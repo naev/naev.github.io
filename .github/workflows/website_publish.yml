@@ -1,0 +1,102 @@
+name: Build and Publish Website
+ 
+on: [repository_dispatch]
+ 
+env:
+  MESON: "${{ github.workspace }}/source/meson.sh"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Event Information
+        run: |
+          echo "Event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'"
+
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        with:
+          path: prod
+
+      - name: Clone Website
+        if: github.event.action == 'website'
+        uses: actions/checkout@v2
+        with:
+          repository: 'ProjectSynchro/naev-website'
+          path: staging
+
+      - name: Clone API Docs
+        if: github.event.action == 'api'
+        uses: actions/checkout@v2
+        with:
+          repository: 'ProjectSynchro/naev'
+          path: staging
+
+      - name: Update APT Cache
+        run: |
+          sudo apt-get update
+
+      - name: Install Required APT Packages
+        if: github.event.action == 'website'
+        run: |
+          sudo apt-get install \
+            make \
+            ruby-bundler \
+            ruby-dev \
+            tidy
+
+      - name: Install Additional Build Dependencies
+        if: github.event.action == 'api'
+        run: |
+          sudo apt-get install \
+            lua-ldoc \
+            graphviz \
+            doxygen \
+            ninja-build
+
+      - name: Install Required Ruby Gems
+        if: github.event.action == 'website'
+        run: |
+          bundle install -j$(nproc)
+        working-directory: staging
+
+      - name: Compile Website
+        if: github.event.action == 'website'
+        run: |
+          make
+        working-directory: staging
+
+      - name: Meson Build
+        if: github.event.action == 'api'
+        run: |
+          sh $MESON setup build . -Dexecutable=disabled
+          sh $MESON compile -C build
+        working-directory: staging
+
+      - name: Apply Website Changes
+        if: github.event.action == 'website'
+        run: |
+          rsync -avzh output/ ${{ github.workspace }}/prod
+        working-directory: staging
+
+      - name: Apply API Docs Changes
+        if: github.event.action == 'api'
+        run: |
+          rsync -avzh build/docs/lua/ ${{ github.workspace }}/prod/api
+        working-directory: staging
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Actions"
+          git add *
+          git commit -m "updates" -a
+        working-directory: prod
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          directory: prod
+          
