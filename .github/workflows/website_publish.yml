@@ -2,9 +2,6 @@ name: Build and Publish Website
  
 on: [repository_dispatch]
  
-env:
-  MESON: "${{ github.workspace }}/source/meson.sh"
-
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -69,8 +66,8 @@ jobs:
       - name: Meson Build
         if: github.event.action == 'api'
         run: |
-          sh $MESON setup build . -Dexecutable=disabled
-          sh $MESON compile -C build
+          ./meson.sh setup build . -Dexecutable=disabled
+          ./meson.sh compile -C build
         working-directory: staging
 
       - name: Apply Website Changes
