@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <!--Old html 4.0.1 way <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+  <!--<meta charset="UTF-8">--><!-- New HTML5 way -->
+  <!-- Mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Favourite icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://naev.org/favicon-180.png">
+  <link rel="icon" type="image/png" sizes="196x196" href="https://naev.org/favicon-196.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="https://naev.org/favicon-128.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="https://naev.org/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://naev.org/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://naev.org/favicon-16.png">
+  <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
+  <link rel="stylesheet" href="../ldoc.css"><!-- CSS -->
+  <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <title>Naev Lua API</title><!-- Website information -->
+</head>
+<body class="bg-light">
+  <div id="naev-header" class="container-fluid nebula-bg">
+    <div class="container">
+      <a href="https://naev.org/"><img src="https://naev.org/imgs/naev.png" alt="Naev"></a>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="p-0 navbar-brand" href="#"><img id="logo" class="img-fluid" src="https://naev.org/favicon.png" alt=
+      "Naev"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=
+      "#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label=
+      "Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/">Blarg</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/about/">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/media/">Media</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/downloads/">Downloads</a></li>
+          <li class="nav-item"><a class="nav-link" href=
+          "https://github.com/naev/naev">Github</a></li>
+          <li class="nav-item"><a class="nav-link" href=
+          "https://github.com/naev/naev/wiki">Wiki</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://discord.com/invite/nd2M5BR">Discord</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/api">Lua API</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div id="lDoc_container">
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Naev Lua API</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/ai.html">ai</a></li>
+  <li><a href="../modules/bkg.html">bkg</a></li>
+  <li><a href="../modules/camera.html">camera</a></li>
+  <li><a href="../modules/colour.html">colour</a></li>
+  <li><a href="../modules/commodity.html">commodity</a></li>
+  <li><a href="../modules/diff.html">diff</a></li>
+  <li><a href="../modules/evt.html">evt</a></li>
+  <li><a href="../modules/faction.html">faction</a></li>
+  <li><a href="../modules/gfx.html">gfx</a></li>
+  <li><a href="../modules/gui.html">gui</a></li>
+  <li><a href="../modules/hook.html">hook</a></li>
+  <li><a href="../modules/jump.html">jump</a></li>
+  <li><a href="../modules/misn.html">misn</a></li>
+  <li><a href="../modules/music.html">music</a></li>
+  <li><a href="../modules/naev.html">naev</a></li>
+  <li><a href="../modules/news.html">news</a></li>
+  <li><a href="../modules/outfit.html">outfit</a></li>
+  <li><a href="../modules/pilot.html">pilot</a></li>
+  <li><a href="../modules/planet.html">planet</a></li>
+  <li><a href="../modules/player.html">player</a></li>
+  <li><a href="../modules/rnd.html">rnd</a></li>
+  <li><strong>ship</strong></li>
+  <li><a href="../modules/shiplog.html">shiplog</a></li>
+  <li><a href="../modules/spfx.html">spfx</a></li>
+  <li><a href="../modules/system.html">system</a></li>
+  <li><a href="../modules/tex.html">tex</a></li>
+  <li><a href="../modules/time.html">time</a></li>
+  <li><a href="../modules/tk.html">tk</a></li>
+  <li><a href="../modules/var.html">var</a></li>
+  <li><a href="../modules/vec2.html">vec2</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>ship</code></h1>
+<p>Lua bindings to interact with ships.</p>
+<p>
+<p> This will allow you to create and manipulate ships in-game.
+<p> An example would be:
+ <pre>
+ s = ship.get( "Empire Lancelot" ) -- Gets the ship
+ cpu_free = s:cpu() -- Gets the CPU
+ </pre>
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#__eq">__eq (s1, s2)</a></td>
+	<td class="summary">Checks to see if two ships are the same.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get">get (s)</a></td>
+	<td class="summary">Gets a ship.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#name">name (s)</a></td>
+	<td class="summary">Gets the name of the ship.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#baseType">baseType (s)</a></td>
+	<td class="summary">Gets the ship's base type.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#class">class (s)</a></td>
+	<td class="summary">Gets the name of the ship's class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#slots">slots (s)</a></td>
+	<td class="summary">Gets the amount of the ship's slots.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getSlots">getSlots (s)</a></td>
+	<td class="summary">Get a table of slots of a ship, where a slot is a table with a string size, type, and property</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#cpu">cpu (s)</a></td>
+	<td class="summary">Gets the ship available CPU.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#price">price (s)</a></td>
+	<td class="summary">Gets the ship's price, with and without default outfits.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#gfxTarget">gfxTarget (s)</a></td>
+	<td class="summary">Gets the ship's target graphics.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#gfx">gfx (s)</a></td>
+	<td class="summary">Gets the ship's graphics.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "__eq"></a>
+    <strong>__eq (s1, s2)</strong>
+    </dt>
+    <dd>
+    Checks to see if two ships are the same. ( s1, s2 )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s1</span>
+            <span class="types"><span class="type">Ship</span></span>
+         First ship to compare.
+        </li>
+        <li><span class="parameter">s2</span>
+            <span class="types"><span class="type">Ship</span></span>
+         Second ship to compare.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true if both ships are the same.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">if</span> s1 == s2 <span class="keyword">then</span> <span class="comment">-- Checks to see if ship s1 and s2 are the same</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "get"></a>
+    <strong>get (s)</strong>
+    </dt>
+    <dd>
+    Gets a ship. ( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the ship to get.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Ship</span></span>
+        The ship matching name or nil if error.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">s = ship.get( <span class="string">"Hyena"</span> ) <span class="comment">-- Gets the hyena</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "name"></a>
+    <strong>name (s)</strong>
+    </dt>
+    <dd>
+    Gets the name of the ship. ( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">Ship</span></span>
+         Ship to get ship name.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The name of the ship.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">shipname = s:name()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "baseType"></a>
+    <strong>baseType (s)</strong>
+    </dt>
+    <dd>
+    Gets the ship's base type.
+<p> For example "Empire Lancelot" and "Lancelot" are both of the base type "Lancelot".
+( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">Ship</span></span>
+         Ship to get the ship base type.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The name of the ship base type.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="global">type</span> = s:baseType()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "class"></a>
+    <strong>class (s)</strong>
+    </dt>
+    <dd>
+    Gets the name of the ship's class. ( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">Ship</span></span>
+         Ship to get ship class name.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The name of the ship's class.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">shipclass = s:class()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "slots"></a>
+    <strong>slots (s)</strong>
+    </dt>
+    <dd>
+    Gets the amount of the ship's slots. ( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">Ship</span></span>
+         Ship to get ship slots of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Number of weapon slots.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Number of utility slots.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Number of structure slots.</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">slots_weapon, slots_utility, slots_structure = p:slots()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "getSlots"></a>
+    <strong>getSlots (s)</strong>
+    </dt>
+    <dd>
+    Get a table of slots of a ship, where a slot is a table with a string size, type, and property ( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+         Ship to get slots of
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        A table of tables with slot properties string "size", string "type", and string "property"
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="global">ipairs</span>( ship.getSlots( ship.get(<span class="string">"Llama"</span>) ) ) <span class="keyword">do</span> <span class="global">print</span>(v[<span class="string">"type"</span>]) <span class="keyword">end</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "cpu"></a>
+    <strong>cpu (s)</strong>
+    </dt>
+    <dd>
+    Gets the ship available CPU. ( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">Ship</span></span>
+         Ship to get available CPU of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The CPU available on the ship.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">cpu_left = s:cpu()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "price"></a>
+    <strong>price (s)</strong>
+    </dt>
+    <dd>
+    Gets the ship's price, with and without default outfits. ( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">Ship</span></span>
+         Ship to get the price of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        The ship's final purchase price.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        The ship's base price.</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">price, base = s:price()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "gfxTarget"></a>
+    <strong>gfxTarget (s)</strong>
+    </dt>
+    <dd>
+    Gets the ship's target graphics.
+<p> Will not work without access to the Tex module.
+( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">Ship</span></span>
+         Ship to get target graphics of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Tex</span></span>
+        The target graphics of the ship.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">gfx = s:gfxTarget()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "gfx"></a>
+    <strong>gfx (s)</strong>
+    </dt>
+    <dd>
+    Gets the ship's graphics.
+<p> Will not work without access to the Tex module. These are nearly always a sprite sheet.
+( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">Ship</span></span>
+         Ship to get graphics of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Tex</span></span>
+        The graphics of the ship.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">gfx = s:gfx()</pre>
+    </ul>
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-11-07 00:47:06 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+<div class="container-fluid nebula-bg mt-5">
+    <div class="container">
+        <footer class="row text-muted">
+            <p class="col-xs-12 col-sm-6 text-left">© 2019 Naev Development Blarg</p>
+            <p class="col-xs-12 col-sm-6 text-right">Original content licensed under CC-By-SA 4.0</p>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

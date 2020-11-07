@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <!--Old html 4.0.1 way <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+  <!--<meta charset="UTF-8">--><!-- New HTML5 way -->
+  <!-- Mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Favourite icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://naev.org/favicon-180.png">
+  <link rel="icon" type="image/png" sizes="196x196" href="https://naev.org/favicon-196.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="https://naev.org/favicon-128.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="https://naev.org/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://naev.org/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://naev.org/favicon-16.png">
+  <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
+  <link rel="stylesheet" href="../ldoc.css"><!-- CSS -->
+  <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <title>Naev Lua API</title><!-- Website information -->
+</head>
+<body class="bg-light">
+  <div id="naev-header" class="container-fluid nebula-bg">
+    <div class="container">
+      <a href="https://naev.org/"><img src="https://naev.org/imgs/naev.png" alt="Naev"></a>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="p-0 navbar-brand" href="#"><img id="logo" class="img-fluid" src="https://naev.org/favicon.png" alt=
+      "Naev"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=
+      "#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label=
+      "Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/">Blarg</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/about/">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/media/">Media</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/downloads/">Downloads</a></li>
+          <li class="nav-item"><a class="nav-link" href=
+          "https://github.com/naev/naev">Github</a></li>
+          <li class="nav-item"><a class="nav-link" href=
+          "https://github.com/naev/naev/wiki">Wiki</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://discord.com/invite/nd2M5BR">Discord</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/api">Lua API</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div id="lDoc_container">
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Naev Lua API</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/ai.html">ai</a></li>
+  <li><a href="../modules/bkg.html">bkg</a></li>
+  <li><a href="../modules/camera.html">camera</a></li>
+  <li><a href="../modules/colour.html">colour</a></li>
+  <li><a href="../modules/commodity.html">commodity</a></li>
+  <li><a href="../modules/diff.html">diff</a></li>
+  <li><a href="../modules/evt.html">evt</a></li>
+  <li><a href="../modules/faction.html">faction</a></li>
+  <li><strong>gfx</strong></li>
+  <li><a href="../modules/gui.html">gui</a></li>
+  <li><a href="../modules/hook.html">hook</a></li>
+  <li><a href="../modules/jump.html">jump</a></li>
+  <li><a href="../modules/misn.html">misn</a></li>
+  <li><a href="../modules/music.html">music</a></li>
+  <li><a href="../modules/naev.html">naev</a></li>
+  <li><a href="../modules/news.html">news</a></li>
+  <li><a href="../modules/outfit.html">outfit</a></li>
+  <li><a href="../modules/pilot.html">pilot</a></li>
+  <li><a href="../modules/planet.html">planet</a></li>
+  <li><a href="../modules/player.html">player</a></li>
+  <li><a href="../modules/rnd.html">rnd</a></li>
+  <li><a href="../modules/ship.html">ship</a></li>
+  <li><a href="../modules/shiplog.html">shiplog</a></li>
+  <li><a href="../modules/spfx.html">spfx</a></li>
+  <li><a href="../modules/system.html">system</a></li>
+  <li><a href="../modules/tex.html">tex</a></li>
+  <li><a href="../modules/time.html">time</a></li>
+  <li><a href="../modules/tk.html">tk</a></li>
+  <li><a href="../modules/var.html">var</a></li>
+  <li><a href="../modules/vec2.html">vec2</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>gfx</code></h1>
+<p>Lua bindings to interact with rendering and the Naev graphical environment.</p>
+<p>
+<p> An example would be:
+ <pre>
+ t  = tex.open( GFX_PATH"foo/bar.png" ) -- Loads the texture
+ gfx.renderTex( t, 0., 0. ) -- Draws texture at origin
+ </pre>
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#dim">dim ()</a></td>
+	<td class="summary">Gets the dimensions of the Naev window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#renderTex">renderTex (tex, pos_x, pos_y[, sprite_x=0[, sprite_y=0[, colour]]])</a></td>
+	<td class="summary">Renders a texture.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#renderTexRaw">renderTexRaw (tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h[, colour])</a></td>
+	<td class="summary">Renders a texture using the core render function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#renderRect">renderRect (x, y, w, h, col[, empty=false])</a></td>
+	<td class="summary">Renders a rectangle.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#fontSize">fontSize (small)</a></td>
+	<td class="summary">Gets the size of the font.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#printDim">printDim (small, str[, width])</a></td>
+	<td class="summary">Gets the size of the text to print.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#print">print (small, str, x, y, col[, max[, center]])</a></td>
+	<td class="summary">Prints text on the screen.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#printText">printText (small, str, x, y, w, h, col)</a></td>
+	<td class="summary">Prints a block of text on the screen.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "dim"></a>
+    <strong>dim ()</strong>
+    </dt>
+    <dd>
+    Gets the dimensions of the Naev window. ()
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        The width of the Naev window.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        The height of the Naev window.</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">screen_w, screen_h = gfx.dim()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "renderTex"></a>
+    <strong>renderTex (tex, pos_x, pos_y[, sprite_x=0[, sprite_y=0[, colour]]])</strong>
+    </dt>
+    <dd>
+    Renders a texture.
+<p> This function has variable parameters depending on how you want to render.
+( tex, pos_x, pos_y, sprite_x, sprite_y, colour )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tex</span>
+            <span class="types"><span class="type">Tex</span></span>
+         Texture to render.
+        </li>
+        <li><span class="parameter">pos_x</span>
+            <span class="types"><span class="type">number</span></span>
+         X position to render texture at.
+        </li>
+        <li><span class="parameter">pos_y</span>
+            <span class="types"><span class="type">number</span></span>
+         Y position to render texture at.
+        </li>
+        <li><span class="parameter">sprite_x</span>
+            <span class="types"><span class="type">int</span></span>
+         X sprite to render.
+         (<em>default</em> 0)
+        </li>
+        <li><span class="parameter">sprite_y</span>
+            <span class="types"><span class="type">int</span></span>
+         Y sprite to render.
+         (<em>default</em> 0)
+        </li>
+        <li><span class="parameter">colour</span>
+            <span class="types"><span class="type">Colour</span></span>
+         Colour to use when rendering.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">gfx.renderTex( tex, <span class="number">0.</span>, <span class="number">0.</span> ) <span class="comment">-- Render tex at origin</span></pre></li>
+        <li><pre class="example">gfx.renderTex( tex, <span class="number">0.</span>, <span class="number">0.</span>, col ) <span class="comment">-- Render tex at origin with colour col</span></pre></li>
+        <li><pre class="example">gfx.renderTex( tex, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">4</span>, <span class="number">3</span> ) <span class="comment">-- Render sprite at position 4,3 (top-left is 1,1)</span></pre></li>
+        <li><pre class="example">gfx.renderTex( tex, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">4</span>, <span class="number">3</span>, col ) <span class="comment">-- Render sprite at position 4,3 (top-left is 1,1) with colour col</span></pre></li>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "renderTexRaw"></a>
+    <strong>renderTexRaw (tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h[, colour])</strong>
+    </dt>
+    <dd>
+    Renders a texture using the core render function.
+<p> This function is far more complex than renderTex, however it allows much
+  more fine grained control over the entire render process and puts you
+  closer to the actual OpenGL calls.
+( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tex</span>
+            <span class="types"><span class="type">Tex</span></span>
+         Texture to render.
+        </li>
+        <li><span class="parameter">pos_x</span>
+            <span class="types"><span class="type">number</span></span>
+         X position to render texture at.
+        </li>
+        <li><span class="parameter">pos_y</span>
+            <span class="types"><span class="type">number</span></span>
+         Y position to render texture at.
+        </li>
+        <li><span class="parameter">pos_w</span>
+            <span class="types"><span class="type">number</span></span>
+         Width of the image on screen.
+        </li>
+        <li><span class="parameter">pos_h</span>
+            <span class="types"><span class="type">number</span></span>
+         Height of the image on screen.
+        </li>
+        <li><span class="parameter">sprite_x</span>
+            <span class="types"><span class="type">number</span></span>
+         X sprite to render.
+        </li>
+        <li><span class="parameter">sprite_y</span>
+            <span class="types"><span class="type">number</span></span>
+         Y sprite to render.
+        </li>
+        <li><span class="parameter">tex_x</span>
+            <span class="types"><span class="type">number</span></span>
+         X sprite texture offset as [0.:1.].
+        </li>
+        <li><span class="parameter">tex_y</span>
+            <span class="types"><span class="type">number</span></span>
+         Y sprite texture offset as [0.:1.].
+        </li>
+        <li><span class="parameter">tex_w</span>
+            <span class="types"><span class="type">number</span></span>
+         Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
+        </li>
+        <li><span class="parameter">tex_h</span>
+            <span class="types"><span class="type">number</span></span>
+         Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
+        </li>
+        <li><span class="parameter">colour</span>
+            <span class="types"><span class="type">Colour</span></span>
+         Colour to use when rendering.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">gfx.renderTexRaw( tex, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">100.</span>, <span class="number">100.</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.5</span>, <span class="number">0.5</span> ) <span class="comment">-- Renders the bottom quarter of the sprite 1,1 of the image.</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "renderRect"></a>
+    <strong>renderRect (x, y, w, h, col[, empty=false])</strong>
+    </dt>
+    <dd>
+    Renders a rectangle. ( x, y, w, h, col, empty )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         X position to render at.
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         Y position to render at.
+        </li>
+        <li><span class="parameter">w</span>
+            <span class="types"><span class="type">number</span></span>
+         Width of the rectangle.
+        </li>
+        <li><span class="parameter">h</span>
+            <span class="types"><span class="type">number</span></span>
+         Height of the rectangle.
+        </li>
+        <li><span class="parameter">col</span>
+            <span class="types"><span class="type">Colour</span></span>
+         Colour to use.
+        </li>
+        <li><span class="parameter">empty</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not it should be empty.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">gfx.renderRect( <span class="number">10.</span>, <span class="number">30</span>,. <span class="number">40.</span>, <span class="number">40.</span>, col ) <span class="comment">-- Renders a 40 side square at position 10,30 of colour col</span></pre></li>
+        <li><pre class="example">gfx.renderRect( <span class="number">10.</span>, <span class="number">30</span>,. <span class="number">40.</span>, <span class="number">40.</span>, col, True ) <span class="comment">-- Renders a 40 side empty square at position 10,30 of colour col</span></pre></li>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "fontSize"></a>
+    <strong>fontSize (small)</strong>
+    </dt>
+    <dd>
+    Gets the size of the font. ( small )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">small</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to get the size of the small font.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">The</span></span>
+        size in pixels of the font.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "printDim"></a>
+    <strong>printDim (small, str[, width])</strong>
+    </dt>
+    <dd>
+    Gets the size of the text to print. ( small, str, width )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">small</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to use the small font.
+        </li>
+        <li><span class="parameter">str</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Text to calculate length of.
+        </li>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">int</span></span>
+         Optional parameter to indicate it is a block of text and to use this width.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">len = gfx.printDim( <span class="keyword">nil</span>, <span class="string">"Hello World!"</span> ) <span class="comment">-- Length of string with normal font</span></pre></li>
+        <li><pre class="example">height = gfx.printDim( <span class="keyword">true</span>, <span class="string">"Longer text"</span>, <span class="number">20</span> ) <span class="comment">-- Dimensions of text block</span></pre></li>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "print"></a>
+    <strong>print (small, str, x, y, col[, max[, center]])</strong>
+    </dt>
+    <dd>
+    Prints text on the screen. ( small, str, x, y, col, max, center )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">small</span>
+            <span class="types"><span class="type">bookean</span></span>
+         Whether or not to use a small font.
+        </li>
+        <li><span class="parameter">str</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         String to print.
+        </li>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         X position to print at.
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         Y position to print at.
+        </li>
+        <li><span class="parameter">col</span>
+            <span class="types"><span class="type">Colour</span></span>
+         Colour to print text.
+        </li>
+        <li><span class="parameter">max</span>
+            <span class="types"><span class="type">int</span></span>
+         Maximum width to render up to.
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">center</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to center it.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">gfx.<span class="global">print</span>( <span class="keyword">nil</span>, <span class="string">"Hello World!"</span>, <span class="number">50</span>, <span class="number">50</span>, colour.new(<span class="string">"Red"</span>) ) <span class="comment">-- Displays text in red at 50,50.</span></pre></li>
+        <li><pre class="example">gfx.<span class="global">print</span>( <span class="keyword">true</span>, <span class="string">"Hello World!"</span>, <span class="number">50</span>, <span class="number">50</span>, col, <span class="number">100</span> ) <span class="comment">-- Displays text to a maximum of 100 pixels wide.</span></pre></li>
+        <li><pre class="example">gfx.<span class="global">print</span>( <span class="keyword">true</span>, str, <span class="number">50</span>, <span class="number">50</span>, col, <span class="number">100</span>, <span class="keyword">true</span> ) <span class="comment">-- Displays centered text to a maximum of 100 pixels.</span></pre></li>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "printText"></a>
+    <strong>printText (small, str, x, y, w, h, col)</strong>
+    </dt>
+    <dd>
+    Prints a block of text on the screen. ( small, str, x, y, w, h, col )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">small</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to use a small font.
+        </li>
+        <li><span class="parameter">str</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         String to print.
+        </li>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         X position to print at.
+        </li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         Y position to print at.
+        </li>
+        <li><span class="parameter">w</span>
+            <span class="types"><span class="type">number</span></span>
+         Width of the block of text.
+        </li>
+        <li><span class="parameter">h</span>
+            <span class="types"><span class="type">number</span></span>
+         Height of the block of text.
+        </li>
+        <li><span class="parameter">col</span>
+            <span class="types"><span class="type">Colour</span></span>
+         Colour to print text.
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">gfx.printText( <span class="keyword">true</span>, <span class="number">100</span>, <span class="number">50</span>, <span class="number">50</span>, <span class="number">100</span>, <span class="number">100</span>, col ) <span class="comment">-- Displays a 100x100 block of text</span></pre>
+    </ul>
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-11-07 00:47:06 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+<div class="container-fluid nebula-bg mt-5">
+    <div class="container">
+        <footer class="row text-muted">
+            <p class="col-xs-12 col-sm-6 text-left">© 2019 Naev Development Blarg</p>
+            <p class="col-xs-12 col-sm-6 text-right">Original content licensed under CC-By-SA 4.0</p>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

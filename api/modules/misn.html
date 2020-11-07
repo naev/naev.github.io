@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <!--Old html 4.0.1 way <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+  <!--<meta charset="UTF-8">--><!-- New HTML5 way -->
+  <!-- Mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Favourite icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://naev.org/favicon-180.png">
+  <link rel="icon" type="image/png" sizes="196x196" href="https://naev.org/favicon-196.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="https://naev.org/favicon-128.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="https://naev.org/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://naev.org/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://naev.org/favicon-16.png">
+  <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
+  <link rel="stylesheet" href="../ldoc.css"><!-- CSS -->
+  <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <title>Naev Lua API</title><!-- Website information -->
+</head>
+<body class="bg-light">
+  <div id="naev-header" class="container-fluid nebula-bg">
+    <div class="container">
+      <a href="https://naev.org/"><img src="https://naev.org/imgs/naev.png" alt="Naev"></a>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="p-0 navbar-brand" href="#"><img id="logo" class="img-fluid" src="https://naev.org/favicon.png" alt=
+      "Naev"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=
+      "#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label=
+      "Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/">Blarg</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/about/">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/media/">Media</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/downloads/">Downloads</a></li>
+          <li class="nav-item"><a class="nav-link" href=
+          "https://github.com/naev/naev">Github</a></li>
+          <li class="nav-item"><a class="nav-link" href=
+          "https://github.com/naev/naev/wiki">Wiki</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://discord.com/invite/nd2M5BR">Discord</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://naev.org/api">Lua API</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div id="lDoc_container">
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Naev Lua API</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/ai.html">ai</a></li>
+  <li><a href="../modules/bkg.html">bkg</a></li>
+  <li><a href="../modules/camera.html">camera</a></li>
+  <li><a href="../modules/colour.html">colour</a></li>
+  <li><a href="../modules/commodity.html">commodity</a></li>
+  <li><a href="../modules/diff.html">diff</a></li>
+  <li><a href="../modules/evt.html">evt</a></li>
+  <li><a href="../modules/faction.html">faction</a></li>
+  <li><a href="../modules/gfx.html">gfx</a></li>
+  <li><a href="../modules/gui.html">gui</a></li>
+  <li><a href="../modules/hook.html">hook</a></li>
+  <li><a href="../modules/jump.html">jump</a></li>
+  <li><strong>misn</strong></li>
+  <li><a href="../modules/music.html">music</a></li>
+  <li><a href="../modules/naev.html">naev</a></li>
+  <li><a href="../modules/news.html">news</a></li>
+  <li><a href="../modules/outfit.html">outfit</a></li>
+  <li><a href="../modules/pilot.html">pilot</a></li>
+  <li><a href="../modules/planet.html">planet</a></li>
+  <li><a href="../modules/player.html">player</a></li>
+  <li><a href="../modules/rnd.html">rnd</a></li>
+  <li><a href="../modules/ship.html">ship</a></li>
+  <li><a href="../modules/shiplog.html">shiplog</a></li>
+  <li><a href="../modules/spfx.html">spfx</a></li>
+  <li><a href="../modules/system.html">system</a></li>
+  <li><a href="../modules/tex.html">tex</a></li>
+  <li><a href="../modules/time.html">time</a></li>
+  <li><a href="../modules/tk.html">tk</a></li>
+  <li><a href="../modules/var.html">var</a></li>
+  <li><a href="../modules/vec2.html">vec2</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>misn</code></h1>
+<p>Mission Lua bindings.</p>
+<p>
+<p> An example would be:
+ <pre>
+ misn.setNPC( "Keer", "empire/unique/keer" )
+ misn.setDesc( "You see here Commodore Keer." )
+ </pre>
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#setTitle">setTitle (title)</a></td>
+	<td class="summary">Sets the current mission title.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setDesc">setDesc (desc)</a></td>
+	<td class="summary">Sets the current mission description.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setReward">setReward (reward)</a></td>
+	<td class="summary">Sets the current mission reward description.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#markerAdd">markerAdd (sys, type)</a></td>
+	<td class="summary">Adds a new marker.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#markerMove">markerMove (id, sys)</a></td>
+	<td class="summary">Moves a marker to a new system.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#markerRm">markerRm (id)</a></td>
+	<td class="summary">Removes a mission system marker.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setNPC">setNPC (name, portrait)</a></td>
+	<td class="summary">Sets the current mission NPC.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#factions">factions ()</a></td>
+	<td class="summary">Gets the factions the mission is available for.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#accept">accept ()</a></td>
+	<td class="summary">Attempts to accept the mission.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#finish">finish ([properly])</a></td>
+	<td class="summary">Finishes the mission.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#cargoAdd">cargoAdd (cargo, quantity)</a></td>
+	<td class="summary">Adds some mission cargo to the player.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#cargoRm">cargoRm (cargoid)</a></td>
+	<td class="summary">Removes the mission cargo.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#cargoJet">cargoJet (cargoid)</a></td>
+	<td class="summary">Jettisons the mission cargo.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#osdCreate">osdCreate (title, list)</a></td>
+	<td class="summary">Creates a mission OSD.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#osdDestroy">osdDestroy ()</a></td>
+	<td class="summary">Destroys the mission OSD.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#osdActive">osdActive (n)</a></td>
+	<td class="summary">Sets active in mission OSD.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#npcAdd">npcAdd (func, name, portrait, desc[, priority=5])</a></td>
+	<td class="summary">Adds an NPC.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#npcRm">npcRm (id)</a></td>
+	<td class="summary">Removes an NPC.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#claim">claim (params)</a></td>
+	<td class="summary">Tries to claim systems or strings.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "setTitle"></a>
+    <strong>setTitle (title)</strong>
+    </dt>
+    <dd>
+    Sets the current mission title. ( title )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">title</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Title to use for mission.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setDesc"></a>
+    <strong>setDesc (desc)</strong>
+    </dt>
+    <dd>
+    Sets the current mission description.
+<p> Also sets the mission OSD unless you explicitly force an OSD, however you
+  can't specify bullet points or other fancy things like with the real OSD.
+( desc )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">desc</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Description to use for mission.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setReward"></a>
+    <strong>setReward (reward)</strong>
+    </dt>
+    <dd>
+    Sets the current mission reward description. ( reward )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">reward</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Description of the reward to use.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "markerAdd"></a>
+    <strong>markerAdd (sys, type)</strong>
+    </dt>
+    <dd>
+    Adds a new marker. ( sys, type )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sys</span>
+            <span class="types"><span class="type">System</span></span>
+         System to mark.
+        </li>
+        <li><span class="parameter">type</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Colouring scheme to use.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        A marker ID to be used with markerMove and markerRm.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">my_marker = misn.markerAdd( system.get(<span class="string">"Gamma Polaris"</span>), <span class="string">"low"</span> )
+
+Valid marker types are:&lt;br/&gt;
+ - <span class="string">"plot"</span>: Important plot marker.&lt;br/&gt;
+ - <span class="string">"high"</span>: High importance mission marker (lower than plot).&lt;br/&gt;
+ - <span class="string">"low"</span>: Low importance mission marker (lower than high).&lt;br/&gt;
+ - <span class="string">"computer"</span>: Mission computer marker.&lt;br/&gt;</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "markerMove"></a>
+    <strong>markerMove (id, sys)</strong>
+    </dt>
+    <dd>
+    Moves a marker to a new system. ( id, sys )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">number</span></span>
+         ID of the mission marker to move.
+        </li>
+        <li><span class="parameter">sys</span>
+            <span class="types"><span class="type">System</span></span>
+         System to move the marker to.
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.markerMove( my_marker, system.get(<span class="string">"Delta Pavonis"</span>) )</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "markerRm"></a>
+    <strong>markerRm (id)</strong>
+    </dt>
+    <dd>
+    Removes a mission system marker. ( id )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">number</span></span>
+         ID of the marker to remove.
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.markerRm( my_marker )</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "setNPC"></a>
+    <strong>setNPC (name, portrait)</strong>
+    </dt>
+    <dd>
+    Sets the current mission NPC.
+<p> This is used in bar missions where you talk to a person. The portraits are
+  the ones found in GFX_PATH/portraits without the png extension. So for
+  GFX_PATH/portraits/none.png you would just use "none".
+( name, portrait )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the NPC.
+        </li>
+        <li><span class="parameter">portrait</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the portrait to use for the NPC.
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.setNPC( <span class="string">"Invisible Man"</span>, <span class="string">"none"</span> )</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "factions"></a>
+    <strong>factions ()</strong>
+    </dt>
+    <dd>
+    Gets the factions the mission is available for. ()
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">{Faction,...}</span></span>
+        A table containing the factions for whom the mission is available.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">f = misn.factions()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "accept"></a>
+    <strong>accept ()</strong>
+    </dt>
+    <dd>
+    Attempts to accept the mission. ()
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true if mission was properly accepted.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">if</span> <span class="keyword">not</span> misn.accept() <span class="keyword">then</span> <span class="keyword">return</span> <span class="keyword">end</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "finish"></a>
+    <strong>finish ([properly])</strong>
+    </dt>
+    <dd>
+    Finishes the mission. ( properly )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">properly</span>
+            <span class="types"><span class="type">boolean</span></span>
+         If true and the mission is unique it marks the mission
+                     as completed.  If false it deletes the mission but
+                     doesn't mark it as completed.  If the parameter isn't
+                     passed it just ends the mission (without removing it
+                     from the player's list of active missions).
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "cargoAdd"></a>
+    <strong>cargoAdd (cargo, quantity)</strong>
+    </dt>
+    <dd>
+    Adds some mission cargo to the player.   He cannot sell it nor get rid of it
+  unless he abandons the mission in which case it'll get eliminated.
+( cargo, quantity )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">cargo</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the cargo to add. This must match a cargo name defined in commodity.xml.
+        </li>
+        <li><span class="parameter">quantity</span>
+            <span class="types"><span class="type">number</span></span>
+         Quantity of cargo to add.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The id of the cargo which can be used in cargoRm.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "cargoRm"></a>
+    <strong>cargoRm (cargoid)</strong>
+    </dt>
+    <dd>
+    Removes the mission cargo. ( cargoid )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">cargoid</span>
+            <span class="types"><span class="type">number</span></span>
+         Identifier of the mission cargo.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true on success.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "cargoJet"></a>
+    <strong>cargoJet (cargoid)</strong>
+    </dt>
+    <dd>
+    Jettisons the mission cargo. ( cargoid )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">cargoid</span>
+            <span class="types"><span class="type">number</span></span>
+         ID of the cargo to jettison.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true on success.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "osdCreate"></a>
+    <strong>osdCreate (title, list)</strong>
+    </dt>
+    <dd>
+    Creates a mission OSD.
+<p>( title, list )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">title</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Title to give the OSD.
+        </li>
+        <li><span class="parameter">list</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">{string,...}</a></span>
+         List of elements to put in the OSD.
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.osdCreate( <span class="string">"My OSD"</span>, {<span class="string">"Element 1"</span>, <span class="string">"Element 2"</span>})</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "osdDestroy"></a>
+    <strong>osdDestroy ()</strong>
+    </dt>
+    <dd>
+    Destroys the mission OSD. ()
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "osdActive"></a>
+    <strong>osdActive (n)</strong>
+    </dt>
+    <dd>
+    Sets active in mission OSD.
+<p>( n )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">n</span>
+            <span class="types"><span class="type">number</span></span>
+         Element of the OSD to make active.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "npcAdd"></a>
+    <strong>npcAdd (func, name, portrait, desc[, priority=5])</strong>
+    </dt>
+    <dd>
+    Adds an NPC.
+<p>( func, name, portrait, desc, priority )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">func</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the function to run when approaching, gets passed the npc_id when called.
+        </li>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the NPC
+        </li>
+        <li><span class="parameter">portrait</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Portrait to use for the NPC (from GFX_PATH/portraits*.png).
+        </li>
+        <li><span class="parameter">desc</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Description associated to the NPC.
+        </li>
+        <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">number</span></span>
+         Optional priority argument (highest is 0, lowest is 10).
+         (<em>default</em> 5)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The ID of the NPC to pass to npcRm.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">npc_id = misn.npcAdd( <span class="string">"my_func"</span>, <span class="string">"Mr. Test"</span>, <span class="string">"none"</span>, <span class="string">"A test."</span> ) <span class="comment">-- Creates an NPC.</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "npcRm"></a>
+    <strong>npcRm (id)</strong>
+    </dt>
+    <dd>
+    Removes an NPC. ( id )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">number</span></span>
+         ID of the NPC to remove.
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.npcRm( npc_id )</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "claim"></a>
+    <strong>claim (params)</strong>
+    </dt>
+    <dd>
+    Tries to claim systems or strings.
+<p> Claiming systems and strings is a way to avoid mission collisions preemptively.
+<p> Note it does not actually perform the claim if it fails to claim. It also
+  does not work more than once.
+( params )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">System</span>, <span class="type">String</span> or <span class="type">{System,String...}</span></span>
+         Table of systems/strings to claim or a single system/string.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true if was able to claim, false otherwise.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example"><span class="keyword">if</span> <span class="keyword">not</span> misn.claim( { system.get(<span class="string">"Gamma Polaris"</span>) } ) <span class="keyword">then</span> misn.finish( <span class="keyword">false</span> ) <span class="keyword">end</span></pre></li>
+        <li><pre class="example"><span class="keyword">if</span> <span class="keyword">not</span> misn.claim( system.get(<span class="string">"Gamma Polaris"</span>) ) <span class="keyword">then</span> misn.finish( <span class="keyword">false</span> ) <span class="keyword">end</span></pre></li>
+        <li><pre class="example"><span class="keyword">if</span> <span class="keyword">not</span> misn.claim( <span class="string">'some_string'</span> ) <span class="keyword">then</span> misn.finish( <span class="keyword">false</span> ) <span class="keyword">end</span></pre></li>
+        <li><pre class="example"><span class="keyword">if</span> <span class="keyword">not</span> misn.claim( { system.get(<span class="string">"Gamma Polaris"</span>), <span class="string">'some_string'</span> } ) <span class="keyword">then</span> misn.finish( <span class="keyword">false</span> ) <span class="keyword">end</span></pre></li>
+    </ul>
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-11-07 00:47:06 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+<div class="container-fluid nebula-bg mt-5">
+    <div class="container">
+        <footer class="row text-muted">
+            <p class="col-xs-12 col-sm-6 text-left">© 2019 Naev Development Blarg</p>
+            <p class="col-xs-12 col-sm-6 text-right">Original content licensed under CC-By-SA 4.0</p>
+        </footer>
+    </div>
+</div>
+</body>
+</html>
