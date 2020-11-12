@@ -82,12 +82,23 @@ jobs:
           rsync -avzh build/docs/lua/ ${{ github.workspace }}/prod/api
         working-directory: staging
 
-      - name: Commit changes
+      - name: Add new file changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions"
           git add *
-          git commit -m "updates" -a
+        working-directory: prod
+
+      - name: Commit Website Changes
+        if: github.event.action == 'website'
+        run: |
+          git commit -m "Website Updates" -a
+        working-directory: prod
+
+      - name: Commit API Documentation Changes
+        if: github.event.action == 'api'
+        run: |
+          git commit -m "API Documentation Updates" -a
         working-directory: prod
 
       - name: Push changes
