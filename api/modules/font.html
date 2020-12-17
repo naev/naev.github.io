@@ -75,7 +75,7 @@
   <li><a href="../modules/evt.html">evt</a></li>
   <li><a href="../modules/faction.html">faction</a></li>
   <li><a href="../modules/file.html">file</a></li>
-  <li><a href="../modules/font.html">font</a></li>
+  <li><strong>font</strong></li>
   <li><a href="../modules/gfx.html">gfx</a></li>
   <li><a href="../modules/gui.html">gui</a></li>
   <li><a href="../modules/hook.html">hook</a></li>
@@ -90,7 +90,7 @@
   <li><a href="../modules/player.html">player</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
-  <li><strong>shiplog</strong></li>
+  <li><a href="../modules/shiplog.html">shiplog</a></li>
   <li><a href="../modules/system.html">system</a></li>
   <li><a href="../modules/tex.html">tex</a></li>
   <li><a href="../modules/time.html">time</a></li>
@@ -103,26 +103,28 @@
 
 <div id="content">
 
-<h1>Module <code>shiplog</code></h1>
-<p>Bindings for adding log entries to the ship log.</p>
-<p>
-<p> A typical example would be:
- <pre>
- logid = shiplog.createLog( "idstring", "log name", "log type", 0, 0 )
- shiplog.appendLog( "idstring", "message to append to log" )
- </pre>
-</p>
+<h1>Module <code>font</code></h1>
+<p>Lua bindings to interact with fonts.</p>
+<p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#createLog">createLog (idstr, logname, logtype[, overwrite[, maxLen]])</a></td>
-	<td class="summary">Creates a shiplog for this mission.</td>
+	<td class="name" nowrap><a href="#__gc">__gc (font)</a></td>
+	<td class="summary">Frees a font.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#appendLog">appendLog (idstr, message)</a></td>
-	<td class="summary">Appends to the shiplog.</td>
+	<td class="name" nowrap><a href="#__eq">__eq (f1, f2)</a></td>
+	<td class="summary">Compares two fonts to see if they are the same.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new">new (fontname[, Font=1.])</a></td>
+	<td class="summary">Gets a font.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#height">height (f)</a></td>
+	<td class="summary">Gets the height of a font.</td>
 	</tr>
 </table>
 
@@ -134,76 +136,114 @@
 
     <dl class="function">
     <dt>
-    <a name = "createLog"></a>
-    <strong>createLog (idstr, logname, logtype[, overwrite[, maxLen]])</strong>
+    <a name = "__gc"></a>
+    <strong>__gc (font)</strong>
     </dt>
     <dd>
-    Creates a shiplog for this mission. ( idstr, logname, logtype, overwrite, maxLen )
+    Frees a font. ( font )
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">idstr</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         ID string to identify this log, or empty string for unnamed logsets.
-        </li>
-        <li><span class="parameter">logname</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name for this log.
-        </li>
-        <li><span class="parameter">logtype</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Type of log (e.g travel, trade, etc, can be anything).
-        </li>
-        <li><span class="parameter">overwrite</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether to remove previous entries of this logname and type (default false).
-         (<em>optional</em>)
-        </li>
-        <li><span class="parameter">maxLen</span>
-            <span class="types"><span class="type">number</span></span>
-         Maximum length of the log (zero or nil for infinite) - if greater than this length, new entries appended will result in old entries being removed.
-         (<em>optional</em>)
+        <li><span class="parameter">font</span>
+            <span class="types"><span class="type">Font</span></span>
+         Font to free.
         </li>
     </ul>
 
 
 
 
-    <h3>Usage:</h3>
-    <ul>
-        <li><pre class="example">shiplog.createLog(<span class="string">"MyLog"</span>, <span class="string">"My mission title"</span>, <span class="string">"Mission type"</span>) <span class="comment">-- Creates log "MyLog" without erasing anything</span></pre></li>
-        <li><pre class="example">shiplog.createLog(<span class="string">"MyOtherLog"</span>, <span class="string">"Any title"</span>,<span class="string">"Anything can be a type"</span>, <span class="keyword">true</span>, <span class="number">10</span>) <span class="comment">-- Erases any existing MyOtherLog entries and sets a limit of 10 entries</span></pre></li>
-    </ul>
 
 </dd>
     <dt>
-    <a name = "appendLog"></a>
-    <strong>appendLog (idstr, message)</strong>
+    <a name = "__eq"></a>
+    <strong>__eq (f1, f2)</strong>
     </dt>
     <dd>
-    Appends to the shiplog. ( idstr, message )
+    Compares two fonts to see if they are the same. ( f1, f2 )
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">idstr</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         ID string of the log to append to.
+        <li><span class="parameter">f1</span>
+            <span class="types"><span class="type">Font</span></span>
+         Font 1 to compare.
         </li>
-        <li><span class="parameter">message</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Message to append to the log.
+        <li><span class="parameter">f2</span>
+            <span class="types"><span class="type">Font</span></span>
+         Font 2 to compare.
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true if both fonts are the same.
+    </ol>
 
 
 
-    <h3>Usage:</h3>
+
+</dd>
+    <dt>
+    <a name = "new"></a>
+    <strong>new (fontname[, Font=1.])</strong>
+    </dt>
+    <dd>
+    Gets a font. ( r, g, b, a )
+
+
+    <h3>Parameters:</h3>
     <ul>
-        <pre class="example">shiplog.appendLog(<span class="string">"MyLog"</span>, <span class="string">"Some message here"</span>)</pre>
+        <li><span class="parameter">fontname</span>
+            <span class="types"><span class="type">String</span> or <span class="type">Number</span></span>
+         Name of the font.
+        </li>
+        <li><span class="parameter">Font</span>
+            <span class="types"><span class="type">Number</span></span>
+         height.
+         (<em>default</em> 1.)
+        </li>
     </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Font</span></span>
+        A newly created font.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "height"></a>
+    <strong>height (f)</strong>
+    </dt>
+    <dd>
+    Gets the height of a font. ( f )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Font</span></span>
+         Font to get the height of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Height of the font.
+    </ol>
+
+
+
 
 </dd>
 </dl>

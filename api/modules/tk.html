@@ -65,13 +65,17 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
+  <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
   <li><a href="../modules/colour.html">colour</a></li>
   <li><a href="../modules/commodity.html">commodity</a></li>
+  <li><a href="../modules/data.html">data</a></li>
   <li><a href="../modules/diff.html">diff</a></li>
   <li><a href="../modules/evt.html">evt</a></li>
   <li><a href="../modules/faction.html">faction</a></li>
+  <li><a href="../modules/file.html">file</a></li>
+  <li><a href="../modules/font.html">font</a></li>
   <li><a href="../modules/gfx.html">gfx</a></li>
   <li><a href="../modules/gui.html">gui</a></li>
   <li><a href="../modules/hook.html">hook</a></li>
@@ -87,7 +91,6 @@
   <li><a href="../modules/rnd.html">rnd</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
   <li><a href="../modules/shiplog.html">shiplog</a></li>
-  <li><a href="../modules/spfx.html">spfx</a></li>
   <li><a href="../modules/system.html">system</a></li>
   <li><a href="../modules/tex.html">tex</a></li>
   <li><a href="../modules/time.html">time</a></li>
@@ -142,6 +145,30 @@
 	<tr>
 	<td class="name" nowrap><a href="#merchantOutfit">merchantOutfit (name, outfits)</a></td>
 	<td class="summary">Opens an outfit merchant window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#custom">custom (title, width, height, update, draw, keyboard, mouse)</a></td>
+	<td class="summary">Creates a custom widget window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#customRename">customRename (displayname)</a></td>
+	<td class="summary">Renames the custom widget window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#customFullscreen">customFullscreen (enable)</a></td>
+	<td class="summary">Sets the custom widget fullscreen.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#customResize">customResize (width, height)</a></td>
+	<td class="summary">Sets the custom widget fullscreen.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#customSize">customSize ()</a></td>
+	<td class="summary">Gets the size of a custom widget.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#customDone">customDone ()</a></td>
+	<td class="summary">Ends the execution of a custom widget.</td>
 	</tr>
 </table>
 
@@ -389,6 +416,155 @@
     </ul>
 
 </dd>
+    <dt>
+    <a name = "custom"></a>
+    <strong>custom (title, width, height, update, draw, keyboard, mouse)</strong>
+    </dt>
+    <dd>
+    Creates a custom widget window. ( title, width, height, update, draw, keyboard, mouse )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">title</span>
+            <span class="types"><span class="type">String</span></span>
+         Title of the window.
+        </li>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">Number</span></span>
+         Width of the drawable area of the widget.
+        </li>
+        <li><span class="parameter">height</span>
+            <span class="types"><span class="type">Number</span></span>
+         Height of the drawable area of the widget.
+        </li>
+        <li><span class="parameter">update</span>
+            <span class="types"><span class="type">Function</span></span>
+         Function to call when updating. Should take a single parameter which is a number indicating how many seconds passed from previous update.
+        </li>
+        <li><span class="parameter">draw</span>
+            <span class="types"><span class="type">Function</span></span>
+         Function to call when drawing.
+        </li>
+        <li><span class="parameter">keyboard</span>
+            <span class="types"><span class="type">Function</span></span>
+         Function to call when keyboard events are received.
+        </li>
+        <li><span class="parameter">mouse</span>
+            <span class="types"><span class="type">Function</span></span>
+         Function to call when mouse events are received.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "customRename"></a>
+    <strong>customRename (displayname)</strong>
+    </dt>
+    <dd>
+    Renames the custom widget window. ( displayname )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">displayname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name to give the custom widget window.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "customFullscreen"></a>
+    <strong>customFullscreen (enable)</strong>
+    </dt>
+    <dd>
+    Sets the custom widget fullscreen. ( enable )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">enable</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Enable fullscreen or not.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "customResize"></a>
+    <strong>customResize (width, height)</strong>
+    </dt>
+    <dd>
+    Sets the custom widget fullscreen. ( width, height )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">number</span></span>
+         Width of the widget to resize to.
+        </li>
+        <li><span class="parameter">height</span>
+            <span class="types"><span class="type">number</span></span>
+         Height of the widget to resize to.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "customSize"></a>
+    <strong>customSize ()</strong>
+    </dt>
+    <dd>
+    Gets the size of a custom widget. ()
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Width of the window.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Height of the window.</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "customDone"></a>
+    <strong>customDone ()</strong>
+    </dt>
+    <dd>
+    Ends the execution of a custom widget. ()
+
+
+
+
+
+
+
+</dd>
 </dl>
 
 
@@ -396,7 +572,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-12-17 02:42:29 </i>
+<i style="float:right;">Last updated 2020-12-17 03:04:44 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">

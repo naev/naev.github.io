@@ -65,13 +65,17 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
+  <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
   <li><a href="../modules/colour.html">colour</a></li>
   <li><a href="../modules/commodity.html">commodity</a></li>
+  <li><a href="../modules/data.html">data</a></li>
   <li><a href="../modules/diff.html">diff</a></li>
   <li><a href="../modules/evt.html">evt</a></li>
   <li><a href="../modules/faction.html">faction</a></li>
+  <li><a href="../modules/file.html">file</a></li>
+  <li><a href="../modules/font.html">font</a></li>
   <li><a href="../modules/gfx.html">gfx</a></li>
   <li><a href="../modules/gui.html">gui</a></li>
   <li><a href="../modules/hook.html">hook</a></li>
@@ -87,7 +91,6 @@
   <li><a href="../modules/rnd.html">rnd</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
   <li><a href="../modules/shiplog.html">shiplog</a></li>
-  <li><a href="../modules/spfx.html">spfx</a></li>
   <li><a href="../modules/system.html">system</a></li>
   <li><strong>tex</strong></li>
   <li><a href="../modules/time.html">time</a></li>
@@ -106,7 +109,7 @@
 <p> This will allow you to load textures.
 <p> An example would be:
  <pre>
- t  = tex.open( GFX_PATH"foo/bar.png" ) -- Loads the texture
+ t  = tex.open( "foo/bar.png" ) -- Loads the texture
  w,h, sw,sh = t:dim()
  sprites, sx,sy = t:sprites()
  </pre>
@@ -120,8 +123,12 @@
 	<td class="summary">Frees the texture.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#open">open (path[, sx=1[, sy=1]])</a></td>
+	<td class="name" nowrap><a href="#open">open (path[, w=1[, h=1[, sx=1[, sy=1]]]])</a></td>
 	<td class="summary">Opens a texture.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#readData">readData (File)</a></td>
+	<td class="summary">Reads image data from a file.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#dim">dim (t)</a></td>
@@ -134,6 +141,14 @@
 	<tr>
 	<td class="name" nowrap><a href="#spriteFromDir">spriteFromDir (t, a[, b=false])</a></td>
 	<td class="summary">Gets the sprite that corresponds to a direction.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setFilter">setFilter (tex, min[, mag])</a></td>
+	<td class="summary">Sets the texture minification and magnification filters.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setWrap">setWrap (tex, horiz[, vert[, depth]])</a></td>
+	<td class="summary">Sets the texture wrapping.</td>
 	</tr>
 </table>
 
@@ -167,26 +182,37 @@
 </dd>
     <dt>
     <a name = "open"></a>
-    <strong>open (path[, sx=1[, sy=1]])</strong>
+    <strong>open (path[, w=1[, h=1[, sx=1[, sy=1]]]])</strong>
     </dt>
     <dd>
-    Opens a texture. ( path, sx, sy )
+    Opens a texture.
+<p>( path, w, h, sx, sy )
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">path</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Path to open.
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>, <span class="type">File</span> or <span class="type">Data</span></span>
+         Path, File, or Data to open.
+        </li>
+        <li><span class="parameter">w</span>
+            <span class="types"><span class="type">number</span></span>
+         Width when Data or optional number of x sprites otherwise.
+         (<em>default</em> 1)
+        </li>
+        <li><span class="parameter">h</span>
+            <span class="types"><span class="type">number</span></span>
+         Height when Data or optional number of y sprites otherwise.
+         (<em>default</em> 1)
         </li>
         <li><span class="parameter">sx</span>
             <span class="types"><span class="type">number</span></span>
-         Optional number of x sprites.
+         Optional number of x sprites when path is Data.
          (<em>default</em> 1)
         </li>
         <li><span class="parameter">sy</span>
             <span class="types"><span class="type">number</span></span>
-         Optional number of y sprites.
+         Optional number of y sprites when path is Data.
          (<em>default</em> 1)
         </li>
     </ul>
@@ -205,6 +231,40 @@
         <li><pre class="example">t = tex.open( <span class="string">"no_sprites.png"</span> )</pre></li>
         <li><pre class="example">t = tex.open( <span class="string">"spritesheet.png"</span>, <span class="number">6</span>, <span class="number">6</span> )</pre></li>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "readData"></a>
+    <strong>readData (File)</strong>
+    </dt>
+    <dd>
+    Reads image data from a file.
+<p>( file )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">File</span>
+            <span class="types"><span class="type">file</span></span>
+        |string File or filename of the file to read the data from.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">Data</span></span>
+        Data containing the image data.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Width of the loaded data.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Height of the loaded data.</li>
+    </ol>
+
+
+
 
 </dd>
     <dt>
@@ -327,6 +387,71 @@
     </ul>
 
 </dd>
+    <dt>
+    <a name = "setFilter"></a>
+    <strong>setFilter (tex, min[, mag])</strong>
+    </dt>
+    <dd>
+    Sets the texture minification and magnification filters. ( tex, min, mag )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tex</span>
+            <span class="types"><span class="type">Tex</span></span>
+         Texture to set filter.
+        </li>
+        <li><span class="parameter">min</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Minification filter ("nearest" or "linear")
+        </li>
+        <li><span class="parameter">mag</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Magnification filter ("nearest" or "linear"). Defaults to min.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setWrap"></a>
+    <strong>setWrap (tex, horiz[, vert[, depth]])</strong>
+    </dt>
+    <dd>
+    Sets the texture wrapping. ( tex, horiz, vert, depth )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tex</span>
+            <span class="types"><span class="type">Tex</span></span>
+         Texture to set filter.
+        </li>
+        <li><span class="parameter">horiz</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Horizontal wrapping ("clamp", "repeat", or "mirroredrepeat" )
+        </li>
+        <li><span class="parameter">vert</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Vertical wrapping ("clamp", "repeat", or "mirroredrepeat" )
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">depth</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Depth wrapping ("clamp", "repeat", or "mirroredrepeat" )
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
 </dl>
 
 
@@ -334,7 +459,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-12-17 02:42:29 </i>
+<i style="float:right;">Last updated 2020-12-17 03:04:44 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">

@@ -65,7 +65,7 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
-  <li><a href="../modules/audio.html">audio</a></li>
+  <li><strong>audio</strong></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
   <li><a href="../modules/colour.html">colour</a></li>
@@ -90,7 +90,7 @@
   <li><a href="../modules/player.html">player</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
-  <li><strong>shiplog</strong></li>
+  <li><a href="../modules/shiplog.html">shiplog</a></li>
   <li><a href="../modules/system.html">system</a></li>
   <li><a href="../modules/tex.html">tex</a></li>
   <li><a href="../modules/time.html">time</a></li>
@@ -103,26 +103,25 @@
 
 <div id="content">
 
-<h1>Module <code>shiplog</code></h1>
-<p>Bindings for adding log entries to the ship log.</p>
+<h1>Module <code>audio</code></h1>
+<p>Lua bindings to interact with audio.</p>
 <p>
-<p> A typical example would be:
- <pre>
- logid = shiplog.createLog( "idstring", "log name", "log type", 0, 0 )
- shiplog.appendLog( "idstring", "message to append to log" )
- </pre>
-</p>
+<p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#createLog">createLog (idstr, logname, logtype[, overwrite[, maxLen]])</a></td>
-	<td class="summary">Creates a shiplog for this mission.</td>
+	<td class="name" nowrap><a href="#__gc">__gc (audio)</a></td>
+	<td class="summary">Frees a audio.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#appendLog">appendLog (idstr, message)</a></td>
-	<td class="summary">Appends to the shiplog.</td>
+	<td class="name" nowrap><a href="#__eq">__eq (a1, a2)</a></td>
+	<td class="summary">Compares two audios to see if they are the same.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#soundPlay">soundPlay (s[, pos[, vel]])</a></td>
+	<td class="summary">Plays a sound.</td>
 	</tr>
 </table>
 
@@ -134,66 +133,82 @@
 
     <dl class="function">
     <dt>
-    <a name = "createLog"></a>
-    <strong>createLog (idstr, logname, logtype[, overwrite[, maxLen]])</strong>
+    <a name = "__gc"></a>
+    <strong>__gc (audio)</strong>
     </dt>
     <dd>
-    Creates a shiplog for this mission. ( idstr, logname, logtype, overwrite, maxLen )
+    Frees a audio. ( audio )
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">idstr</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         ID string to identify this log, or empty string for unnamed logsets.
-        </li>
-        <li><span class="parameter">logname</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name for this log.
-        </li>
-        <li><span class="parameter">logtype</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Type of log (e.g travel, trade, etc, can be anything).
-        </li>
-        <li><span class="parameter">overwrite</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether to remove previous entries of this logname and type (default false).
-         (<em>optional</em>)
-        </li>
-        <li><span class="parameter">maxLen</span>
-            <span class="types"><span class="type">number</span></span>
-         Maximum length of the log (zero or nil for infinite) - if greater than this length, new entries appended will result in old entries being removed.
-         (<em>optional</em>)
+        <li><span class="parameter">audio</span>
+            <span class="types"><span class="type">Audio</span></span>
+         Audio to free.
         </li>
     </ul>
 
 
 
 
-    <h3>Usage:</h3>
-    <ul>
-        <li><pre class="example">shiplog.createLog(<span class="string">"MyLog"</span>, <span class="string">"My mission title"</span>, <span class="string">"Mission type"</span>) <span class="comment">-- Creates log "MyLog" without erasing anything</span></pre></li>
-        <li><pre class="example">shiplog.createLog(<span class="string">"MyOtherLog"</span>, <span class="string">"Any title"</span>,<span class="string">"Anything can be a type"</span>, <span class="keyword">true</span>, <span class="number">10</span>) <span class="comment">-- Erases any existing MyOtherLog entries and sets a limit of 10 entries</span></pre></li>
-    </ul>
 
 </dd>
     <dt>
-    <a name = "appendLog"></a>
-    <strong>appendLog (idstr, message)</strong>
+    <a name = "__eq"></a>
+    <strong>__eq (a1, a2)</strong>
     </dt>
     <dd>
-    Appends to the shiplog. ( idstr, message )
+    Compares two audios to see if they are the same. ( a1, a2 )
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">idstr</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         ID string of the log to append to.
+        <li><span class="parameter">a1</span>
+            <span class="types"><span class="type">Audio</span></span>
+         Audio 1 to compare.
         </li>
-        <li><span class="parameter">message</span>
+        <li><span class="parameter">a2</span>
+            <span class="types"><span class="type">Audio</span></span>
+         Audio 2 to compare.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true if both audios are the same.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "soundPlay"></a>
+    <strong>soundPlay (s[, pos[, vel]])</strong>
+    </dt>
+    <dd>
+    Plays a sound.
+<p> by default, the sound is played at player's current position
+( s )
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Message to append to the log.
+         Name of the sound to play
+        </li>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         Position of the source
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">vel</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         Velocity of the source
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -202,7 +217,9 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">shiplog.appendLog(<span class="string">"MyLog"</span>, <span class="string">"Some message here"</span>)</pre>
+        <li><pre class="example">audio.soundPlay( <span class="string">"hail"</span> ) <span class="comment">-- Plays the hail sound</span></pre></li>
+        <li><pre class="example">audio.soundPlay( <span class="string">"hail"</span>, pos ) <span class="comment">-- Plays the hail sound at position pos</span></pre></li>
+        <li><pre class="example">audio.soundPlay( <span class="string">"hail"</span>, pos, vel ) <span class="comment">-- Plays the hail sound at position pos with velocity vel</span></pre></li>
     </ul>
 
 </dd>
