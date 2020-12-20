@@ -81,7 +81,7 @@
   <li><a href="../modules/hook.html">hook</a></li>
   <li><a href="../modules/jump.html">jump</a></li>
   <li><a href="../modules/misn.html">misn</a></li>
-  <li><strong>music</strong></li>
+  <li><a href="../modules/music.html">music</a></li>
   <li><a href="../modules/naev.html">naev</a></li>
   <li><a href="../modules/news.html">news</a></li>
   <li><a href="../modules/outfit.html">outfit</a></li>
@@ -89,7 +89,7 @@
   <li><a href="../modules/planet.html">planet</a></li>
   <li><a href="../modules/player.html">player</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
-  <li><a href="../modules/shader.html">shader</a></li>
+  <li><strong>shader</strong></li>
   <li><a href="../modules/ship.html">ship</a></li>
   <li><a href="../modules/shiplog.html">shiplog</a></li>
   <li><a href="../modules/system.html">system</a></li>
@@ -105,42 +105,24 @@
 
 <div id="content">
 
-<h1>Module <code>music</code></h1>
-<p>Music Lua module.</p>
-<p>
-<p> Typical usage would be something like:
- <pre>
- music.load( "intro" ) -- Load the song
- music.play() -- Play it
- </pre>
-</p>
+<h1>Module <code>shader</code></h1>
+<p>Lua bindings to interact with shaders.</p>
+<p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#delay">delay (situation, delay)</a></td>
-	<td class="summary">Delays a rechoose.</td>
+	<td class="name" nowrap><a href="#__gc">__gc (shader)</a></td>
+	<td class="summary">Frees a shader.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#load">load (name)</a></td>
-	<td class="summary">Loads a song.</td>
+	<td class="name" nowrap><a href="#__eq">__eq (f1, f2)</a></td>
+	<td class="summary">Compares two shaders to see if they are the same.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#play">play ()</a></td>
-	<td class="summary">Plays the loaded song.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#stop">stop ()</a></td>
-	<td class="summary">Stops playing the current song.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#isPlaying">isPlaying ()</a></td>
-	<td class="summary">Checks to see if something is playing.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#current">current ()</a></td>
-	<td class="summary">Gets the name of the current playing song.</td>
+	<td class="name" nowrap><a href="#new">new (vertex, fragment)</a></td>
+	<td class="summary">Creates a new shader.</td>
 	</tr>
 </table>
 
@@ -152,97 +134,51 @@
 
     <dl class="function">
     <dt>
-    <a name = "delay"></a>
-    <strong>delay (situation, delay)</strong>
+    <a name = "__gc"></a>
+    <strong>__gc (shader)</strong>
     </dt>
     <dd>
-    Delays a rechoose. ( situation, delay )
+    Frees a shader. ( shader )
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">situation</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Situation to choose.
-        </li>
-        <li><span class="parameter">delay</span>
-            <span class="types"><span class="type">number</span></span>
-         Delay in seconds.
+        <li><span class="parameter">shader</span>
+            <span class="types"><span class="type">Shader</span></span>
+         Shader to free.
         </li>
     </ul>
 
 
 
 
-    <h3>Usage:</h3>
-    <ul>
-        <pre class="example">music.delay( <span class="string">"ambient"</span>, <span class="number">5.0</span> ) <span class="comment">-- Rechooses ambient in 5 seconds</span></pre>
-    </ul>
 
 </dd>
     <dt>
-    <a name = "load"></a>
-    <strong>load (name)</strong>
+    <a name = "__eq"></a>
+    <strong>__eq (f1, f2)</strong>
     </dt>
     <dd>
-    Loads a song. ( name )
+    Compares two shaders to see if they are the same. ( f1, f2 )
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">name</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the song to load.
+        <li><span class="parameter">f1</span>
+            <span class="types"><span class="type">Shader</span></span>
+         Shader 1 to compare.
+        </li>
+        <li><span class="parameter">f2</span>
+            <span class="types"><span class="type">Shader</span></span>
+         Shader 2 to compare.
         </li>
     </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "play"></a>
-    <strong>play ()</strong>
-    </dt>
-    <dd>
-    Plays the loaded song. ()
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "stop"></a>
-    <strong>stop ()</strong>
-    </dt>
-    <dd>
-    Stops playing the current song. ()
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "isPlaying"></a>
-    <strong>isPlaying ()</strong>
-    </dt>
-    <dd>
-    Checks to see if something is playing. ()
-
-
 
     <h3>Returns:</h3>
     <ol>
 
            <span class="types"><span class="type">boolean</span></span>
-        true if something is playing.
+        true if both shaders are the same.
     </ol>
 
 
@@ -250,30 +186,34 @@
 
 </dd>
     <dt>
-    <a name = "current"></a>
-    <strong>current ()</strong>
+    <a name = "new"></a>
+    <strong>new (vertex, fragment)</strong>
     </dt>
     <dd>
-    Gets the name of the current playing song. ()
+    Creates a new shader. ( vertex, fragment )
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vertex</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Script containing the vertex shader.
+        </li>
+        <li><span class="parameter">fragment</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         String containing the fragment shader.
+        </li>
+    </ul>
 
     <h3>Returns:</h3>
     <ol>
-        <li>
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-        The name of the current playing song or "none" if no song is playing.</li>
-        <li>
-           <span class="types"><span class="type">number</span></span>
-        The current offset inside the song (0. if music is none).</li>
+
+           <span class="types"><span class="type">Shader</span></span>
+        A newly created shader.
     </ol>
 
 
 
-    <h3>Usage:</h3>
-    <ul>
-        <pre class="example">songname, songplayed = music.current()</pre>
-    </ul>
 
 </dd>
 </dl>
