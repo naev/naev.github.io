@@ -106,13 +106,45 @@
 <div id="content">
 
 <h1>Module <code>ai</code></h1>
-<p>Handles how the AI interacts with the universe.</p>
+<p>Controls the Pilot AI.</p>
 <p>
-<p> Usage is:
- <pre>
- ai.function( params )
- </pre>
-</p>
+<p> AI Overview
+<p> Concept: Goal (Task) Based AI with additional Optimization
+<p>  AI uses the goal (task) based AI approach with tasks scripted in Lua,
+ additionally there is a task that is hard-coded and obligatory in any AI
+ script, the 'control' task, whose sole purpose is to assign tasks if there
+ is no current tasks and optimizes or changes tasks if there are.
+<p>  For example: Pilot A is attacking Pilot B.  Say that Pilot C then comes in
+ the same system and is of the same faction as Pilot B, and therefore attacks
+ Pilot A.  Pilot A would keep on fighting Pilot B until the control task
+ kicks in.  Then he/she could run if it deems that Pilot C and Pilot B
+ together are too strong for him/her, or attack Pilot C because it's an
+ easier target to finish off then Pilot B.  Therefore there are endless
+ possibilities and it's up to the AI coder to set up.
+<p>
+ Specification
+<p>   -  AI will follow basic tasks defined from Lua AI script.
+     - if Task is NULL, AI will run "control" task
+     - Task is continued every frame
+     - Tasks can have subtasks which will be closed when parent task is dead.
+     -  "control" task is a special task that MUST exist in any given  Pilot AI
+        (missiles and such will use "seek")
+     - "control" task is not permanent, but transitory
+     - "control" task sets another task
+   - "control" task is also run at a set rate (depending on Lua global "control_rate")
+     to choose optimal behaviour (task)
+<p> Memory
+<p>  The AI currently has per-pilot memory which is accessible as "mem".  This
+ memory is actually stored in the table pilotmem[cur_pilot->id].  This allows
+ the pilot to keep some memory always accessible between runs without having
+ to rely on the storage space a task has.
+<p> Garbage Collector
+<p>  The tasks are not deleted directly but are marked for deletion and are then
+ cleaned up in a garbage collector. This is to avoid accessing invalid task
+ memory.
+<p> <em>Note</em>  Nothing in this file can be considered reentrant.  Plan accordingly.
+<p> <em>TODO</em> Clean up most of the code, it was written as one of the first
+         subsystems and is pretty lacking in quite a few aspects. </p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -433,7 +465,7 @@
     <strong>pushtask (func[, data])</strong>
     </dt>
     <dd>
-    Pushes a task onto the pilot's task list. ( func, data )
+    Pushes a task onto the pilot's task list.
 
 
     <h3>Parameters:</h3>
@@ -458,7 +490,7 @@
     <strong>poptask ()</strong>
     </dt>
     <dd>
-    Pops the current running task. ()
+    Pops the current running task.
 
 
 
@@ -472,7 +504,7 @@
     <strong>taskname ()</strong>
     </dt>
     <dd>
-    Gets the current task's name. ()
+    Gets the current task's name.
 
 
 
@@ -492,7 +524,7 @@
     <strong>target ()</strong>
     </dt>
     <dd>
-    Gets the pilot's task target. ()
+    Gets the pilot's task target.
 
 
 
@@ -515,7 +547,7 @@
     <strong>pushsubtask (func[, data])</strong>
     </dt>
     <dd>
-    Pushes a subtask onto the pilot's task's subtask list. ( func, data )
+    Pushes a subtask onto the pilot's task's subtask list.
 
 
     <h3>Parameters:</h3>
@@ -540,7 +572,7 @@
     <strong>popsubtask ()</strong>
     </dt>
     <dd>
-    Pops the current running task. ()
+    Pops the current running task.
 
 
 
@@ -554,7 +586,7 @@
     <strong>subtaskname ()</strong>
     </dt>
     <dd>
-    Gets the current subtask's name. ()
+    Gets the current subtask's name.
 
 
 
@@ -574,7 +606,7 @@
     <strong>subtarget ()</strong>
     </dt>
     <dd>
-    Gets the pilot's subtask target. ()
+    Gets the pilot's subtask target.
 
 
 
@@ -597,7 +629,7 @@
     <strong>pilot ()</strong>
     </dt>
     <dd>
-    Gets the AI's pilot. ()
+    Gets the AI's pilot.
 
 
 
@@ -617,7 +649,7 @@
     <strong>rndpilot ()</strong>
     </dt>
     <dd>
-    Gets a random pilot in the system. ()
+    Gets a random pilot in the system.
 
 
 
@@ -637,7 +669,7 @@
     <strong>nearestpilot ()</strong>
     </dt>
     <dd>
-    gets the nearest pilot to the current pilot ()
+    gets the nearest pilot to the current pilot
 
 
 
@@ -657,7 +689,7 @@
     <strong>dist (pointer)</strong>
     </dt>
     <dd>
-    Gets the distance from the pointer. ( pointer )
+    Gets the distance from the pointer.
 
 
     <h3>Parameters:</h3>
@@ -684,7 +716,7 @@
     <strong>flyby_dist (pointer)</strong>
     </dt>
     <dd>
-    Gets the distance from the pointer perpendicular to the current pilot's flight vector. ( pointer )
+    Gets the distance from the pointer perpendicular to the current pilot's flight vector.
 
 
     <h3>Parameters:</h3>
@@ -717,7 +749,7 @@
  add it to general euler equation  x = v * t + 0.5 * a * t^2
  and voila!
 <p> I hate this function and it'll probably need to get changed in the future
-<p>()
+<p>
 
 
 
@@ -737,7 +769,7 @@
     <strong>isbribed (target)</strong>
     </dt>
     <dd>
-    Checks to see if target has bribed pilot. ( target )
+    Checks to see if target has bribed pilot.
 
 
     <h3>Parameters:</h3>
@@ -764,7 +796,7 @@
     <strong>getstanding (target)</strong>
     </dt>
     <dd>
-    Gets the standing of the target pilot with the current pilot. ( target )
+    Gets the standing of the target pilot with the current pilot.
 
 
     <h3>Parameters:</h3>
@@ -791,7 +823,7 @@
     <strong>ismaxvel ()</strong>
     </dt>
     <dd>
-    Checks to see if pilot is at maximum velocity. ()
+    Checks to see if pilot is at maximum velocity.
 
 
 
@@ -811,7 +843,7 @@
     <strong>isstopped ()</strong>
     </dt>
     <dd>
-    Checks to see if pilot is stopped. ()
+    Checks to see if pilot is stopped.
 
 
 
@@ -831,7 +863,7 @@
     <strong>isenemy (target)</strong>
     </dt>
     <dd>
-    Checks to see if target is an enemy. ( target )
+    Checks to see if target is an enemy.
 
 
     <h3>Parameters:</h3>
@@ -858,7 +890,7 @@
     <strong>isally (target)</strong>
     </dt>
     <dd>
-    Checks to see if target is an ally. ( target )
+    Checks to see if target is an ally.
 
 
     <h3>Parameters:</h3>
@@ -885,7 +917,7 @@
     <strong>haslockon ()</strong>
     </dt>
     <dd>
-    Checks to see if pilot has a missile lockon. ()
+    Checks to see if pilot has a missile lockon.
 
 
 
@@ -905,7 +937,7 @@
     <strong>hasprojectile ()</strong>
     </dt>
     <dd>
-    Checks to see if pilot has a projectile after him. ()
+    Checks to see if pilot has a projectile after him.
 
 
 
@@ -925,7 +957,7 @@
     <strong>accel ([acceleration=1.])</strong>
     </dt>
     <dd>
-    Starts accelerating the pilot. ( acceleration )
+    Starts accelerating the pilot.
 
 
     <h3>Parameters:</h3>
@@ -947,7 +979,7 @@
     <strong>turn (vel)</strong>
     </dt>
     <dd>
-    Starts turning the pilot. ( vel )
+    Starts turning the pilot.
 
 
     <h3>Parameters:</h3>
@@ -968,7 +1000,7 @@
     <strong>face (target, invert, compensate)</strong>
     </dt>
     <dd>
-    Faces the target. ( target, invert, compensate )
+    Faces the target.
 
 
     <h3>Parameters:</h3>
@@ -1017,7 +1049,7 @@
  Obstacles (enemies) and the target exert
  attractive or repulsive force on this object.
 <p> Only visible ships are taken into account.
-( target )
+
 
 
     <h3>Parameters:</h3>
@@ -1040,7 +1072,7 @@
     <dd>
     Aims at a pilot, trying to hit it rather than move to it.
 <p> This method uses a polar UV decomposition to get a more accurate time-of-flight
-( target )
+
 
 
     <h3>Parameters:</h3>
@@ -1067,7 +1099,7 @@
     <strong>iface (target)</strong>
     </dt>
     <dd>
-    Maintains an intercept pursuit course. ( target )
+    Maintains an intercept pursuit course.
 
 
     <h3>Parameters:</h3>
@@ -1094,7 +1126,7 @@
     <strong>dir (target)</strong>
     </dt>
     <dd>
-    calculates the direction that the target is relative to the current pilot facing. ( target )
+    calculates the direction that the target is relative to the current pilot facing.
 
 
     <h3>Parameters:</h3>
@@ -1121,7 +1153,7 @@
     <strong>idir (target)</strong>
     </dt>
     <dd>
-    calculates angle between pilot facing and intercept-course to target. ( target )
+    calculates angle between pilot facing and intercept-course to target.
 
 
     <h3>Parameters:</h3>
@@ -1148,7 +1180,7 @@
     <strong>drift_facing ()</strong>
     </dt>
     <dd>
-    Calculate the offset between the pilot's current direction of travel and the pilot's current facing. ()
+    Calculate the offset between the pilot's current direction of travel and the pilot's current facing.
 
 
 
@@ -1168,7 +1200,7 @@
     <strong>brake ()</strong>
     </dt>
     <dd>
-    Brakes the pilot. ()
+    Brakes the pilot.
 
 
 
@@ -1188,7 +1220,7 @@
     <strong>nearestplanet ()</strong>
     </dt>
     <dd>
-    Get the nearest friendly planet to the pilot. ()
+    Get the nearest friendly planet to the pilot.
 
 
 
@@ -1208,7 +1240,7 @@
     <strong>rndplanet ()</strong>
     </dt>
     <dd>
-    Get a random planet. ()
+    Get a random planet.
 
 
 
@@ -1228,7 +1260,7 @@
     <strong>landplanet (only_friend)</strong>
     </dt>
     <dd>
-    Get a random friendly planet. ( only_friend )
+    Get a random friendly planet.
 
 
     <h3>Parameters:</h3>
@@ -1255,7 +1287,7 @@
     <strong>land ()</strong>
     </dt>
     <dd>
-    Lands on a planet. ()
+    Lands on a planet.
 
 
 
@@ -1275,7 +1307,7 @@
     <strong>hyperspace ()</strong>
     </dt>
     <dd>
-    Tries to enter hyperspace. ()
+    Tries to enter hyperspace.
 
 
 
@@ -1295,7 +1327,7 @@
     <strong>sethyptarget (target)</strong>
     </dt>
     <dd>
-    Sets hyperspace target. (target)
+    Sets hyperspace target.
 
 
     <h3>Parameters:</h3>
@@ -1321,7 +1353,7 @@
     <strong>nearhyptarget ()</strong>
     </dt>
     <dd>
-    Gets the nearest hyperspace target. ()
+    Gets the nearest hyperspace target.
 
 
 
@@ -1341,7 +1373,7 @@
     <strong>rndhyptarget ()</strong>
     </dt>
     <dd>
-    Gets a random hyperspace target. ()
+    Gets a random hyperspace target.
 
 
 
@@ -1361,7 +1393,7 @@
     <strong>relvel ()</strong>
     </dt>
     <dd>
-    Gets the relative velocity of a pilot. ()
+    Gets the relative velocity of a pilot.
 
 
 
@@ -1382,7 +1414,7 @@
     </dt>
     <dd>
     Computes the point to face in order to
-        follow an other pilot using a PD controller. ( target, radius, angle, Kp, Kd, method )
+        follow an other pilot using a PD controller.
 
 
     <h3>Parameters:</h3>
@@ -1429,7 +1461,7 @@
     <strong>face_accurate (pos, vel, radius, angle, Kp, Kd)</strong>
     </dt>
     <dd>
-    Computes the point to face in order to follow a moving object. ( target, radius, angle, Kp, Kd, method )
+    Computes the point to face in order to follow a moving object.
 
 
     <h3>Parameters:</h3>
@@ -1475,7 +1507,7 @@
     <strong>stop ()</strong>
     </dt>
     <dd>
-    Completely stops the pilot if it is below minimum vel error (no insta-stops). ()
+    Completely stops the pilot if it is below minimum vel error (no insta-stops).
 
 
 
@@ -1490,7 +1522,7 @@
     </dt>
     <dd>
     Docks the ship.
- ( target )
+
 
 
     <h3>Parameters:</h3>
@@ -1512,7 +1544,7 @@
     </dt>
     <dd>
     Sets the combat flag.
- ( val )
+
 
 
     <h3>Parameters:</h3>
@@ -1535,7 +1567,7 @@
     </dt>
     <dd>
     Sets the pilot's target.
- ( target )
+
 
 
     <h3>Parameters:</h3>
@@ -1556,7 +1588,7 @@
     </dt>
     <dd>
     Sets the pilot's asteroid target.
- ( field, ast )
+
 
 
     <h3>Parameters:</h3>
@@ -1580,7 +1612,7 @@
     </dt>
     <dd>
     Gets the closest gatherable within a radius.
- ( field, ast )
+
 
 
     <h3>Parameters:</h3>
@@ -1606,7 +1638,7 @@
     </dt>
     <dd>
     Gets the pos and vel of a given gatherable.
- ( field, ast )
+
 
 
     <h3>Parameters:</h3>
@@ -1633,7 +1665,7 @@
     <strong>weapset (id[, type=true])</strong>
     </dt>
     <dd>
-    Sets the active weapon set, fires another weapon set or activate an outfit. ( id, type )
+    Sets the active weapon set, fires another weapon set or activate an outfit.
 
 
     <h3>Parameters:</h3>
@@ -1659,7 +1691,7 @@
     <strong>hascannons ()</strong>
     </dt>
     <dd>
-    Does the pilot have cannons? ()
+    Does the pilot have cannons?
 
 
 
@@ -1679,7 +1711,7 @@
     <strong>hasturrets ()</strong>
     </dt>
     <dd>
-    Does the pilot have turrets? ()
+    Does the pilot have turrets?
 
 
 
@@ -1699,7 +1731,7 @@
     <strong>hasafterburners ()</strong>
     </dt>
     <dd>
-    Does the pilot have afterburners? ()
+    Does the pilot have afterburners?
 
 
 
@@ -1719,7 +1751,7 @@
     <strong>shoot ([secondary=false])</strong>
     </dt>
     <dd>
-    Makes the pilot shoot ( secondary )
+    Makes the pilot shoot
 
 
     <h3>Parameters:</h3>
@@ -1741,7 +1773,7 @@
     <strong>getenemy ()</strong>
     </dt>
     <dd>
-    Gets the nearest enemy. ()
+    Gets the nearest enemy.
 
 
 
@@ -1761,7 +1793,7 @@
     <strong>getenemy_size (lb, ub)</strong>
     </dt>
     <dd>
-    Gets the nearest enemy within specified size bounds. ( lb, ub )
+    Gets the nearest enemy within specified size bounds.
 
 
     <h3>Parameters:</h3>
@@ -1792,7 +1824,7 @@
     <strong>getenemy_heuristic (mass, dps, hp, range)</strong>
     </dt>
     <dd>
-    Gets the nearest enemy within specified heuristic. ( mass, dps, hp, range )
+    Gets the nearest enemy within specified heuristic.
 
 
     <h3>Parameters:</h3>
@@ -1831,7 +1863,7 @@
     <strong>hostile (target)</strong>
     </dt>
     <dd>
-    Sets the enemy hostile (basically notifies of an impending attack). ( target )
+    Sets the enemy hostile (basically notifies of an impending attack).
 
 
     <h3>Parameters:</h3>
@@ -1852,7 +1884,7 @@
     <strong>getweaprange ([id[, level=-1]])</strong>
     </dt>
     <dd>
-    Gets the range of a weapon. ( id, level )
+    Gets the range of a weapon.
 
 
     <h3>Parameters:</h3>
@@ -1885,7 +1917,7 @@
     <strong>getweapspeed ([id[, level=-1]])</strong>
     </dt>
     <dd>
-    Gets the speed of a weapon. ( id, level )
+    Gets the speed of a weapon.
 
 
     <h3>Parameters:</h3>
@@ -1918,7 +1950,7 @@
     <strong>canboard (target)</strong>
     </dt>
     <dd>
-    Checks to see if pilot can board the target. ( target )
+    Checks to see if pilot can board the target.
 
 
     <h3>Parameters:</h3>
@@ -1945,7 +1977,7 @@
     <strong>relsize (target)</strong>
     </dt>
     <dd>
-    Gets the relative size (ship mass) between the current pilot and the specified target. ( target )
+    Gets the relative size (ship mass) between the current pilot and the specified target.
 
 
     <h3>Parameters:</h3>
@@ -1972,7 +2004,7 @@
     <strong>reldps (target)</strong>
     </dt>
     <dd>
-    Gets the relative damage output (total DPS) between the current pilot and the specified target. ( target )
+    Gets the relative damage output (total DPS) between the current pilot and the specified target.
 
 
     <h3>Parameters:</h3>
@@ -1999,7 +2031,7 @@
     <strong>relhp (target)</strong>
     </dt>
     <dd>
-    Gets the relative health (total shields and armour) between the current pilot and the specified target (target)
+    Gets the relative health (total shields and armour) between the current pilot and the specified target
 
 
     <h3>Parameters:</h3>
@@ -2026,7 +2058,7 @@
     <strong>board ()</strong>
     </dt>
     <dd>
-    Attempts to board the pilot's target. ()
+    Attempts to board the pilot's target.
 
 
 
@@ -2046,7 +2078,7 @@
     <strong>refuel ()</strong>
     </dt>
     <dd>
-    Attempts to refuel the pilot's target. ()
+    Attempts to refuel the pilot's target.
 
 
 
@@ -2066,7 +2098,7 @@
     <strong>settimer (timer[, time=0])</strong>
     </dt>
     <dd>
-    Sets a timer. (timer, time)
+    Sets a timer.
 
 
     <h3>Parameters:</h3>
@@ -2092,7 +2124,7 @@
     <strong>timeup (timer)</strong>
     </dt>
     <dd>
-    Checks a timer. (timer)
+    Checks a timer.
 
 
     <h3>Parameters:</h3>
@@ -2119,7 +2151,7 @@
     <strong>set_shoot_indicator (value)</strong>
     </dt>
     <dd>
-    Set the seeker shoot indicator. ()
+    Set the seeker shoot indicator.
 
 
     <h3>Parameters:</h3>
@@ -2140,7 +2172,7 @@
     <strong>set_shoot_indicator ()</strong>
     </dt>
     <dd>
-    Access the seeker shoot indicator (that is put to true each time a seeker is shot). ()
+    Access the seeker shoot indicator (that is put to true each time a seeker is shot).
 
 
 
@@ -2160,7 +2192,7 @@
     <strong>distress (msg)</strong>
     </dt>
     <dd>
-    Sends a distress signal. ( msg )
+    Sends a distress signal.
 
 
     <h3>Parameters:</h3>
@@ -2181,7 +2213,7 @@
     <strong>getBoss ()</strong>
     </dt>
     <dd>
-    Picks a pilot that will command the current pilot. ()
+    Picks a pilot that will command the current pilot.
 
 
 
@@ -2202,7 +2234,7 @@
     </dt>
     <dd>
     Sets the pilot_nstack credits.  Only call in create().
-( num )
+
 
 
     <h3>Parameters:</h3>
@@ -2223,7 +2255,7 @@
     <strong>messages ()</strong>
     </dt>
     <dd>
-    Returns and clears the pilots message queue. ()
+    Returns and clears the pilots message queue.
 
 
 
@@ -2245,7 +2277,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-01-09 16:37:18 </i>
+<i style="float:right;">Last updated 2021-01-10 03:05:36 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
