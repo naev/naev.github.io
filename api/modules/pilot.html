@@ -111,7 +111,7 @@
 <p> This will allow you to create and manipulate pilots in-game.
 <p> An example would be:
  <pre>
- p = pilot.add( "Sml Trader Convoy" ) -- Create a trader convoy
+ p = pilot.addFleet( "Sml Trader Convoy" ) -- Create a trader convoy
  for k,v in pairs(p) do
     v:setFriendly() -- Make it friendly
  end
@@ -126,11 +126,11 @@
 	<td class="summary">Returns a suitable jumpin spot for a given pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#add">add (fleetname, param[, ai])</a></td>
+	<td class="name" nowrap><a href="#addFleet">addFleet (fleetname, param[, ai])</a></td>
 	<td class="summary">Adds a fleet to the system.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#addRaw">addRaw (shipname, faction, param[, pilotname[, ai]])</a></td>
+	<td class="name" nowrap><a href="#add">add (shipname, faction, param[, pilotname[, ai]])</a></td>
 	<td class="summary">Adds a ship with an AI and faction to the system (instead of a predefined fleet).</td>
 	</tr>
 	<tr>
@@ -526,24 +526,18 @@
 
 </dd>
     <dt>
-    <a name = "add"></a>
-    <strong>add (fleetname, param[, ai])</strong>
+    <a name = "addFleet"></a>
+    <strong>addFleet (fleetname, param[, ai])</strong>
     </dt>
     <dd>
     Adds a fleet to the system.
 <p> You can then iterate over the pilots to change parameters like so:
  <pre>
- p = pilot.add( "Sml Trader Convoy" )
+ p = pilot.addFleet( "Sml Trader Convoy" )
  for k,v in pairs(p) do
     v:setHostile()
  end
  </pre>
-<p> How param works (by type of value passed): <br/>
-  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
-  - planet: pilot takes off from the planet <br/>
-  - system: jumps pilot in from the system <br/>
-  - vec2: pilot is created at the position (no jump/takeoff) <br/>
-  - true: Acts like nil, but does not avoid jump points with no presence <br/>
 
 
 
@@ -554,9 +548,8 @@
          Name of the fleet to add.
         </li>
         <li><span class="parameter">param</span>
-            <span class="types"><span class="type">System</span> or <span class="type">Planet</span></span>
-         Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
-              a planet it'll try to take off from it.
+            <span class="types"><span class="type">System</span>, <span class="type">Planet</span> or <span class="type">Vec2</span></span>
+         Position to create the pilot at. See pilot.add for further information.
         </li>
         <li><span class="parameter">ai</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
@@ -576,17 +569,17 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">p = pilot.add( <span class="string">"Pirate Hyena"</span> ) <span class="comment">-- Just adds the pilot (will jump in or take off).</span></pre></li>
-        <li><pre class="example">p = pilot.add( <span class="string">"Trader Llama"</span>, <span class="keyword">nil</span>, <span class="string">"dummy"</span> ) <span class="comment">-- Overrides AI with dummy ai.</span></pre></li>
-        <li><pre class="example">p = pilot.add( <span class="string">"Sml Trader Convoy"</span>, vec2.new( <span class="number">1000</span>, <span class="number">200</span> ) ) <span class="comment">-- Pilot won't jump in, will just appear.</span></pre></li>
-        <li><pre class="example">p = pilot.add( <span class="string">"Empire Pacifier"</span>, system.get(<span class="string">"Goddard"</span>) ) <span class="comment">-- Have the pilot jump in from the system.</span></pre></li>
-        <li><pre class="example">p = pilot.add( <span class="string">"Goddard Goddard"</span>, planet.get(<span class="string">"Zhiru"</span>) ) <span class="comment">-- Have the pilot take off from a planet.</span></pre></li>
+        <li><pre class="example">p = pilot.addFleet( <span class="string">"Pirate Hyena"</span> ) <span class="comment">-- Just adds the pilot (will jump in or take off).</span></pre></li>
+        <li><pre class="example">p = pilot.addFleet( <span class="string">"Trader Llama"</span>, <span class="keyword">nil</span>, <span class="string">"dummy"</span> ) <span class="comment">-- Overrides AI with dummy ai.</span></pre></li>
+        <li><pre class="example">p = pilot.addFleet( <span class="string">"Sml Trader Convoy"</span>, vec2.new( <span class="number">1000</span>, <span class="number">200</span> ) ) <span class="comment">-- Pilot won't jump in, will just appear.</span></pre></li>
+        <li><pre class="example">p = pilot.addFleet( <span class="string">"Empire Pacifier"</span>, system.get(<span class="string">"Goddard"</span>) ) <span class="comment">-- Have the pilot jump in from the system.</span></pre></li>
+        <li><pre class="example">p = pilot.addFleet( <span class="string">"Goddard Goddard"</span>, planet.get(<span class="string">"Zhiru"</span>) ) <span class="comment">-- Have the pilot take off from a planet.</span></pre></li>
     </ul>
 
 </dd>
     <dt>
-    <a name = "addRaw"></a>
-    <strong>addRaw (shipname, faction, param[, pilotname[, ai]])</strong>
+    <a name = "add"></a>
+    <strong>add (shipname, faction, param[, pilotname[, ai]])</strong>
     </dt>
     <dd>
     Adds a ship with an AI and faction to the system (instead of a predefined fleet).
@@ -603,8 +596,9 @@
          Faction to give the pilot.
         </li>
         <li><span class="parameter">param</span>
-            <span class="types"><span class="type">System</span>, <span class="type">Planet</span> or <span class="type">Vec2</span></span>
-         Position to create the pilot at. See pilot.add for further information.
+            <span class="types"><span class="type">System</span> or <span class="type">Planet</span></span>
+         Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+              a planet it'll try to take off from it.
         </li>
         <li><span class="parameter">pilotname</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
@@ -629,7 +623,14 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">p = pilot.addRaw( <span class="string">"Empire Shark"</span>, <span class="keyword">nil</span>, <span class="string">"Empire"</span>, <span class="keyword">nil</span>, <span class="string">"empire"</span> ) <span class="comment">-- Creates a pilot analogous to the Empire Shark fleet.</span></pre>
+        <pre class="example">p = pilot.add( <span class="string">"Empire Shark"</span>, <span class="keyword">nil</span>, <span class="string">"Empire"</span>, <span class="keyword">nil</span>, <span class="string">"empire"</span> ) <span class="comment">-- Creates a pilot analogous to the Empire Shark fleet.
+</span>
+How param works (by <span class="global">type</span> of value passed): &lt;br/&gt;
+ - <span class="keyword">nil</span>: spawns pilot randomly entering from jump points with presence of their faction <span class="keyword">or</span> taking off from non-hostile planets &lt;br/&gt;
+ - planet: pilot takes off from the planet &lt;br/&gt;
+ - system: jumps pilot <span class="keyword">in</span> from the system &lt;br/&gt;
+ - vec2: pilot is created at the position (no jump/takeoff) &lt;br/&gt;
+ - <span class="keyword">true</span>: Acts like <span class="keyword">nil</span>, but does <span class="keyword">not</span> avoid jump points with no presence &lt;br/&gt;</pre>
     </ul>
 
 </dd>
@@ -3574,7 +3575,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-01-25 13:41:25 </i>
+<i style="float:right;">Last updated 2021-01-25 14:02:22 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
