@@ -68,10 +68,10 @@
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
-  <li><a href="../modules/canvas.html">canvas</a></li>
+  <li><strong>canvas</strong></li>
   <li><a href="../modules/colour.html">colour</a></li>
   <li><a href="../modules/commodity.html">commodity</a></li>
-  <li><strong>data</strong></li>
+  <li><a href="../modules/data.html">data</a></li>
   <li><a href="../modules/diff.html">diff</a></li>
   <li><a href="../modules/evt.html">evt</a></li>
   <li><a href="../modules/faction.html">faction</a></li>
@@ -106,52 +106,34 @@
 
 <div id="content">
 
-<h1>Module <code>data</code></h1>
-<p>Lua bindings to interact with datas.</p>
-<p></p>
+<h1>Module <code>canvas</code></h1>
+<p>Lua bindings to interact with canvass.</p>
+<p>
+<p> <em>Note</em> The API here is designed to be compatible with that of LÖVE.
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#__gc">__gc (data)</a></td>
-	<td class="summary">Frees a data.</td>
+	<td class="name" nowrap><a href="#__gc">__gc (canvas)</a></td>
+	<td class="summary">Frees a canvas.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#__eq">__eq (d1, d2)</a></td>
-	<td class="summary">Compares two datas to see if they are the same.</td>
+	<td class="name" nowrap><a href="#__eq">__eq (f1, f2)</a></td>
+	<td class="summary">Compares two canvass to see if they are the same.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new">new (size, type)</a></td>
-	<td class="summary">Opens a new data.</td>
+	<td class="name" nowrap><a href="#new">new (width, height)</a></td>
+	<td class="summary">Opens a new canvas.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get ()</a></td>
-	<td class="summary">Gets the value of an element.</td>
+	<td class="name" nowrap><a href="#set">set (arg)</a></td>
+	<td class="summary">Sets the active canvas.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get ()</a></td>
-	<td class="summary">Sets the value of an element.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#getSize">getSize ()</a></td>
-	<td class="summary"></td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#getString">getString ()</a></td>
-	<td class="summary"></td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#paste">paste ()</a></td>
-	<td class="summary"></td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#addWeighted">addWeighted ()</a></td>
-	<td class="summary"></td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#convolve2d">convolve2d ()</a></td>
-	<td class="summary"></td>
+	<td class="name" nowrap><a href="#getTex">getTex (canvas)</a></td>
+	<td class="summary">Gets the texture associated with the canvas.</td>
 	</tr>
 </table>
 
@@ -164,17 +146,17 @@
     <dl class="function">
     <dt>
     <a name = "__gc"></a>
-    <strong>__gc (data)</strong>
+    <strong>__gc (canvas)</strong>
     </dt>
     <dd>
-    Frees a data.
+    Frees a canvas.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">data</span>
-            <span class="types"><span class="type">Data</span></span>
-         Data to free.
+        <li><span class="parameter">canvas</span>
+            <span class="types"><span class="type">Canvas</span></span>
+         Canvas to free.
         </li>
     </ul>
 
@@ -185,21 +167,21 @@
 </dd>
     <dt>
     <a name = "__eq"></a>
-    <strong>__eq (d1, d2)</strong>
+    <strong>__eq (f1, f2)</strong>
     </dt>
     <dd>
-    Compares two datas to see if they are the same.
+    Compares two canvass to see if they are the same.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">d1</span>
-            <span class="types"><span class="type">Data</span></span>
-         Data 1 to compare.
+        <li><span class="parameter">f1</span>
+            <span class="types"><span class="type">Canvas</span></span>
+         Canvas 1 to compare.
         </li>
-        <li><span class="parameter">d2</span>
-            <span class="types"><span class="type">Data</span></span>
-         Data 2 to compare.
+        <li><span class="parameter">f2</span>
+            <span class="types"><span class="type">Canvas</span></span>
+         Canvas 2 to compare.
         </li>
     </ul>
 
@@ -207,7 +189,7 @@
     <ol>
 
            <span class="types"><span class="type">boolean</span></span>
-        true if both datas are the same.
+        true if both canvass are the same.
     </ol>
 
 
@@ -216,29 +198,29 @@
 </dd>
     <dt>
     <a name = "new"></a>
-    <strong>new (size, type)</strong>
+    <strong>new (width, height)</strong>
     </dt>
     <dd>
-    Opens a new data.
+    Opens a new canvas.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">size</span>
+        <li><span class="parameter">width</span>
             <span class="types"><span class="type">number</span></span>
-         Size to allocate for data.
+         Width of the new canvas.
         </li>
-        <li><span class="parameter">type</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Type of the data to create ("number")
+        <li><span class="parameter">height</span>
+            <span class="types"><span class="type">number</span></span>
+         Height of the new canvas.
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Data</span></span>
-        New data object.
+           <span class="types"><span class="type">Canvas</span></span>
+        New canvas object.
     </ol>
 
 
@@ -246,13 +228,20 @@
 
 </dd>
     <dt>
-    <a name = "get"></a>
-    <strong>get ()</strong>
+    <a name = "set"></a>
+    <strong>set (arg)</strong>
     </dt>
     <dd>
-    Gets the value of an element.
+    Sets the active canvas.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">arg</span>
+            <span class="types"><span class="type">Canvas</span> or <span class="type">nil</span></span>
+         Either a canvas object or nil to disable.
+        </li>
+    </ul>
 
 
 
@@ -260,84 +249,27 @@
 
 </dd>
     <dt>
-    <a name = "get"></a>
-    <strong>get ()</strong>
+    <a name = "getTex"></a>
+    <strong>getTex (canvas)</strong>
     </dt>
     <dd>
-    Sets the value of an element.
+    Gets the texture associated with the canvas.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">canvas</span>
+            <span class="types"><span class="type">Canvas</span></span>
+         Canvas to get the texture from.
+        </li>
+    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
 
-
-
-
-</dd>
-    <dt>
-    <a name = "getSize"></a>
-    <strong>getSize ()</strong>
-    </dt>
-    <dd>
-
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "getString"></a>
-    <strong>getString ()</strong>
-    </dt>
-    <dd>
-
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "paste"></a>
-    <strong>paste ()</strong>
-    </dt>
-    <dd>
-
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "addWeighted"></a>
-    <strong>addWeighted ()</strong>
-    </dt>
-    <dd>
-
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "convolve2d"></a>
-    <strong>convolve2d ()</strong>
-    </dt>
-    <dd>
-
-
-
-
+           <span class="types"><span class="type">Tex</span></span>
+        Texture associated with the canvas.
+    </ol>
 
 
 
