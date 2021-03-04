@@ -65,7 +65,7 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
-  <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><strong>love_shaders</strong></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
@@ -91,7 +91,7 @@
   <li><a href="../modules/planet.html">planet</a></li>
   <li><a href="../modules/player.html">player</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
-  <li><strong>shader</strong></li>
+  <li><a href="../modules/shader.html">shader</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
   <li><a href="../modules/shiplog.html">shiplog</a></li>
   <li><a href="../modules/system.html">system</a></li>
@@ -108,36 +108,45 @@
 
 <div id="content">
 
-<h1>Module <code>shader</code></h1>
-<p>Lua bindings to interact with shaders.</p>
-<p></p>
+<h1>Module <code>love_shaders</code></h1>
+<p>A module containing a diversity of Love2D shaders for use in Naev.</p>
+<p> These are
+designed to be used with the different aspects of the VN framework.
+<p>In general all shaders have a "strength" parameter indicating the strength
+of the effect. Furthermore, those that have a temporal component have a
+"speed" parameter. These are all normalized such that 1 is the default
+value. Temporal component can also be inverted by setting a negative value.</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#__gc">__gc (shader)</a></td>
-	<td class="summary">Frees a shader.</td>
+	<td class="name" nowrap><a href="#shader2canvas">shader2canvas (shader[, width=love.w[, height=love.h]])</a></td>
+	<td class="summary">Renders a shader to a canvas.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#__eq">__eq (f1, f2)</a></td>
-	<td class="summary">Compares two shaders to see if they are the same.</td>
+	<td class="name" nowrap><a href="#blur">blur (image[, kernel_size=5[, blurtype="gaussian"]])</a></td>
+	<td class="summary">Blur shader applied to an image.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new">new (vertex, fragment)</a></td>
-	<td class="summary">Creates a new shader.</td>
+	<td class="name" nowrap><a href="#oldify">oldify (strength)</a></td>
+	<td class="summary">Creates an oldify effect, meant for full screen effects.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#send">send (shader, name)</a></td>
-	<td class="summary">Allows setting values of uniforms for a shader.</td>
+	<td class="name" nowrap><a href="#hologram">hologram (strength)</a></td>
+	<td class="summary">A hologram effect, mainly meant for VN characters.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#send">send (shader, name)</a></td>
-	<td class="summary">Allows setting values of uniforms for a shader, while ignoring unknown (or unused) uniforms.</td>
+	<td class="name" nowrap><a href="#corruption">corruption (strength)</a></td>
+	<td class="summary">A corruption effect applies a noisy pixelated effect.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#hasUniform">hasUniform (shader, name)</a></td>
-	<td class="summary">Checks to see if a shader has a uniform.</td>
+	<td class="name" nowrap><a href="#steam">steam (strength)</a></td>
+	<td class="summary">A rolling steamy effect.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#aura">aura (strength)</a></td>
+	<td class="summary">An aura effect for characters.</td>
 	</tr>
 </table>
 
@@ -149,51 +158,36 @@
 
     <dl class="function">
     <dt>
-    <a name = "__gc"></a>
-    <strong>__gc (shader)</strong>
+    <a name = "shader2canvas"></a>
+    <strong>shader2canvas (shader[, width=love.w[, height=love.h]])</strong>
     </dt>
     <dd>
-    Frees a shader.
+    Renders a shader to a canvas.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">shader</span>
             <span class="types"><span class="type">Shader</span></span>
-         Shader to free.
+         Shader to render.
         </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "__eq"></a>
-    <strong>__eq (f1, f2)</strong>
-    </dt>
-    <dd>
-    Compares two shaders to see if they are the same.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">f1</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader 1 to compare.
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">number</span></span>
+         Width of the canvas to create (or nil for fullscreen).
+         (<em>default</em> love.w)
         </li>
-        <li><span class="parameter">f2</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader 2 to compare.
+        <li><span class="parameter">height</span>
+            <span class="types"><span class="type">number</span></span>
+         Height of the canvas to create (or nil for fullscreen).
+         (<em>default</em> love.h)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">boolean</span></span>
-        true if both shaders are the same.
+           <span class="types"><span class="type">Canvas</span></span>
+        Generated canvas.
     </ol>
 
 
@@ -201,54 +195,30 @@
 
 </dd>
     <dt>
-    <a name = "new"></a>
-    <strong>new (vertex, fragment)</strong>
+    <a name = "blur"></a>
+    <strong>blur (image[, kernel_size=5[, blurtype="gaussian"]])</strong>
     </dt>
     <dd>
-    Creates a new shader.
+    Blur shader applied to an image.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">vertex</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Script containing the vertex shader.
+        <li><span class="parameter">image</span>
+            <span class="types"><span class="type">Drawable</span></span>
+         A drawable to blur.
         </li>
-        <li><span class="parameter">fragment</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         String containing the fragment shader.
+        <li><span class="parameter">kernel_size</span>
+            <span class="types"><span class="type">number</span></span>
+         The size of the kernel to use to blur. This
+   is the number of pixels in the linear case or the standard deviation in the
+   Gaussian case.
+         (<em>default</em> 5)
         </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Shader</span></span>
-        A newly created shader.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "send"></a>
-    <strong>send (shader, name)</strong>
-    </dt>
-    <dd>
-    Allows setting values of uniforms for a shader.  Errors out if the uniform is unknown or unused (as in optimized out by the compiler).
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">shader</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader to send uniform to.
-        </li>
-        <li><span class="parameter">name</span>
+        <li><span class="parameter">blurtype</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the uniform.
+         Either "linear" or "gaussian".
+         (<em>default</em> "gaussian")
         </li>
     </ul>
 
@@ -258,22 +228,18 @@
 
 </dd>
     <dt>
-    <a name = "send"></a>
-    <strong>send (shader, name)</strong>
+    <a name = "oldify"></a>
+    <strong>oldify (strength)</strong>
     </dt>
     <dd>
-    Allows setting values of uniforms for a shader, while ignoring unknown (or unused) uniforms.
+    Creates an oldify effect, meant for full screen effects.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">shader</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader to send uniform to.
-        </li>
-        <li><span class="parameter">name</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the uniform.
+        <li><span class="parameter">strength</span>
+            <span class="types"><span class="type">{</span></span>
+        =number } params Parameter table.
         </li>
     </ul>
 
@@ -283,31 +249,85 @@
 
 </dd>
     <dt>
-    <a name = "hasUniform"></a>
-    <strong>hasUniform (shader, name)</strong>
+    <a name = "hologram"></a>
+    <strong>hologram (strength)</strong>
     </dt>
     <dd>
-    Checks to see if a shader has a uniform.
+    A hologram effect, mainly meant for VN characters.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">shader</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader to send uniform to.
-        </li>
-        <li><span class="parameter">name</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the uniform to check.
+        <li><span class="parameter">strength</span>
+            <span class="types"><span class="type">{</span></span>
+        =number } params Parameter table.
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
 
-           <span class="types"><span class="type">boolean</span></span>
-        true if the shader has the uniform.
-    </ol>
+
+
+
+</dd>
+    <dt>
+    <a name = "corruption"></a>
+    <strong>corruption (strength)</strong>
+    </dt>
+    <dd>
+    A corruption effect applies a noisy pixelated effect.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">strength</span>
+            <span class="types"><span class="type">{</span></span>
+        =number } params Parameter table.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "steam"></a>
+    <strong>steam (strength)</strong>
+    </dt>
+    <dd>
+    A rolling steamy effect.  Meant as/for backgrounds.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">strength</span>
+            <span class="types"><span class="type">{</span></span>
+        =number, speed=number } params Parameter table.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "aura"></a>
+    <strong>aura (strength)</strong>
+    </dt>
+    <dd>
+    An aura effect for characters.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">strength</span>
+            <span class="types"><span class="type">{</span></span>
+        =number, speed=number, color=Color, size=number } params Parameter table.
+        </li>
+    </ul>
+
 
 
 

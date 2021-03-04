@@ -65,6 +65,7 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
+  <li><a href="../modules/love_shaders.html">love_shaders</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
@@ -108,48 +109,35 @@
 <div id="content">
 
 <h1>Module <code>vn</code></h1>
-<p>-- Visual Novel API for Naev
---
--- Based on Love2D API
--- @module vn</p>
-<p></p>
+<p>Visual Novel API for Naev</p>
+<p>Based on Love2D API</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#update">update (dt)</a></td>
-	<td class="summary">-- Main updating function.</td>
+	<td class="summary">Main updating function.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#keypressed">keypressed (key)</a></td>
-	<td class="summary">[[
- Key press handler.</td>
+	<td class="summary">Key press handler.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#mousepressed">mousepressed (mx, my, button)</a></td>
-	<td class="summary">[[
- Mouse press handler.</td>
+	<td class="summary">Mouse press handler.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#na">na (what, nowait)</a></td>
-	<td class="summary">[[
- Makes the narrator say something.</td>
+	<td class="summary">Makes the narrator say something.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#vn.Character:say">vn.Character:say (what, nowait)</a></td>
-	<td class="summary">[[
- Makes a player say something.</td>
+	<td class="name" nowrap><a href="#vn.Character:say">vn.Character:say (what, Whether)</a></td>
+	<td class="summary">Makes a player say something.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#vn.Character.new">vn.Character.new (who, params)</a></td>
-	<td class="summary">[[
- Creates a new character without adding it to the VN.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#newCharacter">newCharacter (who, params)</a></td>
-	<td class="summary">[[
- Creates a new character.</td>
+	<td class="summary">Creates a new character without adding it to the VN.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#scene">scene (background)</a></td>
@@ -222,81 +210,6 @@
  Fully resets the VN environment to default values.</td>
 	</tr>
 </table>
-<h2><a href="#Tables">Tables</a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#State">State</a></td>
-	<td class="summary">[[
- State
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateScene">StateScene</a></td>
-	<td class="summary">[[
- Scene
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateCharacter">StateCharacter</a></td>
-	<td class="summary">[[
- Character
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateSay">StateSay</a></td>
-	<td class="summary">[[
- Say
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateWait">StateWait</a></td>
-	<td class="summary">[[
- Wait
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateMenu">StateMenu</a></td>
-	<td class="summary">[[
- Menu
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateLabel">StateLabel</a></td>
-	<td class="summary">[[
- Label
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateJump">StateJump</a></td>
-	<td class="summary">[[
- Jump
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateStart">StateStart</a></td>
-	<td class="summary">[[
- Start
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateEnd">StateEnd</a></td>
-	<td class="summary">[[
- End
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#StateAnimation">StateAnimation</a></td>
-	<td class="summary">[[
- Animation
-]]</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#Character">Character</a></td>
-	<td class="summary">[[
- Character
-]]</td>
-	</tr>
-</table>
 
 <br/>
 <br/>
@@ -310,14 +223,13 @@
     <strong>update (dt)</strong>
     </dt>
     <dd>
-    -- Main updating function.
---    @param dt Update tick.
+    Main updating function.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">dt</span>
-        Out of states
+         Update tick.
         </li>
     </ul>
 
@@ -331,14 +243,13 @@
     <strong>keypressed (key)</strong>
     </dt>
     <dd>
-    [[
- Key press handler.
-]]
+    Key press handler.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Name of the key pressed.
         </li>
     </ul>
@@ -353,20 +264,21 @@
     <strong>mousepressed (mx, my, button)</strong>
     </dt>
     <dd>
-    [[
- Mouse press handler.
-]]
+    Mouse press handler.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">mx</span>
+            <span class="types"><span class="type">number</span></span>
          X position of the click.
         </li>
         <li><span class="parameter">my</span>
+            <span class="types"><span class="type">number</span></span>
          Y position of the click.
         </li>
         <li><span class="parameter">button</span>
+            <span class="types"><span class="type">number</span></span>
          Button that was pressed.
         </li>
     </ul>
@@ -381,9 +293,7 @@
     <strong>na (what, nowait)</strong>
     </dt>
     <dd>
-    [[
- Makes the narrator say something.
-]]
+    Makes the narrator say something.
 
 
     <h3>Parameters:</h3>
@@ -403,21 +313,21 @@
 </dd>
     <dt>
     <a name = "vn.Character:say"></a>
-    <strong>vn.Character:say (what, nowait)</strong>
+    <strong>vn.Character:say (what, Whether)</strong>
     </dt>
     <dd>
-    [[
- Makes a player say something.
-]]
+    Makes a player say something.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">what</span>
-
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         What the player will say.
         </li>
-        <li><span class="parameter">nowait</span>
-
+        <li><span class="parameter">Whether</span>
+            <span class="types"><span class="type">bool</span></span>
+         or not to wait for player input after saying something.
         </li>
     </ul>
 
@@ -431,48 +341,18 @@
     <strong>vn.Character.new (who, params)</strong>
     </dt>
     <dd>
-    [[
- Creates a new character without adding it to the VN.
- <em>Note</em> The character can be added with vn.newCharacter.
-]]
+    Creates a new character without adding it to the VN.
+<em>Note</em> The character can be added with vn.newCharacter.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">who</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Name of the character to add.
         </li>
         <li><span class="parameter">params</span>
-         Parameter table.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        New character.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "newCharacter"></a>
-    <strong>newCharacter (who, params)</strong>
-    </dt>
-    <dd>
-    [[
- Creates a new character.
-]]
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">who</span>
-         Name (or previously created character) to add.
-        </li>
-        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">tab</span></span>
          Parameter table.
         </li>
     </ul>
@@ -785,209 +665,13 @@
 
 </dd>
 </dl>
-    <h2><a name="Tables"></a>Tables</h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "State"></a>
-    <strong>State</strong>
-    </dt>
-    <dd>
-    [[
- State
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateScene"></a>
-    <strong>StateScene</strong>
-    </dt>
-    <dd>
-    [[
- Scene
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateCharacter"></a>
-    <strong>StateCharacter</strong>
-    </dt>
-    <dd>
-    [[
- Character
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateSay"></a>
-    <strong>StateSay</strong>
-    </dt>
-    <dd>
-    [[
- Say
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateWait"></a>
-    <strong>StateWait</strong>
-    </dt>
-    <dd>
-    [[
- Wait
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateMenu"></a>
-    <strong>StateMenu</strong>
-    </dt>
-    <dd>
-    [[
- Menu
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateLabel"></a>
-    <strong>StateLabel</strong>
-    </dt>
-    <dd>
-    [[
- Label
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateJump"></a>
-    <strong>StateJump</strong>
-    </dt>
-    <dd>
-    [[
- Jump
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateStart"></a>
-    <strong>StateStart</strong>
-    </dt>
-    <dd>
-    [[
- Start
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateEnd"></a>
-    <strong>StateEnd</strong>
-    </dt>
-    <dd>
-    [[
- End
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "StateAnimation"></a>
-    <strong>StateAnimation</strong>
-    </dt>
-    <dd>
-    [[
- Animation
-]]
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "Character"></a>
-    <strong>Character</strong>
-    </dt>
-    <dd>
-    [[
- Character
-]]
-
-
-
-
-
-
-
-</dd>
-</dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-03-04 06:13:26 </i>
+<i style="float:right;">Last updated 2021-03-04 06:29:03 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
