@@ -83,7 +83,7 @@
   <li><a href="../modules/hook.html">hook</a></li>
   <li><a href="../modules/jump.html">jump</a></li>
   <li><a href="../modules/misn.html">misn</a></li>
-  <li><strong>music</strong></li>
+  <li><a href="../modules/music.html">music</a></li>
   <li><a href="../modules/naev.html">naev</a></li>
   <li><a href="../modules/news.html">news</a></li>
   <li><a href="../modules/outfit.html">outfit</a></li>
@@ -102,7 +102,7 @@
   <li><a href="../modules/var.html">var</a></li>
   <li><a href="../modules/vec2.html">vec2</a></li>
   <li><a href="../modules/portrait.html">portrait</a></li>
-  <li><a href="../modules/prng.html">prng</a></li>
+  <li><strong>prng</strong></li>
   <li><a href="../modules/vn.html">vn</a></li>
 </ul>
 
@@ -110,42 +110,30 @@
 
 <div id="content">
 
-<h1>Module <code>music</code></h1>
-<p>Music Lua module.</p>
-<p>
-<p> Typical usage would be something like:
- <pre>
- music.load( "intro" ) -- Load the song
- music.play() -- Play it
- </pre>
+<h1>Module <code>prng</code></h1>
+<p>Simple deterministic Lua PRNG.</p>
+<p> Meant when you want worse quality random numbers
+and more deterministic than what the rnd module provides.
 </p>
 
 
-<h2><a href="#Functions">Functions</a></h2>
+<h2><a href="#Class_prng">Class prng </a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#delay">delay (situation, delay)</a></td>
-	<td class="summary">Delays a rechoose.</td>
+	<td class="name" nowrap><a href="#prng:new">prng:new ([Seed=1])</a></td>
+	<td class="summary">Creates a new pseudo random number generator.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#load">load (name)</a></td>
-	<td class="summary">Loads a song.</td>
+	<td class="name" nowrap><a href="#prng:setSeed">prng:setSeed (Seed)</a></td>
+	<td class="summary">Sets the seed of a PRNG object.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#play">play ()</a></td>
-	<td class="summary">Plays the loaded song.</td>
+	<td class="name" nowrap><a href="#prng:random">prng:random ([min=0[, max=1]])</a></td>
+	<td class="summary">Gets a random integer value between min and max.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#stop">stop ()</a></td>
-	<td class="summary">Stops playing the current song.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#isPlaying">isPlaying ()</a></td>
-	<td class="summary">Checks to see if something is playing.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#current">current ()</a></td>
-	<td class="summary">Gets the name of the current playing song.</td>
+	<td class="name" nowrap><a href="#prng:_rnd">prng:_rnd ()</a></td>
+	<td class="summary">Gets a value between 0 and 1.</td>
 	</tr>
 </table>
 
@@ -153,132 +141,113 @@
 <br/>
 
 
-    <h2><a name="Functions"></a>Functions</h2>
+    <h2><a name="Class_prng"></a>Class prng </h2>
 
+        A pseudo random number generator class.
     <dl class="function">
     <dt>
-    <a name = "delay"></a>
-    <strong>delay (situation, delay)</strong>
+    <a name = "prng:new"></a>
+    <strong>prng:new ([Seed=1])</strong>
     </dt>
     <dd>
-    Delays a rechoose.
+    Creates a new pseudo random number generator.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">situation</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Situation to choose.
+        <li><span class="parameter">Seed</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">number</span></span>
+         to initialize with.
+         (<em>default</em> 1)
         </li>
-        <li><span class="parameter">delay</span>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../modules/prng.html#prng">prng</a></span>
+        A new PRNG object.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "prng:setSeed"></a>
+    <strong>prng:setSeed (Seed)</strong>
+    </dt>
+    <dd>
+    Sets the seed of a PRNG object.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">Seed</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">number</span></span>
+         to set.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "prng:random"></a>
+    <strong>prng:random ([min=0[, max=1]])</strong>
+    </dt>
+    <dd>
+    Gets a random integer value between min and max.
+<p>If max is ommitted, a value between [1,max] is returned.
+<p>If both min and max are nil, a floating point value between [0,1] is returned.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">min</span>
             <span class="types"><span class="type">number</span></span>
-         Delay in seconds.
+         Minimum value to get from.
+         (<em>default</em> 0)
+        </li>
+        <li><span class="parameter">max</span>
+            <span class="types"><span class="type">number</span></span>
+         Maximum value to get from.
+         (<em>default</em> 1)
         </li>
     </ul>
-
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre class="example">music.delay( <span class="string">"ambient"</span>, <span class="number">5.0</span> ) <span class="comment">-- Rechooses ambient in 5 seconds</span></pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "load"></a>
-    <strong>load (name)</strong>
-    </dt>
-    <dd>
-    Loads a song.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">name</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the song to load.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "play"></a>
-    <strong>play ()</strong>
-    </dt>
-    <dd>
-    Plays the loaded song.
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "stop"></a>
-    <strong>stop ()</strong>
-    </dt>
-    <dd>
-    Stops playing the current song.
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "isPlaying"></a>
-    <strong>isPlaying ()</strong>
-    </dt>
-    <dd>
-    Checks to see if something is playing.
-
-
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">boolean</span></span>
-        true if something is playing.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "current"></a>
-    <strong>current ()</strong>
-    </dt>
-    <dd>
-    Gets the name of the current playing song.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-        <li>
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-        The name of the current playing song or "none" if no song is playing.</li>
-        <li>
            <span class="types"><span class="type">number</span></span>
-        The current offset inside the song (0. if music is none).</li>
+        Random number value.
     </ol>
 
 
 
-    <h3>Usage:</h3>
-    <ul>
-        <pre class="example">songname, songplayed = music.current()</pre>
-    </ul>
+
+</dd>
+    <dt>
+    <a name = "prng:_rnd"></a>
+    <strong>prng:_rnd ()</strong>
+    </dt>
+    <dd>
+    Gets a value between 0 and 1.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Random number value.
+    </ol>
+
+
+
 
 </dd>
 </dl>
