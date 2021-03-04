@@ -91,7 +91,7 @@
   <li><a href="../modules/planet.html">planet</a></li>
   <li><a href="../modules/player.html">player</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
-  <li><strong>shader</strong></li>
+  <li><a href="../modules/shader.html">shader</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
   <li><a href="../modules/shiplog.html">shiplog</a></li>
   <li><a href="../modules/system.html">system</a></li>
@@ -101,7 +101,7 @@
   <li><a href="../modules/transform.html">transform</a></li>
   <li><a href="../modules/var.html">var</a></li>
   <li><a href="../modules/vec2.html">vec2</a></li>
-  <li><a href="../modules/portrait.html">portrait</a></li>
+  <li><strong>portrait</strong></li>
   <li><a href="../modules/vn.html">vn</a></li>
 </ul>
 
@@ -109,36 +109,41 @@
 
 <div id="content">
 
-<h1>Module <code>shader</code></h1>
-<p>Lua bindings to interact with shaders.</p>
-<p></p>
+<h1>Module <code>portrait</code></h1>
+<p>Functions for handling portraits in Naev.</p>
+<p>
+[[</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#__gc">__gc (shader)</a></td>
-	<td class="summary">Frees a shader.</td>
+	<td class="name" nowrap><a href="#getMale">getMale ([faction="neutral"])</a></td>
+	<td class="summary">Choose a random male civilian portrait.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#__eq">__eq (f1, f2)</a></td>
-	<td class="summary">Compares two shaders to see if they are the same.</td>
+	<td class="name" nowrap><a href="#getFemale">getFemale ([faction="neutral"])</a></td>
+	<td class="summary">Choose a random female civilian portrait.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new">new (vertex, fragment)</a></td>
-	<td class="summary">Creates a new shader.</td>
+	<td class="name" nowrap><a href="#get">get ([faction="neutral"])</a></td>
+	<td class="summary">Choose a random civilian portrait of any gender.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#send">send (shader, name)</a></td>
-	<td class="summary">Allows setting values of uniforms for a shader.</td>
+	<td class="name" nowrap><a href="#getMaleMil">getMaleMil ([faction="neutral"])</a></td>
+	<td class="summary">Choose a random male military portrait.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#send">send (shader, name)</a></td>
-	<td class="summary">Allows setting values of uniforms for a shader, while ignoring unknown (or unused) uniforms.</td>
+	<td class="name" nowrap><a href="#getFemaleMil">getFemaleMil ([faction="neutral"])</a></td>
+	<td class="summary">Choose a random female military portrait.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#hasUniform">hasUniform (shader, name)</a></td>
-	<td class="summary">Checks to see if a shader has a uniform.</td>
+	<td class="name" nowrap><a href="#getMil">getMil ([faction="neutral"])</a></td>
+	<td class="summary">Choose a random military portrait of any gender.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getFullPath">getFullPath (str)</a></td>
+	<td class="summary">Gets the full path of a portrait relative to the data directory.</td>
 	</tr>
 </table>
 
@@ -150,168 +155,184 @@
 
     <dl class="function">
     <dt>
-    <a name = "__gc"></a>
-    <strong>__gc (shader)</strong>
+    <a name = "getMale"></a>
+    <strong>getMale ([faction="neutral"])</strong>
     </dt>
     <dd>
-    Frees a shader.
+    Choose a random male civilian portrait.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">shader</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader to free.
+        <li><span class="parameter">faction</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of faction to get a portrait for, or nil for neutral.
+         (<em>default</em> "neutral")
         </li>
     </ul>
 
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.setNPC( <span class="string">"Sam"</span>, getMale( <span class="string">"Pirate"</span> ) )</pre>
+    </ul>
 
 </dd>
     <dt>
-    <a name = "__eq"></a>
-    <strong>__eq (f1, f2)</strong>
+    <a name = "getFemale"></a>
+    <strong>getFemale ([faction="neutral"])</strong>
     </dt>
     <dd>
-    Compares two shaders to see if they are the same.
+    Choose a random female civilian portrait.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">f1</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader 1 to compare.
-        </li>
-        <li><span class="parameter">f2</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader 2 to compare.
+        <li><span class="parameter">faction</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of faction to get a portrait for, or nil for neutral.
+         (<em>default</em> "neutral")
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        true if both shaders are the same.
-    </ol>
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.setNPC( <span class="string">"Sam"</span>, getFemale() )</pre>
+    </ul>
 
 </dd>
     <dt>
-    <a name = "new"></a>
-    <strong>new (vertex, fragment)</strong>
+    <a name = "get"></a>
+    <strong>get ([faction="neutral"])</strong>
     </dt>
     <dd>
-    Creates a new shader.
+    Choose a random civilian portrait of any gender.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">vertex</span>
+        <li><span class="parameter">faction</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Script containing the vertex shader.
-        </li>
-        <li><span class="parameter">fragment</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         String containing the fragment shader.
+         Name of faction to get a portrait for, or nil for neutral.
+         (<em>default</em> "neutral")
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Shader</span></span>
-        A newly created shader.
-    </ol>
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.setNPC( <span class="string">"Sam"</span>, get( <span class="string">"Empire"</span> ) )</pre>
+    </ul>
 
 </dd>
     <dt>
-    <a name = "send"></a>
-    <strong>send (shader, name)</strong>
+    <a name = "getMaleMil"></a>
+    <strong>getMaleMil ([faction="neutral"])</strong>
     </dt>
     <dd>
-    Allows setting values of uniforms for a shader.  Errors out if the uniform is unknown or unused (as in optimized out by the compiler).
-
+    Choose a random male military portrait.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">shader</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader to send uniform to.
-        </li>
-        <li><span class="parameter">name</span>
+        <li><span class="parameter">faction</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the uniform.
+         Name of faction to get a portrait for, or nil for neutral.
+         (<em>default</em> "neutral")
         </li>
     </ul>
 
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.setNPC( <span class="string">"Sam"</span>, getMaleMil( <span class="string">"Pirate"</span> ) )</pre>
+    </ul>
 
 </dd>
     <dt>
-    <a name = "send"></a>
-    <strong>send (shader, name)</strong>
+    <a name = "getFemaleMil"></a>
+    <strong>getFemaleMil ([faction="neutral"])</strong>
     </dt>
     <dd>
-    Allows setting values of uniforms for a shader, while ignoring unknown (or unused) uniforms.
+    Choose a random female military portrait.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">shader</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader to send uniform to.
-        </li>
-        <li><span class="parameter">name</span>
+        <li><span class="parameter">faction</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the uniform.
+         Name of faction to get a portrait for, or nil for neutral.
+         (<em>default</em> "neutral")
         </li>
     </ul>
 
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.setNPC( <span class="string">"Sam"</span>, getFemaleMil( <span class="string">"Dvaered"</span> ) )</pre>
+    </ul>
 
 </dd>
     <dt>
-    <a name = "hasUniform"></a>
-    <strong>hasUniform (shader, name)</strong>
+    <a name = "getMil"></a>
+    <strong>getMil ([faction="neutral"])</strong>
     </dt>
     <dd>
-    Checks to see if a shader has a uniform.
+    Choose a random military portrait of any gender.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">shader</span>
-            <span class="types"><span class="type">Shader</span></span>
-         Shader to send uniform to.
-        </li>
-        <li><span class="parameter">name</span>
+        <li><span class="parameter">faction</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the uniform to check.
+         Name of faction to get a portrait for, or nil for neutral.
+         (<em>default</em> "neutral")
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        true if the shader has the uniform.
-    </ol>
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">misn.setNPC( <span class="string">"Sam"</span>, getMil( <span class="string">"Empire"</span> ) )</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "getFullPath"></a>
+    <strong>getFullPath (str)</strong>
+    </dt>
+    <dd>
+    Gets the full path of a portrait relative to the data directory.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the portrait image to get.
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">portrait.getFullPath( portrait.get() )</pre>
+    </ul>
 
 </dd>
 </dl>
