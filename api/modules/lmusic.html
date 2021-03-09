@@ -65,10 +65,10 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
-  <li><a href="../modules/lmusic.html">lmusic</a></li>
+  <li><strong>lmusic</strong></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
-  <li><strong>bkg</strong></li>
+  <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
   <li><a href="../modules/canvas.html">canvas</a></li>
   <li><a href="../modules/colour.html">colour</a></li>
@@ -111,24 +111,25 @@
 
 <div id="content">
 
-<h1>Module <code>bkg</code></h1>
-<p>Lua bindings to interact with the background.</p>
+<h1>Module <code>lmusic</code></h1>
+<p>Small music handling library.</p>
 <p>
-<p> An example would be:
- <pre>
- </pre>
-`</p>
+<p>Based on Love2D and Naev API</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#clear">clear ()</a></td>
-	<td class="summary">Clears any backgrounds that may currently be displaying.</td>
+	<td class="name" nowrap><a href="#play">play (filename, params)</a></td>
+	<td class="summary">Plays a music with fade-in and fade-out.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#image">image (image, x, y, move, scale[, col[, foreground=false]])</a></td>
-	<td class="summary">Adds a background image.</td>
+	<td class="name" nowrap><a href="#stop">stop (m)</a></td>
+	<td class="summary">Stops a playing music (or all of them)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clear">clear ()</a></td>
+	<td class="summary">Forcibly stops playing music and restarts Naev's game music.</td>
 	</tr>
 </table>
 
@@ -140,13 +141,51 @@
 
     <dl class="function">
     <dt>
-    <a name = "clear"></a>
-    <strong>clear ()</strong>
+    <a name = "play"></a>
+    <strong>play (filename, params)</strong>
     </dt>
     <dd>
-    Clears any backgrounds that may currently be displaying.
+    Plays a music with fade-in and fade-out.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">filename</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">file</span></span>
+         Name or file object to open.
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">tab</span></span>
+         Parameter table.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">tab</span></span>
+        New music object.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "stop"></a>
+    <strong>stop (m)</strong>
+    </dt>
+    <dd>
+    Stops a playing music (or all of them)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">m</span>
+            <span class="types"><span class="type">tab</span> or <span class="type">nil</span></span>
+         Music to stop, or nil to stop all playing music.
+        </li>
+    </ul>
 
 
 
@@ -154,65 +193,17 @@
 
 </dd>
     <dt>
-    <a name = "image"></a>
-    <strong>image (image, x, y, move, scale[, col[, foreground=false]])</strong>
+    <a name = "clear"></a>
+    <strong>clear ()</strong>
     </dt>
     <dd>
-    Adds a background image.
-<p> If the colour parameter is a boolean it's treated as the foreground parameter instead.
+    Forcibly stops playing music and restarts Naev's game music.
 
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">image</span>
-            <span class="types"><span class="type">Tex</span></span>
-         Image to use.
-        </li>
-        <li><span class="parameter">x</span>
-            <span class="types"><span class="type">number</span></span>
-         X position.
-        </li>
-        <li><span class="parameter">y</span>
-            <span class="types"><span class="type">number</span></span>
-         Y position.
-        </li>
-        <li><span class="parameter">move</span>
-            <span class="types"><span class="type">number</span></span>
-         Fraction of a pixel to move when the player moves one pixel.
-        </li>
-        <li><span class="parameter">scale</span>
-            <span class="types"><span class="type">number</span></span>
-         How much to scale the image.
-        </li>
-        <li><span class="parameter">col</span>
-            <span class="types"><span class="type">Colour</span></span>
-         Colour to tint image.
-         (<em>optional</em>)
-        </li>
-        <li><span class="parameter">foreground</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether or not it should be rendered above the stars.
-         (<em>default</em> false)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        ID of the background.
-    </ol>
 
 
 
-    <h3>Usage:</h3>
-    <ul>
-        <li><pre class="example">bkg.image( img, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.1</span>, <span class="number">1.</span> ) <span class="comment">-- Adds the image without scaling that moves at 0.1 the player speed</span></pre></li>
-        <li><pre class="example">bkg.image( img, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.1</span>, <span class="number">1.</span>, <span class="keyword">true</span> ) <span class="comment">-- Now on the foreground</span></pre></li>
-        <li><pre class="example">bkg.image( img, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.1</span>, <span class="number">1.</span>, col.new(<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>) ) <span class="comment">-- Now with colour</span></pre></li>
-        <li><pre class="example">bkg.image( img, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.1</span>, <span class="number">1.</span>, col.new(<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>), <span class="keyword">true</span> ) <span class="comment">-- Now with colour and on the foreground</span></pre></li>
-    </ul>
 
 </dd>
 </dl>
