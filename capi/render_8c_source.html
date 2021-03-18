@@ -258,48 +258,50 @@ $(function() {
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;   <span class="comment">/* Resort n case stuff is weird. */</span></div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;   qsort( *pp_shaders, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(*pp_shaders), <span class="keyword">sizeof</span>(PPShader), ppshader_compare );</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;   <span class="keywordflow">return</span> pp-&gt;id;</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;}</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160; </div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="keywordtype">int</span> render_postprocessRm( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;{</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;   <span class="keywordtype">int</span> i, j, found;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   PPShader *pp, *pp_shaders;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;   found = -1;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;   <span class="keywordflow">for</span> (j=0; j&lt;PP_LAYER_MAX; j++) {</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      pp_shaders = pp_shaders_list[j];</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pp_shaders); i++) {</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;         pp = &amp;pp_shaders[i];</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;         <span class="keywordflow">if</span> (pp-&gt;id != <span class="keywordtype">id</span>)</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;         found = i;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      }</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      <span class="keywordflow">if</span> (found&gt;=0)</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   }</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   <span class="keywordflow">if</span> (found==-1) {</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      WARN(_(<span class="stringliteral">&quot;Trying to remove non-existant post-processing shader with id &#39;%d&#39;!&quot;</span>), <span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;   }</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   <span class="comment">/* No need to resort. */</span></div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;   <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;pp_shaders_list[j], &amp;pp_shaders_list[j][found], &amp;pp_shaders_list[j][found+1] );</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;}</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="keywordtype">void</span> render_exit (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;{</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;PP_LAYER_MAX; i++) {</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( pp_shaders_list[i] );</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      pp_shaders_list[i] = NULL;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;   }</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;}</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;   gl_checkErr();</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;   <span class="keywordflow">return</span> pp-&gt;id;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;}</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="keywordtype">int</span> render_postprocessRm( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;{</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;   <span class="keywordtype">int</span> i, j, found;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;   PPShader *pp, *pp_shaders;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;   found = -1;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;   <span class="keywordflow">for</span> (j=0; j&lt;PP_LAYER_MAX; j++) {</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;      pp_shaders = pp_shaders_list[j];</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pp_shaders); i++) {</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;         pp = &amp;pp_shaders[i];</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;         <span class="keywordflow">if</span> (pp-&gt;id != <span class="keywordtype">id</span>)</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;         found = i;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      }</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      <span class="keywordflow">if</span> (found&gt;=0)</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;   }</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;   <span class="keywordflow">if</span> (found==-1) {</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      WARN(_(<span class="stringliteral">&quot;Trying to remove non-existant post-processing shader with id &#39;%d&#39;!&quot;</span>), <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   }</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;   <span class="comment">/* No need to resort. */</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;pp_shaders_list[j], &amp;pp_shaders_list[j][found], &amp;pp_shaders_list[j][found+1] );</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;}</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="keywordtype">void</span> render_exit (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;{</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;PP_LAYER_MAX; i++) {</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( pp_shaders_list[i] );</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      pp_shaders_list[i] = NULL;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   }</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;}</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructPPShader__s_html_a70a8a780a4d35bca2dcf8fb45cfef896"><div class="ttname"><a href="structPPShader__s.html#a70a8a780a4d35bca2dcf8fb45cfef896">PPShader_s::u_time</a></div><div class="ttdeci">GLint u_time</div><div class="ttdef"><b>Definition:</b> <a href="render_8c_source.html#l00036">render.c:36</a></div></div>
 <div class="ttc" id="aopengl__vbo_8c_html_acec4f799c6a06738c21ddfef975d9c36"><div class="ttname"><a href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a></div><div class="ttdeci">void gl_vboActivateAttribOffset(gl_vbo *vbo, GLuint index, GLuint offset, GLint size, GLenum type, GLsizei stride)</div><div class="ttdoc">Activates a VBO's offset.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__vbo_8c_source.html#l00251">opengl_vbo.c:251</a></div></div>
@@ -330,7 +332,7 @@ $(function() {
 <div class="ttc" id="anaev_8c_html_a53bff93ee1c266e7cd67aeeb8bc4202b"><div class="ttname"><a href="naev_8c.html#a53bff93ee1c266e7cd67aeeb8bc4202b">display_fps</a></div><div class="ttdeci">void display_fps(const double dt)</div><div class="ttdoc">Displays FPS on the screen.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00852">naev.c:852</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a4b21a3189aa8f078ba5ec0ee314924f6"><div class="ttname"><a href="player_8c.html#a4b21a3189aa8f078ba5ec0ee314924f6">player_render</a></div><div class="ttdeci">void player_render(double dt)</div><div class="ttdoc">Renders the player.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00920">player.c:920</a></div></div>
-<div class="ttc" id="aspfx_8c_html_a185c64a00b47bf616cefa22b838d7943"><div class="ttname"><a href="spfx_8c.html#a185c64a00b47bf616cefa22b838d7943">spfx_render</a></div><div class="ttdeci">void spfx_render(const int layer)</div><div class="ttdoc">Renders the entire spfx layer.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00833">spfx.c:833</a></div></div>
+<div class="ttc" id="aspfx_8c_html_a185c64a00b47bf616cefa22b838d7943"><div class="ttname"><a href="spfx_8c.html#a185c64a00b47bf616cefa22b838d7943">spfx_render</a></div><div class="ttdeci">void spfx_render(const int layer)</div><div class="ttdoc">Renders the entire spfx layer.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00893">spfx.c:893</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
