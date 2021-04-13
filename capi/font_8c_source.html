@@ -1308,122 +1308,141 @@ $(function() {
 <div class="line"><a name="l01576"></a><span class="lineno"> 1576</span>&#160;}</div>
 <div class="line"><a name="l01577"></a><span class="lineno"> 1577</span>&#160; </div>
 <div class="line"><a name="l01578"></a><span class="lineno"> 1578</span>&#160; </div>
-<div class="line"><a name="l01586"></a><span class="lineno"><a class="line" href="font_8c.html#afa5dbe9c63df94bac898dd3c5933bc48"> 1586</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="font_8c.html#afa5dbe9c63df94bac898dd3c5933bc48">gl_fontAddFallback</a>( glFont* font, <span class="keyword">const</span> <span class="keywordtype">char</span> *fname )</div>
-<div class="line"><a name="l01587"></a><span class="lineno"> 1587</span>&#160;{</div>
-<div class="line"><a name="l01588"></a><span class="lineno"> 1588</span>&#160;   glFontStash *stsh = <a class="code" href="font_8c.html#aff7a854fe59fd6b10e284e2bdc152671">gl_fontGetStash</a>( font );</div>
-<div class="line"><a name="l01589"></a><span class="lineno"> 1589</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="font_8c.html#a90bea7a81313d0a73fccba4f0d1ddcd8">gl_fontstashAddFallback</a>( stsh, fname, font-&gt;h );</div>
-<div class="line"><a name="l01590"></a><span class="lineno"> 1590</span>&#160;}</div>
-<div class="line"><a name="l01591"></a><span class="lineno"> 1591</span>&#160; </div>
-<div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160; </div>
-<div class="line"><a name="l01601"></a><span class="lineno"><a class="line" href="font_8c.html#a90bea7a81313d0a73fccba4f0d1ddcd8"> 1601</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="font_8c.html#a90bea7a81313d0a73fccba4f0d1ddcd8">gl_fontstashAddFallback</a>( glFontStash* stsh, <span class="keyword">const</span> <span class="keywordtype">char</span> *fname, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> h )</div>
-<div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;{</div>
-<div class="line"><a name="l01603"></a><span class="lineno"> 1603</span>&#160;   glFontStashFreetype *ft;</div>
-<div class="line"><a name="l01604"></a><span class="lineno"> 1604</span>&#160;   FT_Face face;</div>
-<div class="line"><a name="l01605"></a><span class="lineno"> 1605</span>&#160;   FT_Matrix scale;</div>
-<div class="line"><a name="l01606"></a><span class="lineno"> 1606</span>&#160;   <span class="keywordtype">int</span> i, j;</div>
-<div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160; </div>
-<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160;   <span class="comment">/* Set up file data. Reference a loaded copy if we have one. */</span></div>
-<div class="line"><a name="l01609"></a><span class="lineno"> 1609</span>&#160;   ft = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;stsh-&gt;ft );</div>
-<div class="line"><a name="l01610"></a><span class="lineno"> 1610</span>&#160;   ft-&gt;file = NULL;</div>
-<div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>); i++) {</div>
-<div class="line"><a name="l01612"></a><span class="lineno"> 1612</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft == NULL)</div>
-<div class="line"><a name="l01613"></a><span class="lineno"> 1613</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01614"></a><span class="lineno"> 1614</span>&#160;      <span class="keywordflow">for</span> (j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft); j++)</div>
-<div class="line"><a name="l01615"></a><span class="lineno"> 1615</span>&#160;         <span class="keywordflow">if</span> (ft != &amp;<a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft[j] &amp;&amp; !strcmp( fname, <a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft[j].file-&gt;name ))</div>
-<div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;            ft-&gt;file = <a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft[j].file;</div>
-<div class="line"><a name="l01617"></a><span class="lineno"> 1617</span>&#160;      if (ft-&gt;file != NULL) {</div>
-<div class="line"><a name="l01618"></a><span class="lineno"> 1618</span>&#160;         ft-&gt;file-&gt;refcount++;</div>
-<div class="line"><a name="l01619"></a><span class="lineno"> 1619</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01620"></a><span class="lineno"> 1620</span>&#160;      }</div>
-<div class="line"><a name="l01621"></a><span class="lineno"> 1621</span>&#160;   }</div>
-<div class="line"><a name="l01622"></a><span class="lineno"> 1622</span>&#160; </div>
-<div class="line"><a name="l01623"></a><span class="lineno"> 1623</span>&#160;   <span class="keywordflow">if</span> (ft-&gt;file == NULL) {</div>
-<div class="line"><a name="l01624"></a><span class="lineno"> 1624</span>&#160;      <span class="comment">/* Read font file. */</span></div>
-<div class="line"><a name="l01625"></a><span class="lineno"> 1625</span>&#160;      ft-&gt;file = malloc( <span class="keyword">sizeof</span>( glFontFile ) );</div>
-<div class="line"><a name="l01626"></a><span class="lineno"> 1626</span>&#160;      ft-&gt;file-&gt;name = strdup( fname );</div>
-<div class="line"><a name="l01627"></a><span class="lineno"> 1627</span>&#160;      ft-&gt;file-&gt;refcount = 1;</div>
-<div class="line"><a name="l01628"></a><span class="lineno"> 1628</span>&#160;      ft-&gt;file-&gt;data = (FT_Byte*) <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( fname, &amp;ft-&gt;file-&gt;datasize );</div>
-<div class="line"><a name="l01629"></a><span class="lineno"> 1629</span>&#160;      <span class="keywordflow">if</span> (ft-&gt;file-&gt;data == NULL) {</div>
-<div class="line"><a name="l01630"></a><span class="lineno"> 1630</span>&#160;         WARN(_(<span class="stringliteral">&quot;Unable to read font: %s&quot;</span>), fname );</div>
-<div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;         <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01632"></a><span class="lineno"> 1632</span>&#160;      }</div>
-<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160;   }</div>
-<div class="line"><a name="l01634"></a><span class="lineno"> 1634</span>&#160; </div>
-<div class="line"><a name="l01635"></a><span class="lineno"> 1635</span>&#160;   <span class="comment">/* Object which freetype uses to store font info. */</span></div>
-<div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;   <span class="keywordflow">if</span> (FT_New_Memory_Face( <a class="code" href="font_8c.html#ac8f0e58fdfea2f976336967ec3c69a5e">font_library</a>, ft-&gt;file-&gt;data, ft-&gt;file-&gt;datasize, 0, &amp;face )) {</div>
-<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160;      WARN(_(<span class="stringliteral">&quot;FT_New_Memory_Face failed loading library from %s&quot;</span>), fname);</div>
-<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01639"></a><span class="lineno"> 1639</span>&#160;   }</div>
-<div class="line"><a name="l01640"></a><span class="lineno"> 1640</span>&#160; </div>
-<div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160;   <span class="comment">/* Try to resize. */</span></div>
-<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160;   <span class="keywordflow">if</span> (FT_IS_SCALABLE(face)) {</div>
-<div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;      <span class="keywordflow">if</span> (FT_Set_Char_Size( face,</div>
-<div class="line"><a name="l01644"></a><span class="lineno"> 1644</span>&#160;               0, <span class="comment">/* Same as width. */</span></div>
-<div class="line"><a name="l01645"></a><span class="lineno"> 1645</span>&#160;               h * 64,</div>
-<div class="line"><a name="l01646"></a><span class="lineno"> 1646</span>&#160;               96, <span class="comment">/* Create at 96 DPI */</span></div>
-<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;               96)) <span class="comment">/* Create at 96 DPI */</span></div>
-<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;         WARN(_(<span class="stringliteral">&quot;FT_Set_Char_Size failed.&quot;</span>));</div>
-<div class="line"><a name="l01649"></a><span class="lineno"> 1649</span>&#160;      scale.xx = scale.yy = (FT_Fixed)<a class="code" href="font_8c.html#ac9139e618fcd31a1268b2a87ed3d61cb">FONT_DISTANCE_FIELD_SIZE</a>*0x10000/h;</div>
-<div class="line"><a name="l01650"></a><span class="lineno"> 1650</span>&#160;      scale.xy = scale.yx = 0;</div>
-<div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;      FT_Set_Transform( face, &amp;scale, NULL );</div>
-<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160;   }</div>
-<div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01654"></a><span class="lineno"> 1654</span>&#160;      WARN(_(<span class="stringliteral">&quot;Font isn&#39;t resizable!&quot;</span>));</div>
-<div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160; </div>
-<div class="line"><a name="l01656"></a><span class="lineno"> 1656</span>&#160;   <span class="comment">/* Select the character map. */</span></div>
-<div class="line"><a name="l01657"></a><span class="lineno"> 1657</span>&#160;   <span class="keywordflow">if</span> (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))</div>
-<div class="line"><a name="l01658"></a><span class="lineno"> 1658</span>&#160;      WARN(_(<span class="stringliteral">&quot;FT_Select_Charmap failed to change character mapping.&quot;</span>));</div>
-<div class="line"><a name="l01659"></a><span class="lineno"> 1659</span>&#160; </div>
-<div class="line"><a name="l01660"></a><span class="lineno"> 1660</span>&#160;   <span class="comment">/* Save stuff. */</span></div>
-<div class="line"><a name="l01661"></a><span class="lineno"> 1661</span>&#160;   ft-&gt;face     = face;</div>
-<div class="line"><a name="l01662"></a><span class="lineno"> 1662</span>&#160; </div>
-<div class="line"><a name="l01663"></a><span class="lineno"> 1663</span>&#160;   <span class="comment">/* Success. */</span></div>
-<div class="line"><a name="l01664"></a><span class="lineno"> 1664</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160;}</div>
-<div class="line"><a name="l01666"></a><span class="lineno"> 1666</span>&#160; </div>
-<div class="line"><a name="l01675"></a><span class="lineno"><a class="line" href="font_8c.html#a8a96ba8ce0244757643f5b65233d7f35"> 1675</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="font_8c.html#a8a96ba8ce0244757643f5b65233d7f35">gl_freeFont</a>( glFont* font )</div>
-<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;{</div>
-<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160;   glFontStashFreetype *ft;</div>
+<div class="line"><a name="l01587"></a><span class="lineno"><a class="line" href="font_8c.html#a843c4ccf04cd07684879a00407080747"> 1587</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="font_8c.html#a843c4ccf04cd07684879a00407080747">gl_fontAddFallback</a>( glFont* font, <span class="keyword">const</span> <span class="keywordtype">char</span> *fname, <span class="keyword">const</span> <span class="keywordtype">char</span> *prefix )</div>
+<div class="line"><a name="l01588"></a><span class="lineno"> 1588</span>&#160;{</div>
+<div class="line"><a name="l01589"></a><span class="lineno"> 1589</span>&#160;   <span class="keywordtype">size_t</span> i, len, plen;</div>
+<div class="line"><a name="l01590"></a><span class="lineno"> 1590</span>&#160;   <span class="keywordtype">int</span> ch, ret;</div>
+<div class="line"><a name="l01591"></a><span class="lineno"> 1591</span>&#160;   <span class="keywordtype">char</span> fullname[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160;   glFontStash *stsh = <a class="code" href="font_8c.html#aff7a854fe59fd6b10e284e2bdc152671">gl_fontGetStash</a>( font );</div>
+<div class="line"><a name="l01593"></a><span class="lineno"> 1593</span>&#160; </div>
+<div class="line"><a name="l01594"></a><span class="lineno"> 1594</span>&#160;   ret = 0;</div>
+<div class="line"><a name="l01595"></a><span class="lineno"> 1595</span>&#160;   ch = 0;</div>
+<div class="line"><a name="l01596"></a><span class="lineno"> 1596</span>&#160;   len = strlen(fname);</div>
+<div class="line"><a name="l01597"></a><span class="lineno"> 1597</span>&#160;   plen = strlen(prefix);</div>
+<div class="line"><a name="l01598"></a><span class="lineno"> 1598</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;=len; i++) {</div>
+<div class="line"><a name="l01599"></a><span class="lineno"> 1599</span>&#160;      <span class="keywordflow">if</span> ((fname[i]==<span class="charliteral">&#39;\0&#39;</span>) || (fname[i]==<span class="charliteral">&#39;,&#39;</span>)) {</div>
+<div class="line"><a name="l01600"></a><span class="lineno"> 1600</span>&#160;         strncpy( fullname, prefix, <a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>-1 );</div>
+<div class="line"><a name="l01601"></a><span class="lineno"> 1601</span>&#160;         strncat( fullname, &amp;fname[ch], <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>-1-plen, i-ch ) );</div>
+<div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;         ret |= <a class="code" href="font_8c.html#a90bea7a81313d0a73fccba4f0d1ddcd8">gl_fontstashAddFallback</a>( stsh, fullname, font-&gt;h );</div>
+<div class="line"><a name="l01603"></a><span class="lineno"> 1603</span>&#160;         ch = i;</div>
+<div class="line"><a name="l01604"></a><span class="lineno"> 1604</span>&#160;         <span class="keywordflow">if</span> (fname[i]==<span class="charliteral">&#39;,&#39;</span>)</div>
+<div class="line"><a name="l01605"></a><span class="lineno"> 1605</span>&#160;            ch++;</div>
+<div class="line"><a name="l01606"></a><span class="lineno"> 1606</span>&#160;      }</div>
+<div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160;   }</div>
+<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160; </div>
+<div class="line"><a name="l01609"></a><span class="lineno"> 1609</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l01610"></a><span class="lineno"> 1610</span>&#160;}</div>
+<div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160; </div>
+<div class="line"><a name="l01612"></a><span class="lineno"> 1612</span>&#160; </div>
+<div class="line"><a name="l01621"></a><span class="lineno"><a class="line" href="font_8c.html#a90bea7a81313d0a73fccba4f0d1ddcd8"> 1621</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="font_8c.html#a90bea7a81313d0a73fccba4f0d1ddcd8">gl_fontstashAddFallback</a>( glFontStash* stsh, <span class="keyword">const</span> <span class="keywordtype">char</span> *fname, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> h )</div>
+<div class="line"><a name="l01622"></a><span class="lineno"> 1622</span>&#160;{</div>
+<div class="line"><a name="l01623"></a><span class="lineno"> 1623</span>&#160;   glFontStashFreetype *ft;</div>
+<div class="line"><a name="l01624"></a><span class="lineno"> 1624</span>&#160;   FT_Face face;</div>
+<div class="line"><a name="l01625"></a><span class="lineno"> 1625</span>&#160;   FT_Matrix scale;</div>
+<div class="line"><a name="l01626"></a><span class="lineno"> 1626</span>&#160;   <span class="keywordtype">int</span> i, j;</div>
+<div class="line"><a name="l01627"></a><span class="lineno"> 1627</span>&#160; </div>
+<div class="line"><a name="l01628"></a><span class="lineno"> 1628</span>&#160;   <span class="comment">/* Set up file data. Reference a loaded copy if we have one. */</span></div>
+<div class="line"><a name="l01629"></a><span class="lineno"> 1629</span>&#160;   ft = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;stsh-&gt;ft );</div>
+<div class="line"><a name="l01630"></a><span class="lineno"> 1630</span>&#160;   ft-&gt;file = NULL;</div>
+<div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>); i++) {</div>
+<div class="line"><a name="l01632"></a><span class="lineno"> 1632</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft == NULL)</div>
+<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01634"></a><span class="lineno"> 1634</span>&#160;      <span class="keywordflow">for</span> (j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft); j++)</div>
+<div class="line"><a name="l01635"></a><span class="lineno"> 1635</span>&#160;         <span class="keywordflow">if</span> (ft != &amp;<a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft[j] &amp;&amp; !strcmp( fname, <a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft[j].file-&gt;name ))</div>
+<div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;            ft-&gt;file = <a class="code" href="font_8c.html#ad23a97f410d4cb9979e997e54f76b220">avail_fonts</a>[i].ft[j].file;</div>
+<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160;      if (ft-&gt;file != NULL) {</div>
+<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160;         ft-&gt;file-&gt;refcount++;</div>
+<div class="line"><a name="l01639"></a><span class="lineno"> 1639</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01640"></a><span class="lineno"> 1640</span>&#160;      }</div>
+<div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160;   }</div>
+<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160; </div>
+<div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;   <span class="keywordflow">if</span> (ft-&gt;file == NULL) {</div>
+<div class="line"><a name="l01644"></a><span class="lineno"> 1644</span>&#160;      <span class="comment">/* Read font file. */</span></div>
+<div class="line"><a name="l01645"></a><span class="lineno"> 1645</span>&#160;      ft-&gt;file = malloc( <span class="keyword">sizeof</span>( glFontFile ) );</div>
+<div class="line"><a name="l01646"></a><span class="lineno"> 1646</span>&#160;      ft-&gt;file-&gt;name = strdup( fname );</div>
+<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;      ft-&gt;file-&gt;refcount = 1;</div>
+<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;      ft-&gt;file-&gt;data = (FT_Byte*) <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( fname, &amp;ft-&gt;file-&gt;datasize );</div>
+<div class="line"><a name="l01649"></a><span class="lineno"> 1649</span>&#160;      <span class="keywordflow">if</span> (ft-&gt;file-&gt;data == NULL) {</div>
+<div class="line"><a name="l01650"></a><span class="lineno"> 1650</span>&#160;         WARN(_(<span class="stringliteral">&quot;Unable to read font: %s&quot;</span>), fname );</div>
+<div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;         <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160;      }</div>
+<div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160;   }</div>
+<div class="line"><a name="l01654"></a><span class="lineno"> 1654</span>&#160; </div>
+<div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160;   <span class="comment">/* Object which freetype uses to store font info. */</span></div>
+<div class="line"><a name="l01656"></a><span class="lineno"> 1656</span>&#160;   <span class="keywordflow">if</span> (FT_New_Memory_Face( <a class="code" href="font_8c.html#ac8f0e58fdfea2f976336967ec3c69a5e">font_library</a>, ft-&gt;file-&gt;data, ft-&gt;file-&gt;datasize, 0, &amp;face )) {</div>
+<div class="line"><a name="l01657"></a><span class="lineno"> 1657</span>&#160;      WARN(_(<span class="stringliteral">&quot;FT_New_Memory_Face failed loading library from %s&quot;</span>), fname);</div>
+<div class="line"><a name="l01658"></a><span class="lineno"> 1658</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01659"></a><span class="lineno"> 1659</span>&#160;   }</div>
+<div class="line"><a name="l01660"></a><span class="lineno"> 1660</span>&#160; </div>
+<div class="line"><a name="l01661"></a><span class="lineno"> 1661</span>&#160;   <span class="comment">/* Try to resize. */</span></div>
+<div class="line"><a name="l01662"></a><span class="lineno"> 1662</span>&#160;   <span class="keywordflow">if</span> (FT_IS_SCALABLE(face)) {</div>
+<div class="line"><a name="l01663"></a><span class="lineno"> 1663</span>&#160;      <span class="keywordflow">if</span> (FT_Set_Char_Size( face,</div>
+<div class="line"><a name="l01664"></a><span class="lineno"> 1664</span>&#160;               0, <span class="comment">/* Same as width. */</span></div>
+<div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160;               h * 64,</div>
+<div class="line"><a name="l01666"></a><span class="lineno"> 1666</span>&#160;               96, <span class="comment">/* Create at 96 DPI */</span></div>
+<div class="line"><a name="l01667"></a><span class="lineno"> 1667</span>&#160;               96)) <span class="comment">/* Create at 96 DPI */</span></div>
+<div class="line"><a name="l01668"></a><span class="lineno"> 1668</span>&#160;         WARN(_(<span class="stringliteral">&quot;FT_Set_Char_Size failed.&quot;</span>));</div>
+<div class="line"><a name="l01669"></a><span class="lineno"> 1669</span>&#160;      scale.xx = scale.yy = (FT_Fixed)<a class="code" href="font_8c.html#ac9139e618fcd31a1268b2a87ed3d61cb">FONT_DISTANCE_FIELD_SIZE</a>*0x10000/h;</div>
+<div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160;      scale.xy = scale.yx = 0;</div>
+<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160;      FT_Set_Transform( face, &amp;scale, NULL );</div>
+<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;   }</div>
+<div class="line"><a name="l01673"></a><span class="lineno"> 1673</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160;      WARN(_(<span class="stringliteral">&quot;Font isn&#39;t resizable!&quot;</span>));</div>
+<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160; </div>
+<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;   <span class="comment">/* Select the character map. */</span></div>
+<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;   <span class="keywordflow">if</span> (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))</div>
+<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160;      WARN(_(<span class="stringliteral">&quot;FT_Select_Charmap failed to change character mapping.&quot;</span>));</div>
 <div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160; </div>
-<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;   <span class="keywordflow">if</span> (font == NULL)</div>
-<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;      font = &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>;</div>
-<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;   glFontStash *stsh = <a class="code" href="font_8c.html#aff7a854fe59fd6b10e284e2bdc152671">gl_fontGetStash</a>( font );</div>
-<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160; </div>
-<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;   <span class="comment">/* Check references. */</span></div>
-<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;   stsh-&gt;refcount--;</div>
-<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;   <span class="keywordflow">if</span> (stsh-&gt;refcount &gt; 0)</div>
-<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;   <span class="comment">/* Not references and must eliminate. */</span></div>
-<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160; </div>
-<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(stsh-&gt;ft); i++) {</div>
-<div class="line"><a name="l01691"></a><span class="lineno"> 1691</span>&#160;      ft = &amp;stsh-&gt;ft[i];</div>
-<div class="line"><a name="l01692"></a><span class="lineno"> 1692</span>&#160;      <span class="keywordflow">if</span>(--ft-&gt;file-&gt;refcount == 0) {</div>
-<div class="line"><a name="l01693"></a><span class="lineno"> 1693</span>&#160;         free(ft-&gt;file-&gt;name);</div>
-<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;         free(ft-&gt;file-&gt;data);</div>
-<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;         free(ft-&gt;file);</div>
-<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;      }</div>
-<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;      FT_Done_Face(ft-&gt;face);</div>
-<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160;   }</div>
-<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( stsh-&gt;ft );</div>
-<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160; </div>
-<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;   <span class="keywordflow">if</span> (--<a class="code" href="font_8c.html#a73b79f3391030f128320e05ae1f94ca4">font_library_refs</a> == 0) {</div>
-<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;      FT_Done_FreeType( <a class="code" href="font_8c.html#ac8f0e58fdfea2f976336967ec3c69a5e">font_library</a> );</div>
-<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;      <a class="code" href="font_8c.html#ac8f0e58fdfea2f976336967ec3c69a5e">font_library</a> = NULL;</div>
-<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;   }</div>
-<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160; </div>
-<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;   free( stsh-&gt;fname );</div>
-<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(stsh-&gt;tex); i++)</div>
-<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;      glDeleteTextures( 1, &amp;stsh-&gt;tex-&gt;id );</div>
-<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( stsh-&gt;tex );</div>
-<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160; </div>
-<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( stsh-&gt;glyphs );</div>
-<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>(stsh-&gt;vbo_tex);</div>
-<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>(stsh-&gt;vbo_vert);</div>
-<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;   free(stsh-&gt;vbo_tex_data);</div>
-<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;   free(stsh-&gt;vbo_vert_data);</div>
-<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;   memset( stsh, 0, <span class="keyword">sizeof</span>(glFontStash) );</div>
-<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;}</div>
+<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;   <span class="comment">/* Save stuff. */</span></div>
+<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;   ft-&gt;face     = face;</div>
+<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160; </div>
+<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160;   <span class="comment">/* Success. */</span></div>
+<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;}</div>
+<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160; </div>
+<div class="line"><a name="l01695"></a><span class="lineno"><a class="line" href="font_8c.html#a8a96ba8ce0244757643f5b65233d7f35"> 1695</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="font_8c.html#a8a96ba8ce0244757643f5b65233d7f35">gl_freeFont</a>( glFont* font )</div>
+<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;{</div>
+<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160;   glFontStashFreetype *ft;</div>
+<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160; </div>
+<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;   <span class="keywordflow">if</span> (font == NULL)</div>
+<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;      font = &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>;</div>
+<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;   glFontStash *stsh = <a class="code" href="font_8c.html#aff7a854fe59fd6b10e284e2bdc152671">gl_fontGetStash</a>( font );</div>
+<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160; </div>
+<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;   <span class="comment">/* Check references. */</span></div>
+<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160;   stsh-&gt;refcount--;</div>
+<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;   <span class="keywordflow">if</span> (stsh-&gt;refcount &gt; 0)</div>
+<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;   <span class="comment">/* Not references and must eliminate. */</span></div>
+<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160; </div>
+<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(stsh-&gt;ft); i++) {</div>
+<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;      ft = &amp;stsh-&gt;ft[i];</div>
+<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160;      <span class="keywordflow">if</span>(--ft-&gt;file-&gt;refcount == 0) {</div>
+<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160;         free(ft-&gt;file-&gt;name);</div>
+<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;         free(ft-&gt;file-&gt;data);</div>
+<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;         free(ft-&gt;file);</div>
+<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;      }</div>
+<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;      FT_Done_Face(ft-&gt;face);</div>
+<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160;   }</div>
+<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( stsh-&gt;ft );</div>
+<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160; </div>
+<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;   <span class="keywordflow">if</span> (--<a class="code" href="font_8c.html#a73b79f3391030f128320e05ae1f94ca4">font_library_refs</a> == 0) {</div>
+<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;      FT_Done_FreeType( <a class="code" href="font_8c.html#ac8f0e58fdfea2f976336967ec3c69a5e">font_library</a> );</div>
+<div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160;      <a class="code" href="font_8c.html#ac8f0e58fdfea2f976336967ec3c69a5e">font_library</a> = NULL;</div>
+<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;   }</div>
+<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160; </div>
+<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;   free( stsh-&gt;fname );</div>
+<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(stsh-&gt;tex); i++)</div>
+<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160;      glDeleteTextures( 1, &amp;stsh-&gt;tex-&gt;id );</div>
+<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( stsh-&gt;tex );</div>
+<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160; </div>
+<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( stsh-&gt;glyphs );</div>
+<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>(stsh-&gt;vbo_tex);</div>
+<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>(stsh-&gt;vbo_vert);</div>
+<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;   free(stsh-&gt;vbo_tex_data);</div>
+<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;   free(stsh-&gt;vbo_vert_data);</div>
+<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160;   memset( stsh, 0, <span class="keyword">sizeof</span>(glFontStash) );</div>
+<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructglFontFile__s_html_ab64c19f98a6a27c42ab36f01543facfb"><div class="ttname"><a href="structglFontFile__s.html#ab64c19f98a6a27c42ab36f01543facfb">glFontFile_s::datasize</a></div><div class="ttdeci">size_t datasize</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00113">font.c:113</a></div></div>
 <div class="ttc" id="afont_8c_html_a8ae26dda33edb6177e4c3f82141081c8"><div class="ttname"><a href="font_8c.html#a8ae26dda33edb6177e4c3f82141081c8">gl_printRawH</a></div><div class="ttdeci">void gl_printRawH(const glFont *ft_font, const gl_Matrix4 *H, const glColour *c, const double outlineR, const char *text)</div><div class="ttdoc">Prints text on screen using a transformation matrix.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00650">font.c:650</a></div></div>
@@ -1491,11 +1510,10 @@ $(function() {
 <div class="ttc" id="afont_8c_html_ad0e17606adcc082c278842649bfa163d"><div class="ttname"><a href="font_8c.html#ad0e17606adcc082c278842649bfa163d">HASH_LUT_SIZE</a></div><div class="ttdeci">#define HASH_LUT_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00039">font.c:39</a></div></div>
 <div class="ttc" id="aopengl__vbo_8c_html_a92514f507d7bfa25488fe578641932b3"><div class="ttname"><a href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a></div><div class="ttdeci">gl_vbo * gl_vboCreateStatic(GLsizei size, void *data)</div><div class="ttdoc">Creates a stream vbo.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__vbo_8c_source.html#l00199">opengl_vbo.c:199</a></div></div>
 <div class="ttc" id="astructfont__char__s_html_ac4d2862a672c999194b210479fe0183f"><div class="ttname"><a href="structfont__char__s.html#ac4d2862a672c999194b210479fe0183f">font_char_s::data</a></div><div class="ttdeci">GLubyte * data</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00091">font.c:91</a></div></div>
-<div class="ttc" id="afont_8c_html_a90bea7a81313d0a73fccba4f0d1ddcd8"><div class="ttname"><a href="font_8c.html#a90bea7a81313d0a73fccba4f0d1ddcd8">gl_fontstashAddFallback</a></div><div class="ttdeci">static int gl_fontstashAddFallback(glFontStash *stsh, const char *fname, unsigned int h)</div><div class="ttdoc">Adds a fallback font to a stash.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01601">font.c:1601</a></div></div>
+<div class="ttc" id="afont_8c_html_a90bea7a81313d0a73fccba4f0d1ddcd8"><div class="ttname"><a href="font_8c.html#a90bea7a81313d0a73fccba4f0d1ddcd8">gl_fontstashAddFallback</a></div><div class="ttdeci">static int gl_fontstashAddFallback(glFontStash *stsh, const char *fname, unsigned int h)</div><div class="ttdoc">Adds a fallback font to a stash.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01621">font.c:1621</a></div></div>
 <div class="ttc" id="astructglFontStash__s_html_ad5238874edb817c8f87f4b6e7c7aabb4"><div class="ttname"><a href="structglFontStash__s.html#ad5238874edb817c8f87f4b6e7c7aabb4">glFontStash_s::h</a></div><div class="ttdeci">int h</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00136">font.c:136</a></div></div>
 <div class="ttc" id="afont_8c_html_a0fa869d05ba61f47744480e33f0a6cec"><div class="ttname"><a href="font_8c.html#a0fa869d05ba61f47744480e33f0a6cec">prev_glyph_index</a></div><div class="ttdeci">static FT_UInt prev_glyph_index</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00051">font.c:51</a></div></div>
 <div class="ttc" id="afont_8c_html_adb40376739b1dc118bc90ae734451d4b"><div class="ttname"><a href="font_8c.html#adb40376739b1dc118bc90ae734451d4b">gl_fontRenderEnd</a></div><div class="ttdeci">static void gl_fontRenderEnd(void)</div><div class="ttdoc">Ends the rendering engine.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01438">font.c:1438</a></div></div>
-<div class="ttc" id="afont_8c_html_afa5dbe9c63df94bac898dd3c5933bc48"><div class="ttname"><a href="font_8c.html#afa5dbe9c63df94bac898dd3c5933bc48">gl_fontAddFallback</a></div><div class="ttdeci">int gl_fontAddFallback(glFont *font, const char *fname)</div><div class="ttdoc">Adds a fallback font to a font.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01586">font.c:1586</a></div></div>
 <div class="ttc" id="astructfont__char__s_html_aa37a38046ddf0d828eba1be90c7ced76"><div class="ttname"><a href="structfont__char__s.html#aa37a38046ddf0d828eba1be90c7ced76">font_char_s::off_x</a></div><div class="ttdeci">int off_x</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00096">font.c:96</a></div></div>
 <div class="ttc" id="adistance__field_8c_html_a0900d370efc2219ef6b793f8b67e77e8"><div class="ttname"><a href="distance__field_8c.html#a0900d370efc2219ef6b793f8b67e77e8">make_distance_mapbf</a></div><div class="ttdeci">float * make_distance_mapbf(unsigned char *img, unsigned int width, unsigned int height, double explicit_max)</div><div class="ttdoc">Perform a Euclidean Distance Transform on the input and normalize to [0,1], with a value of 0....</div><div class="ttdef"><b>Definition:</b> <a href="distance__field_8c_source.html#l00132">distance_field.c:132</a></div></div>
 <div class="ttc" id="afont_8c_html_a31d45dd9ccab0e3b594290f9807d1b37"><div class="ttname"><a href="font_8c.html#a31d45dd9ccab0e3b594290f9807d1b37">gl_printRestoreClear</a></div><div class="ttdeci">void gl_printRestoreClear(void)</div><div class="ttdoc">Clears the restoration.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00385">font.c:385</a></div></div>
@@ -1512,7 +1530,7 @@ $(function() {
 <div class="ttc" id="astructglFontTex__s_html_a4482eb46a9f2be2f7191b6e26413d400"><div class="ttname"><a href="structglFontTex__s.html#a4482eb46a9f2be2f7191b6e26413d400">glFontTex_s::rows</a></div><div class="ttdeci">glFontRow rows[MAX_ROWS]</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00070">font.c:70</a></div></div>
 <div class="ttc" id="anaev_8h_html_ae688d728e1acdfe5988c7db45d6f0166"><div class="ttname"><a href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a></div><div class="ttdeci">#define PATH_MAX</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00056">naev.h:56</a></div></div>
 <div class="ttc" id="afont_8c_html_adf2630ef13d612686cff000f1552ef61"><div class="ttname"><a href="font_8c.html#adf2630ef13d612686cff000f1552ef61">gl_printRestoreLast</a></div><div class="ttdeci">void gl_printRestoreLast(void)</div><div class="ttdoc">Restores last colour.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00394">font.c:394</a></div></div>
-<div class="ttc" id="afont_8c_html_a8a96ba8ce0244757643f5b65233d7f35"><div class="ttname"><a href="font_8c.html#a8a96ba8ce0244757643f5b65233d7f35">gl_freeFont</a></div><div class="ttdeci">void gl_freeFont(glFont *font)</div><div class="ttdoc">Frees a loaded font. Caution: its glFontStash still has a slot in avail_fonts. At the time of writing...</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01675">font.c:1675</a></div></div>
+<div class="ttc" id="afont_8c_html_a8a96ba8ce0244757643f5b65233d7f35"><div class="ttname"><a href="font_8c.html#a8a96ba8ce0244757643f5b65233d7f35">gl_freeFont</a></div><div class="ttdeci">void gl_freeFont(glFont *font)</div><div class="ttdoc">Frees a loaded font. Caution: its glFontStash still has a slot in avail_fonts. At the time of writing...</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01695">font.c:1695</a></div></div>
 <div class="ttc" id="astructglFontStash__s_html_a3ce9b16ff63521181599dcf46c3ffab2"><div class="ttname"><a href="structglFontStash__s.html#a3ce9b16ff63521181599dcf46c3ffab2">glFontStash_s::vbo_tex</a></div><div class="ttdeci">gl_vbo * vbo_tex</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00140">font.c:140</a></div></div>
 <div class="ttc" id="afont_8c_html_af6bdf054d44ae7ce15419cc8fbb25238"><div class="ttname"><a href="font_8c.html#af6bdf054d44ae7ce15419cc8fbb25238">gl_fontGetColour</a></div><div class="ttdeci">static const glColour * gl_fontGetColour(uint32_t ch)</div><div class="ttdoc">Gets the colour from a character.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01232">font.c:1232</a></div></div>
 <div class="ttc" id="andata_8c_html_a16f6ef61238e43179df6914a165c70ad"><div class="ttname"><a href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a></div><div class="ttdeci">void * ndata_read(const char *path, size_t *filesize)</div><div class="ttdoc">Reads a file from the ndata.</div><div class="ttdef"><b>Definition:</b> <a href="ndata_8c_source.html#l00157">ndata.c:157</a></div></div>
@@ -1561,6 +1579,7 @@ $(function() {
 <div class="ttc" id="arng_8c_html_a6dbc3ea54b9ab71917fe57fa11372346"><div class="ttname"><a href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a></div><div class="ttdeci">static const double b[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00273">rng.c:273</a></div></div>
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
 <div class="ttc" id="afont_8c_html_ae32ab51315902a11902c8ad59afa6bab"><div class="ttname"><a href="font_8c.html#ae32ab51315902a11902c8ad59afa6bab">gl_fontSetFilter</a></div><div class="ttdeci">void gl_fontSetFilter(const glFont *ft_font, GLint min, GLint mag)</div><div class="ttdoc">Sets the minification and magnification filters for a font.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01456">font.c:1456</a></div></div>
+<div class="ttc" id="afont_8c_html_a843c4ccf04cd07684879a00407080747"><div class="ttname"><a href="font_8c.html#a843c4ccf04cd07684879a00407080747">gl_fontAddFallback</a></div><div class="ttdeci">int gl_fontAddFallback(glFont *font, const char *fname, const char *prefix)</div><div class="ttdoc">Adds a fallback font to a font.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01587">font.c:1587</a></div></div>
 <div class="ttc" id="astructglFontRow__s_html_a15cde1846f41e2e08b8d67fd8c79a76f"><div class="ttname"><a href="structglFontRow__s.html#a15cde1846f41e2e08b8d67fd8c79a76f">glFontRow_s::y</a></div><div class="ttdeci">int y</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00060">font.c:60</a></div></div>
 <div class="ttc" id="afont_8c_html_ac0d563c73d894096b743f8946f1dd916"><div class="ttname"><a href="font_8c.html#ac0d563c73d894096b743f8946f1dd916">gl_printMaxRaw</a></div><div class="ttdeci">int gl_printMaxRaw(const glFont *ft_font, const int max, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Behaves like gl_printRaw but stops displaying text after a certain distance.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00725">font.c:725</a></div></div>
 <div class="ttc" id="astructglFontStashFreetype__s_html_aa06ebe5d36e0d825203ba55d8dded965"><div class="ttname"><a href="structglFontStashFreetype__s.html#aa06ebe5d36e0d825203ba55d8dded965">glFontStashFreetype_s::file</a></div><div class="ttdeci">glFontFile * file</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00121">font.c:121</a></div></div>
