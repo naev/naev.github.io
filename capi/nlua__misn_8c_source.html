@@ -312,7 +312,7 @@ $(function() {
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <span class="comment">/* Check parameters. */</span></div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;   sys   = <a class="code" href="nlua__system_8c.html#a2068ddc43e0c079b0d66c696dc843941">luaL_checksystem</a>( L, 1 );</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;   stype = luaL_checkstring( L, 2 );</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;   stype = luaL_optstring( L, 2, <span class="stringliteral">&quot;high&quot;</span> );</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160; </div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   <span class="comment">/* Handle types. */</span></div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;   <span class="keywordflow">if</span> (strcmp(stype, <span class="stringliteral">&quot;computer&quot;</span>)==0)</div>
@@ -412,442 +412,447 @@ $(function() {
 <div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;}</div>
 <div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160; </div>
 <div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160; </div>
-<div class="line"><a name="l00500"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#afb82edc3c26d042d9b7afbea5363011f">  500</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#afb82edc3c26d042d9b7afbea5363011f">misn_setNPC</a>( lua_State *L )</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;{</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name, *str;</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160; </div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160; </div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(cur_mission-&gt;portrait);</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;   cur_mission-&gt;portrait = NULL;</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160; </div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;   free(cur_mission-&gt;npc);</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;   cur_mission-&gt;npc = NULL;</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160; </div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;   <span class="comment">/* For no parameters just leave having freed NPC. */</span></div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;   <span class="keywordflow">if</span> (lua_gettop(L) == 0)</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00501"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#afb82edc3c26d042d9b7afbea5363011f">  501</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#afb82edc3c26d042d9b7afbea5363011f">misn_setNPC</a>( lua_State *L )</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;{</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name, *str, *desc;</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160; </div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160; </div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(cur_mission-&gt;portrait);</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;   cur_mission-&gt;portrait = NULL;</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160; </div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;   free(cur_mission-&gt;npc);</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;   cur_mission-&gt;npc = NULL;</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160; </div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;   free(cur_mission-&gt;npc_desc);</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;   cur_mission-&gt;npc_desc = NULL;</div>
 <div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160; </div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;   <span class="comment">/* Get parameters. */</span></div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;   name = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;   str  = luaL_checkstring(L,2);</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;   <span class="comment">/* For no parameters just leave having freed NPC. */</span></div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;   <span class="keywordflow">if</span> (lua_gettop(L) == 0)</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;      <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160; </div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;   <span class="comment">/* Set NPC name. */</span></div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   cur_mission-&gt;npc = strdup(name);</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160; </div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;   <span class="comment">/* Set portrait. */</span></div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), GFX_PATH<span class="stringliteral">&quot;portraits/%s&quot;</span>, str );</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;   cur_mission-&gt;portrait = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, 0 );</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160; </div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;}</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160; </div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160; </div>
-<div class="line"><a name="l00540"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a0c43078201c8549f2daa899576da792e">  540</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a0c43078201c8549f2daa899576da792e">misn_factions</a>( lua_State *L )</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;{</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;   <a class="code" href="structMissionData.html">MissionData</a> *dat;</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;   LuaFaction f;</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160; </div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;   dat = cur_mission-&gt;data;</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160; </div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;   <span class="comment">/* we&#39;ll push all the factions in table form */</span></div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;   lua_newtable(L);</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(dat-&gt;avail.factions); i++) {</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;      lua_pushnumber(L,i+1); <span class="comment">/* index, starts with 1 */</span></div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;      f = dat-&gt;avail.factions[i];</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;      <a class="code" href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a>(L, f); <span class="comment">/* value */</span></div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;      lua_rawset(L,-3); <span class="comment">/* store the value in the table */</span></div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;   }</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;}</div>
-<div class="line"><a name="l00567"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a9e39666e27ad2c31684507f19b15e856">  567</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a9e39666e27ad2c31684507f19b15e856">misn_accept</a>( lua_State *L )</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;{</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;   <span class="keywordtype">int</span> i, ret;</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission, **misnptr;</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160; </div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;   ret = 0;</div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160; </div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;   <span class="comment">/* find last mission */</span></div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;MISSION_MAX; i++)</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i]-&gt;data == NULL)</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160; </div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160; </div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;   <span class="comment">/* no missions left */</span></div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   <span class="keywordflow">if</span> (cur_mission-&gt;accepted)</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Mission already accepted!&quot;</span>));</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (i&gt;=MISSION_MAX)</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;      ret = 1;</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;   <span class="keywordflow">else</span> { <span class="comment">/* copy it over */</span></div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;      *<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i] = *cur_mission;</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;      memset( cur_mission, 0, <span class="keyword">sizeof</span>(<a class="code" href="structMission.html">Mission</a>) );</div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;      cur_mission = <a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i];</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;      cur_mission-&gt;accepted = 1; <span class="comment">/* Mark as accepted. */</span></div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160; </div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;      <span class="comment">/* Need to change pointer. */</span></div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;      misnptr = lua_newuserdata( L, <span class="keyword">sizeof</span>(<a class="code" href="structMission.html">Mission</a>*) );</div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;      *misnptr = cur_mission;</div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;      nlua_setenv(cur_mission-&gt;env, <span class="stringliteral">&quot;__misn&quot;</span>);</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;   }</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;   <span class="comment">/* Get parameters. */</span></div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   name = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;   str  = luaL_checkstring(L,2);</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;   desc = luaL_checkstring(L,3);</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160; </div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;   <span class="comment">/* Set NPC name and description. */</span></div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;   cur_mission-&gt;npc = strdup(name);</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;   cur_mission-&gt;npc_desc = strdup(desc);</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160; </div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;   <span class="comment">/* Set portrait. */</span></div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), GFX_PATH<span class="stringliteral">&quot;portraits/%s&quot;</span>, str );</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;   cur_mission-&gt;portrait = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, 0 );</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160; </div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;}</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160; </div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160; </div>
+<div class="line"><a name="l00546"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a0c43078201c8549f2daa899576da792e">  546</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a0c43078201c8549f2daa899576da792e">misn_factions</a>( lua_State *L )</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;{</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;   <a class="code" href="structMissionData.html">MissionData</a> *dat;</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;   LuaFaction f;</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160; </div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   dat = cur_mission-&gt;data;</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160; </div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;   <span class="comment">/* we&#39;ll push all the factions in table form */</span></div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;   lua_newtable(L);</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(dat-&gt;avail.factions); i++) {</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;      lua_pushnumber(L,i+1); <span class="comment">/* index, starts with 1 */</span></div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;      f = dat-&gt;avail.factions[i];</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;      <a class="code" href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a>(L, f); <span class="comment">/* value */</span></div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;      lua_rawset(L,-3); <span class="comment">/* store the value in the table */</span></div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;   }</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;}</div>
+<div class="line"><a name="l00573"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a9e39666e27ad2c31684507f19b15e856">  573</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a9e39666e27ad2c31684507f19b15e856">misn_accept</a>( lua_State *L )</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;{</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;   <span class="keywordtype">int</span> i, ret;</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission, **misnptr;</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160; </div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;   ret = 0;</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160; </div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;   <span class="comment">/* find last mission */</span></div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;MISSION_MAX; i++)</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i]-&gt;data == NULL)</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160; </div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160; </div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;   <span class="comment">/* no missions left */</span></div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;   <span class="keywordflow">if</span> (cur_mission-&gt;accepted)</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Mission already accepted!&quot;</span>));</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (i&gt;=MISSION_MAX)</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;      ret = 1;</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;   <span class="keywordflow">else</span> { <span class="comment">/* copy it over */</span></div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;      *<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i] = *cur_mission;</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;      memset( cur_mission, 0, <span class="keyword">sizeof</span>(<a class="code" href="structMission.html">Mission</a>) );</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;      cur_mission = <a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i];</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;      cur_mission-&gt;accepted = 1; <span class="comment">/* Mark as accepted. */</span></div>
 <div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160; </div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;   lua_pushboolean(L,!ret); <span class="comment">/* we&#39;ll convert C style return to Lua */</span></div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;}</div>
-<div class="line"><a name="l00611"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a566fb35f7a927f0ba197f0218346ce85">  611</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a566fb35f7a927f0ba197f0218346ce85">misn_finish</a>( lua_State *L )</div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;{</div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a>;</div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160; </div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;   <span class="keywordflow">if</span> (lua_isboolean(L,1))</div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;      b = lua_toboolean(L,1);</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;      lua_pushstring(L, NLUA_DONE);</div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;      lua_error(L); <span class="comment">/* THERE IS NO RETURN */</span></div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;   }</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160; </div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160; </div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;   lua_pushboolean( L, 1 );</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;   nlua_setenv(cur_mission-&gt;env, <span class="stringliteral">&quot;__misn_delete&quot;</span>);</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160; </div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;   <span class="keywordflow">if</span> (b &amp;&amp; mis_isFlag(cur_mission-&gt;data,MISSION_UNIQUE))</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;      <a class="code" href="player_8c.html#acceaacc7d700db4a8c294b06ee243dba">player_missionFinished</a>( <a class="code" href="mission_8c.html#ab6f7e7d4d7d03985b4d6f12a9bd6fc96">mission_getID</a>( cur_mission-&gt;data-&gt;name ) );</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;      <span class="comment">/* Need to change pointer. */</span></div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;      misnptr = lua_newuserdata( L, <span class="keyword">sizeof</span>(<a class="code" href="structMission.html">Mission</a>*) );</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;      *misnptr = cur_mission;</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;      nlua_setenv(cur_mission-&gt;env, <span class="stringliteral">&quot;__misn&quot;</span>);</div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;   }</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160; </div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;   lua_pushboolean(L,!ret); <span class="comment">/* we&#39;ll convert C style return to Lua */</span></div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;}</div>
+<div class="line"><a name="l00617"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a566fb35f7a927f0ba197f0218346ce85">  617</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a566fb35f7a927f0ba197f0218346ce85">misn_finish</a>( lua_State *L )</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;{</div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a>;</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160; </div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;   <span class="keywordflow">if</span> (lua_isboolean(L,1))</div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;      b = lua_toboolean(L,1);</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;      lua_pushstring(L, NLUA_DONE);</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;      lua_error(L); <span class="comment">/* THERE IS NO RETURN */</span></div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;   }</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160; </div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
 <div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160; </div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   lua_pushstring(L, NLUA_DONE);</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   lua_error(L); <span class="comment">/* shouldn&#39;t return */</span></div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   lua_pushboolean( L, 1 );</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   nlua_setenv(cur_mission-&gt;env, <span class="stringliteral">&quot;__misn_delete&quot;</span>);</div>
 <div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160; </div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;}</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   <span class="keywordflow">if</span> (b &amp;&amp; mis_isFlag(cur_mission-&gt;data,MISSION_UNIQUE))</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;      <a class="code" href="player_8c.html#acceaacc7d700db4a8c294b06ee243dba">player_missionFinished</a>( <a class="code" href="mission_8c.html#ab6f7e7d4d7d03985b4d6f12a9bd6fc96">mission_getID</a>( cur_mission-&gt;data-&gt;name ) );</div>
 <div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160; </div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160; </div>
-<div class="line"><a name="l00648"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#aedabb17f821a3ddd1b25cccfb5de1f37">  648</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#aedabb17f821a3ddd1b25cccfb5de1f37">misn_cargoAdd</a>( lua_State *L )</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;{</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *cname;</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *cargo;</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;   <span class="keywordtype">int</span> quantity, ret;</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160; </div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;   <span class="comment">/* Parameters. */</span></div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;   cname    = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;   quantity = luaL_checkint(L,2);</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;   cargo = commodity_get( cname );</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160; </div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;   <span class="comment">/* Check if the cargo exists. */</span></div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   <span class="keywordflow">if</span> (cargo == NULL) {</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Cargo &#39;%s&#39; not found.&quot;</span>), cname);</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   }</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   lua_pushstring(L, NLUA_DONE);</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;   lua_error(L); <span class="comment">/* shouldn&#39;t return */</span></div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160; </div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;}</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160; </div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160; </div>
+<div class="line"><a name="l00654"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#aedabb17f821a3ddd1b25cccfb5de1f37">  654</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#aedabb17f821a3ddd1b25cccfb5de1f37">misn_cargoAdd</a>( lua_State *L )</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;{</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *cname;</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *cargo;</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;   <span class="keywordtype">int</span> quantity, ret;</div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160; </div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   <span class="comment">/* Parameters. */</span></div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   cname    = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   quantity = luaL_checkint(L,2);</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   cargo = commodity_get( cname );</div>
 <div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160; </div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160; </div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   <span class="comment">/* First try to add the cargo. */</span></div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;   ret = <a class="code" href="pilot__cargo_8c.html#a2936ec91cb7f5e8bc8be0504f830a8f7">pilot_addMissionCargo</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, cargo, quantity );</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;   <a class="code" href="mission_8c.html#a42cda5460294ebae411b631f430a5857">mission_linkCargo</a>( cur_mission, ret );</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   <span class="comment">/* Check if the cargo exists. */</span></div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;   <span class="keywordflow">if</span> (cargo == NULL) {</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Cargo &#39;%s&#39; not found.&quot;</span>), cname);</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;   }</div>
 <div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160; </div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;   lua_pushnumber(L, ret);</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;}</div>
-<div class="line"><a name="l00682"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a6bdc938a8d4843a42addeba1c2f4a703">  682</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a6bdc938a8d4843a42addeba1c2f4a703">misn_cargoRm</a>( lua_State *L )</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;{</div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160; </div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;   <span class="keywordtype">id</span> = luaL_checklong(L,1);</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160; </div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;   <span class="comment">/* First try to remove the cargo from player. */</span></div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#a9ebf0a667e4b8a154a951770e0013420">pilot_rmMissionCargo</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, <span class="keywordtype">id</span>, 0 ) != 0) {</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;      lua_pushboolean(L,0);</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;   }</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160; </div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;   <span class="comment">/* First try to add the cargo. */</span></div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;   ret = <a class="code" href="pilot__cargo_8c.html#a2936ec91cb7f5e8bc8be0504f830a8f7">pilot_addMissionCargo</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, cargo, quantity );</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;   <a class="code" href="mission_8c.html#a42cda5460294ebae411b631f430a5857">mission_linkCargo</a>( cur_mission, ret );</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160; </div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;   lua_pushnumber(L, ret);</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;}</div>
+<div class="line"><a name="l00688"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a6bdc938a8d4843a42addeba1c2f4a703">  688</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a6bdc938a8d4843a42addeba1c2f4a703">misn_cargoRm</a>( lua_State *L )</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;{</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160; </div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;   <span class="keywordtype">id</span> = luaL_checklong(L,1);</div>
 <div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160; </div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160; </div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;   <span class="comment">/* Now unlink the mission cargo if it was successful. */</span></div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;   ret = <a class="code" href="mission_8c.html#ae75ed34a4a407ee72de7f62595f5c958">mission_unlinkCargo</a>( cur_mission, <span class="keywordtype">id</span> );</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160; </div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;   lua_pushboolean(L,!ret);</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;}</div>
-<div class="line"><a name="l00711"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#acf1a00e9782f1a6a4e9ba590012104da">  711</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#acf1a00e9782f1a6a4e9ba590012104da">misn_cargoJet</a>( lua_State *L )</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;{</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160; </div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;   <span class="keywordtype">id</span> = luaL_checklong(L,1);</div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160; </div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;   <span class="comment">/* First try to remove the cargo from player. */</span></div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#a9ebf0a667e4b8a154a951770e0013420">pilot_rmMissionCargo</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, <span class="keywordtype">id</span>, 1 ) != 0) {</div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;      lua_pushboolean(L,0);</div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   }</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   <span class="comment">/* First try to remove the cargo from player. */</span></div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#a9ebf0a667e4b8a154a951770e0013420">pilot_rmMissionCargo</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, <span class="keywordtype">id</span>, 0 ) != 0) {</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;      lua_pushboolean(L,0);</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;   }</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160; </div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160; </div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;   <span class="comment">/* Now unlink the mission cargo if it was successful. */</span></div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;   ret = <a class="code" href="mission_8c.html#ae75ed34a4a407ee72de7f62595f5c958">mission_unlinkCargo</a>( cur_mission, <span class="keywordtype">id</span> );</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160; </div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;   lua_pushboolean(L,!ret);</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;}</div>
+<div class="line"><a name="l00717"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#acf1a00e9782f1a6a4e9ba590012104da">  717</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#acf1a00e9782f1a6a4e9ba590012104da">misn_cargoJet</a>( lua_State *L )</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;{</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160; </div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   <span class="keywordtype">id</span> = luaL_checklong(L,1);</div>
 <div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160; </div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160; </div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;   <span class="comment">/* Now unlink the mission cargo if it was successful. */</span></div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;   ret = <a class="code" href="mission_8c.html#ae75ed34a4a407ee72de7f62595f5c958">mission_unlinkCargo</a>( cur_mission, <span class="keywordtype">id</span> );</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160; </div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;   lua_pushboolean(L,!ret);</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;}</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160; </div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160; </div>
-<div class="line"><a name="l00747"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a6a89f6a26fe28d972ad20012630a3830">  747</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a6a89f6a26fe28d972ad20012630a3830">misn_osdCreate</a>( lua_State *L )</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;{</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *title;</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;   <span class="keywordtype">int</span> nitems;</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;   <span class="keywordtype">char</span> **items;</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160; </div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160; </div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;   <span class="comment">/* Must be accepted. */</span></div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;   <span class="keywordflow">if</span> (!cur_mission-&gt;accepted) {</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;      WARN(_(<span class="stringliteral">&quot;Can&#39;t create an OSD on an unaccepted mission!&quot;</span>));</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   }</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   <span class="comment">/* First try to remove the cargo from player. */</span></div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#a9ebf0a667e4b8a154a951770e0013420">pilot_rmMissionCargo</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, <span class="keywordtype">id</span>, 1 ) != 0) {</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;      lua_pushboolean(L,0);</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;   }</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160; </div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160; </div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;   <span class="comment">/* Now unlink the mission cargo if it was successful. */</span></div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;   ret = <a class="code" href="mission_8c.html#ae75ed34a4a407ee72de7f62595f5c958">mission_unlinkCargo</a>( cur_mission, <span class="keywordtype">id</span> );</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160; </div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;   lua_pushboolean(L,!ret);</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;}</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160; </div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160; </div>
+<div class="line"><a name="l00753"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a6a89f6a26fe28d972ad20012630a3830">  753</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a6a89f6a26fe28d972ad20012630a3830">misn_osdCreate</a>( lua_State *L )</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;{</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *title;</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;   <span class="keywordtype">int</span> nitems;</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;   <span class="keywordtype">char</span> **items;</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160; </div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
 <div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160; </div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;   <span class="comment">/* Check parameters. */</span></div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;   title  = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;   luaL_checktype(L,2,LUA_TTABLE);</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;   nitems = lua_objlen(L,2);</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160; </div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;   <span class="comment">/* Destroy OSD if already exists. */</span></div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;   <span class="keywordflow">if</span> (cur_mission-&gt;osd != 0) {</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;      osd_destroy( cur_mission-&gt;osd );</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;      cur_mission-&gt;osd = 0;</div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;   }</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;   <span class="comment">/* Must be accepted. */</span></div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;   <span class="keywordflow">if</span> (!cur_mission-&gt;accepted) {</div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;      WARN(_(<span class="stringliteral">&quot;Can&#39;t create an OSD on an unaccepted mission!&quot;</span>));</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;   }</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;   <span class="comment">/* Check parameters. */</span></div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;   title  = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;   luaL_checktype(L,2,LUA_TTABLE);</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;   nitems = lua_objlen(L,2);</div>
 <div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160; </div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;   <span class="comment">/* Allocate items. */</span></div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;   items = calloc( nitems, <span class="keyword">sizeof</span>(<span class="keywordtype">char</span> *) );</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160; </div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;   <span class="comment">/* Get items. */</span></div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nitems; i++) {</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;      lua_pushnumber(L,i+1);</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;      lua_gettable(L,2);</div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;      <span class="keywordflow">if</span> (!lua_isstring(L,-1)) {</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;         free(items);</div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;         luaL_typerror(L, -1, <span class="stringliteral">&quot;string&quot;</span>);</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      }</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;      items[i] = strdup( lua_tostring(L, -1) );</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      lua_pop(L,1);</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;   }</div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160; </div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;   <span class="comment">/* Create OSD. */</span></div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;   cur_mission-&gt;osd = osd_create( title, nitems, (<span class="keyword">const</span> <span class="keywordtype">char</span>**) items,</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;         cur_mission-&gt;data-&gt;avail.priority );</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;   cur_mission-&gt;osd_set = 1; <span class="comment">/* OSD was explicitly set. */</span></div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160; </div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;   <span class="comment">/* Free items. */</span></div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nitems; i++)</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;      free(items[i]);</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   free(items);</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160; </div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;}</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160; </div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160; </div>
-<div class="line"><a name="l00809"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a545356a9f2e73e04aa62d61a35721d61">  809</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a545356a9f2e73e04aa62d61a35721d61">misn_osdDestroy</a>( lua_State *L )</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;{</div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160; </div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;   <span class="keywordflow">if</span> (cur_mission-&gt;osd != 0) {</div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;      osd_destroy( cur_mission-&gt;osd );</div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;      cur_mission-&gt;osd = 0;</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;   }</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160; </div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;}</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160; </div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160; </div>
-<div class="line"><a name="l00831"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a4eccf56e59cf282b0060399c6f5dc78f">  831</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a4eccf56e59cf282b0060399c6f5dc78f">misn_osdActive</a>( lua_State *L )</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;{</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   <span class="keywordtype">int</span> n;</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160; </div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;   n = luaL_checkint(L,1);</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;   n = n-1; <span class="comment">/* Convert to C index. */</span></div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160; </div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160; </div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;   <span class="keywordflow">if</span> (cur_mission-&gt;osd != 0)</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;      osd_active( cur_mission-&gt;osd, n );</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160; </div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;}</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;   <span class="comment">/* Destroy OSD if already exists. */</span></div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;   <span class="keywordflow">if</span> (cur_mission-&gt;osd != 0) {</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;      osd_destroy( cur_mission-&gt;osd );</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;      cur_mission-&gt;osd = 0;</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   }</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160; </div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;   <span class="comment">/* Allocate items. */</span></div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;   items = calloc( nitems, <span class="keyword">sizeof</span>(<span class="keywordtype">char</span> *) );</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160; </div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;   <span class="comment">/* Get items. */</span></div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nitems; i++) {</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      lua_pushnumber(L,i+1);</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;      lua_gettable(L,2);</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      <span class="keywordflow">if</span> (!lua_isstring(L,-1)) {</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;         free(items);</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;         luaL_typerror(L, -1, <span class="stringliteral">&quot;string&quot;</span>);</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;      }</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;      items[i] = strdup( lua_tostring(L, -1) );</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;      lua_pop(L,1);</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;   }</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160; </div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   <span class="comment">/* Create OSD. */</span></div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;   cur_mission-&gt;osd = osd_create( title, nitems, (<span class="keyword">const</span> <span class="keywordtype">char</span>**) items,</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;         cur_mission-&gt;data-&gt;avail.priority );</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;   cur_mission-&gt;osd_set = 1; <span class="comment">/* OSD was explicitly set. */</span></div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160; </div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;   <span class="comment">/* Free items. */</span></div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nitems; i++)</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;      free(items[i]);</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;   free(items);</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160; </div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;}</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160; </div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160; </div>
+<div class="line"><a name="l00815"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a545356a9f2e73e04aa62d61a35721d61">  815</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a545356a9f2e73e04aa62d61a35721d61">misn_osdDestroy</a>( lua_State *L )</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;{</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160; </div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;   <span class="keywordflow">if</span> (cur_mission-&gt;osd != 0) {</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;      osd_destroy( cur_mission-&gt;osd );</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;      cur_mission-&gt;osd = 0;</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;   }</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160; </div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;}</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160; </div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160; </div>
+<div class="line"><a name="l00837"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a4eccf56e59cf282b0060399c6f5dc78f">  837</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a4eccf56e59cf282b0060399c6f5dc78f">misn_osdActive</a>( lua_State *L )</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;{</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;   <span class="keywordtype">int</span> n;</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160; </div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;   n = luaL_checkint(L,1);</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;   n = n-1; <span class="comment">/* Convert to C index. */</span></div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160; </div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
 <div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160; </div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> misn_osdGetActiveItem( lua_State *L )</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;{</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160; </div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;   <span class="keywordtype">char</span> **items = osd_getItems(cur_mission-&gt;osd);</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;   <span class="keywordtype">int</span> active   = osd_getActive(cur_mission-&gt;osd);</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160; </div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;   <span class="keywordflow">if</span> (!items || active &lt; 0) {</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;      lua_pushnil(L);</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;   }</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160; </div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;   lua_pushstring(L, items[active]);</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;}</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160; </div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160; </div>
-<div class="line"><a name="l00881"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#adedae59c4fa0c6c834a64ea4544dd406">  881</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#adedae59c4fa0c6c834a64ea4544dd406">misn_npcAdd</a>( lua_State *L )</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;{</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;   <span class="keywordtype">int</span> priority;</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *func, *name, *gfx, *desc, *bg;</div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;   <span class="keywordtype">char</span> portrait[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>], background[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160; </div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   func = luaL_checkstring(L, 1);</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;   name = luaL_checkstring(L, 2);</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;   gfx  = luaL_checkstring(L, 3);</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;   desc = luaL_checkstring(L, 4);</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160; </div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   <span class="comment">/* Optional parameters. */</span></div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;   priority = luaL_optinteger(L,5,5);</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;   bg   = luaL_optstring(L,6,NULL);</div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;   <span class="keywordflow">if</span> (cur_mission-&gt;osd != 0)</div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;      osd_active( cur_mission-&gt;osd, n );</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160; </div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;}</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160; </div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> misn_osdGetActiveItem( lua_State *L )</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;{</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160; </div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;   <span class="keywordtype">char</span> **items = osd_getItems(cur_mission-&gt;osd);</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;   <span class="keywordtype">int</span> active   = osd_getActive(cur_mission-&gt;osd);</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160; </div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;   <span class="keywordflow">if</span> (!items || active &lt; 0) {</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;      lua_pushnil(L);</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;   }</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160; </div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;   lua_pushstring(L, items[active]);</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;}</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160; </div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160; </div>
+<div class="line"><a name="l00885"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#adedae59c4fa0c6c834a64ea4544dd406">  885</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#adedae59c4fa0c6c834a64ea4544dd406">misn_npcAdd</a>( lua_State *L )</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;{</div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;   <span class="keywordtype">int</span> priority;</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *func, *name, *gfx, *desc, *bg;</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   <span class="keywordtype">char</span> portrait[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>], background[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160; </div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;   func = luaL_checkstring(L, 1);</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   name = luaL_checkstring(L, 2);</div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;   gfx  = luaL_checkstring(L, 3);</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;   desc = luaL_checkstring(L, 4);</div>
 <div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160; </div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;   <span class="comment">/* Set path. */</span></div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;   snprintf( portrait, <span class="keyword">sizeof</span>(portrait), GFX_PATH<span class="stringliteral">&quot;portraits/%s&quot;</span>, gfx );</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   <span class="keywordflow">if</span> (bg!=NULL)</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;      snprintf( background, <span class="keyword">sizeof</span>(background), GFX_PATH<span class="stringliteral">&quot;portraits/%s&quot;</span>, bg );</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160; </div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160; </div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;   <span class="comment">/* Add npc. */</span></div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="npc_8c.html#a1efec62bac41473d7821e17245d7d956">npc_add_mission</a>( cur_mission-&gt;id, func, name, priority, portrait, desc, (bg==NULL) ? bg :background );</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160; </div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   <span class="comment">/* Regenerate bar. */</span></div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   <a class="code" href="land_8c.html#a005d4e974a6f9a7e7fe8b20a9cc2e5ec">bar_regen</a>();</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160; </div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;   <span class="comment">/* Return ID. */</span></div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;   <span class="keywordflow">if</span> (<span class="keywordtype">id</span> &gt; 0) {</div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;      lua_pushnumber( L, <span class="keywordtype">id</span> );</div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;   }</div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;}</div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160; </div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160; </div>
-<div class="line"><a name="l00929"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a342cd5d5548cf21ea8989455f12296d8">  929</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a342cd5d5548cf21ea8989455f12296d8">misn_npcRm</a>( lua_State *L )</div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;{</div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160; </div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;   <span class="keywordtype">id</span> = luaL_checklong(L, 1);</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   ret = <a class="code" href="npc_8c.html#aca5284c3980b38aa6269eb532151ff87">npc_rm_mission</a>( <span class="keywordtype">id</span>, cur_mission-&gt;id );</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;   <span class="comment">/* Optional parameters. */</span></div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;   priority = luaL_optinteger(L,5,5);</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   bg   = luaL_optstring(L,6,NULL);</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160; </div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;   <span class="comment">/* Set path. */</span></div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;   snprintf( portrait, <span class="keyword">sizeof</span>(portrait), GFX_PATH<span class="stringliteral">&quot;portraits/%s&quot;</span>, gfx );</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;   <span class="keywordflow">if</span> (bg!=NULL)</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;      snprintf( background, <span class="keyword">sizeof</span>(background), GFX_PATH<span class="stringliteral">&quot;portraits/%s&quot;</span>, bg );</div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160; </div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160; </div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   <span class="comment">/* Add npc. */</span></div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="npc_8c.html#a1efec62bac41473d7821e17245d7d956">npc_add_mission</a>( cur_mission-&gt;id, func, name, priority, portrait, desc, (bg==NULL) ? bg :background );</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160; </div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;   <span class="comment">/* Regenerate bar. */</span></div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;   <a class="code" href="land_8c.html#a005d4e974a6f9a7e7fe8b20a9cc2e5ec">bar_regen</a>();</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160; </div>
+<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;   <span class="comment">/* Return ID. */</span></div>
+<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;   <span class="keywordflow">if</span> (<span class="keywordtype">id</span> &gt; 0) {</div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;      lua_pushnumber( L, <span class="keywordtype">id</span> );</div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;   }</div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;}</div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160; </div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160; </div>
+<div class="line"><a name="l00933"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a342cd5d5548cf21ea8989455f12296d8">  933</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a342cd5d5548cf21ea8989455f12296d8">misn_npcRm</a>( lua_State *L )</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;{</div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
 <div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160; </div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;   <span class="comment">/* Regenerate bar. */</span></div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;   <a class="code" href="land_8c.html#a005d4e974a6f9a7e7fe8b20a9cc2e5ec">bar_regen</a>();</div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160; </div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;   <span class="keywordflow">if</span> (ret != 0)</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Invalid NPC ID!&quot;</span>));</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;}</div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160; </div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160; </div>
-<div class="line"><a name="l00965"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a81b0a6fe811b2b92fd594ae561cf254d">  965</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a81b0a6fe811b2b92fd594ae561cf254d">misn_claim</a>( lua_State *L )</div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;{</div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;   Claim_t *claim;</div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160; </div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;   <span class="comment">/* Get mission. */</span></div>
-<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
-<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160; </div>
-<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;   <span class="comment">/* Check to see if already claimed. */</span></div>
-<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="claim_8c.html#a09eb4cf183b066367c0893f3c49bdab1">claim_isNull</a>(cur_mission-&gt;claims)) {</div>
-<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Mission trying to claim but already has.&quot;</span>));</div>
-<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;   }</div>
-<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160; </div>
-<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;   <span class="comment">/* Create the claim. */</span></div>
-<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;   claim = <a class="code" href="claim_8c.html#a0376d1989dda916fa9357f9a0a06b153">claim_create</a>();</div>
-<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160; </div>
-<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;   <span class="keywordflow">if</span> (lua_istable(L,1)) {</div>
-<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160;      <span class="comment">/* Iterate over table. */</span></div>
-<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;      lua_pushnil(L);</div>
-<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160;      <span class="keywordflow">while</span> (lua_next(L, 1) != 0) {</div>
-<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a>(L,-1))</div>
-<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;            <a class="code" href="claim_8c.html#a7ef75de0fdd741332c5b4c8c516f6340">claim_addSys</a>( claim, <a class="code" href="nlua__system_8c.html#ab5cfd75f7e72e8fc7f08fdc02ede028d">lua_tosystem</a>( L, -1 ) );</div>
-<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lua_isstring(L,-1))</div>
-<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;            <a class="code" href="claim_8c.html#a65668ac79196f426586cc12fb13cfa33">claim_addStr</a>( claim, lua_tostring( L, -1 ) );</div>
-<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;         lua_pop(L,1);</div>
-<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;      }</div>
-<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;   }</div>
-<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a>(L, 1))</div>
-<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;      <a class="code" href="claim_8c.html#a7ef75de0fdd741332c5b4c8c516f6340">claim_addSys</a>( claim, <a class="code" href="nlua__system_8c.html#ab5cfd75f7e72e8fc7f08fdc02ede028d">lua_tosystem</a>( L, 1 ) );</div>
-<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lua_isstring(L, 1))</div>
-<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;      <a class="code" href="claim_8c.html#a65668ac79196f426586cc12fb13cfa33">claim_addStr</a>( claim, lua_tostring( L, 1 ) );</div>
-<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
-<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160; </div>
-<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;   <span class="comment">/* Test claim. */</span></div>
-<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="claim_8c.html#aef8457eb8ed5333d5a146af8f436c63c">claim_test</a>( claim )) {</div>
-<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;      <a class="code" href="claim_8c.html#a37b28c3b7f8d99b280d289269ff268ac">claim_destroy</a>( claim );</div>
-<div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160;      lua_pushboolean(L,0);</div>
-<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;   }</div>
-<div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160; </div>
-<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160;   <span class="comment">/* Set the claim. */</span></div>
-<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160;   cur_mission-&gt;claims = claim;</div>
-<div class="line"><a name="l01009"></a><span class="lineno"> 1009</span>&#160;   <a class="code" href="claim_8c.html#a8afa8feb0d1d488c6c2529abc502293d">claim_activate</a>( claim );</div>
-<div class="line"><a name="l01010"></a><span class="lineno"> 1010</span>&#160;   lua_pushboolean(L,1);</div>
-<div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;}</div>
-<div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160; </div>
+<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;   <span class="keywordtype">id</span> = luaL_checklong(L, 1);</div>
+<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;   ret = <a class="code" href="npc_8c.html#aca5284c3980b38aa6269eb532151ff87">npc_rm_mission</a>( <span class="keywordtype">id</span>, cur_mission-&gt;id );</div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160; </div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;   <span class="comment">/* Regenerate bar. */</span></div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;   <a class="code" href="land_8c.html#a005d4e974a6f9a7e7fe8b20a9cc2e5ec">bar_regen</a>();</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160; </div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;   <span class="keywordflow">if</span> (ret != 0)</div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Invalid NPC ID!&quot;</span>));</div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;}</div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160; </div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160; </div>
+<div class="line"><a name="l00969"></a><span class="lineno"><a class="line" href="nlua__misn_8c.html#a81b0a6fe811b2b92fd594ae561cf254d">  969</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__misn_8c.html#a81b0a6fe811b2b92fd594ae561cf254d">misn_claim</a>( lua_State *L )</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;{</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;   Claim_t *claim;</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;   <a class="code" href="structMission.html">Mission</a> *cur_mission;</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160; </div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;   <span class="comment">/* Get mission. */</span></div>
+<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;   cur_mission = <a class="code" href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a>(L);</div>
+<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160; </div>
+<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;   <span class="comment">/* Check to see if already claimed. */</span></div>
+<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="claim_8c.html#a09eb4cf183b066367c0893f3c49bdab1">claim_isNull</a>(cur_mission-&gt;claims)) {</div>
+<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Mission trying to claim but already has.&quot;</span>));</div>
+<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;   }</div>
+<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160; </div>
+<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160;   <span class="comment">/* Create the claim. */</span></div>
+<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;   claim = <a class="code" href="claim_8c.html#a0376d1989dda916fa9357f9a0a06b153">claim_create</a>();</div>
+<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160; </div>
+<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;   <span class="keywordflow">if</span> (lua_istable(L,1)) {</div>
+<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;      <span class="comment">/* Iterate over table. */</span></div>
+<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;      lua_pushnil(L);</div>
+<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;      <span class="keywordflow">while</span> (lua_next(L, 1) != 0) {</div>
+<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a>(L,-1))</div>
+<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;            <a class="code" href="claim_8c.html#a7ef75de0fdd741332c5b4c8c516f6340">claim_addSys</a>( claim, <a class="code" href="nlua__system_8c.html#ab5cfd75f7e72e8fc7f08fdc02ede028d">lua_tosystem</a>( L, -1 ) );</div>
+<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lua_isstring(L,-1))</div>
+<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;            <a class="code" href="claim_8c.html#a65668ac79196f426586cc12fb13cfa33">claim_addStr</a>( claim, lua_tostring( L, -1 ) );</div>
+<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;         lua_pop(L,1);</div>
+<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;      }</div>
+<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;   }</div>
+<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a>(L, 1))</div>
+<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;      <a class="code" href="claim_8c.html#a7ef75de0fdd741332c5b4c8c516f6340">claim_addSys</a>( claim, <a class="code" href="nlua__system_8c.html#ab5cfd75f7e72e8fc7f08fdc02ede028d">lua_tosystem</a>( L, 1 ) );</div>
+<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lua_isstring(L, 1))</div>
+<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;      <a class="code" href="claim_8c.html#a65668ac79196f426586cc12fb13cfa33">claim_addStr</a>( claim, lua_tostring( L, 1 ) );</div>
+<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
+<div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160; </div>
+<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;   <span class="comment">/* Test claim. */</span></div>
+<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="claim_8c.html#aef8457eb8ed5333d5a146af8f436c63c">claim_test</a>( claim )) {</div>
+<div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160;      <a class="code" href="claim_8c.html#a37b28c3b7f8d99b280d289269ff268ac">claim_destroy</a>( claim );</div>
+<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160;      lua_pushboolean(L,0);</div>
+<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01009"></a><span class="lineno"> 1009</span>&#160;   }</div>
+<div class="line"><a name="l01010"></a><span class="lineno"> 1010</span>&#160; </div>
+<div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160;   <span class="comment">/* Set the claim. */</span></div>
+<div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;   cur_mission-&gt;claims = claim;</div>
+<div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;   <a class="code" href="claim_8c.html#a8afa8feb0d1d488c6c2529abc502293d">claim_activate</a>( claim );</div>
+<div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160;   lua_pushboolean(L,1);</div>
+<div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;}</div>
+<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructCommodity_html"><div class="ttname"><a href="structCommodity.html">Commodity</a></div><div class="ttdoc">Represents a commodity.</div></div>
 <div class="ttc" id="anlua__misn_8c_html_aff6cf6e67d87e1f6d6b9f9b7c913df8c"><div class="ttname"><a href="nlua__misn_8c.html#aff6cf6e67d87e1f6d6b9f9b7c913df8c">misn_run</a></div><div class="ttdeci">int misn_run(Mission *misn, const char *func)</div><div class="ttdoc">Runs a mission function.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00181">nlua_misn.c:181</a></div></div>
 <div class="ttc" id="anpc_8c_html_aca5284c3980b38aa6269eb532151ff87"><div class="ttname"><a href="npc_8c.html#aca5284c3980b38aa6269eb532151ff87">npc_rm_mission</a></div><div class="ttdeci">int npc_rm_mission(unsigned int id, unsigned int mid)</div><div class="ttdoc">removes a mission NPC.</div><div class="ttdef"><b>Definition:</b> <a href="npc_8c_source.html#l00278">npc.c:278</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_af47a8f8bffdc840451e5a6768c46b69d"><div class="ttname"><a href="nlua__misn_8c.html#af47a8f8bffdc840451e5a6768c46b69d">misn_loadLibs</a></div><div class="ttdeci">int misn_loadLibs(nlua_env env)</div><div class="ttdoc">Registers all the mission libraries.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00123">nlua_misn.c:123</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_a81b0a6fe811b2b92fd594ae561cf254d"><div class="ttname"><a href="nlua__misn_8c.html#a81b0a6fe811b2b92fd594ae561cf254d">misn_claim</a></div><div class="ttdeci">static int misn_claim(lua_State *L)</div><div class="ttdoc">Tries to claim systems or strings.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00965">nlua_misn.c:965</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_a81b0a6fe811b2b92fd594ae561cf254d"><div class="ttname"><a href="nlua__misn_8c.html#a81b0a6fe811b2b92fd594ae561cf254d">misn_claim</a></div><div class="ttdeci">static int misn_claim(lua_State *L)</div><div class="ttdoc">Tries to claim systems or strings.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00969">nlua_misn.c:969</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_adc6349e181151c3acae34a8e60a17ef2"><div class="ttname"><a href="nlua__misn_8c.html#adc6349e181151c3acae34a8e60a17ef2">misn_markerRm</a></div><div class="ttdeci">static int misn_markerRm(lua_State *L)</div><div class="ttdoc">Removes a mission system marker.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00452">nlua_misn.c:452</a></div></div>
 <div class="ttc" id="anlua__system_8c_html_aff6c85f01c3a5bab7773e3af9de95bfa"><div class="ttname"><a href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a></div><div class="ttdeci">int lua_issystem(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a system.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00198">nlua_system.c:198</a></div></div>
 <div class="ttc" id="aplayer_8c_html_acceaacc7d700db4a8c294b06ee243dba"><div class="ttname"><a href="player_8c.html#acceaacc7d700db4a8c294b06ee243dba">player_missionFinished</a></div><div class="ttdeci">void player_missionFinished(int id)</div><div class="ttdoc">Marks a mission as completed.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02677">player.c:2677</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_a175948c976006bdb435e3b8ab314957d"><div class="ttname"><a href="nlua__misn_8c.html#a175948c976006bdb435e3b8ab314957d">misn_methods</a></div><div class="ttdeci">static const luaL_Reg misn_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00092">nlua_misn.c:92</a></div></div>
 <div class="ttc" id="amission_8c_html_ae75ed34a4a407ee72de7f62595f5c958"><div class="ttname"><a href="mission_8c.html#ae75ed34a4a407ee72de7f62595f5c958">mission_unlinkCargo</a></div><div class="ttdeci">int mission_unlinkCargo(Mission *misn, unsigned int cargo_id)</div><div class="ttdoc">Unlinks cargo from the mission, removes it from the player.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00468">mission.c:468</a></div></div>
 <div class="ttc" id="aclaim_8c_html_a0376d1989dda916fa9357f9a0a06b153"><div class="ttname"><a href="claim_8c.html#a0376d1989dda916fa9357f9a0a06b153">claim_create</a></div><div class="ttdeci">Claim_t * claim_create(void)</div><div class="ttdoc">Creates a system claim.</div><div class="ttdef"><b>Definition:</b> <a href="claim_8c_source.html#l00041">claim.c:41</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_adedae59c4fa0c6c834a64ea4544dd406"><div class="ttname"><a href="nlua__misn_8c.html#adedae59c4fa0c6c834a64ea4544dd406">misn_npcAdd</a></div><div class="ttdeci">static int misn_npcAdd(lua_State *L)</div><div class="ttdoc">Adds an NPC.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00881">nlua_misn.c:881</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_adedae59c4fa0c6c834a64ea4544dd406"><div class="ttname"><a href="nlua__misn_8c.html#adedae59c4fa0c6c834a64ea4544dd406">misn_npcAdd</a></div><div class="ttdeci">static int misn_npcAdd(lua_State *L)</div><div class="ttdoc">Adds an NPC.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00885">nlua_misn.c:885</a></div></div>
 <div class="ttc" id="aclaim_8c_html_a37b28c3b7f8d99b280d289269ff268ac"><div class="ttname"><a href="claim_8c.html#a37b28c3b7f8d99b280d289269ff268ac">claim_destroy</a></div><div class="ttdeci">void claim_destroy(Claim_t *claim)</div><div class="ttdoc">Destroys a system claim.</div><div class="ttdef"><b>Definition:</b> <a href="claim_8c_source.html#l00203">claim.c:203</a></div></div>
 <div class="ttc" id="anlua__camera_8c_html_a8aaa6d3c63da1b6ee1e0fbc7ad01ab3d"><div class="ttname"><a href="nlua__camera_8c.html#a8aaa6d3c63da1b6ee1e0fbc7ad01ab3d">nlua_loadCamera</a></div><div class="ttdeci">int nlua_loadCamera(nlua_env env)</div><div class="ttdoc">Loads the camera library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__camera_8c_source.html#l00053">nlua_camera.c:53</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_a60703c9697f2bcb2dd906ce09bacdcf1"><div class="ttname"><a href="nlua__misn_8c.html#a60703c9697f2bcb2dd906ce09bacdcf1">misn_markerMove</a></div><div class="ttdeci">static int misn_markerMove(lua_State *L)</div><div class="ttdoc">Moves a marker to a new system.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00408">nlua_misn.c:408</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_a4eccf56e59cf282b0060399c6f5dc78f"><div class="ttname"><a href="nlua__misn_8c.html#a4eccf56e59cf282b0060399c6f5dc78f">misn_osdActive</a></div><div class="ttdeci">static int misn_osdActive(lua_State *L)</div><div class="ttdoc">Sets active in mission OSD.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00831">nlua_misn.c:831</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_a4eccf56e59cf282b0060399c6f5dc78f"><div class="ttname"><a href="nlua__misn_8c.html#a4eccf56e59cf282b0060399c6f5dc78f">misn_osdActive</a></div><div class="ttdeci">static int misn_osdActive(lua_State *L)</div><div class="ttdoc">Sets active in mission OSD.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00837">nlua_misn.c:837</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_a8731dbe54e71fecf50c5be9068179bf1"><div class="ttname"><a href="nlua__misn_8c.html#a8731dbe54e71fecf50c5be9068179bf1">misn_getFromLua</a></div><div class="ttdeci">Mission * misn_getFromLua(lua_State *L)</div><div class="ttdoc">Gets the mission that's being currently run in Lua.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00197">nlua_misn.c:197</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_aac56673d1d6b225af654ef3dabd336b7"><div class="ttname"><a href="nlua__misn_8c.html#aac56673d1d6b225af654ef3dabd336b7">misn_setDesc</a></div><div class="ttdeci">static int misn_setDesc(lua_State *L)</div><div class="ttdoc">Sets the current mission description.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00312">nlua_misn.c:312</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_a0c43078201c8549f2daa899576da792e"><div class="ttname"><a href="nlua__misn_8c.html#a0c43078201c8549f2daa899576da792e">misn_factions</a></div><div class="ttdeci">static int misn_factions(lua_State *L)</div><div class="ttdoc">Gets the factions the mission is available for.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00540">nlua_misn.c:540</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_a545356a9f2e73e04aa62d61a35721d61"><div class="ttname"><a href="nlua__misn_8c.html#a545356a9f2e73e04aa62d61a35721d61">misn_osdDestroy</a></div><div class="ttdeci">static int misn_osdDestroy(lua_State *L)</div><div class="ttdoc">Destroys the mission OSD.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00809">nlua_misn.c:809</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_a0c43078201c8549f2daa899576da792e"><div class="ttname"><a href="nlua__misn_8c.html#a0c43078201c8549f2daa899576da792e">misn_factions</a></div><div class="ttdeci">static int misn_factions(lua_State *L)</div><div class="ttdoc">Gets the factions the mission is available for.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00546">nlua_misn.c:546</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_a545356a9f2e73e04aa62d61a35721d61"><div class="ttname"><a href="nlua__misn_8c.html#a545356a9f2e73e04aa62d61a35721d61">misn_osdDestroy</a></div><div class="ttdeci">static int misn_osdDestroy(lua_State *L)</div><div class="ttdoc">Destroys the mission OSD.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00815">nlua_misn.c:815</a></div></div>
 <div class="ttc" id="anlua__system_8c_html_ab5cfd75f7e72e8fc7f08fdc02ede028d"><div class="ttname"><a href="nlua__system_8c.html#ab5cfd75f7e72e8fc7f08fdc02ede028d">lua_tosystem</a></div><div class="ttdeci">LuaSystem lua_tosystem(lua_State *L, int ind)</div><div class="ttdoc">Lua system module.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00126">nlua_system.c:126</a></div></div>
 <div class="ttc" id="anlua_8c_html_a45e6b8d12cc6f943d058023f8ec74a2d"><div class="ttname"><a href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a></div><div class="ttdeci">int nlua_loadStandard(nlua_env env)</div><div class="ttdoc">Loads the standard Naev Lua API.</div><div class="ttdef"><b>Definition:</b> <a href="nlua_8c_source.html#l00563">nlua.c:563</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
 <div class="ttc" id="anlua__tk_8c_html_a589a461c0b7e7019cb11fe5d022a042c"><div class="ttname"><a href="nlua__tk_8c.html#a589a461c0b7e7019cb11fe5d022a042c">nlua_loadTk</a></div><div class="ttdeci">int nlua_loadTk(nlua_env env)</div><div class="ttdoc">Loads the Toolkit Lua library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tk_8c_source.html#l00088">nlua_tk.c:88</a></div></div>
 <div class="ttc" id="amission_8c_html_a2e21b5d28d28af487d690175756f3f11"><div class="ttname"><a href="mission_8c.html#a2e21b5d28d28af487d690175756f3f11">mission_cleanup</a></div><div class="ttdeci">void mission_cleanup(Mission *misn)</div><div class="ttdoc">Cleans up a mission.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00493">mission.c:493</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_a9e39666e27ad2c31684507f19b15e856"><div class="ttname"><a href="nlua__misn_8c.html#a9e39666e27ad2c31684507f19b15e856">misn_accept</a></div><div class="ttdeci">static int misn_accept(lua_State *L)</div><div class="ttdoc">Attempts to accept the mission.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00567">nlua_misn.c:567</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_a9e39666e27ad2c31684507f19b15e856"><div class="ttname"><a href="nlua__misn_8c.html#a9e39666e27ad2c31684507f19b15e856">misn_accept</a></div><div class="ttdeci">static int misn_accept(lua_State *L)</div><div class="ttdoc">Attempts to accept the mission.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00573">nlua_misn.c:573</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_a84a9215a40dab38a523f66354923b7b9"><div class="ttname"><a href="nlua__misn_8c.html#a84a9215a40dab38a523f66354923b7b9">misn_markerAdd</a></div><div class="ttdeci">static int misn_markerAdd(lua_State *L)</div><div class="ttdoc">Adds a new marker.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00360">nlua_misn.c:360</a></div></div>
 <div class="ttc" id="anpc_8c_html_a1efec62bac41473d7821e17245d7d956"><div class="ttname"><a href="npc_8c.html#a1efec62bac41473d7821e17245d7d956">npc_add_mission</a></div><div class="ttdeci">unsigned int npc_add_mission(unsigned int mid, const char *func, const char *name, int priority, const char *portrait, const char *desc, const char *background)</div><div class="ttdoc">Adds a mission NPC to the mission computer.</div><div class="ttdef"><b>Definition:</b> <a href="npc_8c_source.html#l00177">npc.c:177</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ae7c1e2ed8f7e1980ddab05925e2983fe"><div class="ttname"><a href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a></div><div class="ttdeci">void gl_freeTexture(glTexture *texture)</div><div class="ttdoc">Frees a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00768">opengl_tex.c:768</a></div></div>
 <div class="ttc" id="astructMission_html"><div class="ttname"><a href="structMission.html">Mission</a></div><div class="ttdoc">Represents an active mission.</div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00049">news.c:49</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_a342cd5d5548cf21ea8989455f12296d8"><div class="ttname"><a href="nlua__misn_8c.html#a342cd5d5548cf21ea8989455f12296d8">misn_npcRm</a></div><div class="ttdeci">static int misn_npcRm(lua_State *L)</div><div class="ttdoc">Removes an NPC.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00929">nlua_misn.c:929</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_a342cd5d5548cf21ea8989455f12296d8"><div class="ttname"><a href="nlua__misn_8c.html#a342cd5d5548cf21ea8989455f12296d8">misn_npcRm</a></div><div class="ttdeci">static int misn_npcRm(lua_State *L)</div><div class="ttdoc">Removes an NPC.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00933">nlua_misn.c:933</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_af58e06263718891d0c5fea6b822ed1b0"><div class="ttname"><a href="nlua__tex_8c.html#af58e06263718891d0c5fea6b822ed1b0">nlua_loadTex</a></div><div class="ttdeci">int nlua_loadTex(nlua_env env)</div><div class="ttdoc">Loads the texture library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00070">nlua_tex.c:70</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_a566fb35f7a927f0ba197f0218346ce85"><div class="ttname"><a href="nlua__misn_8c.html#a566fb35f7a927f0ba197f0218346ce85">misn_finish</a></div><div class="ttdeci">static int misn_finish(lua_State *L)</div><div class="ttdoc">Finishes the mission.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00611">nlua_misn.c:611</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_a566fb35f7a927f0ba197f0218346ce85"><div class="ttname"><a href="nlua__misn_8c.html#a566fb35f7a927f0ba197f0218346ce85">misn_finish</a></div><div class="ttdeci">static int misn_finish(lua_State *L)</div><div class="ttdoc">Finishes the mission.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00617">nlua_misn.c:617</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_a7945d8650000779fb62cd8166a0ad4ba"><div class="ttname"><a href="nlua__misn_8c.html#a7945d8650000779fb62cd8166a0ad4ba">misn_setTitle</a></div><div class="ttdeci">static int misn_setTitle(lua_State *L)</div><div class="ttdoc">Mission Lua bindings.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00290">nlua_misn.c:290</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c3fb96e542d880f6f5f42594154e0f0"><div class="ttname"><a href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a></div><div class="ttdeci">#define array_erase(ptr_array, first, last)</div><div class="ttdoc">Erases elements in interval [first, last).</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00144">array.h:144</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_ae35fb1c148891bdbbaf2fbd27534f407"><div class="ttname"><a href="nlua__misn_8c.html#ae35fb1c148891bdbbaf2fbd27534f407">nlua_loadMisn</a></div><div class="ttdeci">int nlua_loadMisn(nlua_env env)</div><div class="ttdoc">Loads the mission Lua library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00143">nlua_misn.c:143</a></div></div>
@@ -856,31 +861,31 @@ $(function() {
 <div class="ttc" id="anaev_8h_html_ae688d728e1acdfe5988c7db45d6f0166"><div class="ttname"><a href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a></div><div class="ttdeci">#define PATH_MAX</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00056">naev.h:56</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_a98ab8ab7c1f02d12a7ffe6ad258faf4e"><div class="ttname"><a href="nlua__misn_8c.html#a98ab8ab7c1f02d12a7ffe6ad258faf4e">misn_setReward</a></div><div class="ttdeci">static int misn_setReward(lua_State *L)</div><div class="ttdoc">Sets the current mission reward description.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00331">nlua_misn.c:331</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
-<div class="ttc" id="anlua__misn_8c_html_acf1a00e9782f1a6a4e9ba590012104da"><div class="ttname"><a href="nlua__misn_8c.html#acf1a00e9782f1a6a4e9ba590012104da">misn_cargoJet</a></div><div class="ttdeci">static int misn_cargoJet(lua_State *L)</div><div class="ttdoc">Jettisons the mission cargo.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00711">nlua_misn.c:711</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_acf1a00e9782f1a6a4e9ba590012104da"><div class="ttname"><a href="nlua__misn_8c.html#acf1a00e9782f1a6a4e9ba590012104da">misn_cargoJet</a></div><div class="ttdeci">static int misn_cargoJet(lua_State *L)</div><div class="ttdoc">Jettisons the mission cargo.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00717">nlua_misn.c:717</a></div></div>
 <div class="ttc" id="aclaim_8c_html_a09eb4cf183b066367c0893f3c49bdab1"><div class="ttname"><a href="claim_8c.html#a09eb4cf183b066367c0893f3c49bdab1">claim_isNull</a></div><div class="ttdeci">int claim_isNull(Claim_t *claim)</div><div class="ttdoc">See if a claim actually contains data.</div><div class="ttdef"><b>Definition:</b> <a href="claim_8c_source.html#l00104">claim.c:104</a></div></div>
 <div class="ttc" id="apilot__cargo_8c_html_a2936ec91cb7f5e8bc8be0504f830a8f7"><div class="ttname"><a href="pilot__cargo_8c.html#a2936ec91cb7f5e8bc8be0504f830a8f7">pilot_addMissionCargo</a></div><div class="ttdeci">unsigned int pilot_addMissionCargo(Pilot *pilot, Commodity *cargo, int quantity)</div><div class="ttdoc">Adds special mission cargo, can't sell it and such.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00226">pilot_cargo.c:226</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_abb99806f35828f198e5bfa1e21a5bca7"><div class="ttname"><a href="nlua__misn_8c.html#abb99806f35828f198e5bfa1e21a5bca7">misn_runFunc</a></div><div class="ttdeci">int misn_runFunc(Mission *misn, const char *func, int nargs)</div><div class="ttdoc">Runs a mission set up with misn_runStart.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00234">nlua_misn.c:234</a></div></div>
-<div class="ttc" id="amission_8c_html_a92aa0e2847371f97f34078c4d3a56407"><div class="ttname"><a href="mission_8c.html#a92aa0e2847371f97f34078c4d3a56407">mission_shift</a></div><div class="ttdeci">void mission_shift(int pos)</div><div class="ttdoc">Puts the specified mission at the end of the player_missions array.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00546">mission.c:546</a></div></div>
+<div class="ttc" id="amission_8c_html_a92aa0e2847371f97f34078c4d3a56407"><div class="ttname"><a href="mission_8c.html#a92aa0e2847371f97f34078c4d3a56407">mission_shift</a></div><div class="ttdeci">void mission_shift(int pos)</div><div class="ttdoc">Puts the specified mission at the end of the player_missions array.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00547">mission.c:547</a></div></div>
 <div class="ttc" id="anlua__bkg_8c_html_ab21ef3e1cf234bc67ca4b59b20b1b7bc"><div class="ttname"><a href="nlua__bkg_8c.html#ab21ef3e1cf234bc67ca4b59b20b1b7bc">nlua_loadBackground</a></div><div class="ttdeci">int nlua_loadBackground(nlua_env env)</div><div class="ttdoc">Loads the graphics library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__bkg_8c_source.html#l00044">nlua_bkg.c:44</a></div></div>
 <div class="ttc" id="amission_8c_html_a25b023242d7d6c42fb63cc84d360fc3f"><div class="ttname"><a href="mission_8c.html#a25b023242d7d6c42fb63cc84d360fc3f">mission_addMarker</a></div><div class="ttdeci">int mission_addMarker(Mission *misn, int id, int sys, SysMarker type)</div><div class="ttdoc">Adds a system marker to a mission.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00364">mission.c:364</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ac8701471143b28a786b0028420edfeb6"><div class="ttname"><a href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a></div><div class="ttdeci">Player_t player</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00071">player.c:71</a></div></div>
 <div class="ttc" id="aclaim_8c_html_a7ef75de0fdd741332c5b4c8c516f6340"><div class="ttname"><a href="claim_8c.html#a7ef75de0fdd741332c5b4c8c516f6340">claim_addSys</a></div><div class="ttdeci">int claim_addSys(Claim_t *claim, int ss_id)</div><div class="ttdoc">Adds a claim to a system claim.</div><div class="ttdef"><b>Definition:</b> <a href="claim_8c_source.html#l00082">claim.c:82</a></div></div>
 <div class="ttc" id="amission_8c_html_a42cda5460294ebae411b631f430a5857"><div class="ttname"><a href="mission_8c.html#a42cda5460294ebae411b631f430a5857">mission_linkCargo</a></div><div class="ttdeci">int mission_linkCargo(Mission *misn, unsigned int cargo_id)</div><div class="ttdoc">Links cargo to the mission for posterior cleanup.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00451">mission.c:451</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_afb82edc3c26d042d9b7afbea5363011f"><div class="ttname"><a href="nlua__misn_8c.html#afb82edc3c26d042d9b7afbea5363011f">misn_setNPC</a></div><div class="ttdeci">static int misn_setNPC(lua_State *L)</div><div class="ttdoc">Sets the current mission NPC.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00500">nlua_misn.c:500</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_afb82edc3c26d042d9b7afbea5363011f"><div class="ttname"><a href="nlua__misn_8c.html#afb82edc3c26d042d9b7afbea5363011f">misn_setNPC</a></div><div class="ttdeci">static int misn_setNPC(lua_State *L)</div><div class="ttdoc">Sets the current mission NPC.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00501">nlua_misn.c:501</a></div></div>
 <div class="ttc" id="anlua__system_8c_html_a2068ddc43e0c079b0d66c696dc843941"><div class="ttname"><a href="nlua__system_8c.html#a2068ddc43e0c079b0d66c696dc843941">luaL_checksystem</a></div><div class="ttdeci">LuaSystem luaL_checksystem(lua_State *L, int ind)</div><div class="ttdoc">Gets system at index raising an error if type doesn't match.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00137">nlua_system.c:137</a></div></div>
 <div class="ttc" id="amission_8c_html_aebe38a244b1417b2c2e0cda1473717e5"><div class="ttname"><a href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a></div><div class="ttdeci">Mission * player_missions[MISSION_MAX]</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00051">mission.c:51</a></div></div>
 <div class="ttc" id="anlua__music_8c_html_aab1b6c95775041f56dd96ef3bb879ed4"><div class="ttname"><a href="nlua__music_8c.html#aab1b6c95775041f56dd96ef3bb879ed4">nlua_loadMusic</a></div><div class="ttdeci">int nlua_loadMusic(nlua_env env)</div><div class="ttdoc">Music Lua module.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__music_8c_source.html#l00069">nlua_music.c:69</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_aedabb17f821a3ddd1b25cccfb5de1f37"><div class="ttname"><a href="nlua__misn_8c.html#aedabb17f821a3ddd1b25cccfb5de1f37">misn_cargoAdd</a></div><div class="ttdeci">static int misn_cargoAdd(lua_State *L)</div><div class="ttdoc">Adds some mission cargo to the player. He cannot sell it nor get rid of it unless he abandons the mis...</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00648">nlua_misn.c:648</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_aedabb17f821a3ddd1b25cccfb5de1f37"><div class="ttname"><a href="nlua__misn_8c.html#aedabb17f821a3ddd1b25cccfb5de1f37">misn_cargoAdd</a></div><div class="ttdeci">static int misn_cargoAdd(lua_State *L)</div><div class="ttdoc">Adds some mission cargo to the player. He cannot sell it nor get rid of it unless he abandons the mis...</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00654">nlua_misn.c:654</a></div></div>
 <div class="ttc" id="apilot__cargo_8c_html_a9ebf0a667e4b8a154a951770e0013420"><div class="ttname"><a href="pilot__cargo_8c.html#a9ebf0a667e4b8a154a951770e0013420">pilot_rmMissionCargo</a></div><div class="ttdeci">int pilot_rmMissionCargo(Pilot *pilot, unsigned int cargo_id, int jettison)</div><div class="ttdoc">Removes special mission cargo based on id.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00259">pilot_cargo.c:259</a></div></div>
 <div class="ttc" id="astructMissionData_html"><div class="ttname"><a href="structMissionData.html">MissionData</a></div><div class="ttdoc">Static mission data.</div></div>
 <div class="ttc" id="anlua__audio_8c_html_aeee1eb443b75c9474c5675ce31e45291"><div class="ttname"><a href="nlua__audio_8c.html#aeee1eb443b75c9474c5675ce31e45291">nlua_loadAudio</a></div><div class="ttdeci">int nlua_loadAudio(nlua_env env)</div><div class="ttdoc">Loads the audio library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__audio_8c_source.html#l00115">nlua_audio.c:115</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_a54a026ec005db93a1b9a621506202c19"><div class="ttname"><a href="nlua__misn_8c.html#a54a026ec005db93a1b9a621506202c19">misn_runStart</a></div><div class="ttdeci">void misn_runStart(Mission *misn, const char *func)</div><div class="ttdoc">Sets up the mission to run misn_runFunc.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00213">nlua_misn.c:213</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ac11623fb12c9ea15b80ec32d90c6898d"><div class="ttname"><a href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a></div><div class="ttdeci">glTexture * gl_newImage(const char *path, const unsigned int flags)</div><div class="ttdoc">Loads an image as a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00595">opengl_tex.c:595</a></div></div>
 <div class="ttc" id="arng_8c_html_a6dbc3ea54b9ab71917fe57fa11372346"><div class="ttname"><a href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a></div><div class="ttdeci">static const double b[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00273">rng.c:273</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_a6a89f6a26fe28d972ad20012630a3830"><div class="ttname"><a href="nlua__misn_8c.html#a6a89f6a26fe28d972ad20012630a3830">misn_osdCreate</a></div><div class="ttdeci">static int misn_osdCreate(lua_State *L)</div><div class="ttdoc">Creates a mission OSD.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00747">nlua_misn.c:747</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_a6a89f6a26fe28d972ad20012630a3830"><div class="ttname"><a href="nlua__misn_8c.html#a6a89f6a26fe28d972ad20012630a3830">misn_osdCreate</a></div><div class="ttdeci">static int misn_osdCreate(lua_State *L)</div><div class="ttdoc">Creates a mission OSD.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00753">nlua_misn.c:753</a></div></div>
 <div class="ttc" id="aclaim_8c_html_a65668ac79196f426586cc12fb13cfa33"><div class="ttname"><a href="claim_8c.html#a65668ac79196f426586cc12fb13cfa33">claim_addStr</a></div><div class="ttdeci">int claim_addStr(Claim_t *claim, const char *str)</div><div class="ttdoc">Adds a string claim to a claim.</div><div class="ttdef"><b>Definition:</b> <a href="claim_8c_source.html#l00060">claim.c:60</a></div></div>
-<div class="ttc" id="anlua__misn_8c_html_a6bdc938a8d4843a42addeba1c2f4a703"><div class="ttname"><a href="nlua__misn_8c.html#a6bdc938a8d4843a42addeba1c2f4a703">misn_cargoRm</a></div><div class="ttdeci">static int misn_cargoRm(lua_State *L)</div><div class="ttdoc">Removes the mission cargo.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00682">nlua_misn.c:682</a></div></div>
+<div class="ttc" id="anlua__misn_8c_html_a6bdc938a8d4843a42addeba1c2f4a703"><div class="ttname"><a href="nlua__misn_8c.html#a6bdc938a8d4843a42addeba1c2f4a703">misn_cargoRm</a></div><div class="ttdeci">static int misn_cargoRm(lua_State *L)</div><div class="ttdoc">Removes the mission cargo.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00688">nlua_misn.c:688</a></div></div>
 <div class="ttc" id="anlua__hook_8c_html_a5f228ff3ecc338ef6d924038b61c1b34"><div class="ttname"><a href="nlua__hook_8c.html#a5f228ff3ecc338ef6d924038b61c1b34">nlua_loadHook</a></div><div class="ttdeci">int nlua_loadHook(nlua_env env)</div><div class="ttdoc">Loads the hook Lua library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__hook_8c_source.html#l00112">nlua_hook.c:112</a></div></div>
 <div class="ttc" id="amission_8c_html_ab6f7e7d4d7d03985b4d6f12a9bd6fc96"><div class="ttname"><a href="mission_8c.html#ab6f7e7d4d7d03985b4d6f12a9bd6fc96">mission_getID</a></div><div class="ttdeci">int mission_getID(const char *name)</div><div class="ttdoc">Gets id from mission name.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00108">mission.c:108</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_a5219aad9bb3dfb97b609cfc0a5f1affd"><div class="ttname"><a href="nlua__misn_8c.html#a5219aad9bb3dfb97b609cfc0a5f1affd">misn_tryRun</a></div><div class="ttdeci">int misn_tryRun(Mission *misn, const char *func)</div><div class="ttdoc">Tries to run a mission, but doesn't err if it fails.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00158">nlua_misn.c:158</a></div></div>
