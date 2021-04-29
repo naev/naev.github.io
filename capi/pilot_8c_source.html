@@ -2733,200 +2733,204 @@ $(function() {
 <div class="line"><a name="l03150"></a><span class="lineno"> 3150</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(p,PILOT_DEAD))</div>
 <div class="line"><a name="l03151"></a><span class="lineno"> 3151</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l03152"></a><span class="lineno"> 3152</span>&#160; </div>
-<div class="line"><a name="l03153"></a><span class="lineno"> 3153</span>&#160;      <span class="comment">/* Hyperspace gets special treatment */</span></div>
-<div class="line"><a name="l03154"></a><span class="lineno"> 3154</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_HYP_PREP))</div>
-<div class="line"><a name="l03155"></a><span class="lineno"> 3155</span>&#160;         <a class="code" href="pilot_8c.html#a0f6b3a21ba9e8eeecd2b120fa25ec7ea">pilot_hyperspace</a>(p, dt);</div>
-<div class="line"><a name="l03156"></a><span class="lineno"> 3156</span>&#160;      <span class="comment">/* Entering hyperspace. */</span></div>
-<div class="line"><a name="l03157"></a><span class="lineno"> 3157</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_HYP_END)) {</div>
-<div class="line"><a name="l03158"></a><span class="lineno"> 3158</span>&#160;         <span class="keywordflow">if</span> ((VMOD(p-&gt;solid-&gt;vel) &lt; 2*solid_maxspeed( p-&gt;solid, p-&gt;speed, p-&gt;thrust) ) &amp;&amp; (p-&gt;ptimer &lt; 0.))</div>
-<div class="line"><a name="l03159"></a><span class="lineno"> 3159</span>&#160;            pilot_rmFlag(p, PILOT_HYP_END);</div>
-<div class="line"><a name="l03160"></a><span class="lineno"> 3160</span>&#160;      }</div>
-<div class="line"><a name="l03161"></a><span class="lineno"> 3161</span>&#160;      <span class="comment">/* Must not be boarding to think. */</span></div>
-<div class="line"><a name="l03162"></a><span class="lineno"> 3162</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!pilot_isFlag(p, PILOT_BOARDING) &amp;&amp;</div>
-<div class="line"><a name="l03163"></a><span class="lineno"> 3163</span>&#160;            !pilot_isFlag(p, PILOT_REFUELBOARDING) &amp;&amp;</div>
-<div class="line"><a name="l03164"></a><span class="lineno"> 3164</span>&#160;            <span class="comment">/* Must not be landing nor taking off. */</span></div>
-<div class="line"><a name="l03165"></a><span class="lineno"> 3165</span>&#160;            !pilot_isFlag(p, PILOT_LANDING) &amp;&amp;</div>
-<div class="line"><a name="l03166"></a><span class="lineno"> 3166</span>&#160;            !pilot_isFlag(p, PILOT_TAKEOFF))</div>
-<div class="line"><a name="l03167"></a><span class="lineno"> 3167</span>&#160;         p-&gt;think(p, dt);</div>
-<div class="line"><a name="l03168"></a><span class="lineno"> 3168</span>&#160;   }</div>
-<div class="line"><a name="l03169"></a><span class="lineno"> 3169</span>&#160; </div>
-<div class="line"><a name="l03170"></a><span class="lineno"> 3170</span>&#160;   <span class="comment">/* Now update all the pilots. */</span></div>
-<div class="line"><a name="l03171"></a><span class="lineno"> 3171</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>); i++) {</div>
-<div class="line"><a name="l03172"></a><span class="lineno"> 3172</span>&#160;      p = <a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i];</div>
+<div class="line"><a name="l03153"></a><span class="lineno"> 3153</span>&#160;      <span class="comment">/* Ignore persisting pilots during simulation since they don&#39;t get cleared. */</span></div>
+<div class="line"><a name="l03154"></a><span class="lineno"> 3154</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="space_8c.html#aa80ae05b62fe9166c899d3ee1aee9c62">space_isSimulation</a>() &amp;&amp; (pilot_isFlag(p,PILOT_PERSIST)))</div>
+<div class="line"><a name="l03155"></a><span class="lineno"> 3155</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03156"></a><span class="lineno"> 3156</span>&#160; </div>
+<div class="line"><a name="l03157"></a><span class="lineno"> 3157</span>&#160;      <span class="comment">/* Hyperspace gets special treatment */</span></div>
+<div class="line"><a name="l03158"></a><span class="lineno"> 3158</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_HYP_PREP))</div>
+<div class="line"><a name="l03159"></a><span class="lineno"> 3159</span>&#160;         <a class="code" href="pilot_8c.html#a0f6b3a21ba9e8eeecd2b120fa25ec7ea">pilot_hyperspace</a>(p, dt);</div>
+<div class="line"><a name="l03160"></a><span class="lineno"> 3160</span>&#160;      <span class="comment">/* Entering hyperspace. */</span></div>
+<div class="line"><a name="l03161"></a><span class="lineno"> 3161</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_HYP_END)) {</div>
+<div class="line"><a name="l03162"></a><span class="lineno"> 3162</span>&#160;         <span class="keywordflow">if</span> ((VMOD(p-&gt;solid-&gt;vel) &lt; 2*solid_maxspeed( p-&gt;solid, p-&gt;speed, p-&gt;thrust) ) &amp;&amp; (p-&gt;ptimer &lt; 0.))</div>
+<div class="line"><a name="l03163"></a><span class="lineno"> 3163</span>&#160;            pilot_rmFlag(p, PILOT_HYP_END);</div>
+<div class="line"><a name="l03164"></a><span class="lineno"> 3164</span>&#160;      }</div>
+<div class="line"><a name="l03165"></a><span class="lineno"> 3165</span>&#160;      <span class="comment">/* Must not be boarding to think. */</span></div>
+<div class="line"><a name="l03166"></a><span class="lineno"> 3166</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!pilot_isFlag(p, PILOT_BOARDING) &amp;&amp;</div>
+<div class="line"><a name="l03167"></a><span class="lineno"> 3167</span>&#160;            !pilot_isFlag(p, PILOT_REFUELBOARDING) &amp;&amp;</div>
+<div class="line"><a name="l03168"></a><span class="lineno"> 3168</span>&#160;            <span class="comment">/* Must not be landing nor taking off. */</span></div>
+<div class="line"><a name="l03169"></a><span class="lineno"> 3169</span>&#160;            !pilot_isFlag(p, PILOT_LANDING) &amp;&amp;</div>
+<div class="line"><a name="l03170"></a><span class="lineno"> 3170</span>&#160;            !pilot_isFlag(p, PILOT_TAKEOFF))</div>
+<div class="line"><a name="l03171"></a><span class="lineno"> 3171</span>&#160;         p-&gt;think(p, dt);</div>
+<div class="line"><a name="l03172"></a><span class="lineno"> 3172</span>&#160;   }</div>
 <div class="line"><a name="l03173"></a><span class="lineno"> 3173</span>&#160; </div>
-<div class="line"><a name="l03174"></a><span class="lineno"> 3174</span>&#160;      <span class="comment">/* Ignore. */</span></div>
-<div class="line"><a name="l03175"></a><span class="lineno"> 3175</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_DELETE))</div>
-<div class="line"><a name="l03176"></a><span class="lineno"> 3176</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03174"></a><span class="lineno"> 3174</span>&#160;   <span class="comment">/* Now update all the pilots. */</span></div>
+<div class="line"><a name="l03175"></a><span class="lineno"> 3175</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>); i++) {</div>
+<div class="line"><a name="l03176"></a><span class="lineno"> 3176</span>&#160;      p = <a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i];</div>
 <div class="line"><a name="l03177"></a><span class="lineno"> 3177</span>&#160; </div>
-<div class="line"><a name="l03178"></a><span class="lineno"> 3178</span>&#160;      <span class="comment">/* Invisible, not doing anything. */</span></div>
-<div class="line"><a name="l03179"></a><span class="lineno"> 3179</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_HIDE))</div>
+<div class="line"><a name="l03178"></a><span class="lineno"> 3178</span>&#160;      <span class="comment">/* Ignore. */</span></div>
+<div class="line"><a name="l03179"></a><span class="lineno"> 3179</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_DELETE))</div>
 <div class="line"><a name="l03180"></a><span class="lineno"> 3180</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l03181"></a><span class="lineno"> 3181</span>&#160; </div>
-<div class="line"><a name="l03182"></a><span class="lineno"> 3182</span>&#160;      <span class="comment">/* Just update the pilot. */</span></div>
-<div class="line"><a name="l03183"></a><span class="lineno"> 3183</span>&#160;      <span class="keywordflow">if</span> (p-&gt;update) <span class="comment">/* update */</span></div>
-<div class="line"><a name="l03184"></a><span class="lineno"> 3184</span>&#160;         p-&gt;update( p, dt );</div>
-<div class="line"><a name="l03185"></a><span class="lineno"> 3185</span>&#160;   }</div>
-<div class="line"><a name="l03186"></a><span class="lineno"> 3186</span>&#160;}</div>
-<div class="line"><a name="l03187"></a><span class="lineno"> 3187</span>&#160; </div>
-<div class="line"><a name="l03188"></a><span class="lineno"> 3188</span>&#160; </div>
-<div class="line"><a name="l03194"></a><span class="lineno"><a class="line" href="pilot_8c.html#ae328fbd9fd49e1a9a244b24a4a3c65f2"> 3194</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot_8c.html#ae328fbd9fd49e1a9a244b24a4a3c65f2">pilots_render</a>( <span class="keywordtype">double</span> dt )</div>
-<div class="line"><a name="l03195"></a><span class="lineno"> 3195</span>&#160;{</div>
-<div class="line"><a name="l03196"></a><span class="lineno"> 3196</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l03197"></a><span class="lineno"> 3197</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>); i++) {</div>
-<div class="line"><a name="l03198"></a><span class="lineno"> 3198</span>&#160; </div>
-<div class="line"><a name="l03199"></a><span class="lineno"> 3199</span>&#160;      <span class="comment">/* Invisible, not doing anything. */</span></div>
-<div class="line"><a name="l03200"></a><span class="lineno"> 3200</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i], PILOT_HIDE))</div>
-<div class="line"><a name="l03201"></a><span class="lineno"> 3201</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03182"></a><span class="lineno"> 3182</span>&#160;      <span class="comment">/* Invisible, not doing anything. */</span></div>
+<div class="line"><a name="l03183"></a><span class="lineno"> 3183</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_HIDE))</div>
+<div class="line"><a name="l03184"></a><span class="lineno"> 3184</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03185"></a><span class="lineno"> 3185</span>&#160; </div>
+<div class="line"><a name="l03186"></a><span class="lineno"> 3186</span>&#160;      <span class="comment">/* Just update the pilot. */</span></div>
+<div class="line"><a name="l03187"></a><span class="lineno"> 3187</span>&#160;      <span class="keywordflow">if</span> (p-&gt;update) <span class="comment">/* update */</span></div>
+<div class="line"><a name="l03188"></a><span class="lineno"> 3188</span>&#160;         p-&gt;update( p, dt );</div>
+<div class="line"><a name="l03189"></a><span class="lineno"> 3189</span>&#160;   }</div>
+<div class="line"><a name="l03190"></a><span class="lineno"> 3190</span>&#160;}</div>
+<div class="line"><a name="l03191"></a><span class="lineno"> 3191</span>&#160; </div>
+<div class="line"><a name="l03192"></a><span class="lineno"> 3192</span>&#160; </div>
+<div class="line"><a name="l03198"></a><span class="lineno"><a class="line" href="pilot_8c.html#ae328fbd9fd49e1a9a244b24a4a3c65f2"> 3198</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot_8c.html#ae328fbd9fd49e1a9a244b24a4a3c65f2">pilots_render</a>( <span class="keywordtype">double</span> dt )</div>
+<div class="line"><a name="l03199"></a><span class="lineno"> 3199</span>&#160;{</div>
+<div class="line"><a name="l03200"></a><span class="lineno"> 3200</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l03201"></a><span class="lineno"> 3201</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>); i++) {</div>
 <div class="line"><a name="l03202"></a><span class="lineno"> 3202</span>&#160; </div>
-<div class="line"><a name="l03203"></a><span class="lineno"> 3203</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i]-&gt;render != NULL) <span class="comment">/* render */</span></div>
-<div class="line"><a name="l03204"></a><span class="lineno"> 3204</span>&#160;         <a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i]-&gt;render(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i], dt);</div>
-<div class="line"><a name="l03205"></a><span class="lineno"> 3205</span>&#160;   }</div>
-<div class="line"><a name="l03206"></a><span class="lineno"> 3206</span>&#160;}</div>
-<div class="line"><a name="l03207"></a><span class="lineno"> 3207</span>&#160; </div>
-<div class="line"><a name="l03208"></a><span class="lineno"> 3208</span>&#160; </div>
-<div class="line"><a name="l03214"></a><span class="lineno"><a class="line" href="pilot_8c.html#a308643b7d50db91b4a58ef9f7645b1d3"> 3214</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot_8c.html#a308643b7d50db91b4a58ef9f7645b1d3">pilots_renderOverlay</a>( <span class="keywordtype">double</span> dt )</div>
-<div class="line"><a name="l03215"></a><span class="lineno"> 3215</span>&#160;{</div>
-<div class="line"><a name="l03216"></a><span class="lineno"> 3216</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l03217"></a><span class="lineno"> 3217</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>); i++) {</div>
-<div class="line"><a name="l03218"></a><span class="lineno"> 3218</span>&#160; </div>
-<div class="line"><a name="l03219"></a><span class="lineno"> 3219</span>&#160;      <span class="comment">/* Invisible, not doing anything. */</span></div>
-<div class="line"><a name="l03220"></a><span class="lineno"> 3220</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i], PILOT_HIDE))</div>
-<div class="line"><a name="l03221"></a><span class="lineno"> 3221</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03203"></a><span class="lineno"> 3203</span>&#160;      <span class="comment">/* Invisible, not doing anything. */</span></div>
+<div class="line"><a name="l03204"></a><span class="lineno"> 3204</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i], PILOT_HIDE))</div>
+<div class="line"><a name="l03205"></a><span class="lineno"> 3205</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03206"></a><span class="lineno"> 3206</span>&#160; </div>
+<div class="line"><a name="l03207"></a><span class="lineno"> 3207</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i]-&gt;render != NULL) <span class="comment">/* render */</span></div>
+<div class="line"><a name="l03208"></a><span class="lineno"> 3208</span>&#160;         <a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i]-&gt;render(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i], dt);</div>
+<div class="line"><a name="l03209"></a><span class="lineno"> 3209</span>&#160;   }</div>
+<div class="line"><a name="l03210"></a><span class="lineno"> 3210</span>&#160;}</div>
+<div class="line"><a name="l03211"></a><span class="lineno"> 3211</span>&#160; </div>
+<div class="line"><a name="l03212"></a><span class="lineno"> 3212</span>&#160; </div>
+<div class="line"><a name="l03218"></a><span class="lineno"><a class="line" href="pilot_8c.html#a308643b7d50db91b4a58ef9f7645b1d3"> 3218</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot_8c.html#a308643b7d50db91b4a58ef9f7645b1d3">pilots_renderOverlay</a>( <span class="keywordtype">double</span> dt )</div>
+<div class="line"><a name="l03219"></a><span class="lineno"> 3219</span>&#160;{</div>
+<div class="line"><a name="l03220"></a><span class="lineno"> 3220</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l03221"></a><span class="lineno"> 3221</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>); i++) {</div>
 <div class="line"><a name="l03222"></a><span class="lineno"> 3222</span>&#160; </div>
-<div class="line"><a name="l03223"></a><span class="lineno"> 3223</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i]-&gt;render_overlay != NULL) <span class="comment">/* render */</span></div>
-<div class="line"><a name="l03224"></a><span class="lineno"> 3224</span>&#160;         <a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i]-&gt;render_overlay(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i], dt);</div>
-<div class="line"><a name="l03225"></a><span class="lineno"> 3225</span>&#160;   }</div>
-<div class="line"><a name="l03226"></a><span class="lineno"> 3226</span>&#160;}</div>
-<div class="line"><a name="l03227"></a><span class="lineno"> 3227</span>&#160; </div>
-<div class="line"><a name="l03228"></a><span class="lineno"> 3228</span>&#160; </div>
-<div class="line"><a name="l03234"></a><span class="lineno"><a class="line" href="pilot_8c.html#a59ed76f9e901037745355b095419f902"> 3234</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot_8c.html#a59ed76f9e901037745355b095419f902">pilot_clearTimers</a>( Pilot *pilot )</div>
-<div class="line"><a name="l03235"></a><span class="lineno"> 3235</span>&#160;{</div>
-<div class="line"><a name="l03236"></a><span class="lineno"> 3236</span>&#160;   <span class="keywordtype">int</span> i, n;</div>
-<div class="line"><a name="l03237"></a><span class="lineno"> 3237</span>&#160;   PilotOutfitSlot *o;</div>
-<div class="line"><a name="l03238"></a><span class="lineno"> 3238</span>&#160; </div>
-<div class="line"><a name="l03239"></a><span class="lineno"> 3239</span>&#160;   pilot-&gt;ptimer     = 0.; <span class="comment">/* Pilot timer. */</span></div>
-<div class="line"><a name="l03240"></a><span class="lineno"> 3240</span>&#160;   pilot-&gt;tcontrol   = 0.; <span class="comment">/* AI control timer. */</span></div>
-<div class="line"><a name="l03241"></a><span class="lineno"> 3241</span>&#160;   pilot-&gt;stimer     = 0.; <span class="comment">/* Shield timer. */</span></div>
-<div class="line"><a name="l03242"></a><span class="lineno"> 3242</span>&#160;   pilot-&gt;dtimer     = 0.; <span class="comment">/* Disable timer. */</span></div>
-<div class="line"><a name="l03243"></a><span class="lineno"> 3243</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;MAX_AI_TIMERS; i++)</div>
-<div class="line"><a name="l03244"></a><span class="lineno"> 3244</span>&#160;      pilot-&gt;timer[i] = 0.; <span class="comment">/* Specific AI timers. */</span></div>
-<div class="line"><a name="l03245"></a><span class="lineno"> 3245</span>&#160;   n = 0;</div>
-<div class="line"><a name="l03246"></a><span class="lineno"> 3246</span>&#160;   for (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pilot-&gt;outfits); i++) {</div>
-<div class="line"><a name="l03247"></a><span class="lineno"> 3247</span>&#160;      o = pilot-&gt;outfits[i];</div>
-<div class="line"><a name="l03248"></a><span class="lineno"> 3248</span>&#160;      o-&gt;timer    = 0.; <span class="comment">/* Last used timer. */</span></div>
-<div class="line"><a name="l03249"></a><span class="lineno"> 3249</span>&#160;      o-&gt;stimer   = 0.; <span class="comment">/* State timer. */</span></div>
-<div class="line"><a name="l03250"></a><span class="lineno"> 3250</span>&#160;      <span class="keywordflow">if</span> (o-&gt;state != PILOT_OUTFIT_OFF) {</div>
-<div class="line"><a name="l03251"></a><span class="lineno"> 3251</span>&#160;         o-&gt;state    = PILOT_OUTFIT_OFF; <span class="comment">/* Set off. */</span></div>
-<div class="line"><a name="l03252"></a><span class="lineno"> 3252</span>&#160;         n++;</div>
-<div class="line"><a name="l03253"></a><span class="lineno"> 3253</span>&#160;      }</div>
-<div class="line"><a name="l03254"></a><span class="lineno"> 3254</span>&#160;   }</div>
-<div class="line"><a name="l03255"></a><span class="lineno"> 3255</span>&#160; </div>
-<div class="line"><a name="l03256"></a><span class="lineno"> 3256</span>&#160;   <span class="comment">/* Must recalculate stats. */</span></div>
-<div class="line"><a name="l03257"></a><span class="lineno"> 3257</span>&#160;   <span class="keywordflow">if</span> (n &gt; 0)</div>
-<div class="line"><a name="l03258"></a><span class="lineno"> 3258</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( pilot );</div>
-<div class="line"><a name="l03259"></a><span class="lineno"> 3259</span>&#160;}</div>
-<div class="line"><a name="l03260"></a><span class="lineno"> 3260</span>&#160; </div>
-<div class="line"><a name="l03261"></a><span class="lineno"> 3261</span>&#160; </div>
-<div class="line"><a name="l03269"></a><span class="lineno"><a class="line" href="pilot_8c.html#a406c94bd6098ee9c0a3b8dbe83382dc4"> 3269</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="pilot_8c.html#a406c94bd6098ee9c0a3b8dbe83382dc4">pilot_relsize</a>( <span class="keyword">const</span> Pilot* <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>, <span class="keyword">const</span> Pilot* p )</div>
-<div class="line"><a name="l03270"></a><span class="lineno"> 3270</span>&#160;{</div>
-<div class="line"><a name="l03271"></a><span class="lineno"> 3271</span>&#160;   <span class="keywordflow">return</span> (1 - 1/(1 + ((<span class="keywordtype">double</span>)<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;solid-&gt;mass / (<span class="keywordtype">double</span>)p-&gt;solid-&gt;mass)));</div>
-<div class="line"><a name="l03272"></a><span class="lineno"> 3272</span>&#160;}</div>
-<div class="line"><a name="l03273"></a><span class="lineno"> 3273</span>&#160; </div>
-<div class="line"><a name="l03281"></a><span class="lineno"><a class="line" href="pilot_8c.html#a5b67250e0842ad3fbbd85103a79d5bf4"> 3281</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="pilot_8c.html#a5b67250e0842ad3fbbd85103a79d5bf4">pilot_reldps</a>( <span class="keyword">const</span> Pilot* <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>, <span class="keyword">const</span> Pilot* p )</div>
-<div class="line"><a name="l03282"></a><span class="lineno"> 3282</span>&#160;{</div>
-<div class="line"><a name="l03283"></a><span class="lineno"> 3283</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l03284"></a><span class="lineno"> 3284</span>&#160;   <span class="keywordtype">double</span> DPSaccum_target = 0.;</div>
-<div class="line"><a name="l03285"></a><span class="lineno"> 3285</span>&#160;   <span class="keywordtype">double</span> DPSaccum_pilot = 0.;</div>
-<div class="line"><a name="l03286"></a><span class="lineno"> 3286</span>&#160;   <span class="keywordtype">double</span> delay_cache, damage_cache;</div>
-<div class="line"><a name="l03287"></a><span class="lineno"> 3287</span>&#160;   Outfit *o;</div>
-<div class="line"><a name="l03288"></a><span class="lineno"> 3288</span>&#160;   <span class="keyword">const</span> Damage *dmg;</div>
-<div class="line"><a name="l03289"></a><span class="lineno"> 3289</span>&#160; </div>
-<div class="line"><a name="l03290"></a><span class="lineno"> 3290</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(p-&gt;outfit_weapon); i++) {</div>
-<div class="line"><a name="l03291"></a><span class="lineno"> 3291</span>&#160;      o = p-&gt;outfit_weapon[i].outfit;</div>
-<div class="line"><a name="l03292"></a><span class="lineno"> 3292</span>&#160;      <span class="keywordflow">if</span> (o == NULL)</div>
-<div class="line"><a name="l03293"></a><span class="lineno"> 3293</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l03294"></a><span class="lineno"> 3294</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>( o );</div>
-<div class="line"><a name="l03295"></a><span class="lineno"> 3295</span>&#160;      <span class="keywordflow">if</span> (dmg == NULL)</div>
-<div class="line"><a name="l03296"></a><span class="lineno"> 3296</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l03297"></a><span class="lineno"> 3297</span>&#160; </div>
-<div class="line"><a name="l03298"></a><span class="lineno"> 3298</span>&#160;      damage_cache   = dmg-&gt;damage;</div>
-<div class="line"><a name="l03299"></a><span class="lineno"> 3299</span>&#160;      delay_cache    = <a class="code" href="outfit_8c.html#afd3c474cb6d7c99a3f0fb2499550956c">outfit_delay</a>( o );</div>
-<div class="line"><a name="l03300"></a><span class="lineno"> 3300</span>&#160;      <span class="keywordflow">if</span> ((damage_cache &gt; 0) &amp;&amp; (delay_cache &gt; 0))</div>
-<div class="line"><a name="l03301"></a><span class="lineno"> 3301</span>&#160;         DPSaccum_target += ( damage_cache/delay_cache );</div>
-<div class="line"><a name="l03302"></a><span class="lineno"> 3302</span>&#160;   }</div>
-<div class="line"><a name="l03303"></a><span class="lineno"> 3303</span>&#160; </div>
-<div class="line"><a name="l03304"></a><span class="lineno"> 3304</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;outfit_weapon); i++) {</div>
-<div class="line"><a name="l03305"></a><span class="lineno"> 3305</span>&#160;      o = <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;outfit_weapon[i].outfit;</div>
-<div class="line"><a name="l03306"></a><span class="lineno"> 3306</span>&#160;      <span class="keywordflow">if</span> (o == NULL)</div>
-<div class="line"><a name="l03307"></a><span class="lineno"> 3307</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l03308"></a><span class="lineno"> 3308</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>( o );</div>
-<div class="line"><a name="l03309"></a><span class="lineno"> 3309</span>&#160;      <span class="keywordflow">if</span> (dmg == NULL)</div>
-<div class="line"><a name="l03310"></a><span class="lineno"> 3310</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l03311"></a><span class="lineno"> 3311</span>&#160; </div>
-<div class="line"><a name="l03312"></a><span class="lineno"> 3312</span>&#160;      damage_cache   = dmg-&gt;damage;</div>
-<div class="line"><a name="l03313"></a><span class="lineno"> 3313</span>&#160;      delay_cache    = <a class="code" href="outfit_8c.html#afd3c474cb6d7c99a3f0fb2499550956c">outfit_delay</a>( o );</div>
-<div class="line"><a name="l03314"></a><span class="lineno"> 3314</span>&#160;      <span class="keywordflow">if</span> ((damage_cache &gt; 0) &amp;&amp; (delay_cache &gt; 0))</div>
-<div class="line"><a name="l03315"></a><span class="lineno"> 3315</span>&#160;         DPSaccum_pilot += ( damage_cache/delay_cache );</div>
-<div class="line"><a name="l03316"></a><span class="lineno"> 3316</span>&#160;   }</div>
-<div class="line"><a name="l03317"></a><span class="lineno"> 3317</span>&#160; </div>
-<div class="line"><a name="l03318"></a><span class="lineno"> 3318</span>&#160;   <span class="keywordflow">if</span> ((DPSaccum_target &gt; 1e-6) &amp;&amp; (DPSaccum_pilot &gt; 1e-6))</div>
-<div class="line"><a name="l03319"></a><span class="lineno"> 3319</span>&#160;      <span class="keywordflow">return</span> DPSaccum_pilot / (DPSaccum_target + DPSaccum_pilot);</div>
-<div class="line"><a name="l03320"></a><span class="lineno"> 3320</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (DPSaccum_pilot &gt; 0.)</div>
-<div class="line"><a name="l03321"></a><span class="lineno"> 3321</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l03322"></a><span class="lineno"> 3322</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l03323"></a><span class="lineno"> 3323</span>&#160;}</div>
-<div class="line"><a name="l03324"></a><span class="lineno"> 3324</span>&#160; </div>
-<div class="line"><a name="l03332"></a><span class="lineno"><a class="line" href="pilot_8c.html#a3e77a50e739b48d54acad82b76732342"> 3332</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="pilot_8c.html#a3e77a50e739b48d54acad82b76732342">pilot_relhp</a>( <span class="keyword">const</span> Pilot* <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>, <span class="keyword">const</span> Pilot* p )</div>
-<div class="line"><a name="l03333"></a><span class="lineno"> 3333</span>&#160;{</div>
-<div class="line"><a name="l03334"></a><span class="lineno"> 3334</span>&#160;   <span class="keywordtype">double</span> c_hp = <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a> -&gt; armour_max + <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a> -&gt; shield_max;</div>
-<div class="line"><a name="l03335"></a><span class="lineno"> 3335</span>&#160;   <span class="keywordtype">double</span> p_hp = p -&gt; armour_max + p -&gt; shield_max;</div>
-<div class="line"><a name="l03336"></a><span class="lineno"> 3336</span>&#160;   <span class="keywordflow">return</span> c_hp / (p_hp + c_hp);</div>
-<div class="line"><a name="l03337"></a><span class="lineno"> 3337</span>&#160;}</div>
-<div class="line"><a name="l03338"></a><span class="lineno"> 3338</span>&#160; </div>
-<div class="line"><a name="l03339"></a><span class="lineno"> 3339</span>&#160; </div>
-<div class="line"><a name="l03346"></a><span class="lineno"><a class="line" href="pilot_8c.html#a1ee011c329dd8784822a1fdb4ef1b87d"> 3346</a></span>&#160;credits_t <a class="code" href="pilot_8c.html#a1ee011c329dd8784822a1fdb4ef1b87d">pilot_worth</a>( <span class="keyword">const</span> Pilot *p )</div>
-<div class="line"><a name="l03347"></a><span class="lineno"> 3347</span>&#160;{</div>
-<div class="line"><a name="l03348"></a><span class="lineno"> 3348</span>&#160;   credits_t price;</div>
-<div class="line"><a name="l03349"></a><span class="lineno"> 3349</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l03350"></a><span class="lineno"> 3350</span>&#160; </div>
-<div class="line"><a name="l03351"></a><span class="lineno"> 3351</span>&#160;   <span class="comment">/* Ship price is base price + outfit prices. */</span></div>
-<div class="line"><a name="l03352"></a><span class="lineno"> 3352</span>&#160;   price = <a class="code" href="ship_8c.html#a2f342abe1c82c2a153e690d9baf8fee7">ship_basePrice</a>( p-&gt;ship );</div>
-<div class="line"><a name="l03353"></a><span class="lineno"> 3353</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(p-&gt;outfits); i++) {</div>
-<div class="line"><a name="l03354"></a><span class="lineno"> 3354</span>&#160;      <span class="keywordflow">if</span> (p-&gt;outfits[i]-&gt;outfit == NULL)</div>
-<div class="line"><a name="l03355"></a><span class="lineno"> 3355</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l03356"></a><span class="lineno"> 3356</span>&#160;      <span class="comment">/* Don&#39;t count unique outfits. */</span></div>
-<div class="line"><a name="l03357"></a><span class="lineno"> 3357</span>&#160;      <span class="keywordflow">if</span> (outfit_isProp(p-&gt;outfits[i]-&gt;outfit, OUTFIT_PROP_UNIQUE))</div>
-<div class="line"><a name="l03358"></a><span class="lineno"> 3358</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l03359"></a><span class="lineno"> 3359</span>&#160;      price += p-&gt;outfits[i]-&gt;outfit-&gt;price;</div>
-<div class="line"><a name="l03360"></a><span class="lineno"> 3360</span>&#160;   }</div>
-<div class="line"><a name="l03361"></a><span class="lineno"> 3361</span>&#160; </div>
-<div class="line"><a name="l03362"></a><span class="lineno"> 3362</span>&#160;   <span class="keywordflow">return</span> price;</div>
-<div class="line"><a name="l03363"></a><span class="lineno"> 3363</span>&#160;}</div>
-<div class="line"><a name="l03364"></a><span class="lineno"> 3364</span>&#160; </div>
+<div class="line"><a name="l03223"></a><span class="lineno"> 3223</span>&#160;      <span class="comment">/* Invisible, not doing anything. */</span></div>
+<div class="line"><a name="l03224"></a><span class="lineno"> 3224</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i], PILOT_HIDE))</div>
+<div class="line"><a name="l03225"></a><span class="lineno"> 3225</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03226"></a><span class="lineno"> 3226</span>&#160; </div>
+<div class="line"><a name="l03227"></a><span class="lineno"> 3227</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i]-&gt;render_overlay != NULL) <span class="comment">/* render */</span></div>
+<div class="line"><a name="l03228"></a><span class="lineno"> 3228</span>&#160;         <a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i]-&gt;render_overlay(<a class="code" href="pilot_8c.html#aa282db997ce9db5d89ff0c12f4d7e65a">pilot_stack</a>[i], dt);</div>
+<div class="line"><a name="l03229"></a><span class="lineno"> 3229</span>&#160;   }</div>
+<div class="line"><a name="l03230"></a><span class="lineno"> 3230</span>&#160;}</div>
+<div class="line"><a name="l03231"></a><span class="lineno"> 3231</span>&#160; </div>
+<div class="line"><a name="l03232"></a><span class="lineno"> 3232</span>&#160; </div>
+<div class="line"><a name="l03238"></a><span class="lineno"><a class="line" href="pilot_8c.html#a59ed76f9e901037745355b095419f902"> 3238</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot_8c.html#a59ed76f9e901037745355b095419f902">pilot_clearTimers</a>( Pilot *pilot )</div>
+<div class="line"><a name="l03239"></a><span class="lineno"> 3239</span>&#160;{</div>
+<div class="line"><a name="l03240"></a><span class="lineno"> 3240</span>&#160;   <span class="keywordtype">int</span> i, n;</div>
+<div class="line"><a name="l03241"></a><span class="lineno"> 3241</span>&#160;   PilotOutfitSlot *o;</div>
+<div class="line"><a name="l03242"></a><span class="lineno"> 3242</span>&#160; </div>
+<div class="line"><a name="l03243"></a><span class="lineno"> 3243</span>&#160;   pilot-&gt;ptimer     = 0.; <span class="comment">/* Pilot timer. */</span></div>
+<div class="line"><a name="l03244"></a><span class="lineno"> 3244</span>&#160;   pilot-&gt;tcontrol   = 0.; <span class="comment">/* AI control timer. */</span></div>
+<div class="line"><a name="l03245"></a><span class="lineno"> 3245</span>&#160;   pilot-&gt;stimer     = 0.; <span class="comment">/* Shield timer. */</span></div>
+<div class="line"><a name="l03246"></a><span class="lineno"> 3246</span>&#160;   pilot-&gt;dtimer     = 0.; <span class="comment">/* Disable timer. */</span></div>
+<div class="line"><a name="l03247"></a><span class="lineno"> 3247</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;MAX_AI_TIMERS; i++)</div>
+<div class="line"><a name="l03248"></a><span class="lineno"> 3248</span>&#160;      pilot-&gt;timer[i] = 0.; <span class="comment">/* Specific AI timers. */</span></div>
+<div class="line"><a name="l03249"></a><span class="lineno"> 3249</span>&#160;   n = 0;</div>
+<div class="line"><a name="l03250"></a><span class="lineno"> 3250</span>&#160;   for (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pilot-&gt;outfits); i++) {</div>
+<div class="line"><a name="l03251"></a><span class="lineno"> 3251</span>&#160;      o = pilot-&gt;outfits[i];</div>
+<div class="line"><a name="l03252"></a><span class="lineno"> 3252</span>&#160;      o-&gt;timer    = 0.; <span class="comment">/* Last used timer. */</span></div>
+<div class="line"><a name="l03253"></a><span class="lineno"> 3253</span>&#160;      o-&gt;stimer   = 0.; <span class="comment">/* State timer. */</span></div>
+<div class="line"><a name="l03254"></a><span class="lineno"> 3254</span>&#160;      <span class="keywordflow">if</span> (o-&gt;state != PILOT_OUTFIT_OFF) {</div>
+<div class="line"><a name="l03255"></a><span class="lineno"> 3255</span>&#160;         o-&gt;state    = PILOT_OUTFIT_OFF; <span class="comment">/* Set off. */</span></div>
+<div class="line"><a name="l03256"></a><span class="lineno"> 3256</span>&#160;         n++;</div>
+<div class="line"><a name="l03257"></a><span class="lineno"> 3257</span>&#160;      }</div>
+<div class="line"><a name="l03258"></a><span class="lineno"> 3258</span>&#160;   }</div>
+<div class="line"><a name="l03259"></a><span class="lineno"> 3259</span>&#160; </div>
+<div class="line"><a name="l03260"></a><span class="lineno"> 3260</span>&#160;   <span class="comment">/* Must recalculate stats. */</span></div>
+<div class="line"><a name="l03261"></a><span class="lineno"> 3261</span>&#160;   <span class="keywordflow">if</span> (n &gt; 0)</div>
+<div class="line"><a name="l03262"></a><span class="lineno"> 3262</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( pilot );</div>
+<div class="line"><a name="l03263"></a><span class="lineno"> 3263</span>&#160;}</div>
+<div class="line"><a name="l03264"></a><span class="lineno"> 3264</span>&#160; </div>
+<div class="line"><a name="l03265"></a><span class="lineno"> 3265</span>&#160; </div>
+<div class="line"><a name="l03273"></a><span class="lineno"><a class="line" href="pilot_8c.html#a406c94bd6098ee9c0a3b8dbe83382dc4"> 3273</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="pilot_8c.html#a406c94bd6098ee9c0a3b8dbe83382dc4">pilot_relsize</a>( <span class="keyword">const</span> Pilot* <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>, <span class="keyword">const</span> Pilot* p )</div>
+<div class="line"><a name="l03274"></a><span class="lineno"> 3274</span>&#160;{</div>
+<div class="line"><a name="l03275"></a><span class="lineno"> 3275</span>&#160;   <span class="keywordflow">return</span> (1 - 1/(1 + ((<span class="keywordtype">double</span>)<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;solid-&gt;mass / (<span class="keywordtype">double</span>)p-&gt;solid-&gt;mass)));</div>
+<div class="line"><a name="l03276"></a><span class="lineno"> 3276</span>&#160;}</div>
+<div class="line"><a name="l03277"></a><span class="lineno"> 3277</span>&#160; </div>
+<div class="line"><a name="l03285"></a><span class="lineno"><a class="line" href="pilot_8c.html#a5b67250e0842ad3fbbd85103a79d5bf4"> 3285</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="pilot_8c.html#a5b67250e0842ad3fbbd85103a79d5bf4">pilot_reldps</a>( <span class="keyword">const</span> Pilot* <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>, <span class="keyword">const</span> Pilot* p )</div>
+<div class="line"><a name="l03286"></a><span class="lineno"> 3286</span>&#160;{</div>
+<div class="line"><a name="l03287"></a><span class="lineno"> 3287</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l03288"></a><span class="lineno"> 3288</span>&#160;   <span class="keywordtype">double</span> DPSaccum_target = 0.;</div>
+<div class="line"><a name="l03289"></a><span class="lineno"> 3289</span>&#160;   <span class="keywordtype">double</span> DPSaccum_pilot = 0.;</div>
+<div class="line"><a name="l03290"></a><span class="lineno"> 3290</span>&#160;   <span class="keywordtype">double</span> delay_cache, damage_cache;</div>
+<div class="line"><a name="l03291"></a><span class="lineno"> 3291</span>&#160;   Outfit *o;</div>
+<div class="line"><a name="l03292"></a><span class="lineno"> 3292</span>&#160;   <span class="keyword">const</span> Damage *dmg;</div>
+<div class="line"><a name="l03293"></a><span class="lineno"> 3293</span>&#160; </div>
+<div class="line"><a name="l03294"></a><span class="lineno"> 3294</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(p-&gt;outfit_weapon); i++) {</div>
+<div class="line"><a name="l03295"></a><span class="lineno"> 3295</span>&#160;      o = p-&gt;outfit_weapon[i].outfit;</div>
+<div class="line"><a name="l03296"></a><span class="lineno"> 3296</span>&#160;      <span class="keywordflow">if</span> (o == NULL)</div>
+<div class="line"><a name="l03297"></a><span class="lineno"> 3297</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03298"></a><span class="lineno"> 3298</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>( o );</div>
+<div class="line"><a name="l03299"></a><span class="lineno"> 3299</span>&#160;      <span class="keywordflow">if</span> (dmg == NULL)</div>
+<div class="line"><a name="l03300"></a><span class="lineno"> 3300</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03301"></a><span class="lineno"> 3301</span>&#160; </div>
+<div class="line"><a name="l03302"></a><span class="lineno"> 3302</span>&#160;      damage_cache   = dmg-&gt;damage;</div>
+<div class="line"><a name="l03303"></a><span class="lineno"> 3303</span>&#160;      delay_cache    = <a class="code" href="outfit_8c.html#afd3c474cb6d7c99a3f0fb2499550956c">outfit_delay</a>( o );</div>
+<div class="line"><a name="l03304"></a><span class="lineno"> 3304</span>&#160;      <span class="keywordflow">if</span> ((damage_cache &gt; 0) &amp;&amp; (delay_cache &gt; 0))</div>
+<div class="line"><a name="l03305"></a><span class="lineno"> 3305</span>&#160;         DPSaccum_target += ( damage_cache/delay_cache );</div>
+<div class="line"><a name="l03306"></a><span class="lineno"> 3306</span>&#160;   }</div>
+<div class="line"><a name="l03307"></a><span class="lineno"> 3307</span>&#160; </div>
+<div class="line"><a name="l03308"></a><span class="lineno"> 3308</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;outfit_weapon); i++) {</div>
+<div class="line"><a name="l03309"></a><span class="lineno"> 3309</span>&#160;      o = <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;outfit_weapon[i].outfit;</div>
+<div class="line"><a name="l03310"></a><span class="lineno"> 3310</span>&#160;      <span class="keywordflow">if</span> (o == NULL)</div>
+<div class="line"><a name="l03311"></a><span class="lineno"> 3311</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03312"></a><span class="lineno"> 3312</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>( o );</div>
+<div class="line"><a name="l03313"></a><span class="lineno"> 3313</span>&#160;      <span class="keywordflow">if</span> (dmg == NULL)</div>
+<div class="line"><a name="l03314"></a><span class="lineno"> 3314</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03315"></a><span class="lineno"> 3315</span>&#160; </div>
+<div class="line"><a name="l03316"></a><span class="lineno"> 3316</span>&#160;      damage_cache   = dmg-&gt;damage;</div>
+<div class="line"><a name="l03317"></a><span class="lineno"> 3317</span>&#160;      delay_cache    = <a class="code" href="outfit_8c.html#afd3c474cb6d7c99a3f0fb2499550956c">outfit_delay</a>( o );</div>
+<div class="line"><a name="l03318"></a><span class="lineno"> 3318</span>&#160;      <span class="keywordflow">if</span> ((damage_cache &gt; 0) &amp;&amp; (delay_cache &gt; 0))</div>
+<div class="line"><a name="l03319"></a><span class="lineno"> 3319</span>&#160;         DPSaccum_pilot += ( damage_cache/delay_cache );</div>
+<div class="line"><a name="l03320"></a><span class="lineno"> 3320</span>&#160;   }</div>
+<div class="line"><a name="l03321"></a><span class="lineno"> 3321</span>&#160; </div>
+<div class="line"><a name="l03322"></a><span class="lineno"> 3322</span>&#160;   <span class="keywordflow">if</span> ((DPSaccum_target &gt; 1e-6) &amp;&amp; (DPSaccum_pilot &gt; 1e-6))</div>
+<div class="line"><a name="l03323"></a><span class="lineno"> 3323</span>&#160;      <span class="keywordflow">return</span> DPSaccum_pilot / (DPSaccum_target + DPSaccum_pilot);</div>
+<div class="line"><a name="l03324"></a><span class="lineno"> 3324</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (DPSaccum_pilot &gt; 0.)</div>
+<div class="line"><a name="l03325"></a><span class="lineno"> 3325</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l03326"></a><span class="lineno"> 3326</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l03327"></a><span class="lineno"> 3327</span>&#160;}</div>
+<div class="line"><a name="l03328"></a><span class="lineno"> 3328</span>&#160; </div>
+<div class="line"><a name="l03336"></a><span class="lineno"><a class="line" href="pilot_8c.html#a3e77a50e739b48d54acad82b76732342"> 3336</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="pilot_8c.html#a3e77a50e739b48d54acad82b76732342">pilot_relhp</a>( <span class="keyword">const</span> Pilot* <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>, <span class="keyword">const</span> Pilot* p )</div>
+<div class="line"><a name="l03337"></a><span class="lineno"> 3337</span>&#160;{</div>
+<div class="line"><a name="l03338"></a><span class="lineno"> 3338</span>&#160;   <span class="keywordtype">double</span> c_hp = <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a> -&gt; armour_max + <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a> -&gt; shield_max;</div>
+<div class="line"><a name="l03339"></a><span class="lineno"> 3339</span>&#160;   <span class="keywordtype">double</span> p_hp = p -&gt; armour_max + p -&gt; shield_max;</div>
+<div class="line"><a name="l03340"></a><span class="lineno"> 3340</span>&#160;   <span class="keywordflow">return</span> c_hp / (p_hp + c_hp);</div>
+<div class="line"><a name="l03341"></a><span class="lineno"> 3341</span>&#160;}</div>
+<div class="line"><a name="l03342"></a><span class="lineno"> 3342</span>&#160; </div>
+<div class="line"><a name="l03343"></a><span class="lineno"> 3343</span>&#160; </div>
+<div class="line"><a name="l03350"></a><span class="lineno"><a class="line" href="pilot_8c.html#a1ee011c329dd8784822a1fdb4ef1b87d"> 3350</a></span>&#160;credits_t <a class="code" href="pilot_8c.html#a1ee011c329dd8784822a1fdb4ef1b87d">pilot_worth</a>( <span class="keyword">const</span> Pilot *p )</div>
+<div class="line"><a name="l03351"></a><span class="lineno"> 3351</span>&#160;{</div>
+<div class="line"><a name="l03352"></a><span class="lineno"> 3352</span>&#160;   credits_t price;</div>
+<div class="line"><a name="l03353"></a><span class="lineno"> 3353</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l03354"></a><span class="lineno"> 3354</span>&#160; </div>
+<div class="line"><a name="l03355"></a><span class="lineno"> 3355</span>&#160;   <span class="comment">/* Ship price is base price + outfit prices. */</span></div>
+<div class="line"><a name="l03356"></a><span class="lineno"> 3356</span>&#160;   price = <a class="code" href="ship_8c.html#a2f342abe1c82c2a153e690d9baf8fee7">ship_basePrice</a>( p-&gt;ship );</div>
+<div class="line"><a name="l03357"></a><span class="lineno"> 3357</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(p-&gt;outfits); i++) {</div>
+<div class="line"><a name="l03358"></a><span class="lineno"> 3358</span>&#160;      <span class="keywordflow">if</span> (p-&gt;outfits[i]-&gt;outfit == NULL)</div>
+<div class="line"><a name="l03359"></a><span class="lineno"> 3359</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03360"></a><span class="lineno"> 3360</span>&#160;      <span class="comment">/* Don&#39;t count unique outfits. */</span></div>
+<div class="line"><a name="l03361"></a><span class="lineno"> 3361</span>&#160;      <span class="keywordflow">if</span> (outfit_isProp(p-&gt;outfits[i]-&gt;outfit, OUTFIT_PROP_UNIQUE))</div>
+<div class="line"><a name="l03362"></a><span class="lineno"> 3362</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03363"></a><span class="lineno"> 3363</span>&#160;      price += p-&gt;outfits[i]-&gt;outfit-&gt;price;</div>
+<div class="line"><a name="l03364"></a><span class="lineno"> 3364</span>&#160;   }</div>
 <div class="line"><a name="l03365"></a><span class="lineno"> 3365</span>&#160; </div>
-<div class="line"><a name="l03374"></a><span class="lineno"><a class="line" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64"> 3374</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>(Pilot *p, Pilot *receiver, <span class="keyword">const</span> <span class="keywordtype">char</span> *type, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> idx)</div>
-<div class="line"><a name="l03375"></a><span class="lineno"> 3375</span>&#160;{</div>
-<div class="line"><a name="l03376"></a><span class="lineno"> 3376</span>&#160;   <span class="keywordflow">if</span> (idx != 0)</div>
-<div class="line"><a name="l03377"></a><span class="lineno"> 3377</span>&#160;      lua_pushvalue(naevL, idx); <span class="comment">/* data */</span></div>
-<div class="line"><a name="l03378"></a><span class="lineno"> 3378</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l03379"></a><span class="lineno"> 3379</span>&#160;      lua_pushnil(naevL); <span class="comment">/* data */</span></div>
-<div class="line"><a name="l03380"></a><span class="lineno"> 3380</span>&#160; </div>
-<div class="line"><a name="l03381"></a><span class="lineno"> 3381</span>&#160;   lua_newtable(naevL); <span class="comment">/* data, msg */</span></div>
-<div class="line"><a name="l03382"></a><span class="lineno"> 3382</span>&#160; </div>
-<div class="line"><a name="l03383"></a><span class="lineno"> 3383</span>&#160;   <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, p-&gt;id); <span class="comment">/* data, msg, sender */</span></div>
-<div class="line"><a name="l03384"></a><span class="lineno"> 3384</span>&#160;   lua_rawseti(naevL, -2, 1); <span class="comment">/* data, msg */</span></div>
-<div class="line"><a name="l03385"></a><span class="lineno"> 3385</span>&#160; </div>
-<div class="line"><a name="l03386"></a><span class="lineno"> 3386</span>&#160;   lua_pushstring(naevL, type); <span class="comment">/* data, msg, type */</span></div>
-<div class="line"><a name="l03387"></a><span class="lineno"> 3387</span>&#160;   lua_rawseti(naevL, -2, 2); <span class="comment">/* data, msg */</span></div>
-<div class="line"><a name="l03388"></a><span class="lineno"> 3388</span>&#160; </div>
-<div class="line"><a name="l03389"></a><span class="lineno"> 3389</span>&#160;   lua_pushvalue(naevL, -2); <span class="comment">/* data, msg, data */</span></div>
-<div class="line"><a name="l03390"></a><span class="lineno"> 3390</span>&#160;   lua_rawseti(naevL, -2, 3); <span class="comment">/* data, msg */</span></div>
-<div class="line"><a name="l03391"></a><span class="lineno"> 3391</span>&#160; </div>
-<div class="line"><a name="l03392"></a><span class="lineno"> 3392</span>&#160;   lua_rawgeti(naevL, LUA_REGISTRYINDEX, receiver-&gt;messages); <span class="comment">/* data, msg, messages */</span></div>
-<div class="line"><a name="l03393"></a><span class="lineno"> 3393</span>&#160;   lua_pushvalue(naevL, -2); <span class="comment">/* data, msg, messages, msg */</span></div>
-<div class="line"><a name="l03394"></a><span class="lineno"> 3394</span>&#160;   lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); <span class="comment">/* data, msg, messages */</span></div>
-<div class="line"><a name="l03395"></a><span class="lineno"> 3395</span>&#160;   lua_pop(naevL, 3); <span class="comment">/*  */</span></div>
-<div class="line"><a name="l03396"></a><span class="lineno"> 3396</span>&#160;}</div>
+<div class="line"><a name="l03366"></a><span class="lineno"> 3366</span>&#160;   <span class="keywordflow">return</span> price;</div>
+<div class="line"><a name="l03367"></a><span class="lineno"> 3367</span>&#160;}</div>
+<div class="line"><a name="l03368"></a><span class="lineno"> 3368</span>&#160; </div>
+<div class="line"><a name="l03369"></a><span class="lineno"> 3369</span>&#160; </div>
+<div class="line"><a name="l03378"></a><span class="lineno"><a class="line" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64"> 3378</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>(Pilot *p, Pilot *receiver, <span class="keyword">const</span> <span class="keywordtype">char</span> *type, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> idx)</div>
+<div class="line"><a name="l03379"></a><span class="lineno"> 3379</span>&#160;{</div>
+<div class="line"><a name="l03380"></a><span class="lineno"> 3380</span>&#160;   <span class="keywordflow">if</span> (idx != 0)</div>
+<div class="line"><a name="l03381"></a><span class="lineno"> 3381</span>&#160;      lua_pushvalue(naevL, idx); <span class="comment">/* data */</span></div>
+<div class="line"><a name="l03382"></a><span class="lineno"> 3382</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l03383"></a><span class="lineno"> 3383</span>&#160;      lua_pushnil(naevL); <span class="comment">/* data */</span></div>
+<div class="line"><a name="l03384"></a><span class="lineno"> 3384</span>&#160; </div>
+<div class="line"><a name="l03385"></a><span class="lineno"> 3385</span>&#160;   lua_newtable(naevL); <span class="comment">/* data, msg */</span></div>
+<div class="line"><a name="l03386"></a><span class="lineno"> 3386</span>&#160; </div>
+<div class="line"><a name="l03387"></a><span class="lineno"> 3387</span>&#160;   <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, p-&gt;id); <span class="comment">/* data, msg, sender */</span></div>
+<div class="line"><a name="l03388"></a><span class="lineno"> 3388</span>&#160;   lua_rawseti(naevL, -2, 1); <span class="comment">/* data, msg */</span></div>
+<div class="line"><a name="l03389"></a><span class="lineno"> 3389</span>&#160; </div>
+<div class="line"><a name="l03390"></a><span class="lineno"> 3390</span>&#160;   lua_pushstring(naevL, type); <span class="comment">/* data, msg, type */</span></div>
+<div class="line"><a name="l03391"></a><span class="lineno"> 3391</span>&#160;   lua_rawseti(naevL, -2, 2); <span class="comment">/* data, msg */</span></div>
+<div class="line"><a name="l03392"></a><span class="lineno"> 3392</span>&#160; </div>
+<div class="line"><a name="l03393"></a><span class="lineno"> 3393</span>&#160;   lua_pushvalue(naevL, -2); <span class="comment">/* data, msg, data */</span></div>
+<div class="line"><a name="l03394"></a><span class="lineno"> 3394</span>&#160;   lua_rawseti(naevL, -2, 3); <span class="comment">/* data, msg */</span></div>
+<div class="line"><a name="l03395"></a><span class="lineno"> 3395</span>&#160; </div>
+<div class="line"><a name="l03396"></a><span class="lineno"> 3396</span>&#160;   lua_rawgeti(naevL, LUA_REGISTRYINDEX, receiver-&gt;messages); <span class="comment">/* data, msg, messages */</span></div>
+<div class="line"><a name="l03397"></a><span class="lineno"> 3397</span>&#160;   lua_pushvalue(naevL, -2); <span class="comment">/* data, msg, messages, msg */</span></div>
+<div class="line"><a name="l03398"></a><span class="lineno"> 3398</span>&#160;   lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); <span class="comment">/* data, msg, messages */</span></div>
+<div class="line"><a name="l03399"></a><span class="lineno"> 3399</span>&#160;   lua_pop(naevL, 3); <span class="comment">/*  */</span></div>
+<div class="line"><a name="l03400"></a><span class="lineno"> 3400</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="apilot_8c_html_a67e88b21d47114b1f5d1d3f0260c2862"><div class="ttname"><a href="pilot_8c.html#a67e88b21d47114b1f5d1d3f0260c2862">pilot_cooldownEnd</a></div><div class="ttdeci">void pilot_cooldownEnd(Pilot *p, const char *reason)</div><div class="ttdoc">Terminates active cooldown.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00940">pilot.c:940</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_af51750ac6536e4e124d2520bc0b2bfd8"><div class="ttname"><a href="pilot__weapon_8c.html#af51750ac6536e4e124d2520bc0b2bfd8">pilot_weapSetSpeed</a></div><div class="ttdeci">double pilot_weapSetSpeed(Pilot *p, int id, int level)</div><div class="ttdoc">Gets the speed of the current pilot weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00640">pilot_weapon.c:640</a></div></div>
@@ -2957,7 +2961,7 @@ $(function() {
 <div class="ttc" id="anaev_8h_html_a9b649f4d878e64a80b4cd2cad45f43b3"><div class="ttname"><a href="naev_8h.html#a9b649f4d878e64a80b4cd2cad45f43b3">FABS</a></div><div class="ttdeci">#define FABS(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00043">naev.h:43</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_ad333ddb6ecdfedd1d2f306a271b8dd6d"><div class="ttname"><a href="pilot__outfit_8c.html#ad333ddb6ecdfedd1d2f306a271b8dd6d">pilot_lockUpdateSlot</a></div><div class="ttdeci">void pilot_lockUpdateSlot(Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt)</div><div class="ttdoc">Updates the lockons on the pilot's launchers.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00046">pilot_outfit.c:46</a></div></div>
 <div class="ttc" id="astructSolid___html_a10cd2d7aae37c13fa94bcb4ef88b3b87"><div class="ttname"><a href="structSolid__.html#a10cd2d7aae37c13fa94bcb4ef88b3b87">Solid_::vel</a></div><div class="ttdeci">Vector2d vel</div><div class="ttdef"><b>Definition:</b> <a href="physics_8h_source.html#l00076">physics.h:76</a></div></div>
-<div class="ttc" id="apilot_8c_html_a3e77a50e739b48d54acad82b76732342"><div class="ttname"><a href="pilot_8c.html#a3e77a50e739b48d54acad82b76732342">pilot_relhp</a></div><div class="ttdeci">double pilot_relhp(const Pilot *cur_pilot, const Pilot *p)</div><div class="ttdoc">Gets the relative hp(combined shields and armour) between the current pilot and the specified target.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03332">pilot.c:3332</a></div></div>
+<div class="ttc" id="apilot_8c_html_a3e77a50e739b48d54acad82b76732342"><div class="ttname"><a href="pilot_8c.html#a3e77a50e739b48d54acad82b76732342">pilot_relhp</a></div><div class="ttdeci">double pilot_relhp(const Pilot *cur_pilot, const Pilot *p)</div><div class="ttdoc">Gets the relative hp(combined shields and armour) between the current pilot and the specified target.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03336">pilot.c:3336</a></div></div>
 <div class="ttc" id="apilot_8c_html_addf5b5e80fdfd3cb14269feeb1408abf"><div class="ttname"><a href="pilot_8c.html#addf5b5e80fdfd3cb14269feeb1408abf">pilot_getPrevID</a></div><div class="ttdeci">unsigned int pilot_getPrevID(const unsigned int id, int mode)</div><div class="ttdoc">Gets the previous pilot based on ID.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00182">pilot.c:182</a></div></div>
 <div class="ttc" id="apilot_8c_html_a6e9f4236ae987d9f95f7b66688b4113e"><div class="ttname"><a href="pilot_8c.html#a6e9f4236ae987d9f95f7b66688b4113e">pilot_hyperspaceAbort</a></div><div class="ttdeci">void pilot_hyperspaceAbort(Pilot *p)</div><div class="ttdoc">Stops the pilot from hyperspacing.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l02415">pilot.c:2415</a></div></div>
 <div class="ttc" id="apilot_8c_html_a630973c08b5589d5c1ffd7cfc7c2faa0"><div class="ttname"><a href="pilot_8c.html#a630973c08b5589d5c1ffd7cfc7c2faa0">pilot_updateDisable</a></div><div class="ttdeci">void pilot_updateDisable(Pilot *p, const unsigned int shooter)</div><div class="ttdoc">Handles pilot disabling. Set or unset the disable status depending on health and stress values.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01508">pilot.c:1508</a></div></div>
@@ -3017,7 +3021,7 @@ $(function() {
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00049">news.c:49</a></div></div>
 <div class="ttc" id="afaction_8c_html_ab35a73591f042814be3e4e62283e20f9"><div class="ttname"><a href="faction_8c.html#ab35a73591f042814be3e4e62283e20f9">faction_modPlayer</a></div><div class="ttdeci">void faction_modPlayer(int f, double mod, const char *source)</div><div class="ttdoc">Modifies the player's standing with a faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00729">faction.c:729</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a135a11eaa915afae3e1919cadca0a200"><div class="ttname"><a href="player_8c.html#a135a11eaa915afae3e1919cadca0a200">player_dead</a></div><div class="ttdeci">void player_dead(void)</div><div class="ttdoc">Player got pwned.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02300">player.c:2300</a></div></div>
-<div class="ttc" id="apilot_8c_html_a36720974dd67f3e68d943e98fe022a64"><div class="ttname"><a href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a></div><div class="ttdeci">void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)</div><div class="ttdoc">Sends a message.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03374">pilot.c:3374</a></div></div>
+<div class="ttc" id="apilot_8c_html_a36720974dd67f3e68d943e98fe022a64"><div class="ttname"><a href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a></div><div class="ttdeci">void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)</div><div class="ttdoc">Sends a message.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03378">pilot.c:3378</a></div></div>
 <div class="ttc" id="aarray_8h_html_a6f15b617933d8ed080bd53b043342923"><div class="ttname"><a href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a></div><div class="ttdeci">#define array_create_size(basic_type, capacity)</div><div class="ttdoc">Creates a new dynamic array of ‘basic_type’ with an initial capacity.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00106">array.h:106</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a66f7fe78516b0547eba21d2dec83bb20"><div class="ttname"><a href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a></div><div class="ttdeci">int outfit_isFighterBay(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a fighter bay.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00517">outfit.c:517</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a9b284b9b321ec510ddd49b7d08487ce4"><div class="ttname"><a href="spfx_8c.html#a9b284b9b321ec510ddd49b7d08487ce4">spfx_trail_create</a></div><div class="ttdeci">Trail_spfx * spfx_trail_create(const TrailSpec *spec)</div><div class="ttdoc">Initalizes a trail.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00571">spfx.c:571</a></div></div>
@@ -3044,7 +3048,7 @@ $(function() {
 <div class="ttc" id="astructTrail__spfx_html"><div class="ttname"><a href="structTrail__spfx.html">Trail_spfx</a></div><div class="ttdoc">A trail generated by a ship or an ammo.</div></div>
 <div class="ttc" id="apilot_8c_html_a6475354387f03b14a2cbc154737c30fa"><div class="ttname"><a href="pilot_8c.html#a6475354387f03b14a2cbc154737c30fa">pilot_refuel</a></div><div class="ttdeci">static void pilot_refuel(Pilot *p, double dt)</div><div class="ttdoc">Has the pilot refuel its target.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l02471">pilot.c:2471</a></div></div>
 <div class="ttc" id="apilot_8c_html_abf57fc9116bb310a922ed79f783a36a8"><div class="ttname"><a href="pilot_8c.html#abf57fc9116bb310a922ed79f783a36a8">pilots_newSystem</a></div><div class="ttdeci">void pilots_newSystem(void)</div><div class="ttdoc">Updates pilot state which depends on the system (sensor range, nebula trails...)</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03086">pilot.c:3086</a></div></div>
-<div class="ttc" id="apilot_8c_html_ae328fbd9fd49e1a9a244b24a4a3c65f2"><div class="ttname"><a href="pilot_8c.html#ae328fbd9fd49e1a9a244b24a4a3c65f2">pilots_render</a></div><div class="ttdeci">void pilots_render(double dt)</div><div class="ttdoc">Renders all the pilots.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03194">pilot.c:3194</a></div></div>
+<div class="ttc" id="apilot_8c_html_ae328fbd9fd49e1a9a244b24a4a3c65f2"><div class="ttname"><a href="pilot_8c.html#ae328fbd9fd49e1a9a244b24a4a3c65f2">pilots_render</a></div><div class="ttdeci">void pilots_render(double dt)</div><div class="ttdoc">Renders all the pilots.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03198">pilot.c:3198</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a988a143f483f4ee9fc1e7501e9277a2c"><div class="ttname"><a href="player_8c.html#a988a143f483f4ee9fc1e7501e9277a2c">player_soundStop</a></div><div class="ttdeci">void player_soundStop(void)</div><div class="ttdoc">Stops playing player sounds.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00795">player.c:795</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00045">naev.h:45</a></div></div>
 <div class="ttc" id="apilot_8c_html_a56143a90fcb5ffadb3c837f52f85b2aa"><div class="ttname"><a href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a></div><div class="ttdeci">Pilot *const  * pilot_getAll(void)</div><div class="ttdoc">Gets the pilot stack.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00093">pilot.c:93</a></div></div>
@@ -3054,7 +3058,7 @@ $(function() {
 <div class="ttc" id="apilot_8c_html_adb24da23fdcfb350328eb4fa6862d270"><div class="ttname"><a href="pilot_8c.html#adb24da23fdcfb350328eb4fa6862d270">pilots_free</a></div><div class="ttdeci">void pilots_free(void)</div><div class="ttdoc">Frees the pilot stack.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03029">pilot.c:3029</a></div></div>
 <div class="ttc" id="astructSolid___html_ad057fa91eb5f0cc3faf283a4a8b0f009"><div class="ttname"><a href="structSolid__.html#ad057fa91eb5f0cc3faf283a4a8b0f009">Solid_::thrust</a></div><div class="ttdeci">double thrust</div><div class="ttdef"><b>Definition:</b> <a href="physics_8h_source.html#l00078">physics.h:78</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a4a0e51ed10e9ea167662391f9c00a380"><div class="ttname"><a href="opengl__render_8c.html#a4a0e51ed10e9ea167662391f9c00a380">gl_blitSprite</a></div><div class="ttdeci">void gl_blitSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const glColour *c)</div><div class="ttdoc">Blits a sprite, position is relative to the player.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00429">opengl_render.c:429</a></div></div>
-<div class="ttc" id="apilot_8c_html_a406c94bd6098ee9c0a3b8dbe83382dc4"><div class="ttname"><a href="pilot_8c.html#a406c94bd6098ee9c0a3b8dbe83382dc4">pilot_relsize</a></div><div class="ttdeci">double pilot_relsize(const Pilot *cur_pilot, const Pilot *p)</div><div class="ttdoc">Gets the relative size(shipmass) between the current pilot and the specified target.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03269">pilot.c:3269</a></div></div>
+<div class="ttc" id="apilot_8c_html_a406c94bd6098ee9c0a3b8dbe83382dc4"><div class="ttname"><a href="pilot_8c.html#a406c94bd6098ee9c0a3b8dbe83382dc4">pilot_relsize</a></div><div class="ttdeci">double pilot_relsize(const Pilot *cur_pilot, const Pilot *p)</div><div class="ttdoc">Gets the relative size(shipmass) between the current pilot and the specified target.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03273">pilot.c:3273</a></div></div>
 <div class="ttc" id="anaev_8h_html_a9a1a80dcaf876a3295a7653159a0e90a"><div class="ttname"><a href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a></div><div class="ttdeci">#define pow2(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00052">naev.h:52</a></div></div>
 <div class="ttc" id="aarray_8h_html_ac9a99c83677f4324066a52dc8e5cf91f"><div class="ttname"><a href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a></div><div class="ttdeci">#define array_begin(array)</div><div class="ttdoc">Returns a pointer to the beginning of the reserved memory space.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00198">array.h:198</a></div></div>
 <div class="ttc" id="aplayer_8c_html_aa065b141235ac52f6940948c56ef4ea7"><div class="ttname"><a href="player_8c.html#aa065b141235ac52f6940948c56ef4ea7">snd_hypPowUpJump</a></div><div class="ttdeci">int snd_hypPowUpJump</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00096">player.c:96</a></div></div>
@@ -3082,7 +3086,7 @@ $(function() {
 <div class="ttc" id="aspfx_8c_html_a6839836049ea3657190cc05c9f37a57e"><div class="ttname"><a href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">spfx_shake</a></div><div class="ttdeci">void spfx_shake(double mod)</div><div class="ttdoc">Increases the current rumble level.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00777">spfx.c:777</a></div></div>
 <div class="ttc" id="afont_8c_html_a70108689d1f2c28b6e91f763e3918e9b"><div class="ttname"><a href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a></div><div class="ttdeci">glFont gl_defFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00161">font.c:161</a></div></div>
 <div class="ttc" id="apilot_8c_html_a02bd7447a2521b23e033a7e1087eab5f"><div class="ttname"><a href="pilot_8c.html#a02bd7447a2521b23e033a7e1087eab5f">pilot_getFactionColourChar</a></div><div class="ttdeci">char pilot_getFactionColourChar(const Pilot *p)</div><div class="ttdoc">Gets the faction colour char, works like faction_getColourChar but for a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01065">pilot.c:1065</a></div></div>
-<div class="ttc" id="apilot_8c_html_a308643b7d50db91b4a58ef9f7645b1d3"><div class="ttname"><a href="pilot_8c.html#a308643b7d50db91b4a58ef9f7645b1d3">pilots_renderOverlay</a></div><div class="ttdeci">void pilots_renderOverlay(double dt)</div><div class="ttdoc">Renders all the pilots overlays.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03214">pilot.c:3214</a></div></div>
+<div class="ttc" id="apilot_8c_html_a308643b7d50db91b4a58ef9f7645b1d3"><div class="ttname"><a href="pilot_8c.html#a308643b7d50db91b4a58ef9f7645b1d3">pilots_renderOverlay</a></div><div class="ttdeci">void pilots_renderOverlay(double dt)</div><div class="ttdoc">Renders all the pilots overlays.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03218">pilot.c:3218</a></div></div>
 <div class="ttc" id="adamagetype_8c_html_aae6517a90af0233a5b6440e9584d7e4f"><div class="ttname"><a href="damagetype_8c.html#aae6517a90af0233a5b6440e9584d7e4f">dtype_calcDamage</a></div><div class="ttdeci">void dtype_calcDamage(double *dshield, double *darmour, double absorb, double *knockback, const Damage *dmg, ShipStats *s)</div><div class="ttdoc">Gives the real shield damage, armour damage and knockback modifier.</div><div class="ttdef"><b>Definition:</b> <a href="damagetype_8c_source.html#l00251">damagetype.c:251</a></div></div>
 <div class="ttc" id="apilot_8c_html_ab52882e76c20f713286bc790968bfd9a"><div class="ttname"><a href="pilot_8c.html#ab52882e76c20f713286bc790968bfd9a">pilot_id</a></div><div class="ttdeci">static unsigned int pilot_id</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00055">pilot.c:55</a></div></div>
 <div class="ttc" id="apilot_8c_html_a971df8fe41feb546b4af5bb4167999c5"><div class="ttname"><a href="pilot_8c.html#a971df8fe41feb546b4af5bb4167999c5">pilot_message</a></div><div class="ttdeci">void pilot_message(Pilot *p, unsigned int target, const char *msg, int ignore_int)</div><div class="ttdoc">Have pilot send a message to another.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01097">pilot.c:1097</a></div></div>
@@ -3107,17 +3111,18 @@ $(function() {
 <div class="ttc" id="aescort_8c_html_a3aefcc3bf6a250eef986b575785ea646"><div class="ttname"><a href="escort_8c.html#a3aefcc3bf6a250eef986b575785ea646">escort_rmList</a></div><div class="ttdeci">void escort_rmList(Pilot *p, unsigned int id)</div><div class="ttdoc">Remove from escorts list.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00097">escort.c:97</a></div></div>
 <div class="ttc" id="apilot_8c_html_a80700ca4813aefd4d8fa0e606ee83cb6"><div class="ttname"><a href="pilot_8c.html#a80700ca4813aefd4d8fa0e606ee83cb6">pilot_isNeutral</a></div><div class="ttdeci">int pilot_isNeutral(const Pilot *p)</div><div class="ttdoc">Checks to see if pilot is neutral to the player.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00653">pilot.c:653</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
-<div class="ttc" id="apilot_8c_html_a5b67250e0842ad3fbbd85103a79d5bf4"><div class="ttname"><a href="pilot_8c.html#a5b67250e0842ad3fbbd85103a79d5bf4">pilot_reldps</a></div><div class="ttdeci">double pilot_reldps(const Pilot *cur_pilot, const Pilot *p)</div><div class="ttdoc">Gets the relative damage output(total DPS) between the current pilot and the specified target.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03281">pilot.c:3281</a></div></div>
+<div class="ttc" id="apilot_8c_html_a5b67250e0842ad3fbbd85103a79d5bf4"><div class="ttname"><a href="pilot_8c.html#a5b67250e0842ad3fbbd85103a79d5bf4">pilot_reldps</a></div><div class="ttdeci">double pilot_reldps(const Pilot *cur_pilot, const Pilot *p)</div><div class="ttdoc">Gets the relative damage output(total DPS) between the current pilot and the specified target.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03285">pilot.c:3285</a></div></div>
 <div class="ttc" id="apilot_8c_html_ab6b8802d6c6bb8fefe30cf077dae44e7"><div class="ttname"><a href="pilot_8c.html#ab6b8802d6c6bb8fefe30cf077dae44e7">pilot_setCommMsg</a></div><div class="ttdeci">static void pilot_setCommMsg(Pilot *p, const char *s)</div><div class="ttdoc">Sets the overhead communication message of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01080">pilot.c:1080</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a1e428781a5f08429de391e9b9fe60b30"><div class="ttname"><a href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a></div><div class="ttdeci">void gl_renderRect(double x, double y, double w, double h, const glColour *c)</div><div class="ttdoc">Renders a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00102">opengl_render.c:102</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a270a18620b6bacb0875b8b369b475197"><div class="ttname"><a href="pilot__outfit_8c.html#a270a18620b6bacb0875b8b369b475197">pilot_addAmmo</a></div><div class="ttdeci">int pilot_addAmmo(Pilot *pilot, PilotOutfitSlot *s, Outfit *ammo, int quantity)</div><div class="ttdoc">Adds some ammo to the pilot stock.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00675">pilot_outfit.c:675</a></div></div>
 <div class="ttc" id="apilot_8c_html_a4308b69dd00e41d128191a275f1b9653"><div class="ttname"><a href="pilot_8c.html#a4308b69dd00e41d128191a275f1b9653">pilot_brakeDist</a></div><div class="ttdeci">double pilot_brakeDist(Pilot *p, Vector2d *pos)</div><div class="ttdoc">Gets the braking distance for a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00772">pilot.c:772</a></div></div>
-<div class="ttc" id="apilot_8c_html_a1ee011c329dd8784822a1fdb4ef1b87d"><div class="ttname"><a href="pilot_8c.html#a1ee011c329dd8784822a1fdb4ef1b87d">pilot_worth</a></div><div class="ttdeci">credits_t pilot_worth(const Pilot *p)</div><div class="ttdoc">Gets the price or worth of a pilot in credits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03346">pilot.c:3346</a></div></div>
+<div class="ttc" id="apilot_8c_html_a1ee011c329dd8784822a1fdb4ef1b87d"><div class="ttname"><a href="pilot_8c.html#a1ee011c329dd8784822a1fdb4ef1b87d">pilot_worth</a></div><div class="ttdeci">credits_t pilot_worth(const Pilot *p)</div><div class="ttdoc">Gets the price or worth of a pilot in credits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03350">pilot.c:3350</a></div></div>
 <div class="ttc" id="apilot_8c_html_a8987073ef469a1db7c42bd6047730f37"><div class="ttname"><a href="pilot_8c.html#a8987073ef469a1db7c42bd6047730f37">pilot_broadcast</a></div><div class="ttdeci">void pilot_broadcast(Pilot *p, const char *msg, int ignore_int)</div><div class="ttdoc">Has the pilot broadcast a message.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01133">pilot.c:1133</a></div></div>
 <div class="ttc" id="apilot_8c_html_a51032f37df899787ee644c4f1a36feac"><div class="ttname"><a href="pilot_8c.html#a51032f37df899787ee644c4f1a36feac">pilot_render</a></div><div class="ttdeci">void pilot_render(Pilot *p, const double dt)</div><div class="ttdoc">Renders the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01703">pilot.c:1703</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_af0ba03c950b5f67410e2c2f00018c4fb"><div class="ttname"><a href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a></div><div class="ttdeci">LuaPilot * lua_pushpilot(lua_State *L, LuaPilot pilot)</div><div class="ttdoc">Pushes a pilot on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l00371">nlua_pilot.c:371</a></div></div>
 <div class="ttc" id="apilot_8c_html_ad1ba4aa531b60994bd94992c06f72d03"><div class="ttname"><a href="pilot_8c.html#ad1ba4aa531b60994bd94992c06f72d03">pilot_delete</a></div><div class="ttdeci">void pilot_delete(Pilot *p)</div><div class="ttdoc">Deletes a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l02258">pilot.c:2258</a></div></div>
 <div class="ttc" id="amusic_8c_html_a5a1125faf5771e25b85823fcc492c054"><div class="ttname"><a href="music_8c.html#a5a1125faf5771e25b85823fcc492c054">music_choose</a></div><div class="ttdeci">int music_choose(const char *situation)</div><div class="ttdoc">Actually runs the music stuff, based on situation.</div><div class="ttdef"><b>Definition:</b> <a href="music_8c_source.html#l00563">music.c:563</a></div></div>
+<div class="ttc" id="aspace_8c_html_aa80ae05b62fe9166c899d3ee1aee9c62"><div class="ttname"><a href="space_8c.html#aa80ae05b62fe9166c899d3ee1aee9c62">space_isSimulation</a></div><div class="ttdeci">unsigned int space_isSimulation(void)</div><div class="ttdoc">returns wether we're just simulating.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01421">space.c:1421</a></div></div>
 <div class="ttc" id="anaev_8h_html_a996f7be338ccb40d1a2a5abc1ad61759"><div class="ttname"><a href="naev_8h.html#a996f7be338ccb40d1a2a5abc1ad61759">ABS</a></div><div class="ttdeci">#define ABS(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00042">naev.h:42</a></div></div>
 <div class="ttc" id="apilot_8c_html_ad515bebfbd9556a539e2a9585f18534e"><div class="ttname"><a href="pilot_8c.html#ad515bebfbd9556a539e2a9585f18534e">pilots_update</a></div><div class="ttdeci">void pilots_update(double dt)</div><div class="ttdoc">Updates all the pilots.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03125">pilot.c:3125</a></div></div>
 <div class="ttc" id="adamagetype_8c_html_ae11953b3729251c39ec4483ea47bed60"><div class="ttname"><a href="damagetype_8c.html#ae11953b3729251c39ec4483ea47bed60">dtype_get</a></div><div class="ttdeci">int dtype_get(char *name)</div><div class="ttdoc">Gets the id of a dtype based on name.</div><div class="ttdef"><b>Definition:</b> <a href="damagetype_8c_source.html#l00138">damagetype.c:138</a></div></div>
@@ -3128,7 +3133,7 @@ $(function() {
 <div class="ttc" id="acolour_8c_html_a0dbd5c8a06b69839b2a1428702b47705"><div class="ttname"><a href="colour_8c.html#a0dbd5c8a06b69839b2a1428702b47705">cFriend</a></div><div class="ttdeci">const glColour cFriend</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00092">colour.c:92</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a32d9c1fc9818a3f3700992f7b41541ce"><div class="ttname"><a href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a></div><div class="ttdeci">int outfit_isLauncher(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a weapon launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00456">outfit.c:456</a></div></div>
 <div class="ttc" id="aplayer_8c_html_abc05bfcba0298818f510eb83aa5b66ac"><div class="ttname"><a href="player_8c.html#abc05bfcba0298818f510eb83aa5b66ac">player_think</a></div><div class="ttdeci">void player_think(Pilot *pplayer, const double dt)</div><div class="ttdoc">Basically uses keyboard input instead of AI input. Used in pilot.c.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l01007">player.c:1007</a></div></div>
-<div class="ttc" id="apilot_8c_html_a59ed76f9e901037745355b095419f902"><div class="ttname"><a href="pilot_8c.html#a59ed76f9e901037745355b095419f902">pilot_clearTimers</a></div><div class="ttdeci">void pilot_clearTimers(Pilot *pilot)</div><div class="ttdoc">Clears the pilot's timers.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03234">pilot.c:3234</a></div></div>
+<div class="ttc" id="apilot_8c_html_a59ed76f9e901037745355b095419f902"><div class="ttname"><a href="pilot_8c.html#a59ed76f9e901037745355b095419f902">pilot_clearTimers</a></div><div class="ttdeci">void pilot_clearTimers(Pilot *pilot)</div><div class="ttdoc">Clears the pilot's timers.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03238">pilot.c:3238</a></div></div>
 <div class="ttc" id="acolour_8c_html_ae8cc0e3bb1cf7ff8a313605895925ee3"><div class="ttname"><a href="colour_8c.html#ae8cc0e3bb1cf7ff8a313605895925ee3">cInert</a></div><div class="ttdeci">const glColour cInert</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00090">colour.c:90</a></div></div>
 <div class="ttc" id="apilot_8c_html_ac9e3f60b01ba2a65e7bb01e818cc0e23"><div class="ttname"><a href="pilot_8c.html#ac9e3f60b01ba2a65e7bb01e818cc0e23">pilot_untargetAsteroid</a></div><div class="ttdeci">void pilot_untargetAsteroid(int anchor, int asteroid)</div><div class="ttdoc">Loops over pilot stack to remove an asteroid as target.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l02519">pilot.c:2519</a></div></div>
 <div class="ttc" id="apilot__hook_8c_html_a80dd77ac9e393bf132e87ca466ad42ba"><div class="ttname"><a href="pilot__hook_8c.html#a80dd77ac9e393bf132e87ca466ad42ba">pilot_freeGlobalHooks</a></div><div class="ttdeci">void pilot_freeGlobalHooks(void)</div><div class="ttdoc">Clears global pilot hooks.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__hook_8c_source.html#l00238">pilot_hook.c:238</a></div></div>
