@@ -1201,12 +1201,12 @@ $(function() {
 <div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;      xmlr_float(node,<span class="stringliteral">&quot;ew_target&quot;</span>,temp-&gt;u.lau.ew_target);</div>
 <div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;      xmlr_float(node,<span class="stringliteral">&quot;lockon&quot;</span>,temp-&gt;u.lau.lockon);</div>
 <div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="outfit_8c.html#a785a20c65e3dd4117bd913a6838597ba">outfit_isTurret</a>(temp))</div>
-<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;         xmlr_float(node,<span class="stringliteral">&quot;arc&quot;</span>,temp-&gt;u.lau.arc);</div>
+<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;         xmlr_float(node,<span class="stringliteral">&quot;arc&quot;</span>,temp-&gt;u.lau.arc); <span class="comment">/* This is full arc in degrees, so we have to correct it to semi-arc in radians for internal usage. */</span></div>
 <div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;      WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; has unknown node &#39;%s&#39;&quot;</span>),temp-&gt;name, node-&gt;name);</div>
 <div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
 <div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160; </div>
 <div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160;   <span class="comment">/* Post processing. */</span></div>
-<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;   temp-&gt;u.lau.arc *= M_PI/180.;</div>
+<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;   temp-&gt;u.lau.arc *= (M_PI/180.) / 2.; <span class="comment">/* Note we convert from arc to semi-arc. */</span></div>
 <div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;   temp-&gt;u.lau.ew_target2 = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( temp-&gt;u.lau.ew_target );</div>
 <div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160; </div>
 <div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;   <span class="comment">/* Set default outfit size if necessary. */</span></div>
