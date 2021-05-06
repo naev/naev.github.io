@@ -144,175 +144,191 @@ $(function() {
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;   pe = <a class="code" href="pilot_8c.html#a249f03095a08ed9f99e344bd6ab1127c">pilot_get</a>(e);</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;   pe-&gt;parent = parent;</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   <span class="comment">/* Add to escort list. */</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   <span class="keywordflow">if</span> (add != 0)</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      <a class="code" href="escort_8c.html#a415471f3591ce3f0f1ce0f9a77a6040b">escort_addList</a>( p, ship, type, e, 1 );</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   <span class="keywordflow">return</span> e;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;}</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">  165</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( Pilot *parent, <span class="keyword">const</span> <span class="keywordtype">char</span> *cmd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> idx )</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;{</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;   Pilot *e;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(parent-&gt;escorts) == 0)</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(parent-&gt;escorts); i++) {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      e = <a class="code" href="pilot_8c.html#a249f03095a08ed9f99e344bd6ab1127c">pilot_get</a>( parent-&gt;escorts[i].id );</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      <span class="keywordflow">if</span> (e == NULL) <span class="comment">/* Most likely died. */</span></div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>(parent, e, cmd, idx);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;   }</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;}</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   <span class="comment">/* Computer fighter bay bonuses. */</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   <span class="comment">/* Damage. */</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   pe-&gt;intrinsic_stats.launch_damage *= p-&gt;stats.fbay_damage;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;   pe-&gt;intrinsic_stats.fwd_damage *= p-&gt;stats.fbay_damage;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   pe-&gt;intrinsic_stats.tur_damage *= p-&gt;stats.fbay_damage;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;   <span class="comment">/* Health. */</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;   pe-&gt;intrinsic_stats.armour_mod *= p-&gt;stats.fbay_health;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;   pe-&gt;intrinsic_stats.shield_mod *= p-&gt;stats.fbay_health;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   <span class="comment">/* Movement. */</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;   pe-&gt;intrinsic_stats.speed_mod  *= p-&gt;stats.fbay_movement;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   pe-&gt;intrinsic_stats.turn_mod   *= p-&gt;stats.fbay_movement;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;   pe-&gt;intrinsic_stats.thrust_mod *= p-&gt;stats.fbay_movement;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   <span class="comment">/* Update stats. */</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( pe );</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;   <span class="comment">/* Add to escort list. */</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;   <span class="keywordflow">if</span> (add != 0)</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      <a class="code" href="escort_8c.html#a415471f3591ce3f0f1ce0f9a77a6040b">escort_addList</a>( p, ship, type, e, 1 );</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;   <span class="keywordflow">return</span> e;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00180"></a><span class="lineno"><a class="line" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">  180</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( Pilot *parent, <span class="keyword">const</span> <span class="keywordtype">char</span> *cmd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> idx )</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;{</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;   Pilot *e;</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
-<div class="line"><a name="l00190"></a><span class="lineno"><a class="line" href="escort_8c.html#abd0d71e81f89f08a2531d510e21c33a0">  190</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#abd0d71e81f89f08a2531d510e21c33a0">escorts_attack</a>( Pilot *parent )</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;{</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;   Pilot *t;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;   <span class="comment">/* Avoid killing self. */</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;   t = <a class="code" href="pilot_8c.html#a249f03095a08ed9f99e344bd6ab1127c">pilot_get</a>(parent-&gt;target);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;   <span class="keywordflow">if</span> (t == NULL)</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;   <span class="keywordflow">if</span> (t-&gt;faction == parent-&gt;faction)</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;   <span class="comment">/* Send command. */</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;   ret = 1;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;   <span class="keywordflow">if</span> (parent-&gt;target != parent-&gt;id) {</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, parent-&gt;target);</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;      ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;e_attack&quot;</span>, -1 );</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;      lua_pop(naevL, 1);</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;   }</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Attacking %s.&quot;</span>), t-&gt;name);</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;}</div>
-<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="escort_8c.html#ac53de50869c4e1f3573398696d37309d">  218</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#ac53de50869c4e1f3573398696d37309d">escorts_hold</a>( Pilot *parent )</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;{</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;e_hold&quot;</span>, 0 );</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;         <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Holding position.&quot;</span>));</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;}</div>
-<div class="line"><a name="l00231"></a><span class="lineno"><a class="line" href="escort_8c.html#aae70543b6b2877a8b87afc44d9c6817f">  231</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#aae70543b6b2877a8b87afc44d9c6817f">escorts_return</a>( Pilot *parent )</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;{</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;   ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;e_return&quot;</span>, 0 );</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Returning to ship.&quot;</span>));</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
-<div class="line"><a name="l00244"></a><span class="lineno"><a class="line" href="escort_8c.html#ae0a9759324c1ed45c086f31fda37f15e">  244</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#ae0a9759324c1ed45c086f31fda37f15e">escorts_clear</a>( Pilot *parent )</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;{</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;   ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;e_clear&quot;</span>, 0 );</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Clearing orders.&quot;</span>));</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;}</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="escort_8c.html#a9ed3e348f4e3ce2cbee2227937e7f12a">  260</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#a9ed3e348f4e3ce2cbee2227937e7f12a">escort_playerCommand</a>( Pilot *e )</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;{</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *title, *caption, *ret;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   <span class="comment">/* &quot;Attack My Target&quot; order is omitted deliberately since e is your</span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="comment">    * target, making &quot;Attack My Target&quot; a useless command. */</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *opts[] = {</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      _(<span class="stringliteral">&quot;Hold Position&quot;</span>),</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      _(<span class="stringliteral">&quot;Return To Ship&quot;</span>),</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      _(<span class="stringliteral">&quot;Clear Orders&quot;</span>),</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;      _(<span class="stringliteral">&quot;Cancel&quot;</span>)</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   };</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;   <span class="keywordtype">int</span> nopts = 4;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;   <span class="comment">/* Must not be NULL */</span></div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   <span class="keywordflow">if</span> (e == NULL)</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   title = _(<span class="stringliteral">&quot;Escort Orders&quot;</span>);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   caption = _(<span class="stringliteral">&quot;Select the order to give to this escort.&quot;</span>);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; </div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;   <a class="code" href="dialogue_8c.html#abe68e03484c865327755569d7589661c">dialogue_makeChoice</a>( title, caption, nopts );</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nopts; i++) {</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      <a class="code" href="dialogue_8c.html#a9d227b72759ab94d031530b98fa11bb8">dialogue_addChoice</a>( title, caption, opts[i] );</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   }</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;   ret = <a class="code" href="dialogue_8c.html#a190b137106a90524f844f215f9bd4d08">dialogue_runChoice</a>();</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   <span class="keywordflow">if</span> (ret != NULL) {</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      <span class="keywordflow">if</span> (strcmp(ret, opts[0]) == 0) { <span class="comment">/* Hold position */</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;         <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, e, <span class="stringliteral">&quot;e_hold&quot;</span>, 0 );</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      }</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(ret, opts[1]) == 0) { <span class="comment">/* Return to ship */</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;         <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, e, <span class="stringliteral">&quot;e_return&quot;</span>, 0 );</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;      }</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(ret, opts[2]) == 0) { <span class="comment">/* Clear orders */</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;         <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, e, <span class="stringliteral">&quot;e_clear&quot;</span>, 0 );</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      }</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   }</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;}</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
-<div class="line"><a name="l00312"></a><span class="lineno"><a class="line" href="escort_8c.html#a50e5f49aa8cf28e19c72288d483921f6">  312</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#a50e5f49aa8cf28e19c72288d483921f6">escorts_jump</a>( Pilot *parent, JumpPoint *jp )</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;{</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;   LuaJump lj;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;   lj.destid = jp-&gt;targetid;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;   lj.srcid = <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;id;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(parent-&gt;escorts) == 0)</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(parent-&gt;escorts); i++) {</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      e = <a class="code" href="pilot_8c.html#a249f03095a08ed9f99e344bd6ab1127c">pilot_get</a>( parent-&gt;escorts[i].id );</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;      <span class="keywordflow">if</span> (e == NULL) <span class="comment">/* Most likely died. */</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;      <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>(parent, e, cmd, idx);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;   }</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="escort_8c.html#abd0d71e81f89f08a2531d510e21c33a0">  205</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#abd0d71e81f89f08a2531d510e21c33a0">escorts_attack</a>( Pilot *parent )</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;{</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;   Pilot *t;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;   <span class="comment">/* Avoid killing self. */</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;   t = <a class="code" href="pilot_8c.html#a249f03095a08ed9f99e344bd6ab1127c">pilot_get</a>(parent-&gt;target);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;   <span class="keywordflow">if</span> (t == NULL)</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;   <span class="keywordflow">if</span> (t-&gt;faction == parent-&gt;faction)</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;   <span class="comment">/* Send command. */</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;   ret = 1;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;   <span class="keywordflow">if</span> (parent-&gt;target != parent-&gt;id) {</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, parent-&gt;target);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;e_attack&quot;</span>, -1 );</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      lua_pop(naevL, 1);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   }</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Attacking %s.&quot;</span>), t-&gt;name);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;}</div>
+<div class="line"><a name="l00233"></a><span class="lineno"><a class="line" href="escort_8c.html#ac53de50869c4e1f3573398696d37309d">  233</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#ac53de50869c4e1f3573398696d37309d">escorts_hold</a>( Pilot *parent )</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;{</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;   ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;e_hold&quot;</span>, 0 );</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;         <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Holding position.&quot;</span>));</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;}</div>
+<div class="line"><a name="l00246"></a><span class="lineno"><a class="line" href="escort_8c.html#aae70543b6b2877a8b87afc44d9c6817f">  246</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#aae70543b6b2877a8b87afc44d9c6817f">escorts_return</a>( Pilot *parent )</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;{</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;   ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;e_return&quot;</span>, 0 );</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;      <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Returning to ship.&quot;</span>));</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;}</div>
+<div class="line"><a name="l00259"></a><span class="lineno"><a class="line" href="escort_8c.html#ae0a9759324c1ed45c086f31fda37f15e">  259</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#ae0a9759324c1ed45c086f31fda37f15e">escorts_clear</a>( Pilot *parent )</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;{</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;   ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;e_clear&quot;</span>, 0 );</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Clearing orders.&quot;</span>));</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
+<div class="line"><a name="l00275"></a><span class="lineno"><a class="line" href="escort_8c.html#a9ed3e348f4e3ce2cbee2227937e7f12a">  275</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#a9ed3e348f4e3ce2cbee2227937e7f12a">escort_playerCommand</a>( Pilot *e )</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;{</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *title, *caption, *ret;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   <span class="comment">/* &quot;Attack My Target&quot; order is omitted deliberately since e is your</span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="comment">    * target, making &quot;Attack My Target&quot; a useless command. */</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *opts[] = {</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      _(<span class="stringliteral">&quot;Hold Position&quot;</span>),</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      _(<span class="stringliteral">&quot;Return To Ship&quot;</span>),</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;      _(<span class="stringliteral">&quot;Clear Orders&quot;</span>),</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      _(<span class="stringliteral">&quot;Cancel&quot;</span>)</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;   };</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   <span class="keywordtype">int</span> nopts = 4;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;   <span class="comment">/* Must not be NULL */</span></div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   <span class="keywordflow">if</span> (e == NULL)</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   title = _(<span class="stringliteral">&quot;Escort Orders&quot;</span>);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   caption = _(<span class="stringliteral">&quot;Select the order to give to this escort.&quot;</span>);</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;   <a class="code" href="dialogue_8c.html#abe68e03484c865327755569d7589661c">dialogue_makeChoice</a>( title, caption, nopts );</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nopts; i++) {</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      <a class="code" href="dialogue_8c.html#a9d227b72759ab94d031530b98fa11bb8">dialogue_addChoice</a>( title, caption, opts[i] );</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;   }</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   ret = <a class="code" href="dialogue_8c.html#a190b137106a90524f844f215f9bd4d08">dialogue_runChoice</a>();</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;   <span class="keywordflow">if</span> (ret != NULL) {</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      <span class="keywordflow">if</span> (strcmp(ret, opts[0]) == 0) { <span class="comment">/* Hold position */</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;         <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, e, <span class="stringliteral">&quot;e_hold&quot;</span>, 0 );</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      }</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(ret, opts[1]) == 0) { <span class="comment">/* Return to ship */</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;         <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, e, <span class="stringliteral">&quot;e_return&quot;</span>, 0 );</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      }</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(ret, opts[2]) == 0) { <span class="comment">/* Clear orders */</span></div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;         <a class="code" href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, e, <span class="stringliteral">&quot;e_clear&quot;</span>, 0 );</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;      }</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;   }</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;}</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   <a class="code" href="nlua__jump_8c.html#a46a1798c4a3cc21d668f670362188297">lua_pushjump</a>( naevL, lj );</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;   ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;hyperspace&quot;</span>, -1 );</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   lua_pop(naevL, 1);</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160; </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Jumping.&quot;</span>));</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;}</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160; </div>
+<div class="line"><a name="l00327"></a><span class="lineno"><a class="line" href="escort_8c.html#a50e5f49aa8cf28e19c72288d483921f6">  327</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="escort_8c.html#a50e5f49aa8cf28e19c72288d483921f6">escorts_jump</a>( Pilot *parent, JumpPoint *jp )</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;{</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   LuaJump lj;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   lj.destid = jp-&gt;targetid;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;   lj.srcid = <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;id;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   <a class="code" href="nlua__jump_8c.html#a46a1798c4a3cc21d668f670362188297">lua_pushjump</a>( naevL, lj );</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   ret = <a class="code" href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a>( parent, <span class="stringliteral">&quot;hyperspace&quot;</span>, -1 );</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   lua_pop(naevL, 1);</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;   <span class="keywordflow">if</span> ((ret == 0) &amp;&amp; (parent == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p))</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;      <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;#gEscorts: #0Jumping.&quot;</span>));</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="adialogue_8c_html_a9d227b72759ab94d031530b98fa11bb8"><div class="ttname"><a href="dialogue_8c.html#a9d227b72759ab94d031530b98fa11bb8">dialogue_addChoice</a></div><div class="ttdeci">void dialogue_addChoice(const char *caption, const char *msg, const char *opt)</div><div class="ttdoc">Add a choice to the dialog.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00780">dialogue.c:780</a></div></div>
+<div class="ttc" id="apilot__outfit_8c_html_a69e155b5a354ff956e013b1cc8f9cad8"><div class="ttname"><a href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a></div><div class="ttdeci">void pilot_calcStats(Pilot *pilot)</div><div class="ttdoc">Recalculates the pilot's stats based on his outfits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00910">pilot_outfit.c:910</a></div></div>
 <div class="ttc" id="adialogue_8c_html_abe68e03484c865327755569d7589661c"><div class="ttname"><a href="dialogue_8c.html#abe68e03484c865327755569d7589661c">dialogue_makeChoice</a></div><div class="ttdeci">void dialogue_makeChoice(const char *caption, const char *msg, int opts)</div><div class="ttdoc">Create the choice dialog. Need to add choices with below method.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00758">dialogue.c:758</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
-<div class="ttc" id="aescort_8c_html_a2511dbbf4a154282dab2fb48c030c60d"><div class="ttname"><a href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a></div><div class="ttdeci">static int escort_command(Pilot *parent, const char *cmd, unsigned int index)</div><div class="ttdoc">Runs an escort command on all of a pilot's escorts.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00165">escort.c:165</a></div></div>
+<div class="ttc" id="aescort_8c_html_a2511dbbf4a154282dab2fb48c030c60d"><div class="ttname"><a href="escort_8c.html#a2511dbbf4a154282dab2fb48c030c60d">escort_command</a></div><div class="ttdeci">static int escort_command(Pilot *parent, const char *cmd, unsigned int index)</div><div class="ttdoc">Runs an escort command on all of a pilot's escorts.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00180">escort.c:180</a></div></div>
 <div class="ttc" id="apilot_8c_html_a249f03095a08ed9f99e344bd6ab1127c"><div class="ttname"><a href="pilot_8c.html#a249f03095a08ed9f99e344bd6ab1127c">pilot_get</a></div><div class="ttdeci">Pilot * pilot_get(const unsigned int id)</div><div class="ttdoc">Pulls a pilot out of the pilot_stack based on ID.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00595">pilot.c:595</a></div></div>
 <div class="ttc" id="aescort_8c_html_a9c1c7b5e710f242808b10846d77dfb29"><div class="ttname"><a href="escort_8c.html#a9c1c7b5e710f242808b10846d77dfb29">escort_rmListIndex</a></div><div class="ttdeci">void escort_rmListIndex(Pilot *p, int i)</div><div class="ttdoc">Remove from escorts list.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00084">escort.c:84</a></div></div>
 <div class="ttc" id="aarray_8h_html_ad1bf30a2043b321afd76277cec9f46c8"><div class="ttname"><a href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a></div><div class="ttdeci">#define array_create(basic_type)</div><div class="ttdoc">Creates a new dynamic array of ‘basic_type’.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00097">array.h:97</a></div></div>
-<div class="ttc" id="apilot_8c_html_a36720974dd67f3e68d943e98fe022a64"><div class="ttname"><a href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a></div><div class="ttdeci">void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)</div><div class="ttdoc">Sends a message.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03391">pilot.c:3391</a></div></div>
+<div class="ttc" id="apilot_8c_html_a36720974dd67f3e68d943e98fe022a64"><div class="ttname"><a href="pilot_8c.html#a36720974dd67f3e68d943e98fe022a64">pilot_msg</a></div><div class="ttdeci">void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)</div><div class="ttdoc">Sends a message.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03392">pilot.c:3392</a></div></div>
 <div class="ttc" id="adialogue_8c_html_a190b137106a90524f844f215f9bd4d08"><div class="ttname"><a href="dialogue_8c.html#a190b137106a90524f844f215f9bd4d08">dialogue_runChoice</a></div><div class="ttdeci">char * dialogue_runChoice(void)</div><div class="ttdoc">Run the dialog and return the clicked string.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00802">dialogue.c:802</a></div></div>
-<div class="ttc" id="apilot_8c_html_a8d391600257ce1deffee615cb96df843"><div class="ttname"><a href="pilot_8c.html#a8d391600257ce1deffee615cb96df843">pilot_create</a></div><div class="ttdeci">unsigned int pilot_create(Ship *ship, const char *name, int faction, const char *ai, const double dir, const Vector2d *pos, const Vector2d *vel, const PilotFlags flags, unsigned int dockpilot, int dockslot)</div><div class="ttdoc">Creates a new pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l02790">pilot.c:2790</a></div></div>
+<div class="ttc" id="apilot_8c_html_a8d391600257ce1deffee615cb96df843"><div class="ttname"><a href="pilot_8c.html#a8d391600257ce1deffee615cb96df843">pilot_create</a></div><div class="ttdeci">unsigned int pilot_create(Ship *ship, const char *name, int faction, const char *ai, const double dir, const Vector2d *pos, const Vector2d *vel, const PilotFlags flags, unsigned int dockpilot, int dockslot)</div><div class="ttdoc">Creates a new pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l02791">pilot.c:2791</a></div></div>
 <div class="ttc" id="aescort_8c_html_a0301d1ddbd5a87e18242ac1b4c9a6a58"><div class="ttname"><a href="escort_8c.html#a0301d1ddbd5a87e18242ac1b4c9a6a58">escort_create</a></div><div class="ttdeci">unsigned int escort_create(Pilot *p, char *ship, Vector2d *pos, Vector2d *vel, double dir, EscortType_t type, int add, int dockslot)</div><div class="ttdoc">Creates an escort.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00122">escort.c:122</a></div></div>
 <div class="ttc" id="aship_8c_html_a2495d24bde6ebf3f53c19b7601a0cfec"><div class="ttname"><a href="ship_8c.html#a2495d24bde6ebf3f53c19b7601a0cfec">ship_get</a></div><div class="ttdeci">Ship * ship_get(const char *name)</div><div class="ttdoc">Gets a ship based on its name.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00069">ship.c:69</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c3fb96e542d880f6f5f42594154e0f0"><div class="ttname"><a href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a></div><div class="ttdeci">#define array_erase(ptr_array, first, last)</div><div class="ttdoc">Erases elements in interval [first, last).</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00144">array.h:144</a></div></div>
-<div class="ttc" id="aescort_8c_html_aae70543b6b2877a8b87afc44d9c6817f"><div class="ttname"><a href="escort_8c.html#aae70543b6b2877a8b87afc44d9c6817f">escorts_return</a></div><div class="ttdeci">int escorts_return(Pilot *parent)</div><div class="ttdoc">Have a pilot order its escorts to dock.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00231">escort.c:231</a></div></div>
+<div class="ttc" id="aescort_8c_html_aae70543b6b2877a8b87afc44d9c6817f"><div class="ttname"><a href="escort_8c.html#aae70543b6b2877a8b87afc44d9c6817f">escorts_return</a></div><div class="ttdeci">int escorts_return(Pilot *parent)</div><div class="ttdoc">Have a pilot order its escorts to dock.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00246">escort.c:246</a></div></div>
 <div class="ttc" id="aarray_8h_html_a8037aba47ab61629eee083791786b582"><div class="ttname"><a href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a></div><div class="ttdeci">#define array_grow(ptr_array)</div><div class="ttdoc">Increases the number of elements by one and returns the last element.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00123">array.h:123</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
-<div class="ttc" id="aescort_8c_html_a50e5f49aa8cf28e19c72288d483921f6"><div class="ttname"><a href="escort_8c.html#a50e5f49aa8cf28e19c72288d483921f6">escorts_jump</a></div><div class="ttdeci">int escorts_jump(Pilot *parent, JumpPoint *jp)</div><div class="ttdoc">Have a pilot order its escorts to jump.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00312">escort.c:312</a></div></div>
-<div class="ttc" id="aescort_8c_html_abd0d71e81f89f08a2531d510e21c33a0"><div class="ttname"><a href="escort_8c.html#abd0d71e81f89f08a2531d510e21c33a0">escorts_attack</a></div><div class="ttdeci">int escorts_attack(Pilot *parent)</div><div class="ttdoc">Have a pilot order its escorts to attack its target.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00190">escort.c:190</a></div></div>
+<div class="ttc" id="aescort_8c_html_a50e5f49aa8cf28e19c72288d483921f6"><div class="ttname"><a href="escort_8c.html#a50e5f49aa8cf28e19c72288d483921f6">escorts_jump</a></div><div class="ttdeci">int escorts_jump(Pilot *parent, JumpPoint *jp)</div><div class="ttdoc">Have a pilot order its escorts to jump.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00327">escort.c:327</a></div></div>
+<div class="ttc" id="aescort_8c_html_abd0d71e81f89f08a2531d510e21c33a0"><div class="ttname"><a href="escort_8c.html#abd0d71e81f89f08a2531d510e21c33a0">escorts_attack</a></div><div class="ttdeci">int escorts_attack(Pilot *parent)</div><div class="ttdoc">Have a pilot order its escorts to attack its target.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00205">escort.c:205</a></div></div>
 <div class="ttc" id="aspace_8c_html_a80fc91b008974b39b78ee551d5abc684"><div class="ttname"><a href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a></div><div class="ttdeci">StarSystem * cur_system</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00101">space.c:101</a></div></div>
-<div class="ttc" id="aescort_8c_html_ae0a9759324c1ed45c086f31fda37f15e"><div class="ttname"><a href="escort_8c.html#ae0a9759324c1ed45c086f31fda37f15e">escorts_clear</a></div><div class="ttdeci">int escorts_clear(Pilot *parent)</div><div class="ttdoc">Have a pilot order its escorts to clear orders.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00244">escort.c:244</a></div></div>
+<div class="ttc" id="aescort_8c_html_ae0a9759324c1ed45c086f31fda37f15e"><div class="ttname"><a href="escort_8c.html#ae0a9759324c1ed45c086f31fda37f15e">escorts_clear</a></div><div class="ttdeci">int escorts_clear(Pilot *parent)</div><div class="ttdoc">Have a pilot order its escorts to clear orders.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00259">escort.c:259</a></div></div>
 <div class="ttc" id="aarray_8h_html_a04e810cfeccd1cd523f9b28e68aca564"><div class="ttname"><a href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a></div><div class="ttdeci">#define array_free(ptr_array)</div><div class="ttdoc">Frees memory allocated and sets array to NULL.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00162">array.h:162</a></div></div>
-<div class="ttc" id="aescort_8c_html_ac53de50869c4e1f3573398696d37309d"><div class="ttname"><a href="escort_8c.html#ac53de50869c4e1f3573398696d37309d">escorts_hold</a></div><div class="ttdeci">int escorts_hold(Pilot *parent)</div><div class="ttdoc">Have a pilot order its escorts to hold position.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00218">escort.c:218</a></div></div>
+<div class="ttc" id="aescort_8c_html_ac53de50869c4e1f3573398696d37309d"><div class="ttname"><a href="escort_8c.html#ac53de50869c4e1f3573398696d37309d">escorts_hold</a></div><div class="ttdeci">int escorts_hold(Pilot *parent)</div><div class="ttdoc">Have a pilot order its escorts to hold position.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00233">escort.c:233</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ac8701471143b28a786b0028420edfeb6"><div class="ttname"><a href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a></div><div class="ttdeci">Player_t player</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00071">player.c:71</a></div></div>
 <div class="ttc" id="aescort_8c_html_a3aefcc3bf6a250eef986b575785ea646"><div class="ttname"><a href="escort_8c.html#a3aefcc3bf6a250eef986b575785ea646">escort_rmList</a></div><div class="ttdeci">void escort_rmList(Pilot *p, unsigned int id)</div><div class="ttdoc">Remove from escorts list.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00097">escort.c:97</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
 <div class="ttc" id="aescort_8c_html_a415471f3591ce3f0f1ce0f9a77a6040b"><div class="ttname"><a href="escort_8c.html#a415471f3591ce3f0f1ce0f9a77a6040b">escort_addList</a></div><div class="ttdeci">int escort_addList(Pilot *p, char *ship, EscortType_t type, unsigned int id, int persist)</div><div class="ttdoc">Adds an escort to the escort list of a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00044">escort.c:44</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_af0ba03c950b5f67410e2c2f00018c4fb"><div class="ttname"><a href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a></div><div class="ttdeci">LuaPilot * lua_pushpilot(lua_State *L, LuaPilot pilot)</div><div class="ttdoc">Pushes a pilot on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l00371">nlua_pilot.c:371</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_a46a1798c4a3cc21d668f670362188297"><div class="ttname"><a href="nlua__jump_8c.html#a46a1798c4a3cc21d668f670362188297">lua_pushjump</a></div><div class="ttdeci">LuaJump * lua_pushjump(lua_State *L, LuaJump jump)</div><div class="ttdoc">Pushes a jump on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00186">nlua_jump.c:186</a></div></div>
-<div class="ttc" id="aescort_8c_html_a9ed3e348f4e3ce2cbee2227937e7f12a"><div class="ttname"><a href="escort_8c.html#a9ed3e348f4e3ce2cbee2227937e7f12a">escort_playerCommand</a></div><div class="ttdeci">int escort_playerCommand(Pilot *e)</div><div class="ttdoc">Open a dialog for the player to issue a command to an escort.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00260">escort.c:260</a></div></div>
+<div class="ttc" id="aescort_8c_html_a9ed3e348f4e3ce2cbee2227937e7f12a"><div class="ttname"><a href="escort_8c.html#a9ed3e348f4e3ce2cbee2227937e7f12a">escort_playerCommand</a></div><div class="ttdeci">int escort_playerCommand(Pilot *e)</div><div class="ttdoc">Open a dialog for the player to issue a command to an escort.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00275">escort.c:275</a></div></div>
 <div class="ttc" id="agui_8c_html_ae62f951a861023b09fbb17b2cfddb0d2"><div class="ttname"><a href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a></div><div class="ttdeci">void player_message(const char *fmt,...)</div><div class="ttdoc">Adds a mesg to the queue to be displayed on screen.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00404">gui.c:404</a></div></div>
 <div class="ttc" id="aescort_8c_html_a4602b87abe2c36b479b5c7d63c6761e0"><div class="ttname"><a href="escort_8c.html#a4602b87abe2c36b479b5c7d63c6761e0">escort_freeList</a></div><div class="ttdeci">void escort_freeList(Pilot *p)</div><div class="ttdoc">Remove all escorts from a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00067">escort.c:67</a></div></div>
 <!-- start footer part -->
