@@ -578,463 +578,468 @@ $(function() {
 <div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;}</div>
 <div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160; </div>
 <div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160; </div>
-<div class="line"><a name="l00645"></a><span class="lineno"><a class="line" href="spfx_8c.html#ae075edb64b22db9de810a3fa14204662">  645</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#ae075edb64b22db9de810a3fa14204662">spfx_trail_sample</a>( <a class="code" href="structTrail__spfx.html">Trail_spfx</a>* trail, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y, TrailMode mode )</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;{</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   <a class="code" href="structTrailPoint.html">TrailPoint</a> p;</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160; </div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   <span class="keywordflow">if</span> (trail-&gt;spec-&gt;style[mode].col.a &lt;= 0.)</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160; </div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;   p.x = x;</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;   p.y = y;</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;   p.t = 1.;</div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;   p.mode = mode;</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160; </div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;   <span class="comment">/* The &quot;back&quot; of the trail should always reflect our most recent state.  */</span></div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;   trail_back( trail ) = p;</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160; </div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;   <span class="comment">/* We may need to insert a control point, but not if our last sample was recent enough. */</span></div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   <span class="keywordflow">if</span> (trail_size(trail) &gt; 1 &amp;&amp; trail_at( trail, trail-&gt;iwrite-2 ).t &gt;= 1.-TRAIL_UPDATE_DT)</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160; </div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   <span class="comment">/* If the last time we inserted a control point was recent enough, we don&#39;t need a new one. */</span></div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   <span class="keywordflow">if</span> (trail_size(trail) == trail-&gt;capacity) {</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;      <span class="comment">/* Full! Double capacity, and make the elements contiguous. (We&#39;ve made space to grow rightward.) */</span></div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;      trail-&gt;point_ringbuf = realloc( trail-&gt;point_ringbuf, 2 * trail-&gt;capacity * <span class="keyword">sizeof</span>(<a class="code" href="structTrailPoint.html">TrailPoint</a>) );</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;      trail-&gt;iread %= trail-&gt;capacity;</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;      trail-&gt;iwrite = trail-&gt;iread + trail-&gt;capacity;</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;      memmove( &amp;trail-&gt;point_ringbuf[trail-&gt;capacity], trail-&gt;point_ringbuf, trail-&gt;iread * <span class="keyword">sizeof</span>(<a class="code" href="structTrailPoint.html">TrailPoint</a>) );</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;      trail-&gt;capacity *= 2;</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;   }</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;   trail_at( trail, trail-&gt;iwrite++ ) = p;</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;}</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160; </div>
+<div class="line"><a name="l00646"></a><span class="lineno"><a class="line" href="spfx_8c.html#a5b6913ee2c47cbd1fbfabca4e61948d2">  646</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a5b6913ee2c47cbd1fbfabca4e61948d2">spfx_trail_sample</a>( <a class="code" href="structTrail__spfx.html">Trail_spfx</a>* trail, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y, TrailMode mode, <span class="keywordtype">int</span> force )</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;{</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;   <a class="code" href="structTrailPoint.html">TrailPoint</a> p;</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160; </div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;   <span class="keywordflow">if</span> (!force &amp;&amp; trail-&gt;spec-&gt;style[mode].col.a &lt;= 0.)</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160; </div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;   p.x = x;</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;   p.y = y;</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;   p.t = 1.;</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;   p.mode = mode;</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160; </div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;   <span class="comment">/* The &quot;back&quot; of the trail should always reflect our most recent state.  */</span></div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;   trail_back( trail ) = p;</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160; </div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   <span class="comment">/* We may need to insert a control point, but not if our last sample was recent enough. */</span></div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   <span class="keywordflow">if</span> (!force &amp;&amp; trail_size(trail) &gt; 1 &amp;&amp; trail_at( trail, trail-&gt;iwrite-2 ).t &gt;= 1.-TRAIL_UPDATE_DT)</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160; </div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   <span class="comment">/* If the last time we inserted a control point was recent enough, we don&#39;t need a new one. */</span></div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   <span class="keywordflow">if</span> (trail_size(trail) == trail-&gt;capacity) {</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;      <span class="comment">/* Full! Double capacity, and make the elements contiguous. (We&#39;ve made space to grow rightward.) */</span></div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;      trail-&gt;point_ringbuf = realloc( trail-&gt;point_ringbuf, 2 * trail-&gt;capacity * <span class="keyword">sizeof</span>(<a class="code" href="structTrailPoint.html">TrailPoint</a>) );</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;      trail-&gt;iread %= trail-&gt;capacity;</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;      trail-&gt;iwrite = trail-&gt;iread + trail-&gt;capacity;</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;      memmove( &amp;trail-&gt;point_ringbuf[trail-&gt;capacity], trail-&gt;point_ringbuf, trail-&gt;iread * <span class="keyword">sizeof</span>(<a class="code" href="structTrailPoint.html">TrailPoint</a>) );</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;      trail-&gt;capacity *= 2;</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;   }</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;   trail_at( trail, trail-&gt;iwrite++ ) = p;</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;}</div>
 <div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160; </div>
-<div class="line"><a name="l00682"></a><span class="lineno"><a class="line" href="spfx_8c.html#a9871681bdc1764e2d2c59c3e78aa8a4c">  682</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a9871681bdc1764e2d2c59c3e78aa8a4c">spfx_trail_remove</a>( <a class="code" href="structTrail__spfx.html">Trail_spfx</a>* trail )</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;{</div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;   <span class="keywordflow">if</span> (trail != NULL)</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;      trail-&gt;refcount--;</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;}</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160; </div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160; </div>
+<div class="line"><a name="l00683"></a><span class="lineno"><a class="line" href="spfx_8c.html#a9871681bdc1764e2d2c59c3e78aa8a4c">  683</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a9871681bdc1764e2d2c59c3e78aa8a4c">spfx_trail_remove</a>( <a class="code" href="structTrail__spfx.html">Trail_spfx</a>* trail )</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;{</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;   <span class="keywordflow">if</span> (trail != NULL)</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;      trail-&gt;refcount--;</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;}</div>
 <div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160; </div>
-<div class="line"><a name="l00692"></a><span class="lineno"><a class="line" href="spfx_8c.html#ade926e2b52ae09014d87566aa1e038e4">  692</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#ade926e2b52ae09014d87566aa1e038e4">spfx_trail_free</a>( <a class="code" href="structTrail__spfx.html">Trail_spfx</a>* trail )</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;{</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;   assert(trail-&gt;refcount == 0);</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;   free(trail-&gt;point_ringbuf);</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   free(trail);</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;}</div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160; </div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160; </div>
+<div class="line"><a name="l00693"></a><span class="lineno"><a class="line" href="spfx_8c.html#ade926e2b52ae09014d87566aa1e038e4">  693</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#ade926e2b52ae09014d87566aa1e038e4">spfx_trail_free</a>( <a class="code" href="structTrail__spfx.html">Trail_spfx</a>* trail )</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;{</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;   assert(trail-&gt;refcount == 0);</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   free(trail-&gt;point_ringbuf);</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;   free(trail);</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;}</div>
 <div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160; </div>
-<div class="line"><a name="l00703"></a><span class="lineno"><a class="line" href="spfx_8c.html#a104dd38b12ac5d3ef7b885cc99781f04">  703</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a104dd38b12ac5d3ef7b885cc99781f04">spfx_trail_draw</a>( <span class="keyword">const</span> <a class="code" href="structTrail__spfx.html">Trail_spfx</a>* trail )</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;{</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;   <span class="keywordtype">double</span> x1, y1, x2, y2, z;</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;   <span class="keyword">const</span> <a class="code" href="structTrailPoint.html">TrailPoint</a> *tp, *tpp;</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;   <span class="keyword">const</span> TrailStyle *sp, *spp, *styles;</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   <span class="keywordtype">size_t</span> i, n;</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;   GLfloat len;</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;   gl_Matrix4 projection;</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   <span class="keywordtype">double</span> s;</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   n = trail_size(trail);</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;   <span class="keywordflow">if</span> (n==0)</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;   styles = trail-&gt;spec-&gt;style;</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160; </div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;   <span class="comment">/* Stuff that doesn&#39;t change for the entire trail. */</span></div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;   glUseProgram( shaders.trail.program );</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   <span class="keywordflow">if</span> (gl_has( OPENGL_SUBROUTINES ))</div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &amp;trail-&gt;spec-&gt;type );</div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;   glEnableVertexAttribArray( shaders.trail.vertex );</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );</div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   glUniform1f( shaders.trail.dt, trail-&gt;dt );</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   glUniform1f( shaders.trail.r, trail-&gt;r );</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160; </div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;   z   = <a class="code" href="camera_8c.html#aa5f7b75f8350f1e0606d0a698390f3e1">cam_getZoom</a>();</div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;   len = 0.;</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;   <span class="keywordflow">for</span> (i = trail-&gt;iread + 1; i &lt; trail-&gt;iwrite; i++) {</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;      tp  = &amp;trail_at( trail, i );</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;      tpp = &amp;trail_at( trail, i-1 );</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;      sp  = &amp;styles[tp-&gt;<a class="code" href="structTrailPoint.html#a387380e3a1e2175c9838b7b9e91435fe">mode</a>];</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;      spp = &amp;styles[tpp-&gt;<a class="code" href="structTrailPoint.html#a387380e3a1e2175c9838b7b9e91435fe">mode</a>];</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;      <a class="code" href="opengl__render_8c.html#a333d8aaa63616fac7f4d5fb79a272749">gl_gameToScreenCoords</a>( &amp;x1, &amp;y1,  tp-&gt;x,  tp-&gt;<a class="code" href="structTrailPoint.html#a84f6991ae15683228608d55543eed222">y</a> );</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;      <a class="code" href="opengl__render_8c.html#a333d8aaa63616fac7f4d5fb79a272749">gl_gameToScreenCoords</a>( &amp;x2, &amp;y2, tpp-&gt;x, tpp-&gt;<a class="code" href="structTrailPoint.html#a84f6991ae15683228608d55543eed222">y</a> );</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160; </div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;      s = hypotf( x2-x1, y2-y1 );</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160; </div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;      <span class="comment">/* Set vertex. */</span></div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;      projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;      projection = <a class="code" href="opengl__matrix_8c.html#a217094d9a8d9cadd6ef94fbeaa4bc757">gl_Matrix4_Rotate2dv</a>(projection, (x2-x1)/s, (y2-y1)/s);</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;      projection = gl_Matrix4_Scale(projection, s, z*(sp-&gt;thick+spp-&gt;thick), 1);</div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;      projection = gl_Matrix4_Translate(projection, 0., -.5, 0);</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160; </div>
+<div class="line"><a name="l00704"></a><span class="lineno"><a class="line" href="spfx_8c.html#a104dd38b12ac5d3ef7b885cc99781f04">  704</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a104dd38b12ac5d3ef7b885cc99781f04">spfx_trail_draw</a>( <span class="keyword">const</span> <a class="code" href="structTrail__spfx.html">Trail_spfx</a>* trail )</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;{</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;   <span class="keywordtype">double</span> x1, y1, x2, y2, z;</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;   <span class="keyword">const</span> <a class="code" href="structTrailPoint.html">TrailPoint</a> *tp, *tpp;</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   <span class="keyword">const</span> TrailStyle *sp, *spp, *styles;</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;   <span class="keywordtype">size_t</span> i, n;</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;   GLfloat len;</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   gl_Matrix4 projection;</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;   <span class="keywordtype">double</span> s;</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;   n = trail_size(trail);</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;   <span class="keywordflow">if</span> (n==0)</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;   styles = trail-&gt;spec-&gt;style;</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160; </div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;   <span class="comment">/* Stuff that doesn&#39;t change for the entire trail. */</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   glUseProgram( shaders.trail.program );</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;   <span class="keywordflow">if</span> (gl_has( OPENGL_SUBROUTINES ))</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &amp;trail-&gt;spec-&gt;type );</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   glEnableVertexAttribArray( shaders.trail.vertex );</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   glUniform1f( shaders.trail.dt, trail-&gt;dt );</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;   glUniform1f( shaders.trail.r, trail-&gt;r );</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160; </div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;   z   = <a class="code" href="camera_8c.html#aa5f7b75f8350f1e0606d0a698390f3e1">cam_getZoom</a>();</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;   len = 0.;</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;   <span class="keywordflow">for</span> (i = trail-&gt;iread + 1; i &lt; trail-&gt;iwrite; i++) {</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;      tp  = &amp;trail_at( trail, i );</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;      tpp = &amp;trail_at( trail, i-1 );</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160; </div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;      <span class="comment">/* Ignore none modes. */</span></div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;      <span class="keywordflow">if</span> (tp-&gt;<a class="code" href="structTrailPoint.html#a387380e3a1e2175c9838b7b9e91435fe">mode</a> == MODE_NONE || tpp-&gt;<a class="code" href="structTrailPoint.html#a387380e3a1e2175c9838b7b9e91435fe">mode</a> == MODE_NONE)</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160; </div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;      sp  = &amp;styles[tp-&gt;<a class="code" href="structTrailPoint.html#a387380e3a1e2175c9838b7b9e91435fe">mode</a>];</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;      spp = &amp;styles[tpp-&gt;<a class="code" href="structTrailPoint.html#a387380e3a1e2175c9838b7b9e91435fe">mode</a>];</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;      <a class="code" href="opengl__render_8c.html#a333d8aaa63616fac7f4d5fb79a272749">gl_gameToScreenCoords</a>( &amp;x1, &amp;y1,  tp-&gt;x,  tp-&gt;<a class="code" href="structTrailPoint.html#a84f6991ae15683228608d55543eed222">y</a> );</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;      <a class="code" href="opengl__render_8c.html#a333d8aaa63616fac7f4d5fb79a272749">gl_gameToScreenCoords</a>( &amp;x2, &amp;y2, tpp-&gt;x, tpp-&gt;<a class="code" href="structTrailPoint.html#a84f6991ae15683228608d55543eed222">y</a> );</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160; </div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;      s = hypotf( x2-x1, y2-y1 );</div>
 <div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160; </div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;      <span class="comment">/* Set uniforms. */</span></div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;      gl_Matrix4_Uniform(shaders.trail.projection, projection);</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;      gl_uniformColor(shaders.trail.c1, &amp;sp-&gt;col);</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;      gl_uniformColor(shaders.trail.c2, &amp;spp-&gt;col);</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;      glUniform1f(shaders.trail.t1, tp-&gt;<a class="code" href="structTrailPoint.html#ae3c903ee363b89256a88966ec53e89c2">t</a>);</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;      glUniform1f(shaders.trail.t2, tpp-&gt;<a class="code" href="structTrailPoint.html#ae3c903ee363b89256a88966ec53e89c2">t</a>);</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;      glUniform2f(shaders.trail.pos2, len, sp-&gt;thick);</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;      len += s;</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;      glUniform2f(shaders.trail.pos1, len, spp-&gt;thick);</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160; </div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;      <span class="comment">/* Draw. */</span></div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;   }</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160; </div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;   <span class="comment">/* Clear state. */</span></div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;   glDisableVertexAttribArray( shaders.trail.vertex );</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   glUseProgram(0);</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160; </div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;   <span class="comment">/* Check errors. */</span></div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;   gl_checkErr();</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;}</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160; </div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160; </div>
-<div class="line"><a name="l00775"></a><span class="lineno"><a class="line" href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">  775</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">spfx_shake</a>( <span class="keywordtype">double</span> mod )</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;{</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;   <span class="comment">/* Add the modifier. */</span></div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   <a class="code" href="spfx_8c.html#a15e3c663f88d6ac5e79a72a22cfc2196">shake_force_mod</a> = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( SPFX_SHAKE_MAX, <a class="code" href="spfx_8c.html#a15e3c663f88d6ac5e79a72a22cfc2196">shake_force_mod</a> + SPFX_SHAKE_MOD*mod );</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160; </div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;   <span class="comment">/* Rumble if it wasn&#39;t rumbling before. */</span></div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;   <a class="code" href="spfx_8c.html#a7bfe581178586ac8bbb699ce8db2cf68">spfx_hapticRumble</a>(mod);</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160; </div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;   <span class="comment">/* Create the shake. */</span></div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#a838d77b0623115db4f597696c5b99ad8">shake_shader_pp_id</a>==0)</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      <a class="code" href="spfx_8c.html#a838d77b0623115db4f597696c5b99ad8">shake_shader_pp_id</a> = render_postprocessAdd( &amp;<a class="code" href="spfx_8c.html#a0ee09cc9e07cac8134022b557fe54612">shake_shader</a>, PP_LAYER_GAME, 99 );</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;}</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160; </div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;      <span class="comment">/* Set vertex. */</span></div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;      projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;      projection = <a class="code" href="opengl__matrix_8c.html#a217094d9a8d9cadd6ef94fbeaa4bc757">gl_Matrix4_Rotate2dv</a>(projection, (x2-x1)/s, (y2-y1)/s);</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;      projection = gl_Matrix4_Scale(projection, s, z*(sp-&gt;thick+spp-&gt;thick), 1);</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;      projection = gl_Matrix4_Translate(projection, 0., -.5, 0);</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160; </div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;      <span class="comment">/* Set uniforms. */</span></div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;      gl_Matrix4_Uniform(shaders.trail.projection, projection);</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;      gl_uniformColor(shaders.trail.c1, &amp;sp-&gt;col);</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;      gl_uniformColor(shaders.trail.c2, &amp;spp-&gt;col);</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;      glUniform1f(shaders.trail.t1, tp-&gt;<a class="code" href="structTrailPoint.html#ae3c903ee363b89256a88966ec53e89c2">t</a>);</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;      glUniform1f(shaders.trail.t2, tpp-&gt;<a class="code" href="structTrailPoint.html#ae3c903ee363b89256a88966ec53e89c2">t</a>);</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;      glUniform2f(shaders.trail.pos2, len, sp-&gt;thick);</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;      len += s;</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;      glUniform2f(shaders.trail.pos1, len, spp-&gt;thick);</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160; </div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;      <span class="comment">/* Draw. */</span></div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;   }</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160; </div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;   <span class="comment">/* Clear state. */</span></div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;   glDisableVertexAttribArray( shaders.trail.vertex );</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;   glUseProgram(0);</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;   <span class="comment">/* Check errors. */</span></div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;   gl_checkErr();</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;}</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160; </div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160; </div>
+<div class="line"><a name="l00781"></a><span class="lineno"><a class="line" href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">  781</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">spfx_shake</a>( <span class="keywordtype">double</span> mod )</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;{</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;   <span class="comment">/* Add the modifier. */</span></div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;   <a class="code" href="spfx_8c.html#a15e3c663f88d6ac5e79a72a22cfc2196">shake_force_mod</a> = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( SPFX_SHAKE_MAX, <a class="code" href="spfx_8c.html#a15e3c663f88d6ac5e79a72a22cfc2196">shake_force_mod</a> + SPFX_SHAKE_MOD*mod );</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160; </div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;   <span class="comment">/* Rumble if it wasn&#39;t rumbling before. */</span></div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;   <a class="code" href="spfx_8c.html#a7bfe581178586ac8bbb699ce8db2cf68">spfx_hapticRumble</a>(mod);</div>
 <div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160; </div>
-<div class="line"><a name="l00796"></a><span class="lineno"><a class="line" href="spfx_8c.html#acc943df2c1e8911d2cfc4a53488913ce">  796</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#acc943df2c1e8911d2cfc4a53488913ce">spfx_damage</a>( <span class="keywordtype">double</span> mod )</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;{</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   <a class="code" href="spfx_8c.html#a0dd8e33a0c0e89f945067cef04f0f363">damage_strength</a> = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( SPFX_DAMAGE_MAX, <a class="code" href="spfx_8c.html#a0dd8e33a0c0e89f945067cef04f0f363">damage_strength</a> + SPFX_DAMAGE_MOD*mod );</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160; </div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;   <span class="comment">/* Create the damage. */</span></div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#a6ebbb1c38c582e82b738ac6fd9ea0baa">damage_shader_pp_id</a>==0)</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;      <a class="code" href="spfx_8c.html#a6ebbb1c38c582e82b738ac6fd9ea0baa">damage_shader_pp_id</a> = render_postprocessAdd( &amp;<a class="code" href="spfx_8c.html#a702439ade7103282c355ef4661fc9d8f">damage_shader</a>, PP_LAYER_GUI, 98 );</div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;}</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160; </div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;   <span class="comment">/* Create the shake. */</span></div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#a838d77b0623115db4f597696c5b99ad8">shake_shader_pp_id</a>==0)</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;      <a class="code" href="spfx_8c.html#a838d77b0623115db4f597696c5b99ad8">shake_shader_pp_id</a> = render_postprocessAdd( &amp;<a class="code" href="spfx_8c.html#a0ee09cc9e07cac8134022b557fe54612">shake_shader</a>, PP_LAYER_GAME, 99 );</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;}</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160; </div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160; </div>
+<div class="line"><a name="l00802"></a><span class="lineno"><a class="line" href="spfx_8c.html#acc943df2c1e8911d2cfc4a53488913ce">  802</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#acc943df2c1e8911d2cfc4a53488913ce">spfx_damage</a>( <span class="keywordtype">double</span> mod )</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;{</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;   <a class="code" href="spfx_8c.html#a0dd8e33a0c0e89f945067cef04f0f363">damage_strength</a> = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( SPFX_DAMAGE_MAX, <a class="code" href="spfx_8c.html#a0dd8e33a0c0e89f945067cef04f0f363">damage_strength</a> + SPFX_DAMAGE_MOD*mod );</div>
 <div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160; </div>
-<div class="line"><a name="l00811"></a><span class="lineno"><a class="line" href="spfx_8c.html#aeec75c62b6244d4e7d9cfc9cfd16481f">  811</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="spfx_8c.html#aeec75c62b6244d4e7d9cfc9cfd16481f">spfx_hapticInit</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;{</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;   SDL_HapticEffect *efx;</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160; </div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;   <span class="comment">/* Haptic must be enabled. */</span></div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a> == NULL)</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160; </div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   efx = &amp;<a class="code" href="spfx_8c.html#affe45a68e9834d87846150443dedf02e">haptic_rumbleEffect</a>;</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;   memset( efx, 0, <span class="keyword">sizeof</span>(SDL_HapticEffect) );</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   efx-&gt;type = SDL_HAPTIC_SINE;</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;   efx-&gt;periodic.direction.type   = SDL_HAPTIC_POLAR;</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;   efx-&gt;periodic.length           = 1000;</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   efx-&gt;periodic.period           = 200;</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   efx-&gt;periodic.magnitude        = 0x4000;</div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;   efx-&gt;periodic.fade_length      = 1000;</div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   efx-&gt;periodic.fade_level       = 0;</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160; </div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;   <a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a> = SDL_HapticNewEffect( <a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a>, efx );</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a> &lt; 0) {</div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to upload haptic effect: %s.&quot;</span>), SDL_GetError());</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   }</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;   <span class="comment">/* Create the damage. */</span></div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#a6ebbb1c38c582e82b738ac6fd9ea0baa">damage_shader_pp_id</a>==0)</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;      <a class="code" href="spfx_8c.html#a6ebbb1c38c582e82b738ac6fd9ea0baa">damage_shader_pp_id</a> = render_postprocessAdd( &amp;<a class="code" href="spfx_8c.html#a702439ade7103282c355ef4661fc9d8f">damage_shader</a>, PP_LAYER_GUI, 98 );</div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;}</div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160; </div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160; </div>
+<div class="line"><a name="l00817"></a><span class="lineno"><a class="line" href="spfx_8c.html#aeec75c62b6244d4e7d9cfc9cfd16481f">  817</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="spfx_8c.html#aeec75c62b6244d4e7d9cfc9cfd16481f">spfx_hapticInit</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;{</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   SDL_HapticEffect *efx;</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160; </div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   <span class="comment">/* Haptic must be enabled. */</span></div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a> == NULL)</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160; </div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   efx = &amp;<a class="code" href="spfx_8c.html#affe45a68e9834d87846150443dedf02e">haptic_rumbleEffect</a>;</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;   memset( efx, 0, <span class="keyword">sizeof</span>(SDL_HapticEffect) );</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   efx-&gt;type = SDL_HAPTIC_SINE;</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;   efx-&gt;periodic.direction.type   = SDL_HAPTIC_POLAR;</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;   efx-&gt;periodic.length           = 1000;</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   efx-&gt;periodic.period           = 200;</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;   efx-&gt;periodic.magnitude        = 0x4000;</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   efx-&gt;periodic.fade_length      = 1000;</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   efx-&gt;periodic.fade_level       = 0;</div>
 <div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160; </div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;}</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160; </div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160; </div>
-<div class="line"><a name="l00844"></a><span class="lineno"><a class="line" href="spfx_8c.html#a7bfe581178586ac8bbb699ce8db2cf68">  844</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a7bfe581178586ac8bbb699ce8db2cf68">spfx_hapticRumble</a>( <span class="keywordtype">double</span> mod )</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;{</div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;   SDL_HapticEffect *efx;</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;   <span class="keywordtype">double</span> len, mag;</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160; </div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a> &gt;= 0) {</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160; </div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;      <span class="comment">/* Not time to update yet. */</span></div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;      <span class="keywordflow">if</span> ((<a class="code" href="spfx_8c.html#a804bcf96224adc728785a4cd4c52c086">haptic_lastUpdate</a> &gt; 0.) || (<a class="code" href="spfx_8c.html#a838d77b0623115db4f597696c5b99ad8">shake_shader_pp_id</a>==0) || (mod &gt; SPFX_SHAKE_MAX/3.))</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;         <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;   <a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a> = SDL_HapticNewEffect( <a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a>, efx );</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a> &lt; 0) {</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to upload haptic effect: %s.&quot;</span>), SDL_GetError());</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;   }</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160; </div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;}</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160; </div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160; </div>
+<div class="line"><a name="l00850"></a><span class="lineno"><a class="line" href="spfx_8c.html#a7bfe581178586ac8bbb699ce8db2cf68">  850</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a7bfe581178586ac8bbb699ce8db2cf68">spfx_hapticRumble</a>( <span class="keywordtype">double</span> mod )</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;{</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;   SDL_HapticEffect *efx;</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;   <span class="keywordtype">double</span> len, mag;</div>
 <div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160; </div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;      <span class="comment">/* Stop the effect if it was playing. */</span></div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;      SDL_HapticStopEffect( <a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a>, <a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a> );</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160; </div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;      <span class="comment">/* Get length and magnitude. */</span></div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;      len = 1000. * <a class="code" href="spfx_8c.html#a15e3c663f88d6ac5e79a72a22cfc2196">shake_force_mod</a> / SPFX_SHAKE_DECAY;</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;      mag = 32767. * (<a class="code" href="spfx_8c.html#a15e3c663f88d6ac5e79a72a22cfc2196">shake_force_mod</a> / SPFX_SHAKE_MAX);</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160; </div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;      <span class="comment">/* Update the effect. */</span></div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;      efx = &amp;<a class="code" href="spfx_8c.html#affe45a68e9834d87846150443dedf02e">haptic_rumbleEffect</a>;</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;      efx-&gt;periodic.magnitude    = (int16_t)mag;</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;      efx-&gt;periodic.length       = (uint32_t)len;</div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;      efx-&gt;periodic.fade_length  = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( efx-&gt;periodic.length, 1000 );</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;      <span class="keywordflow">if</span> (SDL_HapticUpdateEffect( <a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a>, <a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a>, &amp;<a class="code" href="spfx_8c.html#affe45a68e9834d87846150443dedf02e">haptic_rumbleEffect</a> ) &lt; 0) {</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;         WARN(_(<span class="stringliteral">&quot;Failed to update haptic effect: %s.&quot;</span>), SDL_GetError());</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;         <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;      }</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160; </div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;      <span class="comment">/* Run the new effect. */</span></div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;      SDL_HapticRunEffect( <a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a>, <a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a>, 1 );</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160; </div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;      <span class="comment">/* Set timer again. */</span></div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;      <a class="code" href="spfx_8c.html#a804bcf96224adc728785a4cd4c52c086">haptic_lastUpdate</a> += <a class="code" href="spfx_8c.html#ad7eac1cde2f87e058e00d03bfd3f4a52">HAPTIC_UPDATE_INTERVAL</a>;</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;   }</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;}</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160; </div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a> &gt;= 0) {</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160; </div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;      <span class="comment">/* Not time to update yet. */</span></div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;      <span class="keywordflow">if</span> ((<a class="code" href="spfx_8c.html#a804bcf96224adc728785a4cd4c52c086">haptic_lastUpdate</a> &gt; 0.) || (<a class="code" href="spfx_8c.html#a838d77b0623115db4f597696c5b99ad8">shake_shader_pp_id</a>==0) || (mod &gt; SPFX_SHAKE_MAX/3.))</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;         <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160; </div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;      <span class="comment">/* Stop the effect if it was playing. */</span></div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;      SDL_HapticStopEffect( <a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a>, <a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a> );</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160; </div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;      <span class="comment">/* Get length and magnitude. */</span></div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;      len = 1000. * <a class="code" href="spfx_8c.html#a15e3c663f88d6ac5e79a72a22cfc2196">shake_force_mod</a> / SPFX_SHAKE_DECAY;</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;      mag = 32767. * (<a class="code" href="spfx_8c.html#a15e3c663f88d6ac5e79a72a22cfc2196">shake_force_mod</a> / SPFX_SHAKE_MAX);</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160; </div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;      <span class="comment">/* Update the effect. */</span></div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;      efx = &amp;<a class="code" href="spfx_8c.html#affe45a68e9834d87846150443dedf02e">haptic_rumbleEffect</a>;</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;      efx-&gt;periodic.magnitude    = (int16_t)mag;</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;      efx-&gt;periodic.length       = (uint32_t)len;</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;      efx-&gt;periodic.fade_length  = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( efx-&gt;periodic.length, 1000 );</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;      <span class="keywordflow">if</span> (SDL_HapticUpdateEffect( <a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a>, <a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a>, &amp;<a class="code" href="spfx_8c.html#affe45a68e9834d87846150443dedf02e">haptic_rumbleEffect</a> ) &lt; 0) {</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;         WARN(_(<span class="stringliteral">&quot;Failed to update haptic effect: %s.&quot;</span>), SDL_GetError());</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;         <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;      }</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160; </div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;      <span class="comment">/* Run the new effect. */</span></div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;      SDL_HapticRunEffect( <a class="code" href="spfx_8c.html#ae4c1fd7443dc473825cbc81264693456">haptic</a>, <a class="code" href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a>, 1 );</div>
 <div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160; </div>
-<div class="line"><a name="l00886"></a><span class="lineno"><a class="line" href="spfx_8c.html#a3b808f523a49bd481a88a6d5127f88bf">  886</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a3b808f523a49bd481a88a6d5127f88bf">spfx_cinematic</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;{</div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;   <a class="code" href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a>( 0., 0.,           SCREEN_W, SCREEN_H*0.2, &amp;<a class="code" href="colour_8c.html#a4bec8711639c9c89415ff9b28bf2b233">cBlack</a> );</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;   <a class="code" href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a>( 0., SCREEN_H*0.8, SCREEN_W, SCREEN_H,     &amp;<a class="code" href="colour_8c.html#a4bec8711639c9c89415ff9b28bf2b233">cBlack</a> );</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;}</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160; </div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160; </div>
-<div class="line"><a name="l00898"></a><span class="lineno"><a class="line" href="spfx_8c.html#a185c64a00b47bf616cefa22b838d7943">  898</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a185c64a00b47bf616cefa22b838d7943">spfx_render</a>( <span class="keyword">const</span> <span class="keywordtype">int</span> layer )</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;{</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;   <a class="code" href="structSPFX.html">SPFX</a> *spfx_stack;</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;   <a class="code" href="structSPFX__Base.html">SPFX_Base</a> *effect;</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;   <span class="keywordtype">int</span> sx, sy;</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;   <span class="keywordtype">double</span> time;</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;   <a class="code" href="structTrail__spfx.html">Trail_spfx</a> *trail;</div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160; </div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;   <span class="comment">/* get the appropriate layer */</span></div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;   <span class="keywordflow">switch</span> (layer) {</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;      <span class="keywordflow">case</span> SPFX_LAYER_FRONT:</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;         spfx_stack = <a class="code" href="spfx_8c.html#a0ddc2203c0c70a3ceac01f93f83c2c36">spfx_stack_front</a>;</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;      <span class="comment">/* Set timer again. */</span></div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;      <a class="code" href="spfx_8c.html#a804bcf96224adc728785a4cd4c52c086">haptic_lastUpdate</a> += <a class="code" href="spfx_8c.html#ad7eac1cde2f87e058e00d03bfd3f4a52">HAPTIC_UPDATE_INTERVAL</a>;</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;   }</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;}</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160; </div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160; </div>
+<div class="line"><a name="l00892"></a><span class="lineno"><a class="line" href="spfx_8c.html#a3b808f523a49bd481a88a6d5127f88bf">  892</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a3b808f523a49bd481a88a6d5127f88bf">spfx_cinematic</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;{</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;   <a class="code" href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a>( 0., 0.,           SCREEN_W, SCREEN_H*0.2, &amp;<a class="code" href="colour_8c.html#a4bec8711639c9c89415ff9b28bf2b233">cBlack</a> );</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   <a class="code" href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a>( 0., SCREEN_H*0.8, SCREEN_W, SCREEN_H,     &amp;<a class="code" href="colour_8c.html#a4bec8711639c9c89415ff9b28bf2b233">cBlack</a> );</div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;}</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160; </div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160; </div>
+<div class="line"><a name="l00904"></a><span class="lineno"><a class="line" href="spfx_8c.html#a185c64a00b47bf616cefa22b838d7943">  904</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#a185c64a00b47bf616cefa22b838d7943">spfx_render</a>( <span class="keyword">const</span> <span class="keywordtype">int</span> layer )</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;{</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;   <a class="code" href="structSPFX.html">SPFX</a> *spfx_stack;</div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;   <a class="code" href="structSPFX__Base.html">SPFX_Base</a> *effect;</div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   <span class="keywordtype">int</span> sx, sy;</div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   <span class="keywordtype">double</span> time;</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;   <a class="code" href="structTrail__spfx.html">Trail_spfx</a> *trail;</div>
 <div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160; </div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;      <span class="keywordflow">case</span> SPFX_LAYER_MIDDLE:</div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;         spfx_stack = <a class="code" href="spfx_8c.html#a63ceae446a6681ed24d11357e53373c0">spfx_stack_middle</a>;</div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160; </div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;      <span class="keywordflow">case</span> SPFX_LAYER_BACK:</div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;         spfx_stack = <a class="code" href="spfx_8c.html#ad7b51c27adb96931680a6a7dba12e0f2">spfx_stack_back</a>;</div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160; </div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;      <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;         WARN(_(<span class="stringliteral">&quot;Rendering invalid SPFX layer.&quot;</span>));</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;         <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;   }</div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160; </div>
-<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;   <span class="comment">/* Trails are special (for now?). */</span></div>
-<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;   <span class="keywordflow">if</span> (layer == SPFX_LAYER_BACK)</div>
-<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(trail_spfx_stack); i++) {</div>
-<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;         trail = trail_spfx_stack[i];</div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;         <a class="code" href="spfx_8c.html#a104dd38b12ac5d3ef7b885cc99781f04">spfx_trail_draw</a>( trail );</div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;      }</div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160; </div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;   <span class="comment">/* Now render the layer */</span></div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;   <span class="keywordflow">for</span> (i=<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(spfx_stack)-1; i&gt;=0; i--) {</div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;      effect = &amp;<a class="code" href="spfx_8c.html#a1d6f980823571486df002cca1a8111ed">spfx_effects</a>[ spfx_stack[i].effect ];</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160; </div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;      <span class="comment">/* Simplifies */</span></div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;      sx = (int)effect-&gt;gfx-&gt;sx;</div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;      sy = (<span class="keywordtype">int</span>)effect-&gt;gfx-&gt;sy;</div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160; </div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="pause_8c.html#a868659a2f991de87c2b0dcbe6cea6175">paused</a>) { <span class="comment">/* don&#39;t calculate frame if paused */</span></div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;         time = 1. - fmod(spfx_stack[i].timer,effect-&gt;anim) / effect-&gt;anim;</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;         spfx_stack[i].lastframe = sx * sy * <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>(time, 1.);</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;      }</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160; </div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;      <span class="comment">/* Renders */</span></div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;      <a class="code" href="opengl__render_8c.html#a4a0e51ed10e9ea167662391f9c00a380">gl_blitSprite</a>( effect-&gt;gfx,</div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;            VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),</div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;            spfx_stack[i].lastframe % sx,</div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;            spfx_stack[i].lastframe / sx,</div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;            NULL );</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;   }</div>
-<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;}</div>
-<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160; </div>
-<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160; </div>
-<div class="line"><a name="l00960"></a><span class="lineno"><a class="line" href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">  960</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">trailSpec_parse</a>( xmlNodePtr node, TrailSpec *tc )</div>
-<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;{</div>
-<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *mode_tags[] = MODE_TAGS;</div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;   <span class="keywordtype">char</span> *type;</div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   xmlNodePtr cur = node-&gt;children;</div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160; </div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;      xml_onlyNodes(cur);</div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;thickness&quot;</span>))</div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;         tc-&gt;def_thick = xml_getFloat( cur );</div>
-<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur, <span class="stringliteral">&quot;ttl&quot;</span>))</div>
-<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;         tc-&gt;ttl = xml_getFloat( cur );</div>
-<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur, <span class="stringliteral">&quot;type&quot;</span>)) {</div>
-<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;         type = xml_get(cur);</div>
-<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;         <span class="keywordflow">if</span> (gl_has( OPENGL_SUBROUTINES )) {</div>
-<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;            tc-&gt;type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );</div>
-<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;            <span class="keywordflow">if</span> (tc-&gt;type == GL_INVALID_INDEX)</div>
-<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;               WARN(<span class="stringliteral">&quot;Trail &#39;%s&#39; has unknown type &#39;%s&#39;&quot;</span>, tc-&gt;name, type );</div>
-<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;         }</div>
-<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;      }</div>
-<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur, <span class="stringliteral">&quot;nebula&quot;</span>))</div>
-<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;         tc-&gt;nebula = xml_getInt( cur );</div>
-<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160;      <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;MODE_MAX; i++)</div>
-<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur, mode_tags[i])) {</div>
-<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;r&quot;</span>, tc-&gt;style[i].col.r );</div>
-<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;g&quot;</span>, tc-&gt;style[i].col.g );</div>
-<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;b&quot;</span>, tc-&gt;style[i].col.b );</div>
-<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;a&quot;</span>, tc-&gt;style[i].col.a );</div>
-<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;scale&quot;</span>, tc-&gt;style[i].thick );</div>
-<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;          <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;            }</div>
-<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;         <span class="keywordflow">if</span> (i == MODE_MAX)</div>
-<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;            WARN(_(<span class="stringliteral">&quot;Trail &#39;%s&#39; has unknown node &#39;%s&#39;.&quot;</span>), tc-&gt;name, cur-&gt;name);</div>
-<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;      }</div>
-<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160; </div>
-<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;<span class="preprocessor">#define MELEMENT(o,s)   if (o) WARN(_(&quot;Trail &#39;%s&#39; missing &#39;%s&#39; element&quot;), tc-&gt;name, s)</span></div>
-<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;   MELEMENT( tc-&gt;def_thick==0, <span class="stringliteral">&quot;thickness&quot;</span> );</div>
-<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;   MELEMENT( tc-&gt;ttl==0, <span class="stringliteral">&quot;ttl&quot;</span> );</div>
-<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;<span class="preprocessor">#undef MELEMENT</span></div>
-<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;}</div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;   <span class="comment">/* get the appropriate layer */</span></div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;   <span class="keywordflow">switch</span> (layer) {</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;      <span class="keywordflow">case</span> SPFX_LAYER_FRONT:</div>
+<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;         spfx_stack = <a class="code" href="spfx_8c.html#a0ddc2203c0c70a3ceac01f93f83c2c36">spfx_stack_front</a>;</div>
+<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160; </div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;      <span class="keywordflow">case</span> SPFX_LAYER_MIDDLE:</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;         spfx_stack = <a class="code" href="spfx_8c.html#a63ceae446a6681ed24d11357e53373c0">spfx_stack_middle</a>;</div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160; </div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;      <span class="keywordflow">case</span> SPFX_LAYER_BACK:</div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;         spfx_stack = <a class="code" href="spfx_8c.html#ad7b51c27adb96931680a6a7dba12e0f2">spfx_stack_back</a>;</div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160; </div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;      <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;         WARN(_(<span class="stringliteral">&quot;Rendering invalid SPFX layer.&quot;</span>));</div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;         <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;   }</div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160; </div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;   <span class="comment">/* Trails are special (for now?). */</span></div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;   <span class="keywordflow">if</span> (layer == SPFX_LAYER_BACK)</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(trail_spfx_stack); i++) {</div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;         trail = trail_spfx_stack[i];</div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;         <a class="code" href="spfx_8c.html#a104dd38b12ac5d3ef7b885cc99781f04">spfx_trail_draw</a>( trail );</div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;      }</div>
+<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160; </div>
+<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;   <span class="comment">/* Now render the layer */</span></div>
+<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;   <span class="keywordflow">for</span> (i=<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(spfx_stack)-1; i&gt;=0; i--) {</div>
+<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;      effect = &amp;<a class="code" href="spfx_8c.html#a1d6f980823571486df002cca1a8111ed">spfx_effects</a>[ spfx_stack[i].effect ];</div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160; </div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;      <span class="comment">/* Simplifies */</span></div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;      sx = (int)effect-&gt;gfx-&gt;sx;</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;      sy = (<span class="keywordtype">int</span>)effect-&gt;gfx-&gt;sy;</div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160; </div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="pause_8c.html#a868659a2f991de87c2b0dcbe6cea6175">paused</a>) { <span class="comment">/* don&#39;t calculate frame if paused */</span></div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;         time = 1. - fmod(spfx_stack[i].timer,effect-&gt;anim) / effect-&gt;anim;</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;         spfx_stack[i].lastframe = sx * sy * <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>(time, 1.);</div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;      }</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160; </div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;      <span class="comment">/* Renders */</span></div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;      <a class="code" href="opengl__render_8c.html#a4a0e51ed10e9ea167662391f9c00a380">gl_blitSprite</a>( effect-&gt;gfx,</div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;            VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),</div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;            spfx_stack[i].lastframe % sx,</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;            spfx_stack[i].lastframe / sx,</div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;            NULL );</div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;   }</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;}</div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160; </div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160; </div>
+<div class="line"><a name="l00966"></a><span class="lineno"><a class="line" href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">  966</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">trailSpec_parse</a>( xmlNodePtr node, TrailSpec *tc )</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;{</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *mode_tags[] = MODE_TAGS;</div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;   <span class="keywordtype">char</span> *type;</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;   xmlNodePtr cur = node-&gt;children;</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160; </div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;      xml_onlyNodes(cur);</div>
+<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;thickness&quot;</span>))</div>
+<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;         tc-&gt;def_thick = xml_getFloat( cur );</div>
+<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur, <span class="stringliteral">&quot;ttl&quot;</span>))</div>
+<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;         tc-&gt;ttl = xml_getFloat( cur );</div>
+<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur, <span class="stringliteral">&quot;type&quot;</span>)) {</div>
+<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;         type = xml_get(cur);</div>
+<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;         <span class="keywordflow">if</span> (gl_has( OPENGL_SUBROUTINES )) {</div>
+<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;            tc-&gt;type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );</div>
+<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160;            <span class="keywordflow">if</span> (tc-&gt;type == GL_INVALID_INDEX)</div>
+<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;               WARN(<span class="stringliteral">&quot;Trail &#39;%s&#39; has unknown type &#39;%s&#39;&quot;</span>, tc-&gt;name, type );</div>
+<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160;         }</div>
+<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;      }</div>
+<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur, <span class="stringliteral">&quot;nebula&quot;</span>))</div>
+<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;         tc-&gt;nebula = xml_getInt( cur );</div>
+<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;      <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;MODE_MAX; i++)</div>
+<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur, mode_tags[i])) {</div>
+<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;r&quot;</span>, tc-&gt;style[i].col.r );</div>
+<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;g&quot;</span>, tc-&gt;style[i].col.g );</div>
+<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;b&quot;</span>, tc-&gt;style[i].col.b );</div>
+<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;a&quot;</span>, tc-&gt;style[i].col.a );</div>
+<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;               xmlr_attr_float_opt( cur, <span class="stringliteral">&quot;scale&quot;</span>, tc-&gt;style[i].thick );</div>
+<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;          <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;            }</div>
+<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;         <span class="keywordflow">if</span> (i == MODE_MAX)</div>
+<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;            WARN(_(<span class="stringliteral">&quot;Trail &#39;%s&#39; has unknown node &#39;%s&#39;.&quot;</span>), tc-&gt;name, cur-&gt;name);</div>
+<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;      }</div>
+<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
 <div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160; </div>
-<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160; </div>
-<div class="line"><a name="l01010"></a><span class="lineno"><a class="line" href="spfx_8c.html#a2aa8608cb21447f7af1a8d082f29f206"> 1010</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="spfx_8c.html#a2aa8608cb21447f7af1a8d082f29f206">trailSpec_load</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160;{</div>
-<div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;   TrailSpec *tc, *parent;</div>
-<div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;   xmlNodePtr first, node;</div>
-<div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160;   xmlDocPtr doc;</div>
-<div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160;   <span class="keywordtype">char</span> *name, *inherits;</div>
-<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160; </div>
-<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;   <span class="comment">/* Load the data. */</span></div>
-<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;   doc = <a class="code" href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a>( TRAIL_DATA_PATH );</div>
-<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;   <span class="keywordflow">if</span> (doc == NULL)</div>
-<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160; </div>
-<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;   <span class="comment">/* Get the root node. */</span></div>
-<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;   node = doc-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;   <span class="keywordflow">if</span> (!xml_isNode(node,<span class="stringliteral">&quot;Trail_types&quot;</span>)) {</div>
-<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;      WARN( _(<span class="stringliteral">&quot;Malformed &#39;%s&#39; file: missing root element &#39;Trail_types&#39;&quot;</span>), TRAIL_DATA_PATH);</div>
+<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;<span class="preprocessor">#define MELEMENT(o,s)   if (o) WARN(_(&quot;Trail &#39;%s&#39; missing &#39;%s&#39; element&quot;), tc-&gt;name, s)</span></div>
+<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;   MELEMENT( tc-&gt;def_thick==0, <span class="stringliteral">&quot;thickness&quot;</span> );</div>
+<div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160;   MELEMENT( tc-&gt;ttl==0, <span class="stringliteral">&quot;ttl&quot;</span> );</div>
+<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160;<span class="preprocessor">#undef MELEMENT</span></div>
+<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160;}</div>
+<div class="line"><a name="l01009"></a><span class="lineno"> 1009</span>&#160; </div>
+<div class="line"><a name="l01010"></a><span class="lineno"> 1010</span>&#160; </div>
+<div class="line"><a name="l01016"></a><span class="lineno"><a class="line" href="spfx_8c.html#a2aa8608cb21447f7af1a8d082f29f206"> 1016</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="spfx_8c.html#a2aa8608cb21447f7af1a8d082f29f206">trailSpec_load</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;{</div>
+<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;   TrailSpec *tc, *parent;</div>
+<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;   xmlNodePtr first, node;</div>
+<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;   xmlDocPtr doc;</div>
+<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;   <span class="keywordtype">char</span> *name, *inherits;</div>
+<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160; </div>
+<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;   <span class="comment">/* Load the data. */</span></div>
+<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;   doc = <a class="code" href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a>( TRAIL_DATA_PATH );</div>
+<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;   <span class="keywordflow">if</span> (doc == NULL)</div>
 <div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;   }</div>
-<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160; </div>
-<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;   <span class="comment">/* Get the first node. */</span></div>
-<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;   first = node-&gt;xmlChildrenNode; <span class="comment">/* first event node */</span></div>
-<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;   <span class="keywordflow">if</span> (node == NULL) {</div>
-<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;      WARN( _(<span class="stringliteral">&quot;Malformed &#39;%s&#39; file: does not contain elements&quot;</span>), TRAIL_DATA_PATH);</div>
-<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;   }</div>
-<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160; </div>
-<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;   trail_spec_stack = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( TrailSpec );</div>
-<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160; </div>
-<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;   node = first;</div>
-<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;      xml_onlyNodes( node );</div>
-<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;trail&quot;</span>)) {</div>
-<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;         tc = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;trail_spec_stack );</div>
-<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;         memset( tc, 0, <span class="keyword">sizeof</span>(TrailSpec) );</div>
-<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;         <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;MODE_MAX; i++)</div>
-<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;            tc-&gt;style[i].thick = 1.;</div>
-<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;name&quot;</span>, tc-&gt;name );</div>
-<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160; </div>
-<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;         <span class="comment">/* Do the first pass for non-inheriting trails. */</span></div>
-<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;inherits&quot;</span>, inherits );</div>
-<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;         <span class="keywordflow">if</span> (inherits == NULL)</div>
-<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;            <a class="code" href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">trailSpec_parse</a>( node, tc );</div>
-<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;            free( inherits );</div>
-<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;      }</div>
-<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160; </div>
-<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;   <span class="comment">/* Second pass to complete inheritance. */</span></div>
-<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;   node = first;</div>
-<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;      xml_onlyNodes( node );</div>
-<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;trail&quot;</span>)) {</div>
-<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;         <span class="comment">/* Only interested in inherits. */</span></div>
-<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;inherits&quot;</span>, inherits );</div>
-<div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;         <span class="keywordflow">if</span> (inherits == NULL)</div>
-<div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;         parent = trailSpec_getRaw( inherits );</div>
-<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160; </div>
-<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;         <span class="comment">/* Get the style itself. */</span></div>
-<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;name&quot;</span>, name );</div>
-<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;         tc = trailSpec_getRaw( name );</div>
-<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160; </div>
-<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;         <span class="comment">/* Make sure we found stuff. */</span></div>
-<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;         <span class="keywordflow">if</span> ((tc==NULL) || (parent==NULL)) {</div>
-<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;            WARN(_(<span class="stringliteral">&quot;Trail &#39;%s&#39; that inherits from &#39;%s&#39; has missing reference!&quot;</span>), name, inherits );</div>
-<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;         }</div>
-<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;         free( inherits );</div>
-<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;         free( name );</div>
-<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160; </div>
-<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;         <span class="comment">/* Set properties. */</span></div>
-<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;         name = tc-&gt;name;</div>
-<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;         memcpy( tc, parent, <span class="keyword">sizeof</span>(TrailSpec) );</div>
-<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;         tc-&gt;name = name;</div>
-<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160; </div>
-<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;         <span class="comment">/* Load remaining properties (overrides parent). */</span></div>
-<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;         <a class="code" href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">trailSpec_parse</a>( node, tc );</div>
-<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;      }</div>
-<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160; </div>
-<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160;   <span class="keywordflow">for</span> (tc=<a class="code" href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a>(trail_spec_stack); tc!=<a class="code" href="array_8h.html#a323accdda5fcec44e36b805afa216efc">array_end</a>(trail_spec_stack); tc++) {</div>
-<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;MODE_MAX; i++)</div>
-<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;         tc-&gt;style[i].thick *= tc-&gt;def_thick;</div>
-<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;   }</div>
-<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;   <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>(&amp;trail_spec_stack);</div>
+<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160; </div>
+<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;   <span class="comment">/* Get the root node. */</span></div>
+<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;   node = doc-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;   <span class="keywordflow">if</span> (!xml_isNode(node,<span class="stringliteral">&quot;Trail_types&quot;</span>)) {</div>
+<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;      WARN( _(<span class="stringliteral">&quot;Malformed &#39;%s&#39; file: missing root element &#39;Trail_types&#39;&quot;</span>), TRAIL_DATA_PATH);</div>
+<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;   }</div>
+<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160; </div>
+<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;   <span class="comment">/* Get the first node. */</span></div>
+<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;   first = node-&gt;xmlChildrenNode; <span class="comment">/* first event node */</span></div>
+<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;   <span class="keywordflow">if</span> (node == NULL) {</div>
+<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;      WARN( _(<span class="stringliteral">&quot;Malformed &#39;%s&#39; file: does not contain elements&quot;</span>), TRAIL_DATA_PATH);</div>
+<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;   }</div>
+<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160; </div>
+<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;   trail_spec_stack = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( TrailSpec );</div>
+<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160; </div>
+<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;   node = first;</div>
+<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;      xml_onlyNodes( node );</div>
+<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;trail&quot;</span>)) {</div>
+<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;         tc = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;trail_spec_stack );</div>
+<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;         memset( tc, 0, <span class="keyword">sizeof</span>(TrailSpec) );</div>
+<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;         <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;MODE_MAX; i++)</div>
+<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;            tc-&gt;style[i].thick = 1.;</div>
+<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;name&quot;</span>, tc-&gt;name );</div>
+<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160; </div>
+<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;         <span class="comment">/* Do the first pass for non-inheriting trails. */</span></div>
+<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;inherits&quot;</span>, inherits );</div>
+<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;         <span class="keywordflow">if</span> (inherits == NULL)</div>
+<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;            <a class="code" href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">trailSpec_parse</a>( node, tc );</div>
+<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;            free( inherits );</div>
+<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;      }</div>
+<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160; </div>
+<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;   <span class="comment">/* Second pass to complete inheritance. */</span></div>
+<div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;   node = first;</div>
+<div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;      xml_onlyNodes( node );</div>
+<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;trail&quot;</span>)) {</div>
+<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;         <span class="comment">/* Only interested in inherits. */</span></div>
+<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;inherits&quot;</span>, inherits );</div>
+<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;         <span class="keywordflow">if</span> (inherits == NULL)</div>
+<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;         parent = trailSpec_getRaw( inherits );</div>
+<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160; </div>
+<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;         <span class="comment">/* Get the style itself. */</span></div>
+<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;name&quot;</span>, name );</div>
+<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;         tc = trailSpec_getRaw( name );</div>
+<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160; </div>
+<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;         <span class="comment">/* Make sure we found stuff. */</span></div>
+<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;         <span class="keywordflow">if</span> ((tc==NULL) || (parent==NULL)) {</div>
+<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;            WARN(_(<span class="stringliteral">&quot;Trail &#39;%s&#39; that inherits from &#39;%s&#39; has missing reference!&quot;</span>), name, inherits );</div>
+<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;         }</div>
+<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;         free( inherits );</div>
+<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;         free( name );</div>
+<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160; </div>
+<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;         <span class="comment">/* Set properties. */</span></div>
+<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;         name = tc-&gt;name;</div>
+<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;         memcpy( tc, parent, <span class="keyword">sizeof</span>(TrailSpec) );</div>
+<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;         tc-&gt;name = name;</div>
+<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160; </div>
+<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;         <span class="comment">/* Load remaining properties (overrides parent). */</span></div>
+<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;         <a class="code" href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">trailSpec_parse</a>( node, tc );</div>
+<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;      }</div>
+<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
 <div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160; </div>
-<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;   <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;   xmlFreeDoc(doc);</div>
-<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160; </div>
-<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;}</div>
+<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;   <span class="keywordflow">for</span> (tc=<a class="code" href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a>(trail_spec_stack); tc!=<a class="code" href="array_8h.html#a323accdda5fcec44e36b805afa216efc">array_end</a>(trail_spec_stack); tc++) {</div>
+<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;MODE_MAX; i++)</div>
+<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;         tc-&gt;style[i].thick *= tc-&gt;def_thick;</div>
+<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;   }</div>
+<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;   <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>(&amp;trail_spec_stack);</div>
 <div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160; </div>
-<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160; </div>
-<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;<span class="keyword">static</span> TrailSpec* trailSpec_getRaw( <span class="keyword">const</span> <span class="keywordtype">char</span>* name )</div>
-<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;{</div>
-<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160; </div>
-<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(trail_spec_stack); i++) {</div>
-<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;      <span class="keywordflow">if</span> ( strcmp(trail_spec_stack[i].name, name)==0 )</div>
-<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160;         <span class="keywordflow">return</span> &amp;trail_spec_stack[i];</div>
-<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;   }</div>
-<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160; </div>
-<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;   WARN(_(<span class="stringliteral">&quot;Trail type &#39;%s&#39; not found in stack&quot;</span>), name);</div>
-<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;}</div>
-<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160; </div>
-<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160; </div>
-<div class="line"><a name="l01122"></a><span class="lineno"><a class="line" href="spfx_8c.html#aaa7403ac9f8807a174f95e68dfc88b39"> 1122</a></span>&#160;<span class="keyword">const</span> TrailSpec* <a class="code" href="spfx_8c.html#aaa7403ac9f8807a174f95e68dfc88b39">trailSpec_get</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* name )</div>
-<div class="line"><a name="l01123"></a><span class="lineno"> 1123</span>&#160;{</div>
-<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;   <span class="keywordflow">return</span> trailSpec_getRaw( name );</div>
-<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;}</div>
+<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;   <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;   xmlFreeDoc(doc);</div>
+<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160; </div>
+<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;}</div>
+<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160; </div>
+<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160; </div>
+<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160;<span class="keyword">static</span> TrailSpec* trailSpec_getRaw( <span class="keyword">const</span> <span class="keywordtype">char</span>* name )</div>
+<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;{</div>
+<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160; </div>
+<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(trail_spec_stack); i++) {</div>
+<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;      <span class="keywordflow">if</span> ( strcmp(trail_spec_stack[i].name, name)==0 )</div>
+<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;         <span class="keywordflow">return</span> &amp;trail_spec_stack[i];</div>
+<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;   }</div>
+<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160; </div>
+<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160;   WARN(_(<span class="stringliteral">&quot;Trail type &#39;%s&#39; not found in stack&quot;</span>), name);</div>
+<div class="line"><a name="l01119"></a><span class="lineno"> 1119</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l01120"></a><span class="lineno"> 1120</span>&#160;}</div>
+<div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160; </div>
+<div class="line"><a name="l01122"></a><span class="lineno"> 1122</span>&#160; </div>
+<div class="line"><a name="l01128"></a><span class="lineno"><a class="line" href="spfx_8c.html#aaa7403ac9f8807a174f95e68dfc88b39"> 1128</a></span>&#160;<span class="keyword">const</span> TrailSpec* <a class="code" href="spfx_8c.html#aaa7403ac9f8807a174f95e68dfc88b39">trailSpec_get</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* name )</div>
+<div class="line"><a name="l01129"></a><span class="lineno"> 1129</span>&#160;{</div>
+<div class="line"><a name="l01130"></a><span class="lineno"> 1130</span>&#160;   <span class="keywordflow">return</span> trailSpec_getRaw( name );</div>
+<div class="line"><a name="l01131"></a><span class="lineno"> 1131</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aopengl__render_8c_html_a333d8aaa63616fac7f4d5fb79a272749"><div class="ttname"><a href="opengl__render_8c.html#a333d8aaa63616fac7f4d5fb79a272749">gl_gameToScreenCoords</a></div><div class="ttdeci">void gl_gameToScreenCoords(double *nx, double *ny, double bx, double by)</div><div class="ttdoc">Converts in-game coordinates to screen coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00378">opengl_render.c:378</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a80da4c0a6afe720eb7f50a1495b5822d"><div class="ttname"><a href="spfx_8c.html#a80da4c0a6afe720eb7f50a1495b5822d">shake_force_ang</a></div><div class="ttdeci">static float shake_force_ang</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00067">spfx.c:67</a></div></div>
 <div class="ttc" id="aspfx_8c_html_affe45a68e9834d87846150443dedf02e"><div class="ttname"><a href="spfx_8c.html#affe45a68e9834d87846150443dedf02e">haptic_rumbleEffect</a></div><div class="ttdeci">static SDL_HapticEffect haptic_rumbleEffect</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00073">spfx.c:73</a></div></div>
-<div class="ttc" id="aspfx_8c_html_ac744caf373f1cf1b9e774269904da346"><div class="ttname"><a href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">trailSpec_parse</a></div><div class="ttdeci">static void trailSpec_parse(xmlNodePtr cur, TrailSpec *tc)</div><div class="ttdoc">Parses raw values out of a &quot;trail&quot; element.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00960">spfx.c:960</a></div></div>
+<div class="ttc" id="aspfx_8c_html_ac744caf373f1cf1b9e774269904da346"><div class="ttname"><a href="spfx_8c.html#ac744caf373f1cf1b9e774269904da346">trailSpec_parse</a></div><div class="ttdeci">static void trailSpec_parse(xmlNodePtr cur, TrailSpec *tc)</div><div class="ttdoc">Parses raw values out of a &quot;trail&quot; element.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00966">spfx.c:966</a></div></div>
 <div class="ttc" id="aopengl__vbo_8c_html_acec4f799c6a06738c21ddfef975d9c36"><div class="ttname"><a href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a></div><div class="ttdeci">void gl_vboActivateAttribOffset(gl_vbo *vbo, GLuint index, GLuint offset, GLint size, GLenum type, GLsizei stride)</div><div class="ttdoc">Activates a VBO's offset.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__vbo_8c_source.html#l00251">opengl_vbo.c:251</a></div></div>
 <div class="ttc" id="acolour_8c_html_a4bec8711639c9c89415ff9b28bf2b233"><div class="ttname"><a href="colour_8c.html#a4bec8711639c9c89415ff9b28bf2b233">cBlack</a></div><div class="ttdeci">const glColour cBlack</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00043">colour.c:43</a></div></div>
 <div class="ttc" id="astructSPFX__Base___html_a58ca646badc1a382a7c7efbbf1602eb8"><div class="ttname"><a href="structSPFX__Base__.html#a58ca646badc1a382a7c7efbbf1602eb8">SPFX_Base_::ttl</a></div><div class="ttdeci">double ttl</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00105">spfx.c:105</a></div></div>
 <div class="ttc" id="aarray_8h_html_a323accdda5fcec44e36b805afa216efc"><div class="ttname"><a href="array_8h.html#a323accdda5fcec44e36b805afa216efc">array_end</a></div><div class="ttdeci">#define array_end(array)</div><div class="ttdoc">Returns a pointer to the end of the reserved memory space.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00206">array.h:206</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a702439ade7103282c355ef4661fc9d8f"><div class="ttname"><a href="spfx_8c.html#a702439ade7103282c355ef4661fc9d8f">damage_shader</a></div><div class="ttdeci">static LuaShader_t damage_shader</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00077">spfx.c:77</a></div></div>
-<div class="ttc" id="aspfx_8c_html_a7bfe581178586ac8bbb699ce8db2cf68"><div class="ttname"><a href="spfx_8c.html#a7bfe581178586ac8bbb699ce8db2cf68">spfx_hapticRumble</a></div><div class="ttdeci">static void spfx_hapticRumble(double mod)</div><div class="ttdoc">Runs a rumble effect.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00844">spfx.c:844</a></div></div>
+<div class="ttc" id="aspfx_8c_html_a7bfe581178586ac8bbb699ce8db2cf68"><div class="ttname"><a href="spfx_8c.html#a7bfe581178586ac8bbb699ce8db2cf68">spfx_hapticRumble</a></div><div class="ttdeci">static void spfx_hapticRumble(double mod)</div><div class="ttdoc">Runs a rumble effect.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00850">spfx.c:850</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a875824d5c3dbf2ab32f3240c516c022a"><div class="ttname"><a href="spfx_8c.html#a875824d5c3dbf2ab32f3240c516c022a">spfx_clear</a></div><div class="ttdeci">void spfx_clear(void)</div><div class="ttdoc">Clears all the currently running effects.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00403">spfx.c:403</a></div></div>
 <div class="ttc" id="aspfx_8c_html_aaeb9df336aa0e58fc0d655e480e2e6fc"><div class="ttname"><a href="spfx_8c.html#aaeb9df336aa0e58fc0d655e480e2e6fc">shake_noise</a></div><div class="ttdeci">static perlin_data_t * shake_noise</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00068">spfx.c:68</a></div></div>
 <div class="ttc" id="aspfx_8c_html_ad3750be793043585aeb7057b01d35f64"><div class="ttname"><a href="spfx_8c.html#ad3750be793043585aeb7057b01d35f64">shake_force_mean</a></div><div class="ttdeci">static double shake_force_mean</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00066">spfx.c:66</a></div></div>
 <div class="ttc" id="aspfx_8c_html_aa52947194bf8215ba4ae5f6aa3bc9e76"><div class="ttname"><a href="spfx_8c.html#aa52947194bf8215ba4ae5f6aa3bc9e76">spfx_trail_update</a></div><div class="ttdeci">static void spfx_trail_update(Trail_spfx *trail, double dt)</div><div class="ttdoc">Updates a trail.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00618">spfx.c:618</a></div></div>
-<div class="ttc" id="aspfx_8c_html_aeec75c62b6244d4e7d9cfc9cfd16481f"><div class="ttname"><a href="spfx_8c.html#aeec75c62b6244d4e7d9cfc9cfd16481f">spfx_hapticInit</a></div><div class="ttdeci">static int spfx_hapticInit(void)</div><div class="ttdoc">Initializes the rumble effect.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00811">spfx.c:811</a></div></div>
+<div class="ttc" id="aspfx_8c_html_aeec75c62b6244d4e7d9cfc9cfd16481f"><div class="ttname"><a href="spfx_8c.html#aeec75c62b6244d4e7d9cfc9cfd16481f">spfx_hapticInit</a></div><div class="ttdeci">static int spfx_hapticInit(void)</div><div class="ttdoc">Initializes the rumble effect.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00817">spfx.c:817</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a09f2f2438ae887127bb71429f1fd1437"><div class="ttname"><a href="spfx_8c.html#a09f2f2438ae887127bb71429f1fd1437">SPFX_XML_ID</a></div><div class="ttdeci">#define SPFX_XML_ID</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00038">spfx.c:38</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a4e13d622a0cd3d2a15907fec9f0e4532"><div class="ttname"><a href="spfx_8c.html#a4e13d622a0cd3d2a15907fec9f0e4532">SPFX_XML_TAG</a></div><div class="ttdeci">#define SPFX_XML_TAG</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00039">spfx.c:39</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a0109af70130d1d6f3d722919db8ea5e8"><div class="ttname"><a href="spfx_8c.html#a0109af70130d1d6f3d722919db8ea5e8">spfx_add</a></div><div class="ttdeci">void spfx_add(int effect, const double px, const double py, const double vx, const double vy, const int layer)</div><div class="ttdoc">Creates a new special effect.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00359">spfx.c:359</a></div></div>
 <div class="ttc" id="aarray_8h_html_a38e23023f1405ea0eb4a803ec78174bf"><div class="ttname"><a href="array_8h.html#a38e23023f1405ea0eb4a803ec78174bf">array_resize</a></div><div class="ttdeci">#define array_resize(ptr_array, new_size)</div><div class="ttdoc">Resizes the array to accomodate new_size elements.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00116">array.h:116</a></div></div>
 <div class="ttc" id="aarray_8h_html_ac5806e193ac90a33f8a2a93de4f80dee"><div class="ttname"><a href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a></div><div class="ttdeci">#define array_push_back(ptr_array, element)</div><div class="ttdoc">Adds a new element at the end of the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00133">array.h:133</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a9e61020a87d8066329b4eb0fafbb8eee"><div class="ttname"><a href="spfx_8c.html#a9e61020a87d8066329b4eb0fafbb8eee">haptic_query</a></div><div class="ttdeci">unsigned int haptic_query</div><div class="ttdef"><b>Definition:</b> <a href="joystick_8c_source.html#l00029">joystick.c:29</a></div></div>
-<div class="ttc" id="aspfx_8c_html_a9871681bdc1764e2d2c59c3e78aa8a4c"><div class="ttname"><a href="spfx_8c.html#a9871681bdc1764e2d2c59c3e78aa8a4c">spfx_trail_remove</a></div><div class="ttdeci">void spfx_trail_remove(Trail_spfx *trail)</div><div class="ttdoc">Removes a trail.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00682">spfx.c:682</a></div></div>
-<div class="ttc" id="aspfx_8c_html_ade926e2b52ae09014d87566aa1e038e4"><div class="ttname"><a href="spfx_8c.html#ade926e2b52ae09014d87566aa1e038e4">spfx_trail_free</a></div><div class="ttdeci">static void spfx_trail_free(Trail_spfx *trail)</div><div class="ttdoc">Deallocates an unreferenced, expired trail.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00692">spfx.c:692</a></div></div>
+<div class="ttc" id="aspfx_8c_html_a9871681bdc1764e2d2c59c3e78aa8a4c"><div class="ttname"><a href="spfx_8c.html#a9871681bdc1764e2d2c59c3e78aa8a4c">spfx_trail_remove</a></div><div class="ttdeci">void spfx_trail_remove(Trail_spfx *trail)</div><div class="ttdoc">Removes a trail.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00683">spfx.c:683</a></div></div>
+<div class="ttc" id="aspfx_8c_html_ade926e2b52ae09014d87566aa1e038e4"><div class="ttname"><a href="spfx_8c.html#ade926e2b52ae09014d87566aa1e038e4">spfx_trail_free</a></div><div class="ttdeci">static void spfx_trail_free(Trail_spfx *trail)</div><div class="ttdoc">Deallocates an unreferenced, expired trail.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00693">spfx.c:693</a></div></div>
 <div class="ttc" id="astructTrailPoint_html_a387380e3a1e2175c9838b7b9e91435fe"><div class="ttname"><a href="structTrailPoint.html#a387380e3a1e2175c9838b7b9e91435fe">TrailPoint::mode</a></div><div class="ttdeci">TrailMode mode</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8h_source.html#l00065">spfx.h:65</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a0dd8e33a0c0e89f945067cef04f0f363"><div class="ttname"><a href="spfx_8c.html#a0dd8e33a0c0e89f945067cef04f0f363">damage_strength</a></div><div class="ttdeci">static double damage_strength</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00078">spfx.c:78</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
 <div class="ttc" id="aspfx_8c_html_ac68efe25b8209ef6078dc299c3f5af01"><div class="ttname"><a href="spfx_8c.html#ac68efe25b8209ef6078dc299c3f5af01">spfx_update_trails</a></div><div class="ttdeci">static void spfx_update_trails(double dt)</div><div class="ttdoc">Updates all trails (handling dispersal/fadeout).</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00594">spfx.c:594</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a15e3c663f88d6ac5e79a72a22cfc2196"><div class="ttname"><a href="spfx_8c.html#a15e3c663f88d6ac5e79a72a22cfc2196">shake_force_mod</a></div><div class="ttdeci">static double shake_force_mod</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00065">spfx.c:65</a></div></div>
-<div class="ttc" id="aspfx_8c_html_a3b808f523a49bd481a88a6d5127f88bf"><div class="ttname"><a href="spfx_8c.html#a3b808f523a49bd481a88a6d5127f88bf">spfx_cinematic</a></div><div class="ttdeci">void spfx_cinematic(void)</div><div class="ttdoc">Sets the cinematic mode.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00886">spfx.c:886</a></div></div>
+<div class="ttc" id="aspfx_8c_html_a3b808f523a49bd481a88a6d5127f88bf"><div class="ttname"><a href="spfx_8c.html#a3b808f523a49bd481a88a6d5127f88bf">spfx_cinematic</a></div><div class="ttdeci">void spfx_cinematic(void)</div><div class="ttdoc">Sets the cinematic mode.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00892">spfx.c:892</a></div></div>
 <div class="ttc" id="apause_8c_html_a868659a2f991de87c2b0dcbe6cea6175"><div class="ttname"><a href="pause_8c.html#a868659a2f991de87c2b0dcbe6cea6175">paused</a></div><div class="ttdeci">int paused</div><div class="ttdef"><b>Definition:</b> <a href="pause_8c_source.html#l00025">pause.c:25</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ae7c1e2ed8f7e1980ddab05925e2983fe"><div class="ttname"><a href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a></div><div class="ttdeci">void gl_freeTexture(glTexture *texture)</div><div class="ttdoc">Frees a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00768">opengl_tex.c:768</a></div></div>
 <div class="ttc" id="aperlin_8c_html_a538b354db1c2b2533ada8b4ac2da3263"><div class="ttname"><a href="perlin_8c.html#a538b354db1c2b2533ada8b4ac2da3263">noise_new</a></div><div class="ttdeci">perlin_data_t * noise_new(int dim, float hurst, float lacunarity)</div><div class="ttdoc">Creates a new perlin noise generator.</div><div class="ttdef"><b>Definition:</b> <a href="perlin_8c_source.html#l00174">perlin.c:174</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a399364e40283f921ee18286dbd70814f"><div class="ttname"><a href="spfx_8c.html#a399364e40283f921ee18286dbd70814f">shake_pos</a></div><div class="ttdeci">static Vector2d shake_pos</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00063">spfx.c:63</a></div></div>
-<div class="ttc" id="aspfx_8c_html_acc943df2c1e8911d2cfc4a53488913ce"><div class="ttname"><a href="spfx_8c.html#acc943df2c1e8911d2cfc4a53488913ce">spfx_damage</a></div><div class="ttdeci">void spfx_damage(double mod)</div><div class="ttdoc">Increases the current damage level.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00796">spfx.c:796</a></div></div>
+<div class="ttc" id="aspfx_8c_html_acc943df2c1e8911d2cfc4a53488913ce"><div class="ttname"><a href="spfx_8c.html#acc943df2c1e8911d2cfc4a53488913ce">spfx_damage</a></div><div class="ttdeci">void spfx_damage(double mod)</div><div class="ttdoc">Increases the current damage level.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00802">spfx.c:802</a></div></div>
 <div class="ttc" id="anxml_8c_html_a435de90e2ad949b234e0544aeff32cdd"><div class="ttname"><a href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a></div><div class="ttdeci">xmlDocPtr xml_parsePhysFS(const char *filename)</div><div class="ttdoc">Analogous to xmlParseMemory/xmlParseFile.</div><div class="ttdef"><b>Definition:</b> <a href="nxml_8c_source.html#l00078">nxml.c:78</a></div></div>
 <div class="ttc" id="aspfx_8c_html_ab2267e810720b8f8de55598def35c11f"><div class="ttname"><a href="spfx_8c.html#ab2267e810720b8f8de55598def35c11f">spfx_updateShake</a></div><div class="ttdeci">static void spfx_updateShake(double dt)</div><div class="ttdoc">Updates the shake position.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00477">spfx.c:477</a></div></div>
 <div class="ttc" id="aarray_8h_html_ad1bf30a2043b321afd76277cec9f46c8"><div class="ttname"><a href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a></div><div class="ttdeci">#define array_create(basic_type)</div><div class="ttdoc">Creates a new dynamic array of ‘basic_type’.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00097">array.h:97</a></div></div>
@@ -1050,10 +1055,9 @@ $(function() {
 <div class="ttc" id="astructSPFX_html"><div class="ttname"><a href="structSPFX.html">SPFX</a></div><div class="ttdoc">An actual in-game active special effect.</div></div>
 <div class="ttc" id="aarray_8h_html_a7c3fb96e542d880f6f5f42594154e0f0"><div class="ttname"><a href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a></div><div class="ttdeci">#define array_erase(ptr_array, first, last)</div><div class="ttdoc">Erases elements in interval [first, last).</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00144">array.h:144</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a135b9e0d962f563ed42c5e511f48db56"><div class="ttname"><a href="spfx_8c.html#a135b9e0d962f563ed42c5e511f48db56">spfx_load</a></div><div class="ttdeci">int spfx_load(void)</div><div class="ttdoc">Loads the spfx stack.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00237">spfx.c:237</a></div></div>
-<div class="ttc" id="aspfx_8c_html_ae075edb64b22db9de810a3fa14204662"><div class="ttname"><a href="spfx_8c.html#ae075edb64b22db9de810a3fa14204662">spfx_trail_sample</a></div><div class="ttdeci">void spfx_trail_sample(Trail_spfx *trail, double x, double y, TrailMode mode)</div><div class="ttdoc">Makes a trail grow.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00645">spfx.c:645</a></div></div>
 <div class="ttc" id="aarray_8h_html_a8037aba47ab61629eee083791786b582"><div class="ttname"><a href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a></div><div class="ttdeci">#define array_grow(ptr_array)</div><div class="ttdoc">Increases the number of elements by one and returns the last element.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00123">array.h:123</a></div></div>
 <div class="ttc" id="astructTrail__spfx_html"><div class="ttname"><a href="structTrail__spfx.html">Trail_spfx</a></div><div class="ttdoc">A trail generated by a ship or an ammo.</div></div>
-<div class="ttc" id="aspfx_8c_html_aaa7403ac9f8807a174f95e68dfc88b39"><div class="ttname"><a href="spfx_8c.html#aaa7403ac9f8807a174f95e68dfc88b39">trailSpec_get</a></div><div class="ttdeci">const TrailSpec * trailSpec_get(const char *name)</div><div class="ttdoc">Gets a trail spec by name.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l01122">spfx.c:1122</a></div></div>
+<div class="ttc" id="aspfx_8c_html_aaa7403ac9f8807a174f95e68dfc88b39"><div class="ttname"><a href="spfx_8c.html#aaa7403ac9f8807a174f95e68dfc88b39">trailSpec_get</a></div><div class="ttdeci">const TrailSpec * trailSpec_get(const char *name)</div><div class="ttdoc">Gets a trail spec by name.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l01128">spfx.c:1128</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a4a0e51ed10e9ea167662391f9c00a380"><div class="ttname"><a href="opengl__render_8c.html#a4a0e51ed10e9ea167662391f9c00a380">gl_blitSprite</a></div><div class="ttdeci">void gl_blitSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const glColour *c)</div><div class="ttdoc">Blits a sprite, position is relative to the player.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00429">opengl_render.c:429</a></div></div>
 <div class="ttc" id="aarray_8h_html_ac9a99c83677f4324066a52dc8e5cf91f"><div class="ttname"><a href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a></div><div class="ttdeci">#define array_begin(array)</div><div class="ttdoc">Returns a pointer to the beginning of the reserved memory space.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00198">array.h:198</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a0ddc2203c0c70a3ceac01f93f83c2c36"><div class="ttname"><a href="spfx_8c.html#a0ddc2203c0c70a3ceac01f93f83c2c36">spfx_stack_front</a></div><div class="ttdeci">static SPFX * spfx_stack_front</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00131">spfx.c:131</a></div></div>
@@ -1064,11 +1068,12 @@ $(function() {
 <div class="ttc" id="astructSPFX___html_a50b2e5b39ac6d187590fc0686e5f0780"><div class="ttname"><a href="structSPFX__.html#a50b2e5b39ac6d187590fc0686e5f0780">SPFX_::lastframe</a></div><div class="ttdeci">int lastframe</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00123">spfx.c:123</a></div></div>
 <div class="ttc" id="aarray_8h_html_a95eced54a13af47f83c269654f438b82"><div class="ttname"><a href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a></div><div class="ttdeci">#define array_shrink(ptr_array)</div><div class="ttdoc">Shrinks memory to fit only ‘size’ elements.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00153">array.h:153</a></div></div>
 <div class="ttc" id="aspfx_8c_html_ad7b51c27adb96931680a6a7dba12e0f2"><div class="ttname"><a href="spfx_8c.html#ad7b51c27adb96931680a6a7dba12e0f2">spfx_stack_back</a></div><div class="ttdeci">static SPFX * spfx_stack_back</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00133">spfx.c:133</a></div></div>
-<div class="ttc" id="aspfx_8c_html_a6839836049ea3657190cc05c9f37a57e"><div class="ttname"><a href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">spfx_shake</a></div><div class="ttdeci">void spfx_shake(double mod)</div><div class="ttdoc">Increases the current rumble level.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00775">spfx.c:775</a></div></div>
+<div class="ttc" id="aspfx_8c_html_a6839836049ea3657190cc05c9f37a57e"><div class="ttname"><a href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">spfx_shake</a></div><div class="ttdeci">void spfx_shake(double mod)</div><div class="ttdoc">Increases the current rumble level.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00781">spfx.c:781</a></div></div>
 <div class="ttc" id="acamera_8c_html_aa5f7b75f8350f1e0606d0a698390f3e1"><div class="ttname"><a href="camera_8c.html#aa5f7b75f8350f1e0606d0a698390f3e1">cam_getZoom</a></div><div class="ttdeci">double cam_getZoom(void)</div><div class="ttdoc">Gets the camera zoom.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00099">camera.c:99</a></div></div>
 <div class="ttc" id="astructSPFX___html"><div class="ttname"><a href="structSPFX__.html">SPFX_</a></div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00119">spfx.c:119</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a24369cf8621ba057bab0595c2d610d4b"><div class="ttname"><a href="spfx_8c.html#a24369cf8621ba057bab0595c2d610d4b">SHAKE_B</a></div><div class="ttdeci">#define SHAKE_B</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00046">spfx.c:46</a></div></div>
-<div class="ttc" id="aspfx_8c_html_a104dd38b12ac5d3ef7b885cc99781f04"><div class="ttname"><a href="spfx_8c.html#a104dd38b12ac5d3ef7b885cc99781f04">spfx_trail_draw</a></div><div class="ttdeci">static void spfx_trail_draw(const Trail_spfx *trail)</div><div class="ttdoc">Draws a trail on screen.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00703">spfx.c:703</a></div></div>
+<div class="ttc" id="aspfx_8c_html_a104dd38b12ac5d3ef7b885cc99781f04"><div class="ttname"><a href="spfx_8c.html#a104dd38b12ac5d3ef7b885cc99781f04">spfx_trail_draw</a></div><div class="ttdeci">static void spfx_trail_draw(const Trail_spfx *trail)</div><div class="ttdoc">Draws a trail on screen.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00704">spfx.c:704</a></div></div>
+<div class="ttc" id="aspfx_8c_html_a5b6913ee2c47cbd1fbfabca4e61948d2"><div class="ttname"><a href="spfx_8c.html#a5b6913ee2c47cbd1fbfabca4e61948d2">spfx_trail_sample</a></div><div class="ttdeci">void spfx_trail_sample(Trail_spfx *trail, double x, double y, TrailMode mode, int force)</div><div class="ttdoc">Makes a trail grow.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00646">spfx.c:646</a></div></div>
 <div class="ttc" id="astructTrailPoint_html_a84f6991ae15683228608d55543eed222"><div class="ttname"><a href="structTrailPoint.html#a84f6991ae15683228608d55543eed222">TrailPoint::y</a></div><div class="ttdeci">GLfloat y</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8h_source.html#l00063">spfx.h:63</a></div></div>
 <div class="ttc" id="astructSPFX__Base___html"><div class="ttname"><a href="structSPFX__Base__.html">SPFX_Base_</a></div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00102">spfx.c:102</a></div></div>
 <div class="ttc" id="aopengl__matrix_8c_html_a217094d9a8d9cadd6ef94fbeaa4bc757"><div class="ttname"><a href="opengl__matrix_8c.html#a217094d9a8d9cadd6ef94fbeaa4bc757">gl_Matrix4_Rotate2dv</a></div><div class="ttdeci">gl_Matrix4 gl_Matrix4_Rotate2dv(gl_Matrix4 m, double c, double s)</div><div class="ttdoc">Rotates the +x axis to the given vector.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__matrix_8c_source.html#l00151">opengl_matrix.c:151</a></div></div>
@@ -1086,7 +1091,7 @@ $(function() {
 <div class="ttc" id="aopengl__render_8c_html_a1e428781a5f08429de391e9b9fe60b30"><div class="ttname"><a href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a></div><div class="ttdeci">void gl_renderRect(double x, double y, double w, double h, const glColour *c)</div><div class="ttdoc">Renders a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00102">opengl_render.c:102</a></div></div>
 <div class="ttc" id="astructSPFX___html_ad5aac01cc0ffa9bd6027c1ad0c33dc3d"><div class="ttname"><a href="structSPFX__.html#ad5aac01cc0ffa9bd6027c1ad0c33dc3d">SPFX_::pos</a></div><div class="ttdeci">Vector2d pos</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00120">spfx.c:120</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a9e1a4ccbb4d4797c8d191c01758242a1"><div class="ttname"><a href="spfx_8c.html#a9e1a4ccbb4d4797c8d191c01758242a1">shake_vel</a></div><div class="ttdeci">static Vector2d shake_vel</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00064">spfx.c:64</a></div></div>
-<div class="ttc" id="aspfx_8c_html_a2aa8608cb21447f7af1a8d082f29f206"><div class="ttname"><a href="spfx_8c.html#a2aa8608cb21447f7af1a8d082f29f206">trailSpec_load</a></div><div class="ttdeci">static int trailSpec_load(void)</div><div class="ttdoc">Loads the trail colour sets.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l01010">spfx.c:1010</a></div></div>
+<div class="ttc" id="aspfx_8c_html_a2aa8608cb21447f7af1a8d082f29f206"><div class="ttname"><a href="spfx_8c.html#a2aa8608cb21447f7af1a8d082f29f206">trailSpec_load</a></div><div class="ttdeci">static int trailSpec_load(void)</div><div class="ttdoc">Loads the trail colour sets.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l01016">spfx.c:1016</a></div></div>
 <div class="ttc" id="astructSPFX___html_ad9444584939d2c79b5776b0968833594"><div class="ttname"><a href="structSPFX__.html#ad9444584939d2c79b5776b0968833594">SPFX_::timer</a></div><div class="ttdeci">double timer</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00126">spfx.c:126</a></div></div>
 <div class="ttc" id="astructTrailPoint_html"><div class="ttname"><a href="structTrailPoint.html">TrailPoint</a></div><div class="ttdef"><b>Definition:</b> <a href="spfx_8h_source.html#l00062">spfx.h:62</a></div></div>
 <div class="ttc" id="aperlin_8c_html_a8322893a280f2843ff6e9721405776c9"><div class="ttname"><a href="perlin_8c.html#a8322893a280f2843ff6e9721405776c9">noise_delete</a></div><div class="ttdeci">void noise_delete(perlin_data_t *pdata)</div><div class="ttdoc">Frees some noise data.</div><div class="ttdef"><b>Definition:</b> <a href="perlin_8c_source.html#l00366">perlin.c:366</a></div></div>
@@ -1096,7 +1101,7 @@ $(function() {
 <div class="ttc" id="astructSPFX__Base_html"><div class="ttname"><a href="structSPFX__Base.html">SPFX_Base</a></div><div class="ttdoc">Generic special effect.</div></div>
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a6ebbb1c38c582e82b738ac6fd9ea0baa"><div class="ttname"><a href="spfx_8c.html#a6ebbb1c38c582e82b738ac6fd9ea0baa">damage_shader_pp_id</a></div><div class="ttdeci">static unsigned int damage_shader_pp_id</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00076">spfx.c:76</a></div></div>
-<div class="ttc" id="aspfx_8c_html_a185c64a00b47bf616cefa22b838d7943"><div class="ttname"><a href="spfx_8c.html#a185c64a00b47bf616cefa22b838d7943">spfx_render</a></div><div class="ttdeci">void spfx_render(const int layer)</div><div class="ttdoc">Renders the entire spfx layer.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00898">spfx.c:898</a></div></div>
+<div class="ttc" id="aspfx_8c_html_a185c64a00b47bf616cefa22b838d7943"><div class="ttname"><a href="spfx_8c.html#a185c64a00b47bf616cefa22b838d7943">spfx_render</a></div><div class="ttdeci">void spfx_render(const int layer)</div><div class="ttdoc">Renders the entire spfx layer.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00904">spfx.c:904</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a5249a544b7755293d28ccda85bfc5185"><div class="ttname"><a href="spfx_8c.html#a5249a544b7755293d28ccda85bfc5185">haptic_rumble</a></div><div class="ttdeci">static int haptic_rumble</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00072">spfx.c:72</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a27ba211131c925aa4927f8d7d8ef6855"><div class="ttname"><a href="spfx_8c.html#a27ba211131c925aa4927f8d7d8ef6855">spfx_update_layer</a></div><div class="ttdeci">static void spfx_update_layer(SPFX *layer, const double dt)</div><div class="ttdoc">Updates an individual spfx.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00454">spfx.c:454</a></div></div>
 <!-- start footer part -->
