@@ -2123,16 +2123,16 @@ $(function() {
 <div class="line"><a name="l02864"></a><span class="lineno"> 2864</span>&#160;{</div>
 <div class="line"><a name="l02865"></a><span class="lineno"> 2865</span>&#160;   Pilot *p;</div>
 <div class="line"><a name="l02866"></a><span class="lineno"> 2866</span>&#160;   <span class="keywordtype">double</span> e;</div>
-<div class="line"><a name="l02867"></a><span class="lineno"> 2867</span>&#160;   <span class="keywordtype">int</span> nonrel;</div>
+<div class="line"><a name="l02867"></a><span class="lineno"> 2867</span>&#160;   <span class="keywordtype">int</span> absolute;</div>
 <div class="line"><a name="l02868"></a><span class="lineno"> 2868</span>&#160; </div>
 <div class="line"><a name="l02869"></a><span class="lineno"> 2869</span>&#160;   NLUA_CHECKRW(L);</div>
 <div class="line"><a name="l02870"></a><span class="lineno"> 2870</span>&#160; </div>
 <div class="line"><a name="l02871"></a><span class="lineno"> 2871</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
 <div class="line"><a name="l02872"></a><span class="lineno"> 2872</span>&#160;   p      = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,1);</div>
 <div class="line"><a name="l02873"></a><span class="lineno"> 2873</span>&#160;   e      = luaL_checknumber(L,2);</div>
-<div class="line"><a name="l02874"></a><span class="lineno"> 2874</span>&#160;   nonrel = lua_toboolean(L,3);</div>
+<div class="line"><a name="l02874"></a><span class="lineno"> 2874</span>&#160;   absolute = lua_toboolean(L,3);</div>
 <div class="line"><a name="l02875"></a><span class="lineno"> 2875</span>&#160; </div>
-<div class="line"><a name="l02876"></a><span class="lineno"> 2876</span>&#160;   <span class="keywordflow">if</span> (nonrel)</div>
+<div class="line"><a name="l02876"></a><span class="lineno"> 2876</span>&#160;   <span class="keywordflow">if</span> (absolute)</div>
 <div class="line"><a name="l02877"></a><span class="lineno"> 2877</span>&#160;      p-&gt;energy = <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>( 0, p-&gt;energy_max, e );</div>
 <div class="line"><a name="l02878"></a><span class="lineno"> 2878</span>&#160;   <span class="keywordflow">else</span></div>
 <div class="line"><a name="l02879"></a><span class="lineno"> 2879</span>&#160;      p-&gt;energy = (e/100.) * p-&gt;energy_max;</div>
@@ -2216,10 +2216,10 @@ $(function() {
 <div class="line"><a name="l03006"></a><span class="lineno"><a class="line" href="nlua__pilot_8c.html#a5a0848aed6a43aa2aec9bc5baccf7135"> 3006</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__pilot_8c.html#a5a0848aed6a43aa2aec9bc5baccf7135">pilotL_getHealth</a>( lua_State *L )</div>
 <div class="line"><a name="l03007"></a><span class="lineno"> 3007</span>&#160;{</div>
 <div class="line"><a name="l03008"></a><span class="lineno"> 3008</span>&#160;   Pilot *p = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,1);</div>
-<div class="line"><a name="l03009"></a><span class="lineno"> 3009</span>&#160;   <span class="keywordtype">int</span> nonrel = lua_toboolean(L,2);</div>
+<div class="line"><a name="l03009"></a><span class="lineno"> 3009</span>&#160;   <span class="keywordtype">int</span> absolute = lua_toboolean(L,2);</div>
 <div class="line"><a name="l03010"></a><span class="lineno"> 3010</span>&#160; </div>
 <div class="line"><a name="l03011"></a><span class="lineno"> 3011</span>&#160;   <span class="comment">/* Return parameters. */</span></div>
-<div class="line"><a name="l03012"></a><span class="lineno"> 3012</span>&#160;   <span class="keywordflow">if</span> (nonrel) {</div>
+<div class="line"><a name="l03012"></a><span class="lineno"> 3012</span>&#160;   <span class="keywordflow">if</span> (absolute) {</div>
 <div class="line"><a name="l03013"></a><span class="lineno"> 3013</span>&#160;      lua_pushnumber(L, p-&gt;armour );</div>
 <div class="line"><a name="l03014"></a><span class="lineno"> 3014</span>&#160;      lua_pushnumber(L, p-&gt;shield );</div>
 <div class="line"><a name="l03015"></a><span class="lineno"> 3015</span>&#160;   }</div>
@@ -2237,9 +2237,9 @@ $(function() {
 <div class="line"><a name="l03037"></a><span class="lineno"><a class="line" href="nlua__pilot_8c.html#a4dbc88aac01d21c53ebe5554a2d788f9"> 3037</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__pilot_8c.html#a4dbc88aac01d21c53ebe5554a2d788f9">pilotL_getEnergy</a>( lua_State *L )</div>
 <div class="line"><a name="l03038"></a><span class="lineno"> 3038</span>&#160;{</div>
 <div class="line"><a name="l03039"></a><span class="lineno"> 3039</span>&#160;   Pilot *p = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,1);</div>
-<div class="line"><a name="l03040"></a><span class="lineno"> 3040</span>&#160;   <span class="keywordtype">int</span> nonrel = lua_toboolean(L,2);</div>
+<div class="line"><a name="l03040"></a><span class="lineno"> 3040</span>&#160;   <span class="keywordtype">int</span> absolute = lua_toboolean(L,2);</div>
 <div class="line"><a name="l03041"></a><span class="lineno"> 3041</span>&#160; </div>
-<div class="line"><a name="l03042"></a><span class="lineno"> 3042</span>&#160;   <span class="keywordflow">if</span> (nonrel)</div>
+<div class="line"><a name="l03042"></a><span class="lineno"> 3042</span>&#160;   <span class="keywordflow">if</span> (absolute)</div>
 <div class="line"><a name="l03043"></a><span class="lineno"> 3043</span>&#160;      lua_pushnumber(L, p-&gt;energy );</div>
 <div class="line"><a name="l03044"></a><span class="lineno"> 3044</span>&#160;   <span class="keywordflow">else</span></div>
 <div class="line"><a name="l03045"></a><span class="lineno"> 3045</span>&#160;      lua_pushnumber(L, (p-&gt;energy_max &gt; 0.) ? p-&gt;energy / p-&gt;energy_max * 100. : 0. );</div>
