@@ -697,356 +697,359 @@ $(function() {
 <div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;   <span class="comment">/* Safe hook should be run every frame regardless of whether game is paused or not. */</span></div>
 <div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;safe&quot;</span> );</div>
 <div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160; </div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;   <span class="comment">/*</span></div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;<span class="comment">    * Handle render.</span></div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;   <span class="comment">/* Clear buffer. */</span></div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;   render_all( <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a>, <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a> );</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;   <span class="comment">/* Draw buffer. */</span></div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   SDL_GL_SwapWindow( <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.window );</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;}</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160; </div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160; </div>
-<div class="line"><a name="l00715"></a><span class="lineno"><a class="line" href="naev_8h.html#a821bd54d6154eba9b5f555ecbeab3c3a">  715</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a821bd54d6154eba9b5f555ecbeab3c3a">naev_resize</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;{</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;   <span class="comment">/* Auto-detect window size. */</span></div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;   SDL_GL_GetDrawableSize( <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.window, &amp;w, &amp;h );</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160; </div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;   <span class="comment">/* Update options menu, if open. (Never skip, in case the fullscreen mode alone changed.) */</span></div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;   <a class="code" href="options_8c.html#a6268d9f326315a4eaa7071b31f759a93">opt_resize</a>();</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;   <span class="comment">/* Checks to see if we want to land. */</span></div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;   <a class="code" href="space_8c.html#aea1ceed6485f4f5abec7809a7ebef340">space_checkLand</a>();</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160; </div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;   <span class="comment">/*</span></div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="comment">    * Handle render.</span></div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   <span class="comment">/* Clear buffer. */</span></div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;   render_all( <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a>, <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a> );</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;   <span class="comment">/* Draw buffer. */</span></div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   SDL_GL_SwapWindow( <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.window );</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;}</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160; </div>
+<div class="line"><a name="l00718"></a><span class="lineno"><a class="line" href="naev_8h.html#a821bd54d6154eba9b5f555ecbeab3c3a">  718</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a821bd54d6154eba9b5f555ecbeab3c3a">naev_resize</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;{</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   <span class="comment">/* Auto-detect window size. */</span></div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;   SDL_GL_GetDrawableSize( <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.window, &amp;w, &amp;h );</div>
 <div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160; </div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   <span class="comment">/* Nothing to do. */</span></div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   <span class="keywordflow">if</span> ((w == <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rw) &amp;&amp; (h == <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rh))</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160; </div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;   <span class="comment">/* Resize the GL context, etc. */</span></div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;   <a class="code" href="opengl_8c.html#a6a40887e59ff2bde3375165de3a6265e">gl_resize</a>();</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   <span class="comment">/* Update options menu, if open. (Never skip, in case the fullscreen mode alone changed.) */</span></div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   <a class="code" href="options_8c.html#a6268d9f326315a4eaa7071b31f759a93">opt_resize</a>();</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160; </div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;   <span class="comment">/* Nothing to do. */</span></div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;   <span class="keywordflow">if</span> ((w == <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rw) &amp;&amp; (h == <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rh))</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160; </div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;   <span class="comment">/* Regenerate the background stars. */</span></div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a> != NULL)</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;      <a class="code" href="background_8c.html#ad4d7a2a91315e6c54833c82295de244f">background_initStars</a>( <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;stars );</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;      <a class="code" href="background_8c.html#ad4d7a2a91315e6c54833c82295de244f">background_initStars</a>( 1000 ); <span class="comment">/* from loadscreen_load */</span></div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160; </div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;   <span class="comment">/* Must be before gui_reload */</span></div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;   <a class="code" href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a>( 15., (<span class="keywordtype">double</span>)(SCREEN_H-15-<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h) );</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;   <span class="comment">/* Resize the GL context, etc. */</span></div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;   <a class="code" href="opengl_8c.html#a6a40887e59ff2bde3375165de3a6265e">gl_resize</a>();</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160; </div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;   <span class="comment">/* Regenerate the background stars. */</span></div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a> != NULL)</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;      <a class="code" href="background_8c.html#ad4d7a2a91315e6c54833c82295de244f">background_initStars</a>( <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;stars );</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;      <a class="code" href="background_8c.html#ad4d7a2a91315e6c54833c82295de244f">background_initStars</a>( 1000 ); <span class="comment">/* from loadscreen_load */</span></div>
 <div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160; </div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   <span class="comment">/* Reload the GUI (may regenerate land window) */</span></div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   <a class="code" href="gui_8c.html#a93e20344acde194abc25abc152f52ec9">gui_reload</a>();</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   <span class="comment">/* Must be before gui_reload */</span></div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   <a class="code" href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a>( 15., (<span class="keywordtype">double</span>)(SCREEN_H-15-<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h) );</div>
 <div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160; </div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;   <span class="comment">/* Resets dimensions in other components which care. */</span></div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   ovr_refresh();</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   <a class="code" href="toolkit_8c.html#aeb3525f9d27a9e7379646052d083f3d0">toolkit_reposition</a>();</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   <a class="code" href="menu_8h.html#aca792fceb1fa6a2302a38e8e807491a1">menu_main_resize</a>();</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;   <a class="code" href="nebula_8c.html#a3745e206099183ffe680ad6dbdebe4a7">nebu_resize</a>();</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;}</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160; </div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;<span class="comment"> * @brief Toggles between windowed and fullscreen mode.</span></div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;<span class="keywordtype">void</span> naev_toggleFullscreen (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;{</div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   <a class="code" href="options_8c.html#a0e0d6b5910b75902ba6c2e9c0d233877">opt_setVideoMode</a>( conf.width, conf.height, !conf.fullscreen, 0 );</div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;}</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160; </div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160; </div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;<span class="preprocessor">#if HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC)</span></div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;<span class="keyword">static</span> <span class="keyword">struct </span>timespec global_time; </div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> use_posix_time; </div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC) */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160; </div>
-<div class="line"><a name="l00766"></a><span class="lineno"><a class="line" href="naev_8c.html#a43980db9dfcf61e5d10e6b3e306c9ff1">  766</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a43980db9dfcf61e5d10e6b3e306c9ff1">fps_init</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;{</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;<span class="preprocessor">#if HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC)</span></div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;   use_posix_time = 1;</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;   <span class="comment">/* We must use clock_gettime here instead of gettimeofday mainly because this</span></div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;<span class="comment">    * way we are not influenced by changes to the time source like say ntp which</span></div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;<span class="comment">    * could skew up the dt calculations. */</span></div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;   <span class="keywordflow">if</span> (clock_gettime(CLOCK_MONOTONIC, &amp;global_time)==0)</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;   WARN( _(<span class="stringliteral">&quot;clock_gettime failed, disabling POSIX time.&quot;</span>) );</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   use_posix_time = 0;</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC) */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   <a class="code" href="naev_8c.html#a33c96e6ba66e24cb95a5ea32d3431704">time_ms</a>  = SDL_GetTicks();</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;}</div>
-<div class="line"><a name="l00785"></a><span class="lineno"><a class="line" href="naev_8c.html#a7ab1e5b41ecf27313008a96e42a982a6">  785</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="naev_8c.html#a7ab1e5b41ecf27313008a96e42a982a6">fps_elapsed</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;{</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;   <span class="keywordtype">double</span> dt;</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> t;</div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160; </div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;<span class="preprocessor">#if HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC)</span></div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;   <span class="keyword">struct </span>timespec ts;</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;   <span class="comment">/* Reload the GUI (may regenerate land window) */</span></div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   <a class="code" href="gui_8c.html#a93e20344acde194abc25abc152f52ec9">gui_reload</a>();</div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160; </div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   <span class="comment">/* Resets dimensions in other components which care. */</span></div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;   ovr_refresh();</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;   <a class="code" href="toolkit_8c.html#aeb3525f9d27a9e7379646052d083f3d0">toolkit_reposition</a>();</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   <a class="code" href="menu_8h.html#aca792fceb1fa6a2302a38e8e807491a1">menu_main_resize</a>();</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;   <a class="code" href="nebula_8c.html#a3745e206099183ffe680ad6dbdebe4a7">nebu_resize</a>();</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;}</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160; </div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;<span class="comment"> * @brief Toggles between windowed and fullscreen mode.</span></div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;<span class="keywordtype">void</span> naev_toggleFullscreen (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;{</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;   <a class="code" href="options_8c.html#a0e0d6b5910b75902ba6c2e9c0d233877">opt_setVideoMode</a>( conf.width, conf.height, !conf.fullscreen, 0 );</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;}</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160; </div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160; </div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;<span class="preprocessor">#if HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC)</span></div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;<span class="keyword">static</span> <span class="keyword">struct </span>timespec global_time; </div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> use_posix_time; </div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC) */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160; </div>
+<div class="line"><a name="l00769"></a><span class="lineno"><a class="line" href="naev_8c.html#a43980db9dfcf61e5d10e6b3e306c9ff1">  769</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a43980db9dfcf61e5d10e6b3e306c9ff1">fps_init</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;{</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;<span class="preprocessor">#if HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC)</span></div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;   use_posix_time = 1;</div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;   <span class="comment">/* We must use clock_gettime here instead of gettimeofday mainly because this</span></div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;<span class="comment">    * way we are not influenced by changes to the time source like say ntp which</span></div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;<span class="comment">    * could skew up the dt calculations. */</span></div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   <span class="keywordflow">if</span> (clock_gettime(CLOCK_MONOTONIC, &amp;global_time)==0)</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   WARN( _(<span class="stringliteral">&quot;clock_gettime failed, disabling POSIX time.&quot;</span>) );</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;   use_posix_time = 0;</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC) */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;   <a class="code" href="naev_8c.html#a33c96e6ba66e24cb95a5ea32d3431704">time_ms</a>  = SDL_GetTicks();</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;}</div>
+<div class="line"><a name="l00788"></a><span class="lineno"><a class="line" href="naev_8c.html#a7ab1e5b41ecf27313008a96e42a982a6">  788</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="naev_8c.html#a7ab1e5b41ecf27313008a96e42a982a6">fps_elapsed</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;{</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;   <span class="keywordtype">double</span> dt;</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> t;</div>
 <div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160; </div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;   <span class="keywordflow">if</span> (use_posix_time) {</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;      <span class="keywordflow">if</span> (clock_gettime(CLOCK_MONOTONIC, &amp;ts)==0) {</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;         dt  = ts.tv_sec - global_time.tv_sec;</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;         dt += (ts.tv_nsec - global_time.tv_nsec) / 1000000000.0;</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;         global_time = ts;</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;         <span class="keywordflow">return</span> dt;</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;      }</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;      WARN( _(<span class="stringliteral">&quot;clock_gettime failed!&quot;</span>) );</div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;   }</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC) */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160; </div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;   t        = SDL_GetTicks();</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;   dt       = (double)(t - <a class="code" href="naev_8c.html#a33c96e6ba66e24cb95a5ea32d3431704">time_ms</a>); <span class="comment">/* Get the elapsed ms. */</span></div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;   dt      /= 1000.; <span class="comment">/* Convert to seconds. */</span></div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;   <a class="code" href="naev_8c.html#a33c96e6ba66e24cb95a5ea32d3431704">time_ms</a>  = t;</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160; </div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;   <span class="keywordflow">return</span> dt;</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;}</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;<span class="preprocessor">#if HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC)</span></div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;   <span class="keyword">struct </span>timespec ts;</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160; </div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   <span class="keywordflow">if</span> (use_posix_time) {</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;      <span class="keywordflow">if</span> (clock_gettime(CLOCK_MONOTONIC, &amp;ts)==0) {</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;         dt  = ts.tv_sec - global_time.tv_sec;</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;         dt += (ts.tv_nsec - global_time.tv_nsec) / 1000000000.0;</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;         global_time = ts;</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;         <span class="keywordflow">return</span> dt;</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;      }</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;      WARN( _(<span class="stringliteral">&quot;clock_gettime failed!&quot;</span>) );</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;   }</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX &amp;&amp; defined(CLOCK_MONOTONIC) */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160; </div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;   t        = SDL_GetTicks();</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;   dt       = (double)(t - <a class="code" href="naev_8c.html#a33c96e6ba66e24cb95a5ea32d3431704">time_ms</a>); <span class="comment">/* Get the elapsed ms. */</span></div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;   dt      /= 1000.; <span class="comment">/* Convert to seconds. */</span></div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;   <a class="code" href="naev_8c.html#a33c96e6ba66e24cb95a5ea32d3431704">time_ms</a>  = t;</div>
 <div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160; </div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160; </div>
-<div class="line"><a name="l00816"></a><span class="lineno"><a class="line" href="naev_8c.html#af356ad2e6a756c82003cc701c53e79ee">  816</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#af356ad2e6a756c82003cc701c53e79ee">fps_control</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;{</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;   <span class="keywordtype">double</span> delay;</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   <span class="keywordtype">double</span> fps_max;</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;<span class="preprocessor">#if HAS_POSIX</span></div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   <span class="keyword">struct </span>timespec ts;</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160; </div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   <span class="comment">/* dt in s */</span></div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>  = <a class="code" href="naev_8c.html#a7ab1e5b41ecf27313008a96e42a982a6">fps_elapsed</a>();</div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;   <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a>  = <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a> * <a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>; <span class="comment">/* Apply the modifier. */</span></div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160; </div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;   <span class="comment">/* if fps is limited */</span></div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;   <span class="keywordflow">if</span> (!conf.vsync &amp;&amp; conf.fps_max != 0) {</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;      fps_max = 1./(double)conf.fps_max;</div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;      if (<a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a> &lt; fps_max) {</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;         delay    = fps_max - <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>;</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;<span class="preprocessor">#if HAS_POSIX</span></div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;         ts.tv_sec  = floor( delay );</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;         ts.tv_nsec = fmod( delay, 1. ) * 1e9;</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;         nanosleep( &amp;ts, NULL );</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;<span class="preprocessor">#else </span><span class="comment">/* HAS_POSIX */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;         SDL_Delay( (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)(delay * 1000) );</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;         <a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a>  += delay; <span class="comment">/* makes sure it displays the proper fps */</span></div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;      }</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;   }</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;}</div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160; </div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160; </div>
-<div class="line"><a name="l00849"></a><span class="lineno"><a class="line" href="naev_8h.html#afd0e164bd2b362ae6e8d668467e97ce2">  849</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a>( <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y )</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;{</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;   <a class="code" href="naev_8c.html#aced8275c8cde9fa6ac25fce378ca2aac">fps_x</a> = x;</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;   <a class="code" href="naev_8c.html#adf4515bf95d9b94bc2d83d79afc106b2">fps_y</a> = y;</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;}</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160; </div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160; </div>
-<div class="line"><a name="l00861"></a><span class="lineno"><a class="line" href="naev_8h.html#a53bff93ee1c266e7cd67aeeb8bc4202b">  861</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a53bff93ee1c266e7cd67aeeb8bc4202b">display_fps</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> dt )</div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;{</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;   <span class="keywordtype">double</span> x,y;</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;   <span class="keywordtype">double</span> dt_mod_base = 1.;</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160; </div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;   <a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a>  += dt;</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   <a class="code" href="naev_8c.html#ae7b0e000fd12e430d8d0f854fa8a2d3d">fps_cur</a> += 1.;</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a> &gt; 1.) { <span class="comment">/* recalculate every second */</span></div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;      <a class="code" href="naev_8c.html#a63da2a617b72a1630998a4d8b4d26cd3">fps</a> = <a class="code" href="naev_8c.html#ae7b0e000fd12e430d8d0f854fa8a2d3d">fps_cur</a> / <a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a>;</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;      <a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a> = <a class="code" href="naev_8c.html#ae7b0e000fd12e430d8d0f854fa8a2d3d">fps_cur</a> = 0.;</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;   }</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160; </div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;   x = <a class="code" href="naev_8c.html#aced8275c8cde9fa6ac25fce378ca2aac">fps_x</a>;</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;   y = <a class="code" href="naev_8c.html#adf4515bf95d9b94bc2d83d79afc106b2">fps_y</a>;</div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;   <span class="keywordflow">if</span> (conf.fps_show) {</div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;      <a class="code" href="font_8c.html#a78aea6a63643c7b50d178fbf20bcc265">gl_print</a>( NULL, x, y, NULL, <span class="stringliteral">&quot;%3.2f&quot;</span>, <a class="code" href="naev_8c.html#a63da2a617b72a1630998a4d8b4d26cd3">fps</a> );</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;      y -= <a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h + 5.;</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;   }</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160; </div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p != NULL) &amp;&amp; !player_isFlag(PLAYER_DESTROYED) &amp;&amp;</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;         !player_isFlag(PLAYER_CREATING)) {</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;      dt_mod_base = <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>();</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;   }</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a> != dt_mod_base)</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;      <a class="code" href="font_8c.html#a78aea6a63643c7b50d178fbf20bcc265">gl_print</a>( NULL, x, y, NULL, <span class="stringliteral">&quot;%3.1fx&quot;</span>, <a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a> / dt_mod_base);</div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160; </div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="pause_8c.html#a868659a2f991de87c2b0dcbe6cea6175">paused</a> || !<a class="code" href="pause_8c.html#a2fcb2cc64b571d434a3aa1d7e1775607">player_paused</a> || !conf.pause_show)</div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;   <span class="keywordflow">return</span> dt;</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;}</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160; </div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160; </div>
+<div class="line"><a name="l00819"></a><span class="lineno"><a class="line" href="naev_8c.html#af356ad2e6a756c82003cc701c53e79ee">  819</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#af356ad2e6a756c82003cc701c53e79ee">fps_control</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;{</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   <span class="keywordtype">double</span> delay;</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;   <span class="keywordtype">double</span> fps_max;</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;<span class="preprocessor">#if HAS_POSIX</span></div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   <span class="keyword">struct </span>timespec ts;</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160; </div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   <span class="comment">/* dt in s */</span></div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;   <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>  = <a class="code" href="naev_8c.html#a7ab1e5b41ecf27313008a96e42a982a6">fps_elapsed</a>();</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;   <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a>  = <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a> * <a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>; <span class="comment">/* Apply the modifier. */</span></div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160; </div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;   <span class="comment">/* if fps is limited */</span></div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   <span class="keywordflow">if</span> (!conf.vsync &amp;&amp; conf.fps_max != 0) {</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;      fps_max = 1./(double)conf.fps_max;</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;      if (<a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a> &lt; fps_max) {</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;         delay    = fps_max - <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>;</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;<span class="preprocessor">#if HAS_POSIX</span></div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;         ts.tv_sec  = floor( delay );</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;         ts.tv_nsec = fmod( delay, 1. ) * 1e9;</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;         nanosleep( &amp;ts, NULL );</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;<span class="preprocessor">#else </span><span class="comment">/* HAS_POSIX */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;         SDL_Delay( (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)(delay * 1000) );</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAS_POSIX */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;         <a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a>  += delay; <span class="comment">/* makes sure it displays the proper fps */</span></div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;      }</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   }</div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;}</div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160; </div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160; </div>
+<div class="line"><a name="l00852"></a><span class="lineno"><a class="line" href="naev_8h.html#afd0e164bd2b362ae6e8d668467e97ce2">  852</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a>( <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y )</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;{</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;   <a class="code" href="naev_8c.html#aced8275c8cde9fa6ac25fce378ca2aac">fps_x</a> = x;</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;   <a class="code" href="naev_8c.html#adf4515bf95d9b94bc2d83d79afc106b2">fps_y</a> = y;</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;}</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160; </div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160; </div>
+<div class="line"><a name="l00864"></a><span class="lineno"><a class="line" href="naev_8h.html#a53bff93ee1c266e7cd67aeeb8bc4202b">  864</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a53bff93ee1c266e7cd67aeeb8bc4202b">display_fps</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> dt )</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;{</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;   <span class="keywordtype">double</span> x,y;</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   <span class="keywordtype">double</span> dt_mod_base = 1.;</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160; </div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;   <a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a>  += dt;</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;   <a class="code" href="naev_8c.html#ae7b0e000fd12e430d8d0f854fa8a2d3d">fps_cur</a> += 1.;</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a> &gt; 1.) { <span class="comment">/* recalculate every second */</span></div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;      <a class="code" href="naev_8c.html#a63da2a617b72a1630998a4d8b4d26cd3">fps</a> = <a class="code" href="naev_8c.html#ae7b0e000fd12e430d8d0f854fa8a2d3d">fps_cur</a> / <a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a>;</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;      <a class="code" href="naev_8c.html#a216a51eca1c5ab02b8b7df4934e2adbc">fps_dt</a> = <a class="code" href="naev_8c.html#ae7b0e000fd12e430d8d0f854fa8a2d3d">fps_cur</a> = 0.;</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;   }</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160; </div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;   x = <a class="code" href="naev_8c.html#aced8275c8cde9fa6ac25fce378ca2aac">fps_x</a>;</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;   y = <a class="code" href="naev_8c.html#adf4515bf95d9b94bc2d83d79afc106b2">fps_y</a>;</div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;   <span class="keywordflow">if</span> (conf.fps_show) {</div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;      <a class="code" href="font_8c.html#a78aea6a63643c7b50d178fbf20bcc265">gl_print</a>( NULL, x, y, NULL, <span class="stringliteral">&quot;%3.2f&quot;</span>, <a class="code" href="naev_8c.html#a63da2a617b72a1630998a4d8b4d26cd3">fps</a> );</div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;      y -= <a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h + 5.;</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;   }</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160; </div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p != NULL) &amp;&amp; !player_isFlag(PLAYER_DESTROYED) &amp;&amp;</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;         !player_isFlag(PLAYER_CREATING)) {</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;      dt_mod_base = <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>();</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;   }</div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a> != dt_mod_base)</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;      <a class="code" href="font_8c.html#a78aea6a63643c7b50d178fbf20bcc265">gl_print</a>( NULL, x, y, NULL, <span class="stringliteral">&quot;%3.1fx&quot;</span>, <a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a> / dt_mod_base);</div>
 <div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160; </div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   y = SCREEN_H / 3. - <a class="code" href="font_8c.html#ad1f198bbe0393f8a79923850fd42d29b">gl_defFontMono</a>.h / 2.;</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;   <a class="code" href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a>( &amp;<a class="code" href="font_8c.html#ad1f198bbe0393f8a79923850fd42d29b">gl_defFontMono</a>, SCREEN_W, 0., y,</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;         NULL, -1., _(<span class="stringliteral">&quot;PAUSED&quot;</span>) );</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;}</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160; </div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160; </div>
-<div class="line"><a name="l00901"></a><span class="lineno"><a class="line" href="naev_8c.html#a2fb3ab7699404c65b42c3039c3248523">  901</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a2fb3ab7699404c65b42c3039c3248523">update_all</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;{</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;   <span class="keywordtype">int</span> i, n;</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;   <span class="keywordtype">double</span> nf, microdt, accumdt;</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160; </div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a> &gt; 0.25) &amp;&amp; (<a class="code" href="naev_8c.html#a4a1c4b2110fa349238de41437d8d16c3">fps_skipped</a>==0)) { <span class="comment">/* slow timers down and rerun calculations */</span></div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;      <a class="code" href="naev_8c.html#a4a1c4b2110fa349238de41437d8d16c3">fps_skipped</a> = 1;</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   }</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a> &gt; <a class="code" href="naev_8c.html#ac6d9ef3e62de1d88a6a4a25d8460ba69">fps_min</a>) { <span class="comment">/* we&#39;ll force a minimum FPS for physics to work alright. */</span></div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160; </div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;      <span class="comment">/* Number of frames. */</span></div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;      nf = ceil( <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a> / <a class="code" href="naev_8c.html#ac6d9ef3e62de1d88a6a4a25d8460ba69">fps_min</a> );</div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;      microdt = <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a> / nf;</div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;      n  = (int) nf;</div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160; </div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;      <span class="comment">/* Update as much as needed, evenly. */</span></div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;      accumdt = 0.;</div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;n; i++) {</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;         <a class="code" href="naev_8c.html#a64e1898131337e160bb9d5b98107402e">update_routine</a>( microdt, 0 );</div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;         <span class="comment">/* OK, so we need a bit of hackish logic here in case we are chopping up a</span></div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;<span class="comment">          * very large dt and it turns out time compression changes so we&#39;re now</span></div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;<span class="comment">          * updating in &quot;normal time compression&quot; zone. This amounts to many updates</span></div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;<span class="comment">          * being run when time compression has changed and thus can cause, say, the</span></div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;<span class="comment">          * player to exceed their target position or get mauled by an enemy ship.</span></div>
-<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;<span class="comment">          */</span></div>
-<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;         accumdt += microdt;</div>
-<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;         <span class="keywordflow">if</span> (accumdt &gt; <a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>*<a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>)</div>
-<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;      }</div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160; </div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;      <span class="comment">/* Note we don&#39;t touch game_dt so that fps_display works well */</span></div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;   }</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;   <span class="keywordflow">else</span> <span class="comment">/* Standard, just update with the last dt */</span></div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;      <a class="code" href="naev_8c.html#a64e1898131337e160bb9d5b98107402e">update_routine</a>( <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a>, 0 );</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160; </div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   <a class="code" href="naev_8c.html#a4a1c4b2110fa349238de41437d8d16c3">fps_skipped</a> = 0;</div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;}</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="pause_8c.html#a868659a2f991de87c2b0dcbe6cea6175">paused</a> || !<a class="code" href="pause_8c.html#a2fcb2cc64b571d434a3aa1d7e1775607">player_paused</a> || !conf.pause_show)</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160; </div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;   y = SCREEN_H / 3. - <a class="code" href="font_8c.html#ad1f198bbe0393f8a79923850fd42d29b">gl_defFontMono</a>.h / 2.;</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;   <a class="code" href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a>( &amp;<a class="code" href="font_8c.html#ad1f198bbe0393f8a79923850fd42d29b">gl_defFontMono</a>, SCREEN_W, 0., y,</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;         NULL, -1., _(<span class="stringliteral">&quot;PAUSED&quot;</span>) );</div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;}</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160; </div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160; </div>
+<div class="line"><a name="l00904"></a><span class="lineno"><a class="line" href="naev_8c.html#a2fb3ab7699404c65b42c3039c3248523">  904</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a2fb3ab7699404c65b42c3039c3248523">update_all</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;{</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;   <span class="keywordtype">int</span> i, n;</div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;   <span class="keywordtype">double</span> nf, microdt, accumdt;</div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160; </div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a> &gt; 0.25) &amp;&amp; (<a class="code" href="naev_8c.html#a4a1c4b2110fa349238de41437d8d16c3">fps_skipped</a>==0)) { <span class="comment">/* slow timers down and rerun calculations */</span></div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;      <a class="code" href="naev_8c.html#a4a1c4b2110fa349238de41437d8d16c3">fps_skipped</a> = 1;</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;   }</div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a> &gt; <a class="code" href="naev_8c.html#ac6d9ef3e62de1d88a6a4a25d8460ba69">fps_min</a>) { <span class="comment">/* we&#39;ll force a minimum FPS for physics to work alright. */</span></div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160; </div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;      <span class="comment">/* Number of frames. */</span></div>
+<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;      nf = ceil( <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a> / <a class="code" href="naev_8c.html#ac6d9ef3e62de1d88a6a4a25d8460ba69">fps_min</a> );</div>
+<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;      microdt = <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a> / nf;</div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;      n  = (int) nf;</div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160; </div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;      <span class="comment">/* Update as much as needed, evenly. */</span></div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;      accumdt = 0.;</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;n; i++) {</div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;         <a class="code" href="naev_8c.html#a64e1898131337e160bb9d5b98107402e">update_routine</a>( microdt, 0 );</div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;         <span class="comment">/* OK, so we need a bit of hackish logic here in case we are chopping up a</span></div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;<span class="comment">          * very large dt and it turns out time compression changes so we&#39;re now</span></div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;<span class="comment">          * updating in &quot;normal time compression&quot; zone. This amounts to many updates</span></div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;<span class="comment">          * being run when time compression has changed and thus can cause, say, the</span></div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;<span class="comment">          * player to exceed their target position or get mauled by an enemy ship.</span></div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;<span class="comment">          */</span></div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;         accumdt += microdt;</div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;         <span class="keywordflow">if</span> (accumdt &gt; <a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>*<a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>)</div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;      }</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160; </div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;      <span class="comment">/* Note we don&#39;t touch game_dt so that fps_display works well */</span></div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;   }</div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   <span class="keywordflow">else</span> <span class="comment">/* Standard, just update with the last dt */</span></div>
+<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;      <a class="code" href="naev_8c.html#a64e1898131337e160bb9d5b98107402e">update_routine</a>( <a class="code" href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a>, 0 );</div>
 <div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160; </div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160; </div>
-<div class="line"><a name="l00947"></a><span class="lineno"><a class="line" href="naev_8h.html#a64e1898131337e160bb9d5b98107402e">  947</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a64e1898131337e160bb9d5b98107402e">update_routine</a>( <span class="keywordtype">double</span> dt, <span class="keywordtype">int</span> enter_sys )</div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;{</div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;   HookParam h[3];</div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160; </div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;   <span class="keywordflow">if</span> (!enter_sys) {</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;      <a class="code" href="hook_8c.html#aee4e993707807992f9a1530574eb55a1">hook_exclusionStart</a>();</div>
+<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;   <a class="code" href="naev_8c.html#a4a1c4b2110fa349238de41437d8d16c3">fps_skipped</a> = 0;</div>
+<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;}</div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160; </div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160; </div>
+<div class="line"><a name="l00950"></a><span class="lineno"><a class="line" href="naev_8h.html#a64e1898131337e160bb9d5b98107402e">  950</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a64e1898131337e160bb9d5b98107402e">update_routine</a>( <span class="keywordtype">double</span> dt, <span class="keywordtype">int</span> enter_sys )</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;{</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;   HookParam h[3];</div>
 <div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160; </div>
-<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;      <span class="comment">/* Update time. */</span></div>
-<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;      <a class="code" href="ntime_8c.html#a8b6fa70207cd4065c87d781a95f56545">ntime_update</a>( dt );</div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;   }</div>
-<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160; </div>
-<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;   <span class="comment">/* Update engine stuff. */</span></div>
-<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;   <a class="code" href="space_8c.html#ac694fe86ba4462a9b05673a7f3f98d10">space_update</a>(dt);</div>
-<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;   <a class="code" href="weapon_8c.html#a76f3cbaf10ff2fa8fd09c00a4121d4d8">weapons_update</a>(dt);</div>
-<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;   <a class="code" href="spfx_8c.html#ae49327e310478b08b95c31e5fe5399f5">spfx_update</a>(dt, <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>);</div>
-<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;   <a class="code" href="pilot_8c.html#ad515bebfbd9556a539e2a9585f18534e">pilots_update</a>(dt);</div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160; </div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;   <span class="comment">/* Update camera. */</span></div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   <a class="code" href="camera_8c.html#aeb562b8c352a5e4faba8fbab6ff6062d">cam_update</a>( dt );</div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;   <span class="keywordflow">if</span> (!enter_sys) {</div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;      <a class="code" href="hook_8c.html#aee4e993707807992f9a1530574eb55a1">hook_exclusionStart</a>();</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160; </div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;      <span class="comment">/* Update time. */</span></div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;      <a class="code" href="ntime_8c.html#a8b6fa70207cd4065c87d781a95f56545">ntime_update</a>( dt );</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;   }</div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160; </div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;   <span class="comment">/* Update engine stuff. */</span></div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;   <a class="code" href="space_8c.html#ac694fe86ba4462a9b05673a7f3f98d10">space_update</a>(dt);</div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;   <a class="code" href="weapon_8c.html#a76f3cbaf10ff2fa8fd09c00a4121d4d8">weapons_update</a>(dt);</div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;   <a class="code" href="spfx_8c.html#ae49327e310478b08b95c31e5fe5399f5">spfx_update</a>(dt, <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>);</div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   <a class="code" href="pilot_8c.html#ad515bebfbd9556a539e2a9585f18534e">pilots_update</a>(dt);</div>
 <div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160; </div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;   <span class="keywordflow">if</span> (!enter_sys) {</div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;      <a class="code" href="hook_8c.html#ace484c5c38e4629817f5c723ff48344a">hook_exclusionEnd</a>( dt );</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;   <span class="comment">/* Update camera. */</span></div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;   <a class="code" href="camera_8c.html#aeb562b8c352a5e4faba8fbab6ff6062d">cam_update</a>( dt );</div>
 <div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160; </div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;      <span class="comment">/* Hook set up. */</span></div>
-<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;      h[0].type = HOOK_PARAM_NUMBER;</div>
-<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;      h[0].u.num = dt;</div>
-<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;      h[1].type = HOOK_PARAM_NUMBER;</div>
-<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;      h[1].u.num = <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>;</div>
-<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;      h[2].type = HOOK_PARAM_SENTINEL;</div>
-<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;      <span class="comment">/* Run the update hook. */</span></div>
-<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;      <a class="code" href="hook_8c.html#a4fb5eff926325bb57da5051b87293be7">hooks_runParam</a>( <span class="stringliteral">&quot;update&quot;</span>, h );</div>
-<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;   }</div>
-<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;}</div>
-<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160; </div>
-<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160; </div>
-<div class="line"><a name="l00985"></a><span class="lineno"><a class="line" href="naev_8c.html#a9072714724904f4611a6d48d89a90820">  985</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a9072714724904f4611a6d48d89a90820">window_caption</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;{</div>
-<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
-<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;   SDL_RWops *rw;</div>
-<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160; </div>
-<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;   <span class="comment">/* Load icon. */</span></div>
-<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;   rw = PHYSFSRWOPS_openRead( GFX_PATH<span class="stringliteral">&quot;icon.png&quot;</span> );</div>
-<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;   <span class="keywordflow">if</span> (rw == NULL) {</div>
-<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;      WARN( _(<span class="stringliteral">&quot;Icon (icon.png) not found!&quot;</span>) );</div>
-<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;   }</div>
-<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;   <a class="code" href="naev_8c.html#a2b5f9e313cd5c3d57dcab7028d8701db">naev_icon</a>   = IMG_Load_RW( rw, 1 );</div>
-<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="naev_8c.html#a2b5f9e313cd5c3d57dcab7028d8701db">naev_icon</a> == NULL) {</div>
-<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;      WARN( _(<span class="stringliteral">&quot;Unable to load icon.png!&quot;</span>) );</div>
-<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;   }</div>
-<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160; </div>
-<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;   <span class="comment">/* Set caption. */</span></div>
-<div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160;   snprintf(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <a class="code" href="naev_8h.html#a237e4d19d7046d08c4cc00a45808feaf">APPNAME</a><span class="stringliteral">&quot; - %s&quot;</span>, <a class="code" href="start_8c.html#a3b0ca59b1488d3fb951a493d408fd658">start_name</a>());</div>
-<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;   SDL_SetWindowTitle( <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.window, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;   SDL_SetWindowIcon(  <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.window, <a class="code" href="naev_8c.html#a2b5f9e313cd5c3d57dcab7028d8701db">naev_icon</a> );</div>
-<div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160;}</div>
-<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160; </div>
-<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160; </div>
-<div class="line"><a name="l01015"></a><span class="lineno"><a class="line" href="naev_8h.html#a300319087163a2e498d3f4878a24b8cc"> 1015</a></span>&#160;<span class="keywordtype">char</span> *<a class="code" href="naev_8c.html#a300319087163a2e498d3f4878a24b8cc">naev_version</a>( <span class="keywordtype">int</span> long_version )</div>
-<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;{</div>
-<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;   <span class="comment">/* Set up the long version. */</span></div>
-<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;   <span class="keywordflow">if</span> (long_version) {</div>
-<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="naev_8c.html#abf57294dfbe45f1e5bddae5e46c4e3e8">version_human</a>[0] == <span class="charliteral">&#39;\0&#39;</span>)</div>
-<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;         snprintf( <a class="code" href="naev_8c.html#abf57294dfbe45f1e5bddae5e46c4e3e8">version_human</a>, <span class="keyword">sizeof</span>(<a class="code" href="naev_8c.html#abf57294dfbe45f1e5bddae5e46c4e3e8">version_human</a>),</div>
-<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;               <span class="stringliteral">&quot; &quot;</span><a class="code" href="naev_8h.html#a237e4d19d7046d08c4cc00a45808feaf">APPNAME</a><span class="stringliteral">&quot; v%s%s - %s&quot;</span>, VERSION,</div>
-<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;#ifdef DEBUGGING</div>
-<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;               _(<span class="stringliteral">&quot; debug&quot;</span>),</div>
-<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;#<span class="keywordflow">else</span> <span class="comment">/* DEBUGGING */</span></div>
-<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;               <span class="stringliteral">&quot;&quot;</span>,</div>
-<div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;#endif <span class="comment">/* DEBUGGING */</span></div>
-<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;               <a class="code" href="start_8c.html#a3b0ca59b1488d3fb951a493d408fd658">start_name</a>() );</div>
-<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="naev_8c.html#abf57294dfbe45f1e5bddae5e46c4e3e8">version_human</a>;</div>
-<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;   }</div>
-<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160; </div>
-<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;   <span class="keywordflow">return</span> VERSION;</div>
-<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;}</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;   <span class="keywordflow">if</span> (!enter_sys) {</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;      <a class="code" href="hook_8c.html#ace484c5c38e4629817f5c723ff48344a">hook_exclusionEnd</a>( dt );</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160; </div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;      <span class="comment">/* Hook set up. */</span></div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;      h[0].type = HOOK_PARAM_NUMBER;</div>
+<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;      h[0].u.num = dt;</div>
+<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;      h[1].type = HOOK_PARAM_NUMBER;</div>
+<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;      h[1].u.num = <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>;</div>
+<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;      h[2].type = HOOK_PARAM_SENTINEL;</div>
+<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;      <span class="comment">/* Run the update hook. */</span></div>
+<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;      <a class="code" href="hook_8c.html#a4fb5eff926325bb57da5051b87293be7">hooks_runParam</a>( <span class="stringliteral">&quot;update&quot;</span>, h );</div>
+<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;   }</div>
+<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;}</div>
+<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160; </div>
+<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160; </div>
+<div class="line"><a name="l00988"></a><span class="lineno"><a class="line" href="naev_8c.html#a9072714724904f4611a6d48d89a90820">  988</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a9072714724904f4611a6d48d89a90820">window_caption</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;{</div>
+<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;   SDL_RWops *rw;</div>
+<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160; </div>
+<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;   <span class="comment">/* Load icon. */</span></div>
+<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;   rw = PHYSFSRWOPS_openRead( GFX_PATH<span class="stringliteral">&quot;icon.png&quot;</span> );</div>
+<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;   <span class="keywordflow">if</span> (rw == NULL) {</div>
+<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;      WARN( _(<span class="stringliteral">&quot;Icon (icon.png) not found!&quot;</span>) );</div>
+<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;   }</div>
+<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;   <a class="code" href="naev_8c.html#a2b5f9e313cd5c3d57dcab7028d8701db">naev_icon</a>   = IMG_Load_RW( rw, 1 );</div>
+<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="naev_8c.html#a2b5f9e313cd5c3d57dcab7028d8701db">naev_icon</a> == NULL) {</div>
+<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;      WARN( _(<span class="stringliteral">&quot;Unable to load icon.png!&quot;</span>) );</div>
+<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160;   }</div>
+<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160; </div>
+<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;   <span class="comment">/* Set caption. */</span></div>
+<div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160;   snprintf(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <a class="code" href="naev_8h.html#a237e4d19d7046d08c4cc00a45808feaf">APPNAME</a><span class="stringliteral">&quot; - %s&quot;</span>, <a class="code" href="start_8c.html#a3b0ca59b1488d3fb951a493d408fd658">start_name</a>());</div>
+<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160;   SDL_SetWindowTitle( <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.window, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160;   SDL_SetWindowIcon(  <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.window, <a class="code" href="naev_8c.html#a2b5f9e313cd5c3d57dcab7028d8701db">naev_icon</a> );</div>
+<div class="line"><a name="l01009"></a><span class="lineno"> 1009</span>&#160;}</div>
+<div class="line"><a name="l01010"></a><span class="lineno"> 1010</span>&#160; </div>
+<div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160; </div>
+<div class="line"><a name="l01018"></a><span class="lineno"><a class="line" href="naev_8h.html#a300319087163a2e498d3f4878a24b8cc"> 1018</a></span>&#160;<span class="keywordtype">char</span> *<a class="code" href="naev_8c.html#a300319087163a2e498d3f4878a24b8cc">naev_version</a>( <span class="keywordtype">int</span> long_version )</div>
+<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;{</div>
+<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;   <span class="comment">/* Set up the long version. */</span></div>
+<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;   <span class="keywordflow">if</span> (long_version) {</div>
+<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="naev_8c.html#abf57294dfbe45f1e5bddae5e46c4e3e8">version_human</a>[0] == <span class="charliteral">&#39;\0&#39;</span>)</div>
+<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;         snprintf( <a class="code" href="naev_8c.html#abf57294dfbe45f1e5bddae5e46c4e3e8">version_human</a>, <span class="keyword">sizeof</span>(<a class="code" href="naev_8c.html#abf57294dfbe45f1e5bddae5e46c4e3e8">version_human</a>),</div>
+<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;               <span class="stringliteral">&quot; &quot;</span><a class="code" href="naev_8h.html#a237e4d19d7046d08c4cc00a45808feaf">APPNAME</a><span class="stringliteral">&quot; v%s%s - %s&quot;</span>, VERSION,</div>
+<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;#ifdef DEBUGGING</div>
+<div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;               _(<span class="stringliteral">&quot; debug&quot;</span>),</div>
+<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;#<span class="keywordflow">else</span> <span class="comment">/* DEBUGGING */</span></div>
+<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;               <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;#endif <span class="comment">/* DEBUGGING */</span></div>
+<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;               <a class="code" href="start_8c.html#a3b0ca59b1488d3fb951a493d408fd658">start_name</a>() );</div>
+<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="naev_8c.html#abf57294dfbe45f1e5bddae5e46c4e3e8">version_human</a>;</div>
+<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;   }</div>
 <div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160; </div>
-<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160; </div>
-<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;binary_comparison (<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y) {</div>
-<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;  <span class="keywordflow">if</span> (x == y) <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;  <span class="keywordflow">if</span> (x &gt; y) <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;}</div>
-<div class="line"><a name="l01046"></a><span class="lineno"><a class="line" href="naev_8h.html#a22a7c2ad221e7b22e734d038cbaeea7e"> 1046</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="naev_8c.html#a22a7c2ad221e7b22e734d038cbaeea7e">naev_versionCompare</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *version )</div>
-<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160;{</div>
-<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;   <span class="keywordtype">int</span> res;</div>
-<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;   semver_t sv;</div>
-<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160; </div>
-<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;   <span class="keywordflow">if</span> (semver_parse( version, &amp;sv ))</div>
-<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;   {</div>
-<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;      WARN( _(<span class="stringliteral">&quot;Failed to parse version string &#39;%s&#39;!&quot;</span>), version );</div>
-<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;   }</div>
-<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160; </div>
-<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;   <span class="keywordflow">if</span> ((res = 3*binary_comparison(<a class="code" href="naev_8c.html#ababda82c262edbde750958293f006d09">version_binary</a>.major, sv.major)) == 0) {</div>
-<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;      <span class="keywordflow">if</span> ((res = 2*binary_comparison(<a class="code" href="naev_8c.html#ababda82c262edbde750958293f006d09">version_binary</a>.minor, sv.minor)) == 0) {</div>
-<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;         res = semver_compare( <a class="code" href="naev_8c.html#ababda82c262edbde750958293f006d09">version_binary</a>, sv );</div>
-<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;      }</div>
-<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;   }</div>
-<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;   semver_free( &amp;sv );</div>
-<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;   <span class="keywordflow">return</span> res;</div>
-<div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;}</div>
-<div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160; </div>
-<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160; </div>
-<div class="line"><a name="l01070"></a><span class="lineno"><a class="line" href="naev_8c.html#a5cd916ac13bf224342a034826ac4a03c"> 1070</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a5cd916ac13bf224342a034826ac4a03c">print_SDLversion</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;{</div>
-<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;   <span class="keyword">const</span> SDL_version *linked;</div>
-<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;   SDL_version compiled;</div>
-<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version_linked, version_compiled;</div>
-<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160; </div>
-<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;   <span class="comment">/* Extract information. */</span></div>
-<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;   SDL_VERSION(&amp;compiled);</div>
-<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;   SDL_version ll;</div>
-<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;   SDL_GetVersion( &amp;ll );</div>
-<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;   linked = &amp;ll;</div>
-<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;   DEBUG( _(<span class="stringliteral">&quot;SDL: %d.%d.%d [compiled: %d.%d.%d]&quot;</span>),</div>
-<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;         linked-&gt;major, linked-&gt;minor, linked-&gt;patch,</div>
-<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;         compiled.major, compiled.minor, compiled.patch);</div>
-<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160; </div>
-<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;   <span class="comment">/* Get version as number. */</span></div>
-<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;   version_linked    = linked-&gt;major*100 + linked-&gt;minor;</div>
-<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;   version_compiled  = compiled.major*100 + compiled.minor;</div>
-<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160; </div>
-<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;   <span class="comment">/* Check if major/minor version differ. */</span></div>
-<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160;   <span class="keywordflow">if</span> (version_linked &gt; version_compiled)</div>
-<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;      WARN( _(<span class="stringliteral">&quot;SDL is newer than compiled version&quot;</span>) );</div>
-<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;   <span class="keywordflow">if</span> (version_linked &lt; version_compiled)</div>
-<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;      WARN( _(<span class="stringliteral">&quot;SDL is older than compiled version.&quot;</span>) );</div>
-<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;}</div>
-<div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160; </div>
-<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;<span class="keywordtype">double</span> naev_getrealdt (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;{</div>
-<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>;</div>
-<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;}</div>
-<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160; </div>
+<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;   <span class="keywordflow">return</span> VERSION;</div>
+<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;}</div>
+<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160; </div>
+<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160; </div>
+<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;binary_comparison (<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y) {</div>
+<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;  <span class="keywordflow">if</span> (x == y) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;  <span class="keywordflow">if</span> (x &gt; y) <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;}</div>
+<div class="line"><a name="l01049"></a><span class="lineno"><a class="line" href="naev_8h.html#a22a7c2ad221e7b22e734d038cbaeea7e"> 1049</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="naev_8c.html#a22a7c2ad221e7b22e734d038cbaeea7e">naev_versionCompare</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *version )</div>
+<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;{</div>
+<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;   <span class="keywordtype">int</span> res;</div>
+<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;   semver_t sv;</div>
+<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160; </div>
+<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;   <span class="keywordflow">if</span> (semver_parse( version, &amp;sv ))</div>
+<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;   {</div>
+<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;      WARN( _(<span class="stringliteral">&quot;Failed to parse version string &#39;%s&#39;!&quot;</span>), version );</div>
+<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;   }</div>
+<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160; </div>
+<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;   <span class="keywordflow">if</span> ((res = 3*binary_comparison(<a class="code" href="naev_8c.html#ababda82c262edbde750958293f006d09">version_binary</a>.major, sv.major)) == 0) {</div>
+<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;      <span class="keywordflow">if</span> ((res = 2*binary_comparison(<a class="code" href="naev_8c.html#ababda82c262edbde750958293f006d09">version_binary</a>.minor, sv.minor)) == 0) {</div>
+<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;         res = semver_compare( <a class="code" href="naev_8c.html#ababda82c262edbde750958293f006d09">version_binary</a>, sv );</div>
+<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;      }</div>
+<div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;   }</div>
+<div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;   semver_free( &amp;sv );</div>
+<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;   <span class="keywordflow">return</span> res;</div>
+<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;}</div>
+<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160; </div>
+<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160; </div>
+<div class="line"><a name="l01073"></a><span class="lineno"><a class="line" href="naev_8c.html#a5cd916ac13bf224342a034826ac4a03c"> 1073</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="naev_8c.html#a5cd916ac13bf224342a034826ac4a03c">print_SDLversion</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;{</div>
+<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;   <span class="keyword">const</span> SDL_version *linked;</div>
+<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;   SDL_version compiled;</div>
+<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version_linked, version_compiled;</div>
+<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160; </div>
+<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;   <span class="comment">/* Extract information. */</span></div>
+<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;   SDL_VERSION(&amp;compiled);</div>
+<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;   SDL_version ll;</div>
+<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;   SDL_GetVersion( &amp;ll );</div>
+<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;   linked = &amp;ll;</div>
+<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;   DEBUG( _(<span class="stringliteral">&quot;SDL: %d.%d.%d [compiled: %d.%d.%d]&quot;</span>),</div>
+<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;         linked-&gt;major, linked-&gt;minor, linked-&gt;patch,</div>
+<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;         compiled.major, compiled.minor, compiled.patch);</div>
+<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160; </div>
+<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;   <span class="comment">/* Get version as number. */</span></div>
+<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;   version_linked    = linked-&gt;major*100 + linked-&gt;minor;</div>
+<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160;   version_compiled  = compiled.major*100 + compiled.minor;</div>
+<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160; </div>
+<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;   <span class="comment">/* Check if major/minor version differ. */</span></div>
+<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;   <span class="keywordflow">if</span> (version_linked &gt; version_compiled)</div>
+<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;      WARN( _(<span class="stringliteral">&quot;SDL is newer than compiled version&quot;</span>) );</div>
+<div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160;   <span class="keywordflow">if</span> (version_linked &lt; version_compiled)</div>
+<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;      WARN( _(<span class="stringliteral">&quot;SDL is older than compiled version.&quot;</span>) );</div>
+<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;}</div>
+<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160; </div>
+<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;<span class="keywordtype">double</span> naev_getrealdt (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;{</div>
+<div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a>;</div>
+<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;}</div>
+<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aship_8c_html_a3f388994f3a35daa5ca5c7cdd2ffe7ce"><div class="ttname"><a href="ship_8c.html#a3f388994f3a35daa5ca5c7cdd2ffe7ce">ships_load</a></div><div class="ttdeci">int ships_load(void)</div><div class="ttdoc">Loads all the ships in the data files.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l01029">ship.c:1029</a></div></div>
 <div class="ttc" id="ahook_8c_html_aee4e993707807992f9a1530574eb55a1"><div class="ttname"><a href="hook_8c.html#aee4e993707807992f9a1530574eb55a1">hook_exclusionStart</a></div><div class="ttdeci">void hook_exclusionStart(void)</div><div class="ttdoc">Starts the hook exclusion zone, this makes hooks queue until exclusion is done.</div><div class="ttdef"><b>Definition:</b> <a href="hook_8c_source.html#l00192">hook.c:192</a></div></div>
@@ -1058,7 +1061,7 @@ $(function() {
 <div class="ttc" id="anaev_8c_html_ac6d9ef3e62de1d88a6a4a25d8460ba69"><div class="ttname"><a href="naev_8c.html#ac6d9ef3e62de1d88a6a4a25d8460ba69">fps_min</a></div><div class="ttdeci">const double fps_min</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00116">naev.c:116</a></div></div>
 <div class="ttc" id="acolour_8c_html_a5514de2ab8751008a7932fdf86924aff"><div class="ttname"><a href="colour_8c.html#a5514de2ab8751008a7932fdf86924aff">cGreen</a></div><div class="ttdeci">const glColour cGreen</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00047">colour.c:47</a></div></div>
 <div class="ttc" id="apause_8c_html_ac06299328a86594523b6f357dffafa32"><div class="ttname"><a href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a></div><div class="ttdeci">double dt_mod</div><div class="ttdef"><b>Definition:</b> <a href="pause_8c_source.html#l00027">pause.c:27</a></div></div>
-<div class="ttc" id="anaev_8c_html_a9072714724904f4611a6d48d89a90820"><div class="ttname"><a href="naev_8c.html#a9072714724904f4611a6d48d89a90820">window_caption</a></div><div class="ttdeci">static void window_caption(void)</div><div class="ttdoc">Sets the window caption.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00985">naev.c:985</a></div></div>
+<div class="ttc" id="anaev_8c_html_a9072714724904f4611a6d48d89a90820"><div class="ttname"><a href="naev_8c.html#a9072714724904f4611a6d48d89a90820">window_caption</a></div><div class="ttdeci">static void window_caption(void)</div><div class="ttdoc">Sets the window caption.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00988">naev.c:988</a></div></div>
 <div class="ttc" id="aeconomy_8c_html_a4ff67bc6455a98ade72011dc5c270a2a"><div class="ttname"><a href="economy_8c.html#a4ff67bc6455a98ade72011dc5c270a2a">economy_destroy</a></div><div class="ttdeci">void economy_destroy(void)</div><div class="ttdoc">Destroys the economy.</div><div class="ttdef"><b>Definition:</b> <a href="economy_8c_source.html#l00569">economy.c:569</a></div></div>
 <div class="ttc" id="abackground_8c_html_ad4d7a2a91315e6c54833c82295de244f"><div class="ttname"><a href="background_8c.html#ad4d7a2a91315e6c54833c82295de244f">background_initStars</a></div><div class="ttdeci">void background_initStars(int n)</div><div class="ttdoc">Initializes background stars.</div><div class="ttdef"><b>Definition:</b> <a href="background_8c_source.html#l00092">background.c:92</a></div></div>
 <div class="ttc" id="amenu_8h_html"><div class="ttname"><a href="menu_8h.html">menu.h</a></div><div class="ttdoc">Handles the important game menus.</div></div>
@@ -1072,7 +1075,7 @@ $(function() {
 <div class="ttc" id="acamera_8c_html_a1f63b81cd5c618ea8fbfc9236fcb363c"><div class="ttname"><a href="camera_8c.html#a1f63b81cd5c618ea8fbfc9236fcb363c">cam_setZoom</a></div><div class="ttdeci">void cam_setZoom(double zoom)</div><div class="ttdoc">Sets the camera zoom.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00075">camera.c:75</a></div></div>
 <div class="ttc" id="anaev_8c_html_ababda82c262edbde750958293f006d09"><div class="ttname"><a href="naev_8c.html#ababda82c262edbde750958293f006d09">version_binary</a></div><div class="ttdeci">static semver_t version_binary</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00102">naev.c:102</a></div></div>
 <div class="ttc" id="ahook_8c_html_a4fb5eff926325bb57da5051b87293be7"><div class="ttname"><a href="hook_8c.html#a4fb5eff926325bb57da5051b87293be7">hooks_runParam</a></div><div class="ttdeci">int hooks_runParam(const char *stack, HookParam *param)</div><div class="ttdoc">Runs all the hooks of stack.</div><div class="ttdef"><b>Definition:</b> <a href="hook_8c_source.html#l00954">hook.c:954</a></div></div>
-<div class="ttc" id="anaev_8c_html_a43980db9dfcf61e5d10e6b3e306c9ff1"><div class="ttname"><a href="naev_8c.html#a43980db9dfcf61e5d10e6b3e306c9ff1">fps_init</a></div><div class="ttdeci">static void fps_init(void)</div><div class="ttdoc">Initializes the fps engine.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00766">naev.c:766</a></div></div>
+<div class="ttc" id="anaev_8c_html_a43980db9dfcf61e5d10e6b3e306c9ff1"><div class="ttname"><a href="naev_8c.html#a43980db9dfcf61e5d10e6b3e306c9ff1">fps_init</a></div><div class="ttdeci">static void fps_init(void)</div><div class="ttdoc">Initializes the fps engine.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00769">naev.c:769</a></div></div>
 <div class="ttc" id="anebula_8c_html_a2a228c566ca0acb8916bada4cd52ccb4"><div class="ttname"><a href="nebula_8c.html#a2a228c566ca0acb8916bada4cd52ccb4">nebu_exit</a></div><div class="ttdeci">void nebu_exit(void)</div><div class="ttdoc">Cleans up the nebu subsystem.</div><div class="ttdef"><b>Definition:</b> <a href="nebula_8c_source.html#l00151">nebula.c:151</a></div></div>
 <div class="ttc" id="anaev_8c_html_a2b5f9e313cd5c3d57dcab7028d8701db"><div class="ttname"><a href="naev_8c.html#a2b5f9e313cd5c3d57dcab7028d8701db">naev_icon</a></div><div class="ttdeci">static SDL_Surface * naev_icon</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00099">naev.c:99</a></div></div>
 <div class="ttc" id="anpc_8c_html_a56bde0a1e6b7a363e8095e8f45a4f519"><div class="ttname"><a href="npc_8c.html#a56bde0a1e6b7a363e8095e8f45a4f519">npc_clear</a></div><div class="ttdeci">void npc_clear(void)</div><div class="ttdoc">Cleans up the spaceport bar NPC.</div><div class="ttdef"><b>Definition:</b> <a href="npc_8c_source.html#l00507">npc.c:507</a></div></div>
@@ -1120,12 +1123,12 @@ $(function() {
 <div class="ttc" id="afont_8c_html_a78aea6a63643c7b50d178fbf20bcc265"><div class="ttname"><a href="font_8c.html#a78aea6a63643c7b50d178fbf20bcc265">gl_print</a></div><div class="ttdeci">void gl_print(const glFont *ft_font, const double x, const double y, const glColour *c, const char *fmt,...)</div><div class="ttdoc">Prints text on screen like printf.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00695">font.c:695</a></div></div>
 <div class="ttc" id="anaev_8c_html_ae7b0e000fd12e430d8d0f854fa8a2d3d"><div class="ttname"><a href="naev_8c.html#ae7b0e000fd12e430d8d0f854fa8a2d3d">fps_cur</a></div><div class="ttdeci">static double fps_cur</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00113">naev.c:113</a></div></div>
 <div class="ttc" id="anaev_8c_html_a66ce94413bd531cfa7c591ced296d7ca"><div class="ttname"><a href="naev_8c.html#a66ce94413bd531cfa7c591ced296d7ca">loading</a></div><div class="ttdeci">static glTexture * loading</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00098">naev.c:98</a></div></div>
-<div class="ttc" id="anaev_8c_html_a300319087163a2e498d3f4878a24b8cc"><div class="ttname"><a href="naev_8c.html#a300319087163a2e498d3f4878a24b8cc">naev_version</a></div><div class="ttdeci">char * naev_version(int long_version)</div><div class="ttdoc">Returns the version in a human readable string.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l01015">naev.c:1015</a></div></div>
+<div class="ttc" id="anaev_8c_html_a300319087163a2e498d3f4878a24b8cc"><div class="ttname"><a href="naev_8c.html#a300319087163a2e498d3f4878a24b8cc">naev_version</a></div><div class="ttdeci">char * naev_version(int long_version)</div><div class="ttdoc">Returns the version in a human readable string.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l01018">naev.c:1018</a></div></div>
 <div class="ttc" id="aweapon_8c_html_aafa9a558bbbf1e3ba1cfcc301288852a"><div class="ttname"><a href="weapon_8c.html#aafa9a558bbbf1e3ba1cfcc301288852a">weapon_exit</a></div><div class="ttdeci">void weapon_exit(void)</div><div class="ttdoc">Destroys all the weapons and frees it all.</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l01905">weapon.c:1905</a></div></div>
 <div class="ttc" id="adamagetype_8c_html_a02dedce04ac0d045396127cf3feeaca3"><div class="ttname"><a href="damagetype_8c.html#a02dedce04ac0d045396127cf3feeaca3">dtype_load</a></div><div class="ttdeci">int dtype_load(void)</div><div class="ttdoc">Loads the dtype stack.</div><div class="ttdef"><b>Definition:</b> <a href="damagetype_8c_source.html#l00179">damagetype.c:179</a></div></div>
 <div class="ttc" id="anaev_8c_html_ada3fd1ce0f4e9029c8fc1baf490f5d5b"><div class="ttname"><a href="naev_8c.html#ada3fd1ce0f4e9029c8fc1baf490f5d5b">game_dt</a></div><div class="ttdeci">static double game_dt</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00110">naev.c:110</a></div></div>
 <div class="ttc" id="aweapon_8c_html_a76f3cbaf10ff2fa8fd09c00a4121d4d8"><div class="ttname"><a href="weapon_8c.html#a76f3cbaf10ff2fa8fd09c00a4121d4d8">weapons_update</a></div><div class="ttdeci">void weapons_update(const double dt)</div><div class="ttdoc">Updates all the weapon layers.</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l00456">weapon.c:456</a></div></div>
-<div class="ttc" id="anaev_8c_html_afd0e164bd2b362ae6e8d668467e97ce2"><div class="ttname"><a href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a></div><div class="ttdeci">void fps_setPos(double x, double y)</div><div class="ttdoc">Sets the position to display the FPS.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00849">naev.c:849</a></div></div>
+<div class="ttc" id="anaev_8c_html_afd0e164bd2b362ae6e8d668467e97ce2"><div class="ttname"><a href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a></div><div class="ttdeci">void fps_setPos(double x, double y)</div><div class="ttdoc">Sets the position to display the FPS.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00852">naev.c:852</a></div></div>
 <div class="ttc" id="abackground_8c_html_a8fac3d61e1558e362442d40a0700f26e"><div class="ttname"><a href="background_8c.html#a8fac3d61e1558e362442d40a0700f26e">background_free</a></div><div class="ttdeci">void background_free(void)</div><div class="ttdoc">Cleans up and frees memory after the backgrounds.</div><div class="ttdef"><b>Definition:</b> <a href="background_8c_source.html#l00510">background.c:510</a></div></div>
 <div class="ttc" id="afont_8c_html_ad1f198bbe0393f8a79923850fd42d29b"><div class="ttname"><a href="font_8c.html#ad1f198bbe0393f8a79923850fd42d29b">gl_defFontMono</a></div><div class="ttdeci">glFont gl_defFontMono</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00163">font.c:163</a></div></div>
 <div class="ttc" id="afont_8c_html_a762ad865d8d9c5368c95543c7bb57aa2"><div class="ttname"><a href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a></div><div class="ttdeci">int gl_printMidRaw(const glFont *ft_font, int width, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Displays text centered in position and width.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00793">font.c:793</a></div></div>
@@ -1144,7 +1147,7 @@ $(function() {
 <div class="ttc" id="anaev_8c_html_a8fcb1b8286bc74f3c5a4a6ab141060e8"><div class="ttname"><a href="naev_8c.html#a8fcb1b8286bc74f3c5a4a6ab141060e8">naev_isQuit</a></div><div class="ttdeci">int naev_isQuit(void)</div><div class="ttdoc">Get if Naev is trying to quit.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00150">naev.c:150</a></div></div>
 <div class="ttc" id="alog_8c_html_a5eb5ff801364bf776720c4ecbff40dba"><div class="ttname"><a href="log_8c.html#a5eb5ff801364bf776720c4ecbff40dba">log_redirect</a></div><div class="ttdeci">void log_redirect(void)</div><div class="ttdoc">Sets up redirection of stdout and stderr to files. PhysicsFS must be initialized for this to work.</div><div class="ttdef"><b>Definition:</b> <a href="log_8c_source.html#l00125">log.c:125</a></div></div>
 <div class="ttc" id="acond_8c_html_accd6d47818819f0190916f6daac7cf49"><div class="ttname"><a href="cond_8c.html#accd6d47818819f0190916f6daac7cf49">cond_exit</a></div><div class="ttdeci">void cond_exit(void)</div><div class="ttdoc">Destroys the conditional subsystem.</div><div class="ttdef"><b>Definition:</b> <a href="cond_8c_source.html#l00047">cond.c:47</a></div></div>
-<div class="ttc" id="anaev_8c_html_a821bd54d6154eba9b5f555ecbeab3c3a"><div class="ttname"><a href="naev_8c.html#a821bd54d6154eba9b5f555ecbeab3c3a">naev_resize</a></div><div class="ttdeci">void naev_resize(void)</div><div class="ttdoc">Wrapper for gl_resize that handles non-GL reinitialization.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00715">naev.c:715</a></div></div>
+<div class="ttc" id="anaev_8c_html_a821bd54d6154eba9b5f555ecbeab3c3a"><div class="ttname"><a href="naev_8c.html#a821bd54d6154eba9b5f555ecbeab3c3a">naev_resize</a></div><div class="ttdeci">void naev_resize(void)</div><div class="ttdoc">Wrapper for gl_resize that handles non-GL reinitialization.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00718">naev.c:718</a></div></div>
 <div class="ttc" id="afont_8c_html_a8a96ba8ce0244757643f5b65233d7f35"><div class="ttname"><a href="font_8c.html#a8a96ba8ce0244757643f5b65233d7f35">gl_freeFont</a></div><div class="ttdeci">void gl_freeFont(glFont *font)</div><div class="ttdoc">Frees a loaded font. Caution: its glFontStash still has a slot in avail_fonts. At the time of writing...</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01695">font.c:1695</a></div></div>
 <div class="ttc" id="antime_8c_html_a8b6fa70207cd4065c87d781a95f56545"><div class="ttname"><a href="ntime_8c.html#a8b6fa70207cd4065c87d781a95f56545">ntime_update</a></div><div class="ttdeci">void ntime_update(double dt)</div><div class="ttdoc">Updatse the time based on realtime.</div><div class="ttdef"><b>Definition:</b> <a href="ntime_8c_source.html#l00075">ntime.c:75</a></div></div>
 <div class="ttc" id="ahook_8c_html_ace484c5c38e4629817f5c723ff48344a"><div class="ttname"><a href="hook_8c.html#ace484c5c38e4629817f5c723ff48344a">hook_exclusionEnd</a></div><div class="ttdeci">void hook_exclusionEnd(double dt)</div><div class="ttdoc">Ends exclusion zone and runs all the queued hooks.</div><div class="ttdef"><b>Definition:</b> <a href="hook_8c_source.html#l00201">hook.c:201</a></div></div>
@@ -1157,18 +1160,18 @@ $(function() {
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="acolour_8c_html_a8dac24baaa2f2f5951b9677f4cddb7ef"><div class="ttname"><a href="colour_8c.html#a8dac24baaa2f2f5951b9677f4cddb7ef">cFontGreen</a></div><div class="ttdeci">const glColour cFontGreen</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00116">colour.c:116</a></div></div>
 <div class="ttc" id="anebula_8c_html_aa2d404b0afd25f0cf1e05c63a4d886a8"><div class="ttname"><a href="nebula_8c.html#aa2d404b0afd25f0cf1e05c63a4d886a8">nebu_init</a></div><div class="ttdeci">int nebu_init(void)</div><div class="ttdoc">Initializes the nebula.</div><div class="ttdef"><b>Definition:</b> <a href="nebula_8c_source.html#l00089">nebula.c:89</a></div></div>
-<div class="ttc" id="aspace_8c_html_aeff961461ff5fb4d882cf4d7c4faafbf"><div class="ttname"><a href="space_8c.html#aeff961461ff5fb4d882cf4d7c4faafbf">space_load</a></div><div class="ttdeci">int space_load(void)</div><div class="ttdoc">Loads the entire universe into ram - pretty big feat eh?</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l03066">space.c:3066</a></div></div>
+<div class="ttc" id="aspace_8c_html_aeff961461ff5fb4d882cf4d7c4faafbf"><div class="ttname"><a href="space_8c.html#aeff961461ff5fb4d882cf4d7c4faafbf">space_load</a></div><div class="ttdeci">int space_load(void)</div><div class="ttdoc">Loads the entire universe into ram - pretty big feat eh?</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l03072">space.c:3072</a></div></div>
 <div class="ttc" id="anaev_8c_html_a33c96e6ba66e24cb95a5ea32d3431704"><div class="ttname"><a href="naev_8c.html#a33c96e6ba66e24cb95a5ea32d3431704">time_ms</a></div><div class="ttdeci">static unsigned int time_ms</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00097">naev.c:97</a></div></div>
 <div class="ttc" id="acond_8c_html_ad7d3867c04e482c213757166fbe43f3c"><div class="ttname"><a href="cond_8c.html#ad7d3867c04e482c213757166fbe43f3c">cond_init</a></div><div class="ttdeci">int cond_init(void)</div><div class="ttdoc">Initializes the conditional subsystem.</div><div class="ttdef"><b>Definition:</b> <a href="cond_8c_source.html#l00029">cond.c:29</a></div></div>
 <div class="ttc" id="aoptions_8c_html_a0e0d6b5910b75902ba6c2e9c0d233877"><div class="ttname"><a href="options_8c.html#a0e0d6b5910b75902ba6c2e9c0d233877">opt_setVideoMode</a></div><div class="ttdeci">int opt_setVideoMode(int w, int h, int fullscreen, int confirm)</div><div class="ttdoc">Applies new video-mode options.</div><div class="ttdef"><b>Definition:</b> <a href="options_8c_source.html#l01410">options.c:1410</a></div></div>
-<div class="ttc" id="aspace_8c_html_a8e291b95cc9ab5622ea7f6c714afdf15"><div class="ttname"><a href="space_8c.html#a8e291b95cc9ab5622ea7f6c714afdf15">space_exit</a></div><div class="ttdeci">void space_exit(void)</div><div class="ttdoc">Cleans up the system.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l03530">space.c:3530</a></div></div>
+<div class="ttc" id="aspace_8c_html_a8e291b95cc9ab5622ea7f6c714afdf15"><div class="ttname"><a href="space_8c.html#a8e291b95cc9ab5622ea7f6c714afdf15">space_exit</a></div><div class="ttdeci">void space_exit(void)</div><div class="ttdoc">Cleans up the system.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l03536">space.c:3536</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_a9220ca780322cea4255b4b3f17e6f81e"><div class="ttname"><a href="toolkit_8c.html#a9220ca780322cea4255b4b3f17e6f81e">toolkit_init</a></div><div class="ttdeci">int toolkit_init(void)</div><div class="ttdoc">Initializes the toolkit.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l02569">toolkit.c:2569</a></div></div>
 <div class="ttc" id="anaev_8c_html_aced8275c8cde9fa6ac25fce378ca2aac"><div class="ttname"><a href="naev_8c.html#aced8275c8cde9fa6ac25fce378ca2aac">fps_x</a></div><div class="ttdeci">static double fps_x</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00114">naev.c:114</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_aeb3525f9d27a9e7379646052d083f3d0"><div class="ttname"><a href="toolkit_8c.html#aeb3525f9d27a9e7379646052d083f3d0">toolkit_reposition</a></div><div class="ttdeci">void toolkit_reposition(void)</div><div class="ttdoc">Repositions windows and their children if resolution changes.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l02515">toolkit.c:2515</a></div></div>
 <div class="ttc" id="afont_8c_html_a70108689d1f2c28b6e91f763e3918e9b"><div class="ttname"><a href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a></div><div class="ttdeci">glFont gl_defFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00161">font.c:161</a></div></div>
-<div class="ttc" id="aspace_8c_html_ac694fe86ba4462a9b05673a7f3f98d10"><div class="ttname"><a href="space_8c.html#ac694fe86ba4462a9b05673a7f3f98d10">space_update</a></div><div class="ttdeci">void space_update(const double dt)</div><div class="ttdoc">Controls fleet spawning.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01261">space.c:1261</a></div></div>
+<div class="ttc" id="aspace_8c_html_ac694fe86ba4462a9b05673a7f3f98d10"><div class="ttname"><a href="space_8c.html#ac694fe86ba4462a9b05673a7f3f98d10">space_update</a></div><div class="ttdeci">void space_update(const double dt)</div><div class="ttdoc">Controls fleet spawning.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01273">space.c:1273</a></div></div>
 <div class="ttc" id="aai_8c_html_abb4c70b53d1e6a4159a1091e1578efc7"><div class="ttname"><a href="ai_8c.html#abb4c70b53d1e6a4159a1091e1578efc7">ai_exit</a></div><div class="ttdeci">void ai_exit(void)</div><div class="ttdoc">Cleans up global AI.</div><div class="ttdef"><b>Definition:</b> <a href="ai_8c_source.html#l00713">ai.c:713</a></div></div>
-<div class="ttc" id="anaev_8c_html_a22a7c2ad221e7b22e734d038cbaeea7e"><div class="ttname"><a href="naev_8c.html#a22a7c2ad221e7b22e734d038cbaeea7e">naev_versionCompare</a></div><div class="ttdeci">int naev_versionCompare(const char *version)</div><div class="ttdoc">Compares the version against the current naev version.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l01046">naev.c:1046</a></div></div>
+<div class="ttc" id="anaev_8c_html_a22a7c2ad221e7b22e734d038cbaeea7e"><div class="ttname"><a href="naev_8c.html#a22a7c2ad221e7b22e734d038cbaeea7e">naev_versionCompare</a></div><div class="ttdeci">int naev_versionCompare(const char *version)</div><div class="ttdoc">Compares the version against the current naev version.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l01049">naev.c:1049</a></div></div>
 <div class="ttc" id="atech_8c_html_a0e9c5c0bd87e8891ffdc271af61b6ba2"><div class="ttname"><a href="tech_8c.html#a0e9c5c0bd87e8891ffdc271af61b6ba2">tech_free</a></div><div class="ttdeci">void tech_free(void)</div><div class="ttdoc">Cleans up after the tech stuff.</div><div class="ttdef"><b>Definition:</b> <a href="tech_8c_source.html#l00181">tech.c:181</a></div></div>
 <div class="ttc" id="adebug_8c_html_a3f06348a1d0074f2afbd50dd625294b4"><div class="ttname"><a href="debug_8c.html#a3f06348a1d0074f2afbd50dd625294b4">debug_sigInit</a></div><div class="ttdeci">void debug_sigInit(void)</div><div class="ttdoc">Sets up the SignalHandler for Linux.</div><div class="ttdef"><b>Definition:</b> <a href="debug_8c_source.html#l00168">debug.c:168</a></div></div>
 <div class="ttc" id="ainput_8c_html_ac7c1943fcaf4e6121e6dff4c5c05490f"><div class="ttname"><a href="input_8c.html#ac7c1943fcaf4e6121e6dff4c5c05490f">input_exit</a></div><div class="ttdeci">void input_exit(void)</div><div class="ttdoc">Exits the input subsystem.</div><div class="ttdef"><b>Definition:</b> <a href="input_8c_source.html#l00340">input.c:340</a></div></div>
@@ -1177,6 +1180,7 @@ $(function() {
 <div class="ttc" id="aoutfit_8c_html_a8f945aeb03bcafc0611d5283739e4b1e"><div class="ttname"><a href="outfit_8c.html#a8f945aeb03bcafc0611d5283739e4b1e">outfit_load</a></div><div class="ttdeci">int outfit_load(void)</div><div class="ttdoc">Loads all the outfits.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02425">outfit.c:2425</a></div></div>
 <div class="ttc" id="anaev_8c_html_a681327399c6c724ba46620e8677c6441"><div class="ttname"><a href="naev_8c.html#a681327399c6c724ba46620e8677c6441">NAEV_INIT_DELAY</a></div><div class="ttdeci">#define NAEV_INIT_DELAY</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00093">naev.c:93</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a88a8cb25811799ad5ce9cdddfaf144cd"><div class="ttname"><a href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a></div><div class="ttdeci">double player_dt_default(void)</div><div class="ttdoc">Returns the player's total default time delta based on dt_mod and ship's dt_default.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l01649">player.c:1649</a></div></div>
+<div class="ttc" id="aspace_8c_html_aea1ceed6485f4f5abec7809a7ebef340"><div class="ttname"><a href="space_8c.html#aea1ceed6485f4f5abec7809a7ebef340">space_checkLand</a></div><div class="ttdeci">void space_checkLand(void)</div><div class="ttdoc">Handles landing if necessary.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01259">space.c:1259</a></div></div>
 <div class="ttc" id="anaev_8c_html_a6e46c8208767e471603e6154ab5370a3"><div class="ttname"><a href="naev_8c.html#a6e46c8208767e471603e6154ab5370a3">naev_quit</a></div><div class="ttdeci">void naev_quit(void)</div><div class="ttdoc">Flags naev to quit.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00141">naev.c:141</a></div></div>
 <div class="ttc" id="anaev_8c_html_a51c70c8c17e0e1c3f1204b385d43d523"><div class="ttname"><a href="naev_8c.html#a51c70c8c17e0e1c3f1204b385d43d523">loadscreen_unload</a></div><div class="ttdeci">static void loadscreen_unload(void)</div><div class="ttdoc">Frees the loading screen.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00590">naev.c:590</a></div></div>
 <div class="ttc" id="aspace_8c_html_a80fc91b008974b39b78ee551d5abc684"><div class="ttname"><a href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a></div><div class="ttdeci">StarSystem * cur_system</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00102">space.c:102</a></div></div>
@@ -1187,7 +1191,7 @@ $(function() {
 <div class="ttc" id="anfile_8c_html_aed15c009467a67710618f501a2558fd9"><div class="ttname"><a href="nfile_8c.html#aed15c009467a67710618f501a2558fd9">nfile_configPath</a></div><div class="ttdeci">const char * nfile_configPath(void)</div><div class="ttdoc">Gets Naev's config path (for user preferences such as conf.lua)</div><div class="ttdef"><b>Definition:</b> <a href="nfile_8c_source.html#l00121">nfile.c:121</a></div></div>
 <div class="ttc" id="anaev_8c_html_aec63615b7a2df2504e929fdcacd6c7da"><div class="ttname"><a href="naev_8c.html#aec63615b7a2df2504e929fdcacd6c7da">real_dt</a></div><div class="ttdeci">static double real_dt</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00111">naev.c:111</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ac8701471143b28a786b0028420edfeb6"><div class="ttname"><a href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a></div><div class="ttdeci">Player_t player</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00071">player.c:71</a></div></div>
-<div class="ttc" id="anaev_8c_html_a53bff93ee1c266e7cd67aeeb8bc4202b"><div class="ttname"><a href="naev_8c.html#a53bff93ee1c266e7cd67aeeb8bc4202b">display_fps</a></div><div class="ttdeci">void display_fps(const double dt)</div><div class="ttdoc">Displays FPS on the screen.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00861">naev.c:861</a></div></div>
+<div class="ttc" id="anaev_8c_html_a53bff93ee1c266e7cd67aeeb8bc4202b"><div class="ttname"><a href="naev_8c.html#a53bff93ee1c266e7cd67aeeb8bc4202b">display_fps</a></div><div class="ttdeci">void display_fps(const double dt)</div><div class="ttdoc">Displays FPS on the screen.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00864">naev.c:864</a></div></div>
 <div class="ttc" id="astart_8c_html_a3b0ca59b1488d3fb951a493d408fd658"><div class="ttname"><a href="start_8c.html#a3b0ca59b1488d3fb951a493d408fd658">start_name</a></div><div class="ttdeci">const char * start_name(void)</div><div class="ttdoc">Gets the module name.</div><div class="ttdef"><b>Definition:</b> <a href="start_8c_source.html#l00170">start.c:170</a></div></div>
 <div class="ttc" id="aai_8c_html_af9b0461857572354f8590c45a0917f6e"><div class="ttname"><a href="ai_8c.html#af9b0461857572354f8590c45a0917f6e">ai_load</a></div><div class="ttdeci">int ai_load(void)</div><div class="ttdoc">Initializes the AI stuff which is basically Lua.</div><div class="ttdef"><b>Definition:</b> <a href="ai_8c_source.html#l00561">ai.c:561</a></div></div>
 <div class="ttc" id="alog_8c_html_a2508fad025e49f9746b6c178dce6917e"><div class="ttname"><a href="log_8c.html#a2508fad025e49f9746b6c178dce6917e">log_init</a></div><div class="ttdeci">void log_init(void)</div><div class="ttdoc">Sets up the logging subsystem. (Calling this ensures logging output is preserved until we have a plac...</div><div class="ttdef"><b>Definition:</b> <a href="log_8c_source.html#l00160">log.c:160</a></div></div>
@@ -1201,16 +1205,16 @@ $(function() {
 <div class="ttc" id="amusic_8c_html_a5a1125faf5771e25b85823fcc492c054"><div class="ttname"><a href="music_8c.html#a5a1125faf5771e25b85823fcc492c054">music_choose</a></div><div class="ttdeci">int music_choose(const char *situation)</div><div class="ttdoc">Actually runs the music stuff, based on situation.</div><div class="ttdef"><b>Definition:</b> <a href="music_8c_source.html#l00563">music.c:563</a></div></div>
 <div class="ttc" id="amission_8c_html_a9771ae985eb6e044d41dfb77b9080b75"><div class="ttname"><a href="mission_8c.html#a9771ae985eb6e044d41dfb77b9080b75">missions_load</a></div><div class="ttdeci">int missions_load(void)</div><div class="ttdoc">Loads all the mission data.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00855">mission.c:855</a></div></div>
 <div class="ttc" id="afaction_8c_html_a8a44b76cb78617017dd85328f51f399b"><div class="ttname"><a href="faction_8c.html#a8a44b76cb78617017dd85328f51f399b">factions_free</a></div><div class="ttdeci">void factions_free(void)</div><div class="ttdoc">Frees the factions.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01594">faction.c:1594</a></div></div>
-<div class="ttc" id="anaev_8c_html_a64e1898131337e160bb9d5b98107402e"><div class="ttname"><a href="naev_8c.html#a64e1898131337e160bb9d5b98107402e">update_routine</a></div><div class="ttdeci">void update_routine(double dt, int enter_sys)</div><div class="ttdoc">Actually runs the updates.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00947">naev.c:947</a></div></div>
+<div class="ttc" id="anaev_8c_html_a64e1898131337e160bb9d5b98107402e"><div class="ttname"><a href="naev_8c.html#a64e1898131337e160bb9d5b98107402e">update_routine</a></div><div class="ttdeci">void update_routine(double dt, int enter_sys)</div><div class="ttdoc">Actually runs the updates.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00950">naev.c:950</a></div></div>
 <div class="ttc" id="apilot_8c_html_ad515bebfbd9556a539e2a9585f18534e"><div class="ttname"><a href="pilot_8c.html#ad515bebfbd9556a539e2a9585f18534e">pilots_update</a></div><div class="ttdeci">void pilots_update(double dt)</div><div class="ttdoc">Updates all the pilots.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03164">pilot.c:3164</a></div></div>
-<div class="ttc" id="anaev_8c_html_a5cd916ac13bf224342a034826ac4a03c"><div class="ttname"><a href="naev_8c.html#a5cd916ac13bf224342a034826ac4a03c">print_SDLversion</a></div><div class="ttdeci">static void print_SDLversion(void)</div><div class="ttdoc">Prints the SDL version to console.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l01070">naev.c:1070</a></div></div>
+<div class="ttc" id="anaev_8c_html_a5cd916ac13bf224342a034826ac4a03c"><div class="ttname"><a href="naev_8c.html#a5cd916ac13bf224342a034826ac4a03c">print_SDLversion</a></div><div class="ttdeci">static void print_SDLversion(void)</div><div class="ttdoc">Prints the SDL version to console.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l01073">naev.c:1073</a></div></div>
 <div class="ttc" id="aplayer_8c_html_af789325800780597d59584c9bc3fd570"><div class="ttname"><a href="player_8c.html#af789325800780597d59584c9bc3fd570">player_init</a></div><div class="ttdeci">int player_init(void)</div><div class="ttdoc">Initializes player stuff.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00181">player.c:181</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ae3efc344a7e324bf63002d07811fbc55"><div class="ttname"><a href="outfit_8c.html#ae3efc344a7e324bf63002d07811fbc55">outfit_free</a></div><div class="ttdeci">void outfit_free(void)</div><div class="ttdoc">Frees the outfit stack.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02620">outfit.c:2620</a></div></div>
 <div class="ttc" id="ajoystick_8c_html_aa036232876f4b3c53087920f3ca69bc3"><div class="ttname"><a href="joystick_8c.html#aa036232876f4b3c53087920f3ca69bc3">joystick_use</a></div><div class="ttdeci">int joystick_use(int indjoystick)</div><div class="ttdoc">Makes the game use a joystick by index.</div><div class="ttdef"><b>Definition:</b> <a href="joystick_8c_source.html#l00066">joystick.c:66</a></div></div>
-<div class="ttc" id="anaev_8c_html_a7ab1e5b41ecf27313008a96e42a982a6"><div class="ttname"><a href="naev_8c.html#a7ab1e5b41ecf27313008a96e42a982a6">fps_elapsed</a></div><div class="ttdeci">static double fps_elapsed(void)</div><div class="ttdoc">Gets the elapsed time.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00785">naev.c:785</a></div></div>
-<div class="ttc" id="anaev_8c_html_a2fb3ab7699404c65b42c3039c3248523"><div class="ttname"><a href="naev_8c.html#a2fb3ab7699404c65b42c3039c3248523">update_all</a></div><div class="ttdeci">static void update_all(void)</div><div class="ttdoc">Updates the game itself (player flying around and friends).</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00901">naev.c:901</a></div></div>
+<div class="ttc" id="anaev_8c_html_a7ab1e5b41ecf27313008a96e42a982a6"><div class="ttname"><a href="naev_8c.html#a7ab1e5b41ecf27313008a96e42a982a6">fps_elapsed</a></div><div class="ttdeci">static double fps_elapsed(void)</div><div class="ttdoc">Gets the elapsed time.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00788">naev.c:788</a></div></div>
+<div class="ttc" id="anaev_8c_html_a2fb3ab7699404c65b42c3039c3248523"><div class="ttname"><a href="naev_8c.html#a2fb3ab7699404c65b42c3039c3248523">update_all</a></div><div class="ttdeci">static void update_all(void)</div><div class="ttdoc">Updates the game itself (player flying around and friends).</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00904">naev.c:904</a></div></div>
 <div class="ttc" id="anaev_8c_html_a7fe9f75fed0e48abac693a7a2d1b2fa9"><div class="ttname"><a href="naev_8c.html#a7fe9f75fed0e48abac693a7a2d1b2fa9">LOADING_STAGES</a></div><div class="ttdeci">#define LOADING_STAGES</div><div class="ttdoc">Loads all the data, makes main() simpler.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00600">naev.c:600</a></div></div>
-<div class="ttc" id="agui_8c_html_a8a6a2b0c0cf6e525b0df9babd2fc23d7"><div class="ttname"><a href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7">gui_free</a></div><div class="ttdeci">void gui_free(void)</div><div class="ttdoc">Frees the gui stuff.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02335">gui.c:2335</a></div></div>
+<div class="ttc" id="agui_8c_html_a8a6a2b0c0cf6e525b0df9babd2fc23d7"><div class="ttname"><a href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7">gui_free</a></div><div class="ttdeci">void gui_free(void)</div><div class="ttdoc">Frees the gui stuff.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02339">gui.c:2339</a></div></div>
 <div class="ttc" id="agui_8c_html_a93e20344acde194abc25abc152f52ec9"><div class="ttname"><a href="gui_8c.html#a93e20344acde194abc25abc152f52ec9">gui_reload</a></div><div class="ttdeci">void gui_reload(void)</div><div class="ttdoc">Reloads the GUI.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02043">gui.c:2043</a></div></div>
 <div class="ttc" id="acolour_8c_html_af855c4eff9231bdcaccdb61776280671"><div class="ttname"><a href="colour_8c.html#af855c4eff9231bdcaccdb61776280671">cPrimeGreen</a></div><div class="ttdeci">const glColour cPrimeGreen</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00048">colour.c:48</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_a1501fbe5a11aecdd4478ab0481fec1ba"><div class="ttname"><a href="toolkit_8c.html#a1501fbe5a11aecdd4478ab0481fec1ba">toolkit_exit</a></div><div class="ttdeci">void toolkit_exit(void)</div><div class="ttdoc">Exits the toolkit.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l02588">toolkit.c:2588</a></div></div>
@@ -1218,7 +1222,7 @@ $(function() {
 <div class="ttc" id="amenu_8h_html_aca792fceb1fa6a2302a38e8e807491a1"><div class="ttname"><a href="menu_8h.html#aca792fceb1fa6a2302a38e8e807491a1">menu_main_resize</a></div><div class="ttdeci">void menu_main_resize(void)</div><div class="ttdoc">Resizes the main menu and its background.</div><div class="ttdef"><b>Definition:</b> <a href="menu_8c_source.html#l00267">menu.c:267</a></div></div>
 <div class="ttc" id="aevent_8c_html_a158b6534b5180f1203beffda46d2752b"><div class="ttname"><a href="event_8c.html#a158b6534b5180f1203beffda46d2752b">events_exit</a></div><div class="ttdeci">void events_exit(void)</div><div class="ttdoc">Exits the event subsystem.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00671">event.c:671</a></div></div>
 <div class="ttc" id="ahook_8c_html_ad94fa31ab5926d7577ada6c36d895546"><div class="ttname"><a href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a></div><div class="ttdeci">int hooks_run(const char *stack)</div><div class="ttdoc">Runs all the hooks of stack.</div><div class="ttdef"><b>Definition:</b> <a href="hook_8c_source.html#l00992">hook.c:992</a></div></div>
-<div class="ttc" id="anaev_8c_html_af356ad2e6a756c82003cc701c53e79ee"><div class="ttname"><a href="naev_8c.html#af356ad2e6a756c82003cc701c53e79ee">fps_control</a></div><div class="ttdeci">static void fps_control(void)</div><div class="ttdoc">Controls the FPS.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00816">naev.c:816</a></div></div>
+<div class="ttc" id="anaev_8c_html_af356ad2e6a756c82003cc701c53e79ee"><div class="ttname"><a href="naev_8c.html#af356ad2e6a756c82003cc701c53e79ee">fps_control</a></div><div class="ttdeci">static void fps_control(void)</div><div class="ttdoc">Controls the FPS.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00819">naev.c:819</a></div></div>
 <div class="ttc" id="anaev_8c_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="naev_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdoc">The entry point of Naev.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00163">naev.c:163</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a6e98ded2f25e916b65c537ea92984d2c"><div class="ttname"><a href="player_8c.html#a6e98ded2f25e916b65c537ea92984d2c">player_cleanup</a></div><div class="ttdeci">void player_cleanup(void)</div><div class="ttdoc">Cleans up player stuff like player_stack.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00645">player.c:645</a></div></div>
 <div class="ttc" id="ainput_8c_html_ac2bb3aa1f9f34f6130925b75a3adae2c"><div class="ttname"><a href="input_8c.html#ac2bb3aa1f9f34f6130925b75a3adae2c">input_update</a></div><div class="ttdeci">void input_update(double dt)</div><div class="ttdoc">Handles key repeating.</div><div class="ttdef"><b>Definition:</b> <a href="input_8c_source.html#l00653">input.c:653</a></div></div>

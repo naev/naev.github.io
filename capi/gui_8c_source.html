@@ -1841,353 +1841,357 @@ $(function() {
 <div class="line"><a name="l02119"></a><span class="lineno"> 2119</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> == LUA_NOREF)</div>
 <div class="line"><a name="l02120"></a><span class="lineno"> 2120</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l02121"></a><span class="lineno"> 2121</span>&#160; </div>
-<div class="line"><a name="l02122"></a><span class="lineno"> 2122</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;target != PLAYER_ID) &amp;&amp; (pilot-&gt;id == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;target))</div>
-<div class="line"><a name="l02123"></a><span class="lineno"> 2123</span>&#160;      <a class="code" href="gui_8c.html#a17f8bf8b1cf0ff3a3a8044ac3054111f">gui_setTarget</a>();</div>
-<div class="line"><a name="l02124"></a><span class="lineno"> 2124</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pilot_isPlayer(pilot)) {</div>
-<div class="line"><a name="l02125"></a><span class="lineno"> 2125</span>&#160;      <a class="code" href="gui_8c.html#afbbbe37f0718dbf991f7b9483cf0ba62">gui_setCargo</a>();</div>
-<div class="line"><a name="l02126"></a><span class="lineno"> 2126</span>&#160;      <a class="code" href="gui_8c.html#a891ca49ebbc48ce80a20a99531c5cb51">gui_setShip</a>();</div>
-<div class="line"><a name="l02127"></a><span class="lineno"> 2127</span>&#160;   }</div>
-<div class="line"><a name="l02128"></a><span class="lineno"> 2128</span>&#160;}</div>
-<div class="line"><a name="l02129"></a><span class="lineno"> 2129</span>&#160; </div>
-<div class="line"><a name="l02130"></a><span class="lineno"> 2130</span>&#160; </div>
-<div class="line"><a name="l02134"></a><span class="lineno"><a class="line" href="gui_8c.html#ae05bab0fbea0f8f32cf930237934ac1f"> 2134</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="gui_8c.html#ae05bab0fbea0f8f32cf930237934ac1f">gui_pick</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l02135"></a><span class="lineno"> 2135</span>&#160;{</div>
-<div class="line"><a name="l02136"></a><span class="lineno"> 2136</span>&#160;   <span class="keywordtype">char</span>* gui;</div>
-<div class="line"><a name="l02137"></a><span class="lineno"> 2137</span>&#160; </div>
-<div class="line"><a name="l02138"></a><span class="lineno"> 2138</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.gui &amp;&amp; (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.guiOverride == 1 || strcmp(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;ship-&gt;gui,<span class="stringliteral">&quot;default&quot;</span>)==0))</div>
-<div class="line"><a name="l02139"></a><span class="lineno"> 2139</span>&#160;      gui = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.gui;</div>
-<div class="line"><a name="l02140"></a><span class="lineno"> 2140</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l02141"></a><span class="lineno"> 2141</span>&#160;      gui = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;ship-&gt;gui;</div>
-<div class="line"><a name="l02142"></a><span class="lineno"> 2142</span>&#160;   <span class="keywordflow">return</span> gui;</div>
-<div class="line"><a name="l02143"></a><span class="lineno"> 2143</span>&#160;}</div>
-<div class="line"><a name="l02144"></a><span class="lineno"> 2144</span>&#160; </div>
-<div class="line"><a name="l02145"></a><span class="lineno"> 2145</span>&#160; </div>
-<div class="line"><a name="l02152"></a><span class="lineno"><a class="line" href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d"> 2152</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d">gui_load</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* name )</div>
-<div class="line"><a name="l02153"></a><span class="lineno"> 2153</span>&#160;{</div>
-<div class="line"><a name="l02154"></a><span class="lineno"> 2154</span>&#160;   (void) name;</div>
-<div class="line"><a name="l02155"></a><span class="lineno"> 2155</span>&#160;   <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, path[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
-<div class="line"><a name="l02156"></a><span class="lineno"> 2156</span>&#160;   <span class="keywordtype">size_t</span> bufsize;</div>
-<div class="line"><a name="l02157"></a><span class="lineno"> 2157</span>&#160; </div>
-<div class="line"><a name="l02158"></a><span class="lineno"> 2158</span>&#160;   <span class="comment">/* Set defaults. */</span></div>
-<div class="line"><a name="l02159"></a><span class="lineno"> 2159</span>&#160;   <a class="code" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a>();</div>
-<div class="line"><a name="l02160"></a><span class="lineno"> 2160</span>&#160; </div>
-<div class="line"><a name="l02161"></a><span class="lineno"> 2161</span>&#160;   <span class="comment">/* Open file. */</span></div>
-<div class="line"><a name="l02162"></a><span class="lineno"> 2162</span>&#160;   snprintf( path, <span class="keyword">sizeof</span>(path), GUI_PATH<span class="stringliteral">&quot;%s.lua&quot;</span>, name );</div>
-<div class="line"><a name="l02163"></a><span class="lineno"> 2163</span>&#160;   <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( path, &amp;bufsize );</div>
-<div class="line"><a name="l02164"></a><span class="lineno"> 2164</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> == NULL) {</div>
-<div class="line"><a name="l02165"></a><span class="lineno"> 2165</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to find GUI &#39;%s&#39;.&quot;</span>), path );</div>
-<div class="line"><a name="l02166"></a><span class="lineno"> 2166</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l02167"></a><span class="lineno"> 2167</span>&#160;   }</div>
-<div class="line"><a name="l02168"></a><span class="lineno"> 2168</span>&#160; </div>
-<div class="line"><a name="l02169"></a><span class="lineno"> 2169</span>&#160;   <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l02170"></a><span class="lineno"> 2170</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> != LUA_NOREF) {</div>
-<div class="line"><a name="l02171"></a><span class="lineno"> 2171</span>&#160;      nlua_freeEnv(<a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a>);</div>
-<div class="line"><a name="l02172"></a><span class="lineno"> 2172</span>&#160;      <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = LUA_NOREF;</div>
-<div class="line"><a name="l02173"></a><span class="lineno"> 2173</span>&#160;   }</div>
-<div class="line"><a name="l02174"></a><span class="lineno"> 2174</span>&#160; </div>
-<div class="line"><a name="l02175"></a><span class="lineno"> 2175</span>&#160;   <span class="comment">/* Create Lua state. */</span></div>
-<div class="line"><a name="l02176"></a><span class="lineno"> 2176</span>&#160;   <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = nlua_newEnv(1);</div>
-<div class="line"><a name="l02177"></a><span class="lineno"> 2177</span>&#160;   <span class="keywordflow">if</span> (nlua_dobufenv( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, bufsize, path ) != 0) {</div>
-<div class="line"><a name="l02178"></a><span class="lineno"> 2178</span>&#160;      WARN(_(<span class="stringliteral">&quot;Failed to load GUI Lua: %s\n&quot;</span></div>
-<div class="line"><a name="l02179"></a><span class="lineno"> 2179</span>&#160;            <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l02180"></a><span class="lineno"> 2180</span>&#160;            <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
-<div class="line"><a name="l02181"></a><span class="lineno"> 2181</span>&#160;            path, lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l02182"></a><span class="lineno"> 2182</span>&#160;      nlua_freeEnv( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
-<div class="line"><a name="l02183"></a><span class="lineno"> 2183</span>&#160;      <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = LUA_NOREF;</div>
-<div class="line"><a name="l02184"></a><span class="lineno"> 2184</span>&#160;      free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
-<div class="line"><a name="l02185"></a><span class="lineno"> 2185</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l02186"></a><span class="lineno"> 2186</span>&#160;   }</div>
-<div class="line"><a name="l02187"></a><span class="lineno"> 2187</span>&#160;   free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
-<div class="line"><a name="l02188"></a><span class="lineno"> 2188</span>&#160;   <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
-<div class="line"><a name="l02189"></a><span class="lineno"> 2189</span>&#160;   <a class="code" href="nlua__gfx_8c.html#ac6baa00bb26587c59bbea16f996917fa">nlua_loadGFX</a>( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
-<div class="line"><a name="l02190"></a><span class="lineno"> 2190</span>&#160;   <a class="code" href="nlua__gui_8c.html#a6512dca92ea3e5174c274b4f7aef1cbe">nlua_loadGUI</a>( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
-<div class="line"><a name="l02191"></a><span class="lineno"> 2191</span>&#160;   <a class="code" href="nlua__tk_8c.html#a589a461c0b7e7019cb11fe5d022a042c">nlua_loadTk</a>( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
-<div class="line"><a name="l02192"></a><span class="lineno"> 2192</span>&#160; </div>
-<div class="line"><a name="l02193"></a><span class="lineno"> 2193</span>&#160;   <span class="comment">/* Run create function. */</span></div>
-<div class="line"><a name="l02194"></a><span class="lineno"> 2194</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="gui_8c.html#a217ffd9106967591c7e61c99993af4cd">gui_doFunc</a>( <span class="stringliteral">&quot;create&quot;</span> )) {</div>
-<div class="line"><a name="l02195"></a><span class="lineno"> 2195</span>&#160;      nlua_freeEnv( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
-<div class="line"><a name="l02196"></a><span class="lineno"> 2196</span>&#160;      <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = LUA_NOREF;</div>
-<div class="line"><a name="l02197"></a><span class="lineno"> 2197</span>&#160;   }</div>
-<div class="line"><a name="l02198"></a><span class="lineno"> 2198</span>&#160; </div>
-<div class="line"><a name="l02199"></a><span class="lineno"> 2199</span>&#160;   <span class="comment">/* Recreate land window if landed. */</span></div>
-<div class="line"><a name="l02200"></a><span class="lineno"> 2200</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>) {</div>
-<div class="line"><a name="l02201"></a><span class="lineno"> 2201</span>&#160;      <a class="code" href="land_8c.html#a35634614957e81cc5a3df1f1d3592141">land_genWindows</a>( 0, 1 );</div>
-<div class="line"><a name="l02202"></a><span class="lineno"> 2202</span>&#160;      <a class="code" href="toolkit_8c.html#ab9cb9e690788fe1cfa7089d0cb528798">window_lower</a>( <a class="code" href="gui_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a> );</div>
-<div class="line"><a name="l02203"></a><span class="lineno"> 2203</span>&#160;   }</div>
-<div class="line"><a name="l02204"></a><span class="lineno"> 2204</span>&#160; </div>
-<div class="line"><a name="l02205"></a><span class="lineno"> 2205</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02206"></a><span class="lineno"> 2206</span>&#160;}</div>
-<div class="line"><a name="l02207"></a><span class="lineno"> 2207</span>&#160; </div>
+<div class="line"><a name="l02122"></a><span class="lineno"> 2122</span>&#160;   <span class="keywordflow">if</span> (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||</div>
+<div class="line"><a name="l02123"></a><span class="lineno"> 2123</span>&#160;      (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p == NULL) || pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p,PILOT_DEAD))</div>
+<div class="line"><a name="l02124"></a><span class="lineno"> 2124</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l02125"></a><span class="lineno"> 2125</span>&#160; </div>
+<div class="line"><a name="l02126"></a><span class="lineno"> 2126</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;target != PLAYER_ID) &amp;&amp; (pilot-&gt;id == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;target))</div>
+<div class="line"><a name="l02127"></a><span class="lineno"> 2127</span>&#160;      <a class="code" href="gui_8c.html#a17f8bf8b1cf0ff3a3a8044ac3054111f">gui_setTarget</a>();</div>
+<div class="line"><a name="l02128"></a><span class="lineno"> 2128</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pilot_isPlayer(pilot)) {</div>
+<div class="line"><a name="l02129"></a><span class="lineno"> 2129</span>&#160;      <a class="code" href="gui_8c.html#afbbbe37f0718dbf991f7b9483cf0ba62">gui_setCargo</a>();</div>
+<div class="line"><a name="l02130"></a><span class="lineno"> 2130</span>&#160;      <a class="code" href="gui_8c.html#a891ca49ebbc48ce80a20a99531c5cb51">gui_setShip</a>();</div>
+<div class="line"><a name="l02131"></a><span class="lineno"> 2131</span>&#160;   }</div>
+<div class="line"><a name="l02132"></a><span class="lineno"> 2132</span>&#160;}</div>
+<div class="line"><a name="l02133"></a><span class="lineno"> 2133</span>&#160; </div>
+<div class="line"><a name="l02134"></a><span class="lineno"> 2134</span>&#160; </div>
+<div class="line"><a name="l02138"></a><span class="lineno"><a class="line" href="gui_8c.html#ae05bab0fbea0f8f32cf930237934ac1f"> 2138</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="gui_8c.html#ae05bab0fbea0f8f32cf930237934ac1f">gui_pick</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l02139"></a><span class="lineno"> 2139</span>&#160;{</div>
+<div class="line"><a name="l02140"></a><span class="lineno"> 2140</span>&#160;   <span class="keywordtype">char</span>* gui;</div>
+<div class="line"><a name="l02141"></a><span class="lineno"> 2141</span>&#160; </div>
+<div class="line"><a name="l02142"></a><span class="lineno"> 2142</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.gui &amp;&amp; (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.guiOverride == 1 || strcmp(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;ship-&gt;gui,<span class="stringliteral">&quot;default&quot;</span>)==0))</div>
+<div class="line"><a name="l02143"></a><span class="lineno"> 2143</span>&#160;      gui = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.gui;</div>
+<div class="line"><a name="l02144"></a><span class="lineno"> 2144</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l02145"></a><span class="lineno"> 2145</span>&#160;      gui = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;ship-&gt;gui;</div>
+<div class="line"><a name="l02146"></a><span class="lineno"> 2146</span>&#160;   <span class="keywordflow">return</span> gui;</div>
+<div class="line"><a name="l02147"></a><span class="lineno"> 2147</span>&#160;}</div>
+<div class="line"><a name="l02148"></a><span class="lineno"> 2148</span>&#160; </div>
+<div class="line"><a name="l02149"></a><span class="lineno"> 2149</span>&#160; </div>
+<div class="line"><a name="l02156"></a><span class="lineno"><a class="line" href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d"> 2156</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d">gui_load</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* name )</div>
+<div class="line"><a name="l02157"></a><span class="lineno"> 2157</span>&#160;{</div>
+<div class="line"><a name="l02158"></a><span class="lineno"> 2158</span>&#160;   (void) name;</div>
+<div class="line"><a name="l02159"></a><span class="lineno"> 2159</span>&#160;   <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, path[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a name="l02160"></a><span class="lineno"> 2160</span>&#160;   <span class="keywordtype">size_t</span> bufsize;</div>
+<div class="line"><a name="l02161"></a><span class="lineno"> 2161</span>&#160; </div>
+<div class="line"><a name="l02162"></a><span class="lineno"> 2162</span>&#160;   <span class="comment">/* Set defaults. */</span></div>
+<div class="line"><a name="l02163"></a><span class="lineno"> 2163</span>&#160;   <a class="code" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a>();</div>
+<div class="line"><a name="l02164"></a><span class="lineno"> 2164</span>&#160; </div>
+<div class="line"><a name="l02165"></a><span class="lineno"> 2165</span>&#160;   <span class="comment">/* Open file. */</span></div>
+<div class="line"><a name="l02166"></a><span class="lineno"> 2166</span>&#160;   snprintf( path, <span class="keyword">sizeof</span>(path), GUI_PATH<span class="stringliteral">&quot;%s.lua&quot;</span>, name );</div>
+<div class="line"><a name="l02167"></a><span class="lineno"> 2167</span>&#160;   <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( path, &amp;bufsize );</div>
+<div class="line"><a name="l02168"></a><span class="lineno"> 2168</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> == NULL) {</div>
+<div class="line"><a name="l02169"></a><span class="lineno"> 2169</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to find GUI &#39;%s&#39;.&quot;</span>), path );</div>
+<div class="line"><a name="l02170"></a><span class="lineno"> 2170</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l02171"></a><span class="lineno"> 2171</span>&#160;   }</div>
+<div class="line"><a name="l02172"></a><span class="lineno"> 2172</span>&#160; </div>
+<div class="line"><a name="l02173"></a><span class="lineno"> 2173</span>&#160;   <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l02174"></a><span class="lineno"> 2174</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> != LUA_NOREF) {</div>
+<div class="line"><a name="l02175"></a><span class="lineno"> 2175</span>&#160;      nlua_freeEnv(<a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a>);</div>
+<div class="line"><a name="l02176"></a><span class="lineno"> 2176</span>&#160;      <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = LUA_NOREF;</div>
+<div class="line"><a name="l02177"></a><span class="lineno"> 2177</span>&#160;   }</div>
+<div class="line"><a name="l02178"></a><span class="lineno"> 2178</span>&#160; </div>
+<div class="line"><a name="l02179"></a><span class="lineno"> 2179</span>&#160;   <span class="comment">/* Create Lua state. */</span></div>
+<div class="line"><a name="l02180"></a><span class="lineno"> 2180</span>&#160;   <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = nlua_newEnv(1);</div>
+<div class="line"><a name="l02181"></a><span class="lineno"> 2181</span>&#160;   <span class="keywordflow">if</span> (nlua_dobufenv( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, bufsize, path ) != 0) {</div>
+<div class="line"><a name="l02182"></a><span class="lineno"> 2182</span>&#160;      WARN(_(<span class="stringliteral">&quot;Failed to load GUI Lua: %s\n&quot;</span></div>
+<div class="line"><a name="l02183"></a><span class="lineno"> 2183</span>&#160;            <span class="stringliteral">&quot;%s\n&quot;</span></div>
+<div class="line"><a name="l02184"></a><span class="lineno"> 2184</span>&#160;            <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
+<div class="line"><a name="l02185"></a><span class="lineno"> 2185</span>&#160;            path, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l02186"></a><span class="lineno"> 2186</span>&#160;      nlua_freeEnv( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
+<div class="line"><a name="l02187"></a><span class="lineno"> 2187</span>&#160;      <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = LUA_NOREF;</div>
+<div class="line"><a name="l02188"></a><span class="lineno"> 2188</span>&#160;      free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
+<div class="line"><a name="l02189"></a><span class="lineno"> 2189</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l02190"></a><span class="lineno"> 2190</span>&#160;   }</div>
+<div class="line"><a name="l02191"></a><span class="lineno"> 2191</span>&#160;   free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
+<div class="line"><a name="l02192"></a><span class="lineno"> 2192</span>&#160;   <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
+<div class="line"><a name="l02193"></a><span class="lineno"> 2193</span>&#160;   <a class="code" href="nlua__gfx_8c.html#ac6baa00bb26587c59bbea16f996917fa">nlua_loadGFX</a>( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
+<div class="line"><a name="l02194"></a><span class="lineno"> 2194</span>&#160;   <a class="code" href="nlua__gui_8c.html#a6512dca92ea3e5174c274b4f7aef1cbe">nlua_loadGUI</a>( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
+<div class="line"><a name="l02195"></a><span class="lineno"> 2195</span>&#160;   <a class="code" href="nlua__tk_8c.html#a589a461c0b7e7019cb11fe5d022a042c">nlua_loadTk</a>( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
+<div class="line"><a name="l02196"></a><span class="lineno"> 2196</span>&#160; </div>
+<div class="line"><a name="l02197"></a><span class="lineno"> 2197</span>&#160;   <span class="comment">/* Run create function. */</span></div>
+<div class="line"><a name="l02198"></a><span class="lineno"> 2198</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="gui_8c.html#a217ffd9106967591c7e61c99993af4cd">gui_doFunc</a>( <span class="stringliteral">&quot;create&quot;</span> )) {</div>
+<div class="line"><a name="l02199"></a><span class="lineno"> 2199</span>&#160;      nlua_freeEnv( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
+<div class="line"><a name="l02200"></a><span class="lineno"> 2200</span>&#160;      <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = LUA_NOREF;</div>
+<div class="line"><a name="l02201"></a><span class="lineno"> 2201</span>&#160;   }</div>
+<div class="line"><a name="l02202"></a><span class="lineno"> 2202</span>&#160; </div>
+<div class="line"><a name="l02203"></a><span class="lineno"> 2203</span>&#160;   <span class="comment">/* Recreate land window if landed. */</span></div>
+<div class="line"><a name="l02204"></a><span class="lineno"> 2204</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>) {</div>
+<div class="line"><a name="l02205"></a><span class="lineno"> 2205</span>&#160;      <a class="code" href="land_8c.html#a35634614957e81cc5a3df1f1d3592141">land_genWindows</a>( 0, 1 );</div>
+<div class="line"><a name="l02206"></a><span class="lineno"> 2206</span>&#160;      <a class="code" href="toolkit_8c.html#ab9cb9e690788fe1cfa7089d0cb528798">window_lower</a>( <a class="code" href="gui_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a> );</div>
+<div class="line"><a name="l02207"></a><span class="lineno"> 2207</span>&#160;   }</div>
 <div class="line"><a name="l02208"></a><span class="lineno"> 2208</span>&#160; </div>
-<div class="line"><a name="l02212"></a><span class="lineno"><a class="line" href="gui_8c.html#a94a82f1ecb6e55d04ea387729c152f7c"> 2212</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a94a82f1ecb6e55d04ea387729c152f7c">gui_createInterference</a>( <a class="code" href="structRadar.html">Radar</a> *radar )</div>
-<div class="line"><a name="l02213"></a><span class="lineno"> 2213</span>&#160;{</div>
-<div class="line"><a name="l02214"></a><span class="lineno"> 2214</span>&#160;   uint8_t raw;</div>
-<div class="line"><a name="l02215"></a><span class="lineno"> 2215</span>&#160;   <span class="keywordtype">int</span> i, j, k;</div>
-<div class="line"><a name="l02216"></a><span class="lineno"> 2216</span>&#160;   <span class="keywordtype">float</span> *map;</div>
-<div class="line"><a name="l02217"></a><span class="lineno"> 2217</span>&#160;   uint32_t *pix;</div>
-<div class="line"><a name="l02218"></a><span class="lineno"> 2218</span>&#160;   SDL_Surface *sur;</div>
-<div class="line"><a name="l02219"></a><span class="lineno"> 2219</span>&#160;   <span class="keywordtype">int</span> w,h, hw,hh;</div>
-<div class="line"><a name="l02220"></a><span class="lineno"> 2220</span>&#160;   <span class="keywordtype">float</span> <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
-<div class="line"><a name="l02221"></a><span class="lineno"> 2221</span>&#160;   <span class="keywordtype">int</span> r;</div>
-<div class="line"><a name="l02222"></a><span class="lineno"> 2222</span>&#160; </div>
-<div class="line"><a name="l02223"></a><span class="lineno"> 2223</span>&#160;   <span class="comment">/* Dimension shortcuts. */</span></div>
-<div class="line"><a name="l02224"></a><span class="lineno"> 2224</span>&#160;   <span class="keywordflow">if</span> (radar-&gt;shape == RADAR_CIRCLE) {</div>
-<div class="line"><a name="l02225"></a><span class="lineno"> 2225</span>&#160;      w = radar-&gt;w*2.;</div>
-<div class="line"><a name="l02226"></a><span class="lineno"> 2226</span>&#160;      h = w;</div>
-<div class="line"><a name="l02227"></a><span class="lineno"> 2227</span>&#160;   }</div>
-<div class="line"><a name="l02228"></a><span class="lineno"> 2228</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (radar-&gt;shape == RADAR_RECT) {</div>
+<div class="line"><a name="l02209"></a><span class="lineno"> 2209</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02210"></a><span class="lineno"> 2210</span>&#160;}</div>
+<div class="line"><a name="l02211"></a><span class="lineno"> 2211</span>&#160; </div>
+<div class="line"><a name="l02212"></a><span class="lineno"> 2212</span>&#160; </div>
+<div class="line"><a name="l02216"></a><span class="lineno"><a class="line" href="gui_8c.html#a94a82f1ecb6e55d04ea387729c152f7c"> 2216</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a94a82f1ecb6e55d04ea387729c152f7c">gui_createInterference</a>( <a class="code" href="structRadar.html">Radar</a> *radar )</div>
+<div class="line"><a name="l02217"></a><span class="lineno"> 2217</span>&#160;{</div>
+<div class="line"><a name="l02218"></a><span class="lineno"> 2218</span>&#160;   uint8_t raw;</div>
+<div class="line"><a name="l02219"></a><span class="lineno"> 2219</span>&#160;   <span class="keywordtype">int</span> i, j, k;</div>
+<div class="line"><a name="l02220"></a><span class="lineno"> 2220</span>&#160;   <span class="keywordtype">float</span> *map;</div>
+<div class="line"><a name="l02221"></a><span class="lineno"> 2221</span>&#160;   uint32_t *pix;</div>
+<div class="line"><a name="l02222"></a><span class="lineno"> 2222</span>&#160;   SDL_Surface *sur;</div>
+<div class="line"><a name="l02223"></a><span class="lineno"> 2223</span>&#160;   <span class="keywordtype">int</span> w,h, hw,hh;</div>
+<div class="line"><a name="l02224"></a><span class="lineno"> 2224</span>&#160;   <span class="keywordtype">float</span> <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
+<div class="line"><a name="l02225"></a><span class="lineno"> 2225</span>&#160;   <span class="keywordtype">int</span> r;</div>
+<div class="line"><a name="l02226"></a><span class="lineno"> 2226</span>&#160; </div>
+<div class="line"><a name="l02227"></a><span class="lineno"> 2227</span>&#160;   <span class="comment">/* Dimension shortcuts. */</span></div>
+<div class="line"><a name="l02228"></a><span class="lineno"> 2228</span>&#160;   <span class="keywordflow">if</span> (radar-&gt;shape == RADAR_CIRCLE) {</div>
 <div class="line"><a name="l02229"></a><span class="lineno"> 2229</span>&#160;      w = radar-&gt;w*2.;</div>
-<div class="line"><a name="l02230"></a><span class="lineno"> 2230</span>&#160;      h = radar-&gt;h*2.;</div>
+<div class="line"><a name="l02230"></a><span class="lineno"> 2230</span>&#160;      h = w;</div>
 <div class="line"><a name="l02231"></a><span class="lineno"> 2231</span>&#160;   }</div>
-<div class="line"><a name="l02232"></a><span class="lineno"> 2232</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l02233"></a><span class="lineno"> 2233</span>&#160;      WARN( _(<span class="stringliteral">&quot;Radar shape is invalid.&quot;</span>) );</div>
-<div class="line"><a name="l02234"></a><span class="lineno"> 2234</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l02232"></a><span class="lineno"> 2232</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (radar-&gt;shape == RADAR_RECT) {</div>
+<div class="line"><a name="l02233"></a><span class="lineno"> 2233</span>&#160;      w = radar-&gt;w*2.;</div>
+<div class="line"><a name="l02234"></a><span class="lineno"> 2234</span>&#160;      h = radar-&gt;h*2.;</div>
 <div class="line"><a name="l02235"></a><span class="lineno"> 2235</span>&#160;   }</div>
-<div class="line"><a name="l02236"></a><span class="lineno"> 2236</span>&#160; </div>
-<div class="line"><a name="l02237"></a><span class="lineno"> 2237</span>&#160;   <span class="keywordflow">for</span> (k=0; k&lt;<a class="code" href="gui_8c.html#ae5288a51fca0d166c65d2ffa5c935548">INTERFERENCE_LAYERS</a>; k++) {</div>
-<div class="line"><a name="l02238"></a><span class="lineno"> 2238</span>&#160;      <span class="comment">/* Free the old texture. */</span></div>
-<div class="line"><a name="l02239"></a><span class="lineno"> 2239</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(radar-&gt;interference[k]);</div>
+<div class="line"><a name="l02236"></a><span class="lineno"> 2236</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l02237"></a><span class="lineno"> 2237</span>&#160;      WARN( _(<span class="stringliteral">&quot;Radar shape is invalid.&quot;</span>) );</div>
+<div class="line"><a name="l02238"></a><span class="lineno"> 2238</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l02239"></a><span class="lineno"> 2239</span>&#160;   }</div>
 <div class="line"><a name="l02240"></a><span class="lineno"> 2240</span>&#160; </div>
-<div class="line"><a name="l02241"></a><span class="lineno"> 2241</span>&#160;      <span class="comment">/* Create the temporary surface. */</span></div>
-<div class="line"><a name="l02242"></a><span class="lineno"> 2242</span>&#160;      sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );</div>
-<div class="line"><a name="l02243"></a><span class="lineno"> 2243</span>&#160;      pix = sur-&gt;pixels;</div>
+<div class="line"><a name="l02241"></a><span class="lineno"> 2241</span>&#160;   <span class="keywordflow">for</span> (k=0; k&lt;<a class="code" href="gui_8c.html#ae5288a51fca0d166c65d2ffa5c935548">INTERFERENCE_LAYERS</a>; k++) {</div>
+<div class="line"><a name="l02242"></a><span class="lineno"> 2242</span>&#160;      <span class="comment">/* Free the old texture. */</span></div>
+<div class="line"><a name="l02243"></a><span class="lineno"> 2243</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(radar-&gt;interference[k]);</div>
 <div class="line"><a name="l02244"></a><span class="lineno"> 2244</span>&#160; </div>
-<div class="line"><a name="l02245"></a><span class="lineno"> 2245</span>&#160;      <span class="comment">/* Clear pixels. */</span></div>
-<div class="line"><a name="l02246"></a><span class="lineno"> 2246</span>&#160;      memset( pix, 0, <span class="keyword">sizeof</span>(uint32_t)*w*h );</div>
-<div class="line"><a name="l02247"></a><span class="lineno"> 2247</span>&#160; </div>
-<div class="line"><a name="l02248"></a><span class="lineno"> 2248</span>&#160;      <span class="comment">/* Load the interference map. */</span></div>
-<div class="line"><a name="l02249"></a><span class="lineno"> 2249</span>&#160;      map = <a class="code" href="perlin_8c.html#ad3fe41f90ff600bd8fb924e8e1d86b92">noise_genRadarInt</a>( w, h, (w+h)/2*1.2 );</div>
-<div class="line"><a name="l02250"></a><span class="lineno"> 2250</span>&#160; </div>
-<div class="line"><a name="l02251"></a><span class="lineno"> 2251</span>&#160;      <span class="comment">/* Create the texture. */</span></div>
-<div class="line"><a name="l02252"></a><span class="lineno"> 2252</span>&#160;      SDL_LockSurface( sur );</div>
-<div class="line"><a name="l02253"></a><span class="lineno"> 2253</span>&#160;      <span class="keywordflow">if</span> (radar-&gt;shape == RADAR_CIRCLE) {</div>
-<div class="line"><a name="l02254"></a><span class="lineno"> 2254</span>&#160;         r = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>((<span class="keywordtype">int</span>)radar-&gt;w);</div>
-<div class="line"><a name="l02255"></a><span class="lineno"> 2255</span>&#160;         hw = w/2;</div>
-<div class="line"><a name="l02256"></a><span class="lineno"> 2256</span>&#160;         hh = h/2;</div>
-<div class="line"><a name="l02257"></a><span class="lineno"> 2257</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;h; i++) {</div>
-<div class="line"><a name="l02258"></a><span class="lineno"> 2258</span>&#160;            <span class="keywordflow">for</span> (j=0; j&lt;w; j++) {</div>
-<div class="line"><a name="l02259"></a><span class="lineno"> 2259</span>&#160;               <span class="comment">/* Must be in circle. */</span></div>
-<div class="line"><a name="l02260"></a><span class="lineno"> 2260</span>&#160;               <span class="keywordflow">if</span> (<a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(i-hh) + <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(j-hw) &gt; r)</div>
-<div class="line"><a name="l02261"></a><span class="lineno"> 2261</span>&#160;                  <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02262"></a><span class="lineno"> 2262</span>&#160;               <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = map[i*w + j];</div>
-<div class="line"><a name="l02263"></a><span class="lineno"> 2263</span>&#160;               raw = 0xff &amp; (uint8_t)((<span class="keywordtype">float</span>)0xff * <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>);</div>
-<div class="line"><a name="l02264"></a><span class="lineno"> 2264</span>&#160;               memset( &amp;pix[i*w + j], raw, <span class="keyword">sizeof</span>(uint32_t) );</div>
-<div class="line"><a name="l02265"></a><span class="lineno"> 2265</span>&#160;               pix[i*w + j] |= AMASK;</div>
-<div class="line"><a name="l02266"></a><span class="lineno"> 2266</span>&#160;            }</div>
-<div class="line"><a name="l02267"></a><span class="lineno"> 2267</span>&#160;         }</div>
-<div class="line"><a name="l02268"></a><span class="lineno"> 2268</span>&#160;      }</div>
-<div class="line"><a name="l02269"></a><span class="lineno"> 2269</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (radar-&gt;shape == RADAR_RECT) {</div>
-<div class="line"><a name="l02270"></a><span class="lineno"> 2270</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;h*w; i++) {</div>
-<div class="line"><a name="l02271"></a><span class="lineno"> 2271</span>&#160;            <span class="comment">/* Process pixels. */</span></div>
-<div class="line"><a name="l02272"></a><span class="lineno"> 2272</span>&#160;            <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = map[i];</div>
-<div class="line"><a name="l02273"></a><span class="lineno"> 2273</span>&#160;            raw = 0xff &amp; (uint8_t)((<span class="keywordtype">float</span>)0xff * <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>);</div>
-<div class="line"><a name="l02274"></a><span class="lineno"> 2274</span>&#160;            memset( &amp;pix[i], raw, <span class="keyword">sizeof</span>(uint32_t) );</div>
-<div class="line"><a name="l02275"></a><span class="lineno"> 2275</span>&#160;            pix[i] |= AMASK;</div>
-<div class="line"><a name="l02276"></a><span class="lineno"> 2276</span>&#160;         }</div>
-<div class="line"><a name="l02277"></a><span class="lineno"> 2277</span>&#160;      }</div>
-<div class="line"><a name="l02278"></a><span class="lineno"> 2278</span>&#160;      SDL_UnlockSurface( sur );</div>
-<div class="line"><a name="l02279"></a><span class="lineno"> 2279</span>&#160; </div>
-<div class="line"><a name="l02280"></a><span class="lineno"> 2280</span>&#160;      <span class="comment">/* Set the interference. */</span></div>
-<div class="line"><a name="l02281"></a><span class="lineno"> 2281</span>&#160;      radar-&gt;interference[k] = <a class="code" href="opengl__tex_8c.html#a1073728002cd319745c8224536d433fa">gl_loadImage</a>( sur, 0 );</div>
-<div class="line"><a name="l02282"></a><span class="lineno"> 2282</span>&#160; </div>
-<div class="line"><a name="l02283"></a><span class="lineno"> 2283</span>&#160;      <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l02284"></a><span class="lineno"> 2284</span>&#160;      free(map);</div>
-<div class="line"><a name="l02285"></a><span class="lineno"> 2285</span>&#160;   }</div>
-<div class="line"><a name="l02286"></a><span class="lineno"> 2286</span>&#160;}</div>
-<div class="line"><a name="l02287"></a><span class="lineno"> 2287</span>&#160; </div>
-<div class="line"><a name="l02288"></a><span class="lineno"> 2288</span>&#160; </div>
-<div class="line"><a name="l02292"></a><span class="lineno"><a class="line" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1"> 2292</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l02293"></a><span class="lineno"> 2293</span>&#160;{</div>
-<div class="line"><a name="l02294"></a><span class="lineno"> 2294</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l02295"></a><span class="lineno"> 2295</span>&#160; </div>
-<div class="line"><a name="l02296"></a><span class="lineno"> 2296</span>&#160;   <span class="comment">/* Disable mouse voodoo. */</span></div>
-<div class="line"><a name="l02297"></a><span class="lineno"> 2297</span>&#160;   <a class="code" href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c">gui_mouseClickEnable</a>( 0 );</div>
-<div class="line"><a name="l02298"></a><span class="lineno"> 2298</span>&#160;   <a class="code" href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2">gui_mouseMoveEnable</a>( 0 );</div>
+<div class="line"><a name="l02245"></a><span class="lineno"> 2245</span>&#160;      <span class="comment">/* Create the temporary surface. */</span></div>
+<div class="line"><a name="l02246"></a><span class="lineno"> 2246</span>&#160;      sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );</div>
+<div class="line"><a name="l02247"></a><span class="lineno"> 2247</span>&#160;      pix = sur-&gt;pixels;</div>
+<div class="line"><a name="l02248"></a><span class="lineno"> 2248</span>&#160; </div>
+<div class="line"><a name="l02249"></a><span class="lineno"> 2249</span>&#160;      <span class="comment">/* Clear pixels. */</span></div>
+<div class="line"><a name="l02250"></a><span class="lineno"> 2250</span>&#160;      memset( pix, 0, <span class="keyword">sizeof</span>(uint32_t)*w*h );</div>
+<div class="line"><a name="l02251"></a><span class="lineno"> 2251</span>&#160; </div>
+<div class="line"><a name="l02252"></a><span class="lineno"> 2252</span>&#160;      <span class="comment">/* Load the interference map. */</span></div>
+<div class="line"><a name="l02253"></a><span class="lineno"> 2253</span>&#160;      map = <a class="code" href="perlin_8c.html#ad3fe41f90ff600bd8fb924e8e1d86b92">noise_genRadarInt</a>( w, h, (w+h)/2*1.2 );</div>
+<div class="line"><a name="l02254"></a><span class="lineno"> 2254</span>&#160; </div>
+<div class="line"><a name="l02255"></a><span class="lineno"> 2255</span>&#160;      <span class="comment">/* Create the texture. */</span></div>
+<div class="line"><a name="l02256"></a><span class="lineno"> 2256</span>&#160;      SDL_LockSurface( sur );</div>
+<div class="line"><a name="l02257"></a><span class="lineno"> 2257</span>&#160;      <span class="keywordflow">if</span> (radar-&gt;shape == RADAR_CIRCLE) {</div>
+<div class="line"><a name="l02258"></a><span class="lineno"> 2258</span>&#160;         r = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>((<span class="keywordtype">int</span>)radar-&gt;w);</div>
+<div class="line"><a name="l02259"></a><span class="lineno"> 2259</span>&#160;         hw = w/2;</div>
+<div class="line"><a name="l02260"></a><span class="lineno"> 2260</span>&#160;         hh = h/2;</div>
+<div class="line"><a name="l02261"></a><span class="lineno"> 2261</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;h; i++) {</div>
+<div class="line"><a name="l02262"></a><span class="lineno"> 2262</span>&#160;            <span class="keywordflow">for</span> (j=0; j&lt;w; j++) {</div>
+<div class="line"><a name="l02263"></a><span class="lineno"> 2263</span>&#160;               <span class="comment">/* Must be in circle. */</span></div>
+<div class="line"><a name="l02264"></a><span class="lineno"> 2264</span>&#160;               <span class="keywordflow">if</span> (<a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(i-hh) + <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(j-hw) &gt; r)</div>
+<div class="line"><a name="l02265"></a><span class="lineno"> 2265</span>&#160;                  <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02266"></a><span class="lineno"> 2266</span>&#160;               <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = map[i*w + j];</div>
+<div class="line"><a name="l02267"></a><span class="lineno"> 2267</span>&#160;               raw = 0xff &amp; (uint8_t)((<span class="keywordtype">float</span>)0xff * <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>);</div>
+<div class="line"><a name="l02268"></a><span class="lineno"> 2268</span>&#160;               memset( &amp;pix[i*w + j], raw, <span class="keyword">sizeof</span>(uint32_t) );</div>
+<div class="line"><a name="l02269"></a><span class="lineno"> 2269</span>&#160;               pix[i*w + j] |= AMASK;</div>
+<div class="line"><a name="l02270"></a><span class="lineno"> 2270</span>&#160;            }</div>
+<div class="line"><a name="l02271"></a><span class="lineno"> 2271</span>&#160;         }</div>
+<div class="line"><a name="l02272"></a><span class="lineno"> 2272</span>&#160;      }</div>
+<div class="line"><a name="l02273"></a><span class="lineno"> 2273</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (radar-&gt;shape == RADAR_RECT) {</div>
+<div class="line"><a name="l02274"></a><span class="lineno"> 2274</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;h*w; i++) {</div>
+<div class="line"><a name="l02275"></a><span class="lineno"> 2275</span>&#160;            <span class="comment">/* Process pixels. */</span></div>
+<div class="line"><a name="l02276"></a><span class="lineno"> 2276</span>&#160;            <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = map[i];</div>
+<div class="line"><a name="l02277"></a><span class="lineno"> 2277</span>&#160;            raw = 0xff &amp; (uint8_t)((<span class="keywordtype">float</span>)0xff * <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>);</div>
+<div class="line"><a name="l02278"></a><span class="lineno"> 2278</span>&#160;            memset( &amp;pix[i], raw, <span class="keyword">sizeof</span>(uint32_t) );</div>
+<div class="line"><a name="l02279"></a><span class="lineno"> 2279</span>&#160;            pix[i] |= AMASK;</div>
+<div class="line"><a name="l02280"></a><span class="lineno"> 2280</span>&#160;         }</div>
+<div class="line"><a name="l02281"></a><span class="lineno"> 2281</span>&#160;      }</div>
+<div class="line"><a name="l02282"></a><span class="lineno"> 2282</span>&#160;      SDL_UnlockSurface( sur );</div>
+<div class="line"><a name="l02283"></a><span class="lineno"> 2283</span>&#160; </div>
+<div class="line"><a name="l02284"></a><span class="lineno"> 2284</span>&#160;      <span class="comment">/* Set the interference. */</span></div>
+<div class="line"><a name="l02285"></a><span class="lineno"> 2285</span>&#160;      radar-&gt;interference[k] = <a class="code" href="opengl__tex_8c.html#a1073728002cd319745c8224536d433fa">gl_loadImage</a>( sur, 0 );</div>
+<div class="line"><a name="l02286"></a><span class="lineno"> 2286</span>&#160; </div>
+<div class="line"><a name="l02287"></a><span class="lineno"> 2287</span>&#160;      <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l02288"></a><span class="lineno"> 2288</span>&#160;      free(map);</div>
+<div class="line"><a name="l02289"></a><span class="lineno"> 2289</span>&#160;   }</div>
+<div class="line"><a name="l02290"></a><span class="lineno"> 2290</span>&#160;}</div>
+<div class="line"><a name="l02291"></a><span class="lineno"> 2291</span>&#160; </div>
+<div class="line"><a name="l02292"></a><span class="lineno"> 2292</span>&#160; </div>
+<div class="line"><a name="l02296"></a><span class="lineno"><a class="line" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1"> 2296</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l02297"></a><span class="lineno"> 2297</span>&#160;{</div>
+<div class="line"><a name="l02298"></a><span class="lineno"> 2298</span>&#160;   <span class="keywordtype">int</span> i;</div>
 <div class="line"><a name="l02299"></a><span class="lineno"> 2299</span>&#160; </div>
-<div class="line"><a name="l02300"></a><span class="lineno"> 2300</span>&#160;   <span class="comment">/* Interference. */</span></div>
-<div class="line"><a name="l02301"></a><span class="lineno"> 2301</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="gui_8c.html#ae5288a51fca0d166c65d2ffa5c935548">INTERFERENCE_LAYERS</a>; i++) {</div>
-<div class="line"><a name="l02302"></a><span class="lineno"> 2302</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(gui_radar.interference[i]);</div>
-<div class="line"><a name="l02303"></a><span class="lineno"> 2303</span>&#160;      gui_radar.interference[i] = NULL;</div>
-<div class="line"><a name="l02304"></a><span class="lineno"> 2304</span>&#160;   }</div>
-<div class="line"><a name="l02305"></a><span class="lineno"> 2305</span>&#160; </div>
-<div class="line"><a name="l02306"></a><span class="lineno"> 2306</span>&#160;   <span class="comment">/* Set the viewport. */</span></div>
-<div class="line"><a name="l02307"></a><span class="lineno"> 2307</span>&#160;   <a class="code" href="gui_8c.html#a91ad94799b8b82685bb01c2fa64929eb">gui_clearViewport</a>();</div>
-<div class="line"><a name="l02308"></a><span class="lineno"> 2308</span>&#160; </div>
-<div class="line"><a name="l02309"></a><span class="lineno"> 2309</span>&#160;   <span class="comment">/* Reset FPS. */</span></div>
-<div class="line"><a name="l02310"></a><span class="lineno"> 2310</span>&#160;   <a class="code" href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a>( 15., (<span class="keywordtype">double</span>)(<a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.h-15-<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h) );</div>
-<div class="line"><a name="l02311"></a><span class="lineno"> 2311</span>&#160; </div>
-<div class="line"><a name="l02312"></a><span class="lineno"> 2312</span>&#160;   <span class="comment">/* Clean up interference. */</span></div>
-<div class="line"><a name="l02313"></a><span class="lineno"> 2313</span>&#160;   <a class="code" href="gui_8c.html#aac38e2889cd12be891efb16ca7f3fc87">interference_alpha</a> = 0.;</div>
-<div class="line"><a name="l02314"></a><span class="lineno"> 2314</span>&#160;   <a class="code" href="gui_8c.html#a84c2d945ef7b207cd4dbadf20d78e0fc">interference_layer</a> = 0;</div>
-<div class="line"><a name="l02315"></a><span class="lineno"> 2315</span>&#160;   <a class="code" href="gui_8c.html#a60bbd29e5f4b96306ad2f273f7d5b905">interference_t</a>     = 0.;</div>
-<div class="line"><a name="l02316"></a><span class="lineno"> 2316</span>&#160; </div>
-<div class="line"><a name="l02317"></a><span class="lineno"> 2317</span>&#160;   <span class="comment">/* Destroy offset. */</span></div>
-<div class="line"><a name="l02318"></a><span class="lineno"> 2318</span>&#160;   <a class="code" href="gui_8c.html#a82786ba51191e1623009a865853bdb3c">gui_xoff</a> = 0.;</div>
-<div class="line"><a name="l02319"></a><span class="lineno"> 2319</span>&#160;   <a class="code" href="gui_8c.html#a0e35a7c93e09854096b90931a51933ea">gui_yoff</a> = 0.;</div>
+<div class="line"><a name="l02300"></a><span class="lineno"> 2300</span>&#160;   <span class="comment">/* Disable mouse voodoo. */</span></div>
+<div class="line"><a name="l02301"></a><span class="lineno"> 2301</span>&#160;   <a class="code" href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c">gui_mouseClickEnable</a>( 0 );</div>
+<div class="line"><a name="l02302"></a><span class="lineno"> 2302</span>&#160;   <a class="code" href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2">gui_mouseMoveEnable</a>( 0 );</div>
+<div class="line"><a name="l02303"></a><span class="lineno"> 2303</span>&#160; </div>
+<div class="line"><a name="l02304"></a><span class="lineno"> 2304</span>&#160;   <span class="comment">/* Interference. */</span></div>
+<div class="line"><a name="l02305"></a><span class="lineno"> 2305</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="gui_8c.html#ae5288a51fca0d166c65d2ffa5c935548">INTERFERENCE_LAYERS</a>; i++) {</div>
+<div class="line"><a name="l02306"></a><span class="lineno"> 2306</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(gui_radar.interference[i]);</div>
+<div class="line"><a name="l02307"></a><span class="lineno"> 2307</span>&#160;      gui_radar.interference[i] = NULL;</div>
+<div class="line"><a name="l02308"></a><span class="lineno"> 2308</span>&#160;   }</div>
+<div class="line"><a name="l02309"></a><span class="lineno"> 2309</span>&#160; </div>
+<div class="line"><a name="l02310"></a><span class="lineno"> 2310</span>&#160;   <span class="comment">/* Set the viewport. */</span></div>
+<div class="line"><a name="l02311"></a><span class="lineno"> 2311</span>&#160;   <a class="code" href="gui_8c.html#a91ad94799b8b82685bb01c2fa64929eb">gui_clearViewport</a>();</div>
+<div class="line"><a name="l02312"></a><span class="lineno"> 2312</span>&#160; </div>
+<div class="line"><a name="l02313"></a><span class="lineno"> 2313</span>&#160;   <span class="comment">/* Reset FPS. */</span></div>
+<div class="line"><a name="l02314"></a><span class="lineno"> 2314</span>&#160;   <a class="code" href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a>( 15., (<span class="keywordtype">double</span>)(<a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.h-15-<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h) );</div>
+<div class="line"><a name="l02315"></a><span class="lineno"> 2315</span>&#160; </div>
+<div class="line"><a name="l02316"></a><span class="lineno"> 2316</span>&#160;   <span class="comment">/* Clean up interference. */</span></div>
+<div class="line"><a name="l02317"></a><span class="lineno"> 2317</span>&#160;   <a class="code" href="gui_8c.html#aac38e2889cd12be891efb16ca7f3fc87">interference_alpha</a> = 0.;</div>
+<div class="line"><a name="l02318"></a><span class="lineno"> 2318</span>&#160;   <a class="code" href="gui_8c.html#a84c2d945ef7b207cd4dbadf20d78e0fc">interference_layer</a> = 0;</div>
+<div class="line"><a name="l02319"></a><span class="lineno"> 2319</span>&#160;   <a class="code" href="gui_8c.html#a60bbd29e5f4b96306ad2f273f7d5b905">interference_t</a>     = 0.;</div>
 <div class="line"><a name="l02320"></a><span class="lineno"> 2320</span>&#160; </div>
-<div class="line"><a name="l02321"></a><span class="lineno"> 2321</span>&#160;   <span class="comment">/* Destroy lua. */</span></div>
-<div class="line"><a name="l02322"></a><span class="lineno"> 2322</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> != LUA_NOREF) {</div>
-<div class="line"><a name="l02323"></a><span class="lineno"> 2323</span>&#160;      nlua_freeEnv( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
-<div class="line"><a name="l02324"></a><span class="lineno"> 2324</span>&#160;      <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = LUA_NOREF;</div>
-<div class="line"><a name="l02325"></a><span class="lineno"> 2325</span>&#160;   }</div>
-<div class="line"><a name="l02326"></a><span class="lineno"> 2326</span>&#160; </div>
-<div class="line"><a name="l02327"></a><span class="lineno"> 2327</span>&#160;   <span class="comment">/* OMSG */</span></div>
-<div class="line"><a name="l02328"></a><span class="lineno"> 2328</span>&#160;   omsg_position( SCREEN_W/2., SCREEN_H*2./3., SCREEN_W*2./3. );</div>
-<div class="line"><a name="l02329"></a><span class="lineno"> 2329</span>&#160;}</div>
+<div class="line"><a name="l02321"></a><span class="lineno"> 2321</span>&#160;   <span class="comment">/* Destroy offset. */</span></div>
+<div class="line"><a name="l02322"></a><span class="lineno"> 2322</span>&#160;   <a class="code" href="gui_8c.html#a82786ba51191e1623009a865853bdb3c">gui_xoff</a> = 0.;</div>
+<div class="line"><a name="l02323"></a><span class="lineno"> 2323</span>&#160;   <a class="code" href="gui_8c.html#a0e35a7c93e09854096b90931a51933ea">gui_yoff</a> = 0.;</div>
+<div class="line"><a name="l02324"></a><span class="lineno"> 2324</span>&#160; </div>
+<div class="line"><a name="l02325"></a><span class="lineno"> 2325</span>&#160;   <span class="comment">/* Destroy lua. */</span></div>
+<div class="line"><a name="l02326"></a><span class="lineno"> 2326</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> != LUA_NOREF) {</div>
+<div class="line"><a name="l02327"></a><span class="lineno"> 2327</span>&#160;      nlua_freeEnv( <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> );</div>
+<div class="line"><a name="l02328"></a><span class="lineno"> 2328</span>&#160;      <a class="code" href="gui_8c.html#ae4fba27c5342214e7f2cda824a6e8b23">gui_env</a> = LUA_NOREF;</div>
+<div class="line"><a name="l02329"></a><span class="lineno"> 2329</span>&#160;   }</div>
 <div class="line"><a name="l02330"></a><span class="lineno"> 2330</span>&#160; </div>
-<div class="line"><a name="l02331"></a><span class="lineno"> 2331</span>&#160; </div>
-<div class="line"><a name="l02335"></a><span class="lineno"><a class="line" href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7"> 2335</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7">gui_free</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l02336"></a><span class="lineno"> 2336</span>&#160;{</div>
-<div class="line"><a name="l02337"></a><span class="lineno"> 2337</span>&#160;   <a class="code" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a>();</div>
-<div class="line"><a name="l02338"></a><span class="lineno"> 2338</span>&#160; </div>
-<div class="line"><a name="l02339"></a><span class="lineno"> 2339</span>&#160;   free(<a class="code" href="gui_8c.html#a2e3021244e7ab0874aae2b593851fcf5">mesg_stack</a>);</div>
-<div class="line"><a name="l02340"></a><span class="lineno"> 2340</span>&#160;   <a class="code" href="gui_8c.html#a2e3021244e7ab0874aae2b593851fcf5">mesg_stack</a> = NULL;</div>
-<div class="line"><a name="l02341"></a><span class="lineno"> 2341</span>&#160; </div>
-<div class="line"><a name="l02342"></a><span class="lineno"> 2342</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gui_planet_vbo );</div>
-<div class="line"><a name="l02343"></a><span class="lineno"> 2343</span>&#160;   gui_planet_vbo = NULL;</div>
-<div class="line"><a name="l02344"></a><span class="lineno"> 2344</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gui_radar_select_vbo );</div>
-<div class="line"><a name="l02345"></a><span class="lineno"> 2345</span>&#160;   gui_radar_select_vbo = NULL;</div>
-<div class="line"><a name="l02346"></a><span class="lineno"> 2346</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gui_planet_blink_vbo );</div>
-<div class="line"><a name="l02347"></a><span class="lineno"> 2347</span>&#160;   gui_planet_blink_vbo = NULL;</div>
-<div class="line"><a name="l02348"></a><span class="lineno"> 2348</span>&#160; </div>
-<div class="line"><a name="l02349"></a><span class="lineno"> 2349</span>&#160;   osd_exit();</div>
-<div class="line"><a name="l02350"></a><span class="lineno"> 2350</span>&#160; </div>
-<div class="line"><a name="l02351"></a><span class="lineno"> 2351</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#a0e6c24ee937155b15a30c1b483b9b80e">gui_ico_hail</a> );</div>
-<div class="line"><a name="l02352"></a><span class="lineno"> 2352</span>&#160;   <a class="code" href="gui_8c.html#a0e6c24ee937155b15a30c1b483b9b80e">gui_ico_hail</a> = NULL;</div>
-<div class="line"><a name="l02353"></a><span class="lineno"> 2353</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#acb164f220b40a88fd1892a46e3a44a71">gui_target_planet</a> );</div>
-<div class="line"><a name="l02354"></a><span class="lineno"> 2354</span>&#160;   <a class="code" href="gui_8c.html#acb164f220b40a88fd1892a46e3a44a71">gui_target_planet</a> = NULL;</div>
-<div class="line"><a name="l02355"></a><span class="lineno"> 2355</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#affd801178ce0d7a5f999698b23cb2733">gui_target_pilot</a> );</div>
-<div class="line"><a name="l02356"></a><span class="lineno"> 2356</span>&#160;   <a class="code" href="gui_8c.html#affd801178ce0d7a5f999698b23cb2733">gui_target_pilot</a> = NULL;</div>
-<div class="line"><a name="l02357"></a><span class="lineno"> 2357</span>&#160; </div>
-<div class="line"><a name="l02358"></a><span class="lineno"> 2358</span>&#160;   omsg_cleanup();</div>
-<div class="line"><a name="l02359"></a><span class="lineno"> 2359</span>&#160;}</div>
-<div class="line"><a name="l02360"></a><span class="lineno"> 2360</span>&#160; </div>
+<div class="line"><a name="l02331"></a><span class="lineno"> 2331</span>&#160;   <span class="comment">/* OMSG */</span></div>
+<div class="line"><a name="l02332"></a><span class="lineno"> 2332</span>&#160;   omsg_position( SCREEN_W/2., SCREEN_H*2./3., SCREEN_W*2./3. );</div>
+<div class="line"><a name="l02333"></a><span class="lineno"> 2333</span>&#160;}</div>
+<div class="line"><a name="l02334"></a><span class="lineno"> 2334</span>&#160; </div>
+<div class="line"><a name="l02335"></a><span class="lineno"> 2335</span>&#160; </div>
+<div class="line"><a name="l02339"></a><span class="lineno"><a class="line" href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7"> 2339</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7">gui_free</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l02340"></a><span class="lineno"> 2340</span>&#160;{</div>
+<div class="line"><a name="l02341"></a><span class="lineno"> 2341</span>&#160;   <a class="code" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a>();</div>
+<div class="line"><a name="l02342"></a><span class="lineno"> 2342</span>&#160; </div>
+<div class="line"><a name="l02343"></a><span class="lineno"> 2343</span>&#160;   free(<a class="code" href="gui_8c.html#a2e3021244e7ab0874aae2b593851fcf5">mesg_stack</a>);</div>
+<div class="line"><a name="l02344"></a><span class="lineno"> 2344</span>&#160;   <a class="code" href="gui_8c.html#a2e3021244e7ab0874aae2b593851fcf5">mesg_stack</a> = NULL;</div>
+<div class="line"><a name="l02345"></a><span class="lineno"> 2345</span>&#160; </div>
+<div class="line"><a name="l02346"></a><span class="lineno"> 2346</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gui_planet_vbo );</div>
+<div class="line"><a name="l02347"></a><span class="lineno"> 2347</span>&#160;   gui_planet_vbo = NULL;</div>
+<div class="line"><a name="l02348"></a><span class="lineno"> 2348</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gui_radar_select_vbo );</div>
+<div class="line"><a name="l02349"></a><span class="lineno"> 2349</span>&#160;   gui_radar_select_vbo = NULL;</div>
+<div class="line"><a name="l02350"></a><span class="lineno"> 2350</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gui_planet_blink_vbo );</div>
+<div class="line"><a name="l02351"></a><span class="lineno"> 2351</span>&#160;   gui_planet_blink_vbo = NULL;</div>
+<div class="line"><a name="l02352"></a><span class="lineno"> 2352</span>&#160; </div>
+<div class="line"><a name="l02353"></a><span class="lineno"> 2353</span>&#160;   osd_exit();</div>
+<div class="line"><a name="l02354"></a><span class="lineno"> 2354</span>&#160; </div>
+<div class="line"><a name="l02355"></a><span class="lineno"> 2355</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#a0e6c24ee937155b15a30c1b483b9b80e">gui_ico_hail</a> );</div>
+<div class="line"><a name="l02356"></a><span class="lineno"> 2356</span>&#160;   <a class="code" href="gui_8c.html#a0e6c24ee937155b15a30c1b483b9b80e">gui_ico_hail</a> = NULL;</div>
+<div class="line"><a name="l02357"></a><span class="lineno"> 2357</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#acb164f220b40a88fd1892a46e3a44a71">gui_target_planet</a> );</div>
+<div class="line"><a name="l02358"></a><span class="lineno"> 2358</span>&#160;   <a class="code" href="gui_8c.html#acb164f220b40a88fd1892a46e3a44a71">gui_target_planet</a> = NULL;</div>
+<div class="line"><a name="l02359"></a><span class="lineno"> 2359</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#affd801178ce0d7a5f999698b23cb2733">gui_target_pilot</a> );</div>
+<div class="line"><a name="l02360"></a><span class="lineno"> 2360</span>&#160;   <a class="code" href="gui_8c.html#affd801178ce0d7a5f999698b23cb2733">gui_target_pilot</a> = NULL;</div>
 <div class="line"><a name="l02361"></a><span class="lineno"> 2361</span>&#160; </div>
-<div class="line"><a name="l02367"></a><span class="lineno"><a class="line" href="gui_8c.html#a407ae1ef3da43bc1cd37e88eef427a8b"> 2367</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a407ae1ef3da43bc1cd37e88eef427a8b">gui_setRadarRel</a>( <span class="keywordtype">int</span> mod )</div>
-<div class="line"><a name="l02368"></a><span class="lineno"> 2368</span>&#160;{</div>
-<div class="line"><a name="l02369"></a><span class="lineno"> 2369</span>&#160;   gui_radar.res += mod * <a class="code" href="gui_8c.html#a56716808570754a75daef23e8342455b">RADAR_RES_INTERVAL</a>;</div>
-<div class="line"><a name="l02370"></a><span class="lineno"> 2370</span>&#160;   gui_radar.res = <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>( <a class="code" href="gui_8c.html#ac078afe7321ace91199359c128988334">RADAR_RES_MIN</a>, <a class="code" href="gui_8c.html#a8922ec669a55246cae739578e068cd54">RADAR_RES_MAX</a>, gui_radar.res );</div>
-<div class="line"><a name="l02371"></a><span class="lineno"> 2371</span>&#160; </div>
-<div class="line"><a name="l02372"></a><span class="lineno"> 2372</span>&#160;   <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>( _(<span class="stringliteral">&quot;#oRadar set to %dx.&quot;</span>), (<span class="keywordtype">int</span>)gui_radar.res );</div>
-<div class="line"><a name="l02373"></a><span class="lineno"> 2373</span>&#160;}</div>
-<div class="line"><a name="l02374"></a><span class="lineno"> 2374</span>&#160; </div>
+<div class="line"><a name="l02362"></a><span class="lineno"> 2362</span>&#160;   omsg_cleanup();</div>
+<div class="line"><a name="l02363"></a><span class="lineno"> 2363</span>&#160;}</div>
+<div class="line"><a name="l02364"></a><span class="lineno"> 2364</span>&#160; </div>
+<div class="line"><a name="l02365"></a><span class="lineno"> 2365</span>&#160; </div>
+<div class="line"><a name="l02371"></a><span class="lineno"><a class="line" href="gui_8c.html#a407ae1ef3da43bc1cd37e88eef427a8b"> 2371</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a407ae1ef3da43bc1cd37e88eef427a8b">gui_setRadarRel</a>( <span class="keywordtype">int</span> mod )</div>
+<div class="line"><a name="l02372"></a><span class="lineno"> 2372</span>&#160;{</div>
+<div class="line"><a name="l02373"></a><span class="lineno"> 2373</span>&#160;   gui_radar.res += mod * <a class="code" href="gui_8c.html#a56716808570754a75daef23e8342455b">RADAR_RES_INTERVAL</a>;</div>
+<div class="line"><a name="l02374"></a><span class="lineno"> 2374</span>&#160;   gui_radar.res = <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>( <a class="code" href="gui_8c.html#ac078afe7321ace91199359c128988334">RADAR_RES_MIN</a>, <a class="code" href="gui_8c.html#a8922ec669a55246cae739578e068cd54">RADAR_RES_MAX</a>, gui_radar.res );</div>
 <div class="line"><a name="l02375"></a><span class="lineno"> 2375</span>&#160; </div>
-<div class="line"><a name="l02382"></a><span class="lineno"><a class="line" href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1"> 2382</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1">gui_getOffset</a>( <span class="keywordtype">double</span> *x, <span class="keywordtype">double</span> *y )</div>
-<div class="line"><a name="l02383"></a><span class="lineno"> 2383</span>&#160;{</div>
-<div class="line"><a name="l02384"></a><span class="lineno"> 2384</span>&#160;   *x = <a class="code" href="gui_8c.html#a82786ba51191e1623009a865853bdb3c">gui_xoff</a>;</div>
-<div class="line"><a name="l02385"></a><span class="lineno"> 2385</span>&#160;   *y = <a class="code" href="gui_8c.html#a0e35a7c93e09854096b90931a51933ea">gui_yoff</a>;</div>
-<div class="line"><a name="l02386"></a><span class="lineno"> 2386</span>&#160;}</div>
-<div class="line"><a name="l02387"></a><span class="lineno"> 2387</span>&#160; </div>
-<div class="line"><a name="l02388"></a><span class="lineno"> 2388</span>&#160; </div>
-<div class="line"><a name="l02392"></a><span class="lineno"><a class="line" href="gui_8c.html#abcb51253243292fdbb1d642da4f094c6"> 2392</a></span>&#160;glTexture* <a class="code" href="gui_8c.html#abcb51253243292fdbb1d642da4f094c6">gui_hailIcon</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l02393"></a><span class="lineno"> 2393</span>&#160;{</div>
-<div class="line"><a name="l02394"></a><span class="lineno"> 2394</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="gui_8c.html#a0e6c24ee937155b15a30c1b483b9b80e">gui_ico_hail</a>;</div>
-<div class="line"><a name="l02395"></a><span class="lineno"> 2395</span>&#160;}</div>
-<div class="line"><a name="l02396"></a><span class="lineno"> 2396</span>&#160; </div>
-<div class="line"><a name="l02397"></a><span class="lineno"> 2397</span>&#160; </div>
-<div class="line"><a name="l02401"></a><span class="lineno"><a class="line" href="gui_8c.html#a19238703e0fd1015e29d9caa533c68ad"> 2401</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a19238703e0fd1015e29d9caa533c68ad">gui_targetPlanetGFX</a>( glTexture *gfx )</div>
-<div class="line"><a name="l02402"></a><span class="lineno"> 2402</span>&#160;{</div>
-<div class="line"><a name="l02403"></a><span class="lineno"> 2403</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#acb164f220b40a88fd1892a46e3a44a71">gui_target_planet</a> );</div>
-<div class="line"><a name="l02404"></a><span class="lineno"> 2404</span>&#160;   <a class="code" href="gui_8c.html#acb164f220b40a88fd1892a46e3a44a71">gui_target_planet</a> = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( gfx );</div>
-<div class="line"><a name="l02405"></a><span class="lineno"> 2405</span>&#160;}</div>
-<div class="line"><a name="l02406"></a><span class="lineno"> 2406</span>&#160; </div>
-<div class="line"><a name="l02407"></a><span class="lineno"> 2407</span>&#160; </div>
-<div class="line"><a name="l02411"></a><span class="lineno"><a class="line" href="gui_8c.html#a85c549239cd0d7885d00147f6d38177a"> 2411</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a85c549239cd0d7885d00147f6d38177a">gui_targetPilotGFX</a>( glTexture *gfx )</div>
-<div class="line"><a name="l02412"></a><span class="lineno"> 2412</span>&#160;{</div>
-<div class="line"><a name="l02413"></a><span class="lineno"> 2413</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#affd801178ce0d7a5f999698b23cb2733">gui_target_pilot</a> );</div>
-<div class="line"><a name="l02414"></a><span class="lineno"> 2414</span>&#160;   <a class="code" href="gui_8c.html#affd801178ce0d7a5f999698b23cb2733">gui_target_pilot</a> = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( gfx );</div>
-<div class="line"><a name="l02415"></a><span class="lineno"> 2415</span>&#160;}</div>
-<div class="line"><a name="l02416"></a><span class="lineno"> 2416</span>&#160; </div>
-<div class="line"><a name="l02420"></a><span class="lineno"><a class="line" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f"> 2420</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a>( <span class="keywordtype">int</span>* sx, <span class="keywordtype">int</span>* sy, <span class="keywordtype">int</span> ex, <span class="keywordtype">int</span> ey )</div>
-<div class="line"><a name="l02421"></a><span class="lineno"> 2421</span>&#160;{</div>
-<div class="line"><a name="l02422"></a><span class="lineno"> 2422</span>&#160;   <a class="code" href="opengl_8c.html#a93a13cb7cca3a209d10f66e3917f5fd1">gl_windowToScreenPos</a>( sx, sy, ex - <a class="code" href="gui_8c.html#af3e326ac1cb4d3586fdefecf78dbc720">gui_viewport_x</a>, ey - <a class="code" href="gui_8c.html#abe56fe8d434b852dde60acdd3442645b">gui_viewport_y</a> );</div>
-<div class="line"><a name="l02423"></a><span class="lineno"> 2423</span>&#160;}</div>
-<div class="line"><a name="l02424"></a><span class="lineno"> 2424</span>&#160; </div>
-<div class="line"><a name="l02425"></a><span class="lineno"> 2425</span>&#160; </div>
-<div class="line"><a name="l02432"></a><span class="lineno"><a class="line" href="gui_8c.html#a08644b87cc80b86623c3370cafa19165"> 2432</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a08644b87cc80b86623c3370cafa19165">gui_radarClickEvent</a>( SDL_Event* event )</div>
-<div class="line"><a name="l02433"></a><span class="lineno"> 2433</span>&#160;{</div>
-<div class="line"><a name="l02434"></a><span class="lineno"> 2434</span>&#160;   <span class="keywordtype">int</span> mxr, myr, in_bounds;</div>
-<div class="line"><a name="l02435"></a><span class="lineno"> 2435</span>&#160;   <span class="keywordtype">double</span> x, y, cx, cy;</div>
-<div class="line"><a name="l02436"></a><span class="lineno"> 2436</span>&#160; </div>
-<div class="line"><a name="l02437"></a><span class="lineno"> 2437</span>&#160;   <a class="code" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a>( &amp;mxr, &amp;myr, event-&gt;button.x, event-&gt;button.y );</div>
-<div class="line"><a name="l02438"></a><span class="lineno"> 2438</span>&#160;   <span class="keywordflow">if</span> (gui_radar.shape == RADAR_RECT) {</div>
-<div class="line"><a name="l02439"></a><span class="lineno"> 2439</span>&#160;      cx = gui_radar.x + gui_radar.w / 2.;</div>
-<div class="line"><a name="l02440"></a><span class="lineno"> 2440</span>&#160;      cy = gui_radar.y + gui_radar.h / 2.;</div>
-<div class="line"><a name="l02441"></a><span class="lineno"> 2441</span>&#160;      in_bounds = (2*<a class="code" href="naev_8h.html#a996f7be338ccb40d1a2a5abc1ad61759">ABS</a>( mxr-cx ) &lt;= gui_radar.w &amp;&amp; 2*<a class="code" href="naev_8h.html#a996f7be338ccb40d1a2a5abc1ad61759">ABS</a>( myr-cy ) &lt;= gui_radar.h);</div>
-<div class="line"><a name="l02442"></a><span class="lineno"> 2442</span>&#160;   } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l02443"></a><span class="lineno"> 2443</span>&#160;      cx = gui_radar.x;</div>
-<div class="line"><a name="l02444"></a><span class="lineno"> 2444</span>&#160;      cy = gui_radar.y;</div>
-<div class="line"><a name="l02445"></a><span class="lineno"> 2445</span>&#160;      in_bounds = (<a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( mxr-cx ) + <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( myr-cy ) &lt;= <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( gui_radar.w ));</div>
-<div class="line"><a name="l02446"></a><span class="lineno"> 2446</span>&#160;   }</div>
-<div class="line"><a name="l02447"></a><span class="lineno"> 2447</span>&#160;   <span class="keywordflow">if</span> (!in_bounds)</div>
-<div class="line"><a name="l02448"></a><span class="lineno"> 2448</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02449"></a><span class="lineno"> 2449</span>&#160;   x = (mxr - cx) * gui_radar.res + <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos.x;</div>
-<div class="line"><a name="l02450"></a><span class="lineno"> 2450</span>&#160;   y = (myr - cy) * gui_radar.res + <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos.y;</div>
-<div class="line"><a name="l02451"></a><span class="lineno"> 2451</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="input_8c.html#a8a5d7fac9c2193efa4151e82ad8b37ac">input_clickPos</a>( event, x, y, 1., 10. * gui_radar.res, 15. * gui_radar.res );</div>
-<div class="line"><a name="l02452"></a><span class="lineno"> 2452</span>&#160;}</div>
-<div class="line"><a name="l02453"></a><span class="lineno"> 2453</span>&#160; </div>
-<div class="line"><a name="l02457"></a><span class="lineno"><a class="line" href="gui_8c.html#a220c3548710a7e71bc249339e0a4ca0d"> 2457</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a220c3548710a7e71bc249339e0a4ca0d">gui_handleEvent</a>( SDL_Event *evt )</div>
-<div class="line"><a name="l02458"></a><span class="lineno"> 2458</span>&#160;{</div>
-<div class="line"><a name="l02459"></a><span class="lineno"> 2459</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l02460"></a><span class="lineno"> 2460</span>&#160;   <span class="keywordtype">int</span> x, y;</div>
-<div class="line"><a name="l02461"></a><span class="lineno"> 2461</span>&#160; </div>
-<div class="line"><a name="l02462"></a><span class="lineno"> 2462</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p == NULL)</div>
-<div class="line"><a name="l02463"></a><span class="lineno"> 2463</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02464"></a><span class="lineno"> 2464</span>&#160;   <span class="keywordflow">if</span> ((evt-&gt;type == SDL_MOUSEBUTTONDOWN) &amp;&amp;</div>
-<div class="line"><a name="l02465"></a><span class="lineno"> 2465</span>&#160;         (pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p,PILOT_HYP_PREP) ||</div>
-<div class="line"><a name="l02466"></a><span class="lineno"> 2466</span>&#160;         pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p,PILOT_HYP_BEGIN) ||</div>
-<div class="line"><a name="l02467"></a><span class="lineno"> 2467</span>&#160;         pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p,PILOT_HYPERSPACE)))</div>
-<div class="line"><a name="l02468"></a><span class="lineno"> 2468</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02469"></a><span class="lineno"> 2469</span>&#160; </div>
-<div class="line"><a name="l02470"></a><span class="lineno"> 2470</span>&#160;   ret = 0;</div>
-<div class="line"><a name="l02471"></a><span class="lineno"> 2471</span>&#160;   <span class="keywordflow">switch</span> (evt-&gt;type) {</div>
-<div class="line"><a name="l02472"></a><span class="lineno"> 2472</span>&#160;      <span class="comment">/* Mouse motion. */</span></div>
-<div class="line"><a name="l02473"></a><span class="lineno"> 2473</span>&#160;      <span class="keywordflow">case</span> SDL_MOUSEMOTION:</div>
-<div class="line"><a name="l02474"></a><span class="lineno"> 2474</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="gui_8c.html#a0b098e8b27ebcd5c86011e1d619eda7a">gui_L_mmove</a>)</div>
-<div class="line"><a name="l02475"></a><span class="lineno"> 2475</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l02476"></a><span class="lineno"> 2476</span>&#160;         <a class="code" href="gui_8c.html#aab28277a3e509a511c88e2287f4f362a">gui_prepFunc</a>( <span class="stringliteral">&quot;mouse_move&quot;</span> );</div>
-<div class="line"><a name="l02477"></a><span class="lineno"> 2477</span>&#160;         <a class="code" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a>( &amp;x, &amp;y, evt-&gt;motion.x, evt-&gt;motion.y );</div>
-<div class="line"><a name="l02478"></a><span class="lineno"> 2478</span>&#160;         lua_pushnumber( naevL, x );</div>
-<div class="line"><a name="l02479"></a><span class="lineno"> 2479</span>&#160;         lua_pushnumber( naevL, y );</div>
-<div class="line"><a name="l02480"></a><span class="lineno"> 2480</span>&#160;         <a class="code" href="gui_8c.html#abf3793fd4a6b67b16c0bed4b6a596be8">gui_runFunc</a>( <span class="stringliteral">&quot;mouse_move&quot;</span>, 2, 0 );</div>
-<div class="line"><a name="l02481"></a><span class="lineno"> 2481</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l02482"></a><span class="lineno"> 2482</span>&#160; </div>
-<div class="line"><a name="l02483"></a><span class="lineno"> 2483</span>&#160;      <span class="comment">/* Mouse click. */</span></div>
-<div class="line"><a name="l02484"></a><span class="lineno"> 2484</span>&#160;      <span class="keywordflow">case</span> SDL_MOUSEBUTTONDOWN:</div>
-<div class="line"><a name="l02485"></a><span class="lineno"> 2485</span>&#160;      <span class="keywordflow">case</span> SDL_MOUSEBUTTONUP:</div>
-<div class="line"><a name="l02486"></a><span class="lineno"> 2486</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="gui_8c.html#ae883f3820f17b46ae2adcca8da1bfcae">gui_L_mclick</a>)</div>
-<div class="line"><a name="l02487"></a><span class="lineno"> 2487</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l02488"></a><span class="lineno"> 2488</span>&#160;         <a class="code" href="gui_8c.html#aab28277a3e509a511c88e2287f4f362a">gui_prepFunc</a>( <span class="stringliteral">&quot;mouse_click&quot;</span> );</div>
-<div class="line"><a name="l02489"></a><span class="lineno"> 2489</span>&#160;         lua_pushnumber( naevL, evt-&gt;button.button+1 );</div>
-<div class="line"><a name="l02490"></a><span class="lineno"> 2490</span>&#160;         <a class="code" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a>( &amp;x, &amp;y, evt-&gt;button.x, evt-&gt;button.y );</div>
-<div class="line"><a name="l02491"></a><span class="lineno"> 2491</span>&#160;         lua_pushnumber( naevL, x );</div>
-<div class="line"><a name="l02492"></a><span class="lineno"> 2492</span>&#160;         lua_pushnumber( naevL, y );</div>
-<div class="line"><a name="l02493"></a><span class="lineno"> 2493</span>&#160;         lua_pushboolean( naevL, (evt-&gt;type==SDL_MOUSEBUTTONDOWN) );</div>
-<div class="line"><a name="l02494"></a><span class="lineno"> 2494</span>&#160;         <a class="code" href="gui_8c.html#abf3793fd4a6b67b16c0bed4b6a596be8">gui_runFunc</a>( <span class="stringliteral">&quot;mouse_click&quot;</span>, 4, 1 );</div>
-<div class="line"><a name="l02495"></a><span class="lineno"> 2495</span>&#160;         ret = lua_toboolean( naevL, -1 );</div>
-<div class="line"><a name="l02496"></a><span class="lineno"> 2496</span>&#160;         lua_pop( naevL, 1 );</div>
-<div class="line"><a name="l02497"></a><span class="lineno"> 2497</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l02498"></a><span class="lineno"> 2498</span>&#160; </div>
-<div class="line"><a name="l02499"></a><span class="lineno"> 2499</span>&#160;      <span class="comment">/* Not interested in the rest. */</span></div>
-<div class="line"><a name="l02500"></a><span class="lineno"> 2500</span>&#160;      <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l02376"></a><span class="lineno"> 2376</span>&#160;   <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>( _(<span class="stringliteral">&quot;#oRadar set to %dx.&quot;</span>), (<span class="keywordtype">int</span>)gui_radar.res );</div>
+<div class="line"><a name="l02377"></a><span class="lineno"> 2377</span>&#160;}</div>
+<div class="line"><a name="l02378"></a><span class="lineno"> 2378</span>&#160; </div>
+<div class="line"><a name="l02379"></a><span class="lineno"> 2379</span>&#160; </div>
+<div class="line"><a name="l02386"></a><span class="lineno"><a class="line" href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1"> 2386</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1">gui_getOffset</a>( <span class="keywordtype">double</span> *x, <span class="keywordtype">double</span> *y )</div>
+<div class="line"><a name="l02387"></a><span class="lineno"> 2387</span>&#160;{</div>
+<div class="line"><a name="l02388"></a><span class="lineno"> 2388</span>&#160;   *x = <a class="code" href="gui_8c.html#a82786ba51191e1623009a865853bdb3c">gui_xoff</a>;</div>
+<div class="line"><a name="l02389"></a><span class="lineno"> 2389</span>&#160;   *y = <a class="code" href="gui_8c.html#a0e35a7c93e09854096b90931a51933ea">gui_yoff</a>;</div>
+<div class="line"><a name="l02390"></a><span class="lineno"> 2390</span>&#160;}</div>
+<div class="line"><a name="l02391"></a><span class="lineno"> 2391</span>&#160; </div>
+<div class="line"><a name="l02392"></a><span class="lineno"> 2392</span>&#160; </div>
+<div class="line"><a name="l02396"></a><span class="lineno"><a class="line" href="gui_8c.html#abcb51253243292fdbb1d642da4f094c6"> 2396</a></span>&#160;glTexture* <a class="code" href="gui_8c.html#abcb51253243292fdbb1d642da4f094c6">gui_hailIcon</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l02397"></a><span class="lineno"> 2397</span>&#160;{</div>
+<div class="line"><a name="l02398"></a><span class="lineno"> 2398</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="gui_8c.html#a0e6c24ee937155b15a30c1b483b9b80e">gui_ico_hail</a>;</div>
+<div class="line"><a name="l02399"></a><span class="lineno"> 2399</span>&#160;}</div>
+<div class="line"><a name="l02400"></a><span class="lineno"> 2400</span>&#160; </div>
+<div class="line"><a name="l02401"></a><span class="lineno"> 2401</span>&#160; </div>
+<div class="line"><a name="l02405"></a><span class="lineno"><a class="line" href="gui_8c.html#a19238703e0fd1015e29d9caa533c68ad"> 2405</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a19238703e0fd1015e29d9caa533c68ad">gui_targetPlanetGFX</a>( glTexture *gfx )</div>
+<div class="line"><a name="l02406"></a><span class="lineno"> 2406</span>&#160;{</div>
+<div class="line"><a name="l02407"></a><span class="lineno"> 2407</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#acb164f220b40a88fd1892a46e3a44a71">gui_target_planet</a> );</div>
+<div class="line"><a name="l02408"></a><span class="lineno"> 2408</span>&#160;   <a class="code" href="gui_8c.html#acb164f220b40a88fd1892a46e3a44a71">gui_target_planet</a> = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( gfx );</div>
+<div class="line"><a name="l02409"></a><span class="lineno"> 2409</span>&#160;}</div>
+<div class="line"><a name="l02410"></a><span class="lineno"> 2410</span>&#160; </div>
+<div class="line"><a name="l02411"></a><span class="lineno"> 2411</span>&#160; </div>
+<div class="line"><a name="l02415"></a><span class="lineno"><a class="line" href="gui_8c.html#a85c549239cd0d7885d00147f6d38177a"> 2415</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a85c549239cd0d7885d00147f6d38177a">gui_targetPilotGFX</a>( glTexture *gfx )</div>
+<div class="line"><a name="l02416"></a><span class="lineno"> 2416</span>&#160;{</div>
+<div class="line"><a name="l02417"></a><span class="lineno"> 2417</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="gui_8c.html#affd801178ce0d7a5f999698b23cb2733">gui_target_pilot</a> );</div>
+<div class="line"><a name="l02418"></a><span class="lineno"> 2418</span>&#160;   <a class="code" href="gui_8c.html#affd801178ce0d7a5f999698b23cb2733">gui_target_pilot</a> = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( gfx );</div>
+<div class="line"><a name="l02419"></a><span class="lineno"> 2419</span>&#160;}</div>
+<div class="line"><a name="l02420"></a><span class="lineno"> 2420</span>&#160; </div>
+<div class="line"><a name="l02424"></a><span class="lineno"><a class="line" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f"> 2424</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a>( <span class="keywordtype">int</span>* sx, <span class="keywordtype">int</span>* sy, <span class="keywordtype">int</span> ex, <span class="keywordtype">int</span> ey )</div>
+<div class="line"><a name="l02425"></a><span class="lineno"> 2425</span>&#160;{</div>
+<div class="line"><a name="l02426"></a><span class="lineno"> 2426</span>&#160;   <a class="code" href="opengl_8c.html#a93a13cb7cca3a209d10f66e3917f5fd1">gl_windowToScreenPos</a>( sx, sy, ex - <a class="code" href="gui_8c.html#af3e326ac1cb4d3586fdefecf78dbc720">gui_viewport_x</a>, ey - <a class="code" href="gui_8c.html#abe56fe8d434b852dde60acdd3442645b">gui_viewport_y</a> );</div>
+<div class="line"><a name="l02427"></a><span class="lineno"> 2427</span>&#160;}</div>
+<div class="line"><a name="l02428"></a><span class="lineno"> 2428</span>&#160; </div>
+<div class="line"><a name="l02429"></a><span class="lineno"> 2429</span>&#160; </div>
+<div class="line"><a name="l02436"></a><span class="lineno"><a class="line" href="gui_8c.html#a08644b87cc80b86623c3370cafa19165"> 2436</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a08644b87cc80b86623c3370cafa19165">gui_radarClickEvent</a>( SDL_Event* event )</div>
+<div class="line"><a name="l02437"></a><span class="lineno"> 2437</span>&#160;{</div>
+<div class="line"><a name="l02438"></a><span class="lineno"> 2438</span>&#160;   <span class="keywordtype">int</span> mxr, myr, in_bounds;</div>
+<div class="line"><a name="l02439"></a><span class="lineno"> 2439</span>&#160;   <span class="keywordtype">double</span> x, y, cx, cy;</div>
+<div class="line"><a name="l02440"></a><span class="lineno"> 2440</span>&#160; </div>
+<div class="line"><a name="l02441"></a><span class="lineno"> 2441</span>&#160;   <a class="code" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a>( &amp;mxr, &amp;myr, event-&gt;button.x, event-&gt;button.y );</div>
+<div class="line"><a name="l02442"></a><span class="lineno"> 2442</span>&#160;   <span class="keywordflow">if</span> (gui_radar.shape == RADAR_RECT) {</div>
+<div class="line"><a name="l02443"></a><span class="lineno"> 2443</span>&#160;      cx = gui_radar.x + gui_radar.w / 2.;</div>
+<div class="line"><a name="l02444"></a><span class="lineno"> 2444</span>&#160;      cy = gui_radar.y + gui_radar.h / 2.;</div>
+<div class="line"><a name="l02445"></a><span class="lineno"> 2445</span>&#160;      in_bounds = (2*<a class="code" href="naev_8h.html#a996f7be338ccb40d1a2a5abc1ad61759">ABS</a>( mxr-cx ) &lt;= gui_radar.w &amp;&amp; 2*<a class="code" href="naev_8h.html#a996f7be338ccb40d1a2a5abc1ad61759">ABS</a>( myr-cy ) &lt;= gui_radar.h);</div>
+<div class="line"><a name="l02446"></a><span class="lineno"> 2446</span>&#160;   } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l02447"></a><span class="lineno"> 2447</span>&#160;      cx = gui_radar.x;</div>
+<div class="line"><a name="l02448"></a><span class="lineno"> 2448</span>&#160;      cy = gui_radar.y;</div>
+<div class="line"><a name="l02449"></a><span class="lineno"> 2449</span>&#160;      in_bounds = (<a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( mxr-cx ) + <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( myr-cy ) &lt;= <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( gui_radar.w ));</div>
+<div class="line"><a name="l02450"></a><span class="lineno"> 2450</span>&#160;   }</div>
+<div class="line"><a name="l02451"></a><span class="lineno"> 2451</span>&#160;   <span class="keywordflow">if</span> (!in_bounds)</div>
+<div class="line"><a name="l02452"></a><span class="lineno"> 2452</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02453"></a><span class="lineno"> 2453</span>&#160;   x = (mxr - cx) * gui_radar.res + <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos.x;</div>
+<div class="line"><a name="l02454"></a><span class="lineno"> 2454</span>&#160;   y = (myr - cy) * gui_radar.res + <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos.y;</div>
+<div class="line"><a name="l02455"></a><span class="lineno"> 2455</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="input_8c.html#a8a5d7fac9c2193efa4151e82ad8b37ac">input_clickPos</a>( event, x, y, 1., 10. * gui_radar.res, 15. * gui_radar.res );</div>
+<div class="line"><a name="l02456"></a><span class="lineno"> 2456</span>&#160;}</div>
+<div class="line"><a name="l02457"></a><span class="lineno"> 2457</span>&#160; </div>
+<div class="line"><a name="l02461"></a><span class="lineno"><a class="line" href="gui_8c.html#a220c3548710a7e71bc249339e0a4ca0d"> 2461</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a220c3548710a7e71bc249339e0a4ca0d">gui_handleEvent</a>( SDL_Event *evt )</div>
+<div class="line"><a name="l02462"></a><span class="lineno"> 2462</span>&#160;{</div>
+<div class="line"><a name="l02463"></a><span class="lineno"> 2463</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l02464"></a><span class="lineno"> 2464</span>&#160;   <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><a name="l02465"></a><span class="lineno"> 2465</span>&#160; </div>
+<div class="line"><a name="l02466"></a><span class="lineno"> 2466</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p == NULL)</div>
+<div class="line"><a name="l02467"></a><span class="lineno"> 2467</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02468"></a><span class="lineno"> 2468</span>&#160;   <span class="keywordflow">if</span> ((evt-&gt;type == SDL_MOUSEBUTTONDOWN) &amp;&amp;</div>
+<div class="line"><a name="l02469"></a><span class="lineno"> 2469</span>&#160;         (pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p,PILOT_HYP_PREP) ||</div>
+<div class="line"><a name="l02470"></a><span class="lineno"> 2470</span>&#160;         pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p,PILOT_HYP_BEGIN) ||</div>
+<div class="line"><a name="l02471"></a><span class="lineno"> 2471</span>&#160;         pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p,PILOT_HYPERSPACE)))</div>
+<div class="line"><a name="l02472"></a><span class="lineno"> 2472</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02473"></a><span class="lineno"> 2473</span>&#160; </div>
+<div class="line"><a name="l02474"></a><span class="lineno"> 2474</span>&#160;   ret = 0;</div>
+<div class="line"><a name="l02475"></a><span class="lineno"> 2475</span>&#160;   <span class="keywordflow">switch</span> (evt-&gt;type) {</div>
+<div class="line"><a name="l02476"></a><span class="lineno"> 2476</span>&#160;      <span class="comment">/* Mouse motion. */</span></div>
+<div class="line"><a name="l02477"></a><span class="lineno"> 2477</span>&#160;      <span class="keywordflow">case</span> SDL_MOUSEMOTION:</div>
+<div class="line"><a name="l02478"></a><span class="lineno"> 2478</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="gui_8c.html#a0b098e8b27ebcd5c86011e1d619eda7a">gui_L_mmove</a>)</div>
+<div class="line"><a name="l02479"></a><span class="lineno"> 2479</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l02480"></a><span class="lineno"> 2480</span>&#160;         <a class="code" href="gui_8c.html#aab28277a3e509a511c88e2287f4f362a">gui_prepFunc</a>( <span class="stringliteral">&quot;mouse_move&quot;</span> );</div>
+<div class="line"><a name="l02481"></a><span class="lineno"> 2481</span>&#160;         <a class="code" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a>( &amp;x, &amp;y, evt-&gt;motion.x, evt-&gt;motion.y );</div>
+<div class="line"><a name="l02482"></a><span class="lineno"> 2482</span>&#160;         lua_pushnumber( naevL, x );</div>
+<div class="line"><a name="l02483"></a><span class="lineno"> 2483</span>&#160;         lua_pushnumber( naevL, y );</div>
+<div class="line"><a name="l02484"></a><span class="lineno"> 2484</span>&#160;         <a class="code" href="gui_8c.html#abf3793fd4a6b67b16c0bed4b6a596be8">gui_runFunc</a>( <span class="stringliteral">&quot;mouse_move&quot;</span>, 2, 0 );</div>
+<div class="line"><a name="l02485"></a><span class="lineno"> 2485</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l02486"></a><span class="lineno"> 2486</span>&#160; </div>
+<div class="line"><a name="l02487"></a><span class="lineno"> 2487</span>&#160;      <span class="comment">/* Mouse click. */</span></div>
+<div class="line"><a name="l02488"></a><span class="lineno"> 2488</span>&#160;      <span class="keywordflow">case</span> SDL_MOUSEBUTTONDOWN:</div>
+<div class="line"><a name="l02489"></a><span class="lineno"> 2489</span>&#160;      <span class="keywordflow">case</span> SDL_MOUSEBUTTONUP:</div>
+<div class="line"><a name="l02490"></a><span class="lineno"> 2490</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="gui_8c.html#ae883f3820f17b46ae2adcca8da1bfcae">gui_L_mclick</a>)</div>
+<div class="line"><a name="l02491"></a><span class="lineno"> 2491</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l02492"></a><span class="lineno"> 2492</span>&#160;         <a class="code" href="gui_8c.html#aab28277a3e509a511c88e2287f4f362a">gui_prepFunc</a>( <span class="stringliteral">&quot;mouse_click&quot;</span> );</div>
+<div class="line"><a name="l02493"></a><span class="lineno"> 2493</span>&#160;         lua_pushnumber( naevL, evt-&gt;button.button+1 );</div>
+<div class="line"><a name="l02494"></a><span class="lineno"> 2494</span>&#160;         <a class="code" href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a>( &amp;x, &amp;y, evt-&gt;button.x, evt-&gt;button.y );</div>
+<div class="line"><a name="l02495"></a><span class="lineno"> 2495</span>&#160;         lua_pushnumber( naevL, x );</div>
+<div class="line"><a name="l02496"></a><span class="lineno"> 2496</span>&#160;         lua_pushnumber( naevL, y );</div>
+<div class="line"><a name="l02497"></a><span class="lineno"> 2497</span>&#160;         lua_pushboolean( naevL, (evt-&gt;type==SDL_MOUSEBUTTONDOWN) );</div>
+<div class="line"><a name="l02498"></a><span class="lineno"> 2498</span>&#160;         <a class="code" href="gui_8c.html#abf3793fd4a6b67b16c0bed4b6a596be8">gui_runFunc</a>( <span class="stringliteral">&quot;mouse_click&quot;</span>, 4, 1 );</div>
+<div class="line"><a name="l02499"></a><span class="lineno"> 2499</span>&#160;         ret = lua_toboolean( naevL, -1 );</div>
+<div class="line"><a name="l02500"></a><span class="lineno"> 2500</span>&#160;         lua_pop( naevL, 1 );</div>
 <div class="line"><a name="l02501"></a><span class="lineno"> 2501</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l02502"></a><span class="lineno"> 2502</span>&#160;   }</div>
-<div class="line"><a name="l02503"></a><span class="lineno"> 2503</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l02504"></a><span class="lineno"> 2504</span>&#160;}</div>
-<div class="line"><a name="l02505"></a><span class="lineno"> 2505</span>&#160; </div>
-<div class="line"><a name="l02506"></a><span class="lineno"> 2506</span>&#160; </div>
-<div class="line"><a name="l02510"></a><span class="lineno"><a class="line" href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c"> 2510</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c">gui_mouseClickEnable</a>( <span class="keywordtype">int</span> enable )</div>
-<div class="line"><a name="l02511"></a><span class="lineno"> 2511</span>&#160;{</div>
-<div class="line"><a name="l02512"></a><span class="lineno"> 2512</span>&#160;   <a class="code" href="gui_8c.html#ae883f3820f17b46ae2adcca8da1bfcae">gui_L_mclick</a> = enable;</div>
-<div class="line"><a name="l02513"></a><span class="lineno"> 2513</span>&#160;}</div>
-<div class="line"><a name="l02514"></a><span class="lineno"> 2514</span>&#160; </div>
-<div class="line"><a name="l02515"></a><span class="lineno"> 2515</span>&#160; </div>
-<div class="line"><a name="l02519"></a><span class="lineno"><a class="line" href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2"> 2519</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2">gui_mouseMoveEnable</a>( <span class="keywordtype">int</span> enable )</div>
-<div class="line"><a name="l02520"></a><span class="lineno"> 2520</span>&#160;{</div>
-<div class="line"><a name="l02521"></a><span class="lineno"> 2521</span>&#160;   <a class="code" href="gui_8c.html#a0b098e8b27ebcd5c86011e1d619eda7a">gui_L_mmove</a> = enable;</div>
-<div class="line"><a name="l02522"></a><span class="lineno"> 2522</span>&#160;}</div>
+<div class="line"><a name="l02502"></a><span class="lineno"> 2502</span>&#160; </div>
+<div class="line"><a name="l02503"></a><span class="lineno"> 2503</span>&#160;      <span class="comment">/* Not interested in the rest. */</span></div>
+<div class="line"><a name="l02504"></a><span class="lineno"> 2504</span>&#160;      <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l02505"></a><span class="lineno"> 2505</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l02506"></a><span class="lineno"> 2506</span>&#160;   }</div>
+<div class="line"><a name="l02507"></a><span class="lineno"> 2507</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l02508"></a><span class="lineno"> 2508</span>&#160;}</div>
+<div class="line"><a name="l02509"></a><span class="lineno"> 2509</span>&#160; </div>
+<div class="line"><a name="l02510"></a><span class="lineno"> 2510</span>&#160; </div>
+<div class="line"><a name="l02514"></a><span class="lineno"><a class="line" href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c"> 2514</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c">gui_mouseClickEnable</a>( <span class="keywordtype">int</span> enable )</div>
+<div class="line"><a name="l02515"></a><span class="lineno"> 2515</span>&#160;{</div>
+<div class="line"><a name="l02516"></a><span class="lineno"> 2516</span>&#160;   <a class="code" href="gui_8c.html#ae883f3820f17b46ae2adcca8da1bfcae">gui_L_mclick</a> = enable;</div>
+<div class="line"><a name="l02517"></a><span class="lineno"> 2517</span>&#160;}</div>
+<div class="line"><a name="l02518"></a><span class="lineno"> 2518</span>&#160; </div>
+<div class="line"><a name="l02519"></a><span class="lineno"> 2519</span>&#160; </div>
+<div class="line"><a name="l02523"></a><span class="lineno"><a class="line" href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2"> 2523</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2">gui_mouseMoveEnable</a>( <span class="keywordtype">int</span> enable )</div>
+<div class="line"><a name="l02524"></a><span class="lineno"> 2524</span>&#160;{</div>
+<div class="line"><a name="l02525"></a><span class="lineno"> 2525</span>&#160;   <a class="code" href="gui_8c.html#a0b098e8b27ebcd5c86011e1d619eda7a">gui_L_mmove</a> = enable;</div>
+<div class="line"><a name="l02526"></a><span class="lineno"> 2526</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="agui_8c_html_a73f6bd57ebcac87e954420ccd8c21a8d"><div class="ttname"><a href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d">gui_load</a></div><div class="ttdeci">int gui_load(const char *name)</div><div class="ttdoc">Attempts to load the actual GUI.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02152">gui.c:2152</a></div></div>
+<div class="ttc" id="agui_8c_html_a73f6bd57ebcac87e954420ccd8c21a8d"><div class="ttname"><a href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d">gui_load</a></div><div class="ttdeci">int gui_load(const char *name)</div><div class="ttdoc">Attempts to load the actual GUI.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02156">gui.c:2156</a></div></div>
 <div class="ttc" id="agui_8c_html_abe56fe8d434b852dde60acdd3442645b"><div class="ttname"><a href="gui_8c.html#abe56fe8d434b852dde60acdd3442645b">gui_viewport_y</a></div><div class="ttdeci">static double gui_viewport_y</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00110">gui.c:110</a></div></div>
 <div class="ttc" id="agui_8c_html_a3dfb50c0810f8efd906535f83f932c07"><div class="ttname"><a href="gui_8c.html#a3dfb50c0810f8efd906535f83f932c07">INTERFERENCE_CHANGE_DT</a></div><div class="ttdeci">#define INTERFERENCE_CHANGE_DT</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00072">gui.c:72</a></div></div>
 <div class="ttc" id="agui_8c_html_a82786ba51191e1623009a865853bdb3c"><div class="ttname"><a href="gui_8c.html#a82786ba51191e1623009a865853bdb3c">gui_xoff</a></div><div class="ttdeci">static double gui_xoff</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00182">gui.c:182</a></div></div>
@@ -2219,9 +2223,9 @@ $(function() {
 <div class="ttc" id="agui_8c_html_af3e326ac1cb4d3586fdefecf78dbc720"><div class="ttname"><a href="gui_8c.html#af3e326ac1cb4d3586fdefecf78dbc720">gui_viewport_x</a></div><div class="ttdeci">static double gui_viewport_x</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00109">gui.c:109</a></div></div>
 <div class="ttc" id="afont_8c_html_a31dd7bd844c0317d6e848cef7a93dcbf"><div class="ttname"><a href="font_8c.html#a31dd7bd844c0317d6e848cef7a93dcbf">gl_printRestoreInit</a></div><div class="ttdeci">void gl_printRestoreInit(glFontRestore *restore)</div><div class="ttdoc">Initializes a restore structure.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00405">font.c:405</a></div></div>
 <div class="ttc" id="agui_8c_html_af4b7373f5e3c4be1e1796741c79cb583"><div class="ttname"><a href="gui_8c.html#af4b7373f5e3c4be1e1796741c79cb583">gui_onScreenAsset</a></div><div class="ttdeci">int gui_onScreenAsset(double *rx, double *ry, JumpPoint *jp, Planet *pnt)</div><div class="ttdoc">Takes a planet or jump point and returns whether it's on screen, plus its relative position.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00799">gui.c:799</a></div></div>
-<div class="ttc" id="agui_8c_html_a220c3548710a7e71bc249339e0a4ca0d"><div class="ttname"><a href="gui_8c.html#a220c3548710a7e71bc249339e0a4ca0d">gui_handleEvent</a></div><div class="ttdeci">int gui_handleEvent(SDL_Event *evt)</div><div class="ttdoc">Handles GUI events.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02457">gui.c:2457</a></div></div>
+<div class="ttc" id="agui_8c_html_a220c3548710a7e71bc249339e0a4ca0d"><div class="ttname"><a href="gui_8c.html#a220c3548710a7e71bc249339e0a4ca0d">gui_handleEvent</a></div><div class="ttdeci">int gui_handleEvent(SDL_Event *evt)</div><div class="ttdoc">Handles GUI events.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02461">gui.c:2461</a></div></div>
 <div class="ttc" id="agui_8c_html_a35702aa7dc05e8e41d6234cc3464ce82"><div class="ttname"><a href="gui_8c.html#a35702aa7dc05e8e41d6234cc3464ce82">gui_getMapOverlayBoundTop</a></div><div class="ttdeci">int gui_getMapOverlayBoundTop(void)</div><div class="ttdoc">Gets map overlay bound (top)</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01018">gui.c:1018</a></div></div>
-<div class="ttc" id="agui_8c_html_a5d924132d13a890112cb4316b99c32e2"><div class="ttname"><a href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2">gui_mouseMoveEnable</a></div><div class="ttdeci">void gui_mouseMoveEnable(int enable)</div><div class="ttdoc">Enables the mouse movement callback.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02519">gui.c:2519</a></div></div>
+<div class="ttc" id="agui_8c_html_a5d924132d13a890112cb4316b99c32e2"><div class="ttname"><a href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2">gui_mouseMoveEnable</a></div><div class="ttdeci">void gui_mouseMoveEnable(int enable)</div><div class="ttdoc">Enables the mouse movement callback.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02523">gui.c:2523</a></div></div>
 <div class="ttc" id="amenu_8h_html"><div class="ttname"><a href="menu_8h.html">menu.h</a></div><div class="ttdoc">Handles the important game menus.</div></div>
 <div class="ttc" id="agui_8c_html_a62b491e3e2ca240a8478b4875427c7a8"><div class="ttname"><a href="gui_8c.html#a62b491e3e2ca240a8478b4875427c7a8">gui_messageScrollUp</a></div><div class="ttdeci">void gui_messageScrollUp(int lines)</div><div class="ttdoc">Scrolls up the message box.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00280">gui.c:280</a></div></div>
 <div class="ttc" id="agui_8c_html_a3f39577a45f8036c5d48d0f49f50cea2"><div class="ttname"><a href="gui_8c.html#a3f39577a45f8036c5d48d0f49f50cea2">gui_radarRender</a></div><div class="ttdeci">void gui_radarRender(double x, double y)</div><div class="ttdoc">Renders the GUI radar.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01078">gui.c:1078</a></div></div>
@@ -2248,9 +2252,9 @@ $(function() {
 <div class="ttc" id="aperlin_8c_html_ad3fe41f90ff600bd8fb924e8e1d86b92"><div class="ttname"><a href="perlin_8c.html#ad3fe41f90ff600bd8fb924e8e1d86b92">noise_genRadarInt</a></div><div class="ttdeci">float * noise_genRadarInt(const int w, const int h, float rug)</div><div class="ttdoc">Generates radar interference.</div><div class="ttdef"><b>Definition:</b> <a href="perlin_8c_source.html#l00380">perlin.c:380</a></div></div>
 <div class="ttc" id="acolour_8c_html_a5676cb7b961f5519956a3b96498e9795"><div class="ttname"><a href="colour_8c.html#a5676cb7b961f5519956a3b96498e9795">cRadar_player</a></div><div class="ttdeci">const glColour cRadar_player</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00102">colour.c:102</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_ab9cb9e690788fe1cfa7089d0cb528798"><div class="ttname"><a href="toolkit_8c.html#ab9cb9e690788fe1cfa7089d0cb528798">window_lower</a></div><div class="ttdeci">void window_lower(unsigned int wid)</div><div class="ttdoc">Lowers a window (causes all other windows to appear above it).</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l02480">toolkit.c:2480</a></div></div>
-<div class="ttc" id="aspace_8c_html_ae1f3c29af6b93b7762a4ef6ccd4c3e52"><div class="ttname"><a href="space_8c.html#ae1f3c29af6b93b7762a4ef6ccd4c3e52">planet_getColour</a></div><div class="ttdeci">const glColour * planet_getColour(Planet *p)</div><div class="ttdoc">Gets the planet colour.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01868">space.c:1868</a></div></div>
+<div class="ttc" id="aspace_8c_html_ae1f3c29af6b93b7762a4ef6ccd4c3e52"><div class="ttname"><a href="space_8c.html#ae1f3c29af6b93b7762a4ef6ccd4c3e52">planet_getColour</a></div><div class="ttdeci">const glColour * planet_getColour(Planet *p)</div><div class="ttdoc">Gets the planet colour.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01874">space.c:1874</a></div></div>
 <div class="ttc" id="agui_8c_html_a42344733882498be25a703d82df695b7"><div class="ttname"><a href="gui_8c.html#a42344733882498be25a703d82df695b7">gui_renderInterference</a></div><div class="ttdeci">static void gui_renderInterference(void)</div><div class="ttdoc">Renders interference if needed.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01276">gui.c:1276</a></div></div>
-<div class="ttc" id="agui_8c_html_a94a82f1ecb6e55d04ea387729c152f7c"><div class="ttname"><a href="gui_8c.html#a94a82f1ecb6e55d04ea387729c152f7c">gui_createInterference</a></div><div class="ttdeci">static void gui_createInterference(Radar *radar)</div><div class="ttdoc">Creates the interference map for the current gui.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02212">gui.c:2212</a></div></div>
+<div class="ttc" id="agui_8c_html_a94a82f1ecb6e55d04ea387729c152f7c"><div class="ttname"><a href="gui_8c.html#a94a82f1ecb6e55d04ea387729c152f7c">gui_createInterference</a></div><div class="ttdeci">static void gui_createInterference(Radar *radar)</div><div class="ttdoc">Creates the interference map for the current gui.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02216">gui.c:2216</a></div></div>
 <div class="ttc" id="anlua_8c_html_a45e6b8d12cc6f943d058023f8ec74a2d"><div class="ttname"><a href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a></div><div class="ttdeci">int nlua_loadStandard(nlua_env env)</div><div class="ttdoc">Loads the standard Naev Lua API.</div><div class="ttdef"><b>Definition:</b> <a href="nlua_8c_source.html#l00563">nlua.c:563</a></div></div>
 <div class="ttc" id="agui_8c_html_aa3d9b569fc6965e5b49e02028d026eca"><div class="ttname"><a href="gui_8c.html#aa3d9b569fc6965e5b49e02028d026eca">gui_cooldownEnd</a></div><div class="ttdeci">void gui_cooldownEnd(void)</div><div class="ttdoc">Notifies GUI scripts that the player broke out of cooldown.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00988">gui.c:988</a></div></div>
 <div class="ttc" id="afont_8c_html_a41b3c9521462440c62eb76b43f606274"><div class="ttname"><a href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a></div><div class="ttdeci">glFont gl_smallFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00162">font.c:162</a></div></div>
@@ -2259,7 +2263,7 @@ $(function() {
 <div class="ttc" id="agui_8c_html_acdff9d5b173ad42eec23385759132ced"><div class="ttname"><a href="gui_8c.html#acdff9d5b173ad42eec23385759132ced">MESG_SIZE_MAX</a></div><div class="ttdeci">#define MESG_SIZE_MAX</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00186">gui.c:186</a></div></div>
 <div class="ttc" id="aship_8c_html_a03c3256728669106017745877d808af8"><div class="ttname"><a href="ship_8c.html#a03c3256728669106017745877d808af8">ship_size</a></div><div class="ttdeci">int ship_size(const Ship *s)</div><div class="ttdoc">Gets the size of the ship.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00355">ship.c:355</a></div></div>
 <div class="ttc" id="arng_8c_html_a3ae63274d1e5a52f21db2df3bc5eee03"><div class="ttname"><a href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a></div><div class="ttdeci">static const double a[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00264">rng.c:264</a></div></div>
-<div class="ttc" id="agui_8c_html_a407ae1ef3da43bc1cd37e88eef427a8b"><div class="ttname"><a href="gui_8c.html#a407ae1ef3da43bc1cd37e88eef427a8b">gui_setRadarRel</a></div><div class="ttdeci">void gui_setRadarRel(int mod)</div><div class="ttdoc">Modifies the radar resolution.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02367">gui.c:2367</a></div></div>
+<div class="ttc" id="agui_8c_html_a407ae1ef3da43bc1cd37e88eef427a8b"><div class="ttname"><a href="gui_8c.html#a407ae1ef3da43bc1cd37e88eef427a8b">gui_setRadarRel</a></div><div class="ttdeci">void gui_setRadarRel(int mod)</div><div class="ttdoc">Modifies the radar resolution.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02371">gui.c:2371</a></div></div>
 <div class="ttc" id="apilot_8c_html_a2361ee0775d8dc7200e46c3aac937c22"><div class="ttname"><a href="pilot_8c.html#a2361ee0775d8dc7200e46c3aac937c22">pilot_isHostile</a></div><div class="ttdeci">int pilot_isHostile(const Pilot *p)</div><div class="ttdoc">Checks to see if pilot is hostile to the player.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00631">pilot.c:631</a></div></div>
 <div class="ttc" id="agui_8c_html_a989a06e1f235186e323a8c783b46fa55"><div class="ttname"><a href="gui_8c.html#a989a06e1f235186e323a8c783b46fa55">gui_renderPilotTarget</a></div><div class="ttdeci">static void gui_renderPilotTarget(double dt)</div><div class="ttdoc">Renders the players pilot target.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00535">gui.c:535</a></div></div>
 <div class="ttc" id="agui_8c_html_ab1e01c282e6354627b43c6430912d4dd"><div class="ttname"><a href="gui_8c.html#ab1e01c282e6354627b43c6430912d4dd">gui_renderPilot</a></div><div class="ttdeci">void gui_renderPilot(const Pilot *p, RadarShape shape, double w, double h, double res, int overlay)</div><div class="ttdoc">Renders a pilot in the GUI radar.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01339">gui.c:1339</a></div></div>
@@ -2268,7 +2272,7 @@ $(function() {
 <div class="ttc" id="anlua__tk_8c_html_a589a461c0b7e7019cb11fe5d022a042c"><div class="ttname"><a href="nlua__tk_8c.html#a589a461c0b7e7019cb11fe5d022a042c">nlua_loadTk</a></div><div class="ttdeci">int nlua_loadTk(nlua_env env)</div><div class="ttdoc">Loads the Toolkit Lua library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tk_8c_source.html#l00088">nlua_tk.c:88</a></div></div>
 <div class="ttc" id="agui_8c_html_a9150bc4f0df3f65a7b83697f367de51a"><div class="ttname"><a href="gui_8c.html#a9150bc4f0df3f65a7b83697f367de51a">gui_messageInit</a></div><div class="ttdeci">void gui_messageInit(int width, int x, int y)</div><div class="ttdoc">Initializes the message system.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00267">gui.c:267</a></div></div>
 <div class="ttc" id="agui_8c_html_affd801178ce0d7a5f999698b23cb2733"><div class="ttname"><a href="gui_8c.html#affd801178ce0d7a5f999698b23cb2733">gui_target_pilot</a></div><div class="ttdeci">static glTexture * gui_target_pilot</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00215">gui.c:215</a></div></div>
-<div class="ttc" id="agui_8c_html_a6873bfd5c51ca41d90cf381dd7e1835c"><div class="ttname"><a href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c">gui_mouseClickEnable</a></div><div class="ttdeci">void gui_mouseClickEnable(int enable)</div><div class="ttdoc">Enables the mouse click callback.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02510">gui.c:2510</a></div></div>
+<div class="ttc" id="agui_8c_html_a6873bfd5c51ca41d90cf381dd7e1835c"><div class="ttname"><a href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c">gui_mouseClickEnable</a></div><div class="ttdeci">void gui_mouseClickEnable(int enable)</div><div class="ttdoc">Enables the mouse click callback.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02514">gui.c:2514</a></div></div>
 <div class="ttc" id="agui_8c_html_a79c56582dd2a6ab3600374c75aac625e"><div class="ttname"><a href="gui_8c.html#a79c56582dd2a6ab3600374c75aac625e">weapon_minimap</a></div><div class="ttdeci">void weapon_minimap(const double res, const double w, const double h, const RadarShape shape, double alpha)</div><div class="ttdoc">Draws the minimap weapons (used in player.c).</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l00161">weapon.c:161</a></div></div>
 <div class="ttc" id="anlua__gui_8c_html_a6512dca92ea3e5174c274b4f7aef1cbe"><div class="ttname"><a href="nlua__gui_8c.html#a6512dca92ea3e5174c274b4f7aef1cbe">nlua_loadGUI</a></div><div class="ttdeci">int nlua_loadGUI(nlua_env env)</div><div class="ttdoc">Loads the GUI library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gui_8c_source.html#l00071">nlua_gui.c:71</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a3b808f523a49bd481a88a6d5127f88bf"><div class="ttname"><a href="spfx_8c.html#a3b808f523a49bd481a88a6d5127f88bf">spfx_cinematic</a></div><div class="ttdeci">void spfx_cinematic(void)</div><div class="ttdoc">Sets the cinematic mode.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00892">spfx.c:892</a></div></div>
@@ -2277,7 +2281,7 @@ $(function() {
 <div class="ttc" id="agui_8c_html_a73f09ad66b172fdad83831006a115e07"><div class="ttname"><a href="gui_8c.html#a73f09ad66b172fdad83831006a115e07">gui_renderMessages</a></div><div class="ttdeci">static void gui_renderMessages(double dt)</div><div class="ttdoc">Renders the player's messages on screen.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01185">gui.c:1185</a></div></div>
 <div class="ttc" id="agui_8c_html_a4766a47a9ab9ee9aa38c39aeca8382cd"><div class="ttname"><a href="gui_8c.html#a4766a47a9ab9ee9aa38c39aeca8382cd">gui_onScreenPilot</a></div><div class="ttdeci">int gui_onScreenPilot(double *rx, double *ry, Pilot *pilot)</div><div class="ttdoc">Takes a pilot and returns whether it's on screen, plus its relative position.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00761">gui.c:761</a></div></div>
 <div class="ttc" id="agui_8c_html_a644fd494be646e36b74f70406617c228"><div class="ttname"><a href="gui_8c.html#a644fd494be646e36b74f70406617c228">mesg_viewpoint</a></div><div class="ttdeci">static int mesg_viewpoint</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00189">gui.c:189</a></div></div>
-<div class="ttc" id="agui_8c_html_a40b42a40637ed55be39df3f84e88c41f"><div class="ttname"><a href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a></div><div class="ttdeci">static void gui_eventToScreenPos(int *sx, int *sy, int ex, int ey)</div><div class="ttdoc">Translates a mouse position from an SDL_Event to GUI coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02420">gui.c:2420</a></div></div>
+<div class="ttc" id="agui_8c_html_a40b42a40637ed55be39df3f84e88c41f"><div class="ttname"><a href="gui_8c.html#a40b42a40637ed55be39df3f84e88c41f">gui_eventToScreenPos</a></div><div class="ttdeci">static void gui_eventToScreenPos(int *sx, int *sy, int ex, int ey)</div><div class="ttdoc">Translates a mouse position from an SDL_Event to GUI coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02424">gui.c:2424</a></div></div>
 <div class="ttc" id="agui_8c_html_a09cfc358ede4aa953859cdfed59e7427"><div class="ttname"><a href="gui_8c.html#a09cfc358ede4aa953859cdfed59e7427">gui_init</a></div><div class="ttdeci">int gui_init(void)</div><div class="ttdoc">Initializes the GUI system.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01874">gui.c:1874</a></div></div>
 <div class="ttc" id="agui_8c_html_aab28277a3e509a511c88e2287f4f362a"><div class="ttname"><a href="gui_8c.html#aab28277a3e509a511c88e2287f4f362a">gui_prepFunc</a></div><div class="ttdeci">static int gui_prepFunc(const char *func)</div><div class="ttdoc">Prepares to run a function.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01992">gui.c:1992</a></div></div>
 <div class="ttc" id="agui_8c_html_a78de77f88915944d2641ff2b097961ff"><div class="ttname"><a href="gui_8c.html#a78de77f88915944d2641ff2b097961ff">gui_renderJumpPoint</a></div><div class="ttdeci">void gui_renderJumpPoint(int ind, RadarShape shape, double w, double h, double res, int overlay)</div><div class="ttdoc">Renders a jump point on the minimap.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01722">gui.c:1722</a></div></div>
@@ -2295,7 +2299,7 @@ $(function() {
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00049">news.c:49</a></div></div>
 <div class="ttc" id="agui_8c_html_ac078afe7321ace91199359c128988334"><div class="ttname"><a href="gui_8c.html#ac078afe7321ace91199359c128988334">RADAR_RES_MIN</a></div><div class="ttdeci">#define RADAR_RES_MIN</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00176">gui.c:176</a></div></div>
 <div class="ttc" id="agui_8c_html_ac2e164ce22a9abd8c3e165bdd123343d"><div class="ttname"><a href="gui_8c.html#ac2e164ce22a9abd8c3e165bdd123343d">gui_getMessage</a></div><div class="ttdeci">static int gui_getMessage</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00092">gui.c:92</a></div></div>
-<div class="ttc" id="agui_8c_html_a85c549239cd0d7885d00147f6d38177a"><div class="ttname"><a href="gui_8c.html#a85c549239cd0d7885d00147f6d38177a">gui_targetPilotGFX</a></div><div class="ttdeci">void gui_targetPilotGFX(glTexture *gfx)</div><div class="ttdoc">Sets the pilot target GFX.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02411">gui.c:2411</a></div></div>
+<div class="ttc" id="agui_8c_html_a85c549239cd0d7885d00147f6d38177a"><div class="ttname"><a href="gui_8c.html#a85c549239cd0d7885d00147f6d38177a">gui_targetPilotGFX</a></div><div class="ttdeci">void gui_targetPilotGFX(glTexture *gfx)</div><div class="ttdoc">Sets the pilot target GFX.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02415">gui.c:2415</a></div></div>
 <div class="ttc" id="agui_8c_html_ae883f3820f17b46ae2adcca8da1bfcae"><div class="ttname"><a href="gui_8c.html#ae883f3820f17b46ae2adcca8da1bfcae">gui_L_mclick</a></div><div class="ttdeci">static int gui_L_mclick</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00102">gui.c:102</a></div></div>
 <div class="ttc" id="astructRadar___html_a22cc88464635a3609ed6599e0702ec8a"><div class="ttname"><a href="structRadar__.html#a22cc88464635a3609ed6599e0702ec8a">Radar_::w</a></div><div class="ttdeci">double w</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00166">gui.c:166</a></div></div>
 <div class="ttc" id="agui_8c_html_a1fb885b94dca1e589d2a6243b510ba7f"><div class="ttname"><a href="gui_8c.html#a1fb885b94dca1e589d2a6243b510ba7f">gui_renderPlayer</a></div><div class="ttdeci">void gui_renderPlayer(double res, int overlay)</div><div class="ttdoc">Renders the player cross on the radar or whatever.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01484">gui.c:1484</a></div></div>
@@ -2309,17 +2313,17 @@ $(function() {
 <div class="ttc" id="aopengl__tex_8c_html_adef18f796b003fa66617d9bc3d4d198d"><div class="ttname"><a href="opengl__tex_8c.html#adef18f796b003fa66617d9bc3d4d198d">gl_newSprite</a></div><div class="ttdeci">glTexture * gl_newSprite(const char *path, const int sx, const int sy, const unsigned int flags)</div><div class="ttdoc">Loads the texture immediately, but also sets it as a sprite.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00713">opengl_tex.c:713</a></div></div>
 <div class="ttc" id="agui_8c_html_a054a943424817c5581b6fecce2642ba4"><div class="ttname"><a href="gui_8c.html#a054a943424817c5581b6fecce2642ba4">gui_mesg_w</a></div><div class="ttdeci">static int gui_mesg_w</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00202">gui.c:202</a></div></div>
 <div class="ttc" id="agui_8c_html_a01fea7400de086d84038197bfae05b1c"><div class="ttname"><a href="gui_8c.html#a01fea7400de086d84038197bfae05b1c">RADAR_BLINK_PILOT</a></div><div class="ttdeci">#define RADAR_BLINK_PILOT</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00074">gui.c:74</a></div></div>
-<div class="ttc" id="anaev_8c_html_afd0e164bd2b362ae6e8d668467e97ce2"><div class="ttname"><a href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a></div><div class="ttdeci">void fps_setPos(double x, double y)</div><div class="ttdoc">Sets the position to display the FPS.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00849">naev.c:849</a></div></div>
+<div class="ttc" id="anaev_8c_html_afd0e164bd2b362ae6e8d668467e97ce2"><div class="ttname"><a href="naev_8c.html#afd0e164bd2b362ae6e8d668467e97ce2">fps_setPos</a></div><div class="ttdeci">void fps_setPos(double x, double y)</div><div class="ttdoc">Sets the position to display the FPS.</div><div class="ttdef"><b>Definition:</b> <a href="naev_8c_source.html#l00852">naev.c:852</a></div></div>
 <div class="ttc" id="agui_8c_html_a9de4925df9be2e92caba1a12c93c0340"><div class="ttname"><a href="gui_8c.html#a9de4925df9be2e92caba1a12c93c0340">gui_getMapOverlayBoundBottom</a></div><div class="ttdeci">int gui_getMapOverlayBoundBottom(void)</div><div class="ttdoc">Gets map overlay bound (bottom)</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01038">gui.c:1038</a></div></div>
 <div class="ttc" id="agui_8c_html_a5d371b5f8e1833bdeaca67d35412f697"><div class="ttname"><a href="gui_8c.html#a5d371b5f8e1833bdeaca67d35412f697">gui_tl</a></div><div class="ttdeci">static double gui_tl</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00209">gui.c:209</a></div></div>
 <div class="ttc" id="agui_8c_html_a351ef5ee6b3c337e79699cea1e1b89ff"><div class="ttname"><a href="gui_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a></div><div class="ttdeci">unsigned int land_wid</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00077">land.c:77</a></div></div>
-<div class="ttc" id="agui_8c_html_a08644b87cc80b86623c3370cafa19165"><div class="ttname"><a href="gui_8c.html#a08644b87cc80b86623c3370cafa19165">gui_radarClickEvent</a></div><div class="ttdeci">int gui_radarClickEvent(SDL_Event *event)</div><div class="ttdoc">Handles a click at a position in the current system.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02432">gui.c:2432</a></div></div>
+<div class="ttc" id="agui_8c_html_a08644b87cc80b86623c3370cafa19165"><div class="ttname"><a href="gui_8c.html#a08644b87cc80b86623c3370cafa19165">gui_radarClickEvent</a></div><div class="ttdeci">int gui_radarClickEvent(SDL_Event *event)</div><div class="ttdoc">Handles a click at a position in the current system.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02436">gui.c:2436</a></div></div>
 <div class="ttc" id="acolour_8c_html_a2b06d9341e34af7d1b2a9ef04b03a64d"><div class="ttname"><a href="colour_8c.html#a2b06d9341e34af7d1b2a9ef04b03a64d">cRed</a></div><div class="ttdeci">const glColour cRed</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00051">colour.c:51</a></div></div>
 <div class="ttc" id="agui_8c_html_a834fefb1fce801bbbe6e2454205ccdc6"><div class="ttname"><a href="gui_8c.html#a834fefb1fce801bbbe6e2454205ccdc6">gui_blink</a></div><div class="ttdeci">static void gui_blink(int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape, const glColour *col, const double blinkInterval, const double blinkVar)</div><div class="ttdoc">Renders the planet blink around a position on the minimap.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01552">gui.c:1552</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00045">naev.h:45</a></div></div>
 <div class="ttc" id="agui_8c_html_aff8e829ff518046efa43d3f508c5cc3d"><div class="ttname"><a href="gui_8c.html#aff8e829ff518046efa43d3f508c5cc3d">player_messageToggle</a></div><div class="ttdeci">void player_messageToggle(int enable)</div><div class="ttdoc">Toggles if player should receive messages.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00342">gui.c:342</a></div></div>
 <div class="ttc" id="apilot_8c_html_a56143a90fcb5ffadb3c837f52f85b2aa"><div class="ttname"><a href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a></div><div class="ttdeci">Pilot *const  * pilot_getAll(void)</div><div class="ttdoc">Gets the pilot stack.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00092">pilot.c:92</a></div></div>
-<div class="ttc" id="aspace_8c_html_a08d511dc1fcb70247745b9dfa14167f8"><div class="ttname"><a href="space_8c.html#a08d511dc1fcb70247745b9dfa14167f8">space_getType</a></div><div class="ttdeci">AsteroidType * space_getType(int ID)</div><div class="ttdoc">Returns the asteroid type corresponding to an ID.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04130">space.c:4130</a></div></div>
+<div class="ttc" id="aspace_8c_html_a08d511dc1fcb70247745b9dfa14167f8"><div class="ttname"><a href="space_8c.html#a08d511dc1fcb70247745b9dfa14167f8">space_getType</a></div><div class="ttdeci">AsteroidType * space_getType(int ID)</div><div class="ttdoc">Returns the asteroid type corresponding to an ID.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04136">space.c:4136</a></div></div>
 <div class="ttc" id="anaev_8h_html_ae688d728e1acdfe5988c7db45d6f0166"><div class="ttname"><a href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a></div><div class="ttdeci">#define PATH_MAX</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00056">naev.h:56</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ae0970807dc2522d849a4d9d792bff304"><div class="ttname"><a href="player_8c.html#ae0970807dc2522d849a4d9d792bff304">player_soundPlayGUI</a></div><div class="ttdeci">void player_soundPlayGUI(int sound, int once)</div><div class="ttdoc">Plays a GUI sound (unaffected by time accel).</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00778">player.c:778</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a4a0e51ed10e9ea167662391f9c00a380"><div class="ttname"><a href="opengl__render_8c.html#a4a0e51ed10e9ea167662391f9c00a380">gl_blitSprite</a></div><div class="ttdeci">void gl_blitSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const glColour *c)</div><div class="ttdoc">Blits a sprite, position is relative to the player.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00429">opengl_render.c:429</a></div></div>
@@ -2343,8 +2347,8 @@ $(function() {
 <div class="ttc" id="astructRadar___html_ab4234d8397bd49957cbec7872b6f4b7a"><div class="ttname"><a href="structRadar__.html#ab4234d8397bd49957cbec7872b6f4b7a">Radar_::x</a></div><div class="ttdeci">double x</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00168">gui.c:168</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a1f95f4ae0f4739bbb254f9662f39fac4"><div class="ttname"><a href="pilot__ew_8c.html#a1f95f4ae0f4739bbb254f9662f39fac4">pilot_inRangePilot</a></div><div class="ttdeci">int pilot_inRangePilot(const Pilot *p, const Pilot *target, double *dist2)</div><div class="ttdoc">Check to see if a pilot is in sensor range of another.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00179">pilot_ew.c:179</a></div></div>
 <div class="ttc" id="agui_8c_html_ac0fe5b1cc0e3464e6162829a8ea2f8f1"><div class="ttname"><a href="gui_8c.html#ac0fe5b1cc0e3464e6162829a8ea2f8f1">player_messageRaw</a></div><div class="ttdeci">void player_messageRaw(const char *str)</div><div class="ttdoc">Adds a mesg to the queue to be displayed on screen.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00353">gui.c:353</a></div></div>
-<div class="ttc" id="agui_8c_html_abcb51253243292fdbb1d642da4f094c6"><div class="ttname"><a href="gui_8c.html#abcb51253243292fdbb1d642da4f094c6">gui_hailIcon</a></div><div class="ttdeci">glTexture * gui_hailIcon(void)</div><div class="ttdoc">Gets the hail icon texture.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02392">gui.c:2392</a></div></div>
-<div class="ttc" id="agui_8c_html_ab11096c5aabe4fc4c4d8a365611d5dd1"><div class="ttname"><a href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a></div><div class="ttdeci">void gui_cleanup(void)</div><div class="ttdoc">Cleans up the GUI.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02292">gui.c:2292</a></div></div>
+<div class="ttc" id="agui_8c_html_abcb51253243292fdbb1d642da4f094c6"><div class="ttname"><a href="gui_8c.html#abcb51253243292fdbb1d642da4f094c6">gui_hailIcon</a></div><div class="ttdeci">glTexture * gui_hailIcon(void)</div><div class="ttdoc">Gets the hail icon texture.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02396">gui.c:2396</a></div></div>
+<div class="ttc" id="agui_8c_html_ab11096c5aabe4fc4c4d8a365611d5dd1"><div class="ttname"><a href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a></div><div class="ttdeci">void gui_cleanup(void)</div><div class="ttdoc">Cleans up the GUI.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02296">gui.c:2296</a></div></div>
 <div class="ttc" id="acolour_8c_html_a9a9f73753991f093837579ea5dfa6c21"><div class="ttname"><a href="colour_8c.html#a9a9f73753991f093837579ea5dfa6c21">cBlackHilight</a></div><div class="ttdeci">const glColour cBlackHilight</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00079">colour.c:79</a></div></div>
 <div class="ttc" id="afont_8c_html_a70108689d1f2c28b6e91f763e3918e9b"><div class="ttname"><a href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a></div><div class="ttdeci">glFont gl_defFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00161">font.c:161</a></div></div>
 <div class="ttc" id="agui_8c_html_a267b85177b1c751c1faa122089705597"><div class="ttname"><a href="gui_8c.html#a267b85177b1c751c1faa122089705597">gui_messageScrollDown</a></div><div class="ttdeci">void gui_messageScrollDown(int lines)</div><div class="ttdoc">Scrolls up the message box.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00311">gui.c:311</a></div></div>
@@ -2353,7 +2357,7 @@ $(function() {
 <div class="ttc" id="agui_8c_html_a2369e657370863fe7641b669bf8a345f"><div class="ttname"><a href="gui_8c.html#a2369e657370863fe7641b669bf8a345f">gui_renderBorder</a></div><div class="ttdeci">static void gui_renderBorder(double dt)</div><div class="ttdoc">Renders the ships/planets in the border.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00645">gui.c:645</a></div></div>
 <div class="ttc" id="agui_8c_html_ade7f030697ff07efa6b476027787e5cd"><div class="ttname"><a href="gui_8c.html#ade7f030697ff07efa6b476027787e5cd">gui_setViewport</a></div><div class="ttdeci">void gui_setViewport(double x, double y, double w, double h)</div><div class="ttdoc">Sets the viewport.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01814">gui.c:1814</a></div></div>
 <div class="ttc" id="agui_8c_html_a5868965cd396529a4013a313829a99ef"><div class="ttname"><a href="gui_8c.html#a5868965cd396529a4013a313829a99ef">gui_br</a></div><div class="ttdeci">static double gui_br</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00208">gui.c:208</a></div></div>
-<div class="ttc" id="aspace_8c_html_aa21245aac58342487e9b15863039f4ba"><div class="ttname"><a href="space_8c.html#aa21245aac58342487e9b15863039f4ba">planet_getSymbol</a></div><div class="ttdeci">const char * planet_getSymbol(Planet *p)</div><div class="ttdoc">Gets the planet symbol.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01845">space.c:1845</a></div></div>
+<div class="ttc" id="aspace_8c_html_aa21245aac58342487e9b15863039f4ba"><div class="ttname"><a href="space_8c.html#aa21245aac58342487e9b15863039f4ba">planet_getSymbol</a></div><div class="ttdeci">const char * planet_getSymbol(Planet *p)</div><div class="ttdoc">Gets the planet symbol.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01851">space.c:1851</a></div></div>
 <div class="ttc" id="acolour_8c_html_af122c3c970ac91f72585c4cd555ec03a"><div class="ttname"><a href="colour_8c.html#af122c3c970ac91f72585c4cd555ec03a">cHostile</a></div><div class="ttdeci">const glColour cHostile</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00093">colour.c:93</a></div></div>
 <div class="ttc" id="agui_8c_html_a95694c946e98b616cf21d86f31e18f77"><div class="ttname"><a href="gui_8c.html#a95694c946e98b616cf21d86f31e18f77">gui_tr</a></div><div class="ttdeci">static double gui_tr</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00207">gui.c:207</a></div></div>
 <div class="ttc" id="astructRadar_html"><div class="ttname"><a href="structRadar.html">Radar</a></div><div class="ttdoc">Represents the player's radar.</div></div>
@@ -2380,7 +2384,7 @@ $(function() {
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a1e428781a5f08429de391e9b9fe60b30"><div class="ttname"><a href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a></div><div class="ttdeci">void gl_renderRect(double x, double y, double w, double h, const glColour *c)</div><div class="ttdoc">Renders a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00102">opengl_render.c:102</a></div></div>
 <div class="ttc" id="agui_8c_html_a0e35a7c93e09854096b90931a51933ea"><div class="ttname"><a href="gui_8c.html#a0e35a7c93e09854096b90931a51933ea">gui_yoff</a></div><div class="ttdeci">static double gui_yoff</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00183">gui.c:183</a></div></div>
-<div class="ttc" id="agui_8c_html_a19238703e0fd1015e29d9caa533c68ad"><div class="ttname"><a href="gui_8c.html#a19238703e0fd1015e29d9caa533c68ad">gui_targetPlanetGFX</a></div><div class="ttdeci">void gui_targetPlanetGFX(glTexture *gfx)</div><div class="ttdoc">Sets the planet target GFX.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02401">gui.c:2401</a></div></div>
+<div class="ttc" id="agui_8c_html_a19238703e0fd1015e29d9caa533c68ad"><div class="ttname"><a href="gui_8c.html#a19238703e0fd1015e29d9caa533c68ad">gui_targetPlanetGFX</a></div><div class="ttdeci">void gui_targetPlanetGFX(glTexture *gfx)</div><div class="ttdoc">Sets the planet target GFX.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02405">gui.c:2405</a></div></div>
 <div class="ttc" id="agui_8c_html_a290c26aa03e198090787ec7bee5886eb"><div class="ttname"><a href="gui_8c.html#a290c26aa03e198090787ec7bee5886eb">gui_renderPlanetTarget</a></div><div class="ttdeci">static void gui_renderPlanetTarget(double dt)</div><div class="ttdoc">Sets up rendering of planet and jump point targeting reticles.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00432">gui.c:432</a></div></div>
 <div class="ttc" id="agui_8c_html_afb44a001dc42426cc39992233a16c156"><div class="ttname"><a href="gui_8c.html#afb44a001dc42426cc39992233a16c156">gui_getMapOverlayBoundLeft</a></div><div class="ttdeci">int gui_getMapOverlayBoundLeft(void)</div><div class="ttdoc">Gets map overlay bound (left)</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01048">gui.c:1048</a></div></div>
 <div class="ttc" id="anaev_8h_html_a996f7be338ccb40d1a2a5abc1ad61759"><div class="ttname"><a href="naev_8h.html#a996f7be338ccb40d1a2a5abc1ad61759">ABS</a></div><div class="ttdeci">#define ABS(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00042">naev.h:42</a></div></div>
@@ -2390,9 +2394,9 @@ $(function() {
 <div class="ttc" id="acolour_8c_html_aedd18ccb485405740bec90002ef11caf"><div class="ttname"><a href="colour_8c.html#aedd18ccb485405740bec90002ef11caf">cRadar_tPilot</a></div><div class="ttdeci">const glColour cRadar_tPilot</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00103">colour.c:103</a></div></div>
 <div class="ttc" id="aopengl_8c_html_a0a9a567b3aef8706fd56b44a66e7ae95"><div class="ttname"><a href="opengl_8c.html#a0a9a567b3aef8706fd56b44a66e7ae95">gl_setDefViewport</a></div><div class="ttdeci">void gl_setDefViewport(int x, int y, int w, int h)</div><div class="ttdoc">Sets the default viewport.</div><div class="ttdef"><b>Definition:</b> <a href="opengl_8c_source.html#l00579">opengl.c:579</a></div></div>
 <div class="ttc" id="acolour_8c_html_a0dbd5c8a06b69839b2a1428702b47705"><div class="ttname"><a href="colour_8c.html#a0dbd5c8a06b69839b2a1428702b47705">cFriend</a></div><div class="ttdeci">const glColour cFriend</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00092">colour.c:92</a></div></div>
-<div class="ttc" id="agui_8c_html_a8a6a2b0c0cf6e525b0df9babd2fc23d7"><div class="ttname"><a href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7">gui_free</a></div><div class="ttdeci">void gui_free(void)</div><div class="ttdoc">Frees the gui stuff.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02335">gui.c:2335</a></div></div>
+<div class="ttc" id="agui_8c_html_a8a6a2b0c0cf6e525b0df9babd2fc23d7"><div class="ttname"><a href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7">gui_free</a></div><div class="ttdeci">void gui_free(void)</div><div class="ttdoc">Frees the gui stuff.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02339">gui.c:2339</a></div></div>
 <div class="ttc" id="agui_8c_html_abb8fab6a11cbaf9eda07461b5b7f3634"><div class="ttname"><a href="gui_8c.html#abb8fab6a11cbaf9eda07461b5b7f3634">gui_bl</a></div><div class="ttdeci">static double gui_bl</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00210">gui.c:210</a></div></div>
-<div class="ttc" id="agui_8c_html_ae05bab0fbea0f8f32cf930237934ac1f"><div class="ttname"><a href="gui_8c.html#ae05bab0fbea0f8f32cf930237934ac1f">gui_pick</a></div><div class="ttdeci">char * gui_pick(void)</div><div class="ttdoc">Determines which GUI should be used.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02134">gui.c:2134</a></div></div>
+<div class="ttc" id="agui_8c_html_ae05bab0fbea0f8f32cf930237934ac1f"><div class="ttname"><a href="gui_8c.html#ae05bab0fbea0f8f32cf930237934ac1f">gui_pick</a></div><div class="ttdeci">char * gui_pick(void)</div><div class="ttdoc">Determines which GUI should be used.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02138">gui.c:2138</a></div></div>
 <div class="ttc" id="agui_8c_html_a93e20344acde194abc25abc152f52ec9"><div class="ttname"><a href="gui_8c.html#a93e20344acde194abc25abc152f52ec9">gui_reload</a></div><div class="ttdeci">void gui_reload(void)</div><div class="ttdoc">Reloads the GUI.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02043">gui.c:2043</a></div></div>
 <div class="ttc" id="agui_8c_html_a2e3021244e7ab0874aae2b593851fcf5"><div class="ttname"><a href="gui_8c.html#a2e3021244e7ab0874aae2b593851fcf5">mesg_stack</a></div><div class="ttdeci">static Mesg * mesg_stack</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00201">gui.c:201</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a82c845d10d9a06bf95bdeb6546ea40d4"><div class="ttname"><a href="opengl__render_8c.html#a82c845d10d9a06bf95bdeb6546ea40d4">gl_blitStatic</a></div><div class="ttdeci">void gl_blitStatic(const glTexture *texture, const double bx, const double by, const glColour *c)</div><div class="ttdoc">Blits a texture to a position.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00626">opengl_render.c:626</a></div></div>
@@ -2401,7 +2405,7 @@ $(function() {
 <div class="ttc" id="agui_8c_html_ae62f951a861023b09fbb17b2cfddb0d2"><div class="ttname"><a href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a></div><div class="ttdeci">void player_message(const char *fmt,...)</div><div class="ttdoc">Adds a mesg to the queue to be displayed on screen.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00404">gui.c:404</a></div></div>
 <div class="ttc" id="astructRadar___html_a090e25b954d0d8ac33bc3732f33b1569"><div class="ttname"><a href="structRadar__.html#a090e25b954d0d8ac33bc3732f33b1569">Radar_::res</a></div><div class="ttdeci">double res</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00171">gui.c:171</a></div></div>
 <div class="ttc" id="agui_8c_html_ac8bddbc9cc6870cf9326dc297f3c2192"><div class="ttname"><a href="gui_8c.html#ac8bddbc9cc6870cf9326dc297f3c2192">gui_setNav</a></div><div class="ttdeci">void gui_setNav(void)</div><div class="ttdoc">Player just changed their nav computer target.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02065">gui.c:2065</a></div></div>
-<div class="ttc" id="agui_8c_html_a7870a2bde3241982310bfdb418868cc1"><div class="ttname"><a href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1">gui_getOffset</a></div><div class="ttdeci">void gui_getOffset(double *x, double *y)</div><div class="ttdoc">Gets the GUI offset.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02382">gui.c:2382</a></div></div>
+<div class="ttc" id="agui_8c_html_a7870a2bde3241982310bfdb418868cc1"><div class="ttname"><a href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1">gui_getOffset</a></div><div class="ttdeci">void gui_getOffset(double *x, double *y)</div><div class="ttdoc">Gets the GUI offset.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02386">gui.c:2386</a></div></div>
 <div class="ttc" id="agui_8c_html_afbbbe37f0718dbf991f7b9483cf0ba62"><div class="ttname"><a href="gui_8c.html#afbbbe37f0718dbf991f7b9483cf0ba62">gui_setCargo</a></div><div class="ttdeci">void gui_setCargo(void)</div><div class="ttdoc">Player just changed their cargo.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02055">gui.c:2055</a></div></div>
 <div class="ttc" id="astructRadar___html_ae1678a54c20e5ed8ff73e25f75eb3dad"><div class="ttname"><a href="structRadar__.html#ae1678a54c20e5ed8ff73e25f75eb3dad">Radar_::h</a></div><div class="ttdeci">double h</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00167">gui.c:167</a></div></div>
 <div class="ttc" id="agui_8c_html_a9af35a6561dadcdcb58a3548266f6e6e"><div class="ttname"><a href="gui_8c.html#a9af35a6561dadcdcb58a3548266f6e6e">blink_pilot</a></div><div class="ttdeci">static double blink_pilot</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00084">gui.c:84</a></div></div>
