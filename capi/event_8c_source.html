@@ -645,141 +645,145 @@ $(function() {
 <div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;{</div>
 <div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;   Event_t *ev;</div>
 <div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;   ev = <a class="code" href="event_8c.html#af0ec78507456253702338fb89e14a98a">event_get</a>( eventid );</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="claim_8c.html#aaa962b7738f46129810eeaed691b9b48">claim_testSys</a>( ev-&gt;claims, sys );</div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;}</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160; </div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160; </div>
-<div class="line"><a name="l00743"></a><span class="lineno"><a class="line" href="event_8c.html#ac317e4dd877fafc67fac74cb90790e35">  743</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="event_8c.html#ac317e4dd877fafc67fac74cb90790e35">event_checkValidity</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;{</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   Event_t *ev;</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160; </div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;   <span class="comment">/* Iterate. */</span></div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="event_8c.html#a61cb2f9bd2aec3e6cf1c9b27db7129c2">event_active</a>); i++) {</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;      ev = &amp;<a class="code" href="event_8c.html#a61cb2f9bd2aec3e6cf1c9b27db7129c2">event_active</a>[i];</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;   <span class="keywordflow">if</span> (ev==NULL) {</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;      WARN(_(<span class="stringliteral">&quot;Trying to test claims of unknown event with id &#39;%d&#39;!&quot;</span>), eventid);</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;   }</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="claim_8c.html#aaa962b7738f46129810eeaed691b9b48">claim_testSys</a>( ev-&gt;claims, sys );</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;}</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160; </div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160; </div>
+<div class="line"><a name="l00747"></a><span class="lineno"><a class="line" href="event_8c.html#ac317e4dd877fafc67fac74cb90790e35">  747</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="event_8c.html#ac317e4dd877fafc67fac74cb90790e35">event_checkValidity</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;{</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;   Event_t *ev;</div>
 <div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160; </div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;      <span class="comment">/* Check if has children. */</span></div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="hook_8c.html#a656db36a488abe4893a738f531856afd">hook_hasEventParent</a>( ev-&gt;id ) &gt; 0)</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;   <span class="comment">/* Iterate. */</span></div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="event_8c.html#a61cb2f9bd2aec3e6cf1c9b27db7129c2">event_active</a>); i++) {</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;      ev = &amp;<a class="code" href="event_8c.html#a61cb2f9bd2aec3e6cf1c9b27db7129c2">event_active</a>[i];</div>
 <div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160; </div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;      <span class="comment">/* Must delete. */</span></div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;      WARN(_(<span class="stringliteral">&quot;Detected event &#39;%s&#39; without any hooks and is therefore invalid. Removing event.&quot;</span>),</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;            <a class="code" href="event_8c.html#a1ac43d5b3b47e169c2698b21ff340541">event_dataName</a>( ev-&gt;data ));</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;      <a class="code" href="event_8c.html#a54e719ef270804b15aefdf6bfbddcb2f">event_remove</a>( ev-&gt;id );</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;      i--; <span class="comment">/* Keep iteration safe. */</span></div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   }</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;}</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160; </div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160; </div>
-<div class="line"><a name="l00771"></a><span class="lineno"><a class="line" href="save_8c.html#ad7e355e72d11f0e30b2b7df0b44327e5">  771</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="event_8c.html#ad7e355e72d11f0e30b2b7df0b44327e5">events_saveActive</a>( xmlTextWriterPtr writer )</div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;{</div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;   Event_t *ev;</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160; </div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   xmlw_startElem(writer,<span class="stringliteral">&quot;events&quot;</span>);</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160; </div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="event_8c.html#a61cb2f9bd2aec3e6cf1c9b27db7129c2">event_active</a>); i++) {</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;      ev = &amp;<a class="code" href="event_8c.html#a61cb2f9bd2aec3e6cf1c9b27db7129c2">event_active</a>[i];</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;      <span class="keywordflow">if</span> (!ev-&gt;save) <span class="comment">/* Only save events that want to be saved. */</span></div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160; </div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;      xmlw_startElem(writer,<span class="stringliteral">&quot;event&quot;</span>);</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160; </div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      xmlw_attr(writer,<span class="stringliteral">&quot;name&quot;</span>,<span class="stringliteral">&quot;%s&quot;</span>,<a class="code" href="event_8c.html#a1ac43d5b3b47e169c2698b21ff340541">event_dataName</a>(ev-&gt;data));</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;      xmlw_attr(writer,<span class="stringliteral">&quot;id&quot;</span>,<span class="stringliteral">&quot;%u&quot;</span>,ev-&gt;id);</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160; </div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;      <span class="comment">/* Claims. */</span></div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;      xmlw_startElem(writer,<span class="stringliteral">&quot;claims&quot;</span>);</div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;      <a class="code" href="claim_8c.html#a36939dea3efb3c35892bc2e314e2c8d4">claim_xmlSave</a>( writer, ev-&gt;claims );</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;      xmlw_endElem(writer); <span class="comment">/* &quot;claims&quot; */</span></div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160; </div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;      <span class="comment">/* Write Lua magic */</span></div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;      xmlw_startElem(writer,<span class="stringliteral">&quot;lua&quot;</span>);</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;      <a class="code" href="nxml__lua_8c.html#a04eccf09cbd155f3f7add05816d1e585">nxml_persistLua</a>( ev-&gt;env, writer );</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;      xmlw_endElem(writer); <span class="comment">/* &quot;lua&quot; */</span></div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160; </div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;      xmlw_endElem(writer); <span class="comment">/* &quot;event&quot; */</span></div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;   }</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160; </div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;   xmlw_endElem(writer); <span class="comment">/* &quot;events&quot; */</span></div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160; </div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;}</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160; </div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;      <span class="comment">/* Check if has children. */</span></div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="hook_8c.html#a656db36a488abe4893a738f531856afd">hook_hasEventParent</a>( ev-&gt;id ) &gt; 0)</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160; </div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;      <span class="comment">/* Must delete. */</span></div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;      WARN(_(<span class="stringliteral">&quot;Detected event &#39;%s&#39; without any hooks and is therefore invalid. Removing event.&quot;</span>),</div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;            <a class="code" href="event_8c.html#a1ac43d5b3b47e169c2698b21ff340541">event_dataName</a>( ev-&gt;data ));</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;      <a class="code" href="event_8c.html#a54e719ef270804b15aefdf6bfbddcb2f">event_remove</a>( ev-&gt;id );</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;      i--; <span class="comment">/* Keep iteration safe. */</span></div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;   }</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;}</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160; </div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
+<div class="line"><a name="l00775"></a><span class="lineno"><a class="line" href="save_8c.html#ad7e355e72d11f0e30b2b7df0b44327e5">  775</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="event_8c.html#ad7e355e72d11f0e30b2b7df0b44327e5">events_saveActive</a>( xmlTextWriterPtr writer )</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;{</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   Event_t *ev;</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160; </div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;   xmlw_startElem(writer,<span class="stringliteral">&quot;events&quot;</span>);</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160; </div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="event_8c.html#a61cb2f9bd2aec3e6cf1c9b27db7129c2">event_active</a>); i++) {</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;      ev = &amp;<a class="code" href="event_8c.html#a61cb2f9bd2aec3e6cf1c9b27db7129c2">event_active</a>[i];</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;      <span class="keywordflow">if</span> (!ev-&gt;save) <span class="comment">/* Only save events that want to be saved. */</span></div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160; </div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      xmlw_startElem(writer,<span class="stringliteral">&quot;event&quot;</span>);</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160; </div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;      xmlw_attr(writer,<span class="stringliteral">&quot;name&quot;</span>,<span class="stringliteral">&quot;%s&quot;</span>,<a class="code" href="event_8c.html#a1ac43d5b3b47e169c2698b21ff340541">event_dataName</a>(ev-&gt;data));</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;      xmlw_attr(writer,<span class="stringliteral">&quot;id&quot;</span>,<span class="stringliteral">&quot;%u&quot;</span>,ev-&gt;id);</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160; </div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;      <span class="comment">/* Claims. */</span></div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;      xmlw_startElem(writer,<span class="stringliteral">&quot;claims&quot;</span>);</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;      <a class="code" href="claim_8c.html#a36939dea3efb3c35892bc2e314e2c8d4">claim_xmlSave</a>( writer, ev-&gt;claims );</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;      xmlw_endElem(writer); <span class="comment">/* &quot;claims&quot; */</span></div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160; </div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;      <span class="comment">/* Write Lua magic */</span></div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;      xmlw_startElem(writer,<span class="stringliteral">&quot;lua&quot;</span>);</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;      <a class="code" href="nxml__lua_8c.html#a04eccf09cbd155f3f7add05816d1e585">nxml_persistLua</a>( ev-&gt;env, writer );</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;      xmlw_endElem(writer); <span class="comment">/* &quot;lua&quot; */</span></div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160; </div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;      xmlw_endElem(writer); <span class="comment">/* &quot;event&quot; */</span></div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;   }</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160; </div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;   xmlw_endElem(writer); <span class="comment">/* &quot;events&quot; */</span></div>
 <div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160; </div>
-<div class="line"><a name="l00813"></a><span class="lineno"><a class="line" href="load_8c.html#a4833205901b3a96b7d1d2e994f8dabe8">  813</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="event_8c.html#a4833205901b3a96b7d1d2e994f8dabe8">events_loadActive</a>( xmlNodePtr parent )</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;{</div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;   xmlNodePtr node;</div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160; </div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;   <span class="comment">/* cleanup old events */</span></div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;   <a class="code" href="event_8c.html#a64bde057407debd7862302dda094b6ed">events_cleanup</a>();</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160; </div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;events&quot;</span>))</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="event_8c.html#a9759d0404fad62ab935ecafbbc376e7a">events_parseActive</a>( node ) &lt; 0) <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160; </div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;}</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160; </div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;}</div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160; </div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160; </div>
+<div class="line"><a name="l00817"></a><span class="lineno"><a class="line" href="load_8c.html#a4833205901b3a96b7d1d2e994f8dabe8">  817</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="event_8c.html#a4833205901b3a96b7d1d2e994f8dabe8">events_loadActive</a>( xmlNodePtr parent )</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;{</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   xmlNodePtr node;</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160; </div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   <span class="comment">/* cleanup old events */</span></div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;   <a class="code" href="event_8c.html#a64bde057407debd7862302dda094b6ed">events_cleanup</a>();</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160; </div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;events&quot;</span>))</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="event_8c.html#a9759d0404fad62ab935ecafbbc376e7a">events_parseActive</a>( node ) &lt; 0) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
 <div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160; </div>
-<div class="line"><a name="l00836"></a><span class="lineno"><a class="line" href="event_8c.html#a9759d0404fad62ab935ecafbbc376e7a">  836</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="event_8c.html#a9759d0404fad62ab935ecafbbc376e7a">events_parseActive</a>( xmlNodePtr parent )</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;{</div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;   <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>;</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;   <span class="keywordtype">int</span> data;</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;   xmlNodePtr node, cur;</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;   Event_t *ev;</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160; </div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;      <span class="keywordflow">if</span> (!xml_isNode(node,<span class="stringliteral">&quot;event&quot;</span>))</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160; </div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;      xmlr_attr_strd(node,<span class="stringliteral">&quot;name&quot;</span>,<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;         WARN(_(<span class="stringliteral">&quot;Event has missing &#39;name&#39; attribute, skipping.&quot;</span>));</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;      }</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;      data = <a class="code" href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;      <span class="keywordflow">if</span> (data &lt; 0) {</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;         WARN(_(<span class="stringliteral">&quot;Event in save has name &#39;%s&#39; but event data not found matching name. Skipping.&quot;</span>), <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;         free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;      }</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;      free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;      xmlr_attr_uint(node,<span class="stringliteral">&quot;id&quot;</span>,<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;      <span class="keywordflow">if</span> (<span class="keywordtype">id</span>==0) {</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;         WARN(_(<span class="stringliteral">&quot;Event with data &#39;%s&#39; has invalid &#39;id&#39; attribute, skipping.&quot;</span>), <a class="code" href="event_8c.html#a1ac43d5b3b47e169c2698b21ff340541">event_dataName</a>(data));</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;      }</div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160; </div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;      <span class="comment">/* Create the event. */</span></div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;      <a class="code" href="event_8c.html#aff7b76211032ce4580ec2ffcc6551e86">event_create</a>( data, &amp;<span class="keywordtype">id</span> );</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;      ev = <a class="code" href="event_8c.html#af0ec78507456253702338fb89e14a98a">event_get</a>( <span class="keywordtype">id</span> );</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;      <span class="keywordflow">if</span> (ev == NULL) {</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;         WARN(_(<span class="stringliteral">&quot;Event with data &#39;%s&#39; was not created, skipping.&quot;</span>), <a class="code" href="event_8c.html#a1ac43d5b3b47e169c2698b21ff340541">event_dataName</a>(data));</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;      }</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;      ev-&gt;save = 1; <span class="comment">/* Should save by default again. */</span></div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160; </div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;      <span class="comment">/* Get the data. */</span></div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;      cur = node-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;      <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;         <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;lua&quot;</span>))</div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;            <a class="code" href="nxml__lua_8c.html#a96c92783d750b14567d92aa7172acc9e">nxml_unpersistLua</a>( ev-&gt;env, cur );</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;      } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160; </div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;      <span class="comment">/* Claims. */</span></div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;claims&quot;</span>))</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;         ev-&gt;claims = <a class="code" href="claim_8c.html#a981883a4ba70f788495b4d0098012de5">claim_xmlLoad</a>( node );</div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160; </div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;}</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160; </div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;}</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160; </div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160; </div>
+<div class="line"><a name="l00840"></a><span class="lineno"><a class="line" href="event_8c.html#a9759d0404fad62ab935ecafbbc376e7a">  840</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="event_8c.html#a9759d0404fad62ab935ecafbbc376e7a">events_parseActive</a>( xmlNodePtr parent )</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;{</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;   <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>;</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;   <span class="keywordtype">int</span> data;</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   xmlNodePtr node, cur;</div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;   Event_t *ev;</div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160; </div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;      <span class="keywordflow">if</span> (!xml_isNode(node,<span class="stringliteral">&quot;event&quot;</span>))</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160; </div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;      xmlr_attr_strd(node,<span class="stringliteral">&quot;name&quot;</span>,<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;         WARN(_(<span class="stringliteral">&quot;Event has missing &#39;name&#39; attribute, skipping.&quot;</span>));</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;      }</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;      data = <a class="code" href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;      <span class="keywordflow">if</span> (data &lt; 0) {</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;         WARN(_(<span class="stringliteral">&quot;Event in save has name &#39;%s&#39; but event data not found matching name. Skipping.&quot;</span>), <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;         free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;      }</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;      free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;      xmlr_attr_uint(node,<span class="stringliteral">&quot;id&quot;</span>,<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;      <span class="keywordflow">if</span> (<span class="keywordtype">id</span>==0) {</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;         WARN(_(<span class="stringliteral">&quot;Event with data &#39;%s&#39; has invalid &#39;id&#39; attribute, skipping.&quot;</span>), <a class="code" href="event_8c.html#a1ac43d5b3b47e169c2698b21ff340541">event_dataName</a>(data));</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;      }</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160; </div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;      <span class="comment">/* Create the event. */</span></div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;      <a class="code" href="event_8c.html#aff7b76211032ce4580ec2ffcc6551e86">event_create</a>( data, &amp;<span class="keywordtype">id</span> );</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;      ev = <a class="code" href="event_8c.html#af0ec78507456253702338fb89e14a98a">event_get</a>( <span class="keywordtype">id</span> );</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;      <span class="keywordflow">if</span> (ev == NULL) {</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;         WARN(_(<span class="stringliteral">&quot;Event with data &#39;%s&#39; was not created, skipping.&quot;</span>), <a class="code" href="event_8c.html#a1ac43d5b3b47e169c2698b21ff340541">event_dataName</a>(data));</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;      }</div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;      ev-&gt;save = 1; <span class="comment">/* Should save by default again. */</span></div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160; </div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;      <span class="comment">/* Get the data. */</span></div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;      cur = node-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;      <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;         <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;lua&quot;</span>))</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;            <a class="code" href="nxml__lua_8c.html#a96c92783d750b14567d92aa7172acc9e">nxml_unpersistLua</a>( ev-&gt;env, cur );</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;      } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160; </div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;      <span class="comment">/* Claims. */</span></div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;claims&quot;</span>))</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;         ev-&gt;claims = <a class="code" href="claim_8c.html#a981883a4ba70f788495b4d0098012de5">claim_xmlLoad</a>( node );</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
 <div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160; </div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;}</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160; </div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="andata_8c_html_ad662fc8409f9654634613f76113a8691"><div class="ttname"><a href="ndata_8c.html#ad662fc8409f9654634613f76113a8691">ndata_listRecursive</a></div><div class="ttdeci">char ** ndata_listRecursive(const char *path)</div><div class="ttdoc">Lists all the visible files in a directory, at any depth.</div><div class="ttdef"><b>Definition:</b> <a href="ndata_8c_source.html#l00236">ndata.c:236</a></div></div>
 <div class="ttc" id="aevent_8c_html_a409d3ec3985daa6f504ff4d0be65bee6"><div class="ttname"><a href="event_8c.html#a409d3ec3985daa6f504ff4d0be65bee6">event_runFunc</a></div><div class="ttdeci">int event_runFunc(unsigned int eventid, const char *func, int nargs)</div><div class="ttdoc">Runs a function previously set up with event_runStart.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00159">event.c:159</a></div></div>
@@ -802,9 +806,9 @@ $(function() {
 <div class="ttc" id="anlua_8c_html_a45e6b8d12cc6f943d058023f8ec74a2d"><div class="ttname"><a href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a></div><div class="ttdeci">int nlua_loadStandard(nlua_env env)</div><div class="ttdoc">Loads the standard Naev Lua API.</div><div class="ttdef"><b>Definition:</b> <a href="nlua_8c_source.html#l00563">nlua.c:563</a></div></div>
 <div class="ttc" id="acond_8c_html_a5efaf05e03f72665087f44d289567a4c"><div class="ttname"><a href="cond_8c.html#a5efaf05e03f72665087f44d289567a4c">cond_check</a></div><div class="ttdeci">int cond_check(const char *cond)</div><div class="ttdoc">Checks to see if a condition is true.</div><div class="ttdef"><b>Definition:</b> <a href="cond_8c_source.html#l00063">cond.c:63</a></div></div>
 <div class="ttc" id="anlua__evt_8c_html_a9066ff0b0d0e54000b4d31f6410c30c3"><div class="ttname"><a href="nlua__evt_8c.html#a9066ff0b0d0e54000b4d31f6410c30c3">event_runLuaFunc</a></div><div class="ttdeci">int event_runLuaFunc(Event_t *ev, const char *func, int nargs)</div><div class="ttdoc">Runs a Lua func with nargs.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__evt_8c_source.html#l00132">nlua_evt.c:132</a></div></div>
-<div class="ttc" id="aevent_8c_html_ad7e355e72d11f0e30b2b7df0b44327e5"><div class="ttname"><a href="event_8c.html#ad7e355e72d11f0e30b2b7df0b44327e5">events_saveActive</a></div><div class="ttdeci">int events_saveActive(xmlTextWriterPtr writer)</div><div class="ttdoc">Saves the player's active events.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00771">event.c:771</a></div></div>
+<div class="ttc" id="aevent_8c_html_ad7e355e72d11f0e30b2b7df0b44327e5"><div class="ttname"><a href="event_8c.html#ad7e355e72d11f0e30b2b7df0b44327e5">events_saveActive</a></div><div class="ttdeci">int events_saveActive(xmlTextWriterPtr writer)</div><div class="ttdoc">Saves the player's active events.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00775">event.c:775</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
-<div class="ttc" id="aevent_8c_html_ac317e4dd877fafc67fac74cb90790e35"><div class="ttname"><a href="event_8c.html#ac317e4dd877fafc67fac74cb90790e35">event_checkValidity</a></div><div class="ttdeci">void event_checkValidity(void)</div><div class="ttdoc">Checks the event validity and cleans up after them.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00743">event.c:743</a></div></div>
+<div class="ttc" id="aevent_8c_html_ac317e4dd877fafc67fac74cb90790e35"><div class="ttname"><a href="event_8c.html#ac317e4dd877fafc67fac74cb90790e35">event_checkValidity</a></div><div class="ttdeci">void event_checkValidity(void)</div><div class="ttdoc">Checks the event validity and cleans up after them.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00747">event.c:747</a></div></div>
 <div class="ttc" id="anstring_8c_html_a2eddbc0baa6abf391ed5ee6b69772d5b"><div class="ttname"><a href="nstring_8c.html#a2eddbc0baa6abf391ed5ee6b69772d5b">strnstr</a></div><div class="ttdeci">char * strnstr(const char *haystack, const char *needle, size_t size)</div><div class="ttdoc">A bounded version of strstr. Conforms to BSD semantics.</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00029">nstring.c:29</a></div></div>
 <div class="ttc" id="anlua__tk_8c_html_a589a461c0b7e7019cb11fe5d022a042c"><div class="ttname"><a href="nlua__tk_8c.html#a589a461c0b7e7019cb11fe5d022a042c">nlua_loadTk</a></div><div class="ttdeci">int nlua_loadTk(nlua_env env)</div><div class="ttdoc">Loads the Toolkit Lua library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tk_8c_source.html#l00088">nlua_tk.c:88</a></div></div>
 <div class="ttc" id="aevent_8c_html_a65caf33c0036b665dec4b6d07b76f448"><div class="ttname"><a href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a></div><div class="ttdeci">int event_dataID(const char *evdata)</div><div class="ttdoc">Gets the event data id from name.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00691">event.c:691</a></div></div>
@@ -825,11 +829,11 @@ $(function() {
 <div class="ttc" id="aevent_8c_html_a61cb2f9bd2aec3e6cf1c9b27db7129c2"><div class="ttname"><a href="event_8c.html#a61cb2f9bd2aec3e6cf1c9b27db7129c2">event_active</a></div><div class="ttdeci">static Event_t * event_active</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00081">event.c:81</a></div></div>
 <div class="ttc" id="aclaim_8c_html_a8afa8feb0d1d488c6c2529abc502293d"><div class="ttname"><a href="claim_8c.html#a8afa8feb0d1d488c6c2529abc502293d">claim_activate</a></div><div class="ttdeci">void claim_activate(Claim_t *claim)</div><div class="ttdoc">Activates a claim on a system.</div><div class="ttdef"><b>Definition:</b> <a href="claim_8c_source.html#l00256">claim.c:256</a></div></div>
 <div class="ttc" id="aevent_8c_html_a1ac43d5b3b47e169c2698b21ff340541"><div class="ttname"><a href="event_8c.html#a1ac43d5b3b47e169c2698b21ff340541">event_dataName</a></div><div class="ttdeci">const char * event_dataName(int dataid)</div><div class="ttdoc">Gets the event data name from id.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00709">event.c:709</a></div></div>
-<div class="ttc" id="aevent_8c_html_a9759d0404fad62ab935ecafbbc376e7a"><div class="ttname"><a href="event_8c.html#a9759d0404fad62ab935ecafbbc376e7a">events_parseActive</a></div><div class="ttdeci">static int events_parseActive(xmlNodePtr parent)</div><div class="ttdoc">Parses the actual individual event nodes.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00836">event.c:836</a></div></div>
+<div class="ttc" id="aevent_8c_html_a9759d0404fad62ab935ecafbbc376e7a"><div class="ttname"><a href="event_8c.html#a9759d0404fad62ab935ecafbbc376e7a">events_parseActive</a></div><div class="ttdeci">static int events_parseActive(xmlNodePtr parent)</div><div class="ttdoc">Parses the actual individual event nodes.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00840">event.c:840</a></div></div>
 <div class="ttc" id="anxml__lua_8c_html_a04eccf09cbd155f3f7add05816d1e585"><div class="ttname"><a href="nxml__lua_8c.html#a04eccf09cbd155f3f7add05816d1e585">nxml_persistLua</a></div><div class="ttdeci">int nxml_persistLua(nlua_env env, xmlTextWriterPtr writer)</div><div class="ttdoc">Persists all the nxml Lua data.</div><div class="ttdef"><b>Definition:</b> <a href="nxml__lua_8c_source.html#l00320">nxml_lua.c:320</a></div></div>
 <div class="ttc" id="aevent_8c_html_a976a2e167f75682acbfae3e723c291cd"><div class="ttname"><a href="event_8c.html#a976a2e167f75682acbfae3e723c291cd">XML_EVENT_TAG</a></div><div class="ttdeci">#define XML_EVENT_TAG</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00049">event.c:49</a></div></div>
 <div class="ttc" id="aclaim_8c_html_a981883a4ba70f788495b4d0098012de5"><div class="ttname"><a href="claim_8c.html#a981883a4ba70f788495b4d0098012de5">claim_xmlLoad</a></div><div class="ttdeci">Claim_t * claim_xmlLoad(xmlNodePtr parent)</div><div class="ttdoc">Loads a claim.</div><div class="ttdef"><b>Definition:</b> <a href="claim_8c_source.html#l00313">claim.c:313</a></div></div>
-<div class="ttc" id="aevent_8c_html_a4833205901b3a96b7d1d2e994f8dabe8"><div class="ttname"><a href="event_8c.html#a4833205901b3a96b7d1d2e994f8dabe8">events_loadActive</a></div><div class="ttdeci">int events_loadActive(xmlNodePtr parent)</div><div class="ttdoc">Loads the player's active events from a save.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00813">event.c:813</a></div></div>
+<div class="ttc" id="aevent_8c_html_a4833205901b3a96b7d1d2e994f8dabe8"><div class="ttname"><a href="event_8c.html#a4833205901b3a96b7d1d2e994f8dabe8">events_loadActive</a></div><div class="ttdeci">int events_loadActive(xmlNodePtr parent)</div><div class="ttdoc">Loads the player's active events from a save.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00817">event.c:817</a></div></div>
 <div class="ttc" id="andata_8c_html_a16f6ef61238e43179df6914a165c70ad"><div class="ttname"><a href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a></div><div class="ttdeci">void * ndata_read(const char *path, size_t *filesize)</div><div class="ttdoc">Reads a file from the ndata.</div><div class="ttdef"><b>Definition:</b> <a href="ndata_8c_source.html#l00157">ndata.c:157</a></div></div>
 <div class="ttc" id="aevent_8c_html_af18494f0350cd5034acfbddc3e0f469f"><div class="ttname"><a href="event_8c.html#af18494f0350cd5034acfbddc3e0f469f">event_genID</a></div><div class="ttdeci">static unsigned int event_genID(void)</div><div class="ttdoc">Generates a new event ID.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00229">event.c:229</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>

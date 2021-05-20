@@ -106,7 +106,7 @@ $(function() {
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
 <div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="gettext_8c.html#a470286eae30c21c6a71a4e157e8a38f1">   80</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gettext_8c.html#a470286eae30c21c6a71a4e157e8a38f1">gettext_setLanguage</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* lang )</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;{</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   translation_t *newtrans, **ptrans;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   translation_t *newtrans, *ptrans;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;   <span class="keywordtype">char</span> root[256], **paths;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;   <span class="keywordtype">int</span> i;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *map, *lang_part;</div>
@@ -118,9 +118,9 @@ $(function() {
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;   <span class="comment">/* Search for the selected language in the loaded translations. */</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   <span class="keywordflow">for</span> (ptrans = &amp;<a class="code" href="gettext_8c.html#aabb943ee488db598ab80316dcfbf9a8f">gettext_translations</a>; *ptrans != NULL; ptrans = &amp;(*ptrans)-&gt;next)</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keywordflow">if</span> (!strcmp( lang, (*ptrans)-&gt;language )) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;         <a class="code" href="gettext_8c.html#a2e92f8989de3cdd7b2c8f0b1517cabd1">gettext_activeTranslation</a> = *ptrans;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   <span class="keywordflow">for</span> (ptrans = <a class="code" href="gettext_8c.html#aabb943ee488db598ab80316dcfbf9a8f">gettext_translations</a>; ptrans != NULL; ptrans = ptrans-&gt;next)</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keywordflow">if</span> (!strcmp( lang, ptrans-&gt;language )) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;         <a class="code" href="gettext_8c.html#a2e92f8989de3cdd7b2c8f0b1517cabd1">gettext_activeTranslation</a> = ptrans;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;         <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      }</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
@@ -128,66 +128,68 @@ $(function() {
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;   newtrans = calloc( 1, <span class="keyword">sizeof</span>( translation_t ) );</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;   newtrans-&gt;language = strdup( lang );</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   newtrans-&gt;chain = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( msgcat_t );</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;   <span class="comment">/* @TODO This code orders the translations alphabetically by file path.</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">    * That doesn&#39;t make sense, but this is a new use case and it&#39;s unclear</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">    * how we should determine precedence in case multiple .mo files exist. */</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   <span class="keywordflow">while</span> (lang != NULL &amp;&amp; *lang != 0) {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      lang_part = lang;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      lang = strchr(lang, <span class="charliteral">&#39;:&#39;</span>);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordflow">if</span> (lang == NULL)</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;         lang_part_len = strlen(lang_part);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;         lang_part_len = (size_t)(lang-lang_part);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;         lang++;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <span class="keywordflow">if</span> (lang_part_len == 0)</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      strncpy( root, GETTEXT_PATH, <span class="keyword">sizeof</span>(root)-1 );</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      strncat( root, lang_part, <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <span class="keyword">sizeof</span>(root)-<span class="keyword">sizeof</span>(GETTEXT_PATH), lang_part_len) );</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      paths = <a class="code" href="ndata_8c.html#ad662fc8409f9654634613f76113a8691">ndata_listRecursive</a>( root );</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(paths); i++) {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;         map = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( paths[i], &amp;map_size );</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;         <span class="keywordflow">if</span> (map != NULL) {</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <a class="code" href="msgcat_8c.html#ad47774709c1c5f8db8625d0dbda804af">msgcat_init</a>( &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;newtrans-&gt;chain ), map, map_size );</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            DEBUG( _(<span class="stringliteral">&quot;Adding translations from %s&quot;</span>), paths[i] );</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;         }</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;         free( paths[i] );</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      }</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( paths );</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;   }</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;   <a class="code" href="gettext_8c.html#a2e92f8989de3cdd7b2c8f0b1517cabd1">gettext_activeTranslation</a> = *ptrans = newtrans;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">  144</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid, <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid_plural, uint64_t n )</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;{</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;   msgcat_t *<a class="code" href="structtranslation.html#a786c1e57feb500ddbeb969891bf16919">chain</a>;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span>* trans;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="gettext_8c.html#a2e92f8989de3cdd7b2c8f0b1517cabd1">gettext_activeTranslation</a> != NULL) {</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      <a class="code" href="structtranslation.html#a786c1e57feb500ddbeb969891bf16919">chain</a> = <a class="code" href="gettext_8c.html#a2e92f8989de3cdd7b2c8f0b1517cabd1">gettext_activeTranslation</a>-&gt;chain;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structtranslation.html#a786c1e57feb500ddbeb969891bf16919">chain</a>); i++) {</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;         trans = <a class="code" href="msgcat_8c.html#a89871e3c274bcf8e83201383b7dc1af3">msgcat_ngettext</a>( &amp;<a class="code" href="structtranslation.html#a786c1e57feb500ddbeb969891bf16919">chain</a>[i], msgid, msgid_plural, n );</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;         <span class="keywordflow">if</span> (trans != NULL)</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            <span class="keywordflow">return</span> (<span class="keywordtype">char</span>*)trans;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      }</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   }</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   <span class="keywordflow">return</span> n&gt;1 &amp;&amp; msgid_plural!=NULL ? msgid_plural : msgid;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;}</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
-<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="gettext_8c.html#aaf5c1e406dc782c04b95ca79c2fd46f9">  165</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#aaf5c1e406dc782c04b95ca79c2fd46f9">gettext_pgettext</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* lookup, <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid )</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;{</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *trans;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;   trans = _( lookup );</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;   <span class="keywordflow">return</span> trans==lookup ? msgid : trans;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;}</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   newtrans-&gt;next = <a class="code" href="gettext_8c.html#aabb943ee488db598ab80316dcfbf9a8f">gettext_translations</a>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;   <a class="code" href="gettext_8c.html#aabb943ee488db598ab80316dcfbf9a8f">gettext_translations</a> = newtrans;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   <span class="comment">/* @TODO This code orders the translations alphabetically by file path.</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">    * That doesn&#39;t make sense, but this is a new use case and it&#39;s unclear</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">    * how we should determine precedence in case multiple .mo files exist. */</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   <span class="keywordflow">while</span> (lang != NULL &amp;&amp; *lang != 0) {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      lang_part = lang;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      lang = strchr(lang, <span class="charliteral">&#39;:&#39;</span>);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      <span class="keywordflow">if</span> (lang == NULL)</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;         lang_part_len = strlen(lang_part);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;         lang_part_len = (size_t)(lang-lang_part);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;         lang++;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <span class="keywordflow">if</span> (lang_part_len == 0)</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      strncpy( root, GETTEXT_PATH, <span class="keyword">sizeof</span>(root)-1 );</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      strncat( root, lang_part, <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <span class="keyword">sizeof</span>(root)-<span class="keyword">sizeof</span>(GETTEXT_PATH), lang_part_len) );</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      paths = <a class="code" href="ndata_8c.html#ad662fc8409f9654634613f76113a8691">ndata_listRecursive</a>( root );</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(paths); i++) {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;         map = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( paths[i], &amp;map_size );</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;         <span class="keywordflow">if</span> (map != NULL) {</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <a class="code" href="msgcat_8c.html#ad47774709c1c5f8db8625d0dbda804af">msgcat_init</a>( &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;newtrans-&gt;chain ), map, map_size );</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            DEBUG( _(<span class="stringliteral">&quot;Adding translations from %s&quot;</span>), paths[i] );</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;         }</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;         free( paths[i] );</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( paths );</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;   }</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;   <a class="code" href="gettext_8c.html#a2e92f8989de3cdd7b2c8f0b1517cabd1">gettext_activeTranslation</a> = newtrans;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">  146</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid, <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid_plural, uint64_t n )</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;{</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;   msgcat_t *<a class="code" href="structtranslation.html#a786c1e57feb500ddbeb969891bf16919">chain</a>;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span>* trans;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="gettext_8c.html#a2e92f8989de3cdd7b2c8f0b1517cabd1">gettext_activeTranslation</a> != NULL) {</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      <a class="code" href="structtranslation.html#a786c1e57feb500ddbeb969891bf16919">chain</a> = <a class="code" href="gettext_8c.html#a2e92f8989de3cdd7b2c8f0b1517cabd1">gettext_activeTranslation</a>-&gt;chain;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structtranslation.html#a786c1e57feb500ddbeb969891bf16919">chain</a>); i++) {</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;         trans = <a class="code" href="msgcat_8c.html#a89871e3c274bcf8e83201383b7dc1af3">msgcat_ngettext</a>( &amp;<a class="code" href="structtranslation.html#a786c1e57feb500ddbeb969891bf16919">chain</a>[i], msgid, msgid_plural, n );</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;         <span class="keywordflow">if</span> (trans != NULL)</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            <span class="keywordflow">return</span> (<span class="keywordtype">char</span>*)trans;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   <span class="keywordflow">return</span> n&gt;1 &amp;&amp; msgid_plural!=NULL ? msgid_plural : msgid;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00167"></a><span class="lineno"><a class="line" href="gettext_8c.html#aaf5c1e406dc782c04b95ca79c2fd46f9">  167</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#aaf5c1e406dc782c04b95ca79c2fd46f9">gettext_pgettext</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* lookup, <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid )</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;{</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *trans;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;   trans = _( lookup );</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;   <span class="keywordflow">return</span> trans==lookup ? msgid : trans;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="andata_8c_html_ad662fc8409f9654634613f76113a8691"><div class="ttname"><a href="ndata_8c.html#ad662fc8409f9654634613f76113a8691">ndata_listRecursive</a></div><div class="ttdeci">char ** ndata_listRecursive(const char *path)</div><div class="ttdoc">Lists all the visible files in a directory, at any depth.</div><div class="ttdef"><b>Definition:</b> <a href="ndata_8c_source.html#l00236">ndata.c:236</a></div></div>
 <div class="ttc" id="astructtranslation_html"><div class="ttname"><a href="structtranslation.html">translation</a></div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00030">gettext.c:30</a></div></div>
 <div class="ttc" id="agettext_8c_html_a39ed8f89b0818ffdcc1ec040db4ec379"><div class="ttname"><a href="gettext_8c.html#a39ed8f89b0818ffdcc1ec040db4ec379">gettext_init</a></div><div class="ttdeci">void gettext_init()</div><div class="ttdoc">Initialize the translation system. There's no presumption that PhysicsFS is available,...</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00048">gettext.c:48</a></div></div>
-<div class="ttc" id="agettext_8c_html_adc36b65346be9f9d1cd1daf084bd4e16"><div class="ttname"><a href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a></div><div class="ttdeci">const char * gettext_ngettext(const char *msgid, const char *msgid_plural, uint64_t n)</div><div class="ttdoc">Return a translated version of the input, using the current language catalogs.</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00144">gettext.c:144</a></div></div>
+<div class="ttc" id="agettext_8c_html_adc36b65346be9f9d1cd1daf084bd4e16"><div class="ttname"><a href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a></div><div class="ttdeci">const char * gettext_ngettext(const char *msgid, const char *msgid_plural, uint64_t n)</div><div class="ttdoc">Return a translated version of the input, using the current language catalogs.</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00146">gettext.c:146</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
 <div class="ttc" id="amsgcat_8c_html_a89871e3c274bcf8e83201383b7dc1af3"><div class="ttname"><a href="msgcat_8c.html#a89871e3c274bcf8e83201383b7dc1af3">msgcat_ngettext</a></div><div class="ttdeci">const char * msgcat_ngettext(const msgcat_t *p, const char *msgid1, const char *msgid2, uint64_t n)</div><div class="ttdoc">Return a translation, if present, from the given message catalog.</div><div class="ttdef"><b>Definition:</b> <a href="msgcat_8c_source.html#l00101">msgcat.c:101</a></div></div>
 <div class="ttc" id="astructtranslation_html_a786c1e57feb500ddbeb969891bf16919"><div class="ttname"><a href="structtranslation.html#a786c1e57feb500ddbeb969891bf16919">translation::chain</a></div><div class="ttdeci">msgcat_t * chain</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00032">gettext.c:32</a></div></div>
@@ -196,7 +198,7 @@ $(function() {
 <div class="ttc" id="aarray_8h_html_a8037aba47ab61629eee083791786b582"><div class="ttname"><a href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a></div><div class="ttdeci">#define array_grow(ptr_array)</div><div class="ttdoc">Increases the number of elements by one and returns the last element.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00123">array.h:123</a></div></div>
 <div class="ttc" id="astructtranslation_html_adc535709fe09d81396c09b435955a405"><div class="ttname"><a href="structtranslation.html#adc535709fe09d81396c09b435955a405">translation::next</a></div><div class="ttdeci">struct translation * next</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00033">gettext.c:33</a></div></div>
 <div class="ttc" id="andata_8c_html_a16f6ef61238e43179df6914a165c70ad"><div class="ttname"><a href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a></div><div class="ttdeci">void * ndata_read(const char *path, size_t *filesize)</div><div class="ttdoc">Reads a file from the ndata.</div><div class="ttdef"><b>Definition:</b> <a href="ndata_8c_source.html#l00157">ndata.c:157</a></div></div>
-<div class="ttc" id="agettext_8c_html_aaf5c1e406dc782c04b95ca79c2fd46f9"><div class="ttname"><a href="gettext_8c.html#aaf5c1e406dc782c04b95ca79c2fd46f9">gettext_pgettext</a></div><div class="ttdeci">const char * gettext_pgettext(const char *lookup, const char *msgid)</div><div class="ttdoc">Helper function for p_(): Return _(lookup) with a fallback of msgid rather than lookup.</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00165">gettext.c:165</a></div></div>
+<div class="ttc" id="agettext_8c_html_aaf5c1e406dc782c04b95ca79c2fd46f9"><div class="ttname"><a href="gettext_8c.html#aaf5c1e406dc782c04b95ca79c2fd46f9">gettext_pgettext</a></div><div class="ttdeci">const char * gettext_pgettext(const char *lookup, const char *msgid)</div><div class="ttdoc">Helper function for p_(): Return _(lookup) with a fallback of msgid rather than lookup.</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00167">gettext.c:167</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="agettext_8c_html_a2e92f8989de3cdd7b2c8f0b1517cabd1"><div class="ttname"><a href="gettext_8c.html#a2e92f8989de3cdd7b2c8f0b1517cabd1">gettext_activeTranslation</a></div><div class="ttdeci">static translation_t * gettext_activeTranslation</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00039">gettext.c:39</a></div></div>
 <div class="ttc" id="agettext_8c_html_a470286eae30c21c6a71a4e157e8a38f1"><div class="ttname"><a href="gettext_8c.html#a470286eae30c21c6a71a4e157e8a38f1">gettext_setLanguage</a></div><div class="ttdeci">void gettext_setLanguage(const char *lang)</div><div class="ttdoc">Set the translation language.</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00080">gettext.c:80</a></div></div>
