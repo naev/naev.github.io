@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo32.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">naev
-   &#160;<span id="projectnumber">0.9.0-alpha</span>
+   &#160;<span id="projectnumber">0.9.0-alpha.1</span>
    </div>
   </td>
  </tr>
@@ -69,7 +69,7 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;   <span class="keyword">const</span> Outfit *o, *o_all;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;   <span class="keywordtype">int</span> i, l;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;   SDL_RWops *rw;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ 1024 ];</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[STRMAX_SHORT];</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;   <span class="keyword">const</span> Damage *dmg;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;   <span class="comment">/* File to output to. */</span></div>
@@ -84,8 +84,8 @@ $(function() {
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;         <span class="stringliteral">&quot;name,type,slot,size,&quot;</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;         <span class="stringliteral">&quot;license,mass,price,cpu,&quot;</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;         <span class="stringliteral">&quot;delay,speed,range,falloff,&quot;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;         <span class="stringliteral">&quot;lockon,energy,heatup,&quot;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;         <span class="stringliteral">&quot;track,swivel,&quot;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;         <span class="stringliteral">&quot;energy,heatup,&quot;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;         <span class="stringliteral">&quot;trackmin,trackmax,swivel,&quot;</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;         <span class="stringliteral">&quot;penetrate,dtype,damage,disable\n&quot;</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;         );</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;   SDL_RWwrite( rw, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, l, 1 );</div>
@@ -103,14 +103,14 @@ $(function() {
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="stringliteral">&quot;%s,%s,%s,%s,&quot;</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="stringliteral">&quot;%s,%f,%&quot;</span>CREDITS_PRI<span class="stringliteral">&quot;,%f,&quot;</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="stringliteral">&quot;%f,%f,%f,%f,&quot;</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="stringliteral">&quot;%f,%f,%f,&quot;</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="stringliteral">&quot;%f,%f,&quot;</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="stringliteral">&quot;%f,%f,&quot;</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="stringliteral">&quot;%f,%f,%f,&quot;</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="stringliteral">&quot;%f,%s,%f,%f\n&quot;</span>,</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            o-&gt;name, <a class="code" href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a>(o), <a class="code" href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9">outfit_slotName</a>(o), <a class="code" href="outfit_8c.html#a430bc49f57078876971bcb63ad350408">outfit_slotSize</a>(o),</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            o-&gt;license, o-&gt;mass, o-&gt;price, o-&gt;cpu,</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            o-&gt;u.blt.delay, o-&gt;u.blt.speed, o-&gt;u.blt.range, o-&gt;u.blt.falloff,</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            o-&gt;u.blt.ew_lockon, o-&gt;u.blt.energy, o-&gt;u.blt.heatup,</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            o-&gt;u.blt.track, o-&gt;u.blt.swivel * 180. / M_PI,</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            o-&gt;u.blt.energy, o-&gt;u.blt.heatup,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            o-&gt;u.blt.trackmin, o-&gt;u.blt.trackmax, o-&gt;u.blt.swivel * 180. / M_PI,</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            dmg-&gt;penetration*100, <a class="code" href="damagetype_8c.html#a683720b3a22f1fe79cd90d80d1609f57">dtype_damageTypeToStr</a>(dmg-&gt;type), dmg-&gt;damage, dmg-&gt;disable</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            );</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      SDL_RWwrite( rw, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, l, 1 );</div>
@@ -126,7 +126,7 @@ $(function() {
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;   <span class="keyword">const</span> Outfit *o, *o_all;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   <span class="keywordtype">int</span> i, l;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;   SDL_RWops *rw;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ 1024 ];</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[STRMAX_SHORT];</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   <span class="keyword">const</span> Damage *dmg;</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;   <span class="comment">/* File to output to. */</span></div>
@@ -180,7 +180,7 @@ $(function() {
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;   <span class="keyword">const</span> Outfit *o, *o_all;</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   <span class="keywordtype">int</span> i, l;</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   SDL_RWops *rw;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ 1024 ];</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[STRMAX_SHORT];</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   <span class="comment">/* File to output to. */</span></div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;   rw = SDL_RWFromFile( path, <span class="stringliteral">&quot;w&quot;</span> );</div>
@@ -194,7 +194,7 @@ $(function() {
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;         <span class="stringliteral">&quot;name,type,slot,size,&quot;</span></div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;         <span class="stringliteral">&quot;license,mass,price,cpu,&quot;</span></div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;         <span class="stringliteral">&quot;delay,ammo_name,amount,&quot;</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;         <span class="stringliteral">&quot;lockon,ew_target,arc\n&quot;</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;         <span class="stringliteral">&quot;lockon,trackmin,trackmax,arc\n&quot;</span></div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;         );</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;   SDL_RWwrite( rw, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, l, 1 );</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
@@ -210,11 +210,11 @@ $(function() {
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            <span class="stringliteral">&quot;%s,%s,%s,%s,&quot;</span></div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            <span class="stringliteral">&quot;%s,%f,%&quot;</span>CREDITS_PRI<span class="stringliteral">&quot;,%f,&quot;</span></div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            <span class="stringliteral">&quot;%f,%s,%d,&quot;</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            <span class="stringliteral">&quot;%f,%f,%f\n&quot;</span>,</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            <span class="stringliteral">&quot;%f,%f,%f,%f\n&quot;</span>,</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            o-&gt;name, <a class="code" href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a>(o), <a class="code" href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9">outfit_slotName</a>(o), <a class="code" href="outfit_8c.html#a430bc49f57078876971bcb63ad350408">outfit_slotSize</a>(o),</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            o-&gt;license, o-&gt;mass, o-&gt;price, o-&gt;cpu,</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;            o-&gt;u.lau.delay, o-&gt;u.lau.ammo_name, o-&gt;u.lau.amount,</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;            o-&gt;u.lau.lockon, o-&gt;u.lau.ew_target, o-&gt;u.lau.arc * 180 / M_PI</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;            o-&gt;u.lau.lockon, o-&gt;u.lau.trackmin, o-&gt;u.lau.trackmax, o-&gt;u.lau.arc * 180 / M_PI</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;            );</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      SDL_RWwrite( rw, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, l, 1 );</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;   }</div>
@@ -229,7 +229,7 @@ $(function() {
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;   <span class="keyword">const</span> Outfit *o, *o_all;</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;   <span class="keywordtype">int</span> i, j, l;</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;   SDL_RWops *rw;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ 1024 ];</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[STRMAX_SHORT];</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;   <span class="keywordtype">char</span> *ai;</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;   <span class="keyword">const</span> Damage *dmg;</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
@@ -291,7 +291,7 @@ $(function() {
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;   <span class="keyword">const</span> Outfit *o, *o_all;</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   <span class="keywordtype">int</span> i, l;</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;   SDL_RWops *rw;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ 1024 ];</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[STRMAX_SHORT];</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;   ShipStats base, stats;</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   <span class="comment">/* File to output to. */</span></div>
@@ -324,7 +324,7 @@ $(function() {
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      stats = base;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      <a class="code" href="shipstats_8c.html#a59eb18e49766e7126ae438a6e7f62170">ss_statsModFromList</a>( &amp;stats, o-&gt;stats, NULL );</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      <a class="code" href="shipstats_8c.html#a1d422ebc08d9740e56c54e2c3e9b4af1">ss_statsModFromList</a>( &amp;stats, o-&gt;stats );</div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      l = <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>),</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            <span class="stringliteral">&quot;%s,%s,%s,%s,&quot;</span></div>
@@ -350,28 +350,28 @@ $(function() {
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="adev__outfit_8c_html_a875b4bc1d8c4bf88dfee706c4ccd72dd"><div class="ttname"><a href="dev__outfit_8c.html#a875b4bc1d8c4bf88dfee706c4ccd72dd">dout_csvBeam</a></div><div class="ttdeci">void dout_csvBeam(const char *path)</div><div class="ttdoc">Dumps the beam weapon data to csv.</div><div class="ttdef"><b>Definition:</b> <a href="dev__outfit_8c_source.html#l00089">dev_outfit.c:89</a></div></div>
-<div class="ttc" id="ashipstats_8c_html_abfa2c2992f08c6a5e4459241abc3f0db"><div class="ttname"><a href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a></div><div class="ttdeci">int ss_statsInit(ShipStats *stats)</div><div class="ttdoc">Initializes a stat structure.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00245">shipstats.c:245</a></div></div>
+<div class="ttc" id="ashipstats_8c_html_abfa2c2992f08c6a5e4459241abc3f0db"><div class="ttname"><a href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a></div><div class="ttdeci">int ss_statsInit(ShipStats *stats)</div><div class="ttdoc">Initializes a stat structure.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00252">shipstats.c:252</a></div></div>
 <div class="ttc" id="adamagetype_8c_html_a683720b3a22f1fe79cd90d80d1609f57"><div class="ttname"><a href="damagetype_8c.html#a683720b3a22f1fe79cd90d80d1609f57">dtype_damageTypeToStr</a></div><div class="ttdeci">char * dtype_damageTypeToStr(int type)</div><div class="ttdoc">Gets the human readable string from damage type.</div><div class="ttdef"><b>Definition:</b> <a href="damagetype_8c_source.html#l00165">damagetype.c:165</a></div></div>
 <div class="ttc" id="anstring_8c_html_ad02680e374cbaee934840aa7c9123dd4"><div class="ttname"><a href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a></div><div class="ttdeci">int scnprintf(char *text, size_t maxlen, const char *fmt,...)</div><div class="ttdoc">Like snprintf(), but returns the number of characters ACTUALLY &quot;printed&quot; into the buffer....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00180">nstring.c:180</a></div></div>
 <div class="ttc" id="adev__outfit_8c_html_a921885ee3244ada0800368367ff85a2f"><div class="ttname"><a href="dev__outfit_8c.html#a921885ee3244ada0800368367ff85a2f">dout_csvMod</a></div><div class="ttdeci">void dout_csvMod(const char *path)</div><div class="ttdoc">Dumps the modification data to csv.</div><div class="ttdef"><b>Definition:</b> <a href="dev__outfit_8c_source.html#l00269">dev_outfit.c:269</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_adeb116d088c9caaa78688b0fee8f7aa4"><div class="ttname"><a href="outfit_8c.html#adeb116d088c9caaa78688b0fee8f7aa4">outfit_isBolt</a></div><div class="ttdeci">int outfit_isBolt(const Outfit *o)</div><div class="ttdoc">Checks if outfit is bolt type weapon.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00438">outfit.c:438</a></div></div>
-<div class="ttc" id="ashipstats_8c_html_a59eb18e49766e7126ae438a6e7f62170"><div class="ttname"><a href="shipstats_8c.html#a59eb18e49766e7126ae438a6e7f62170">ss_statsModFromList</a></div><div class="ttdeci">int ss_statsModFromList(ShipStats *stats, const ShipStatList *list, const ShipStats *amount)</div><div class="ttdoc">Updates a stat structure from a stat list.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00408">shipstats.c:408</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a37b9117017c667ad55a57d326e6f45a9"><div class="ttname"><a href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9">outfit_slotName</a></div><div class="ttdeci">const char * outfit_slotName(const Outfit *o)</div><div class="ttdoc">Gets the name of the slot type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00261">outfit.c:261</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_adeb116d088c9caaa78688b0fee8f7aa4"><div class="ttname"><a href="outfit_8c.html#adeb116d088c9caaa78688b0fee8f7aa4">outfit_isBolt</a></div><div class="ttdeci">int outfit_isBolt(const Outfit *o)</div><div class="ttdoc">Checks if outfit is bolt type weapon.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00448">outfit.c:448</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a37b9117017c667ad55a57d326e6f45a9"><div class="ttname"><a href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9">outfit_slotName</a></div><div class="ttdeci">const char * outfit_slotName(const Outfit *o)</div><div class="ttdoc">Gets the name of the slot type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00262">outfit.c:262</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
-<div class="ttc" id="aoutfit_8c_html_a2ad92dc394cac9783d9cd18c4fa80ca6"><div class="ttname"><a href="outfit_8c.html#a2ad92dc394cac9783d9cd18c4fa80ca6">outfit_getAmmoAI</a></div><div class="ttdeci">const char * outfit_getAmmoAI(const Outfit *o)</div><div class="ttdoc">Gets a human-readable string describing an ammo outfit's AI.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00889">outfit.c:889</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a4ecafd5a897de1c003afdcbccf51f046"><div class="ttname"><a href="outfit_8c.html#a4ecafd5a897de1c003afdcbccf51f046">outfit_getAll</a></div><div class="ttdeci">const Outfit * outfit_getAll(void)</div><div class="ttdoc">Gets the array (array.h) of all outfits.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00123">outfit.c:123</a></div></div>
+<div class="ttc" id="ashipstats_8c_html_a1d422ebc08d9740e56c54e2c3e9b4af1"><div class="ttname"><a href="shipstats_8c.html#a1d422ebc08d9740e56c54e2c3e9b4af1">ss_statsModFromList</a></div><div class="ttdeci">int ss_statsModFromList(ShipStats *stats, const ShipStatList *list)</div><div class="ttdoc">Updates a stat structure from a stat list.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00399">shipstats.c:399</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a2ad92dc394cac9783d9cd18c4fa80ca6"><div class="ttname"><a href="outfit_8c.html#a2ad92dc394cac9783d9cd18c4fa80ca6">outfit_getAmmoAI</a></div><div class="ttdeci">const char * outfit_getAmmoAI(const Outfit *o)</div><div class="ttdoc">Gets a human-readable string describing an ammo outfit's AI.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00921">outfit.c:921</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a4ecafd5a897de1c003afdcbccf51f046"><div class="ttname"><a href="outfit_8c.html#a4ecafd5a897de1c003afdcbccf51f046">outfit_getAll</a></div><div class="ttdeci">const Outfit * outfit_getAll(void)</div><div class="ttdoc">Gets the array (array.h) of all outfits.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00124">outfit.c:124</a></div></div>
 <div class="ttc" id="adev__outfit_8c_html_ac237f5e9766b407a1ceeeafd4f33015a"><div class="ttname"><a href="dev__outfit_8c.html#ac237f5e9766b407a1ceeeafd4f33015a">dout_csvLauncher</a></div><div class="ttdeci">void dout_csvLauncher(const char *path)</div><div class="ttdoc">Dumps launcher data to CSV.</div><div class="ttdef"><b>Definition:</b> <a href="dev__outfit_8c_source.html#l00146">dev_outfit.c:146</a></div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00049">news.c:49</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
-<div class="ttc" id="aoutfit_8c_html_aa9e0ac971226259f27e350f01e78c4dc"><div class="ttname"><a href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a></div><div class="ttdeci">int outfit_isMod(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a ship modification.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00503">outfit.c:503</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a430bc49f57078876971bcb63ad350408"><div class="ttname"><a href="outfit_8c.html#a430bc49f57078876971bcb63ad350408">outfit_slotSize</a></div><div class="ttdeci">const char * outfit_slotSize(const Outfit *o)</div><div class="ttdoc">Gets the name of the slot size of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00306">outfit.c:306</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_aa9e0ac971226259f27e350f01e78c4dc"><div class="ttname"><a href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a></div><div class="ttdeci">int outfit_isMod(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a ship modification.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00513">outfit.c:513</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a430bc49f57078876971bcb63ad350408"><div class="ttname"><a href="outfit_8c.html#a430bc49f57078876971bcb63ad350408">outfit_slotSize</a></div><div class="ttdeci">const char * outfit_slotSize(const Outfit *o)</div><div class="ttdoc">Gets the name of the slot size of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00316">outfit.c:316</a></div></div>
 <div class="ttc" id="adev__outfit_8c_html_addfda1b2cf5625f3597f777ea2666ce6"><div class="ttname"><a href="dev__outfit_8c.html#addfda1b2cf5625f3597f777ea2666ce6">dout_csvAmmo</a></div><div class="ttdeci">void dout_csvAmmo(const char *path)</div><div class="ttdoc">Dumps ammo data to CSV.</div><div class="ttdef"><b>Definition:</b> <a href="dev__outfit_8c_source.html#l00198">dev_outfit.c:198</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a1d4168a464dd7486602dbe009f38a08c"><div class="ttname"><a href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a></div><div class="ttdeci">int outfit_isBeam(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a beam type weapon.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00448">outfit.c:448</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_ad791ba3026695a8a2dbad90514149ce5"><div class="ttname"><a href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a></div><div class="ttdeci">const char * outfit_getType(const Outfit *o)</div><div class="ttdoc">Gets the outfit's specific type.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00831">outfit.c:831</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a1d4168a464dd7486602dbe009f38a08c"><div class="ttname"><a href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a></div><div class="ttdeci">int outfit_isBeam(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a beam type weapon.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00458">outfit.c:458</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_ad791ba3026695a8a2dbad90514149ce5"><div class="ttname"><a href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a></div><div class="ttdeci">const char * outfit_getType(const Outfit *o)</div><div class="ttdoc">Gets the outfit's specific type.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00863">outfit.c:863</a></div></div>
 <div class="ttc" id="adev__outfit_8c_html_a9aa4ce1c4f347944ec10431b5a87b283"><div class="ttname"><a href="dev__outfit_8c.html#a9aa4ce1c4f347944ec10431b5a87b283">dout_csvBolt</a></div><div class="ttdeci">void dout_csvBolt(const char *path)</div><div class="ttdoc">Dumps the bolt weapon data to csv.</div><div class="ttdef"><b>Definition:</b> <a href="dev__outfit_8c_source.html#l00029">dev_outfit.c:29</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_ab24f9c5d257de22db07258fbc39e98db"><div class="ttname"><a href="outfit_8c.html#ab24f9c5d257de22db07258fbc39e98db">outfit_isAmmo</a></div><div class="ttdeci">int outfit_isAmmo(const Outfit *o)</div><div class="ttdoc">Checks if outfit is ammo for a launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00468">outfit.c:468</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a32d9c1fc9818a3f3700992f7b41541ce"><div class="ttname"><a href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a></div><div class="ttdeci">int outfit_isLauncher(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a weapon launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00458">outfit.c:458</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_ab24f9c5d257de22db07258fbc39e98db"><div class="ttname"><a href="outfit_8c.html#ab24f9c5d257de22db07258fbc39e98db">outfit_isAmmo</a></div><div class="ttdeci">int outfit_isAmmo(const Outfit *o)</div><div class="ttdoc">Checks if outfit is ammo for a launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00478">outfit.c:478</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a32d9c1fc9818a3f3700992f7b41541ce"><div class="ttname"><a href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a></div><div class="ttdeci">int outfit_isLauncher(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a weapon launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00468">outfit.c:468</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

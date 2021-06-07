@@ -141,24 +141,28 @@
 	<td class="summary">Gets the list of standard commodities.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#name">name (s)</a></td>
+	<td class="name" nowrap><a href="#name">name (c)</a></td>
 	<td class="summary">Gets the translated name of the commodity.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#nameRaw">nameRaw (s)</a></td>
+	<td class="name" nowrap><a href="#nameRaw">nameRaw (c)</a></td>
 	<td class="summary">Gets the raw (untranslated) name of the commodity.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#price">price (o)</a></td>
+	<td class="name" nowrap><a href="#price">price (c)</a></td>
 	<td class="summary">Gets the base price of an commodity.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#priceAt">priceAt (o, p)</a></td>
+	<td class="name" nowrap><a href="#priceAt">priceAt (c, p)</a></td>
 	<td class="summary">Gets the base price of an commodity on a certain planet.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#priceAtTime">priceAtTime (o, p, t)</a></td>
+	<td class="name" nowrap><a href="#priceAtTime">priceAtTime (c, p, t)</a></td>
 	<td class="summary">Gets the price of an commodity on a certain planet at a certain time.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#illegalto">illegalto (c, f)</a></td>
+	<td class="summary">Makes a temporary commodity illegal to a faction.</td>
 	</tr>
 </table>
 
@@ -257,7 +261,7 @@
 </dd>
     <dt>
     <a name = "name"></a>
-    <strong>name (s)</strong>
+    <strong>name (c)</strong>
     </dt>
     <dd>
     Gets the translated name of the commodity.
@@ -269,7 +273,7 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">s</span>
+        <li><span class="parameter">c</span>
             <span class="types"><span class="type">Commodity</span></span>
          Commodity to get the translated name of.
         </li>
@@ -286,13 +290,13 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">commodityname = s:name() <span class="comment">-- Equivalent to `_(s:nameRaw())`</span></pre>
+        <pre class="example">commodityname = c:name() <span class="comment">-- Equivalent to `_(c:nameRaw())`</span></pre>
     </ul>
 
 </dd>
     <dt>
     <a name = "nameRaw"></a>
-    <strong>nameRaw (s)</strong>
+    <strong>nameRaw (c)</strong>
     </dt>
     <dd>
     Gets the raw (untranslated) name of the commodity.
@@ -305,7 +309,7 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">s</span>
+        <li><span class="parameter">c</span>
             <span class="types"><span class="type">Commodity</span></span>
          Commodity to get the raw name of.
         </li>
@@ -322,13 +326,13 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">commodityrawname = s:nameRaw()</pre>
+        <pre class="example">commodityrawname = c:nameRaw()</pre>
     </ul>
 
 </dd>
     <dt>
     <a name = "price"></a>
-    <strong>price (o)</strong>
+    <strong>price (c)</strong>
     </dt>
     <dd>
     Gets the base price of an commodity.
@@ -336,7 +340,7 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">o</span>
+        <li><span class="parameter">c</span>
             <span class="types"><span class="type">Commodity</span></span>
          Commodity to get information of.
         </li>
@@ -353,13 +357,13 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="global">print</span>( o:price() ) <span class="comment">-- Prints the base price of the commodity</span></pre>
+        <pre class="example"><span class="global">print</span>( c:price() ) <span class="comment">-- Prints the base price of the commodity</span></pre>
     </ul>
 
 </dd>
     <dt>
     <a name = "priceAt"></a>
-    <strong>priceAt (o, p)</strong>
+    <strong>priceAt (c, p)</strong>
     </dt>
     <dd>
     Gets the base price of an commodity on a certain planet.
@@ -367,7 +371,7 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">o</span>
+        <li><span class="parameter">c</span>
             <span class="types"><span class="type">Commodity</span></span>
          Commodity to get information of.
         </li>
@@ -388,13 +392,13 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> o:priceAt( planet.get(<span class="string">"Polaris Prime"</span>) ) &gt; <span class="number">100</span> <span class="keyword">then</span> <span class="comment">-- Checks price of an outfit at polaris prime</span></pre>
+        <pre class="example"><span class="keyword">if</span> c:priceAt( planet.get(<span class="string">"Polaris Prime"</span>) ) &gt; <span class="number">100</span> <span class="keyword">then</span> <span class="comment">-- Checks price of a commodity at polaris prime</span></pre>
     </ul>
 
 </dd>
     <dt>
     <a name = "priceAtTime"></a>
-    <strong>priceAtTime (o, p, t)</strong>
+    <strong>priceAtTime (c, p, t)</strong>
     </dt>
     <dd>
     Gets the price of an commodity on a certain planet at a certain time.
@@ -402,7 +406,7 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">o</span>
+        <li><span class="parameter">c</span>
             <span class="types"><span class="type">Commodity</span></span>
          Commodity to get information of.
         </li>
@@ -427,8 +431,33 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> o:priceAtTime( planet.get(<span class="string">"Polaris Prime"</span>), time ) &gt; <span class="number">100</span> <span class="keyword">then</span> <span class="comment">-- Checks price of an outfit at polaris prime</span></pre>
+        <pre class="example"><span class="keyword">if</span> c:priceAtTime( planet.get(<span class="string">"Polaris Prime"</span>), time ) &gt; <span class="number">100</span> <span class="keyword">then</span> <span class="comment">-- Checks price of a commodity at polaris prime</span></pre>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "illegalto"></a>
+    <strong>illegalto (c, f)</strong>
+    </dt>
+    <dd>
+    Makes a temporary commodity illegal to a faction.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">c</span>
+            <span class="types"><span class="type">Commodity</span></span>
+         Temporary commodity to make illegal to factions.
+        </li>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Faction</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Faction or table of factions to make illegal to.
+        </li>
+    </ul>
+
+
+
+
 
 </dd>
 </dl>
@@ -438,7 +467,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-06-06 15:09:44 </i>
+<i style="float:right;">Last updated 2021-06-07 02:26:36 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">

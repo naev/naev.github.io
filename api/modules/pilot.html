@@ -159,6 +159,10 @@
 	<td class="summary">Gets hostile pilots to a pilot within a certain distance.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#getVisible">getVisible (pilot[, disabled=false])</a></td>
+	<td class="summary">Gets visible pilots to a pilot within a certain distance.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#__eq">__eq (p, comp)</a></td>
 	<td class="summary">Checks to see if pilot and p are the same.</td>
 	</tr>
@@ -295,6 +299,10 @@
 	<td class="summary">Sets the pilot's invisibility status.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#setInvisible">setInvisible (p, state)</a></td>
+	<td class="summary">Sets the pilot's norender status.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#setVisplayer">setVisplayer (p[, state=true])</a></td>
 	<td class="summary">Marks the pilot as always visible for the player.</td>
 	</tr>
@@ -411,6 +419,10 @@
 	<td class="summary">Gets stats of the pilot.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#shipstat">shipstat (p, name)</a></td>
+	<td class="summary">Gets a shipstat from a Pilot by name.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#cargoFree">cargoFree (p)</a></td>
 	<td class="summary">Gets the free cargo space the pilot has.</td>
 	</tr>
@@ -445,6 +457,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#flags">flags (p)</a></td>
 	<td class="summary">Gets the pilot's flags.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hasIllegal">hasIllegal (p, f)</a></td>
+	<td class="summary">Checks to see if the pilot has illegal stuff to a faction.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#ship">ship (p)</a></td>
@@ -819,6 +835,38 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
             <span class="types"><span class="type">number</span></span>
          Distance to look for hostiles.
          (<em>default</em> infinity)
+        </li>
+        <li><span class="parameter">disabled</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to count disabled pilots.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">{Pilot,...}</span></span>
+        A table containing the pilots.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getVisible"></a>
+    <strong>getVisible (pilot[, disabled=false])</strong>
+    </dt>
+    <dd>
+    Gets visible pilots to a pilot within a certain distance.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pilot</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to get visible pilots of.
         </li>
         <li><span class="parameter">disabled</span>
             <span class="types"><span class="type">boolean</span></span>
@@ -1982,6 +2030,34 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 
 </dd>
     <dt>
+    <a name = "setInvisible"></a>
+    <strong>setInvisible (p, state)</strong>
+    </dt>
+    <dd>
+    Sets the pilot's norender status.
+<p> The pilot still acts normally but is just not visible and can still take
+ damage. Meant to be used in conjunction with other flags like "invisible".
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to set norender status of.
+        </li>
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">boolean</span></span>
+         State to set norender.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "setVisplayer"></a>
     <strong>setVisplayer (p[, state=true])</strong>
     </dt>
@@ -2966,6 +3042,37 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 
 </dd>
     <dt>
+    <a name = "shipstat"></a>
+    <strong>shipstat (p, name)</strong>
+    </dt>
+    <dd>
+    Gets a shipstat from a Pilot by name.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to get ship stat of.
+        </li>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the ship stat to get.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Number corresponding to the ship stat.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "cargoFree"></a>
     <strong>cargoFree (p)</strong>
     </dt>
@@ -3254,6 +3361,7 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
   <li> visible: pilot is always visible.</li>
   <li> visplayer: pilot is always visible to the player.</li>
   <li> hilight: pilot is hilighted on the map.</li>
+  <li> stealth: pilot is in stealth mode.</li>
   <li> invisible: pilot is not displayed.</li>
   <li> invincible: pilot cannot be hit.</li>
   <li> invinc_player: pilot cannot be hit by the player.</li>
@@ -3281,6 +3389,31 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
         Table with flag names an index, boolean as value.
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hasIllegal"></a>
+    <strong>hasIllegal (p, f)</strong>
+    </dt>
+    <dd>
+    Checks to see if the pilot has illegal stuff to a faction.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to check.
+        </li>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Faction</span></span>
+         Faction to see if it is illegal to.
+        </li>
+    </ul>
+
 
 
 
@@ -3951,7 +4084,7 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-06-06 15:09:44 </i>
+<i style="float:right;">Last updated 2021-06-07 02:26:36 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">

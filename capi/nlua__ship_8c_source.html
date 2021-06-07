@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo32.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">naev
-   &#160;<span id="projectnumber">0.9.0-alpha</span>
+   &#160;<span id="projectnumber">0.9.0-alpha.1</span>
    </div>
   </td>
  </tr>
@@ -288,91 +288,99 @@ $(function() {
 <div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;         lua_pushstring( L, <a class="code" href="slots_8c.html#ab7089eecda79d049a82cf7491e685207">sp_display</a>(slot-&gt;spid)); <span class="comment">/* value */</span></div>
 <div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;         lua_rawset(L, -3); <span class="comment">/* table[key] = value */</span></div>
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160; </div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;         <span class="keywordflow">if</span> (sslot-&gt;data != NULL) {</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;            lua_pushstring(L, <span class="stringliteral">&quot;outfit&quot;</span>); <span class="comment">/* key */</span></div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;            <a class="code" href="nlua__outfit_8c.html#a13bbba536f20e8a7f5401685922401a3">lua_pushoutfit</a>(L, sslot-&gt;data); <span class="comment">/* value*/</span></div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;            lua_rawset(L, -3); <span class="comment">/* table[key] = value */</span></div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;         }</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160; </div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;         lua_rawset(L, -3);   <span class="comment">/* put the slot table in */</span></div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;      }</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   }</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160; </div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160; </div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;}</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;         lua_pushstring(L, <span class="stringliteral">&quot;required&quot;</span>); <span class="comment">/* key */</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;         lua_pushboolean( L, <a class="code" href="slots_8c.html#abddd205f78c406e2e148e3055a8847fa">sp_required</a>(slot-&gt;spid)); <span class="comment">/* value */</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;         lua_rawset(L, -3); <span class="comment">/* table[key] = value */</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160; </div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;         lua_pushstring(L, <span class="stringliteral">&quot;exclusive&quot;</span>); <span class="comment">/* key */</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;         lua_pushboolean( L, <a class="code" href="slots_8c.html#aeb56942a01feefe32ccadca9c9aec58b">sp_exclusive</a>(slot-&gt;spid)); <span class="comment">/* value */</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;         lua_rawset(L, -3); <span class="comment">/* table[key] = value */</span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;         <span class="keywordflow">if</span> (sslot-&gt;data != NULL) {</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;            lua_pushstring(L, <span class="stringliteral">&quot;outfit&quot;</span>); <span class="comment">/* key */</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;            <a class="code" href="nlua__outfit_8c.html#a13bbba536f20e8a7f5401685922401a3">lua_pushoutfit</a>(L, sslot-&gt;data); <span class="comment">/* value*/</span></div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;            lua_rawset(L, -3); <span class="comment">/* table[key] = value */</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;         }</div>
 <div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
-<div class="line"><a name="l00420"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#a94cc263561dfdb9b5e6ef9cd08995a0c">  420</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#a94cc263561dfdb9b5e6ef9cd08995a0c">shipL_CPU</a>( lua_State *L )</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;{</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;   Ship *s;</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160; </div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;   <span class="comment">/* Get the ship. */</span></div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;   s  = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160; </div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;   <span class="comment">/* Get CPU. */</span></div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;   lua_pushnumber(L, s-&gt;cpu);</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;}</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;         lua_rawset(L, -3);   <span class="comment">/* put the slot table in */</span></div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;      }</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;   }</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160; </div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160; </div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;}</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160; </div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
+<div class="line"><a name="l00428"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#a94cc263561dfdb9b5e6ef9cd08995a0c">  428</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#a94cc263561dfdb9b5e6ef9cd08995a0c">shipL_CPU</a>( lua_State *L )</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;{</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;   Ship *s;</div>
 <div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160; </div>
-<div class="line"><a name="l00443"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#a1fafde277e5c93522736117cf0970152">  443</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#a1fafde277e5c93522736117cf0970152">shipL_price</a>( lua_State *L )</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;{</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;   Ship *s;</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160; </div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;   s = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;   lua_pushnumber(L, <a class="code" href="ship_8c.html#a3769eda5be6d17cbec6a6ba9a169b182">ship_buyPrice</a>(s));</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;   lua_pushnumber(L, <a class="code" href="ship_8c.html#a2f342abe1c82c2a153e690d9baf8fee7">ship_basePrice</a>(s));</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;   <span class="keywordflow">return</span> 2;</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;}</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160; </div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160; </div>
-<div class="line"><a name="l00465"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#afdc89c96c8c2f3f9df729b3d3f68fce5">  465</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#afdc89c96c8c2f3f9df729b3d3f68fce5">shipL_gfxTarget</a>( lua_State *L )</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;{</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;   Ship *s;</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;   glTexture *tex;</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160; </div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;   <span class="comment">/* Get the ship. */</span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;   s  = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160; </div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;   <span class="comment">/* Push graphic. */</span></div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;   tex = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( s-&gt;gfx_target );</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;   <span class="keywordflow">if</span> (tex == NULL) {</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to get ship target graphic for &#39;%s&#39;.&quot;</span>), s-&gt;name);</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;   }</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;   <a class="code" href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a>( L, tex );</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;}</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160; </div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160; </div>
-<div class="line"><a name="l00495"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#ae6082b9486e17b7ae1b80f54523af6c2">  495</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#ae6082b9486e17b7ae1b80f54523af6c2">shipL_gfx</a>( lua_State *L )</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;{</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;   Ship *s;</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;   glTexture *tex;</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160; </div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;   <span class="comment">/* Get the ship. */</span></div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;   s  = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160; </div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <span class="comment">/* Push graphic. */</span></div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;   tex = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( s-&gt;gfx_space );</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;   <span class="keywordflow">if</span> (tex == NULL) {</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to get ship graphic for &#39;%s&#39;.&quot;</span>), s-&gt;name);</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;   }</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;   <a class="code" href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a>( L, tex );</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;}</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160; </div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160; </div>
-<div class="line"><a name="l00523"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#ac410cdfebafce41afe57e354a1feb3d8">  523</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#ac410cdfebafce41afe57e354a1feb3d8">shipL_description</a>( lua_State *L )</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;{</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;   Ship *s;</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;   s = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;   lua_pushstring(L, s-&gt;description);</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;}</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160; </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;   <span class="comment">/* Get the ship. */</span></div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;   s  = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160; </div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;   <span class="comment">/* Get CPU. */</span></div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;   lua_pushnumber(L, s-&gt;cpu);</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;}</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160; </div>
+<div class="line"><a name="l00451"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#a1fafde277e5c93522736117cf0970152">  451</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#a1fafde277e5c93522736117cf0970152">shipL_price</a>( lua_State *L )</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;{</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;   Ship *s;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160; </div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;   s = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;   lua_pushnumber(L, <a class="code" href="ship_8c.html#a3769eda5be6d17cbec6a6ba9a169b182">ship_buyPrice</a>(s));</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;   lua_pushnumber(L, <a class="code" href="ship_8c.html#a2f342abe1c82c2a153e690d9baf8fee7">ship_basePrice</a>(s));</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;   <span class="keywordflow">return</span> 2;</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;}</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160; </div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160; </div>
+<div class="line"><a name="l00473"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#afdc89c96c8c2f3f9df729b3d3f68fce5">  473</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#afdc89c96c8c2f3f9df729b3d3f68fce5">shipL_gfxTarget</a>( lua_State *L )</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;{</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;   Ship *s;</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;   glTexture *tex;</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160; </div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;   <span class="comment">/* Get the ship. */</span></div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;   s  = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160; </div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;   <span class="comment">/* Push graphic. */</span></div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;   tex = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( s-&gt;gfx_target );</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;   <span class="keywordflow">if</span> (tex == NULL) {</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to get ship target graphic for &#39;%s&#39;.&quot;</span>), s-&gt;name);</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;   }</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;   <a class="code" href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a>( L, tex );</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;}</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160; </div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160; </div>
+<div class="line"><a name="l00503"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#ae6082b9486e17b7ae1b80f54523af6c2">  503</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#ae6082b9486e17b7ae1b80f54523af6c2">shipL_gfx</a>( lua_State *L )</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;{</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;   Ship *s;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;   glTexture *tex;</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160; </div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;   <span class="comment">/* Get the ship. */</span></div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;   s  = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160; </div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;   <span class="comment">/* Push graphic. */</span></div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;   tex = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( s-&gt;gfx_space );</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;   <span class="keywordflow">if</span> (tex == NULL) {</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to get ship graphic for &#39;%s&#39;.&quot;</span>), s-&gt;name);</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;   }</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;   <a class="code" href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a>( L, tex );</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;}</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160; </div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160; </div>
+<div class="line"><a name="l00531"></a><span class="lineno"><a class="line" href="nlua__ship_8c.html#ac410cdfebafce41afe57e354a1feb3d8">  531</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__ship_8c.html#ac410cdfebafce41afe57e354a1feb3d8">shipL_description</a>( lua_State *L )</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;{</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;   Ship *s;</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;   s = <a class="code" href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a>(L,1);</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;   lua_pushstring(L, s-&gt;description);</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;}</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__ship_8c_html_a90eb6174932d126f598de9fb6070a5e5"><div class="ttname"><a href="nlua__ship_8c.html#a90eb6174932d126f598de9fb6070a5e5">shipL_getSlots</a></div><div class="ttdeci">static int shipL_getSlots(lua_State *L)</div><div class="ttdoc">Get a table of slots of a ship, where a slot is a table with a string size, type, and property.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00364">nlua_ship.c:364</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_a8fde1bc1aa596967bf9f58e752dd3210"><div class="ttname"><a href="nlua__ship_8c.html#a8fde1bc1aa596967bf9f58e752dd3210">shipL_eq</a></div><div class="ttdeci">static int shipL_eq(lua_State *L)</div><div class="ttdoc">Checks to see if two ships are the same.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00189">nlua_ship.c:189</a></div></div>
@@ -381,24 +389,26 @@ $(function() {
 <div class="ttc" id="anlua__ship_8c_html_a42b51fe3c1fd1ea708d61feb3b8a1463"><div class="ttname"><a href="nlua__ship_8c.html#a42b51fe3c1fd1ea708d61feb3b8a1463">luaL_validship</a></div><div class="ttdeci">Ship * luaL_validship(lua_State *L, int ind)</div><div class="ttdoc">Makes sure the ship is valid or raises a Lua error.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00121">nlua_ship.c:121</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_a63db2da3089d6a1aea2ee97e502648e5"><div class="ttname"><a href="nlua__ship_8c.html#a63db2da3089d6a1aea2ee97e502648e5">lua_isship</a></div><div class="ttdeci">int lua_isship(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00162">nlua_ship.c:162</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_ace5fc596820443c831ddce46d755f7b4"><div class="ttname"><a href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a></div><div class="ttdeci">glTexture ** lua_pushtex(lua_State *L, glTexture *texture)</div><div class="ttdoc">Pushes a texture on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00123">nlua_tex.c:123</a></div></div>
-<div class="ttc" id="anlua__ship_8c_html_ac410cdfebafce41afe57e354a1feb3d8"><div class="ttname"><a href="nlua__ship_8c.html#ac410cdfebafce41afe57e354a1feb3d8">shipL_description</a></div><div class="ttdeci">static int shipL_description(lua_State *L)</div><div class="ttdoc">Gets the description of the ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00523">nlua_ship.c:523</a></div></div>
+<div class="ttc" id="anlua__ship_8c_html_ac410cdfebafce41afe57e354a1feb3d8"><div class="ttname"><a href="nlua__ship_8c.html#ac410cdfebafce41afe57e354a1feb3d8">shipL_description</a></div><div class="ttdeci">static int shipL_description(lua_State *L)</div><div class="ttdoc">Gets the description of the ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00531">nlua_ship.c:531</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_aba127c35383384f2d4b59380eebafeab"><div class="ttname"><a href="nlua__ship_8c.html#aba127c35383384f2d4b59380eebafeab">shipL_methods</a></div><div class="ttdeci">static const luaL_Reg shipL_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00042">nlua_ship.c:42</a></div></div>
 <div class="ttc" id="arng_8c_html_a3ae63274d1e5a52f21db2df3bc5eee03"><div class="ttname"><a href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a></div><div class="ttdeci">static const double a[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00264">rng.c:264</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
 <div class="ttc" id="anlua__ship_8c_html_adaf33433b13db1324d2d10f6b3527927"><div class="ttname"><a href="nlua__ship_8c.html#adaf33433b13db1324d2d10f6b3527927">shipL_get</a></div><div class="ttdeci">static int shipL_get(lua_State *L)</div><div class="ttdoc">Gets a ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00211">nlua_ship.c:211</a></div></div>
+<div class="ttc" id="aslots_8c_html_abddd205f78c406e2e148e3055a8847fa"><div class="ttname"><a href="slots_8c.html#abddd205f78c406e2e148e3055a8847fa">sp_required</a></div><div class="ttdeci">int sp_required(unsigned int spid)</div><div class="ttdoc">Gets whether or not a slot property is required.</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00194">slots.c:194</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_abdfc5c7ed5ae8eb15ac82715aa7757d7"><div class="ttname"><a href="nlua__ship_8c.html#abdfc5c7ed5ae8eb15ac82715aa7757d7">shipL_slots</a></div><div class="ttdeci">static int shipL_slots(lua_State *L)</div><div class="ttdoc">Gets the amount of the ship's slots.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00339">nlua_ship.c:339</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_a1c297f1c56a5359c6846f516a9437c38"><div class="ttname"><a href="nlua__ship_8c.html#a1c297f1c56a5359c6846f516a9437c38">lua_pushship</a></div><div class="ttdeci">Ship ** lua_pushship(lua_State *L, Ship *ship)</div><div class="ttdoc">Pushes a ship on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00146">nlua_ship.c:146</a></div></div>
-<div class="ttc" id="anlua__ship_8c_html_a94cc263561dfdb9b5e6ef9cd08995a0c"><div class="ttname"><a href="nlua__ship_8c.html#a94cc263561dfdb9b5e6ef9cd08995a0c">shipL_CPU</a></div><div class="ttdeci">static int shipL_CPU(lua_State *L)</div><div class="ttdoc">Gets the ship available CPU.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00420">nlua_ship.c:420</a></div></div>
-<div class="ttc" id="anlua__ship_8c_html_a1fafde277e5c93522736117cf0970152"><div class="ttname"><a href="nlua__ship_8c.html#a1fafde277e5c93522736117cf0970152">shipL_price</a></div><div class="ttdeci">static int shipL_price(lua_State *L)</div><div class="ttdoc">Gets the ship's price, with and without default outfits.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00443">nlua_ship.c:443</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_ac2b34441bcf35f19a6e9f8112e4ce9b9"><div class="ttname"><a href="outfit_8c.html#ac2b34441bcf35f19a6e9f8112e4ce9b9">slotSize</a></div><div class="ttdeci">const char * slotSize(const OutfitSlotSize o)</div><div class="ttdoc">Gets the slot size as a string.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00283">outfit.c:283</a></div></div>
+<div class="ttc" id="anlua__ship_8c_html_a94cc263561dfdb9b5e6ef9cd08995a0c"><div class="ttname"><a href="nlua__ship_8c.html#a94cc263561dfdb9b5e6ef9cd08995a0c">shipL_CPU</a></div><div class="ttdeci">static int shipL_CPU(lua_State *L)</div><div class="ttdoc">Gets the ship available CPU.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00428">nlua_ship.c:428</a></div></div>
+<div class="ttc" id="anlua__ship_8c_html_a1fafde277e5c93522736117cf0970152"><div class="ttname"><a href="nlua__ship_8c.html#a1fafde277e5c93522736117cf0970152">shipL_price</a></div><div class="ttdeci">static int shipL_price(lua_State *L)</div><div class="ttdoc">Gets the ship's price, with and without default outfits.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00451">nlua_ship.c:451</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_ac2b34441bcf35f19a6e9f8112e4ce9b9"><div class="ttname"><a href="outfit_8c.html#ac2b34441bcf35f19a6e9f8112e4ce9b9">slotSize</a></div><div class="ttdeci">const char * slotSize(const OutfitSlotSize o)</div><div class="ttdoc">Gets the slot size as a string.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00293">outfit.c:293</a></div></div>
 <div class="ttc" id="aship_8c_html_a2495d24bde6ebf3f53c19b7601a0cfec"><div class="ttname"><a href="ship_8c.html#a2495d24bde6ebf3f53c19b7601a0cfec">ship_get</a></div><div class="ttdeci">Ship * ship_get(const char *name)</div><div class="ttdoc">Gets a ship based on its name.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00069">ship.c:69</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_a50e2cf34697d9918f5a29e43b6aa6dcc"><div class="ttname"><a href="nlua__ship_8c.html#a50e2cf34697d9918f5a29e43b6aa6dcc">nlua_loadShip</a></div><div class="ttdeci">int nlua_loadShip(nlua_env env)</div><div class="ttdoc">Loads the ship library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00069">nlua_ship.c:69</a></div></div>
-<div class="ttc" id="anlua__ship_8c_html_afdc89c96c8c2f3f9df729b3d3f68fce5"><div class="ttname"><a href="nlua__ship_8c.html#afdc89c96c8c2f3f9df729b3d3f68fce5">shipL_gfxTarget</a></div><div class="ttdeci">static int shipL_gfxTarget(lua_State *L)</div><div class="ttdoc">Gets the ship's target graphics.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00465">nlua_ship.c:465</a></div></div>
-<div class="ttc" id="anlua__ship_8c_html_ae6082b9486e17b7ae1b80f54523af6c2"><div class="ttname"><a href="nlua__ship_8c.html#ae6082b9486e17b7ae1b80f54523af6c2">shipL_gfx</a></div><div class="ttdeci">static int shipL_gfx(lua_State *L)</div><div class="ttdoc">Gets the ship's graphics.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00495">nlua_ship.c:495</a></div></div>
+<div class="ttc" id="anlua__ship_8c_html_afdc89c96c8c2f3f9df729b3d3f68fce5"><div class="ttname"><a href="nlua__ship_8c.html#afdc89c96c8c2f3f9df729b3d3f68fce5">shipL_gfxTarget</a></div><div class="ttdeci">static int shipL_gfxTarget(lua_State *L)</div><div class="ttdoc">Gets the ship's target graphics.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00473">nlua_ship.c:473</a></div></div>
+<div class="ttc" id="anlua__ship_8c_html_ae6082b9486e17b7ae1b80f54523af6c2"><div class="ttname"><a href="nlua__ship_8c.html#ae6082b9486e17b7ae1b80f54523af6c2">shipL_gfx</a></div><div class="ttdeci">static int shipL_gfx(lua_State *L)</div><div class="ttdoc">Gets the ship's graphics.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00503">nlua_ship.c:503</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="aship_8c_html_a2f342abe1c82c2a153e690d9baf8fee7"><div class="ttname"><a href="ship_8c.html#a2f342abe1c82c2a153e690d9baf8fee7">ship_basePrice</a></div><div class="ttdeci">credits_t ship_basePrice(const Ship *s)</div><div class="ttdoc">Gets the ship's base price (no outfits).</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00288">ship.c:288</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_ad8d4bb0145aa113a4103bb3e1c67b326"><div class="ttname"><a href="nlua__ship_8c.html#ad8d4bb0145aa113a4103bb3e1c67b326">shipL_name</a></div><div class="ttdeci">static int shipL_name(lua_State *L)</div><div class="ttdoc">Gets the translated name of the ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00245">nlua_ship.c:245</a></div></div>
 <div class="ttc" id="aslots_8c_html_ab7089eecda79d049a82cf7491e685207"><div class="ttname"><a href="slots_8c.html#ab7089eecda79d049a82cf7491e685207">sp_display</a></div><div class="ttdeci">const char * sp_display(unsigned int spid)</div><div class="ttdoc">Gets the display name of a slot property (in English).</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00172">slots.c:172</a></div></div>
+<div class="ttc" id="aslots_8c_html_aeb56942a01feefe32ccadca9c9aec58b"><div class="ttname"><a href="slots_8c.html#aeb56942a01feefe32ccadca9c9aec58b">sp_exclusive</a></div><div class="ttdeci">int sp_exclusive(unsigned int spid)</div><div class="ttdoc">Gets whether or not a slot property is exclusive.</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00205">slots.c:205</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_a54ebbf08e4bd8159e32542950a52daa3"><div class="ttname"><a href="nlua__ship_8c.html#a54ebbf08e4bd8159e32542950a52daa3">lua_toship</a></div><div class="ttdeci">Ship * lua_toship(lua_State *L, int ind)</div><div class="ttdoc">Lua bindings to interact with ships.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00096">nlua_ship.c:96</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_a5827b3ecc186c64b4566cd0fe19d35a6"><div class="ttname"><a href="nlua__ship_8c.html#a5827b3ecc186c64b4566cd0fe19d35a6">shipL_class</a></div><div class="ttdeci">static int shipL_class(lua_State *L)</div><div class="ttdoc">Gets the raw (untranslated) name of the ship's class.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00316">nlua_ship.c:316</a></div></div>

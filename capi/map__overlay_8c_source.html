@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo32.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">naev
-   &#160;<span id="projectnumber">0.9.0-alpha</span>
+   &#160;<span id="projectnumber">0.9.0-alpha.1</span>
    </div>
   </td>
  </tr>
@@ -492,169 +492,202 @@ $(function() {
 <div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;   Pilot *<span class="keyword">const</span>*pstk;</div>
 <div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;   AsteroidAnchor *ast;</div>
 <div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;   <span class="keywordtype">double</span> w, h, res;</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;   <span class="keywordtype">double</span> x,y;</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160; </div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;   <span class="comment">/* Must be open. */</span></div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <span class="keywordflow">if</span> (!ovr_open)</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160; </div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;   <span class="comment">/* Player must be alive. */</span></div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;   <span class="keywordflow">if</span> (player_isFlag( PLAYER_DESTROYED ) || (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p == NULL))</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160; </div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;   <span class="comment">/* Default values. */</span></div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;   w     = map_overlay_width();</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;   h     = map_overlay_height();</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;   res   = ovr_res;</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160; </div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;   <span class="comment">/* First render the background overlay. */</span></div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;   glColour <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = { .r=0., .g=0., .b=0., .a= conf.map_overlay_opacity };</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;   <a class="code" href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a>( (<span class="keywordtype">double</span>)<a class="code" href="gui_8c.html#afb44a001dc42426cc39992233a16c156">gui_getMapOverlayBoundLeft</a>(), (<span class="keywordtype">double</span>)<a class="code" href="gui_8c.html#aca84c97f42de3bb063090fc5d441642c">gui_getMapOverlayBoundRight</a>(), w, h, &amp;<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> );</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160; </div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;   <span class="comment">/* Render planets. */</span></div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;planets); i++)</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;      <span class="keywordflow">if</span> ((<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;planets[ i ]-&gt;real == ASSET_REAL) &amp;&amp; (i != <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_planet))</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;         <a class="code" href="gui_8c.html#ac6fe6a4667a91d60cbb34f662d7cd208">gui_renderPlanet</a>( i, RADAR_RECT, w, h, res, 1 );</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_planet &gt; -1)</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;      <a class="code" href="gui_8c.html#ac6fe6a4667a91d60cbb34f662d7cd208">gui_renderPlanet</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_planet, RADAR_RECT, w, h, res, 1 );</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160; </div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;   <span class="comment">/* Render jump points. */</span></div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;jumps); i++)</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;      <span class="keywordflow">if</span> ((i != <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace) &amp;&amp; !jp_isFlag(&amp;<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;jumps[i], JP_EXITONLY))</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;         <a class="code" href="gui_8c.html#a78de77f88915944d2641ff2b097961ff">gui_renderJumpPoint</a>( i, RADAR_RECT, w, h, res, 1 );</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace &gt; -1)</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;      <a class="code" href="gui_8c.html#a78de77f88915944d2641ff2b097961ff">gui_renderJumpPoint</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace, RADAR_RECT, w, h, res, 1 );</div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160; </div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;   <span class="comment">/* Render pilots. */</span></div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;   pstk  = <a class="code" href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a>();</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;   j     = 0;</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pstk); i++) {</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;      <span class="keywordflow">if</span> (pstk[i]-&gt;<span class="keywordtype">id</span> == PLAYER_ID) <span class="comment">/* Skip player. */</span></div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;      <span class="keywordflow">if</span> (pstk[i]-&gt;<span class="keywordtype">id</span> == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;target)</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;         j = i;</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;         <a class="code" href="gui_8c.html#ab1e01c282e6354627b43c6430912d4dd">gui_renderPilot</a>( pstk[i], RADAR_RECT, w, h, res, 1 );</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;   }</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;   <span class="comment">/* Render the targeted pilot */</span></div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;   <span class="keywordflow">if</span> (j!=0)</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;      <a class="code" href="gui_8c.html#ab1e01c282e6354627b43c6430912d4dd">gui_renderPilot</a>( pstk[j], RADAR_RECT, w, h, res, 1 );</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160; </div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;   <span class="comment">/* Check if player has goto target. */</span></div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;   <span class="keywordflow">if</span> (player_isFlag(PLAYER_AUTONAV) &amp;&amp; (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav == AUTONAV_POS_APPROACH)) {</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;      x = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_pos.x / res + map_overlay_center_x();</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;      y = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_pos.y / res + map_overlay_center_y();</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;      <a class="code" href="opengl__render_8c.html#adb73863bfb45e9cdfd50ed5e01dbbd03">gl_renderCross</a>( x, y, 5., &amp;<a class="code" href="colour_8c.html#ab63237fdaf0974966a91b3da9459849b">cRadar_hilight</a> );</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;      <a class="code" href="font_8c.html#ae6f6d6e4d219dc6f9f3cae77f0925905">gl_printMarkerRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, x+10., y-<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>.h/2., &amp;<a class="code" href="colour_8c.html#ab63237fdaf0974966a91b3da9459849b">cRadar_hilight</a>, _(<span class="stringliteral">&quot;TARGET&quot;</span>) );</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   }</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160; </div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;   <span class="comment">/* render the asteroids */</span></div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;asteroids); i++) {</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;      ast = &amp;<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;asteroids[i];</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;      <span class="keywordflow">for</span> (j=0; j&lt;ast-&gt;nb; j++)</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;         <a class="code" href="gui_8c.html#a51a9093a58c4ae4c55bbf6a16860f135">gui_renderAsteroid</a>( &amp;ast-&gt;asteroids[j], w, h, res, 1 );</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;   }</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;   <span class="comment">/* Render the player. */</span></div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;   <a class="code" href="gui_8c.html#a1fb885b94dca1e589d2a6243b510ba7f">gui_renderPlayer</a>( res, 1 );</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160; </div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;   <span class="comment">/* Render markers. */</span></div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;   ovr_mrkRenderAll( res );</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;}</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160; </div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160; </div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> ovr_mrkRenderAll( <span class="keywordtype">double</span> res )</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;{</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;   ovr_marker_t *mrk;</div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;   <span class="keywordtype">double</span> x, y;</div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160; </div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;      mrk = &amp;ovr_markers[i];</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160; </div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;      x = mrk-&gt;u.pt.x / res + map_overlay_center_x();</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;      y = mrk-&gt;u.pt.y / res + map_overlay_center_y();</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;      <a class="code" href="opengl__render_8c.html#adb73863bfb45e9cdfd50ed5e01dbbd03">gl_renderCross</a>( x, y, 5., &amp;<a class="code" href="colour_8c.html#ab63237fdaf0974966a91b3da9459849b">cRadar_hilight</a> );</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160; </div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;      <span class="keywordflow">if</span> (mrk-&gt;text != NULL)</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;         <a class="code" href="font_8c.html#ae6f6d6e4d219dc6f9f3cae77f0925905">gl_printMarkerRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, x+10., y-<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>.h/2., &amp;<a class="code" href="colour_8c.html#ab63237fdaf0974966a91b3da9459849b">cRadar_hilight</a>, mrk-&gt;text );</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;   }</div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;}</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;   <span class="keywordtype">double</span> x,y, r,detect;</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;   glColour col;</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160; </div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <span class="comment">/* Must be open. */</span></div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;   <span class="keywordflow">if</span> (!ovr_open)</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160; </div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;   <span class="comment">/* Player must be alive. */</span></div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;   <span class="keywordflow">if</span> (player_isFlag( PLAYER_DESTROYED ) || (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p == NULL))</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160; </div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;   <span class="comment">/* Default values. */</span></div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;   w     = map_overlay_width();</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;   h     = map_overlay_height();</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;   res   = ovr_res;</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160; </div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;   <span class="comment">/* First render the background overlay. */</span></div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;   glColour <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = { .r=0., .g=0., .b=0., .a= conf.map_overlay_opacity };</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;   <a class="code" href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a>( (<span class="keywordtype">double</span>)<a class="code" href="gui_8c.html#afb44a001dc42426cc39992233a16c156">gui_getMapOverlayBoundLeft</a>(), (<span class="keywordtype">double</span>)<a class="code" href="gui_8c.html#aca84c97f42de3bb063090fc5d441642c">gui_getMapOverlayBoundRight</a>(), w, h, &amp;<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> );</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160; </div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;   <span class="comment">/* Render planets. */</span></div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;planets); i++)</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;      <span class="keywordflow">if</span> ((<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;planets[ i ]-&gt;real == ASSET_REAL) &amp;&amp; (i != <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_planet))</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;         <a class="code" href="gui_8c.html#ac6fe6a4667a91d60cbb34f662d7cd208">gui_renderPlanet</a>( i, RADAR_RECT, w, h, res, 1 );</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_planet &gt; -1)</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;      <a class="code" href="gui_8c.html#ac6fe6a4667a91d60cbb34f662d7cd208">gui_renderPlanet</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_planet, RADAR_RECT, w, h, res, 1 );</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160; </div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;   <span class="comment">/* Render jump points. */</span></div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;jumps); i++)</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;      <span class="keywordflow">if</span> ((i != <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace) &amp;&amp; !jp_isFlag(&amp;<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;jumps[i], JP_EXITONLY))</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;         <a class="code" href="gui_8c.html#a78de77f88915944d2641ff2b097961ff">gui_renderJumpPoint</a>( i, RADAR_RECT, w, h, res, 1 );</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace &gt; -1)</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;      <a class="code" href="gui_8c.html#a78de77f88915944d2641ff2b097961ff">gui_renderJumpPoint</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace, RADAR_RECT, w, h, res, 1 );</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160; </div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;   <span class="comment">/* render the asteroids */</span></div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;asteroids); i++) {</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;      ast = &amp;<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;asteroids[i];</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;      <span class="keywordflow">for</span> (j=0; j&lt;ast-&gt;nb; j++)</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;         <a class="code" href="gui_8c.html#a51a9093a58c4ae4c55bbf6a16860f135">gui_renderAsteroid</a>( &amp;ast-&gt;asteroids[j], w, h, res, 1 );</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160; </div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_STEALTH )) {</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;         detect = vect_dist2( &amp;<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos, &amp;ast-&gt;pos );</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;         <span class="keywordflow">if</span> (detect - ast-&gt;radius &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(<a class="code" href="pilot__ew_8c.html#accc57907c09c3b5f45249b121a776886">pilot_sensorRange</a>() * <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;stats.ew_detect)) {</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;            col = <a class="code" href="colour_8c.html#ab4bb599a8a88651c39e3f740e58838d8">cBlue</a>;</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;            col.a = 0.2;</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;            x = map_overlay_center_x() + ast-&gt;pos.x / res;</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;            y = map_overlay_center_y() + ast-&gt;pos.y / res;</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;            <a class="code" href="opengl__render_8c.html#ae452ed0fa0e8b19ed0ee3da05946892b">gl_drawCircle</a>( x, y, ast-&gt;radius / res, &amp;col, 1 );</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;         }</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;      }</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;   }</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160; </div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;   <span class="comment">/* Render pilots. */</span></div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;   pstk  = <a class="code" href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a>();</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   <span class="comment">/* First do the overlays if in stealth. */</span></div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_STEALTH )) {</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;      detect = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;ew_stealth;</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;      col = <a class="code" href="colour_8c.html#a2b06d9341e34af7d1b2a9ef04b03a64d">cRed</a>;</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;      col.a = 0.2;</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pstk); i++) {</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;faction, pstk[i]-&gt;faction ) || <a class="code" href="pilot_8c.html#a79cca646d86f820231fed535fb07c434">pilot_isFriendly</a>(pstk[i]))</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;         <span class="keywordflow">if</span> (pilot_isDisabled(pstk[i]))</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;         <span class="comment">/* Only show pilots the player can see. */</span></div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="pilot_8c.html#a7108b85fb84677a56ecd2948e8af78bb">pilot_validTarget</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, pstk[i] ))</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;         x = map_overlay_center_x() + (int)(pstk[i]-&gt;solid-&gt;pos.x / res);</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;         y = map_overlay_center_y() + (int)(pstk[i]-&gt;solid-&gt;pos.y / res);</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;         r = detect * pstk[i]-&gt;stats.ew_detect / res;</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;         <a class="code" href="opengl__render_8c.html#ae452ed0fa0e8b19ed0ee3da05946892b">gl_drawCircle</a>( x, y, r, &amp;col, 1 );</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;      }</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;   }</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;   j     = 0;</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pstk); i++) {</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;      <span class="keywordflow">if</span> (pstk[i]-&gt;<span class="keywordtype">id</span> == PLAYER_ID) <span class="comment">/* Skip player. */</span></div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;      <span class="keywordflow">if</span> (pstk[i]-&gt;<span class="keywordtype">id</span> == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;target)</div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;         j = i;</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;         <a class="code" href="gui_8c.html#ab1e01c282e6354627b43c6430912d4dd">gui_renderPilot</a>( pstk[i], RADAR_RECT, w, h, res, 1 );</div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;   }</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   <span class="comment">/* Render the targeted pilot */</span></div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;   <span class="keywordflow">if</span> (j!=0)</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;      <a class="code" href="gui_8c.html#ab1e01c282e6354627b43c6430912d4dd">gui_renderPilot</a>( pstk[j], RADAR_RECT, w, h, res, 1 );</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160; </div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;   <span class="comment">/* Check if player has goto target. */</span></div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;   <span class="keywordflow">if</span> (player_isFlag(PLAYER_AUTONAV) &amp;&amp; (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav == AUTONAV_POS_APPROACH)) {</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;      x = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_pos.x / res + map_overlay_center_x();</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;      y = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_pos.y / res + map_overlay_center_y();</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;      <a class="code" href="opengl__render_8c.html#adb73863bfb45e9cdfd50ed5e01dbbd03">gl_renderCross</a>( x, y, 5., &amp;<a class="code" href="colour_8c.html#ab63237fdaf0974966a91b3da9459849b">cRadar_hilight</a> );</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;      <a class="code" href="font_8c.html#ae6f6d6e4d219dc6f9f3cae77f0925905">gl_printMarkerRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, x+10., y-<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>.h/2., &amp;<a class="code" href="colour_8c.html#ab63237fdaf0974966a91b3da9459849b">cRadar_hilight</a>, _(<span class="stringliteral">&quot;TARGET&quot;</span>) );</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;   }</div>
 <div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160; </div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160; </div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;<span class="keywordtype">void</span> ovr_mrkFree (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;{</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;   <span class="comment">/* Clear markers. */</span></div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;   ovr_mrkClear();</div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160; </div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;   <span class="comment">/* Free array. */</span></div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( ovr_markers );</div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;   ovr_markers = NULL;</div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;}</div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160; </div>
-<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160; </div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;<span class="keywordtype">void</span> ovr_mrkClear (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;{</div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++)</div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;      ovr_mrkCleanup( &amp;ovr_markers[i] );</div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;   <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ovr_markers, <a class="code" href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a>(ovr_markers), <a class="code" href="array_8h.html#a323accdda5fcec44e36b805afa216efc">array_end</a>(ovr_markers) );</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;}</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;   <span class="comment">/* Render the player. */</span></div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;   <a class="code" href="gui_8c.html#a1fb885b94dca1e589d2a6243b510ba7f">gui_renderPlayer</a>( res, 1 );</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160; </div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;   <span class="comment">/* Render markers. */</span></div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;   ovr_mrkRenderAll( res );</div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;}</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160; </div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160; </div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> ovr_mrkRenderAll( <span class="keywordtype">double</span> res )</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;{</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;   ovr_marker_t *mrk;</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;   <span class="keywordtype">double</span> x, y;</div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160; </div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;      mrk = &amp;ovr_markers[i];</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160; </div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;      x = mrk-&gt;u.pt.x / res + map_overlay_center_x();</div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;      y = mrk-&gt;u.pt.y / res + map_overlay_center_y();</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;      <a class="code" href="opengl__render_8c.html#adb73863bfb45e9cdfd50ed5e01dbbd03">gl_renderCross</a>( x, y, 5., &amp;<a class="code" href="colour_8c.html#ab63237fdaf0974966a91b3da9459849b">cRadar_hilight</a> );</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160; </div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160; </div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> ovr_mrkCleanup( ovr_marker_t *mrk )</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;{</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;   free( mrk-&gt;text );</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;   mrk-&gt;text = NULL;</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;}</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160; </div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160; </div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;<span class="keyword">static</span> ovr_marker_t *ovr_mrkNew (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;{</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;   ovr_marker_t *mrk;</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160; </div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;   <span class="keywordflow">if</span> (ovr_markers == NULL)</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;      ovr_markers = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>(  ovr_marker_t );</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160; </div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;   mrk = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;ovr_markers );</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;   memset( mrk, 0, <span class="keyword">sizeof</span>( ovr_marker_t ) );</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   mrk-&gt;id = ++mrk_idgen;</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;   <span class="keywordflow">return</span> mrk;</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;      <span class="keywordflow">if</span> (mrk-&gt;text != NULL)</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;         <a class="code" href="font_8c.html#ae6f6d6e4d219dc6f9f3cae77f0925905">gl_printMarkerRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, x+10., y-<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>.h/2., &amp;<a class="code" href="colour_8c.html#ab63237fdaf0974966a91b3da9459849b">cRadar_hilight</a>, mrk-&gt;text );</div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;   }</div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;}</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160; </div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160; </div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;<span class="keywordtype">void</span> ovr_mrkFree (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;{</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;   <span class="comment">/* Clear markers. */</span></div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   ovr_mrkClear();</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160; </div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   <span class="comment">/* Free array. */</span></div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( ovr_markers );</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   ovr_markers = NULL;</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;}</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160; </div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160; </div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;<span class="keywordtype">void</span> ovr_mrkClear (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;{</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++)</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;      ovr_mrkCleanup( &amp;ovr_markers[i] );</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;   <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ovr_markers, <a class="code" href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a>(ovr_markers), <a class="code" href="array_8h.html#a323accdda5fcec44e36b805afa216efc">array_end</a>(ovr_markers) );</div>
 <div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;}</div>
 <div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160; </div>
 <div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160; </div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ovr_mrkAddPoint( <span class="keyword">const</span> <span class="keywordtype">char</span> *text, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y )</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;{</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   ovr_marker_t *mrk;</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> ovr_mrkCleanup( ovr_marker_t *mrk )</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;{</div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;   free( mrk-&gt;text );</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;   mrk-&gt;text = NULL;</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;}</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160; </div>
 <div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160; </div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   mrk = ovr_mrkNew();</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   mrk-&gt;type = 0;</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   <span class="keywordflow">if</span> (text != NULL)</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;      mrk-&gt;text = strdup( text );</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   mrk-&gt;u.pt.x = x;</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;   mrk-&gt;u.pt.y = y;</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160; </div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;   <span class="keywordflow">return</span> mrk-&gt;id;</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;}</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160; </div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160; </div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;<span class="keywordtype">void</span> ovr_mrkRm( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;{</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;      <span class="keywordflow">if</span> (<span class="keywordtype">id</span>!=ovr_markers[i].<span class="keywordtype">id</span>)</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;      ovr_mrkCleanup( &amp;ovr_markers[i] );</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;      <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ovr_markers, &amp;ovr_markers[i], &amp;ovr_markers[i+1] );</div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;   }</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;}</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160; </div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160; </div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;<span class="keyword">static</span> ovr_marker_t *ovr_mrkNew (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;{</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;   ovr_marker_t *mrk;</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160; </div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;   <span class="keywordflow">if</span> (ovr_markers == NULL)</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;      ovr_markers = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>(  ovr_marker_t );</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160; </div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;   mrk = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;ovr_markers );</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;   memset( mrk, 0, <span class="keyword">sizeof</span>( ovr_marker_t ) );</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;   mrk-&gt;id = ++mrk_idgen;</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;   <span class="keywordflow">return</span> mrk;</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;}</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160; </div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160; </div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ovr_mrkAddPoint( <span class="keyword">const</span> <span class="keywordtype">char</span> *text, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y )</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;{</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;   ovr_marker_t *mrk;</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160; </div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;   mrk = ovr_mrkNew();</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   mrk-&gt;type = 0;</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;   <span class="keywordflow">if</span> (text != NULL)</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;      mrk-&gt;text = strdup( text );</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;   mrk-&gt;u.pt.x = x;</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;   mrk-&gt;u.pt.y = y;</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160; </div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;   <span class="keywordflow">return</span> mrk-&gt;id;</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;}</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160; </div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;<span class="keywordtype">void</span> ovr_mrkRm( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;{</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;      <span class="keywordflow">if</span> (<span class="keywordtype">id</span>!=ovr_markers[i].<span class="keywordtype">id</span>)</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;      ovr_mrkCleanup( &amp;ovr_markers[i] );</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;      <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ovr_markers, &amp;ovr_markers[i], &amp;ovr_markers[i+1] );</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   }</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;}</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160; </div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aspace_8c_html_a60ed2a67c98651dc7a1d3743a6b66555"><div class="ttname"><a href="space_8c.html#a60ed2a67c98651dc7a1d3743a6b66555">jump_getSymbol</a></div><div class="ttdeci">const char * jump_getSymbol(JumpPoint *jp)</div><div class="ttdoc">Gets the jump point symbol.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01118">space.c:1118</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_accc57907c09c3b5f45249b121a776886"><div class="ttname"><a href="pilot__ew_8c.html#accc57907c09c3b5f45249b121a776886">pilot_sensorRange</a></div><div class="ttdeci">double pilot_sensorRange(void)</div><div class="ttdoc">Returns the default sensor range for the current system.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00190">pilot_ew.c:190</a></div></div>
+<div class="ttc" id="aspace_8c_html_a60ed2a67c98651dc7a1d3743a6b66555"><div class="ttname"><a href="space_8c.html#a60ed2a67c98651dc7a1d3743a6b66555">jump_getSymbol</a></div><div class="ttdeci">const char * jump_getSymbol(JumpPoint *jp)</div><div class="ttdoc">Gets the jump point symbol.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01126">space.c:1126</a></div></div>
 <div class="ttc" id="aarray_8h_html_a323accdda5fcec44e36b805afa216efc"><div class="ttname"><a href="array_8h.html#a323accdda5fcec44e36b805afa216efc">array_end</a></div><div class="ttdeci">#define array_end(array)</div><div class="ttdoc">Returns a pointer to the end of the reserved memory space.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00206">array.h:206</a></div></div>
 <div class="ttc" id="astructPlanet_html"><div class="ttname"><a href="structPlanet.html">Planet</a></div><div class="ttdoc">Represents a planet.</div></div>
+<div class="ttc" id="apilot_8c_html_a79cca646d86f820231fed535fb07c434"><div class="ttname"><a href="pilot_8c.html#a79cca646d86f820231fed535fb07c434">pilot_isFriendly</a></div><div class="ttdeci">int pilot_isFriendly(const Pilot *p)</div><div class="ttdoc">Checks to see if pilot is friendly to the player.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00685">pilot.c:685</a></div></div>
 <div class="ttc" id="astructMapOverlayRadiusConstraint___html_acd1f6c32d852c64b69e8d5014d1f0a8b"><div class="ttname"><a href="structMapOverlayRadiusConstraint__.html#acd1f6c32d852c64b69e8d5014d1f0a8b">MapOverlayRadiusConstraint_::j</a></div><div class="ttdeci">int j</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00032">map_overlay.c:32</a></div></div>
 <div class="ttc" id="astructMapOverlayRadiusConstraint___html_a9b758cd2e9d731a2f63882881a5eba54"><div class="ttname"><a href="structMapOverlayRadiusConstraint__.html#a9b758cd2e9d731a2f63882881a5eba54">MapOverlayRadiusConstraint_::i</a></div><div class="ttdeci">int i</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00031">map_overlay.c:31</a></div></div>
 <div class="ttc" id="astructovr__marker__s_html"><div class="ttname"><a href="structovr__marker__s.html">ovr_marker_s</a></div><div class="ttdoc">An overlay map marker.</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00054">map_overlay.c:54</a></div></div>
@@ -670,10 +703,12 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_aea94c04441e21470acebd589205d5355"><div class="ttname"><a href="space_8c.html#aea94c04441e21470acebd589205d5355">jumppoint_gfx</a></div><div class="ttdeci">glTexture * jumppoint_gfx</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00103">space.c:103</a></div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00049">news.c:49</a></div></div>
 <div class="ttc" id="agui_8c_html_a1fb885b94dca1e589d2a6243b510ba7f"><div class="ttname"><a href="gui_8c.html#a1fb885b94dca1e589d2a6243b510ba7f">gui_renderPlayer</a></div><div class="ttdeci">void gui_renderPlayer(double res, int overlay)</div><div class="ttdoc">Renders the player cross on the radar or whatever.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01484">gui.c:1484</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_ae452ed0fa0e8b19ed0ee3da05946892b"><div class="ttname"><a href="opengl__render_8c.html#ae452ed0fa0e8b19ed0ee3da05946892b">gl_drawCircle</a></div><div class="ttdeci">void gl_drawCircle(const double cx, const double cy, const double r, const glColour *c, int filled)</div><div class="ttdoc">Draws a circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00650">opengl_render.c:650</a></div></div>
 <div class="ttc" id="astructMapOverlayPosOpt___html_a866c704905bf2c25b9938a6b7f38d8f3"><div class="ttname"><a href="structMapOverlayPosOpt__.html#a866c704905bf2c25b9938a6b7f38d8f3">MapOverlayPosOpt_::text_offx_base</a></div><div class="ttdeci">float text_offx_base</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00045">map_overlay.c:45</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c3fb96e542d880f6f5f42594154e0f0"><div class="ttname"><a href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a></div><div class="ttdeci">#define array_erase(ptr_array, first, last)</div><div class="ttdoc">Erases elements in interval [first, last).</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00144">array.h:144</a></div></div>
 <div class="ttc" id="astructovr__marker__s_html_a7f0aca04855cf201c27253679aeda76f"><div class="ttname"><a href="structovr__marker__s.html#a7f0aca04855cf201c27253679aeda76f">ovr_marker_s::pt</a></div><div class="ttdeci">struct ovr_marker_s::@7::@8 pt</div></div>
 <div class="ttc" id="aarray_8h_html_a8037aba47ab61629eee083791786b582"><div class="ttname"><a href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a></div><div class="ttdeci">#define array_grow(ptr_array)</div><div class="ttdoc">Increases the number of elements by one and returns the last element.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00123">array.h:123</a></div></div>
+<div class="ttc" id="acolour_8c_html_a2b06d9341e34af7d1b2a9ef04b03a64d"><div class="ttname"><a href="colour_8c.html#a2b06d9341e34af7d1b2a9ef04b03a64d">cRed</a></div><div class="ttdeci">const glColour cRed</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00052">colour.c:52</a></div></div>
 <div class="ttc" id="astructMapOverlayPosOpt___html_a0edadb34cc275819c95d1ef9e3785737"><div class="ttname"><a href="structMapOverlayPosOpt__.html#a0edadb34cc275819c95d1ef9e3785737">MapOverlayPosOpt_::text_offy_base</a></div><div class="ttdeci">float text_offy_base</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00046">map_overlay.c:46</a></div></div>
 <div class="ttc" id="anaev_8h_html_a307ed00ad0ff71bcd15542f9439ef382"><div class="ttname"><a href="naev_8h.html#a307ed00ad0ff71bcd15542f9439ef382">FSIGN</a></div><div class="ttdeci">#define FSIGN(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00050">naev.h:50</a></div></div>
 <div class="ttc" id="astructMapOverlayRadiusConstraint___html"><div class="ttname"><a href="structMapOverlayRadiusConstraint__.html">MapOverlayRadiusConstraint_</a></div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00030">map_overlay.c:30</a></div></div>
@@ -685,11 +720,13 @@ $(function() {
 <div class="ttc" id="astructMapOverlayPosOpt___html_aae109e665356e697f3f12ecfe2ce46c0"><div class="ttname"><a href="structMapOverlayPosOpt__.html#aae109e665356e697f3f12ecfe2ce46c0">MapOverlayPosOpt_::text_width</a></div><div class="ttdeci">float text_width</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00047">map_overlay.c:47</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_adb73863bfb45e9cdfd50ed5e01dbbd03"><div class="ttname"><a href="opengl__render_8c.html#adb73863bfb45e9cdfd50ed5e01dbbd03">gl_renderCross</a></div><div class="ttdeci">void gl_renderCross(double x, double y, double r, const glColour *c)</div><div class="ttdoc">Renders a cross at a given position.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00166">opengl_render.c:166</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
+<div class="ttc" id="afaction_8c_html_afea2f8de538c247a62bdd5d2d4c69f2b"><div class="ttname"><a href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a></div><div class="ttdeci">int areAllies(int a, int b)</div><div class="ttdoc">Checks whether two factions are allies or not.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01179">faction.c:1179</a></div></div>
+<div class="ttc" id="apilot_8c_html_a7108b85fb84677a56ecd2948e8af78bb"><div class="ttname"><a href="pilot_8c.html#a7108b85fb84677a56ecd2948e8af78bb">pilot_validTarget</a></div><div class="ttdeci">int pilot_validTarget(const Pilot *p, const Pilot *target)</div><div class="ttdoc">Checks to see if a pilot is a valid target for another pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00234">pilot.c:234</a></div></div>
 <div class="ttc" id="astructMapOverlayPosOpt___html_a58b1658dce7a7e592ed994bf4554e66b"><div class="ttname"><a href="structMapOverlayPosOpt__.html#a58b1658dce7a7e592ed994bf4554e66b">MapOverlayPosOpt_::text_offy</a></div><div class="ttdeci">float text_offy</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00043">map_overlay.c:43</a></div></div>
 <div class="ttc" id="astructovr__marker__s_html_aa56c1d03d18f154ae2d47ecf4ca4c849"><div class="ttname"><a href="structovr__marker__s.html#aa56c1d03d18f154ae2d47ecf4ca4c849">ovr_marker_s::y</a></div><div class="ttdeci">double y</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00061">map_overlay.c:61</a></div></div>
 <div class="ttc" id="afont_8c_html_ae6f6d6e4d219dc6f9f3cae77f0925905"><div class="ttname"><a href="font_8c.html#ae6f6d6e4d219dc6f9f3cae77f0925905">gl_printMarkerRaw</a></div><div class="ttdeci">void gl_printMarkerRaw(const glFont *ft_font, double x, double y, const glColour *c, const char *text)</div><div class="ttdoc">Wrapper for gl_printRaw for map overlay markers.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00676">font.c:676</a></div></div>
-<div class="ttc" id="aspace_8c_html_aa21245aac58342487e9b15863039f4ba"><div class="ttname"><a href="space_8c.html#aa21245aac58342487e9b15863039f4ba">planet_getSymbol</a></div><div class="ttdeci">const char * planet_getSymbol(Planet *p)</div><div class="ttdoc">Gets the planet symbol.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01851">space.c:1851</a></div></div>
-<div class="ttc" id="ainput_8c_html_a6e78f4db6e11efb80fd9394d1bf583ea"><div class="ttname"><a href="input_8c.html#a6e78f4db6e11efb80fd9394d1bf583ea">input_mouseShow</a></div><div class="ttdeci">void input_mouseShow(void)</div><div class="ttdoc">Shows the mouse.</div><div class="ttdef"><b>Definition:</b> <a href="input_8c_source.html#l00386">input.c:386</a></div></div>
+<div class="ttc" id="aspace_8c_html_aa21245aac58342487e9b15863039f4ba"><div class="ttname"><a href="space_8c.html#aa21245aac58342487e9b15863039f4ba">planet_getSymbol</a></div><div class="ttdeci">const char * planet_getSymbol(Planet *p)</div><div class="ttdoc">Gets the planet symbol.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01859">space.c:1859</a></div></div>
+<div class="ttc" id="ainput_8c_html_a6e78f4db6e11efb80fd9394d1bf583ea"><div class="ttname"><a href="input_8c.html#a6e78f4db6e11efb80fd9394d1bf583ea">input_mouseShow</a></div><div class="ttdeci">void input_mouseShow(void)</div><div class="ttdoc">Shows the mouse.</div><div class="ttdef"><b>Definition:</b> <a href="input_8c_source.html#l00388">input.c:388</a></div></div>
 <div class="ttc" id="astructovr__marker__s_html_a6a806f202f27a33705b6f71e719bf9a1"><div class="ttname"><a href="structovr__marker__s.html#a6a806f202f27a33705b6f71e719bf9a1">ovr_marker_s::u</a></div><div class="ttdeci">union ovr_marker_s::@7 u</div></div>
 <div class="ttc" id="afont_8c_html_a54ef6885d2c4aba9620cf9034f1e0587"><div class="ttname"><a href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a></div><div class="ttdeci">int gl_printWidthRaw(const glFont *ft_font, const char *text)</div><div class="ttdoc">Gets the width that it would take to print some text.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00982">font.c:982</a></div></div>
 <div class="ttc" id="agui_8c_html_a51a9093a58c4ae4c55bbf6a16860f135"><div class="ttname"><a href="gui_8c.html#a51a9093a58c4ae4c55bbf6a16860f135">gui_renderAsteroid</a></div><div class="ttdeci">void gui_renderAsteroid(const Asteroid *a, double w, double h, double res, int overlay)</div><div class="ttdoc">Renders an asteroid in the GUI radar.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01417">gui.c:1417</a></div></div>
@@ -698,8 +735,9 @@ $(function() {
 <div class="ttc" id="astructMapOverlayPos_html"><div class="ttname"><a href="structMapOverlayPos.html">MapOverlayPos</a></div><div class="ttdoc">Saves the layout decisions from positioning labeled objects on the overlay.</div></div>
 <div class="ttc" id="aarray_8h_html_a04e810cfeccd1cd523f9b28e68aca564"><div class="ttname"><a href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a></div><div class="ttdeci">#define array_free(ptr_array)</div><div class="ttdoc">Frees memory allocated and sets array to NULL.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00162">array.h:162</a></div></div>
 <div class="ttc" id="aopengl_8c_html_a93a13cb7cca3a209d10f66e3917f5fd1"><div class="ttname"><a href="opengl_8c.html#a93a13cb7cca3a209d10f66e3917f5fd1">gl_windowToScreenPos</a></div><div class="ttdeci">void gl_windowToScreenPos(int *sx, int *sy, int wx, int wy)</div><div class="ttdoc">Translates the window position to screen position.</div><div class="ttdef"><b>Definition:</b> <a href="opengl_8c_source.html#l00600">opengl.c:600</a></div></div>
+<div class="ttc" id="acolour_8c_html_ab4bb599a8a88651c39e3f740e58838d8"><div class="ttname"><a href="colour_8c.html#ab4bb599a8a88651c39e3f740e58838d8">cBlue</a></div><div class="ttdeci">const glColour cBlue</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00063">colour.c:63</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ac8701471143b28a786b0028420edfeb6"><div class="ttname"><a href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a></div><div class="ttdeci">Player_t player</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00071">player.c:71</a></div></div>
-<div class="ttc" id="ainput_8c_html_a8a5d7fac9c2193efa4151e82ad8b37ac"><div class="ttname"><a href="input_8c.html#a8a5d7fac9c2193efa4151e82ad8b37ac">input_clickPos</a></div><div class="ttdeci">int input_clickPos(SDL_Event *event, double x, double y, double zoom, double minpr, double minr)</div><div class="ttdoc">Handles a click at a position in the current system.</div><div class="ttdef"><b>Definition:</b> <a href="input_8c_source.html#l01278">input.c:1278</a></div></div>
+<div class="ttc" id="ainput_8c_html_a8a5d7fac9c2193efa4151e82ad8b37ac"><div class="ttname"><a href="input_8c.html#a8a5d7fac9c2193efa4151e82ad8b37ac">input_clickPos</a></div><div class="ttdeci">int input_clickPos(SDL_Event *event, double x, double y, double zoom, double minpr, double minr)</div><div class="ttdoc">Handles a click at a position in the current system.</div><div class="ttdef"><b>Definition:</b> <a href="input_8c_source.html#l01283">input.c:1283</a></div></div>
 <div class="ttc" id="astructMapOverlayPosOpt___html_a2adce68ab0c4d48d51319a26c0bebad2"><div class="ttname"><a href="structMapOverlayPosOpt__.html#a2adce68ab0c4d48d51319a26c0bebad2">MapOverlayPosOpt_::text_offx</a></div><div class="ttdeci">float text_offx</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00042">map_overlay.c:42</a></div></div>
 <div class="ttc" id="arng_8c_html_a3a6c194a55c239306d07bbf83f5972e9"><div class="ttname"><a href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a></div><div class="ttdeci">static const double c[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00281">rng.c:281</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
@@ -708,7 +746,7 @@ $(function() {
 <div class="ttc" id="astructovr__marker__s_html_aef4480fbc11132da3b2e4197b1e5a642"><div class="ttname"><a href="structovr__marker__s.html#aef4480fbc11132da3b2e4197b1e5a642">ovr_marker_s::id</a></div><div class="ttdeci">unsigned int id</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00055">map_overlay.c:55</a></div></div>
 <div class="ttc" id="agui_8c_html_afb44a001dc42426cc39992233a16c156"><div class="ttname"><a href="gui_8c.html#afb44a001dc42426cc39992233a16c156">gui_getMapOverlayBoundLeft</a></div><div class="ttdeci">int gui_getMapOverlayBoundLeft(void)</div><div class="ttdoc">Gets map overlay bound (left)</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01048">gui.c:1048</a></div></div>
 <div class="ttc" id="anaev_8h_html_a996f7be338ccb40d1a2a5abc1ad61759"><div class="ttname"><a href="naev_8h.html#a996f7be338ccb40d1a2a5abc1ad61759">ABS</a></div><div class="ttdeci">#define ABS(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00042">naev.h:42</a></div></div>
-<div class="ttc" id="ainput_8c_html_af801381a9bca25d2dd2b648ac0a9104f"><div class="ttname"><a href="input_8c.html#af801381a9bca25d2dd2b648ac0a9104f">input_mouseHide</a></div><div class="ttdeci">void input_mouseHide(void)</div><div class="ttdoc">Hides the mouse.</div><div class="ttdef"><b>Definition:</b> <a href="input_8c_source.html#l00396">input.c:396</a></div></div>
+<div class="ttc" id="ainput_8c_html_af801381a9bca25d2dd2b648ac0a9104f"><div class="ttname"><a href="input_8c.html#af801381a9bca25d2dd2b648ac0a9104f">input_mouseHide</a></div><div class="ttdeci">void input_mouseHide(void)</div><div class="ttdoc">Hides the mouse.</div><div class="ttdef"><b>Definition:</b> <a href="input_8c_source.html#l00398">input.c:398</a></div></div>
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
 <div class="ttc" id="astructMapOverlayPosOpt___html"><div class="ttname"><a href="structMapOverlayPosOpt__.html">MapOverlayPosOpt_</a></div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00040">map_overlay.c:40</a></div></div>
 <div class="ttc" id="astructovr__marker__s_html_af50175b9dde1830052803ea6293f5082"><div class="ttname"><a href="structovr__marker__s.html#af50175b9dde1830052803ea6293f5082">ovr_marker_s::x</a></div><div class="ttdeci">double x</div><div class="ttdef"><b>Definition:</b> <a href="map__overlay_8c_source.html#l00060">map_overlay.c:60</a></div></div>
