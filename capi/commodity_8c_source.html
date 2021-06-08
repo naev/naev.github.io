@@ -79,7 +79,7 @@ $(function() {
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define GATHER_DIST 30. </span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor"></span><span class="comment">/* commodity stack */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">   49</a></span>&#160;<a class="code" href="structCommodity.html">Commodity</a>* <a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a> = NULL; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">static</span> <a class="code" href="structCommodity.html">Commodity</a>* commodity_temp = NULL; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">static</span> <a class="code" href="structCommodity.html">Commodity</a>** commodity_temp = NULL; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">/* gatherables stack */</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">static</span> <a class="code" href="structGatherable.html">Gatherable</a>* gatherable_stack = NULL; </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">static</span> <span class="keywordtype">float</span> noscoop_timer                 = 1.; </div>
@@ -141,8 +141,8 @@ $(function() {
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;      <span class="keywordflow">if</span> (strcmp(<a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a>[i].name,name)==0)</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;         <span class="keywordflow">return</span> &amp;<a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a>[i];</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(commodity_temp); i++)</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      <span class="keywordflow">if</span> (strcmp(commodity_temp[i].name, name) == 0)</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;         <span class="keywordflow">return</span> &amp;commodity_temp[i];</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      <span class="keywordflow">if</span> (strcmp(commodity_temp[i]-&gt;name, name) == 0)</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;         <span class="keywordflow">return</span> commodity_temp[i];</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;   WARN(_(<span class="stringliteral">&quot;Commodity &#39;%s&#39; not found in stack&quot;</span>), name);</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
@@ -156,8 +156,8 @@ $(function() {
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      <span class="keywordflow">if</span> (strcmp(<a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a>[i].name, name) == 0)</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;         <span class="keywordflow">return</span> &amp;<a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a>[i];</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(commodity_temp); i++)</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      <span class="keywordflow">if</span> (strcmp(commodity_temp[i].name, name) == 0)</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;         <span class="keywordflow">return</span> &amp;commodity_temp[i];</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      <span class="keywordflow">if</span> (strcmp(commodity_temp[i]-&gt;name, name) == 0)</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;         <span class="keywordflow">return</span> commodity_temp[i];</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
@@ -507,7 +507,7 @@ $(function() {
 <div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;   <span class="keywordtype">int</span> i;</div>
 <div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160; </div>
 <div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(commodity_temp); i++)</div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;      <span class="keywordflow">if</span> (strcmp(commodity_temp[i].name, name) == 0)</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;      <span class="keywordflow">if</span> (strcmp(commodity_temp[i]-&gt;name, name) == 0)</div>
 <div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;         <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a>); i++)</div>
 <div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;      <span class="keywordflow">if</span> (strcmp(<a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a>[i].name,name)==0)</div>
@@ -520,16 +520,16 @@ $(function() {
 <div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160; </div>
 <div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;<a class="code" href="structCommodity.html">Commodity</a>* commodity_newTemp( <span class="keyword">const</span> <span class="keywordtype">char</span>* name, <span class="keyword">const</span> <span class="keywordtype">char</span>* desc )</div>
 <div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;{</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> **<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
 <div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;   <span class="keywordflow">if</span> (commodity_temp == NULL)</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;      commodity_temp = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <a class="code" href="structCommodity.html">Commodity</a> );</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;      commodity_temp = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <a class="code" href="structCommodity.html">Commodity</a>* );</div>
 <div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160; </div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;   <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>              = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;<a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a>);</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;   memset( <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, 0, <span class="keyword">sizeof</span>(<a class="code" href="structCommodity.html">Commodity</a>) );</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;   <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>-&gt;istemp      = 1;</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;   <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>-&gt;name        = strdup(name);</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>-&gt;description = strdup(desc);</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;   <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>              = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;commodity_temp);</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;   *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>             = calloc( 1, <span class="keyword">sizeof</span>(<a class="code" href="structCommodity.html">Commodity</a>) );</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;   (*c)-&gt;istemp   = 1;</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;   (*c)-&gt;name     = strdup(name);</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   (*c)-&gt;description = strdup(desc);</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   <span class="keywordflow">return</span> *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
 <div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;}</div>
 <div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160; </div>
 <div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160; </div>
@@ -622,19 +622,21 @@ $(function() {
 <div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( <a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a> );</div>
 <div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;   <a class="code" href="economy_8c.html#ac6ac8aced1feb59d5de0220f34595b4f">commodity_stack</a> = NULL;</div>
 <div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160; </div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(commodity_temp); i++)</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;      commodity_freeOne( &amp;commodity_temp[i] );</div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( commodity_temp );</div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   commodity_temp = NULL;</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160; </div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;   <span class="comment">/* More clean up. */</span></div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( <a class="code" href="economy_8c.html#aa7462c4724e61870bf7a01523c79fe5e">econ_comm</a> );</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   <a class="code" href="economy_8c.html#aa7462c4724e61870bf7a01523c79fe5e">econ_comm</a> = NULL;</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160; </div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( gatherable_stack );</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;   gatherable_stack = NULL;</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;}</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160; </div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(commodity_temp); i++) {</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;      commodity_freeOne( commodity_temp[i] );</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;      free( commodity_temp[i] );</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   }</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( commodity_temp );</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;   commodity_temp = NULL;</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160; </div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   <span class="comment">/* More clean up. */</span></div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( <a class="code" href="economy_8c.html#aa7462c4724e61870bf7a01523c79fe5e">econ_comm</a> );</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   <a class="code" href="economy_8c.html#aa7462c4724e61870bf7a01523c79fe5e">econ_comm</a> = NULL;</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160; </div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( gatherable_stack );</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   gatherable_stack = NULL;</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;}</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructCommodity_html"><div class="ttname"><a href="structCommodity.html">Commodity</a></div><div class="ttdoc">Represents a commodity.</div></div>
 <div class="ttc" id="astructGatherable_html"><div class="ttname"><a href="structGatherable.html">Gatherable</a></div><div class="ttdoc">Represents stuff that can be gathered.</div></div>
