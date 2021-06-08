@@ -1475,7 +1475,7 @@ $(function() {
 <div class="line"><a name="l01605"></a><span class="lineno"> 1605</span>&#160;         <span class="stringliteral">&quot;#%c%s%.0f#0 deg/s\n&quot;</span></div>
 <div class="line"><a name="l01606"></a><span class="lineno"> 1606</span>&#160;         <span class="stringliteral">&quot;%.0f%%\n&quot;</span></div>
 <div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160;         <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160;         <span class="stringliteral">&quot;%s\n&quot;</span></div>
+<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160;         <span class="stringliteral">&quot;%s (%.1f secs for scan)\n&quot;</span></div>
 <div class="line"><a name="l01609"></a><span class="lineno"> 1609</span>&#160;         <span class="stringliteral">&quot;%s\n&quot;</span></div>
 <div class="line"><a name="l01610"></a><span class="lineno"> 1610</span>&#160;         <span class="stringliteral">&quot;\n&quot;</span></div>
 <div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160;         <span class="stringliteral">&quot;#%c%s%.0f%%\n&quot;</span></div>
@@ -1500,340 +1500,341 @@ $(function() {
 <div class="line"><a name="l01630"></a><span class="lineno"> 1630</span>&#160;      EQ_COMP( solid_maxspeed( ship-&gt;solid, ship-&gt;speed, ship-&gt;thrust ),</div>
 <div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;            solid_maxspeed( ship-&gt;solid, ship-&gt;ship-&gt;speed, ship-&gt;ship-&gt;thrust), 0 ),</div>
 <div class="line"><a name="l01632"></a><span class="lineno"> 1632</span>&#160;      EQ_COMP( ship-&gt;turn*180./M_PI, ship-&gt;ship-&gt;turn*180./M_PI, 0 ),</div>
-<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160;      ship-&gt;ship-&gt;dt_default * 100, sdet, seva, sste,</div>
-<div class="line"><a name="l01634"></a><span class="lineno"> 1634</span>&#160;      <span class="comment">/* Health. */</span></div>
-<div class="line"><a name="l01635"></a><span class="lineno"> 1635</span>&#160;      EQ_COMP( ship-&gt;dmg_absorb * 100, ship-&gt;ship-&gt;dmg_absorb * 100, 0 ),</div>
-<div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;      EQ_COMP( ship-&gt;shield_max, ship-&gt;ship-&gt;shield, 0 ),</div>
-<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160;      EQ_COMP( ship-&gt;shield_regen, ship-&gt;ship-&gt;shield_regen, 0 ),</div>
-<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160;      EQ_COMP( ship-&gt;armour_max, ship-&gt;ship-&gt;armour, 0 ),</div>
-<div class="line"><a name="l01639"></a><span class="lineno"> 1639</span>&#160;      EQ_COMP( ship-&gt;armour_regen, ship-&gt;ship-&gt;armour_regen, 0 ),</div>
-<div class="line"><a name="l01640"></a><span class="lineno"> 1640</span>&#160;      EQ_COMP( ship-&gt;energy_max, ship-&gt;ship-&gt;energy, 0 ),</div>
-<div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160;      EQ_COMP( ship-&gt;energy_regen, ship-&gt;ship-&gt;energy_regen, 0 ),</div>
-<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160;      <span class="comment">/* Misc. */</span></div>
-<div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;      <a class="code" href="pilot__cargo_8c.html#a3f4a64090c109787f8a8ddac379a8860">pilot_cargoUsed</a>(ship), EQ_COMP( cargo, ship-&gt;ship-&gt;cap_cargo, 0 ),</div>
-<div class="line"><a name="l01644"></a><span class="lineno"> 1644</span>&#160;      n_( <span class="stringliteral">&quot;tonne&quot;</span>, <span class="stringliteral">&quot;tonnes&quot;</span>, ship-&gt;ship-&gt;cap_cargo ),</div>
-<div class="line"><a name="l01645"></a><span class="lineno"> 1645</span>&#160;      sfuel, n_( <span class="stringliteral">&quot;unit&quot;</span>, <span class="stringliteral">&quot;units&quot;</span>, ship-&gt;fuel_max ),</div>
-<div class="line"><a name="l01646"></a><span class="lineno"> 1646</span>&#160;      jumps, n_( <span class="stringliteral">&quot;jump&quot;</span>, <span class="stringliteral">&quot;jumps&quot;</span>, jumps ),</div>
-<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a90f6fc6eab21ae1ffe0b4f6059189eac">pilot_checkSpaceworthy</a>(ship) ? <span class="charliteral">&#39;r&#39;</span> : <span class="charliteral">&#39;0&#39;</span>, errorReport );</div>
-<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDDesc&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l01649"></a><span class="lineno"> 1649</span>&#160; </div>
-<div class="line"><a name="l01650"></a><span class="lineno"> 1650</span>&#160;   <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;   free( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160;   free( nt );</div>
-<div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160; </div>
-<div class="line"><a name="l01654"></a><span class="lineno"> 1654</span>&#160;   <span class="comment">/* button disabling */</span></div>
-<div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160;   <span class="keywordflow">if</span> (onboard) {</div>
-<div class="line"><a name="l01656"></a><span class="lineno"> 1656</span>&#160;      window_disableButton( wid, <span class="stringliteral">&quot;btnSellShip&quot;</span> );</div>
-<div class="line"><a name="l01657"></a><span class="lineno"> 1657</span>&#160;      window_disableButton( wid, <span class="stringliteral">&quot;btnChangeShip&quot;</span> );</div>
-<div class="line"><a name="l01658"></a><span class="lineno"> 1658</span>&#160;   }</div>
-<div class="line"><a name="l01659"></a><span class="lineno"> 1659</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l01660"></a><span class="lineno"> 1660</span>&#160;      window_enableButton( wid, <span class="stringliteral">&quot;btnChangeShip&quot;</span> );</div>
-<div class="line"><a name="l01661"></a><span class="lineno"> 1661</span>&#160;      window_enableButton( wid, <span class="stringliteral">&quot;btnSellShip&quot;</span> );</div>
-<div class="line"><a name="l01662"></a><span class="lineno"> 1662</span>&#160;   }</div>
-<div class="line"><a name="l01663"></a><span class="lineno"> 1663</span>&#160;}</div>
-<div class="line"><a name="l01664"></a><span class="lineno"> 1664</span>&#160;<span class="preprocessor">#undef EQ_COMP</span></div>
-<div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160; </div>
-<div class="line"><a name="l01670"></a><span class="lineno"><a class="line" href="equipment_8c.html#a525d411d86fa73d529526e903226cd25"> 1670</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#a525d411d86fa73d529526e903226cd25">equipment_updateOutfits</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160;{</div>
-<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;   (void) wid;</div>
-<div class="line"><a name="l01673"></a><span class="lineno"> 1673</span>&#160;   (void) str;</div>
-<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160;   <span class="keywordtype">int</span> i, active;</div>
-<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160; </div>
-<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;   <span class="comment">/* Must have outfit. */</span></div>
-<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;   active = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );</div>
-<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160;   i = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );</div>
-<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160;   <span class="keywordflow">if</span> (i &lt; 0 || <a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a>[active] == NULL) {</div>
-<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;      <a class="code" href="equipment_8c.html#a21e2bca3d2b617151c90a3e70bf56bcc">eq_wgt</a>.outfit = NULL;</div>
-<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;   }</div>
-<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160; </div>
-<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;   <a class="code" href="equipment_8c.html#a21e2bca3d2b617151c90a3e70bf56bcc">eq_wgt</a>.outfit = <a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a>[active][i];</div>
-<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;}</div>
-<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160; </div>
-<div class="line"><a name="l01692"></a><span class="lineno"><a class="line" href="equipment_8c.html#aad5e6f1670d612b70a54a8c21e249be0"> 1692</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#aad5e6f1670d612b70a54a8c21e249be0">equipment_filterOutfits</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *str )</div>
-<div class="line"><a name="l01693"></a><span class="lineno"> 1693</span>&#160;{</div>
-<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;   (void) str;</div>
-<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>(wid, 1, 0);</div>
-<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;}</div>
-<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160; </div>
-<div class="line"><a name="l01706"></a><span class="lineno"><a class="line" href="equipment_8c.html#a1834b255148eb95d588400b65170d40c"> 1706</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#a1834b255148eb95d588400b65170d40c">equipment_changeTab</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *wgt, <span class="keywordtype">int</span> old, <span class="keywordtype">int</span> tab )</div>
-<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;{</div>
-<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;   (void) wid;</div>
-<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;   (void) wgt;</div>
-<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;   <span class="keywordtype">int</span> pos;</div>
-<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;   <span class="keywordtype">double</span> offset;</div>
-<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160; </div>
-<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160;   toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &amp;<a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[old] );</div>
-<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160; </div>
-<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;   <span class="comment">/* Store the currently-saved positions for the new tab. */</span></div>
-<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;   pos    = <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[tab].pos;</div>
-<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;   offset = <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[tab].offset;</div>
-<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160; </div>
-<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;   <span class="comment">/* Resetting the input will cause the outfit list to be regenerated. */</span></div>
-<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="toolkit_8c.html#af87ed79d7c7ae46b64b6688e036ddee4">widget_exists</a>(wid, EQUIPMENT_FILTER))</div>
-<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;      window_setInput(wid, EQUIPMENT_FILTER, NULL);</div>
-<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160;      <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>(wid, 1, 0);</div>
-<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160; </div>
-<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;   <span class="comment">/* Set positions for the new tab. This is necessary because the stored</span></div>
-<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;<span class="comment">    * position for the new tab may have exceeded the size of the old tab,</span></div>
-<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;<span class="comment">    * resulting in it being clipped. */</span></div>
-<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160;   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, pos );</div>
-<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160;   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offset );</div>
-<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160; </div>
-<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160;   <span class="comment">/* Focus the outfit image array. */</span></div>
-<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;   <a class="code" href="toolkit_8c.html#a05a62cc818e210915019d81fcc408baa">window_setFocus</a>( wid, EQUIPMENT_OUTFITS );</div>
-<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;}</div>
-<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160; </div>
-<div class="line"><a name="l01740"></a><span class="lineno"><a class="line" href="equipment_8c.html#ae0267608254ab63afdbea1528f9fd270"> 1740</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#ae0267608254ab63afdbea1528f9fd270">equipment_transChangeShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160;{</div>
-<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160;   (void) str;</div>
-<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160; </div>
-<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160;   <a class="code" href="equipment_8c.html#ac7582c1a80b397f2161bb21f9d5e62e4">equipment_changeShip</a>( wid );</div>
-<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160; </div>
-<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160;   <span class="comment">/* update the window to reflect the change */</span></div>
-<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;   <a class="code" href="equipment_8c.html#a3de376e50739bea2a14b8017e3054de2">equipment_updateShips</a>( wid, NULL );</div>
-<div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;}</div>
-<div class="line"><a name="l01753"></a><span class="lineno"><a class="line" href="equipment_8c.html#ac7582c1a80b397f2161bb21f9d5e62e4"> 1753</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#ac7582c1a80b397f2161bb21f9d5e62e4">equipment_changeShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid )</div>
-<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160;{</div>
-<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160;   <span class="keywordtype">char</span> *shipname, *filtertext;</div>
-<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160; </div>
-<div class="line"><a name="l01758"></a><span class="lineno"> 1758</span>&#160;   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );</div>
-<div class="line"><a name="l01759"></a><span class="lineno"> 1759</span>&#160; </div>
-<div class="line"><a name="l01760"></a><span class="lineno"> 1760</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a3c413da9c773a248f216cc34d15f5ab8">land_errDialogue</a>( shipname, <span class="stringliteral">&quot;swapEquipment&quot;</span> ))</div>
-<div class="line"><a name="l01761"></a><span class="lineno"> 1761</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01762"></a><span class="lineno"> 1762</span>&#160; </div>
-<div class="line"><a name="l01763"></a><span class="lineno"> 1763</span>&#160;   <span class="comment">/* Store active tab, filter text, and positions for the outfits. */</span></div>
-<div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160;   i = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );</div>
-<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;   toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &amp;<a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[i] );</div>
-<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="toolkit_8c.html#af87ed79d7c7ae46b64b6688e036ddee4">widget_exists</a>(wid, EQUIPMENT_FILTER))</div>
-<div class="line"><a name="l01767"></a><span class="lineno"> 1767</span>&#160;      filtertext = window_getInput( <a class="code" href="equipment_8c.html#ae11a7f2169b8b5e14b8e1cfb67664274">equipment_wid</a>, EQUIPMENT_FILTER );</div>
-<div class="line"><a name="l01768"></a><span class="lineno"> 1768</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01769"></a><span class="lineno"> 1769</span>&#160;      filtertext = NULL;</div>
-<div class="line"><a name="l01770"></a><span class="lineno"> 1770</span>&#160; </div>
-<div class="line"><a name="l01771"></a><span class="lineno"> 1771</span>&#160;   <span class="comment">/* Swap ship. */</span></div>
-<div class="line"><a name="l01772"></a><span class="lineno"> 1772</span>&#160;   <a class="code" href="player_8c.html#a24281ff4db59d1cb505b0d9aef07f3e6">player_swapShip</a>( shipname );</div>
-<div class="line"><a name="l01773"></a><span class="lineno"> 1773</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a3efb77f9b10293bb645d7641609485ef">pilot_healLanded</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
-<div class="line"><a name="l01774"></a><span class="lineno"> 1774</span>&#160; </div>
-<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160;   <span class="comment">/* What happens here is the gui gets recreated when the player swaps ship.</span></div>
-<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;<span class="comment">    * This causes all the windows to be destroyed and the &#39;wid&#39; we have here</span></div>
-<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160;<span class="comment">    * becomes invalid. However, since we store it in a global variable we can</span></div>
-<div class="line"><a name="l01778"></a><span class="lineno"> 1778</span>&#160;<span class="comment">    * recover it and use it instead. */</span></div>
-<div class="line"><a name="l01779"></a><span class="lineno"> 1779</span>&#160;   wid = <a class="code" href="equipment_8c.html#ae11a7f2169b8b5e14b8e1cfb67664274">equipment_wid</a>;</div>
-<div class="line"><a name="l01780"></a><span class="lineno"> 1780</span>&#160; </div>
-<div class="line"><a name="l01781"></a><span class="lineno"> 1781</span>&#160;   <span class="comment">/* Restore outfits image array properties. */</span></div>
-<div class="line"><a name="l01782"></a><span class="lineno"> 1782</span>&#160;   window_tabWinSetActive( wid, EQUIPMENT_OUTFIT_TAB, i );</div>
-<div class="line"><a name="l01783"></a><span class="lineno"> 1783</span>&#160;   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[i].pos );</div>
-<div class="line"><a name="l01784"></a><span class="lineno"> 1784</span>&#160;   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[i].offset );</div>
-<div class="line"><a name="l01785"></a><span class="lineno"> 1785</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="toolkit_8c.html#af87ed79d7c7ae46b64b6688e036ddee4">widget_exists</a>(wid, EQUIPMENT_FILTER))</div>
-<div class="line"><a name="l01786"></a><span class="lineno"> 1786</span>&#160;      window_setInput(wid, EQUIPMENT_FILTER, filtertext);</div>
-<div class="line"><a name="l01787"></a><span class="lineno"> 1787</span>&#160; </div>
-<div class="line"><a name="l01788"></a><span class="lineno"> 1788</span>&#160;   <span class="comment">/* Regenerate ship widget. */</span></div>
-<div class="line"><a name="l01789"></a><span class="lineno"> 1789</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>( wid, 0, 1 );</div>
-<div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160; </div>
-<div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160;   <span class="comment">/* Focus new ship. */</span></div>
-<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;   toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, 0 );</div>
-<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;   toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );</div>
-<div class="line"><a name="l01794"></a><span class="lineno"> 1794</span>&#160;}</div>
-<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160; </div>
+<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160;      ship-&gt;ship-&gt;dt_default * 100,</div>
+<div class="line"><a name="l01634"></a><span class="lineno"> 1634</span>&#160;      sdet, seva, <a class="code" href="pilot__ew_8c.html#ae4a8d1c46d4a662c8ab34cb36013b096">pilot_ewScanTime</a>(ship), sste,</div>
+<div class="line"><a name="l01635"></a><span class="lineno"> 1635</span>&#160;      <span class="comment">/* Health. */</span></div>
+<div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;      EQ_COMP( ship-&gt;dmg_absorb * 100, ship-&gt;ship-&gt;dmg_absorb * 100, 0 ),</div>
+<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160;      EQ_COMP( ship-&gt;shield_max, ship-&gt;ship-&gt;shield, 0 ),</div>
+<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160;      EQ_COMP( ship-&gt;shield_regen, ship-&gt;ship-&gt;shield_regen, 0 ),</div>
+<div class="line"><a name="l01639"></a><span class="lineno"> 1639</span>&#160;      EQ_COMP( ship-&gt;armour_max, ship-&gt;ship-&gt;armour, 0 ),</div>
+<div class="line"><a name="l01640"></a><span class="lineno"> 1640</span>&#160;      EQ_COMP( ship-&gt;armour_regen, ship-&gt;ship-&gt;armour_regen, 0 ),</div>
+<div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160;      EQ_COMP( ship-&gt;energy_max, ship-&gt;ship-&gt;energy, 0 ),</div>
+<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160;      EQ_COMP( ship-&gt;energy_regen, ship-&gt;ship-&gt;energy_regen, 0 ),</div>
+<div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;      <span class="comment">/* Misc. */</span></div>
+<div class="line"><a name="l01644"></a><span class="lineno"> 1644</span>&#160;      <a class="code" href="pilot__cargo_8c.html#a3f4a64090c109787f8a8ddac379a8860">pilot_cargoUsed</a>(ship), EQ_COMP( cargo, ship-&gt;ship-&gt;cap_cargo, 0 ),</div>
+<div class="line"><a name="l01645"></a><span class="lineno"> 1645</span>&#160;      n_( <span class="stringliteral">&quot;tonne&quot;</span>, <span class="stringliteral">&quot;tonnes&quot;</span>, ship-&gt;ship-&gt;cap_cargo ),</div>
+<div class="line"><a name="l01646"></a><span class="lineno"> 1646</span>&#160;      sfuel, n_( <span class="stringliteral">&quot;unit&quot;</span>, <span class="stringliteral">&quot;units&quot;</span>, ship-&gt;fuel_max ),</div>
+<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;      jumps, n_( <span class="stringliteral">&quot;jump&quot;</span>, <span class="stringliteral">&quot;jumps&quot;</span>, jumps ),</div>
+<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a90f6fc6eab21ae1ffe0b4f6059189eac">pilot_checkSpaceworthy</a>(ship) ? <span class="charliteral">&#39;r&#39;</span> : <span class="charliteral">&#39;0&#39;</span>, errorReport );</div>
+<div class="line"><a name="l01649"></a><span class="lineno"> 1649</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDDesc&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l01650"></a><span class="lineno"> 1650</span>&#160; </div>
+<div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;   <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160;   free( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160;   free( nt );</div>
+<div class="line"><a name="l01654"></a><span class="lineno"> 1654</span>&#160; </div>
+<div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160;   <span class="comment">/* button disabling */</span></div>
+<div class="line"><a name="l01656"></a><span class="lineno"> 1656</span>&#160;   <span class="keywordflow">if</span> (onboard) {</div>
+<div class="line"><a name="l01657"></a><span class="lineno"> 1657</span>&#160;      window_disableButton( wid, <span class="stringliteral">&quot;btnSellShip&quot;</span> );</div>
+<div class="line"><a name="l01658"></a><span class="lineno"> 1658</span>&#160;      window_disableButton( wid, <span class="stringliteral">&quot;btnChangeShip&quot;</span> );</div>
+<div class="line"><a name="l01659"></a><span class="lineno"> 1659</span>&#160;   }</div>
+<div class="line"><a name="l01660"></a><span class="lineno"> 1660</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01661"></a><span class="lineno"> 1661</span>&#160;      window_enableButton( wid, <span class="stringliteral">&quot;btnChangeShip&quot;</span> );</div>
+<div class="line"><a name="l01662"></a><span class="lineno"> 1662</span>&#160;      window_enableButton( wid, <span class="stringliteral">&quot;btnSellShip&quot;</span> );</div>
+<div class="line"><a name="l01663"></a><span class="lineno"> 1663</span>&#160;   }</div>
+<div class="line"><a name="l01664"></a><span class="lineno"> 1664</span>&#160;}</div>
+<div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160;<span class="preprocessor">#undef EQ_COMP</span></div>
+<div class="line"><a name="l01666"></a><span class="lineno"> 1666</span>&#160; </div>
+<div class="line"><a name="l01671"></a><span class="lineno"><a class="line" href="equipment_8c.html#a525d411d86fa73d529526e903226cd25"> 1671</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#a525d411d86fa73d529526e903226cd25">equipment_updateOutfits</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;{</div>
+<div class="line"><a name="l01673"></a><span class="lineno"> 1673</span>&#160;   (void) wid;</div>
+<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160;   (void) str;</div>
+<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;   <span class="keywordtype">int</span> i, active;</div>
+<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160; </div>
+<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;   <span class="comment">/* Must have outfit. */</span></div>
+<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160;   active = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );</div>
+<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160;   i = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );</div>
+<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;   <span class="keywordflow">if</span> (i &lt; 0 || <a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a>[active] == NULL) {</div>
+<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;      <a class="code" href="equipment_8c.html#a21e2bca3d2b617151c90a3e70bf56bcc">eq_wgt</a>.outfit = NULL;</div>
+<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160;   }</div>
+<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160; </div>
+<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;   <a class="code" href="equipment_8c.html#a21e2bca3d2b617151c90a3e70bf56bcc">eq_wgt</a>.outfit = <a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a>[active][i];</div>
+<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;}</div>
+<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160; </div>
+<div class="line"><a name="l01693"></a><span class="lineno"><a class="line" href="equipment_8c.html#aad5e6f1670d612b70a54a8c21e249be0"> 1693</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#aad5e6f1670d612b70a54a8c21e249be0">equipment_filterOutfits</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *str )</div>
+<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;{</div>
+<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;   (void) str;</div>
+<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>(wid, 1, 0);</div>
+<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;}</div>
+<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160; </div>
+<div class="line"><a name="l01707"></a><span class="lineno"><a class="line" href="equipment_8c.html#a1834b255148eb95d588400b65170d40c"> 1707</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#a1834b255148eb95d588400b65170d40c">equipment_changeTab</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *wgt, <span class="keywordtype">int</span> old, <span class="keywordtype">int</span> tab )</div>
+<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;{</div>
+<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;   (void) wid;</div>
+<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;   (void) wgt;</div>
+<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;   <span class="keywordtype">int</span> pos;</div>
+<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160;   <span class="keywordtype">double</span> offset;</div>
+<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160; </div>
+<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;   toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &amp;<a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[old] );</div>
+<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160; </div>
+<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;   <span class="comment">/* Store the currently-saved positions for the new tab. */</span></div>
+<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;   pos    = <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[tab].pos;</div>
+<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160;   offset = <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[tab].offset;</div>
+<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160; </div>
+<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160;   <span class="comment">/* Resetting the input will cause the outfit list to be regenerated. */</span></div>
+<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="toolkit_8c.html#af87ed79d7c7ae46b64b6688e036ddee4">widget_exists</a>(wid, EQUIPMENT_FILTER))</div>
+<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;      window_setInput(wid, EQUIPMENT_FILTER, NULL);</div>
+<div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;      <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>(wid, 1, 0);</div>
+<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160; </div>
+<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;   <span class="comment">/* Set positions for the new tab. This is necessary because the stored</span></div>
+<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;<span class="comment">    * position for the new tab may have exceeded the size of the old tab,</span></div>
+<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160;<span class="comment">    * resulting in it being clipped. */</span></div>
+<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160;   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, pos );</div>
+<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160;   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offset );</div>
+<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160; </div>
+<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;   <span class="comment">/* Focus the outfit image array. */</span></div>
+<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;   <a class="code" href="toolkit_8c.html#a05a62cc818e210915019d81fcc408baa">window_setFocus</a>( wid, EQUIPMENT_OUTFITS );</div>
+<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;}</div>
+<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160; </div>
+<div class="line"><a name="l01741"></a><span class="lineno"><a class="line" href="equipment_8c.html#ae0267608254ab63afdbea1528f9fd270"> 1741</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#ae0267608254ab63afdbea1528f9fd270">equipment_transChangeShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160;{</div>
+<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160;   (void) str;</div>
+<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160; </div>
+<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160;   <a class="code" href="equipment_8c.html#ac7582c1a80b397f2161bb21f9d5e62e4">equipment_changeShip</a>( wid );</div>
+<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160; </div>
+<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;   <span class="comment">/* update the window to reflect the change */</span></div>
+<div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;   <a class="code" href="equipment_8c.html#a3de376e50739bea2a14b8017e3054de2">equipment_updateShips</a>( wid, NULL );</div>
+<div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160;}</div>
+<div class="line"><a name="l01754"></a><span class="lineno"><a class="line" href="equipment_8c.html#ac7582c1a80b397f2161bb21f9d5e62e4"> 1754</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#ac7582c1a80b397f2161bb21f9d5e62e4">equipment_changeShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid )</div>
+<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160;{</div>
+<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;   <span class="keywordtype">char</span> *shipname, *filtertext;</div>
+<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01758"></a><span class="lineno"> 1758</span>&#160; </div>
+<div class="line"><a name="l01759"></a><span class="lineno"> 1759</span>&#160;   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );</div>
+<div class="line"><a name="l01760"></a><span class="lineno"> 1760</span>&#160; </div>
+<div class="line"><a name="l01761"></a><span class="lineno"> 1761</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a3c413da9c773a248f216cc34d15f5ab8">land_errDialogue</a>( shipname, <span class="stringliteral">&quot;swapEquipment&quot;</span> ))</div>
+<div class="line"><a name="l01762"></a><span class="lineno"> 1762</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01763"></a><span class="lineno"> 1763</span>&#160; </div>
+<div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160;   <span class="comment">/* Store active tab, filter text, and positions for the outfits. */</span></div>
+<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;   i = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );</div>
+<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;   toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &amp;<a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[i] );</div>
+<div class="line"><a name="l01767"></a><span class="lineno"> 1767</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="toolkit_8c.html#af87ed79d7c7ae46b64b6688e036ddee4">widget_exists</a>(wid, EQUIPMENT_FILTER))</div>
+<div class="line"><a name="l01768"></a><span class="lineno"> 1768</span>&#160;      filtertext = window_getInput( <a class="code" href="equipment_8c.html#ae11a7f2169b8b5e14b8e1cfb67664274">equipment_wid</a>, EQUIPMENT_FILTER );</div>
+<div class="line"><a name="l01769"></a><span class="lineno"> 1769</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01770"></a><span class="lineno"> 1770</span>&#160;      filtertext = NULL;</div>
+<div class="line"><a name="l01771"></a><span class="lineno"> 1771</span>&#160; </div>
+<div class="line"><a name="l01772"></a><span class="lineno"> 1772</span>&#160;   <span class="comment">/* Swap ship. */</span></div>
+<div class="line"><a name="l01773"></a><span class="lineno"> 1773</span>&#160;   <a class="code" href="player_8c.html#a24281ff4db59d1cb505b0d9aef07f3e6">player_swapShip</a>( shipname );</div>
+<div class="line"><a name="l01774"></a><span class="lineno"> 1774</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a3efb77f9b10293bb645d7641609485ef">pilot_healLanded</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
+<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160; </div>
+<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;   <span class="comment">/* What happens here is the gui gets recreated when the player swaps ship.</span></div>
+<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160;<span class="comment">    * This causes all the windows to be destroyed and the &#39;wid&#39; we have here</span></div>
+<div class="line"><a name="l01778"></a><span class="lineno"> 1778</span>&#160;<span class="comment">    * becomes invalid. However, since we store it in a global variable we can</span></div>
+<div class="line"><a name="l01779"></a><span class="lineno"> 1779</span>&#160;<span class="comment">    * recover it and use it instead. */</span></div>
+<div class="line"><a name="l01780"></a><span class="lineno"> 1780</span>&#160;   wid = <a class="code" href="equipment_8c.html#ae11a7f2169b8b5e14b8e1cfb67664274">equipment_wid</a>;</div>
+<div class="line"><a name="l01781"></a><span class="lineno"> 1781</span>&#160; </div>
+<div class="line"><a name="l01782"></a><span class="lineno"> 1782</span>&#160;   <span class="comment">/* Restore outfits image array properties. */</span></div>
+<div class="line"><a name="l01783"></a><span class="lineno"> 1783</span>&#160;   window_tabWinSetActive( wid, EQUIPMENT_OUTFIT_TAB, i );</div>
+<div class="line"><a name="l01784"></a><span class="lineno"> 1784</span>&#160;   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[i].pos );</div>
+<div class="line"><a name="l01785"></a><span class="lineno"> 1785</span>&#160;   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>[i].offset );</div>
+<div class="line"><a name="l01786"></a><span class="lineno"> 1786</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="toolkit_8c.html#af87ed79d7c7ae46b64b6688e036ddee4">widget_exists</a>(wid, EQUIPMENT_FILTER))</div>
+<div class="line"><a name="l01787"></a><span class="lineno"> 1787</span>&#160;      window_setInput(wid, EQUIPMENT_FILTER, filtertext);</div>
+<div class="line"><a name="l01788"></a><span class="lineno"> 1788</span>&#160; </div>
+<div class="line"><a name="l01789"></a><span class="lineno"> 1789</span>&#160;   <span class="comment">/* Regenerate ship widget. */</span></div>
+<div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>( wid, 0, 1 );</div>
+<div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160; </div>
+<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;   <span class="comment">/* Focus new ship. */</span></div>
+<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;   toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, 0 );</div>
+<div class="line"><a name="l01794"></a><span class="lineno"> 1794</span>&#160;   toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );</div>
+<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160;}</div>
 <div class="line"><a name="l01796"></a><span class="lineno"> 1796</span>&#160; </div>
 <div class="line"><a name="l01797"></a><span class="lineno"> 1797</span>&#160; </div>
-<div class="line"><a name="l01804"></a><span class="lineno"><a class="line" href="equipment_8c.html#aa0a6e14a6d9ffe391d7989bb946be571"> 1804</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#aa0a6e14a6d9ffe391d7989bb946be571">equipment_unequipShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l01805"></a><span class="lineno"> 1805</span>&#160;{</div>
-<div class="line"><a name="l01806"></a><span class="lineno"> 1806</span>&#160;   (void) str;</div>
-<div class="line"><a name="l01807"></a><span class="lineno"> 1807</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l01808"></a><span class="lineno"> 1808</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01809"></a><span class="lineno"> 1809</span>&#160;   Pilot *ship;</div>
-<div class="line"><a name="l01810"></a><span class="lineno"> 1810</span>&#160;   Outfit *o, *ammo;</div>
-<div class="line"><a name="l01811"></a><span class="lineno"> 1811</span>&#160; </div>
-<div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160;   ship = <a class="code" href="equipment_8c.html#a21e2bca3d2b617151c90a3e70bf56bcc">eq_wgt</a>.selected;</div>
-<div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160; </div>
-<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160;   <span class="comment">/*</span></div>
-<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;<span class="comment">    * Unequipping is disallowed under two conditions. Firstly, the ship may not</span></div>
-<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;<span class="comment">    * be unequipped when it has fighters deployed in space. Secondly, it cannot</span></div>
-<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;<span class="comment">    * unequip if it&#39;s carrying more cargo than the ship normally fits, i.e.</span></div>
-<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;<span class="comment">    * by equipping cargo pods.</span></div>
-<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ship-&gt;outfits); i++) {</div>
-<div class="line"><a name="l01821"></a><span class="lineno"> 1821</span>&#160;      <span class="comment">/* Must have outfit. */</span></div>
-<div class="line"><a name="l01822"></a><span class="lineno"> 1822</span>&#160;      <span class="keywordflow">if</span> (ship-&gt;outfits[i]-&gt;outfit == NULL)</div>
-<div class="line"><a name="l01823"></a><span class="lineno"> 1823</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01824"></a><span class="lineno"> 1824</span>&#160;      <span class="comment">/* Must be fighter bay. */</span></div>
-<div class="line"><a name="l01825"></a><span class="lineno"> 1825</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>( ship-&gt;outfits[i]-&gt;outfit))</div>
-<div class="line"><a name="l01826"></a><span class="lineno"> 1826</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160;      <span class="comment">/* Must not have deployed fighters. */</span></div>
-<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160;      <span class="keywordflow">if</span> (ship-&gt;outfits[i]-&gt;u.ammo.deployed &gt; 0) {</div>
-<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160;         <a class="code" href="dialogue_8c.html#a3f539d942fa23eb9561ebc45e964ee07">dialogue_alert</a>( _(<span class="stringliteral">&quot;You can not unequip your ship while you have deployed fighters!&quot;</span>) );</div>
-<div class="line"><a name="l01830"></a><span class="lineno"> 1830</span>&#160;         <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01831"></a><span class="lineno"> 1831</span>&#160;      }</div>
-<div class="line"><a name="l01832"></a><span class="lineno"> 1832</span>&#160;   }</div>
-<div class="line"><a name="l01833"></a><span class="lineno"> 1833</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#a3f4a64090c109787f8a8ddac379a8860">pilot_cargoUsed</a>( ship ) &gt; ship-&gt;ship-&gt;cap_cargo) {</div>
-<div class="line"><a name="l01834"></a><span class="lineno"> 1834</span>&#160;      <a class="code" href="dialogue_8c.html#a3f539d942fa23eb9561ebc45e964ee07">dialogue_alert</a>( _(<span class="stringliteral">&quot;You can not unequip your ship when you have more cargo than it can hold without modifications!&quot;</span>) );</div>
-<div class="line"><a name="l01835"></a><span class="lineno"> 1835</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01836"></a><span class="lineno"> 1836</span>&#160;   }</div>
-<div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160; </div>
-<div class="line"><a name="l01838"></a><span class="lineno"> 1838</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>(_(<span class="stringliteral">&quot;Unequip Ship&quot;</span>), <span class="comment">/* confirm */</span></div>
-<div class="line"><a name="l01839"></a><span class="lineno"> 1839</span>&#160;         _(<span class="stringliteral">&quot;Are you sure you want to remove all equipment from your ship?&quot;</span>))==0)</div>
-<div class="line"><a name="l01840"></a><span class="lineno"> 1840</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01841"></a><span class="lineno"> 1841</span>&#160; </div>
-<div class="line"><a name="l01842"></a><span class="lineno"> 1842</span>&#160;   <span class="comment">/* Remove all outfits. */</span></div>
-<div class="line"><a name="l01843"></a><span class="lineno"> 1843</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ship-&gt;outfits); i++) {</div>
-<div class="line"><a name="l01844"></a><span class="lineno"> 1844</span>&#160;      o = ship-&gt;outfits[i]-&gt;outfit;</div>
-<div class="line"><a name="l01845"></a><span class="lineno"> 1845</span>&#160; </div>
-<div class="line"><a name="l01846"></a><span class="lineno"> 1846</span>&#160;      <span class="comment">/* Skip null outfits. */</span></div>
-<div class="line"><a name="l01847"></a><span class="lineno"> 1847</span>&#160;      <span class="keywordflow">if</span> (o==NULL)</div>
-<div class="line"><a name="l01848"></a><span class="lineno"> 1848</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01849"></a><span class="lineno"> 1849</span>&#160; </div>
-<div class="line"><a name="l01850"></a><span class="lineno"> 1850</span>&#160;      <span class="comment">/* Remove ammo first. */</span></div>
-<div class="line"><a name="l01851"></a><span class="lineno"> 1851</span>&#160;      ammo = <a class="code" href="outfit_8c.html#a368d364e3bc85510c5c294784762133c">outfit_ammo</a>(o);</div>
-<div class="line"><a name="l01852"></a><span class="lineno"> 1852</span>&#160;      <span class="keywordflow">if</span> (ammo != NULL) {</div>
-<div class="line"><a name="l01853"></a><span class="lineno"> 1853</span>&#160;         <a class="code" href="pilot__outfit_8c.html#aca135dfcd7dd8ec42e1e4a3b45602d6b">pilot_rmAmmo</a>( ship, ship-&gt;outfits[i], <a class="code" href="outfit_8c.html#a8ac6f494b5f0972d7d6e87efbc73f3af">outfit_amount</a>(o) );</div>
-<div class="line"><a name="l01854"></a><span class="lineno"> 1854</span>&#160;      }</div>
-<div class="line"><a name="l01855"></a><span class="lineno"> 1855</span>&#160; </div>
-<div class="line"><a name="l01856"></a><span class="lineno"> 1856</span>&#160;      <span class="comment">/* Remove rest. */</span></div>
-<div class="line"><a name="l01857"></a><span class="lineno"> 1857</span>&#160;      ret = <a class="code" href="pilot__outfit_8c.html#a7fa2d1d8295602eec908fa68fdd5a9c9">pilot_rmOutfitRaw</a>( ship, ship-&gt;outfits[i] );</div>
-<div class="line"><a name="l01858"></a><span class="lineno"> 1858</span>&#160;      <span class="keywordflow">if</span> (ret==0)</div>
-<div class="line"><a name="l01859"></a><span class="lineno"> 1859</span>&#160;         <a class="code" href="equipment_8c.html#a26a3d4f5a331b25af644af32e696896d">equipment_playerAddOutfit</a>( o, 1 );</div>
-<div class="line"><a name="l01860"></a><span class="lineno"> 1860</span>&#160;   }</div>
-<div class="line"><a name="l01861"></a><span class="lineno"> 1861</span>&#160; </div>
-<div class="line"><a name="l01862"></a><span class="lineno"> 1862</span>&#160;   <span class="comment">/* Recalculate stats. */</span></div>
-<div class="line"><a name="l01863"></a><span class="lineno"> 1863</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( ship );</div>
-<div class="line"><a name="l01864"></a><span class="lineno"> 1864</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a3efb77f9b10293bb645d7641609485ef">pilot_healLanded</a>( ship );</div>
-<div class="line"><a name="l01865"></a><span class="lineno"> 1865</span>&#160; </div>
-<div class="line"><a name="l01866"></a><span class="lineno"> 1866</span>&#160;   <span class="comment">/* Regenerate list. */</span></div>
-<div class="line"><a name="l01867"></a><span class="lineno"> 1867</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>( wid, 1, 1 );</div>
-<div class="line"><a name="l01868"></a><span class="lineno"> 1868</span>&#160; </div>
-<div class="line"><a name="l01869"></a><span class="lineno"> 1869</span>&#160;   <span class="comment">/* Regenerate outfits. */</span></div>
-<div class="line"><a name="l01870"></a><span class="lineno"> 1870</span>&#160;   <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
-<div class="line"><a name="l01871"></a><span class="lineno"> 1871</span>&#160; </div>
-<div class="line"><a name="l01872"></a><span class="lineno"> 1872</span>&#160;   <span class="comment">/* Update weapon sets if needed. */</span></div>
-<div class="line"><a name="l01873"></a><span class="lineno"> 1873</span>&#160;   <span class="keywordflow">if</span> (ship-&gt;autoweap)</div>
-<div class="line"><a name="l01874"></a><span class="lineno"> 1874</span>&#160;      <a class="code" href="pilot__weapon_8c.html#aef13dabed6b043c7095537d17b4ae41b">pilot_weaponAuto</a>( ship );</div>
-<div class="line"><a name="l01875"></a><span class="lineno"> 1875</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a224a9e2832e39ee1065c3d2c5fce2e59">pilot_weaponSafe</a>( ship );</div>
-<div class="line"><a name="l01876"></a><span class="lineno"> 1876</span>&#160; </div>
-<div class="line"><a name="l01877"></a><span class="lineno"> 1877</span>&#160;   <span class="comment">/* Notify GUI of modification. */</span></div>
-<div class="line"><a name="l01878"></a><span class="lineno"> 1878</span>&#160;   <a class="code" href="gui_8c.html#a891ca49ebbc48ce80a20a99531c5cb51">gui_setShip</a>();</div>
-<div class="line"><a name="l01879"></a><span class="lineno"> 1879</span>&#160;}</div>
-<div class="line"><a name="l01885"></a><span class="lineno"><a class="line" href="equipment_8c.html#aa0633557f3655a4c78710b5c0d6462b7"> 1885</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#aa0633557f3655a4c78710b5c0d6462b7">equipment_sellShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l01886"></a><span class="lineno"> 1886</span>&#160;{</div>
-<div class="line"><a name="l01887"></a><span class="lineno"> 1887</span>&#160;   (void)str;</div>
-<div class="line"><a name="l01888"></a><span class="lineno"> 1888</span>&#160;   <span class="keywordtype">char</span> *shipname, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ECON_CRED_STRLEN], *name;</div>
-<div class="line"><a name="l01889"></a><span class="lineno"> 1889</span>&#160;   credits_t price;</div>
-<div class="line"><a name="l01890"></a><span class="lineno"> 1890</span>&#160;   Pilot *p;</div>
-<div class="line"><a name="l01891"></a><span class="lineno"> 1891</span>&#160;   Ship *s;</div>
-<div class="line"><a name="l01892"></a><span class="lineno"> 1892</span>&#160;   HookParam hparam[3];</div>
-<div class="line"><a name="l01893"></a><span class="lineno"> 1893</span>&#160; </div>
-<div class="line"><a name="l01894"></a><span class="lineno"> 1894</span>&#160;   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );</div>
-<div class="line"><a name="l01895"></a><span class="lineno"> 1895</span>&#160; </div>
-<div class="line"><a name="l01896"></a><span class="lineno"> 1896</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a3c413da9c773a248f216cc34d15f5ab8">land_errDialogue</a>( shipname, <span class="stringliteral">&quot;sell&quot;</span> ))</div>
-<div class="line"><a name="l01897"></a><span class="lineno"> 1897</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01898"></a><span class="lineno"> 1898</span>&#160; </div>
-<div class="line"><a name="l01899"></a><span class="lineno"> 1899</span>&#160;   <span class="comment">/* Calculate price. */</span></div>
-<div class="line"><a name="l01900"></a><span class="lineno"> 1900</span>&#160;   price = <a class="code" href="player_8c.html#a4201ec37d3c5142d4ccbac0b6b80f29b">player_shipPrice</a>(shipname);</div>
-<div class="line"><a name="l01901"></a><span class="lineno"> 1901</span>&#160;   credits2str( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, price, 2 );</div>
-<div class="line"><a name="l01902"></a><span class="lineno"> 1902</span>&#160; </div>
-<div class="line"><a name="l01903"></a><span class="lineno"> 1903</span>&#160;   <span class="comment">/* Check if player really wants to sell. */</span></div>
-<div class="line"><a name="l01904"></a><span class="lineno"> 1904</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Sell Ship&quot;</span>),</div>
-<div class="line"><a name="l01905"></a><span class="lineno"> 1905</span>&#160;            _(<span class="stringliteral">&quot;Are you sure you want to sell your ship %s for %s?&quot;</span>),</div>
-<div class="line"><a name="l01906"></a><span class="lineno"> 1906</span>&#160;            shipname, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>))</div>
-<div class="line"><a name="l01907"></a><span class="lineno"> 1907</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01908"></a><span class="lineno"> 1908</span>&#160; </div>
-<div class="line"><a name="l01909"></a><span class="lineno"> 1909</span>&#160;   <span class="comment">/* Store ship type. */</span></div>
-<div class="line"><a name="l01910"></a><span class="lineno"> 1910</span>&#160;   p = <a class="code" href="player_8c.html#a11f784a03ba54341249928713904410d">player_getShip</a>( shipname );</div>
-<div class="line"><a name="l01911"></a><span class="lineno"> 1911</span>&#160;   s = p-&gt;ship;</div>
-<div class="line"><a name="l01912"></a><span class="lineno"> 1912</span>&#160; </div>
-<div class="line"><a name="l01913"></a><span class="lineno"> 1913</span>&#160;   <span class="comment">/* Sold. */</span></div>
-<div class="line"><a name="l01914"></a><span class="lineno"> 1914</span>&#160;   name = strdup(shipname);</div>
-<div class="line"><a name="l01915"></a><span class="lineno"> 1915</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( price );</div>
-<div class="line"><a name="l01916"></a><span class="lineno"> 1916</span>&#160;   <a class="code" href="player_8c.html#a7c559775373a88bb8c7855c33dd45d5a">player_rmShip</a>( shipname );</div>
-<div class="line"><a name="l01917"></a><span class="lineno"> 1917</span>&#160; </div>
-<div class="line"><a name="l01918"></a><span class="lineno"> 1918</span>&#160;   <span class="comment">/* Destroy widget - must be before widget. */</span></div>
-<div class="line"><a name="l01919"></a><span class="lineno"> 1919</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>( wid, 0, 1 );</div>
-<div class="line"><a name="l01920"></a><span class="lineno"> 1920</span>&#160; </div>
-<div class="line"><a name="l01921"></a><span class="lineno"> 1921</span>&#160;   <span class="comment">/* Display widget. */</span></div>
-<div class="line"><a name="l01922"></a><span class="lineno"> 1922</span>&#160;   <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Ship Sold&quot;</span>),</div>
-<div class="line"><a name="l01923"></a><span class="lineno"> 1923</span>&#160;         _(<span class="stringliteral">&quot;You have sold your ship %s for %s.&quot;</span>), name, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l01924"></a><span class="lineno"> 1924</span>&#160; </div>
-<div class="line"><a name="l01925"></a><span class="lineno"> 1925</span>&#160;   <span class="comment">/* Run hook. */</span></div>
-<div class="line"><a name="l01926"></a><span class="lineno"> 1926</span>&#160;   hparam[0].type    = HOOK_PARAM_STRING;</div>
-<div class="line"><a name="l01927"></a><span class="lineno"> 1927</span>&#160;   hparam[0].u.str   = s-&gt;name;</div>
-<div class="line"><a name="l01928"></a><span class="lineno"> 1928</span>&#160;   hparam[1].type    = HOOK_PARAM_STRING;</div>
-<div class="line"><a name="l01929"></a><span class="lineno"> 1929</span>&#160;   hparam[1].u.str   = name;</div>
-<div class="line"><a name="l01930"></a><span class="lineno"> 1930</span>&#160;   hparam[2].type    = HOOK_PARAM_SENTINEL;</div>
-<div class="line"><a name="l01931"></a><span class="lineno"> 1931</span>&#160;   <a class="code" href="hook_8c.html#a4fb5eff926325bb57da5051b87293be7">hooks_runParam</a>( <span class="stringliteral">&quot;ship_sell&quot;</span>, hparam );</div>
-<div class="line"><a name="l01932"></a><span class="lineno"> 1932</span>&#160;   <span class="keywordflow">if</span> (land_takeoff)</div>
-<div class="line"><a name="l01933"></a><span class="lineno"> 1933</span>&#160;      <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(1);</div>
-<div class="line"><a name="l01934"></a><span class="lineno"> 1934</span>&#160;   free(name);</div>
-<div class="line"><a name="l01935"></a><span class="lineno"> 1935</span>&#160;}</div>
-<div class="line"><a name="l01936"></a><span class="lineno"> 1936</span>&#160; </div>
+<div class="line"><a name="l01798"></a><span class="lineno"> 1798</span>&#160; </div>
+<div class="line"><a name="l01805"></a><span class="lineno"><a class="line" href="equipment_8c.html#aa0a6e14a6d9ffe391d7989bb946be571"> 1805</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#aa0a6e14a6d9ffe391d7989bb946be571">equipment_unequipShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l01806"></a><span class="lineno"> 1806</span>&#160;{</div>
+<div class="line"><a name="l01807"></a><span class="lineno"> 1807</span>&#160;   (void) str;</div>
+<div class="line"><a name="l01808"></a><span class="lineno"> 1808</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l01809"></a><span class="lineno"> 1809</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01810"></a><span class="lineno"> 1810</span>&#160;   Pilot *ship;</div>
+<div class="line"><a name="l01811"></a><span class="lineno"> 1811</span>&#160;   Outfit *o, *ammo;</div>
+<div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160; </div>
+<div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160;   ship = <a class="code" href="equipment_8c.html#a21e2bca3d2b617151c90a3e70bf56bcc">eq_wgt</a>.selected;</div>
+<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160; </div>
+<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;   <span class="comment">/*</span></div>
+<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;<span class="comment">    * Unequipping is disallowed under two conditions. Firstly, the ship may not</span></div>
+<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;<span class="comment">    * be unequipped when it has fighters deployed in space. Secondly, it cannot</span></div>
+<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;<span class="comment">    * unequip if it&#39;s carrying more cargo than the ship normally fits, i.e.</span></div>
+<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160;<span class="comment">    * by equipping cargo pods.</span></div>
+<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l01821"></a><span class="lineno"> 1821</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ship-&gt;outfits); i++) {</div>
+<div class="line"><a name="l01822"></a><span class="lineno"> 1822</span>&#160;      <span class="comment">/* Must have outfit. */</span></div>
+<div class="line"><a name="l01823"></a><span class="lineno"> 1823</span>&#160;      <span class="keywordflow">if</span> (ship-&gt;outfits[i]-&gt;outfit == NULL)</div>
+<div class="line"><a name="l01824"></a><span class="lineno"> 1824</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01825"></a><span class="lineno"> 1825</span>&#160;      <span class="comment">/* Must be fighter bay. */</span></div>
+<div class="line"><a name="l01826"></a><span class="lineno"> 1826</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>( ship-&gt;outfits[i]-&gt;outfit))</div>
+<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160;      <span class="comment">/* Must not have deployed fighters. */</span></div>
+<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160;      <span class="keywordflow">if</span> (ship-&gt;outfits[i]-&gt;u.ammo.deployed &gt; 0) {</div>
+<div class="line"><a name="l01830"></a><span class="lineno"> 1830</span>&#160;         <a class="code" href="dialogue_8c.html#a3f539d942fa23eb9561ebc45e964ee07">dialogue_alert</a>( _(<span class="stringliteral">&quot;You can not unequip your ship while you have deployed fighters!&quot;</span>) );</div>
+<div class="line"><a name="l01831"></a><span class="lineno"> 1831</span>&#160;         <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01832"></a><span class="lineno"> 1832</span>&#160;      }</div>
+<div class="line"><a name="l01833"></a><span class="lineno"> 1833</span>&#160;   }</div>
+<div class="line"><a name="l01834"></a><span class="lineno"> 1834</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#a3f4a64090c109787f8a8ddac379a8860">pilot_cargoUsed</a>( ship ) &gt; ship-&gt;ship-&gt;cap_cargo) {</div>
+<div class="line"><a name="l01835"></a><span class="lineno"> 1835</span>&#160;      <a class="code" href="dialogue_8c.html#a3f539d942fa23eb9561ebc45e964ee07">dialogue_alert</a>( _(<span class="stringliteral">&quot;You can not unequip your ship when you have more cargo than it can hold without modifications!&quot;</span>) );</div>
+<div class="line"><a name="l01836"></a><span class="lineno"> 1836</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160;   }</div>
+<div class="line"><a name="l01838"></a><span class="lineno"> 1838</span>&#160; </div>
+<div class="line"><a name="l01839"></a><span class="lineno"> 1839</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>(_(<span class="stringliteral">&quot;Unequip Ship&quot;</span>), <span class="comment">/* confirm */</span></div>
+<div class="line"><a name="l01840"></a><span class="lineno"> 1840</span>&#160;         _(<span class="stringliteral">&quot;Are you sure you want to remove all equipment from your ship?&quot;</span>))==0)</div>
+<div class="line"><a name="l01841"></a><span class="lineno"> 1841</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01842"></a><span class="lineno"> 1842</span>&#160; </div>
+<div class="line"><a name="l01843"></a><span class="lineno"> 1843</span>&#160;   <span class="comment">/* Remove all outfits. */</span></div>
+<div class="line"><a name="l01844"></a><span class="lineno"> 1844</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ship-&gt;outfits); i++) {</div>
+<div class="line"><a name="l01845"></a><span class="lineno"> 1845</span>&#160;      o = ship-&gt;outfits[i]-&gt;outfit;</div>
+<div class="line"><a name="l01846"></a><span class="lineno"> 1846</span>&#160; </div>
+<div class="line"><a name="l01847"></a><span class="lineno"> 1847</span>&#160;      <span class="comment">/* Skip null outfits. */</span></div>
+<div class="line"><a name="l01848"></a><span class="lineno"> 1848</span>&#160;      <span class="keywordflow">if</span> (o==NULL)</div>
+<div class="line"><a name="l01849"></a><span class="lineno"> 1849</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01850"></a><span class="lineno"> 1850</span>&#160; </div>
+<div class="line"><a name="l01851"></a><span class="lineno"> 1851</span>&#160;      <span class="comment">/* Remove ammo first. */</span></div>
+<div class="line"><a name="l01852"></a><span class="lineno"> 1852</span>&#160;      ammo = <a class="code" href="outfit_8c.html#a368d364e3bc85510c5c294784762133c">outfit_ammo</a>(o);</div>
+<div class="line"><a name="l01853"></a><span class="lineno"> 1853</span>&#160;      <span class="keywordflow">if</span> (ammo != NULL) {</div>
+<div class="line"><a name="l01854"></a><span class="lineno"> 1854</span>&#160;         <a class="code" href="pilot__outfit_8c.html#aca135dfcd7dd8ec42e1e4a3b45602d6b">pilot_rmAmmo</a>( ship, ship-&gt;outfits[i], <a class="code" href="outfit_8c.html#a8ac6f494b5f0972d7d6e87efbc73f3af">outfit_amount</a>(o) );</div>
+<div class="line"><a name="l01855"></a><span class="lineno"> 1855</span>&#160;      }</div>
+<div class="line"><a name="l01856"></a><span class="lineno"> 1856</span>&#160; </div>
+<div class="line"><a name="l01857"></a><span class="lineno"> 1857</span>&#160;      <span class="comment">/* Remove rest. */</span></div>
+<div class="line"><a name="l01858"></a><span class="lineno"> 1858</span>&#160;      ret = <a class="code" href="pilot__outfit_8c.html#a7fa2d1d8295602eec908fa68fdd5a9c9">pilot_rmOutfitRaw</a>( ship, ship-&gt;outfits[i] );</div>
+<div class="line"><a name="l01859"></a><span class="lineno"> 1859</span>&#160;      <span class="keywordflow">if</span> (ret==0)</div>
+<div class="line"><a name="l01860"></a><span class="lineno"> 1860</span>&#160;         <a class="code" href="equipment_8c.html#a26a3d4f5a331b25af644af32e696896d">equipment_playerAddOutfit</a>( o, 1 );</div>
+<div class="line"><a name="l01861"></a><span class="lineno"> 1861</span>&#160;   }</div>
+<div class="line"><a name="l01862"></a><span class="lineno"> 1862</span>&#160; </div>
+<div class="line"><a name="l01863"></a><span class="lineno"> 1863</span>&#160;   <span class="comment">/* Recalculate stats. */</span></div>
+<div class="line"><a name="l01864"></a><span class="lineno"> 1864</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( ship );</div>
+<div class="line"><a name="l01865"></a><span class="lineno"> 1865</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a3efb77f9b10293bb645d7641609485ef">pilot_healLanded</a>( ship );</div>
+<div class="line"><a name="l01866"></a><span class="lineno"> 1866</span>&#160; </div>
+<div class="line"><a name="l01867"></a><span class="lineno"> 1867</span>&#160;   <span class="comment">/* Regenerate list. */</span></div>
+<div class="line"><a name="l01868"></a><span class="lineno"> 1868</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>( wid, 1, 1 );</div>
+<div class="line"><a name="l01869"></a><span class="lineno"> 1869</span>&#160; </div>
+<div class="line"><a name="l01870"></a><span class="lineno"> 1870</span>&#160;   <span class="comment">/* Regenerate outfits. */</span></div>
+<div class="line"><a name="l01871"></a><span class="lineno"> 1871</span>&#160;   <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
+<div class="line"><a name="l01872"></a><span class="lineno"> 1872</span>&#160; </div>
+<div class="line"><a name="l01873"></a><span class="lineno"> 1873</span>&#160;   <span class="comment">/* Update weapon sets if needed. */</span></div>
+<div class="line"><a name="l01874"></a><span class="lineno"> 1874</span>&#160;   <span class="keywordflow">if</span> (ship-&gt;autoweap)</div>
+<div class="line"><a name="l01875"></a><span class="lineno"> 1875</span>&#160;      <a class="code" href="pilot__weapon_8c.html#aef13dabed6b043c7095537d17b4ae41b">pilot_weaponAuto</a>( ship );</div>
+<div class="line"><a name="l01876"></a><span class="lineno"> 1876</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a224a9e2832e39ee1065c3d2c5fce2e59">pilot_weaponSafe</a>( ship );</div>
+<div class="line"><a name="l01877"></a><span class="lineno"> 1877</span>&#160; </div>
+<div class="line"><a name="l01878"></a><span class="lineno"> 1878</span>&#160;   <span class="comment">/* Notify GUI of modification. */</span></div>
+<div class="line"><a name="l01879"></a><span class="lineno"> 1879</span>&#160;   <a class="code" href="gui_8c.html#a891ca49ebbc48ce80a20a99531c5cb51">gui_setShip</a>();</div>
+<div class="line"><a name="l01880"></a><span class="lineno"> 1880</span>&#160;}</div>
+<div class="line"><a name="l01886"></a><span class="lineno"><a class="line" href="equipment_8c.html#aa0633557f3655a4c78710b5c0d6462b7"> 1886</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#aa0633557f3655a4c78710b5c0d6462b7">equipment_sellShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l01887"></a><span class="lineno"> 1887</span>&#160;{</div>
+<div class="line"><a name="l01888"></a><span class="lineno"> 1888</span>&#160;   (void)str;</div>
+<div class="line"><a name="l01889"></a><span class="lineno"> 1889</span>&#160;   <span class="keywordtype">char</span> *shipname, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ECON_CRED_STRLEN], *name;</div>
+<div class="line"><a name="l01890"></a><span class="lineno"> 1890</span>&#160;   credits_t price;</div>
+<div class="line"><a name="l01891"></a><span class="lineno"> 1891</span>&#160;   Pilot *p;</div>
+<div class="line"><a name="l01892"></a><span class="lineno"> 1892</span>&#160;   Ship *s;</div>
+<div class="line"><a name="l01893"></a><span class="lineno"> 1893</span>&#160;   HookParam hparam[3];</div>
+<div class="line"><a name="l01894"></a><span class="lineno"> 1894</span>&#160; </div>
+<div class="line"><a name="l01895"></a><span class="lineno"> 1895</span>&#160;   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );</div>
+<div class="line"><a name="l01896"></a><span class="lineno"> 1896</span>&#160; </div>
+<div class="line"><a name="l01897"></a><span class="lineno"> 1897</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a3c413da9c773a248f216cc34d15f5ab8">land_errDialogue</a>( shipname, <span class="stringliteral">&quot;sell&quot;</span> ))</div>
+<div class="line"><a name="l01898"></a><span class="lineno"> 1898</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01899"></a><span class="lineno"> 1899</span>&#160; </div>
+<div class="line"><a name="l01900"></a><span class="lineno"> 1900</span>&#160;   <span class="comment">/* Calculate price. */</span></div>
+<div class="line"><a name="l01901"></a><span class="lineno"> 1901</span>&#160;   price = <a class="code" href="player_8c.html#a4201ec37d3c5142d4ccbac0b6b80f29b">player_shipPrice</a>(shipname);</div>
+<div class="line"><a name="l01902"></a><span class="lineno"> 1902</span>&#160;   credits2str( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, price, 2 );</div>
+<div class="line"><a name="l01903"></a><span class="lineno"> 1903</span>&#160; </div>
+<div class="line"><a name="l01904"></a><span class="lineno"> 1904</span>&#160;   <span class="comment">/* Check if player really wants to sell. */</span></div>
+<div class="line"><a name="l01905"></a><span class="lineno"> 1905</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Sell Ship&quot;</span>),</div>
+<div class="line"><a name="l01906"></a><span class="lineno"> 1906</span>&#160;            _(<span class="stringliteral">&quot;Are you sure you want to sell your ship %s for %s?&quot;</span>),</div>
+<div class="line"><a name="l01907"></a><span class="lineno"> 1907</span>&#160;            shipname, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>))</div>
+<div class="line"><a name="l01908"></a><span class="lineno"> 1908</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01909"></a><span class="lineno"> 1909</span>&#160; </div>
+<div class="line"><a name="l01910"></a><span class="lineno"> 1910</span>&#160;   <span class="comment">/* Store ship type. */</span></div>
+<div class="line"><a name="l01911"></a><span class="lineno"> 1911</span>&#160;   p = <a class="code" href="player_8c.html#a11f784a03ba54341249928713904410d">player_getShip</a>( shipname );</div>
+<div class="line"><a name="l01912"></a><span class="lineno"> 1912</span>&#160;   s = p-&gt;ship;</div>
+<div class="line"><a name="l01913"></a><span class="lineno"> 1913</span>&#160; </div>
+<div class="line"><a name="l01914"></a><span class="lineno"> 1914</span>&#160;   <span class="comment">/* Sold. */</span></div>
+<div class="line"><a name="l01915"></a><span class="lineno"> 1915</span>&#160;   name = strdup(shipname);</div>
+<div class="line"><a name="l01916"></a><span class="lineno"> 1916</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( price );</div>
+<div class="line"><a name="l01917"></a><span class="lineno"> 1917</span>&#160;   <a class="code" href="player_8c.html#a7c559775373a88bb8c7855c33dd45d5a">player_rmShip</a>( shipname );</div>
+<div class="line"><a name="l01918"></a><span class="lineno"> 1918</span>&#160; </div>
+<div class="line"><a name="l01919"></a><span class="lineno"> 1919</span>&#160;   <span class="comment">/* Destroy widget - must be before widget. */</span></div>
+<div class="line"><a name="l01920"></a><span class="lineno"> 1920</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>( wid, 0, 1 );</div>
+<div class="line"><a name="l01921"></a><span class="lineno"> 1921</span>&#160; </div>
+<div class="line"><a name="l01922"></a><span class="lineno"> 1922</span>&#160;   <span class="comment">/* Display widget. */</span></div>
+<div class="line"><a name="l01923"></a><span class="lineno"> 1923</span>&#160;   <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Ship Sold&quot;</span>),</div>
+<div class="line"><a name="l01924"></a><span class="lineno"> 1924</span>&#160;         _(<span class="stringliteral">&quot;You have sold your ship %s for %s.&quot;</span>), name, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l01925"></a><span class="lineno"> 1925</span>&#160; </div>
+<div class="line"><a name="l01926"></a><span class="lineno"> 1926</span>&#160;   <span class="comment">/* Run hook. */</span></div>
+<div class="line"><a name="l01927"></a><span class="lineno"> 1927</span>&#160;   hparam[0].type    = HOOK_PARAM_STRING;</div>
+<div class="line"><a name="l01928"></a><span class="lineno"> 1928</span>&#160;   hparam[0].u.str   = s-&gt;name;</div>
+<div class="line"><a name="l01929"></a><span class="lineno"> 1929</span>&#160;   hparam[1].type    = HOOK_PARAM_STRING;</div>
+<div class="line"><a name="l01930"></a><span class="lineno"> 1930</span>&#160;   hparam[1].u.str   = name;</div>
+<div class="line"><a name="l01931"></a><span class="lineno"> 1931</span>&#160;   hparam[2].type    = HOOK_PARAM_SENTINEL;</div>
+<div class="line"><a name="l01932"></a><span class="lineno"> 1932</span>&#160;   <a class="code" href="hook_8c.html#a4fb5eff926325bb57da5051b87293be7">hooks_runParam</a>( <span class="stringliteral">&quot;ship_sell&quot;</span>, hparam );</div>
+<div class="line"><a name="l01933"></a><span class="lineno"> 1933</span>&#160;   <span class="keywordflow">if</span> (land_takeoff)</div>
+<div class="line"><a name="l01934"></a><span class="lineno"> 1934</span>&#160;      <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(1);</div>
+<div class="line"><a name="l01935"></a><span class="lineno"> 1935</span>&#160;   free(name);</div>
+<div class="line"><a name="l01936"></a><span class="lineno"> 1936</span>&#160;}</div>
 <div class="line"><a name="l01937"></a><span class="lineno"> 1937</span>&#160; </div>
-<div class="line"><a name="l01944"></a><span class="lineno"><a class="line" href="equipment_8c.html#a7c68b351b31f329c4670f3baf707f3e8"> 1944</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#a7c68b351b31f329c4670f3baf707f3e8">equipment_renameShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *str )</div>
-<div class="line"><a name="l01945"></a><span class="lineno"> 1945</span>&#160;{</div>
-<div class="line"><a name="l01946"></a><span class="lineno"> 1946</span>&#160;   (void)str;</div>
-<div class="line"><a name="l01947"></a><span class="lineno"> 1947</span>&#160;   Pilot *ship;</div>
-<div class="line"><a name="l01948"></a><span class="lineno"> 1948</span>&#160;   <span class="keywordtype">char</span> *shipname, *newname;</div>
-<div class="line"><a name="l01949"></a><span class="lineno"> 1949</span>&#160; </div>
-<div class="line"><a name="l01950"></a><span class="lineno"> 1950</span>&#160;   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );</div>
-<div class="line"><a name="l01951"></a><span class="lineno"> 1951</span>&#160;   ship = <a class="code" href="player_8c.html#a11f784a03ba54341249928713904410d">player_getShip</a>(shipname);</div>
-<div class="line"><a name="l01952"></a><span class="lineno"> 1952</span>&#160;   newname = <a class="code" href="dialogue_8c.html#a3c9bf3d5c017403c97ece41567aa9920">dialogue_input</a>( _(<span class="stringliteral">&quot;Ship Name&quot;</span>), 1, 60,</div>
-<div class="line"><a name="l01953"></a><span class="lineno"> 1953</span>&#160;         _(<span class="stringliteral">&quot;Please enter a new name for your %s:&quot;</span>), _(ship-&gt;ship-&gt;name) );</div>
-<div class="line"><a name="l01954"></a><span class="lineno"> 1954</span>&#160; </div>
-<div class="line"><a name="l01955"></a><span class="lineno"> 1955</span>&#160;   <span class="comment">/* Player cancelled the dialogue. */</span></div>
-<div class="line"><a name="l01956"></a><span class="lineno"> 1956</span>&#160;   <span class="keywordflow">if</span> (newname == NULL)</div>
-<div class="line"><a name="l01957"></a><span class="lineno"> 1957</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01958"></a><span class="lineno"> 1958</span>&#160; </div>
-<div class="line"><a name="l01959"></a><span class="lineno"> 1959</span>&#160;   <span class="comment">/* Must not have same name. */</span></div>
-<div class="line"><a name="l01960"></a><span class="lineno"> 1960</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ab8651322093a4bacac6cf641964ebbb3">player_hasShip</a>(newname)) {</div>
-<div class="line"><a name="l01961"></a><span class="lineno"> 1961</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Name Collision&quot;</span>),</div>
-<div class="line"><a name="l01962"></a><span class="lineno"> 1962</span>&#160;            _(<span class="stringliteral">&quot;Please do not give the ship the same name as another of your ships.&quot;</span>));</div>
-<div class="line"><a name="l01963"></a><span class="lineno"> 1963</span>&#160;      free(newname);</div>
-<div class="line"><a name="l01964"></a><span class="lineno"> 1964</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01965"></a><span class="lineno"> 1965</span>&#160;   }</div>
-<div class="line"><a name="l01966"></a><span class="lineno"> 1966</span>&#160; </div>
-<div class="line"><a name="l01967"></a><span class="lineno"> 1967</span>&#160;   free (ship-&gt;name);</div>
-<div class="line"><a name="l01968"></a><span class="lineno"> 1968</span>&#160;   ship-&gt;name = newname;</div>
-<div class="line"><a name="l01969"></a><span class="lineno"> 1969</span>&#160; </div>
-<div class="line"><a name="l01970"></a><span class="lineno"> 1970</span>&#160;   <span class="comment">/* Destroy widget - must be before widget. */</span></div>
-<div class="line"><a name="l01971"></a><span class="lineno"> 1971</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>( wid, 0, 1 );</div>
-<div class="line"><a name="l01972"></a><span class="lineno"> 1972</span>&#160;}</div>
-<div class="line"><a name="l01973"></a><span class="lineno"> 1973</span>&#160; </div>
+<div class="line"><a name="l01938"></a><span class="lineno"> 1938</span>&#160; </div>
+<div class="line"><a name="l01945"></a><span class="lineno"><a class="line" href="equipment_8c.html#a7c68b351b31f329c4670f3baf707f3e8"> 1945</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#a7c68b351b31f329c4670f3baf707f3e8">equipment_renameShip</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *str )</div>
+<div class="line"><a name="l01946"></a><span class="lineno"> 1946</span>&#160;{</div>
+<div class="line"><a name="l01947"></a><span class="lineno"> 1947</span>&#160;   (void)str;</div>
+<div class="line"><a name="l01948"></a><span class="lineno"> 1948</span>&#160;   Pilot *ship;</div>
+<div class="line"><a name="l01949"></a><span class="lineno"> 1949</span>&#160;   <span class="keywordtype">char</span> *shipname, *newname;</div>
+<div class="line"><a name="l01950"></a><span class="lineno"> 1950</span>&#160; </div>
+<div class="line"><a name="l01951"></a><span class="lineno"> 1951</span>&#160;   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );</div>
+<div class="line"><a name="l01952"></a><span class="lineno"> 1952</span>&#160;   ship = <a class="code" href="player_8c.html#a11f784a03ba54341249928713904410d">player_getShip</a>(shipname);</div>
+<div class="line"><a name="l01953"></a><span class="lineno"> 1953</span>&#160;   newname = <a class="code" href="dialogue_8c.html#a3c9bf3d5c017403c97ece41567aa9920">dialogue_input</a>( _(<span class="stringliteral">&quot;Ship Name&quot;</span>), 1, 60,</div>
+<div class="line"><a name="l01954"></a><span class="lineno"> 1954</span>&#160;         _(<span class="stringliteral">&quot;Please enter a new name for your %s:&quot;</span>), _(ship-&gt;ship-&gt;name) );</div>
+<div class="line"><a name="l01955"></a><span class="lineno"> 1955</span>&#160; </div>
+<div class="line"><a name="l01956"></a><span class="lineno"> 1956</span>&#160;   <span class="comment">/* Player cancelled the dialogue. */</span></div>
+<div class="line"><a name="l01957"></a><span class="lineno"> 1957</span>&#160;   <span class="keywordflow">if</span> (newname == NULL)</div>
+<div class="line"><a name="l01958"></a><span class="lineno"> 1958</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01959"></a><span class="lineno"> 1959</span>&#160; </div>
+<div class="line"><a name="l01960"></a><span class="lineno"> 1960</span>&#160;   <span class="comment">/* Must not have same name. */</span></div>
+<div class="line"><a name="l01961"></a><span class="lineno"> 1961</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ab8651322093a4bacac6cf641964ebbb3">player_hasShip</a>(newname)) {</div>
+<div class="line"><a name="l01962"></a><span class="lineno"> 1962</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Name Collision&quot;</span>),</div>
+<div class="line"><a name="l01963"></a><span class="lineno"> 1963</span>&#160;            _(<span class="stringliteral">&quot;Please do not give the ship the same name as another of your ships.&quot;</span>));</div>
+<div class="line"><a name="l01964"></a><span class="lineno"> 1964</span>&#160;      free(newname);</div>
+<div class="line"><a name="l01965"></a><span class="lineno"> 1965</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01966"></a><span class="lineno"> 1966</span>&#160;   }</div>
+<div class="line"><a name="l01967"></a><span class="lineno"> 1967</span>&#160; </div>
+<div class="line"><a name="l01968"></a><span class="lineno"> 1968</span>&#160;   free (ship-&gt;name);</div>
+<div class="line"><a name="l01969"></a><span class="lineno"> 1969</span>&#160;   ship-&gt;name = newname;</div>
+<div class="line"><a name="l01970"></a><span class="lineno"> 1970</span>&#160; </div>
+<div class="line"><a name="l01971"></a><span class="lineno"> 1971</span>&#160;   <span class="comment">/* Destroy widget - must be before widget. */</span></div>
+<div class="line"><a name="l01972"></a><span class="lineno"> 1972</span>&#160;   <a class="code" href="equipment_8c.html#a54c8adbed2750c15d05fbbad9e4d2821">equipment_regenLists</a>( wid, 0, 1 );</div>
+<div class="line"><a name="l01973"></a><span class="lineno"> 1973</span>&#160;}</div>
 <div class="line"><a name="l01974"></a><span class="lineno"> 1974</span>&#160; </div>
-<div class="line"><a name="l01978"></a><span class="lineno"><a class="line" href="equipment_8c.html#a26a3d4f5a331b25af644af32e696896d"> 1978</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="equipment_8c.html#a26a3d4f5a331b25af644af32e696896d">equipment_playerAddOutfit</a>( <span class="keyword">const</span> Outfit *o, <span class="keywordtype">int</span> quantity )</div>
-<div class="line"><a name="l01979"></a><span class="lineno"> 1979</span>&#160;{</div>
-<div class="line"><a name="l01980"></a><span class="lineno"> 1980</span>&#160;   <span class="keywordflow">if</span> (outfit_isProp(o,OUTFIT_PROP_UNIQUE) &amp;&amp; (<a class="code" href="player_8c.html#ad0d77b1bddb767ee622ce0d0a98b5068">player_outfitOwned</a>(o)&gt;0))</div>
-<div class="line"><a name="l01981"></a><span class="lineno"> 1981</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01982"></a><span class="lineno"> 1982</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="player_8c.html#a2879b779c15cddabfa8b93d43351ae1d">player_addOutfit</a>(o,quantity);</div>
-<div class="line"><a name="l01983"></a><span class="lineno"> 1983</span>&#160;}</div>
-<div class="line"><a name="l01984"></a><span class="lineno"> 1984</span>&#160; </div>
+<div class="line"><a name="l01975"></a><span class="lineno"> 1975</span>&#160; </div>
+<div class="line"><a name="l01979"></a><span class="lineno"><a class="line" href="equipment_8c.html#a26a3d4f5a331b25af644af32e696896d"> 1979</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="equipment_8c.html#a26a3d4f5a331b25af644af32e696896d">equipment_playerAddOutfit</a>( <span class="keyword">const</span> Outfit *o, <span class="keywordtype">int</span> quantity )</div>
+<div class="line"><a name="l01980"></a><span class="lineno"> 1980</span>&#160;{</div>
+<div class="line"><a name="l01981"></a><span class="lineno"> 1981</span>&#160;   <span class="keywordflow">if</span> (outfit_isProp(o,OUTFIT_PROP_UNIQUE) &amp;&amp; (<a class="code" href="player_8c.html#ad0d77b1bddb767ee622ce0d0a98b5068">player_outfitOwned</a>(o)&gt;0))</div>
+<div class="line"><a name="l01982"></a><span class="lineno"> 1982</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01983"></a><span class="lineno"> 1983</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="player_8c.html#a2879b779c15cddabfa8b93d43351ae1d">player_addOutfit</a>(o,quantity);</div>
+<div class="line"><a name="l01984"></a><span class="lineno"> 1984</span>&#160;}</div>
 <div class="line"><a name="l01985"></a><span class="lineno"> 1985</span>&#160; </div>
-<div class="line"><a name="l01989"></a><span class="lineno"><a class="line" href="equipment_8c.html#a37cc4b87446a8f52da7dfa7ee8010cf5"> 1989</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="equipment_8c.html#a37cc4b87446a8f52da7dfa7ee8010cf5">equipment_playerRmOutfit</a>( <span class="keyword">const</span> Outfit *o, <span class="keywordtype">int</span> quantity )</div>
-<div class="line"><a name="l01990"></a><span class="lineno"> 1990</span>&#160;{</div>
-<div class="line"><a name="l01991"></a><span class="lineno"> 1991</span>&#160;   <span class="keywordflow">if</span> (outfit_isProp(o,OUTFIT_PROP_UNIQUE))</div>
-<div class="line"><a name="l01992"></a><span class="lineno"> 1992</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01993"></a><span class="lineno"> 1993</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="player_8c.html#a0d19cbccd09a8dca98d329a8f538636d">player_rmOutfit</a>(o,quantity);</div>
-<div class="line"><a name="l01994"></a><span class="lineno"> 1994</span>&#160;}</div>
-<div class="line"><a name="l01995"></a><span class="lineno"> 1995</span>&#160; </div>
+<div class="line"><a name="l01986"></a><span class="lineno"> 1986</span>&#160; </div>
+<div class="line"><a name="l01990"></a><span class="lineno"><a class="line" href="equipment_8c.html#a37cc4b87446a8f52da7dfa7ee8010cf5"> 1990</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="equipment_8c.html#a37cc4b87446a8f52da7dfa7ee8010cf5">equipment_playerRmOutfit</a>( <span class="keyword">const</span> Outfit *o, <span class="keywordtype">int</span> quantity )</div>
+<div class="line"><a name="l01991"></a><span class="lineno"> 1991</span>&#160;{</div>
+<div class="line"><a name="l01992"></a><span class="lineno"> 1992</span>&#160;   <span class="keywordflow">if</span> (outfit_isProp(o,OUTFIT_PROP_UNIQUE))</div>
+<div class="line"><a name="l01993"></a><span class="lineno"> 1993</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01994"></a><span class="lineno"> 1994</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="player_8c.html#a0d19cbccd09a8dca98d329a8f538636d">player_rmOutfit</a>(o,quantity);</div>
+<div class="line"><a name="l01995"></a><span class="lineno"> 1995</span>&#160;}</div>
 <div class="line"><a name="l01996"></a><span class="lineno"> 1996</span>&#160; </div>
-<div class="line"><a name="l02000"></a><span class="lineno"><a class="line" href="equipment_8c.html#a6fc7d94624bfe0199b85168c0065a5d5"> 2000</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#a6fc7d94624bfe0199b85168c0065a5d5">equipment_cleanup</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l02001"></a><span class="lineno"> 2001</span>&#160;{</div>
-<div class="line"><a name="l02002"></a><span class="lineno"> 2002</span>&#160;   <span class="comment">/* Free stored positions. */</span></div>
-<div class="line"><a name="l02003"></a><span class="lineno"> 2003</span>&#160;   free(<a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>);</div>
-<div class="line"><a name="l02004"></a><span class="lineno"> 2004</span>&#160;   <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a> = NULL;</div>
-<div class="line"><a name="l02005"></a><span class="lineno"> 2005</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a> != NULL) {</div>
-<div class="line"><a name="l02006"></a><span class="lineno"> 2006</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;OUTFIT_TABS; i++)</div>
-<div class="line"><a name="l02007"></a><span class="lineno"> 2007</span>&#160;         free( <a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a>[i] );</div>
-<div class="line"><a name="l02008"></a><span class="lineno"> 2008</span>&#160;      free(<a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a>);</div>
-<div class="line"><a name="l02009"></a><span class="lineno"> 2009</span>&#160;      <a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a> = NULL;</div>
-<div class="line"><a name="l02010"></a><span class="lineno"> 2010</span>&#160;   }</div>
-<div class="line"><a name="l02011"></a><span class="lineno"> 2011</span>&#160; </div>
-<div class="line"><a name="l02012"></a><span class="lineno"> 2012</span>&#160;   <span class="comment">/* Free icons. */</span></div>
-<div class="line"><a name="l02013"></a><span class="lineno"> 2013</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(equip_ico_yes);</div>
-<div class="line"><a name="l02014"></a><span class="lineno"> 2014</span>&#160;   equip_ico_yes = NULL;</div>
-<div class="line"><a name="l02015"></a><span class="lineno"> 2015</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(equip_ico_no);</div>
-<div class="line"><a name="l02016"></a><span class="lineno"> 2016</span>&#160;   equip_ico_no = NULL;</div>
-<div class="line"><a name="l02017"></a><span class="lineno"> 2017</span>&#160;}</div>
-<div class="line"><a name="l02018"></a><span class="lineno"> 2018</span>&#160; </div>
+<div class="line"><a name="l01997"></a><span class="lineno"> 1997</span>&#160; </div>
+<div class="line"><a name="l02001"></a><span class="lineno"><a class="line" href="equipment_8c.html#a6fc7d94624bfe0199b85168c0065a5d5"> 2001</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="equipment_8c.html#a6fc7d94624bfe0199b85168c0065a5d5">equipment_cleanup</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l02002"></a><span class="lineno"> 2002</span>&#160;{</div>
+<div class="line"><a name="l02003"></a><span class="lineno"> 2003</span>&#160;   <span class="comment">/* Free stored positions. */</span></div>
+<div class="line"><a name="l02004"></a><span class="lineno"> 2004</span>&#160;   free(<a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a>);</div>
+<div class="line"><a name="l02005"></a><span class="lineno"> 2005</span>&#160;   <a class="code" href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a> = NULL;</div>
+<div class="line"><a name="l02006"></a><span class="lineno"> 2006</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a> != NULL) {</div>
+<div class="line"><a name="l02007"></a><span class="lineno"> 2007</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;OUTFIT_TABS; i++)</div>
+<div class="line"><a name="l02008"></a><span class="lineno"> 2008</span>&#160;         free( <a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a>[i] );</div>
+<div class="line"><a name="l02009"></a><span class="lineno"> 2009</span>&#160;      free(<a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a>);</div>
+<div class="line"><a name="l02010"></a><span class="lineno"> 2010</span>&#160;      <a class="code" href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a> = NULL;</div>
+<div class="line"><a name="l02011"></a><span class="lineno"> 2011</span>&#160;   }</div>
+<div class="line"><a name="l02012"></a><span class="lineno"> 2012</span>&#160; </div>
+<div class="line"><a name="l02013"></a><span class="lineno"> 2013</span>&#160;   <span class="comment">/* Free icons. */</span></div>
+<div class="line"><a name="l02014"></a><span class="lineno"> 2014</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(equip_ico_yes);</div>
+<div class="line"><a name="l02015"></a><span class="lineno"> 2015</span>&#160;   equip_ico_yes = NULL;</div>
+<div class="line"><a name="l02016"></a><span class="lineno"> 2016</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(equip_ico_no);</div>
+<div class="line"><a name="l02017"></a><span class="lineno"> 2017</span>&#160;   equip_ico_no = NULL;</div>
+<div class="line"><a name="l02018"></a><span class="lineno"> 2018</span>&#160;}</div>
+<div class="line"><a name="l02019"></a><span class="lineno"> 2019</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="apilot__weapon_8c_html_a9a2fc2265fea8e8f3a35cdb1332e7a1b"><div class="ttname"><a href="pilot__weapon_8c.html#a9a2fc2265fea8e8f3a35cdb1332e7a1b">pilot_weapSetType</a></div><div class="ttdeci">void pilot_weapSetType(Pilot *p, int id, int type)</div><div class="ttdoc">Changes the weapon sets mode.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00320">pilot_weapon.c:320</a></div></div>
 <div class="ttc" id="acolour_8c_html_aa0601ca54aed9efd2dddd294138c2ad6"><div class="ttname"><a href="colour_8c.html#aa0601ca54aed9efd2dddd294138c2ad6">cWhite</a></div><div class="ttdeci">const glColour cWhite</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00029">colour.c:29</a></div></div>
@@ -1848,9 +1849,9 @@ $(function() {
 <div class="ttc" id="aequipment_8c_html_a21e2bca3d2b617151c90a3e70bf56bcc"><div class="ttname"><a href="equipment_8c.html#a21e2bca3d2b617151c90a3e70bf56bcc">eq_wgt</a></div><div class="ttdeci">static CstSlotWidget eq_wgt</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l00063">equipment.c:63</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a428a06d1049fe829ea5aaf76193b82a9"><div class="ttname"><a href="player_8c.html#a428a06d1049fe829ea5aaf76193b82a9">player_numOutfits</a></div><div class="ttdeci">int player_numOutfits(void)</div><div class="ttdoc">Gets the amount of different outfits in the player outfit stack.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02657">player.c:2657</a></div></div>
 <div class="ttc" id="acolour_8c_html_a5514de2ab8751008a7932fdf86924aff"><div class="ttname"><a href="colour_8c.html#a5514de2ab8751008a7932fdf86924aff">cGreen</a></div><div class="ttdeci">const glColour cGreen</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00048">colour.c:48</a></div></div>
-<div class="ttc" id="aequipment_8c_html_a7c68b351b31f329c4670f3baf707f3e8"><div class="ttname"><a href="equipment_8c.html#a7c68b351b31f329c4670f3baf707f3e8">equipment_renameShip</a></div><div class="ttdeci">static void equipment_renameShip(unsigned int wid, char *str)</div><div class="ttdoc">Renames the selected ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01944">equipment.c:1944</a></div></div>
+<div class="ttc" id="aequipment_8c_html_a7c68b351b31f329c4670f3baf707f3e8"><div class="ttname"><a href="equipment_8c.html#a7c68b351b31f329c4670f3baf707f3e8">equipment_renameShip</a></div><div class="ttdeci">static void equipment_renameShip(unsigned int wid, char *str)</div><div class="ttdoc">Renames the selected ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01945">equipment.c:1945</a></div></div>
 <div class="ttc" id="acolour_8c_html_ad1679692c3064f5db9eafee4c44dccbb"><div class="ttname"><a href="colour_8c.html#ad1679692c3064f5db9eafee4c44dccbb">cFontRed</a></div><div class="ttdeci">const glColour cFontRed</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00116">colour.c:116</a></div></div>
-<div class="ttc" id="aequipment_8c_html_ae0267608254ab63afdbea1528f9fd270"><div class="ttname"><a href="equipment_8c.html#ae0267608254ab63afdbea1528f9fd270">equipment_transChangeShip</a></div><div class="ttdeci">static void equipment_transChangeShip(unsigned int wid, char *str)</div><div class="ttdoc">Changes ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01740">equipment.c:1740</a></div></div>
+<div class="ttc" id="aequipment_8c_html_ae0267608254ab63afdbea1528f9fd270"><div class="ttname"><a href="equipment_8c.html#ae0267608254ab63afdbea1528f9fd270">equipment_transChangeShip</a></div><div class="ttdeci">static void equipment_transChangeShip(unsigned int wid, char *str)</div><div class="ttdoc">Changes ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01741">equipment.c:1741</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a90f6fc6eab21ae1ffe0b4f6059189eac"><div class="ttname"><a href="pilot__outfit_8c.html#a90f6fc6eab21ae1ffe0b4f6059189eac">pilot_checkSpaceworthy</a></div><div class="ttdeci">const char * pilot_checkSpaceworthy(Pilot *p)</div><div class="ttdoc">Pilot safety check - makes sure stats are safe.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00521">pilot_outfit.c:521</a></div></div>
 <div class="ttc" id="aland__outfits_8c_html_a85405fd856b901f1d1586bda75146110"><div class="ttname"><a href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a></div><div class="ttdeci">void outfits_updateEquipmentOutfits(void)</div><div class="ttdoc">Updates the outfitter and equipment outfit image arrays.</div><div class="ttdef"><b>Definition:</b> <a href="land__outfits_8c_source.html#l00464">land_outfits.c:464</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_a224a9e2832e39ee1065c3d2c5fce2e59"><div class="ttname"><a href="pilot__weapon_8c.html#a224a9e2832e39ee1065c3d2c5fce2e59">pilot_weaponSafe</a></div><div class="ttdeci">void pilot_weaponSafe(Pilot *p)</div><div class="ttdoc">Sets the weapon set as safe.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01379">pilot_weapon.c:1379</a></div></div>
@@ -1874,7 +1875,7 @@ $(function() {
 <div class="ttc" id="ainfo_8h_html_a58234a19df722cbd9388efe023aa88ba"><div class="ttname"><a href="info_8h.html#a58234a19df722cbd9388efe023aa88ba">info_update</a></div><div class="ttdeci">void info_update(void)</div><div class="ttdoc">Updates the info windows.</div><div class="ttdef"><b>Definition:</b> <a href="info_8c_source.html#l00186">info.c:186</a></div></div>
 <div class="ttc" id="aequipment_8c_html_a1a135678aa1a063fcb5699ffcadb2e11"><div class="ttname"><a href="equipment_8c.html#a1a135678aa1a063fcb5699ffcadb2e11">equipment_renderColumn</a></div><div class="ttdeci">static void equipment_renderColumn(double x, double y, double w, double h, PilotOutfitSlot *lst, const char *txt, int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt)</div><div class="ttdoc">Renders an outfit column.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l00368">equipment.c:368</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a69e155b5a354ff956e013b1cc8f9cad8"><div class="ttname"><a href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a></div><div class="ttdeci">void pilot_calcStats(Pilot *pilot)</div><div class="ttdoc">Recalculates the pilot's stats based on his outfits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00924">pilot_outfit.c:924</a></div></div>
-<div class="ttc" id="aequipment_8c_html_aa0633557f3655a4c78710b5c0d6462b7"><div class="ttname"><a href="equipment_8c.html#aa0633557f3655a4c78710b5c0d6462b7">equipment_sellShip</a></div><div class="ttdeci">static void equipment_sellShip(unsigned int wid, char *str)</div><div class="ttdoc">Player tries to sell a ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01885">equipment.c:1885</a></div></div>
+<div class="ttc" id="aequipment_8c_html_aa0633557f3655a4c78710b5c0d6462b7"><div class="ttname"><a href="equipment_8c.html#aa0633557f3655a4c78710b5c0d6462b7">equipment_sellShip</a></div><div class="ttdeci">static void equipment_sellShip(unsigned int wid, char *str)</div><div class="ttdoc">Player tries to sell a ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01886">equipment.c:1886</a></div></div>
 <div class="ttc" id="acolour_8c_html_a683c18146da99c5a9cc6102f33ea60ee"><div class="ttname"><a href="colour_8c.html#a683c18146da99c5a9cc6102f33ea60ee">cFontYellow</a></div><div class="ttdeci">const glColour cFontYellow</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00119">colour.c:119</a></div></div>
 <div class="ttc" id="acolour_8c_html_a5676cb7b961f5519956a3b96498e9795"><div class="ttname"><a href="colour_8c.html#a5676cb7b961f5519956a3b96498e9795">cRadar_player</a></div><div class="ttdeci">const glColour cRadar_player</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00103">colour.c:103</a></div></div>
 <div class="ttc" id="aequipment_8c_html_a202d7f542ce1901b06e22ae836669650"><div class="ttname"><a href="equipment_8c.html#a202d7f542ce1901b06e22ae836669650">iar_outfits</a></div><div class="ttdeci">static Outfit *** iar_outfits</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l00068">equipment.c:68</a></div></div>
@@ -1898,7 +1899,7 @@ $(function() {
 <div class="ttc" id="aland__outfits_8c_html_aead8fdb13cc626ef797d8d0c29f5717d"><div class="ttname"><a href="land__outfits_8c.html#aead8fdb13cc626ef797d8d0c29f5717d">outfit_altText</a></div><div class="ttdeci">int outfit_altText(char *buf, int n, const Outfit *o)</div><div class="ttdoc">Computes the alt text for an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="land__outfits_8c_source.html#l00581">land_outfits.c:581</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a06dde45f3ce9494c2660f62c6513ea93"><div class="ttname"><a href="opengl__render_8c.html#a06dde45f3ce9494c2660f62c6513ea93">gl_blitScaleSprite</a></div><div class="ttdeci">void gl_blitScaleSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const double bw, const double bh, const glColour *c)</div><div class="ttdoc">Blits a scaled sprite, position is in absolute screen coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00569">opengl_render.c:569</a></div></div>
 <div class="ttc" id="aequipment_8c_html_aab3d8fabf241c8eca577f11d67adf3ba"><div class="ttname"><a href="equipment_8c.html#aab3d8fabf241c8eca577f11d67adf3ba">eq_qSym</a></div><div class="ttdeci">static const char * eq_qSym(double cur, double base, int inv)</div><div class="ttdoc">Gets the symbol for comparing a current value vs a ship base value.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01529">equipment.c:1529</a></div></div>
-<div class="ttc" id="aequipment_8c_html_a525d411d86fa73d529526e903226cd25"><div class="ttname"><a href="equipment_8c.html#a525d411d86fa73d529526e903226cd25">equipment_updateOutfits</a></div><div class="ttdeci">void equipment_updateOutfits(unsigned int wid, char *str)</div><div class="ttdoc">Updates the player's outfit list.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01670">equipment.c:1670</a></div></div>
+<div class="ttc" id="aequipment_8c_html_a525d411d86fa73d529526e903226cd25"><div class="ttname"><a href="equipment_8c.html#a525d411d86fa73d529526e903226cd25">equipment_updateOutfits</a></div><div class="ttdeci">void equipment_updateOutfits(unsigned int wid, char *str)</div><div class="ttdoc">Updates the player's outfit list.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01671">equipment.c:1671</a></div></div>
 <div class="ttc" id="acolour_8c_html_ada04a93c16816b1df8aeae41d284bc72"><div class="ttname"><a href="colour_8c.html#ada04a93c16816b1df8aeae41d284bc72">cGrey60</a></div><div class="ttdeci">const glColour cGrey60</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00033">colour.c:33</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a11f784a03ba54341249928713904410d"><div class="ttname"><a href="player_8c.html#a11f784a03ba54341249928713904410d">player_getShip</a></div><div class="ttdeci">Pilot * player_getShip(const char *shipname)</div><div class="ttdoc">Gets a specific ship.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02533">player.c:2533</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_aca135dfcd7dd8ec42e1e4a3b45602d6b"><div class="ttname"><a href="pilot__outfit_8c.html#aca135dfcd7dd8ec42e1e4a3b45602d6b">pilot_rmAmmo</a></div><div class="ttdeci">int pilot_rmAmmo(Pilot *pilot, PilotOutfitSlot *s, int quantity)</div><div class="ttdoc">Removes some ammo from the pilot stock.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00750">pilot_outfit.c:750</a></div></div>
@@ -1913,10 +1914,11 @@ $(function() {
 <div class="ttc" id="aequipment_8c_html_a8aff4a7ae8daa9d8ba38d13897e7afe6"><div class="ttname"><a href="equipment_8c.html#a8aff4a7ae8daa9d8ba38d13897e7afe6">iar_data</a></div><div class="ttdeci">static iar_data_t * iar_data</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l00067">equipment.c:67</a></div></div>
 <div class="ttc" id="agui_8c_html_a891ca49ebbc48ce80a20a99531c5cb51"><div class="ttname"><a href="gui_8c.html#a891ca49ebbc48ce80a20a99531c5cb51">gui_setShip</a></div><div class="ttdeci">void gui_setShip(void)</div><div class="ttdoc">Player just upgraded their ship or modified it.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02085">gui.c:2085</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a4201ec37d3c5142d4ccbac0b6b80f29b"><div class="ttname"><a href="player_8c.html#a4201ec37d3c5142d4ccbac0b6b80f29b">player_shipPrice</a></div><div class="ttdeci">credits_t player_shipPrice(const char *shipname)</div><div class="ttdoc">Calculates the price of one of the player's ships.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00591">player.c:591</a></div></div>
-<div class="ttc" id="aequipment_8c_html_a6fc7d94624bfe0199b85168c0065a5d5"><div class="ttname"><a href="equipment_8c.html#a6fc7d94624bfe0199b85168c0065a5d5">equipment_cleanup</a></div><div class="ttdeci">void equipment_cleanup(void)</div><div class="ttdoc">Cleans up after the equipment stuff.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l02000">equipment.c:2000</a></div></div>
+<div class="ttc" id="aequipment_8c_html_a6fc7d94624bfe0199b85168c0065a5d5"><div class="ttname"><a href="equipment_8c.html#a6fc7d94624bfe0199b85168c0065a5d5">equipment_cleanup</a></div><div class="ttdeci">void equipment_cleanup(void)</div><div class="ttdoc">Cleans up after the equipment stuff.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l02001">equipment.c:2001</a></div></div>
 <div class="ttc" id="aland_8c_html_aeefd3773b3efb48d43d0916398741051"><div class="ttname"><a href="land_8c.html#aeefd3773b3efb48d43d0916398741051">land_refuel</a></div><div class="ttdeci">void land_refuel(void)</div><div class="ttdoc">Refuels the player's current ship, if possible.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00758">land.c:758</a></div></div>
 <div class="ttc" id="aequipment_8c_html_afb2eef2d27cf2da38deba1afd169266d"><div class="ttname"><a href="equipment_8c.html#afb2eef2d27cf2da38deba1afd169266d">equipment_renderOverlaySlots</a></div><div class="ttdeci">static void equipment_renderOverlaySlots(double bx, double by, double bw, double bh, void *data)</div><div class="ttdoc">Renders the equipment overlay.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l00696">equipment.c:696</a></div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00049">news.c:49</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_ae4a8d1c46d4a662c8ab34cb36013b096"><div class="ttname"><a href="pilot__ew_8c.html#ae4a8d1c46d4a662c8ab34cb36013b096">pilot_ewScanTime</a></div><div class="ttdeci">double pilot_ewScanTime(const Pilot *p)</div><div class="ttdoc">Gets the time it takes to scan a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00051">pilot_ew.c:51</a></div></div>
 <div class="ttc" id="adialogue_8c_html_a3c9bf3d5c017403c97ece41567aa9920"><div class="ttname"><a href="dialogue_8c.html#a3c9bf3d5c017403c97ece41567aa9920">dialogue_input</a></div><div class="ttdeci">char * dialogue_input(const char *title, int min, int max, const char *fmt,...)</div><div class="ttdoc">Creates a dialogue that allows the player to write a message.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00450">dialogue.c:450</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a66f7fe78516b0547eba21d2dec83bb20"><div class="ttname"><a href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a></div><div class="ttdeci">int outfit_isFighterBay(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a fighter bay.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00531">outfit.c:531</a></div></div>
 <div class="ttc" id="aslots_8c_html_ab152840be004609850e9feeff17c15e6"><div class="ttname"><a href="slots_8c.html#ab152840be004609850e9feeff17c15e6">sp_description</a></div><div class="ttdeci">const char * sp_description(unsigned int spid)</div><div class="ttdoc">Gets the description of a slot property (in English).</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00183">slots.c:183</a></div></div>
@@ -1924,7 +1926,7 @@ $(function() {
 <div class="ttc" id="atoolkit_8c_html_aadaca8f1d0da7032094fd3f3f97b8bc3"><div class="ttname"><a href="toolkit_8c.html#aadaca8f1d0da7032094fd3f3f97b8bc3">toolkit_colDark</a></div><div class="ttdeci">const glColour * toolkit_colDark</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00059">toolkit.c:59</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ada2f6a54782a53868bc2db9a478523a1"><div class="ttname"><a href="outfit_8c.html#ada2f6a54782a53868bc2db9a478523a1">outfit_duration</a></div><div class="ttdeci">double outfit_duration(const Outfit *o)</div><div class="ttdoc">Gets the outfit's duration.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00828">outfit.c:828</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_aedae79b24dddf435ae86e0930235aaa0"><div class="ttname"><a href="outfit_8c.html#aedae79b24dddf435ae86e0930235aaa0">outfit_energy</a></div><div class="ttdeci">double outfit_energy(const Outfit *o)</div><div class="ttdoc">Gets the outfit's energy usage.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00683">outfit.c:683</a></div></div>
-<div class="ttc" id="aequipment_8c_html_aad5e6f1670d612b70a54a8c21e249be0"><div class="ttname"><a href="equipment_8c.html#aad5e6f1670d612b70a54a8c21e249be0">equipment_filterOutfits</a></div><div class="ttdeci">static void equipment_filterOutfits(unsigned int wid, char *str)</div><div class="ttdoc">Handles text input in the filter input widget.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01692">equipment.c:1692</a></div></div>
+<div class="ttc" id="aequipment_8c_html_aad5e6f1670d612b70a54a8c21e249be0"><div class="ttname"><a href="equipment_8c.html#aad5e6f1670d612b70a54a8c21e249be0">equipment_filterOutfits</a></div><div class="ttdeci">static void equipment_filterOutfits(unsigned int wid, char *str)</div><div class="ttdoc">Handles text input in the filter input widget.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01693">equipment.c:1693</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a8ac6f494b5f0972d7d6e87efbc73f3af"><div class="ttname"><a href="outfit_8c.html#a8ac6f494b5f0972d7d6e87efbc73f3af">outfit_amount</a></div><div class="ttdeci">int outfit_amount(const Outfit *o)</div><div class="ttdoc">Gets the amount an outfit can hold.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00672">outfit.c:672</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ad0d77b1bddb767ee622ce0d0a98b5068"><div class="ttname"><a href="player_8c.html#ad0d77b1bddb767ee622ce0d0a98b5068">player_outfitOwned</a></div><div class="ttdeci">int player_outfitOwned(const Outfit *o)</div><div class="ttdoc">Gets how many of the outfit the player owns.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02555">player.c:2555</a></div></div>
 <div class="ttc" id="aequipment_8c_html_ad123843e2466efea4df0a0cd4c38e0d7"><div class="ttname"><a href="equipment_8c.html#ad123843e2466efea4df0a0cd4c38e0d7">equipment_renderShip</a></div><div class="ttdeci">static void equipment_renderShip(double bx, double by, double bw, double bh, double x, double y, Pilot *p)</div><div class="ttdoc">Renders the ship in the equipment window.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l00814">equipment.c:814</a></div></div>
@@ -1933,10 +1935,10 @@ $(function() {
 <div class="ttc" id="atoolkit_8c_html_a60a492ca37c314e11317d40c8a8afdc3"><div class="ttname"><a href="toolkit_8c.html#a60a492ca37c314e11317d40c8a8afdc3">window_existsID</a></div><div class="ttdeci">int window_existsID(const unsigned int wid)</div><div class="ttdoc">Checks to see if a window with a certain ID exists.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00563">toolkit.c:563</a></div></div>
 <div class="ttc" id="afont_8c_html_a762ad865d8d9c5368c95543c7bb57aa2"><div class="ttname"><a href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a></div><div class="ttdeci">int gl_printMidRaw(const glFont *ft_font, int width, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Displays text centered in position and width.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00793">font.c:793</a></div></div>
 <div class="ttc" id="aequipment_8c_html_ab6332cb5f9384ec391577c06d0e75a7a"><div class="ttname"><a href="equipment_8c.html#ab6332cb5f9384ec391577c06d0e75a7a">equipment_mouseInColumn</a></div><div class="ttdeci">static int equipment_mouseInColumn(double y, double h, int n, double my)</div><div class="ttdoc">Handles a mouse press in column.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l00877">equipment.c:877</a></div></div>
-<div class="ttc" id="aequipment_8c_html_a37cc4b87446a8f52da7dfa7ee8010cf5"><div class="ttname"><a href="equipment_8c.html#a37cc4b87446a8f52da7dfa7ee8010cf5">equipment_playerRmOutfit</a></div><div class="ttdeci">static int equipment_playerRmOutfit(const Outfit *o, int quantity)</div><div class="ttdoc">Wrapper to only remove unique outfits.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01989">equipment.c:1989</a></div></div>
+<div class="ttc" id="aequipment_8c_html_a37cc4b87446a8f52da7dfa7ee8010cf5"><div class="ttname"><a href="equipment_8c.html#a37cc4b87446a8f52da7dfa7ee8010cf5">equipment_playerRmOutfit</a></div><div class="ttdeci">static int equipment_playerRmOutfit(const Outfit *o, int quantity)</div><div class="ttdoc">Wrapper to only remove unique outfits.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01990">equipment.c:1990</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_a505c2ce5b16f3c1d46d3d5c3d2c81467"><div class="ttname"><a href="toolkit_8c.html#a505c2ce5b16f3c1d46d3d5c3d2c81467">toolkit_drawAltText</a></div><div class="ttdeci">void toolkit_drawAltText(int bx, int by, const char *alt)</div><div class="ttdoc">Draws an alt text.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l01368">toolkit.c:1368</a></div></div>
 <div class="ttc" id="aequipment_8c_html_a60f336f1eab14da078427246b2c1e91c"><div class="ttname"><a href="equipment_8c.html#a60f336f1eab14da078427246b2c1e91c">equipment_renderOverlayColumn</a></div><div class="ttdeci">static void equipment_renderOverlayColumn(double x, double y, double h, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt)</div><div class="ttdoc">Renders an outfit column.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l00614">equipment.c:614</a></div></div>
-<div class="ttc" id="aequipment_8c_html_a26a3d4f5a331b25af644af32e696896d"><div class="ttname"><a href="equipment_8c.html#a26a3d4f5a331b25af644af32e696896d">equipment_playerAddOutfit</a></div><div class="ttdeci">static int equipment_playerAddOutfit(const Outfit *o, int quantity)</div><div class="ttdoc">Wrapper to only add unique outfits.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01978">equipment.c:1978</a></div></div>
+<div class="ttc" id="aequipment_8c_html_a26a3d4f5a331b25af644af32e696896d"><div class="ttname"><a href="equipment_8c.html#a26a3d4f5a331b25af644af32e696896d">equipment_playerAddOutfit</a></div><div class="ttdeci">static int equipment_playerAddOutfit(const Outfit *o, int quantity)</div><div class="ttdoc">Wrapper to only add unique outfits.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01979">equipment.c:1979</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a24281ff4db59d1cb505b0d9aef07f3e6"><div class="ttname"><a href="player_8c.html#a24281ff4db59d1cb505b0d9aef07f3e6">player_swapShip</a></div><div class="ttdeci">void player_swapShip(const char *shipname)</div><div class="ttdoc">Swaps player's current ship with their ship named shipname.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00527">player.c:527</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_ad57af3a473ba86a8fa63055d7c2ddca7"><div class="ttname"><a href="pilot__outfit_8c.html#ad57af3a473ba86a8fa63055d7c2ddca7">pilot_addOutfitRaw</a></div><div class="ttdeci">int pilot_addOutfitRaw(Pilot *pilot, Outfit *outfit, PilotOutfitSlot *s)</div><div class="ttdoc">Adds an outfit to the pilot, ignoring CPU or other limits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00294">pilot_outfit.c:294</a></div></div>
 <div class="ttc" id="acolour_8c_html_a2b06d9341e34af7d1b2a9ef04b03a64d"><div class="ttname"><a href="colour_8c.html#a2b06d9341e34af7d1b2a9ef04b03a64d">cRed</a></div><div class="ttdeci">const glColour cRed</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00052">colour.c:52</a></div></div>
@@ -1949,7 +1951,7 @@ $(function() {
 <div class="ttc" id="acolour_8c_html_a85a5f60887c6192354db2edc8e6979c9"><div class="ttname"><a href="colour_8c.html#a85a5f60887c6192354db2edc8e6979c9">cOrange</a></div><div class="ttdeci">const glColour cOrange</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00056">colour.c:56</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_a947d3bfff14e87add07e23ef76552367"><div class="ttname"><a href="pilot__weapon_8c.html#a947d3bfff14e87add07e23ef76552367">pilot_weapSetRmSlot</a></div><div class="ttdeci">void pilot_weapSetRmSlot(Pilot *p, int id, OutfitSlotType type)</div><div class="ttdoc">Removes slots by type from the weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00387">pilot_weapon.c:387</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a5c24f1a8ae7e54530acd9c4057bd524f"><div class="ttname"><a href="outfit_8c.html#a5c24f1a8ae7e54530acd9c4057bd524f">outfit_fitsSlot</a></div><div class="ttdeci">int outfit_fitsSlot(const Outfit *o, const OutfitSlot *s)</div><div class="ttdoc">Checks to see if an outfit fits a slot.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00945">outfit.c:945</a></div></div>
-<div class="ttc" id="aequipment_8c_html_a1834b255148eb95d588400b65170d40c"><div class="ttname"><a href="equipment_8c.html#a1834b255148eb95d588400b65170d40c">equipment_changeTab</a></div><div class="ttdeci">static void equipment_changeTab(unsigned int wid, char *wgt, int old, int tab)</div><div class="ttdoc">Ensures the tab's selected item is reflected in the ship slot list.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01706">equipment.c:1706</a></div></div>
+<div class="ttc" id="aequipment_8c_html_a1834b255148eb95d588400b65170d40c"><div class="ttname"><a href="equipment_8c.html#a1834b255148eb95d588400b65170d40c">equipment_changeTab</a></div><div class="ttdeci">static void equipment_changeTab(unsigned int wid, char *wgt, int old, int tab)</div><div class="ttdoc">Ensures the tab's selected item is reflected in the ship slot list.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01707">equipment.c:1707</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ad8b80204f9f10624ccea0182c92a206e"><div class="ttname"><a href="player_8c.html#ad8b80204f9f10624ccea0182c92a206e">player_getShipStack</a></div><div class="ttdeci">const PlayerShip_t * player_getShipStack(void)</div><div class="ttdoc">Gets the array (array.h) of the player's ships.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02488">player.c:2488</a></div></div>
 <div class="ttc" id="aequipment_8c_html_ac304bc48317d206ea2836f6d7a7afd1c"><div class="ttname"><a href="equipment_8c.html#ac304bc48317d206ea2836f6d7a7afd1c">equipment_swapSlot</a></div><div class="ttdeci">static int equipment_swapSlot(unsigned int wid, Pilot *p, PilotOutfitSlot *slot)</div><div class="ttdoc">Swaps an equipment slot.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01055">equipment.c:1055</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_adb73863bfb45e9cdfd50ed5e01dbbd03"><div class="ttname"><a href="opengl__render_8c.html#adb73863bfb45e9cdfd50ed5e01dbbd03">gl_renderCross</a></div><div class="ttdeci">void gl_renderCross(double x, double y, double r, const glColour *c)</div><div class="ttdoc">Renders a cross at a given position.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00166">opengl_render.c:166</a></div></div>
@@ -1990,12 +1992,12 @@ $(function() {
 <div class="ttc" id="aoutfit_8c_html_a32d9c1fc9818a3f3700992f7b41541ce"><div class="ttname"><a href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a></div><div class="ttdeci">int outfit_isLauncher(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a weapon launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00468">outfit.c:468</a></div></div>
 <div class="ttc" id="aequipment_8c_html_af33fef65e455683f75a1055724cd3f6b"><div class="ttname"><a href="equipment_8c.html#af33fef65e455683f75a1055724cd3f6b">equipment_lastick</a></div><div class="ttdeci">static unsigned int equipment_lastick</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l00065">equipment.c:65</a></div></div>
 <div class="ttc" id="aequipment_8c_html_a9515e4462406885bc3532c1df26a1c1c"><div class="ttname"><a href="equipment_8c.html#a9515e4462406885bc3532c1df26a1c1c">equipment_genOutfitList</a></div><div class="ttdeci">static void equipment_genOutfitList(unsigned int wid)</div><div class="ttdoc">Generates the outfit list.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01417">equipment.c:1417</a></div></div>
-<div class="ttc" id="aequipment_8c_html_aa0a6e14a6d9ffe391d7989bb946be571"><div class="ttname"><a href="equipment_8c.html#aa0a6e14a6d9ffe391d7989bb946be571">equipment_unequipShip</a></div><div class="ttdeci">static void equipment_unequipShip(unsigned int wid, char *str)</div><div class="ttdoc">Unequips the player's ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01804">equipment.c:1804</a></div></div>
+<div class="ttc" id="aequipment_8c_html_aa0a6e14a6d9ffe391d7989bb946be571"><div class="ttname"><a href="equipment_8c.html#aa0a6e14a6d9ffe391d7989bb946be571">equipment_unequipShip</a></div><div class="ttdeci">static void equipment_unequipShip(unsigned int wid, char *str)</div><div class="ttdoc">Unequips the player's ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01805">equipment.c:1805</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_aef13dabed6b043c7095537d17b4ae41b"><div class="ttname"><a href="pilot__weapon_8c.html#aef13dabed6b043c7095537d17b4ae41b">pilot_weaponAuto</a></div><div class="ttdeci">void pilot_weaponAuto(Pilot *p)</div><div class="ttdoc">Tries to automatically set and create the pilot's weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01256">pilot_weapon.c:1256</a></div></div>
 <div class="ttc" id="aequipment_8c_html_a82c0ee2d34485c1f8740e1f835d78277"><div class="ttname"><a href="equipment_8c.html#a82c0ee2d34485c1f8740e1f835d78277">equipment_genLists</a></div><div class="ttdeci">static void equipment_genLists(unsigned int wid)</div><div class="ttdoc">Generates a new ship/outfit lists if needed.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01317">equipment.c:1317</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ac11623fb12c9ea15b80ec32d90c6898d"><div class="ttname"><a href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a></div><div class="ttdeci">glTexture * gl_newImage(const char *path, const unsigned int flags)</div><div class="ttdoc">Loads an image as a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00596">opengl_tex.c:596</a></div></div>
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
-<div class="ttc" id="aequipment_8c_html_ac7582c1a80b397f2161bb21f9d5e62e4"><div class="ttname"><a href="equipment_8c.html#ac7582c1a80b397f2161bb21f9d5e62e4">equipment_changeShip</a></div><div class="ttdeci">static void equipment_changeShip(unsigned int wid)</div><div class="ttdoc">Player attempts to change ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01753">equipment.c:1753</a></div></div>
+<div class="ttc" id="aequipment_8c_html_ac7582c1a80b397f2161bb21f9d5e62e4"><div class="ttname"><a href="equipment_8c.html#ac7582c1a80b397f2161bb21f9d5e62e4">equipment_changeShip</a></div><div class="ttdeci">static void equipment_changeShip(unsigned int wid)</div><div class="ttdoc">Player attempts to change ship.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01754">equipment.c:1754</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_a379ee3f742710a1e5f24661d235316f6"><div class="ttname"><a href="toolkit_8c.html#a379ee3f742710a1e5f24661d235316f6">window_getFocus</a></div><div class="ttdeci">char * window_getFocus(const unsigned int wid)</div><div class="ttdoc">Gets the focused widget in a window.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l02413">toolkit.c:2413</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a0d19cbccd09a8dca98d329a8f538636d"><div class="ttname"><a href="player_8c.html#a0d19cbccd09a8dca98d329a8f538636d">player_rmOutfit</a></div><div class="ttdeci">int player_rmOutfit(const Outfit *o, int quantity)</div><div class="ttdoc">Remove an outfit from the player's outfit stack.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02728">player.c:2728</a></div></div>
 <div class="ttc" id="aequipment_8c_html_abcfbcf158d592f9f9600afd129204725"><div class="ttname"><a href="equipment_8c.html#abcfbcf158d592f9f9600afd129204725">equipment_addAmmo</a></div><div class="ttdeci">void equipment_addAmmo(void)</div><div class="ttdoc">Adds all the ammo it can to the player.</div><div class="ttdef"><b>Definition:</b> <a href="equipment_8c_source.html#l01204">equipment.c:1204</a></div></div>
