@@ -66,7 +66,7 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define EW_ASTEROID_DIST      7500.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define EW_JUMPDETECT_DIST    7500.</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define EW_PLANETDETECT_DIST  pilot_ewMass(10e3) </span><span class="comment">/* TODO something better than this. */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define EW_PLANETDETECT_DIST  250000. </span><span class="comment">/* TODO something better than this. */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#a5034c923fad0642b2131542daedfc050">   33</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="pilot__ew_8c.html#a5034c923fad0642b2131542daedfc050">ew_interference</a> = 1.; </div>
@@ -251,216 +251,215 @@ $(function() {
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;   pnt = <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;planets[<a class="code" href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">target</a>];</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;   <span class="comment">/* target must not be virtual */</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   <span class="keywordflow">if</span> ( !pnt-&gt;real )</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   <span class="keywordflow">if</span> (!pnt-&gt;real)</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   sense = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(EW_PLANETDETECT_DIST);</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   sense = EW_PLANETDETECT_DIST;</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;   <span class="comment">/* Get distance. */</span></div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;pnt-&gt;pos );</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> / p-&gt;stats.ew_detect &lt; sense )</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;}</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(sense * p-&gt;stats.ew_detect * pnt-&gt;hide) )</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#ab00918f1a61e73c7bce2c129a7e96813">  308</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__ew_8c.html#ab00918f1a61e73c7bce2c129a7e96813">pilot_inRangeAsteroid</a>( <span class="keyword">const</span> Pilot *p, <span class="keywordtype">int</span> ast, <span class="keywordtype">int</span> fie )</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;{</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   Asteroid *as;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;   AsteroidAnchor *f;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;   <span class="keywordtype">double</span> sense;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;   <span class="comment">/* pilot must exist */</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;   <span class="keywordflow">if</span> ( p == NULL )</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   <span class="comment">/* Get the asteroid. */</span></div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   f = &amp;<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;asteroids[fie];</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;   as = &amp;f-&gt;asteroids[ast];</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;   <span class="comment">/* TODO something better than this. */</span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;   sense = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(EW_ASTEROID_DIST);</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   <span class="comment">/* Get distance. */</span></div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;as-&gt;pos );</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> / p-&gt;stats.ew_detect &lt; sense ) <span class="comment">/* By default, asteroid&#39;s hide score is 1. It could be made changeable via xml.*/</span></div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;}</div>
+<div class="line"><a name="l00307"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#ab00918f1a61e73c7bce2c129a7e96813">  307</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__ew_8c.html#ab00918f1a61e73c7bce2c129a7e96813">pilot_inRangeAsteroid</a>( <span class="keyword">const</span> Pilot *p, <span class="keywordtype">int</span> ast, <span class="keywordtype">int</span> fie )</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;{</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;   Asteroid *as;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   AsteroidAnchor *f;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;   <span class="keywordtype">double</span> sense;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;   <span class="comment">/* pilot must exist */</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;   <span class="keywordflow">if</span> ( p == NULL )</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;   <span class="comment">/* Get the asteroid. */</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   f = &amp;<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;asteroids[fie];</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   as = &amp;f-&gt;asteroids[ast];</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   <span class="comment">/* TODO something better than this. */</span></div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;   sense = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(EW_ASTEROID_DIST);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   <span class="comment">/* Get distance. */</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;as-&gt;pos );</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> / p-&gt;stats.ew_detect &lt; sense ) <span class="comment">/* By default, asteroid&#39;s hide score is 1. It could be made changeable via xml.*/</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;}</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
-<div class="line"><a name="l00343"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#a7dffce6d5eab2ad2b626c5f65d4a1b77">  343</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__ew_8c.html#a7dffce6d5eab2ad2b626c5f65d4a1b77">pilot_inRangeJump</a>( <span class="keyword">const</span> Pilot *p, <span class="keywordtype">int</span> i )</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;{</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;   JumpPoint *jp;</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   <span class="keywordtype">double</span> sense;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;   <span class="keywordtype">double</span> hide;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160; </div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;   <span class="comment">/* pilot must exist */</span></div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;   <span class="keywordflow">if</span> ( p == NULL )</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160; </div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;   <span class="comment">/* Get the jump point. */</span></div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;   jp = &amp;<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;jumps[i];</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;   <span class="comment">/* We don&#39;t want exit-only jumps. */</span></div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;   <span class="keywordflow">if</span> (jp_isFlag(jp, JP_EXITONLY))</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;   sense = EW_JUMPDETECT_DIST * p-&gt;stats.ew_jump_detect;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;   <span class="comment">/* Handle hidden jumps separately, as they use a special range parameter. */</span></div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   <span class="keywordflow">if</span> (jp_isFlag(jp, JP_HIDDEN))</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;      sense *= p-&gt;stats.misc_hidden_jump_detect;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160; </div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;   <span class="comment">/* Get distance. */</span></div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   hide = jp-&gt;hide;</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;jp-&gt;pos );</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> * hide &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(sense))</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160; </div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;}</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
-<div class="line"><a name="l00384"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#aab04860312c7476e386e3bdcfc0b6d16">  384</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="pilot__ew_8c.html#aab04860312c7476e386e3bdcfc0b6d16">pilot_ewWeaponTrack</a>( <span class="keyword">const</span> Pilot *p, <span class="keyword">const</span> Pilot *t, <span class="keywordtype">double</span> trackmin, <span class="keywordtype">double</span> trackmax )</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;{</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;   <span class="keywordtype">double</span> mod = p-&gt;stats.ew_track * p-&gt;stats.ew_detect;</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>( 0., 1., (t-&gt;ew_evasion * mod - trackmin) / (trackmax - trackmin) );</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;}</div>
+<div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#a7dffce6d5eab2ad2b626c5f65d4a1b77">  342</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__ew_8c.html#a7dffce6d5eab2ad2b626c5f65d4a1b77">pilot_inRangeJump</a>( <span class="keyword">const</span> Pilot *p, <span class="keywordtype">int</span> i )</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;{</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   JumpPoint *jp;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;   <span class="keywordtype">double</span> sense;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   <span class="keywordtype">double</span> hide;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;   <span class="comment">/* pilot must exist */</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;   <span class="keywordflow">if</span> ( p == NULL )</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;   <span class="comment">/* Get the jump point. */</span></div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;   jp = &amp;<a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;jumps[i];</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;   <span class="comment">/* We don&#39;t want exit-only jumps. */</span></div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;   <span class="keywordflow">if</span> (jp_isFlag(jp, JP_EXITONLY))</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160; </div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;   sense = EW_JUMPDETECT_DIST * p-&gt;stats.ew_jump_detect;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;   <span class="comment">/* Handle hidden jumps separately, as they use a special range parameter. */</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;   <span class="keywordflow">if</span> (jp_isFlag(jp, JP_HIDDEN))</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;      sense *= p-&gt;stats.misc_hidden_jump_detect;</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160; </div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   <span class="comment">/* Get distance. */</span></div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;   hide = jp-&gt;hide;</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;jp-&gt;pos );</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> * hide &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(sense))</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;}</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160; </div>
+<div class="line"><a name="l00383"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#aab04860312c7476e386e3bdcfc0b6d16">  383</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="pilot__ew_8c.html#aab04860312c7476e386e3bdcfc0b6d16">pilot_ewWeaponTrack</a>( <span class="keyword">const</span> Pilot *p, <span class="keyword">const</span> Pilot *t, <span class="keywordtype">double</span> trackmin, <span class="keywordtype">double</span> trackmax )</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;{</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   <span class="keywordtype">double</span> mod = p-&gt;stats.ew_track * p-&gt;stats.ew_detect;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>( 0., 1., (t-&gt;ew_evasion * mod - trackmin) / (trackmax - trackmin) );</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;}</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160; </div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160; </div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> pilot_ewStealthGetNearby( <span class="keyword">const</span> Pilot *p, <span class="keywordtype">double</span> *mod, <span class="keywordtype">int</span> *close )</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;{</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;   Pilot *t;</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;   Pilot *<span class="keyword">const</span>* ps;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;   <span class="keywordtype">int</span> i, n;</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;   <span class="keywordtype">double</span> dist;</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;   <span class="comment">/* Check nearby non-allies. */</span></div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;   <span class="keywordflow">if</span> (mod != NULL)</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      *mod = 0.;</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;   <span class="keywordflow">if</span> (close != NULL)</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;      *close = 0;</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;   n = 0;</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   ps = <a class="code" href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a>();</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ps); i++) {</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;      t = ps[i];</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a>( p-&gt;faction, t-&gt;faction ) ||</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;            ((p-&gt;id == PLAYER_ID) &amp;&amp; <a class="code" href="pilot_8c.html#a79cca646d86f820231fed535fb07c434">pilot_isFriendly</a>(t)))</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;      <span class="keywordflow">if</span> (pilot_isDisabled(t))</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="pilot_8c.html#aafce463b094e0bf5654ee072430429de">pilot_canTarget</a>(t))</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160; </div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;      <span class="comment">/* Must not be landing nor taking off. */</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(t, PILOT_LANDING) ||</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;            pilot_isFlag(t, PILOT_TAKEOFF))</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160; </div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;      <span class="comment">/* Stealthed pilots don&#39;t reduce stealth. */</span></div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(t, PILOT_STEALTH))</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160; </div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;      <span class="comment">/* Compute distance. */</span></div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;      dist = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;t-&gt;solid-&gt;pos );</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;      <span class="comment">/* TODO maybe not hardcode the close value. */</span></div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;      <span class="keywordflow">if</span> ((close != NULL) &amp;&amp; (dist &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;ew_stealth * t-&gt;stats.ew_detect * 1.5)))</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;         (*close)++;</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;      <span class="keywordflow">if</span> (dist &gt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;ew_stealth * t-&gt;stats.ew_detect))</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;      <span class="keywordflow">if</span> (mod != NULL)</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;         *mod += 1.0 - sqrt(dist) / (p-&gt;ew_stealth * t-&gt;stats.ew_detect);</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160; </div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;      <span class="comment">/* We found a pilot that is in range. */</span></div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;      n++;</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;   }</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160; </div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;   <span class="keywordflow">return</span> n;</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;}</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> pilot_ewStealthGetNearby( <span class="keyword">const</span> Pilot *p, <span class="keywordtype">double</span> *mod, <span class="keywordtype">int</span> *close )</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;{</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;   Pilot *t;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;   Pilot *<span class="keyword">const</span>* ps;</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;   <span class="keywordtype">int</span> i, n;</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;   <span class="keywordtype">double</span> dist;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160; </div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;   <span class="comment">/* Check nearby non-allies. */</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;   <span class="keywordflow">if</span> (mod != NULL)</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;      *mod = 0.;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;   <span class="keywordflow">if</span> (close != NULL)</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;      *close = 0;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;   n = 0;</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;   ps = <a class="code" href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a>();</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ps); i++) {</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;      t = ps[i];</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a>( p-&gt;faction, t-&gt;faction ) ||</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;            ((p-&gt;id == PLAYER_ID) &amp;&amp; <a class="code" href="pilot_8c.html#a79cca646d86f820231fed535fb07c434">pilot_isFriendly</a>(t)))</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;      <span class="keywordflow">if</span> (pilot_isDisabled(t))</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="pilot_8c.html#aafce463b094e0bf5654ee072430429de">pilot_canTarget</a>(t))</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160; </div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;      <span class="comment">/* Must not be landing nor taking off. */</span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(t, PILOT_LANDING) ||</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;            pilot_isFlag(t, PILOT_TAKEOFF))</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;      <span class="comment">/* Stealthed pilots don&#39;t reduce stealth. */</span></div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(t, PILOT_STEALTH))</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160; </div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;      <span class="comment">/* Compute distance. */</span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;      dist = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;t-&gt;solid-&gt;pos );</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;      <span class="comment">/* TODO maybe not hardcode the close value. */</span></div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;      <span class="keywordflow">if</span> ((close != NULL) &amp;&amp; (dist &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;ew_stealth * t-&gt;stats.ew_detect * 1.5)))</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;         (*close)++;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;      <span class="keywordflow">if</span> (dist &gt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;ew_stealth * t-&gt;stats.ew_detect))</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160; </div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;      <span class="keywordflow">if</span> (mod != NULL)</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;         *mod += 1.0 - sqrt(dist) / (p-&gt;ew_stealth * t-&gt;stats.ew_detect);</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160; </div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;      <span class="comment">/* We found a pilot that is in range. */</span></div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;      n++;</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;   }</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160; </div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;   <span class="keywordflow">return</span> n;</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;}</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160; </div>
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160; </div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160; </div>
-<div class="line"><a name="l00446"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#a1f33423ce2a41f129a335ad6af5d585a">  446</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__ew_8c.html#a1f33423ce2a41f129a335ad6af5d585a">pilot_ewUpdateStealth</a>( Pilot *p, <span class="keywordtype">double</span> dt )</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;{</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;   <span class="keywordtype">int</span> n, close;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;   <span class="keywordtype">double</span> mod;</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160; </div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;   <span class="keywordflow">if</span> (!pilot_isFlag( p, PILOT_STEALTH ))</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160; </div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;   <span class="comment">/* Get nearby pilots. */</span></div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;   <span class="keywordflow">if</span> (pilot_isPlayer(p))</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;      n = pilot_ewStealthGetNearby( p, &amp;mod, &amp;close );</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;      n = pilot_ewStealthGetNearby( p, &amp;mod, NULL );</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160; </div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;   <span class="comment">/* Stop autonav if pilots are nearby. */</span></div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;   <span class="keywordflow">if</span> (pilot_isPlayer(p) &amp;&amp; (close&gt;0))</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;      <a class="code" href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a>();</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160; </div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;   <span class="comment">/* Increases if nobody nearby. */</span></div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;   <span class="keywordflow">if</span> (n == 0) {</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;      p-&gt;ew_stealth_timer += dt * 5000. / p-&gt;ew_stealth;</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;      <span class="keywordflow">if</span> (p-&gt;ew_stealth_timer &gt; 1.)</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;         p-&gt;ew_stealth_timer = 1.;</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;   }</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;   <span class="comment">/* Otherwise decreases. */</span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;      p-&gt;ew_stealth_timer -= dt * (p-&gt;ew_stealth / 10000. + mod);</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;      <span class="keywordflow">if</span> (p-&gt;ew_stealth_timer &lt; 0.) {</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;         <a class="code" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a>( p );</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;         <span class="keywordflow">if</span> (pilot_isPlayer(p))</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;            <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;You have been discovered!&quot;</span>));</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;      }</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;   }</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;}</div>
+<div class="line"><a name="l00445"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#a1f33423ce2a41f129a335ad6af5d585a">  445</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__ew_8c.html#a1f33423ce2a41f129a335ad6af5d585a">pilot_ewUpdateStealth</a>( Pilot *p, <span class="keywordtype">double</span> dt )</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;{</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;   <span class="keywordtype">int</span> n, close;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;   <span class="keywordtype">double</span> mod;</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160; </div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;   <span class="keywordflow">if</span> (!pilot_isFlag( p, PILOT_STEALTH ))</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160; </div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;   <span class="comment">/* Get nearby pilots. */</span></div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;   <span class="keywordflow">if</span> (pilot_isPlayer(p))</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;      n = pilot_ewStealthGetNearby( p, &amp;mod, &amp;close );</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;      n = pilot_ewStealthGetNearby( p, &amp;mod, NULL );</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160; </div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;   <span class="comment">/* Stop autonav if pilots are nearby. */</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;   <span class="keywordflow">if</span> (pilot_isPlayer(p) &amp;&amp; (close&gt;0))</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;      <a class="code" href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a>();</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160; </div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;   <span class="comment">/* Increases if nobody nearby. */</span></div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;   <span class="keywordflow">if</span> (n == 0) {</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;      p-&gt;ew_stealth_timer += dt * 5000. / p-&gt;ew_stealth;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;      <span class="keywordflow">if</span> (p-&gt;ew_stealth_timer &gt; 1.)</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;         p-&gt;ew_stealth_timer = 1.;</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;   }</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;   <span class="comment">/* Otherwise decreases. */</span></div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;      p-&gt;ew_stealth_timer -= dt * (p-&gt;ew_stealth / 10000. + mod);</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;      <span class="keywordflow">if</span> (p-&gt;ew_stealth_timer &lt; 0.) {</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;         <a class="code" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a>( p );</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;         <span class="keywordflow">if</span> (pilot_isPlayer(p))</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;            <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;You have been discovered!&quot;</span>));</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;      }</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;   }</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;}</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160; </div>
 <div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160; </div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160; </div>
-<div class="line"><a name="l00485"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">  485</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">pilot_stealth</a>( Pilot *p )</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;{</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;   <span class="keywordtype">int</span> n;</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160; </div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag( p, PILOT_STEALTH ))</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160; </div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;   <span class="comment">/* Can&#39;t stealth if locked on. */</span></div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;   <span class="keywordflow">if</span> (p-&gt;lockons &gt; 0)</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160; </div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;   <span class="comment">/* Can&#39;t stealth if pilots nearby. */</span></div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;   pilot_setFlag( p, PILOT_STEALTH );</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;   n = pilot_ewStealthGetNearby( p, NULL, NULL );</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;   <span class="keywordflow">if</span> (n&gt;0) {</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;      pilot_rmFlag( p, PILOT_STEALTH );</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;   }</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160; </div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;   <span class="comment">/* Turn off outfits. */</span></div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;   <a class="code" href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a>( p );</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160; </div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;   <span class="comment">/* Got into stealth. */</span></div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>(p);</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;   p-&gt;ew_stealth_timer = 0.;</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;}</div>
+<div class="line"><a name="l00484"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">  484</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">pilot_stealth</a>( Pilot *p )</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;{</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;   <span class="keywordtype">int</span> n;</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160; </div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag( p, PILOT_STEALTH ))</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160; </div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;   <span class="comment">/* Can&#39;t stealth if locked on. */</span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;   <span class="keywordflow">if</span> (p-&gt;lockons &gt; 0)</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160; </div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;   <span class="comment">/* Can&#39;t stealth if pilots nearby. */</span></div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;   pilot_setFlag( p, PILOT_STEALTH );</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;   n = pilot_ewStealthGetNearby( p, NULL, NULL );</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;   <span class="keywordflow">if</span> (n&gt;0) {</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;      pilot_rmFlag( p, PILOT_STEALTH );</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;   }</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160; </div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <span class="comment">/* Turn off outfits. */</span></div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;   <a class="code" href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a>( p );</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160; </div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;   <span class="comment">/* Got into stealth. */</span></div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>(p);</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;   p-&gt;ew_stealth_timer = 0.;</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;}</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160; </div>
 <div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160; </div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160; </div>
-<div class="line"><a name="l00517"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">  517</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a>( Pilot *p )</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;{</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;   <span class="keywordflow">if</span> (!pilot_isFlag( p, PILOT_STEALTH ))</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;   pilot_rmFlag( p, PILOT_STEALTH );</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;   p-&gt;ew_stealth_timer = 0.;</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>(p);</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;}</div>
+<div class="line"><a name="l00516"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">  516</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a>( Pilot *p )</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;{</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;   <span class="keywordflow">if</span> (!pilot_isFlag( p, PILOT_STEALTH ))</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;   pilot_rmFlag( p, PILOT_STEALTH );</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;   p-&gt;ew_stealth_timer = 0.;</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>(p);</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="apilot__ew_8c_html_accc57907c09c3b5f45249b121a776886"><div class="ttname"><a href="pilot__ew_8c.html#accc57907c09c3b5f45249b121a776886">pilot_sensorRange</a></div><div class="ttdeci">double pilot_sensorRange(void)</div><div class="ttdoc">Returns the default sensor range for the current system.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00190">pilot_ew.c:190</a></div></div>
-<div class="ttc" id="apilot__ew_8c_html_ab00918f1a61e73c7bce2c129a7e96813"><div class="ttname"><a href="pilot__ew_8c.html#ab00918f1a61e73c7bce2c129a7e96813">pilot_inRangeAsteroid</a></div><div class="ttdeci">int pilot_inRangeAsteroid(const Pilot *p, int ast, int fie)</div><div class="ttdoc">Check to see if an asteroid is in sensor range of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00308">pilot_ew.c:308</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_ab00918f1a61e73c7bce2c129a7e96813"><div class="ttname"><a href="pilot__ew_8c.html#ab00918f1a61e73c7bce2c129a7e96813">pilot_inRangeAsteroid</a></div><div class="ttdeci">int pilot_inRangeAsteroid(const Pilot *p, int ast, int fie)</div><div class="ttdoc">Check to see if an asteroid is in sensor range of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00307">pilot_ew.c:307</a></div></div>
 <div class="ttc" id="aspace_8c_html_aeef8afaa38a0a6b1bdde0b100605a1a4"><div class="ttname"><a href="space_8c.html#aeef8afaa38a0a6b1bdde0b100605a1a4">space_isInField</a></div><div class="ttdeci">int space_isInField(Vector2d *p)</div><div class="ttdoc">See if the position is in an asteroid field.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04114">space.c:4114</a></div></div>
 <div class="ttc" id="astructPlanet_html"><div class="ttname"><a href="structPlanet.html">Planet</a></div><div class="ttdoc">Represents a planet.</div></div>
 <div class="ttc" id="apilot_8c_html_a79cca646d86f820231fed535fb07c434"><div class="ttname"><a href="pilot_8c.html#a79cca646d86f820231fed535fb07c434">pilot_isFriendly</a></div><div class="ttdeci">int pilot_isFriendly(const Pilot *p)</div><div class="ttdoc">Checks to see if pilot is friendly to the player.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00685">pilot.c:685</a></div></div>
@@ -471,9 +470,9 @@ $(function() {
 <div class="ttc" id="apilot__ew_8c_html_a312a5cce2f4d86e2e702e97c2d2552e2"><div class="ttname"><a href="pilot__ew_8c.html#a312a5cce2f4d86e2e702e97c2d2552e2">pilot_ewUpdateDynamic</a></div><div class="ttdeci">void pilot_ewUpdateDynamic(Pilot *p, double dt)</div><div class="ttdoc">Updates the pilot's dynamic electronic warfare properties.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00115">pilot_ew.c:115</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
 <div class="ttc" id="arng_8c_html_a5e71a6e0c14542f60c8007edc2eaf286"><div class="ttname"><a href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a></div><div class="ttdeci">static const double d[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00290">rng.c:290</a></div></div>
-<div class="ttc" id="apilot__ew_8c_html_aab04860312c7476e386e3bdcfc0b6d16"><div class="ttname"><a href="pilot__ew_8c.html#aab04860312c7476e386e3bdcfc0b6d16">pilot_ewWeaponTrack</a></div><div class="ttdeci">double pilot_ewWeaponTrack(const Pilot *p, const Pilot *t, double trackmin, double trackmax)</div><div class="ttdoc">Calculates the weapon lead (1. is 100%, 0. is 0%)..</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00384">pilot_ew.c:384</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_aab04860312c7476e386e3bdcfc0b6d16"><div class="ttname"><a href="pilot__ew_8c.html#aab04860312c7476e386e3bdcfc0b6d16">pilot_ewWeaponTrack</a></div><div class="ttdeci">double pilot_ewWeaponTrack(const Pilot *p, const Pilot *t, double trackmin, double trackmax)</div><div class="ttdoc">Calculates the weapon lead (1. is 100%, 0. is 0%)..</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00383">pilot_ew.c:383</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_aa4c238985e0188725d86c3e3be3de5fe"><div class="ttname"><a href="pilot__ew_8c.html#aa4c238985e0188725d86c3e3be3de5fe">pilot_ewAsteroid</a></div><div class="ttdeci">static double pilot_ewAsteroid(Pilot *p)</div><div class="ttdoc">Gets the electronic warfare asteroid modifier.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00164">pilot_ew.c:164</a></div></div>
-<div class="ttc" id="apilot__ew_8c_html_a7dffce6d5eab2ad2b626c5f65d4a1b77"><div class="ttname"><a href="pilot__ew_8c.html#a7dffce6d5eab2ad2b626c5f65d4a1b77">pilot_inRangeJump</a></div><div class="ttdeci">int pilot_inRangeJump(const Pilot *p, int i)</div><div class="ttdoc">Check to see if a jump point is in sensor range of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00343">pilot_ew.c:343</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_a7dffce6d5eab2ad2b626c5f65d4a1b77"><div class="ttname"><a href="pilot__ew_8c.html#a7dffce6d5eab2ad2b626c5f65d4a1b77">pilot_inRangeJump</a></div><div class="ttdeci">int pilot_inRangeJump(const Pilot *p, int i)</div><div class="ttdoc">Check to see if a jump point is in sensor range of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00342">pilot_ew.c:342</a></div></div>
 <div class="ttc" id="apilot_8c_html_a249f03095a08ed9f99e344bd6ab1127c"><div class="ttname"><a href="pilot_8c.html#a249f03095a08ed9f99e344bd6ab1127c">pilot_get</a></div><div class="ttdeci">Pilot * pilot_get(const unsigned int id)</div><div class="ttdoc">Pulls a pilot out of the pilot_stack based on ID.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00613">pilot.c:613</a></div></div>
 <div class="ttc" id="astructPilot___html_adfb1ffae5f5653864bcec8a54bc075ab"><div class="ttname"><a href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">Pilot_::target</a></div><div class="ttdeci">unsigned int target</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8h_source.html#l00338">pilot.h:338</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a5034c923fad0642b2131542daedfc050"><div class="ttname"><a href="pilot__ew_8c.html#a5034c923fad0642b2131542daedfc050">ew_interference</a></div><div class="ttdeci">static double ew_interference</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00033">pilot_ew.c:33</a></div></div>
@@ -485,13 +484,13 @@ $(function() {
 <div class="ttc" id="anaev_8h_html_a8fa5e6968bb39c7ec03c486af1e7b335"><div class="ttname"><a href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a></div><div class="ttdeci">#define CLAMP(a, b, x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00047">naev.h:47</a></div></div>
 <div class="ttc" id="afaction_8c_html_afea2f8de538c247a62bdd5d2d4c69f2b"><div class="ttname"><a href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a></div><div class="ttdeci">int areAllies(int a, int b)</div><div class="ttdoc">Checks whether two factions are allies or not.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01179">faction.c:1179</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a9205b78a74cacef55b89b3d2cc4685bf"><div class="ttname"><a href="pilot__ew_8c.html#a9205b78a74cacef55b89b3d2cc4685bf">pilot_ewScanStart</a></div><div class="ttdeci">void pilot_ewScanStart(Pilot *p)</div><div class="ttdoc">Initializes the scan timer for a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00050">pilot_ew.c:50</a></div></div>
-<div class="ttc" id="apilot__ew_8c_html_a6c5a5fc00f060b01b7f54cde48bb32a8"><div class="ttname"><a href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a></div><div class="ttdeci">void pilot_destealth(Pilot *p)</div><div class="ttdoc">Destealths a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00517">pilot_ew.c:517</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_a6c5a5fc00f060b01b7f54cde48bb32a8"><div class="ttname"><a href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a></div><div class="ttdeci">void pilot_destealth(Pilot *p)</div><div class="ttdoc">Destealths a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00516">pilot_ew.c:516</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a1f95f4ae0f4739bbb254f9662f39fac4"><div class="ttname"><a href="pilot__ew_8c.html#a1f95f4ae0f4739bbb254f9662f39fac4">pilot_inRangePilot</a></div><div class="ttdeci">int pilot_inRangePilot(const Pilot *p, const Pilot *target, double *dist2)</div><div class="ttdoc">Check to see if a pilot is in sensor range of another.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00227">pilot_ew.c:227</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_aab9be0d524d212b94dd9d9520349b832"><div class="ttname"><a href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a></div><div class="ttdeci">int pilot_outfitOffAll(Pilot *p)</div><div class="ttdoc">Disables all active outfits for a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01473">pilot_weapon.c:1473</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_a49c761c41fb035d49699b214fd55edc1"><div class="ttname"><a href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a></div><div class="ttdeci">void player_autonavResetSpeed(void)</div><div class="ttdoc">Resets the game speed.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00054">player_autonav.c:54</a></div></div>
 <div class="ttc" id="aspace_8c_html_a80fc91b008974b39b78ee551d5abc684"><div class="ttname"><a href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a></div><div class="ttdeci">StarSystem * cur_system</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00102">space.c:102</a></div></div>
-<div class="ttc" id="apilot__ew_8c_html_a1f33423ce2a41f129a335ad6af5d585a"><div class="ttname"><a href="pilot__ew_8c.html#a1f33423ce2a41f129a335ad6af5d585a">pilot_ewUpdateStealth</a></div><div class="ttdeci">void pilot_ewUpdateStealth(Pilot *p, double dt)</div><div class="ttdoc">Updates the stealth mode and checks to see if it is getting broken.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00446">pilot_ew.c:446</a></div></div>
-<div class="ttc" id="apilot__ew_8c_html_af7780816d90c72f566e5c6e097adb230"><div class="ttname"><a href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">pilot_stealth</a></div><div class="ttdeci">int pilot_stealth(Pilot *p)</div><div class="ttdoc">Stealths a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00485">pilot_ew.c:485</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_a1f33423ce2a41f129a335ad6af5d585a"><div class="ttname"><a href="pilot__ew_8c.html#a1f33423ce2a41f129a335ad6af5d585a">pilot_ewUpdateStealth</a></div><div class="ttdeci">void pilot_ewUpdateStealth(Pilot *p, double dt)</div><div class="ttdoc">Updates the stealth mode and checks to see if it is getting broken.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00445">pilot_ew.c:445</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_af7780816d90c72f566e5c6e097adb230"><div class="ttname"><a href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">pilot_stealth</a></div><div class="ttdeci">int pilot_stealth(Pilot *p)</div><div class="ttdoc">Stealths a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00484">pilot_ew.c:484</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_aae8ec77a4f451e8e3c7912c353f90496"><div class="ttname"><a href="pilot__ew_8c.html#aae8ec77a4f451e8e3c7912c353f90496">pilot_ewUpdateStatic</a></div><div class="ttdeci">void pilot_ewUpdateStatic(Pilot *p)</div><div class="ttdoc">Updates the pilot's static electronic warfare properties.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00101">pilot_ew.c:101</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_af85be17278e2a8bffde0ad285e84a34f"><div class="ttname"><a href="pilot__ew_8c.html#af85be17278e2a8bffde0ad285e84a34f">pilot_inRangePlanet</a></div><div class="ttdeci">int pilot_inRangePlanet(const Pilot *p, int target)</div><div class="ttdoc">Check to see if a planet is in sensor range of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00271">pilot_ew.c:271</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
