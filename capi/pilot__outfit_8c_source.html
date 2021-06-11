@@ -1276,24 +1276,28 @@ $(function() {
 <div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l01473"></a><span class="lineno"> 1473</span>&#160;      <span class="keywordflow">if</span> (po-&gt;outfit-&gt;u.mod.lua_cleanup == LUA_NOREF)</div>
 <div class="line"><a name="l01474"></a><span class="lineno"> 1474</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01475"></a><span class="lineno"> 1475</span>&#160; </div>
-<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160;      nlua_env env = po-&gt;outfit-&gt;u.mod.lua_env;</div>
-<div class="line"><a name="l01477"></a><span class="lineno"> 1477</span>&#160; </div>
-<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;      <span class="comment">/* Set the memory. */</span></div>
-<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;lua_mem); <span class="comment">/* mem */</span></div>
-<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;      nlua_setenv(env, <span class="stringliteral">&quot;mem&quot;</span>); <span class="comment">/* */</span></div>
+<div class="line"><a name="l01475"></a><span class="lineno"> 1475</span>&#160;      <span class="comment">/* Pilot could be created and then erased without getting properly</span></div>
+<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160;<span class="comment">       * initialized. */</span></div>
+<div class="line"><a name="l01477"></a><span class="lineno"> 1477</span>&#160;      <span class="keywordflow">if</span> (po-&gt;lua_mem == LUA_NOREF)</div>
+<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160; </div>
+<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;      nlua_env env = po-&gt;outfit-&gt;u.mod.lua_env;</div>
 <div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160; </div>
-<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;      <span class="comment">/* Set up the function: cleanup( p, po ) */</span></div>
-<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;outfit-&gt;u.mod.lua_cleanup); <span class="comment">/* f */</span></div>
-<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, pilot-&gt;id); <span class="comment">/* f, p */</span></div>
-<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;      <a class="code" href="nlua__pilotoutfit_8c.html#a9a4411b619fd54467cc9e3c193bb1c3d">lua_pushpilotoutfit</a>(naevL, po);  <span class="comment">/* f, p, po */</span></div>
-<div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;      <span class="keywordflow">if</span> (nlua_pcall( env, 2, 0 )) {   <span class="comment">/* */</span></div>
-<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;         WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39;&#39;s outfit &#39;%s&#39; -&gt; &#39;cleanup&#39;:\n%s&quot;</span>), pilot-&gt;name, po-&gt;outfit-&gt;name, lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;         lua_pop(naevL, 1);</div>
-<div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160;      }</div>
-<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;   }</div>
-<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;   <span class="comment">/* Pilot gets cleaned up so no need to recalculate stats. */</span></div>
-<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;}</div>
+<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;      <span class="comment">/* Set the memory. */</span></div>
+<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;lua_mem); <span class="comment">/* mem */</span></div>
+<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;      nlua_setenv(env, <span class="stringliteral">&quot;mem&quot;</span>); <span class="comment">/* */</span></div>
+<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160; </div>
+<div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;      <span class="comment">/* Set up the function: cleanup( p, po ) */</span></div>
+<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;outfit-&gt;u.mod.lua_cleanup); <span class="comment">/* f */</span></div>
+<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, pilot-&gt;id); <span class="comment">/* f, p */</span></div>
+<div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160;      <a class="code" href="nlua__pilotoutfit_8c.html#a9a4411b619fd54467cc9e3c193bb1c3d">lua_pushpilotoutfit</a>(naevL, po);  <span class="comment">/* f, p, po */</span></div>
+<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;      <span class="keywordflow">if</span> (nlua_pcall( env, 2, 0 )) {   <span class="comment">/* */</span></div>
+<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;         WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39;&#39;s outfit &#39;%s&#39; -&gt; &#39;cleanup&#39;:\n%s&quot;</span>), pilot-&gt;name, po-&gt;outfit-&gt;name, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;         lua_pop(naevL, 1);</div>
+<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;      }</div>
+<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;   }</div>
+<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;   <span class="comment">/* Pilot gets cleaned up so no need to recalculate stats. */</span></div>
+<div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="apilot__outfit_8c_html_a9cb477b86d1f8b3a3b878ffa91a1bfee"><div class="ttname"><a href="pilot__outfit_8c.html#a9cb477b86d1f8b3a3b878ffa91a1bfee">pilot_outfitLCleanup</a></div><div class="ttdeci">void pilot_outfitLCleanup(Pilot *pilot)</div><div class="ttdoc">Handle cleanup hooks for outfits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l01464">pilot_outfit.c:1464</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a43b13997d25f22b53607feb02eda8574"><div class="ttname"><a href="pilot__outfit_8c.html#a43b13997d25f22b53607feb02eda8574">pilot_maxAmmoO</a></div><div class="ttdeci">int pilot_maxAmmoO(const Pilot *p, const Outfit *o)</div><div class="ttdoc">Gets the maximum available ammo for a pilot for a specific outfit.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00837">pilot_outfit.c:837</a></div></div>
