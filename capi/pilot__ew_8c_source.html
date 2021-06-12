@@ -156,7 +156,7 @@ $(function() {
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;t-&gt;solid-&gt;pos );</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;   <span class="comment">/* Must be in evasion range. */</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;stats.ew_detect * p-&gt;stats.ew_track * t-&gt;ew_evasion))</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., p-&gt;stats.ew_detect * p-&gt;stats.ew_track * t-&gt;ew_evasion ) ))</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      p-&gt;scantimer -= dt;</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;   <span class="comment">/* TODO handle case the player finished scaning by setting a flag or something. */</span></div>
@@ -200,7 +200,7 @@ $(function() {
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;   <span class="comment">/* Get distance. */</span></div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(x-p-&gt;solid-&gt;pos.x) + <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(y-p-&gt;solid-&gt;pos.y);</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;   sense = <a class="code" href="pilot__ew_8c.html#accc57907c09c3b5f45249b121a776886">pilot_sensorRange</a>() * p-&gt;stats.ew_detect;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;   sense = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., <a class="code" href="pilot__ew_8c.html#accc57907c09c3b5f45249b121a776886">pilot_sensorRange</a>() * p-&gt;stats.ew_detect );</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(sense))</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
@@ -230,14 +230,14 @@ $(function() {
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;   <span class="comment">/* Stealth detection. */</span></div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag( <a class="code" href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">target</a>, PILOT_STEALTH )) {</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;stats.ew_detect * <a class="code" href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">target</a>-&gt;ew_stealth))</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., p-&gt;stats.ew_detect * <a class="code" href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">target</a>-&gt;ew_stealth )))</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;         <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   }</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;   <span class="comment">/* No stealth so normal detection. */</span></div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;stats.ew_detect * p-&gt;stats.ew_track * <a class="code" href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">target</a>-&gt;ew_evasion))</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., p-&gt;stats.ew_detect * p-&gt;stats.ew_track * <a class="code" href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">target</a>-&gt;ew_evasion )))</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;         <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span>  (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;stats.ew_detect * <a class="code" href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">target</a>-&gt;ew_detection))</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span>  (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., p-&gt;stats.ew_detect * <a class="code" href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">target</a>-&gt;ew_detection )))</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;         <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   }</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160; </div>
@@ -266,7 +266,7 @@ $(function() {
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;   <span class="comment">/* Get distance. */</span></div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;pnt-&gt;pos );</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(sense * p-&gt;stats.ew_detect * pnt-&gt;hide) )</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., sense * p-&gt;stats.ew_detect * pnt-&gt;hide) ) )</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   <span class="keywordflow">return</span> 0;</div>
@@ -289,12 +289,12 @@ $(function() {
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;   as = &amp;f-&gt;asteroids[ast];</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   <span class="comment">/* TODO something better than this. */</span></div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   sense = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(EW_ASTEROID_DIST);</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   sense = EW_ASTEROID_DIST;</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;   <span class="comment">/* Get distance. */</span></div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;as-&gt;pos );</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> / p-&gt;stats.ew_detect &lt; sense ) <span class="comment">/* By default, asteroid&#39;s hide score is 1. It could be made changeable via xml.*/</span></div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., sense * p-&gt;stats.ew_detect ) ) ) <span class="comment">/* By default, asteroid&#39;s hide score is 1. It could be made changeable via xml.*/</span></div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;      <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160; </div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   <span class="keywordflow">return</span> 0;</div>
@@ -327,7 +327,7 @@ $(function() {
 <div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;   <span class="comment">/* Get distance. */</span></div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;   hide = jp-&gt;hide;</div>
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;jp-&gt;pos );</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> * hide &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(sense))</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., sense * hide )))</div>
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;      <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   <span class="keywordflow">return</span> 0;</div>
@@ -376,9 +376,9 @@ $(function() {
 <div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;      <span class="comment">/* Compute distance. */</span></div>
 <div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;      dist = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;t-&gt;solid-&gt;pos );</div>
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;      <span class="comment">/* TODO maybe not hardcode the close value. */</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;      <span class="keywordflow">if</span> ((close != NULL) &amp;&amp; (dist &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;ew_stealth * t-&gt;stats.ew_detect * 1.5)))</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;      <span class="keywordflow">if</span> ((close != NULL) &amp;&amp; (dist &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., p-&gt;ew_stealth * t-&gt;stats.ew_detect * 1.5 ))))</div>
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;         (*close)++;</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;      <span class="keywordflow">if</span> (dist &gt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(p-&gt;ew_stealth * t-&gt;stats.ew_detect))</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;      <span class="keywordflow">if</span> (dist &gt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>( <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0., p-&gt;ew_stealth * t-&gt;stats.ew_detect )))</div>
 <div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160; </div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;      <span class="keywordflow">if</span> (mod != NULL)</div>
