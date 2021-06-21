@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <!--Old html 4.0.1 way <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+  <!--<meta charset="UTF-8">--><!-- New HTML5 way -->
+  <!-- Mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Favourite icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../../favicon-180.png">
+  <link rel="icon" type="image/png" sizes="196x196" href="../../favicon-196.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="../../favicon-128.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16.png">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico"><!-- CSS -->
+  <link rel="stylesheet" href="../../style.css"><!-- Website information -->
+  <title>Naev - Correct Physics</title><!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Naev Blarg RSS Feed" href=
+  "https://naev.org/feed/index.xml">
+</head>
+<body class="bg-light">
+  <div id="naev-header" class="container-fluid nebula-bg">
+    <div class="container">
+      <a href="../../"><img src="../../imgs/naev.png" alt="Naev"></a>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="p-0 navbar-brand" href="#"><img id="logo" class="img-fluid" src="../../favicon.png"
+      alt="Naev"></a> <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+      aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../../">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../page/1/">Blarg</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../media/">Media</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../downloads/">Downloads</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/naev/naev">Github</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/naev/naev/wiki">Wiki</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://discord.com/invite/nd2M5BR">Discord</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://naev.org/api/">Lua API</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main role="main" class="container">
+    <h2>Correct Physics</h2>
+    <p class="text-muted">BY BOBBENS, ON NOVEMBER 23RD, 2010</p>
+    <p><strong>WARNING: TECHNICAL POST</strong></p>
+    <p>After much insistence on Deiz that something was wrong since we needed a hack to get ships
+    to properly display 100% speed, we’ve finally found the culprit. Some old code of mine that
+    what it did was:</p>
+    <p><code>c void limit_speed( Vector2d* vel, const double speed, const double dt ) { double
+    vmod; vmod = VMOD(*vel); if (vmod &gt; speed) /* shouldn't go faster */ vect_pset( vel,
+    (vmod-speed)*(1. - dt*3.) + speed, VANGLE(*vel) ); }</code></p>
+    <p>What does this mean? It may seem like a good idea to limit the speed by modulating the
+    velocity directly. There is also a dt in there to try to make it not frame dependent. However
+    let’s analyze the consequences.</p>
+    <p>The important question is: what is the maximum velocity? The way stuff is done we’re
+    cascading the limit_speed with the physics model. We can simplify it to an euler integration
+    (it’s actually runge-kutta but I’ll talk about that a bit latter):</p>
+    <p><code>v_1 = v_0 + a dt</code></p>
+    <p>Everyone should be familiar with that. I won’t go into details from where that comes from.
+    Basically it means that the current velocity is the last velocity plus the acceleration times
+    the time that passed from the last instant. This is then chained to the limit_speed which
+    does:</p>
+    <p><code>v = (v_1 - v_{max})(1 - 3dt)</code></p>
+    <p>So we can write the composite form as:</p>
+    <p><code>v = (v_0 + a dt - v_{max})(1 - 3dt) = v_0 + a dt - v_{max} - 3 dt v_0 - 3 a dt^2 + 3
+    dt v_{max}</code></p>
+    <p>Now we can see the problem. What should be linearly dependent on the dt to cancel out the
+    dependency on the frame rate is now quadratically dependent (notice <code>3 a dt^2</code>).
+    This means that the velocity now does indeed depend on the frame rate. That’s bad. The physics
+    model shouldn’t depend on the frame rate. How can we fix that?</p>
+    <p>The most logical and simple solution would be instead of hardcoding a limit_speed function
+    outside of the physics engine to integrate it. What does the physics engine work with? Forces.
+    What should we do? Create a virtual force dependent on velocity.</p>
+    <p>A bit on our physics engine. The physics in NAEV is modelled as <a href=
+    "https://en.wikipedia.org/wiki/Differential_equation">differential equations</a> and is solved
+    generally with <a href="https://en.wikipedia.org/wiki/Runge-kutta">Runge-Kutta</a>. It all
+    sounds really complicated but it isn’t too much. If you want to go into detail take a look at
+    <a href="https://github.com/naev/naev/blob/main/src/physics.c">src/physics.c</a>.</p>
+    <p>First the philosophical meaning of this force. What does it represent? Why do ships have
+    speed limits? This limit represents the ship’s stabilization systems. To allow the ships to
+    have artificial gravity (the ones that do) and fly around so well with turning, they need
+    complex stabilization systems. So what we’re modelling is some sort of drag force.</p>
+    <p>Now onto the force itself. After much discussion ranting and throwing of equations we
+    finally managed to model it. The current model is:</p>
+    <p><code>f_{stabilization} = k (v - v_{max})</code></p>
+    <p>It’s much more simple, behaves really well and allows really simple max speed calculations.
+    Your max speed is when the forces acting on your ship are 0. When does this happen? Easy,
+    <code>v_{realmax} = speed + \frac{thrust}{k}</code>. We’ve found that a good value is <code>k =
+    3</code> .</p>
+    <p>Other notes, while doing this revamp I improved the current engine. Thrust is relative to
+    the ship, that means that rotations are smoothed out really nicely by the Runge-Kutta
+    algorithm. Same happens with the new stabilization force. This means the physics are smoother
+    than ever. The system was also improved to handle fast ships and jump ins without instability.
+    What we saw originally was that when your ship was moving really fast, the stabilization force
+    caused instability in the physics engine. This meant your ship would end up at infinity about a
+    second after jumping in. However the new improved engine can handle any speed by chopping up
+    the simulation more finely when the ship is going fast.</p>
+    <p>Other notes we also have a hybrid physics engine now, in the sense it can do both <a href=
+    "https://en.wikipedia.org/wiki/Runge-kutta">Runge-Kutta</a> and <a href=
+    "https://en.wikipedia.org/wiki/Euler_method">Euler</a> for different objects at the same time.
+    I’m quite proud of it. The player may be asking what to make of all this? Well you probably
+    won’t feel a thing, but let me assure you it’s much more awesome.</p>
+    <p><strong>EDIT:</strong> It’s been pointed out that if you go back to the equation originally
+    you could have looked at how the units did mismatch. We all learn from our mistakes, how stupid
+    they may be :) .</p>
+  </main>
+  <div class="container-fluid nebula-bg mt-5">
+    <div class="container">
+      <footer class="row text-muted">
+        <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
+        <p class="col-xs-12 col-sm-6 text-right">Original content licensed under <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
+      </footer>
+    </div>
+  </div><!-- Javascript -->
+  <script src="../../site.js"></script>
+</body>
+</html>
