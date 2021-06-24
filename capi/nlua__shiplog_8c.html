@@ -235,7 +235,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Appends to the shiplog. </p>
-<p><em>Lua usage parameter:</em> shiplog.appendLog("MyLog", "Some message here")</p>
+<p><em>Lua usage parameter:</em> shiplog.append("MyLog", "Some message here")</p>
 <p><em>Lua function parameter:</em> string idstr ID string of the log to append to. <em>Lua function parameter:</em> string message Message to append to the log. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">L</td><td>Lua State </td></tr>
@@ -244,9 +244,9 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of variables on the Lua State stack.<br  />
  </dd></dl>
-<p><em>Lua function:</em> appendLog </p>
+<p><em>Lua function:</em> append </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__shiplog_8c_source.html#l00132">132</a> of file <a class="el" href="nlua__shiplog_8c_source.html">nlua_shiplog.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__shiplog_8c_source.html#l00123">123</a> of file <a class="el" href="nlua__shiplog_8c_source.html">nlua_shiplog.c</a>.</p>
 
 </div>
 </div>
@@ -275,12 +275,12 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Bindings for adding log entries to the ship log. </p>
-<p>A typical example would be: </p><div class="fragment"><div class="line">shiplog.createLog( <span class="stringliteral">&quot;idstring&quot;</span>, <span class="stringliteral">&quot;log name&quot;</span>, <span class="stringliteral">&quot;log type&quot;</span>, 0, 0 )</div>
-<div class="line">shiplog.appendLog( <span class="stringliteral">&quot;idstring&quot;</span>, <span class="stringliteral">&quot;message to append to log&quot;</span> )</div>
+<p>A typical example would be: </p><div class="fragment"><div class="line">shiplog.create( <span class="stringliteral">&quot;idstring&quot;</span>, <span class="stringliteral">&quot;log name&quot;</span>, <span class="stringliteral">&quot;log type&quot;</span>, 0, 0 )</div>
+<div class="line">shiplog.append( <span class="stringliteral">&quot;idstring&quot;</span>, <span class="stringliteral">&quot;message to append to log&quot;</span> )</div>
 </div><!-- fragment --><p><em>Lua module:</em> shiplog</p>
 <p>Creates a shiplog for this mission.</p>
-<p><em>Lua usage parameter:</em> shiplog.createLog("MyLog", "My mission title", "Mission type") &ndash; Creates log "MyLog" without erasing anything <em>Lua usage parameter:</em> shiplog.createLog("MyOtherLog", "Any title","Anything can be a type", true, 10) &ndash; Erases any existing MyOtherLog entries and sets a limit of 10 entries</p>
-<p><em>Lua function parameter:</em> string idstr ID string to identify this log, or empty string for unnamed logsets. <em>Lua function parameter:</em> string logname Name for this log. <em>Lua function parameter:</em> string logtype Type of log (e.g travel, trade, etc, can be anything). <em>Lua function parameter:</em>[opt] boolean overwrite Whether to remove previous entries of this logname and type (default false). <em>Lua function parameter:</em>[opt] number maxLen Maximum length of the log (zero or nil for infinite) - if greater than this length, new entries appended will result in old entries being removed.</p>
+<p><em>Lua usage parameter:</em> shiplog.create("MyLog", "My mission title", "Mission type") &ndash; Creates log "MyLog" without erasing anything <em>Lua usage parameter:</em> shiplog.create("MyOtherLog", "Any title","Anything can be a type", true, 10) &ndash; Erases any existing MyOtherLog entries and sets a limit of 10 entries</p>
+<p><em>Lua function parameter:</em> string idstr ID string to identify this log, or empty string for unnamed logsets. <em>Lua function parameter:</em> string logname Name for this log. <em>Lua function parameter:</em> string logtype Type of log (e.g travel, trade, etc, can be anything). <em>Lua function parameter:</em>[opt] boolean overwrite Whether to remove previous entries of this logname and type (default false). <em>Lua function parameter:</em>[opt=0] number maxLen Maximum length of the log (zero for infinite) - if greater than this length, new entries appended will result in old entries being removed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">L</td><td>Lua State </td></tr>
@@ -289,7 +289,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of variables on the Lua State stack.<br  />
  </dd></dl>
-<p><em>Lua function:</em> createLog </p>
+<p><em>Lua function:</em> create </p>
 
 <p class="definition">Definition at line <a class="el" href="nlua__shiplog_8c_source.html#l00098">98</a> of file <a class="el" href="nlua__shiplog_8c_source.html">nlua_shiplog.c</a>.</p>
 
@@ -316,8 +316,8 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div>
-<div class="line">   { <span class="stringliteral">&quot;createLog&quot;</span>, <a class="code" href="nlua__shiplog_8c.html#aee9b3eaee0147f54a182b25b1a8d6e6e">shiplog_createLog</a> },</div>
-<div class="line">   { <span class="stringliteral">&quot;appendLog&quot;</span>, <a class="code" href="nlua__shiplog_8c.html#a423da0c41d81199ec39aafafb738901c">shiplog_appendLog</a> },</div>
+<div class="line">   { <span class="stringliteral">&quot;create&quot;</span>, <a class="code" href="nlua__shiplog_8c.html#aee9b3eaee0147f54a182b25b1a8d6e6e">shiplog_createLog</a> },</div>
+<div class="line">   { <span class="stringliteral">&quot;append&quot;</span>, <a class="code" href="nlua__shiplog_8c.html#a423da0c41d81199ec39aafafb738901c">shiplog_appendLog</a> },</div>
 <div class="line">   {0,0}</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Shiplog Lua methods. </p>
@@ -327,7 +327,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="anlua__shiplog_8c_html_a423da0c41d81199ec39aafafb738901c"><div class="ttname"><a href="nlua__shiplog_8c.html#a423da0c41d81199ec39aafafb738901c">shiplog_appendLog</a></div><div class="ttdeci">static int shiplog_appendLog(lua_State *L)</div><div class="ttdoc">Appends to the shiplog.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__shiplog_8c_source.html#l00132">nlua_shiplog.c:132</a></div></div>
+<div class="ttc" id="anlua__shiplog_8c_html_a423da0c41d81199ec39aafafb738901c"><div class="ttname"><a href="nlua__shiplog_8c.html#a423da0c41d81199ec39aafafb738901c">shiplog_appendLog</a></div><div class="ttdeci">static int shiplog_appendLog(lua_State *L)</div><div class="ttdoc">Appends to the shiplog.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__shiplog_8c_source.html#l00123">nlua_shiplog.c:123</a></div></div>
 <div class="ttc" id="anlua__shiplog_8c_html_aee9b3eaee0147f54a182b25b1a8d6e6e"><div class="ttname"><a href="nlua__shiplog_8c.html#aee9b3eaee0147f54a182b25b1a8d6e6e">shiplog_createLog</a></div><div class="ttdeci">static int shiplog_createLog(lua_State *L)</div><div class="ttdoc">Bindings for adding log entries to the ship log.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__shiplog_8c_source.html#l00098">nlua_shiplog.c:98</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
