@@ -255,51 +255,47 @@ $(function() {
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;   <span class="keywordtype">char</span> nt[64];</div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   <span class="comment">/* Defaults. */</span></div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = 2;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160; </div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   top = lua_gettop(L);</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <span class="keywordflow">if</span> ((top &gt; 0) &amp;&amp; !lua_isnil(L,1))</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      t = <a class="code" href="nlua__time_8c.html#aef1ea965c1c55e102b8610f97c5edbb5">luaL_validtime</a>(L,1);</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      t = <a class="code" href="ntime_8c.html#a261e90cc23cfdea5de3a2568508528b9">ntime_get</a>();</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   <span class="keywordflow">if</span> (top &gt; 1)</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;      <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = luaL_checkint(L,2);</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;   <span class="comment">/* Push string. */</span></div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;   <a class="code" href="ntime_8c.html#a8b4f29712b6ddfa0dfea45e455b6b289">ntime_prettyBuf</a>( nt, <span class="keyword">sizeof</span>(nt), t, <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> );</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;   lua_pushstring(L, nt);</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;}</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160; </div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160; </div>
-<div class="line"><a name="l00390"></a><span class="lineno"><a class="line" href="nlua__time_8c.html#aaecb7d8a1a04f46cba55f948f24b5316">  390</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__time_8c.html#aaecb7d8a1a04f46cba55f948f24b5316">time_inc</a>( lua_State *L )</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;{</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;   <a class="code" href="ntime_8c.html#a6c36a00020524fdd13d3c46cb110a942">ntime_inc</a>( <a class="code" href="nlua__time_8c.html#aef1ea965c1c55e102b8610f97c5edbb5">luaL_validtime</a>(L,1) );</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;}</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160; </div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
-<div class="line"><a name="l00409"></a><span class="lineno"><a class="line" href="nlua__time_8c.html#af01b5af0b49da8c5813a0056373e9537">  409</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__time_8c.html#af01b5af0b49da8c5813a0056373e9537">time_tonumber</a>( lua_State *L )</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;{</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;   ntime_t t = <a class="code" href="nlua__time_8c.html#aef1ea965c1c55e102b8610f97c5edbb5">luaL_validtime</a>(L,1);</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;   lua_pushnumber( L, t );</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;}</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160; </div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160; </div>
-<div class="line"><a name="l00428"></a><span class="lineno"><a class="line" href="nlua__time_8c.html#ad671469ad1d5b0b1f9d57c24bf82889c">  428</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__time_8c.html#ad671469ad1d5b0b1f9d57c24bf82889c">time_fromnumber</a>( lua_State *L )</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;{</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;   ntime_t t;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;   t = (ntime_t) luaL_checknumber(L,1);</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;   <a class="code" href="nlua__time_8c.html#a646c743fc4fb0107ee90b2d426888963">lua_pushtime</a>( L, t );</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;}</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160; </div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160; </div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160; </div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   top = lua_gettop(L);</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   <span class="keywordflow">if</span> ((top &gt; 0) &amp;&amp; !lua_isnil(L,1))</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;      t = <a class="code" href="nlua__time_8c.html#aef1ea965c1c55e102b8610f97c5edbb5">luaL_validtime</a>(L,1);</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;      t = <a class="code" href="ntime_8c.html#a261e90cc23cfdea5de3a2568508528b9">ntime_get</a>();</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = luaL_optinteger(L,2,2); <span class="comment">/* Defaults to 2 decimals. */</span></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;   <span class="comment">/* Push string. */</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   <a class="code" href="ntime_8c.html#a8b4f29712b6ddfa0dfea45e455b6b289">ntime_prettyBuf</a>( nt, <span class="keyword">sizeof</span>(nt), t, <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> );</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;   lua_pushstring(L, nt);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;}</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160; </div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
+<div class="line"><a name="l00386"></a><span class="lineno"><a class="line" href="nlua__time_8c.html#aaecb7d8a1a04f46cba55f948f24b5316">  386</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__time_8c.html#aaecb7d8a1a04f46cba55f948f24b5316">time_inc</a>( lua_State *L )</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;{</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;   <a class="code" href="ntime_8c.html#a6c36a00020524fdd13d3c46cb110a942">ntime_inc</a>( <a class="code" href="nlua__time_8c.html#aef1ea965c1c55e102b8610f97c5edbb5">luaL_validtime</a>(L,1) );</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;}</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160; </div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
+<div class="line"><a name="l00405"></a><span class="lineno"><a class="line" href="nlua__time_8c.html#af01b5af0b49da8c5813a0056373e9537">  405</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__time_8c.html#af01b5af0b49da8c5813a0056373e9537">time_tonumber</a>( lua_State *L )</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;{</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;   ntime_t t = <a class="code" href="nlua__time_8c.html#aef1ea965c1c55e102b8610f97c5edbb5">luaL_validtime</a>(L,1);</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;   lua_pushnumber( L, t );</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;}</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160; </div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160; </div>
+<div class="line"><a name="l00424"></a><span class="lineno"><a class="line" href="nlua__time_8c.html#ad671469ad1d5b0b1f9d57c24bf82889c">  424</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__time_8c.html#ad671469ad1d5b0b1f9d57c24bf82889c">time_fromnumber</a>( lua_State *L )</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;{</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;   ntime_t t;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;   t = (ntime_t) luaL_checknumber(L,1);</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;   <a class="code" href="nlua__time_8c.html#a646c743fc4fb0107ee90b2d426888963">lua_pushtime</a>( L, t );</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;}</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160; </div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__time_8c_html_a646c743fc4fb0107ee90b2d426888963"><div class="ttname"><a href="nlua__time_8c.html#a646c743fc4fb0107ee90b2d426888963">lua_pushtime</a></div><div class="ttdeci">ntime_t * lua_pushtime(lua_State *L, ntime_t time)</div><div class="ttdoc">Pushes a time on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00131">nlua_time.c:131</a></div></div>
 <div class="ttc" id="antime_8c_html_a8b4f29712b6ddfa0dfea45e455b6b289"><div class="ttname"><a href="ntime_8c.html#a8b4f29712b6ddfa0dfea45e455b6b289">ntime_prettyBuf</a></div><div class="ttdeci">void ntime_prettyBuf(char *str, int max, ntime_t t, int d)</div><div class="ttdoc">Gets the time in a pretty human readable format filling a preset buffer.</div><div class="ttdef"><b>Definition:</b> <a href="ntime_8c_source.html#l00205">ntime.c:205</a></div></div>
@@ -310,18 +306,18 @@ $(function() {
 <div class="ttc" id="anlua__time_8c_html_a87aa24ea73ca9c4f4fa4f0772d98b273"><div class="ttname"><a href="nlua__time_8c.html#a87aa24ea73ca9c4f4fa4f0772d98b273">lua_istime</a></div><div class="ttdeci">int lua_istime(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a time.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00147">nlua_time.c:147</a></div></div>
 <div class="ttc" id="arng_8c_html_a5e71a6e0c14542f60c8007edc2eaf286"><div class="ttname"><a href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a></div><div class="ttdeci">static const double d[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00290">rng.c:290</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_ad5e702792533c1b2034965102edbb9cd"><div class="ttname"><a href="nlua__time_8c.html#ad5e702792533c1b2034965102edbb9cd">time_methods</a></div><div class="ttdeci">static const luaL_Reg time_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00039">nlua_time.c:39</a></div></div>
-<div class="ttc" id="anlua__time_8c_html_af01b5af0b49da8c5813a0056373e9537"><div class="ttname"><a href="nlua__time_8c.html#af01b5af0b49da8c5813a0056373e9537">time_tonumber</a></div><div class="ttdeci">static int time_tonumber(lua_State *L)</div><div class="ttdoc">Gets a number representing this time.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00409">nlua_time.c:409</a></div></div>
+<div class="ttc" id="anlua__time_8c_html_af01b5af0b49da8c5813a0056373e9537"><div class="ttname"><a href="nlua__time_8c.html#af01b5af0b49da8c5813a0056373e9537">time_tonumber</a></div><div class="ttdeci">static int time_tonumber(lua_State *L)</div><div class="ttdoc">Gets a number representing this time.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00405">nlua_time.c:405</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_a8438e6c876a5f9c45380aa348283d9db"><div class="ttname"><a href="nlua__time_8c.html#a8438e6c876a5f9c45380aa348283d9db">time_str</a></div><div class="ttdeci">static int time_str(lua_State *L)</div><div class="ttdoc">Converts the time to a pretty human readable format.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00356">nlua_time.c:356</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_a5c607e8b59b44e113e4360e51f49c9ea"><div class="ttname"><a href="nlua__time_8c.html#a5c607e8b59b44e113e4360e51f49c9ea">time_get</a></div><div class="ttdeci">static int time_get(lua_State *L)</div><div class="ttdoc">Gets the current time in internal representation time.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00338">nlua_time.c:338</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="antime_8c_html_a0c1f06bbf4516b2b6f908e8a4f9aa86b"><div class="ttname"><a href="ntime_8c.html#a0c1f06bbf4516b2b6f908e8a4f9aa86b">ntime_create</a></div><div class="ttdeci">ntime_t ntime_create(int scu, int stp, int stu)</div><div class="ttdoc">Creates a time structure.</div><div class="ttdef"><b>Definition:</b> <a href="ntime_8c_source.html#l00101">ntime.c:101</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_a98f15fb6d6e43f176aa298a49fdaf443"><div class="ttname"><a href="nlua__time_8c.html#a98f15fb6d6e43f176aa298a49fdaf443">time_create</a></div><div class="ttdeci">static int time_create(lua_State *L)</div><div class="ttdoc">Creates a time. This can be absolute or relative.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00175">nlua_time.c:175</a></div></div>
-<div class="ttc" id="anlua__time_8c_html_ad671469ad1d5b0b1f9d57c24bf82889c"><div class="ttname"><a href="nlua__time_8c.html#ad671469ad1d5b0b1f9d57c24bf82889c">time_fromnumber</a></div><div class="ttdeci">static int time_fromnumber(lua_State *L)</div><div class="ttdoc">Creates a time from a number representing it.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00428">nlua_time.c:428</a></div></div>
+<div class="ttc" id="anlua__time_8c_html_ad671469ad1d5b0b1f9d57c24bf82889c"><div class="ttname"><a href="nlua__time_8c.html#ad671469ad1d5b0b1f9d57c24bf82889c">time_fromnumber</a></div><div class="ttdeci">static int time_fromnumber(lua_State *L)</div><div class="ttdoc">Creates a time from a number representing it.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00424">nlua_time.c:424</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_a6f5904c3a945e94d361c1d9ce473d4dd"><div class="ttname"><a href="nlua__time_8c.html#a6f5904c3a945e94d361c1d9ce473d4dd">time_le</a></div><div class="ttdeci">static int time_le(lua_State *L)</div><div class="ttdoc">Checks to see if a time is larger or equal to another.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00322">nlua_time.c:322</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_a7581d82cbac024f06bb03b454e262084"><div class="ttname"><a href="nlua__time_8c.html#a7581d82cbac024f06bb03b454e262084">nlua_loadTime</a></div><div class="ttdeci">int nlua_loadTime(nlua_env env)</div><div class="ttdoc">Loads the Time Lua library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00064">nlua_time.c:64</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_a4f5bc67d450d28d832b6d29145c4a5a2"><div class="ttname"><a href="nlua__time_8c.html#a4f5bc67d450d28d832b6d29145c4a5a2">time_lt</a></div><div class="ttdeci">static int time_lt(lua_State *L)</div><div class="ttdoc">Checks to see if a time is strictly larger than another.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00304">nlua_time.c:304</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_a4bd8f3dd9ce23715bd61b6175bf51e9e"><div class="ttname"><a href="nlua__time_8c.html#a4bd8f3dd9ce23715bd61b6175bf51e9e">time_add</a></div><div class="ttdeci">static int time_add(lua_State *L)</div><div class="ttdoc">Adds two time metatables.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00199">nlua_time.c:199</a></div></div>
-<div class="ttc" id="anlua__time_8c_html_aaecb7d8a1a04f46cba55f948f24b5316"><div class="ttname"><a href="nlua__time_8c.html#aaecb7d8a1a04f46cba55f948f24b5316">time_inc</a></div><div class="ttdeci">static int time_inc(lua_State *L)</div><div class="ttdoc">Increases or decreases the time.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00390">nlua_time.c:390</a></div></div>
+<div class="ttc" id="anlua__time_8c_html_aaecb7d8a1a04f46cba55f948f24b5316"><div class="ttname"><a href="nlua__time_8c.html#aaecb7d8a1a04f46cba55f948f24b5316">time_inc</a></div><div class="ttdeci">static int time_inc(lua_State *L)</div><div class="ttdoc">Increases or decreases the time.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00386">nlua_time.c:386</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_ae05328bd635b41c1c4e50c380e8438b4"><div class="ttname"><a href="nlua__time_8c.html#ae05328bd635b41c1c4e50c380e8438b4">time_sub</a></div><div class="ttdeci">static int time_sub(lua_State *L)</div><div class="ttdoc">Subtracts two time metatables.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00242">nlua_time.c:242</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_aed3b53fc83c7aaa9dfb583f29688506f"><div class="ttname"><a href="nlua__time_8c.html#aed3b53fc83c7aaa9dfb583f29688506f">lua_totime</a></div><div class="ttdeci">ntime_t * lua_totime(lua_State *L, int ind)</div><div class="ttdoc">Bindings for interacting with the time.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00095">nlua_time.c:95</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_aef1ea965c1c55e102b8610f97c5edbb5"><div class="ttname"><a href="nlua__time_8c.html#aef1ea965c1c55e102b8610f97c5edbb5">luaL_validtime</a></div><div class="ttdeci">ntime_t luaL_validtime(lua_State *L, int ind)</div><div class="ttdoc">Gets a time directly.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00120">nlua_time.c:120</a></div></div>
