@@ -603,243 +603,191 @@ $(function() {
 <div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;}</div>
 <div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160; </div>
 <div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160; </div>
-<div class="line"><a name="l00675"></a><span class="lineno"><a class="line" href="shipstats_8c.html#a77554d55872df0daaddff4d97b88f7e8">  675</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="shipstats_8c.html#a77554d55872df0daaddff4d97b88f7e8">ss_csv</a>( <span class="keyword">const</span> ShipStats *s, <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keywordtype">int</span> len )</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;{</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;   <span class="keywordtype">int</span> i, l, left, num;</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;   <span class="keywordtype">double</span> dbl;</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;   <span class="keywordtype">char</span> *ptr;</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;   <span class="keyword">const</span> ShipStatsLookup *sl;</div>
+<div class="line"><a name="l00672"></a><span class="lineno"><a class="line" href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">  672</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">ss_free</a>( ShipStatList *ll )</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;{</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;   <span class="keywordflow">while</span> (ll != NULL) {</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;      ShipStatList *tmp = ll;</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;      ll = ll-&gt;next;</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;      free(tmp);</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;   }</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;}</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160; </div>
 <div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160; </div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;   l = 0;</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;   ptr = (<span class="keywordtype">char</span>*) s;</div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;SS_TYPE_SENTINEL; i++) {</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;      sl = &amp;<a class="code" href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a>[ i ];</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160; </div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;      <span class="comment">/* Only want valid names. */</span></div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;      <span class="keywordflow">if</span> (sl-&gt;name == NULL)</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160; </div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;      <span class="comment">/* Calculate offset left. */</span></div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;      left = len - l;</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;      <span class="keywordflow">if</span> (left &lt; 0) {</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;         WARN(_(<span class="stringliteral">&quot;Buffer out of space, CSV output truncated&quot;</span>));</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;      }</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160; </div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;      <span class="keywordflow">if</span> (s == NULL) {</div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;         l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], left, <span class="stringliteral">&quot;%s,&quot;</span>, sl-&gt;name );</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;      }</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160; </div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;      <span class="keywordflow">switch</span> (sl-&gt;data) {</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;         <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52dad42f7baed76bbc06c3137bd0b7a60ead">SS_DATA_TYPE_DOUBLE</a>:</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;            memcpy(&amp;dbl, &amp;ptr[ sl-&gt;offset ], <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;            l  += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], left, <span class="stringliteral">&quot;%f,&quot;</span>, (dbl - 1.) * 100. );</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160; </div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;         <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da2842fc868ce59f0f86a8391e7203055d">SS_DATA_TYPE_DOUBLE_ABSOLUTE</a>:</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;            memcpy(&amp;dbl, &amp;ptr[ sl-&gt;offset ], <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            l  += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], left, <span class="stringliteral">&quot;%f,&quot;</span>, dbl );</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;         <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da53e1b7bb2ed25bf4c987c73f70ed6099">SS_DATA_TYPE_INTEGER</a>:</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;         <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da480e9eba552a60f696a9998ebabe968f">SS_DATA_TYPE_BOOLEAN</a>:</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;            memcpy(&amp;num, &amp;ptr[ sl-&gt;offset ], <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;            l  += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], left, <span class="stringliteral">&quot;%d,&quot;</span>, num );</div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;      }</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   }</div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160; </div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;   <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l-1] = <span class="charliteral">&#39;\n&#39;</span>; <span class="comment">/* Terminate with a newline. */</span></div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   <span class="keywordflow">return</span> l;</div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;}</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160; </div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160; </div>
-<div class="line"><a name="l00732"></a><span class="lineno"><a class="line" href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">  732</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">ss_free</a>( ShipStatList *ll )</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;{</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;   <span class="keywordflow">while</span> (ll != NULL) {</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;      ShipStatList *tmp = ll;</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;      ll = ll-&gt;next;</div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;      free(tmp);</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;   }</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160; </div>
+<div class="line"><a name="l00686"></a><span class="lineno"><a class="line" href="shipstats_8c.html#ac023a2d78c2ab3bc0fbb669d7adec88a">  686</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="shipstats_8c.html#ac023a2d78c2ab3bc0fbb669d7adec88a">ss_statsSet</a>( ShipStats *s, <span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keywordtype">double</span> value, <span class="keywordtype">int</span> overwrite )</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;{</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;   <span class="keyword">const</span> ShipStatsLookup *sl;</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;   ShipStatsType type;</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;   <span class="keywordtype">char</span> *ptr;</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;   <span class="keywordtype">double</span> *destdbl;</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;   <span class="keywordtype">int</span> *destint;</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;   <span class="keywordtype">double</span> v;</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160; </div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;   type = <a class="code" href="shipstats_8c.html#a8d020e1ecd7f98c90897e78c1ce2ec25">ss_typeFromName</a>( name );</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   <span class="keywordflow">if</span> (type == SS_TYPE_NIL) {</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unknown ship stat type &#39;%s&#39;!&quot;</span>), name );</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;   }</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160; </div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;   sl = &amp;<a class="code" href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a>[ type ];</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;   ptr = (<span class="keywordtype">char</span>*) s;</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;   <span class="keywordflow">switch</span> (sl-&gt;data) {</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52dad42f7baed76bbc06c3137bd0b7a60ead">SS_DATA_TYPE_DOUBLE</a>:</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;         destdbl = (<span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;         v = 1.0 + value / 100.;</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;         if (overwrite)</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;            *destdbl = v;</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;            *destdbl *= v;</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da2842fc868ce59f0f86a8391e7203055d">SS_DATA_TYPE_DOUBLE_ABSOLUTE</a>:</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;         destdbl  = (<span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;         if (overwrite)</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;            *destdbl = value;</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;            *destdbl += value;</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160; </div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da480e9eba552a60f696a9998ebabe968f">SS_DATA_TYPE_BOOLEAN</a>:</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;         destint  = (<span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;         if (overwrite)</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;            *destint = !(fabs(value) &gt; 1e-5);</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;            *destint |= !(fabs(value) &gt; 1e-5);</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160; </div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da53e1b7bb2ed25bf4c987c73f70ed6099">SS_DATA_TYPE_INTEGER</a>:</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;         destint  = (<span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;         if (overwrite)</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;            *destint = round(value);</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;            *destint += round(value);</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;   }</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160; </div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;   <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;}</div>
 <div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160; </div>
 <div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160; </div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160; </div>
-<div class="line"><a name="l00746"></a><span class="lineno"><a class="line" href="shipstats_8c.html#ac023a2d78c2ab3bc0fbb669d7adec88a">  746</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="shipstats_8c.html#ac023a2d78c2ab3bc0fbb669d7adec88a">ss_statsSet</a>( ShipStats *s, <span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keywordtype">double</span> value, <span class="keywordtype">int</span> overwrite )</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;{</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;   <span class="keyword">const</span> ShipStatsLookup *sl;</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   ShipStatsType type;</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;   <span class="keywordtype">char</span> *ptr;</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;   <span class="keywordtype">double</span> *destdbl;</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;   <span class="keywordtype">int</span> *destint;</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;   <span class="keywordtype">double</span> v;</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160; </div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   type = <a class="code" href="shipstats_8c.html#a8d020e1ecd7f98c90897e78c1ce2ec25">ss_typeFromName</a>( name );</div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;   <span class="keywordflow">if</span> (type == SS_TYPE_NIL) {</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unknown ship stat type &#39;%s&#39;!&quot;</span>), name );</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;   }</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160; </div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   sl = &amp;<a class="code" href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a>[ type ];</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;   ptr = (<span class="keywordtype">char</span>*) s;</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;   <span class="keywordflow">switch</span> (sl-&gt;data) {</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52dad42f7baed76bbc06c3137bd0b7a60ead">SS_DATA_TYPE_DOUBLE</a>:</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;         destdbl = (<span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;         v = 1.0 + value / 100.;</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;         if (overwrite)</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;            *destdbl = v;</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;            *destdbl *= v;</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160; </div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da2842fc868ce59f0f86a8391e7203055d">SS_DATA_TYPE_DOUBLE_ABSOLUTE</a>:</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;         destdbl  = (<span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;         if (overwrite)</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;            *destdbl = value;</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;            *destdbl += value;</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160; </div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da480e9eba552a60f696a9998ebabe968f">SS_DATA_TYPE_BOOLEAN</a>:</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;         destint  = (<span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;         if (overwrite)</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;            *destint = !(fabs(value) &gt; 1e-5);</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;            *destint |= !(fabs(value) &gt; 1e-5);</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160; </div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da53e1b7bb2ed25bf4c987c73f70ed6099">SS_DATA_TYPE_INTEGER</a>:</div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;         destint  = (<span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;         if (overwrite)</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;            *destint = round(value);</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;            *destint += round(value);</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   }</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160; </div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;}</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160; </div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160; </div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;<span class="keyword">static</span> <span class="keywordtype">double</span> ss_statsGetInternal( <span class="keyword">const</span> ShipStats *s, ShipStatsType type )</div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;{</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;   <span class="keyword">const</span> ShipStatsLookup *sl;</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *ptr;</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> *destdbl;</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">int</span> *destint;</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160; </div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;   sl = &amp;<a class="code" href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a>[ type ];</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;   ptr = (<span class="keyword">const</span> <span class="keywordtype">char</span>*) s;</div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;   <span class="keywordflow">switch</span> (sl-&gt;data) {</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52dad42f7baed76bbc06c3137bd0b7a60ead">SS_DATA_TYPE_DOUBLE</a>:</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;         destdbl = (<span class="keyword">const</span> <span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;         <span class="keywordflow">return</span> 100.*((*destdbl) - 1.0);</div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160; </div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da2842fc868ce59f0f86a8391e7203055d">SS_DATA_TYPE_DOUBLE_ABSOLUTE</a>:</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;         destdbl  = (<span class="keyword">const</span> <span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;         <span class="keywordflow">return</span> *destdbl;</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160; </div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da480e9eba552a60f696a9998ebabe968f">SS_DATA_TYPE_BOOLEAN</a>:</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da53e1b7bb2ed25bf4c987c73f70ed6099">SS_DATA_TYPE_INTEGER</a>:</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;         destint  = (<span class="keyword">const</span> <span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;         <span class="keywordflow">return</span> *destint;</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   }</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   <span class="keywordflow">return</span> 0.;</div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;}</div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160; </div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160; </div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> ss_statsGetLuaInternal( lua_State *L, <span class="keyword">const</span> ShipStats *s, ShipStatsType type, <span class="keywordtype">int</span> <span class="keyword">internal</span> )</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;{</div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;   <span class="keyword">const</span> ShipStatsLookup *sl;</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *ptr;</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> *destdbl;</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">int</span> *destint;</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160; </div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;   sl = &amp;<a class="code" href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a>[ type ];</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;   ptr = (<span class="keyword">const</span> <span class="keywordtype">char</span>*) s;</div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;   <span class="keywordflow">switch</span> (sl-&gt;data) {</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52dad42f7baed76bbc06c3137bd0b7a60ead">SS_DATA_TYPE_DOUBLE</a>:</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;         destdbl = (<span class="keyword">const</span> <span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;         if (<span class="keyword">internal</span>)</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;            lua_pushnumber(L, *destdbl );</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;            lua_pushnumber(L, 100.*((*destdbl) - 1.0) );</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160; </div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da2842fc868ce59f0f86a8391e7203055d">SS_DATA_TYPE_DOUBLE_ABSOLUTE</a>:</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;         destdbl  = (<span class="keyword">const</span> <span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;         lua_pushnumber(L, *destdbl);</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;<span class="keyword">static</span> <span class="keywordtype">double</span> ss_statsGetInternal( <span class="keyword">const</span> ShipStats *s, ShipStatsType type )</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;{</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   <span class="keyword">const</span> ShipStatsLookup *sl;</div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *ptr;</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> *destdbl;</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">int</span> *destint;</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160; </div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   sl = &amp;<a class="code" href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a>[ type ];</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;   ptr = (<span class="keyword">const</span> <span class="keywordtype">char</span>*) s;</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;   <span class="keywordflow">switch</span> (sl-&gt;data) {</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52dad42f7baed76bbc06c3137bd0b7a60ead">SS_DATA_TYPE_DOUBLE</a>:</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;         destdbl = (<span class="keyword">const</span> <span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;         <span class="keywordflow">return</span> 100.*((*destdbl) - 1.0);</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160; </div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da2842fc868ce59f0f86a8391e7203055d">SS_DATA_TYPE_DOUBLE_ABSOLUTE</a>:</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;         destdbl  = (<span class="keyword">const</span> <span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;         <span class="keywordflow">return</span> *destdbl;</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160; </div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da480e9eba552a60f696a9998ebabe968f">SS_DATA_TYPE_BOOLEAN</a>:</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da53e1b7bb2ed25bf4c987c73f70ed6099">SS_DATA_TYPE_INTEGER</a>:</div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;         destint  = (<span class="keyword">const</span> <span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;         <span class="keywordflow">return</span> *destint;</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;   }</div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;   <span class="keywordflow">return</span> 0.;</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;}</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160; </div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> ss_statsGetLuaInternal( lua_State *L, <span class="keyword">const</span> ShipStats *s, ShipStatsType type, <span class="keywordtype">int</span> <span class="keyword">internal</span> )</div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;{</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;   <span class="keyword">const</span> ShipStatsLookup *sl;</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *ptr;</div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> *destdbl;</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">int</span> *destint;</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160; </div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   sl = &amp;<a class="code" href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a>[ type ];</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;   ptr = (<span class="keyword">const</span> <span class="keywordtype">char</span>*) s;</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   <span class="keywordflow">switch</span> (sl-&gt;data) {</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52dad42f7baed76bbc06c3137bd0b7a60ead">SS_DATA_TYPE_DOUBLE</a>:</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;         destdbl = (<span class="keyword">const</span> <span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;         if (<span class="keyword">internal</span>)</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;            lua_pushnumber(L, *destdbl );</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;            lua_pushnumber(L, 100.*((*destdbl) - 1.0) );</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160; </div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da2842fc868ce59f0f86a8391e7203055d">SS_DATA_TYPE_DOUBLE_ABSOLUTE</a>:</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;         destdbl  = (<span class="keyword">const</span> <span class="keywordtype">double</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;         lua_pushnumber(L, *destdbl);</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160; </div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da480e9eba552a60f696a9998ebabe968f">SS_DATA_TYPE_BOOLEAN</a>:</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;         destint  = (<span class="keyword">const</span> <span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;         lua_pushboolean(L, *destint);</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160; </div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da53e1b7bb2ed25bf4c987c73f70ed6099">SS_DATA_TYPE_INTEGER</a>:</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;         destint  = (<span class="keyword">const</span> <span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;         lua_pushinteger(L, *destint);</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;   }</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;   lua_pushnil(L);</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;   <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;}</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160; </div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160; </div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160; </div>
+<div class="line"><a name="l00811"></a><span class="lineno"><a class="line" href="shipstats_8c.html#ab269500d0b1bf25a199ad004377cfdf3">  811</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="shipstats_8c.html#ab269500d0b1bf25a199ad004377cfdf3">ss_statsGet</a>( <span class="keyword">const</span> ShipStats *s, <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;{</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;   ShipStatsType type;</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160; </div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;   type = <a class="code" href="shipstats_8c.html#a8d020e1ecd7f98c90897e78c1ce2ec25">ss_typeFromName</a>( name );</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;   <span class="keywordflow">if</span> (type == SS_TYPE_NIL) {</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unknown ship stat type &#39;%s&#39;!&quot;</span>), name );</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   }</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160; </div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   <span class="keywordflow">return</span> ss_statsGetInternal( s, type );</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;}</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160; </div>
+<div class="line"><a name="l00827"></a><span class="lineno"><a class="line" href="shipstats_8c.html#a33781de4a7e7c4cb1fa0031cb4d73212">  827</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="shipstats_8c.html#a33781de4a7e7c4cb1fa0031cb4d73212">ss_statsGetLua</a>( lua_State *L, <span class="keyword">const</span> ShipStats *s, <span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keywordtype">int</span> <span class="keyword">internal</span> )</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;{</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;   ShipStatsType type;</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160; </div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;   <span class="keywordflow">if</span> (name==NULL)</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="shipstats_8c.html#ad03b8087e23214cb1b5dbeb64a5d2d1a">ss_statsGetLuaTable</a>( L, s, <span class="keyword">internal</span> );</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160; </div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;   type = <a class="code" href="shipstats_8c.html#a8d020e1ecd7f98c90897e78c1ce2ec25">ss_typeFromName</a>( name );</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;   <span class="keywordflow">if</span> (type == SS_TYPE_NIL) {</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unknown ship stat type &#39;%s&#39;!&quot;</span>), name );</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;   }</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160; </div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;   <span class="keywordflow">return</span> ss_statsGetLuaInternal( L, s, type, <span class="keyword">internal</span> );</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;}</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160; </div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160; </div>
+<div class="line"><a name="l00847"></a><span class="lineno"><a class="line" href="shipstats_8c.html#ad03b8087e23214cb1b5dbeb64a5d2d1a">  847</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="shipstats_8c.html#ad03b8087e23214cb1b5dbeb64a5d2d1a">ss_statsGetLuaTable</a>( lua_State *L, <span class="keyword">const</span> ShipStats *s, <span class="keywordtype">int</span> <span class="keyword">internal</span> )</div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;{</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;   <span class="keyword">const</span> ShipStatsLookup *sl;</div>
 <div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160; </div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da480e9eba552a60f696a9998ebabe968f">SS_DATA_TYPE_BOOLEAN</a>:</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;         destint  = (<span class="keyword">const</span> <span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;         lua_pushboolean(L, *destint);</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;   lua_newtable(L);</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160; </div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;SS_TYPE_SENTINEL; i++) {</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;      sl = &amp;<a class="code" href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a>[ i ];</div>
 <div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160; </div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;      <span class="keywordflow">case</span> <a class="code" href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da53e1b7bb2ed25bf4c987c73f70ed6099">SS_DATA_TYPE_INTEGER</a>:</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;         destint  = (<span class="keyword">const</span> <span class="keywordtype">int</span>*) &amp;ptr[ sl-&gt;offset ];</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;         lua_pushinteger(L, *destint);</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;   }</div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;   lua_pushnil(L);</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;   <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;}</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160; </div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;      <span class="comment">/* Only want valid names. */</span></div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;      <span class="keywordflow">if</span> (sl-&gt;name == NULL)</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160; </div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;      <span class="comment">/* Push name and get value. */</span></div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;      lua_pushstring(L, sl-&gt;name);</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;      ss_statsGetLuaInternal( L, s, i, <span class="keyword">internal</span> );</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;      lua_rawset( L, -3 );</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;   }</div>
 <div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160; </div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160; </div>
-<div class="line"><a name="l00871"></a><span class="lineno"><a class="line" href="shipstats_8c.html#ab269500d0b1bf25a199ad004377cfdf3">  871</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="shipstats_8c.html#ab269500d0b1bf25a199ad004377cfdf3">ss_statsGet</a>( <span class="keyword">const</span> ShipStats *s, <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;{</div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;   ShipStatsType type;</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160; </div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;   type = <a class="code" href="shipstats_8c.html#a8d020e1ecd7f98c90897e78c1ce2ec25">ss_typeFromName</a>( name );</div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;   <span class="keywordflow">if</span> (type == SS_TYPE_NIL) {</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unknown ship stat type &#39;%s&#39;!&quot;</span>), name );</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;   }</div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160; </div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;   <span class="keywordflow">return</span> ss_statsGetInternal( s, type );</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;}</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160; </div>
-<div class="line"><a name="l00887"></a><span class="lineno"><a class="line" href="shipstats_8c.html#a33781de4a7e7c4cb1fa0031cb4d73212">  887</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="shipstats_8c.html#a33781de4a7e7c4cb1fa0031cb4d73212">ss_statsGetLua</a>( lua_State *L, <span class="keyword">const</span> ShipStats *s, <span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keywordtype">int</span> <span class="keyword">internal</span> )</div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;{</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;   ShipStatsType type;</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160; </div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;   <span class="keywordflow">if</span> (name==NULL)</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="shipstats_8c.html#ad03b8087e23214cb1b5dbeb64a5d2d1a">ss_statsGetLuaTable</a>( L, s, <span class="keyword">internal</span> );</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160; </div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;   type = <a class="code" href="shipstats_8c.html#a8d020e1ecd7f98c90897e78c1ce2ec25">ss_typeFromName</a>( name );</div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   <span class="keywordflow">if</span> (type == SS_TYPE_NIL) {</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unknown ship stat type &#39;%s&#39;!&quot;</span>), name );</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;   }</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160; </div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;   <span class="keywordflow">return</span> ss_statsGetLuaInternal( L, s, type, <span class="keyword">internal</span> );</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;}</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160; </div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160; </div>
-<div class="line"><a name="l00907"></a><span class="lineno"><a class="line" href="shipstats_8c.html#ad03b8087e23214cb1b5dbeb64a5d2d1a">  907</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="shipstats_8c.html#ad03b8087e23214cb1b5dbeb64a5d2d1a">ss_statsGetLuaTable</a>( lua_State *L, <span class="keyword">const</span> ShipStats *s, <span class="keywordtype">int</span> <span class="keyword">internal</span> )</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;{</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   <span class="keyword">const</span> ShipStatsLookup *sl;</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160; </div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;   lua_newtable(L);</div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160; </div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;SS_TYPE_SENTINEL; i++) {</div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;      sl = &amp;<a class="code" href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a>[ i ];</div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160; </div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;      <span class="comment">/* Only want valid names. */</span></div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;      <span class="keywordflow">if</span> (sl-&gt;name == NULL)</div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160; </div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;      <span class="comment">/* Push name and get value. */</span></div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;      lua_pushstring(L, sl-&gt;name);</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;      ss_statsGetLuaInternal( L, s, i, <span class="keyword">internal</span> );</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;      lua_rawset( L, -3 );</div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;   }</div>
-<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160; </div>
-<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;}</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="ashipstats_8c_html_abfa2c2992f08c6a5e4459241abc3f0db"><div class="ttname"><a href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a></div><div class="ttdeci">int ss_statsInit(ShipStats *stats)</div><div class="ttdoc">Initializes a stat structure.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00262">shipstats.c:262</a></div></div>
 <div class="ttc" id="astructShipStatsLookup___html_a479dc74fef27a74aacdeb06f471ab197"><div class="ttname"><a href="structShipStatsLookup__.html#a479dc74fef27a74aacdeb06f471ab197">ShipStatsLookup_::data</a></div><div class="ttdeci">StatDataType data</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00043">shipstats.c:43</a></div></div>
@@ -850,10 +798,9 @@ $(function() {
 <div class="ttc" id="astructShipStatsLookup___html_a7767595e7ebafcc8ecfad2a993cf5ae2"><div class="ttname"><a href="structShipStatsLookup__.html#a7767595e7ebafcc8ecfad2a993cf5ae2">ShipStatsLookup_::inverted</a></div><div class="ttdeci">int inverted</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00044">shipstats.c:44</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a34424c56df725134949b22cf113cf887"><div class="ttname"><a href="shipstats_8c.html#a34424c56df725134949b22cf113cf887">ss_printD_colour</a></div><div class="ttdeci">static const char * ss_printD_colour(double d, const ShipStatsLookup *sl)</div><div class="ttdoc">Some colour coding for ship stats doubles.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00472">shipstats.c:472</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a813774dec95a80b3a84a13bb1a9c1d1d"><div class="ttname"><a href="shipstats_8c.html#a813774dec95a80b3a84a13bb1a9c1d1d">ss_offsetFromType</a></div><div class="ttdeci">size_t ss_offsetFromType(ShipStatsType type)</div><div class="ttdoc">Gets the offset from type.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00445">shipstats.c:445</a></div></div>
-<div class="ttc" id="ashipstats_8c_html_a33781de4a7e7c4cb1fa0031cb4d73212"><div class="ttname"><a href="shipstats_8c.html#a33781de4a7e7c4cb1fa0031cb4d73212">ss_statsGetLua</a></div><div class="ttdeci">int ss_statsGetLua(lua_State *L, const ShipStats *s, const char *name, int internal)</div><div class="ttdoc">Gets a ship stat value by name and pushes it to Lua.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00887">shipstats.c:887</a></div></div>
-<div class="ttc" id="ashipstats_8c_html_ad03b8087e23214cb1b5dbeb64a5d2d1a"><div class="ttname"><a href="shipstats_8c.html#ad03b8087e23214cb1b5dbeb64a5d2d1a">ss_statsGetLuaTable</a></div><div class="ttdeci">int ss_statsGetLuaTable(lua_State *L, const ShipStats *s, int internal)</div><div class="ttdoc">Converts ship stats to a Lua table, which is pushed on the Lua stack.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00907">shipstats.c:907</a></div></div>
+<div class="ttc" id="ashipstats_8c_html_a33781de4a7e7c4cb1fa0031cb4d73212"><div class="ttname"><a href="shipstats_8c.html#a33781de4a7e7c4cb1fa0031cb4d73212">ss_statsGetLua</a></div><div class="ttdeci">int ss_statsGetLua(lua_State *L, const ShipStats *s, const char *name, int internal)</div><div class="ttdoc">Gets a ship stat value by name and pushes it to Lua.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00827">shipstats.c:827</a></div></div>
+<div class="ttc" id="ashipstats_8c_html_ad03b8087e23214cb1b5dbeb64a5d2d1a"><div class="ttname"><a href="shipstats_8c.html#ad03b8087e23214cb1b5dbeb64a5d2d1a">ss_statsGetLuaTable</a></div><div class="ttdeci">int ss_statsGetLuaTable(lua_State *L, const ShipStats *s, int internal)</div><div class="ttdoc">Converts ship stats to a Lua table, which is pushed on the Lua stack.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00847">shipstats.c:847</a></div></div>
 <div class="ttc" id="astructShipStatsLookup___html_a21dac2634991d7c95479ff5ef897788b"><div class="ttname"><a href="structShipStatsLookup__.html#a21dac2634991d7c95479ff5ef897788b">ShipStatsLookup_::name</a></div><div class="ttdeci">const char * name</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00041">shipstats.c:41</a></div></div>
-<div class="ttc" id="ashipstats_8c_html_a77554d55872df0daaddff4d97b88f7e8"><div class="ttname"><a href="shipstats_8c.html#a77554d55872df0daaddff4d97b88f7e8">ss_csv</a></div><div class="ttdeci">int ss_csv(const ShipStats *s, char *buf, int len)</div><div class="ttdoc">Generates CSV output for the given ship stats.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00675">shipstats.c:675</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a1d422ebc08d9740e56c54e2c3e9b4af1"><div class="ttname"><a href="shipstats_8c.html#a1d422ebc08d9740e56c54e2c3e9b4af1">ss_statsModFromList</a></div><div class="ttdeci">int ss_statsModFromList(ShipStats *stats, const ShipStatList *list)</div><div class="ttdoc">Updates a stat structure from a stat list.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00412">shipstats.c:412</a></div></div>
 <div class="ttc" id="arng_8c_html_a5e71a6e0c14542f60c8007edc2eaf286"><div class="ttname"><a href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a></div><div class="ttdeci">static const double d[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00290">rng.c:290</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a81ffbc3cd40c7fa3ecd122eb7738e52d"><div class="ttname"><a href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52d">StatDataType_</a></div><div class="ttdeci">StatDataType_</div><div class="ttdoc">The data type.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00025">shipstats.c:25</a></div></div>
@@ -865,14 +812,14 @@ $(function() {
 <div class="ttc" id="ashipstats_8c_html_a8bb2eebfe0ffdb09563b030faa18fb1d"><div class="ttname"><a href="shipstats_8c.html#a8bb2eebfe0ffdb09563b030faa18fb1d">ss_lookup</a></div><div class="ttdeci">static const ShipStatsLookup ss_lookup[]</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00081">shipstats.c:81</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a8dac71ba2d17ea15747e5538557779ef"><div class="ttname"><a href="shipstats_8c.html#a8dac71ba2d17ea15747e5538557779ef">ss_printB</a></div><div class="ttdeci">static int ss_printB(char *buf, int len, int newline, int b, const ShipStatsLookup *sl)</div><div class="ttdoc">Helper to print booleans.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00546">shipstats.c:546</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a8d020e1ecd7f98c90897e78c1ce2ec25"><div class="ttname"><a href="shipstats_8c.html#a8d020e1ecd7f98c90897e78c1ce2ec25">ss_typeFromName</a></div><div class="ttdeci">ShipStatsType ss_typeFromName(const char *name)</div><div class="ttdoc">Gets the type from the name.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00457">shipstats.c:457</a></div></div>
-<div class="ttc" id="ashipstats_8c_html_ac023a2d78c2ab3bc0fbb669d7adec88a"><div class="ttname"><a href="shipstats_8c.html#ac023a2d78c2ab3bc0fbb669d7adec88a">ss_statsSet</a></div><div class="ttdeci">int ss_statsSet(ShipStats *s, const char *name, double value, int overwrite)</div><div class="ttdoc">Sets a ship stat by name.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00746">shipstats.c:746</a></div></div>
+<div class="ttc" id="ashipstats_8c_html_ac023a2d78c2ab3bc0fbb669d7adec88a"><div class="ttname"><a href="shipstats_8c.html#ac023a2d78c2ab3bc0fbb669d7adec88a">ss_statsSet</a></div><div class="ttdeci">int ss_statsSet(ShipStats *s, const char *name, double value, int overwrite)</div><div class="ttdoc">Sets a ship stat by name.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00686">shipstats.c:686</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="ashipstats_8c_html_a13a02ebb994fb24c4cf5f41189df763f"><div class="ttname"><a href="shipstats_8c.html#a13a02ebb994fb24c4cf5f41189df763f">ss_listFromXML</a></div><div class="ttdeci">ShipStatList * ss_listFromXML(xmlNodePtr node)</div><div class="ttdoc">Creatse a shipstat list element from an xml node.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00199">shipstats.c:199</a></div></div>
 <div class="ttc" id="astructShipStatsLookup___html_aacf630b78f5efdd7df73357c996b0579"><div class="ttname"><a href="structShipStatsLookup__.html#aacf630b78f5efdd7df73357c996b0579">ShipStatsLookup_::type</a></div><div class="ttdeci">ShipStatsType type</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00040">shipstats.c:40</a></div></div>
 <div class="ttc" id="astructShipStatsLookup___html_ab1ece6822b6cbd56bd8a6fbc73e8dfcb"><div class="ttname"><a href="structShipStatsLookup__.html#ab1ece6822b6cbd56bd8a6fbc73e8dfcb">ShipStatsLookup_::offset</a></div><div class="ttdeci">size_t offset</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00049">shipstats.c:49</a></div></div>
-<div class="ttc" id="ashipstats_8c_html_ab269500d0b1bf25a199ad004377cfdf3"><div class="ttname"><a href="shipstats_8c.html#ab269500d0b1bf25a199ad004377cfdf3">ss_statsGet</a></div><div class="ttdeci">double ss_statsGet(const ShipStats *s, const char *name)</div><div class="ttdoc">Gets a ship stat value by name.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00871">shipstats.c:871</a></div></div>
+<div class="ttc" id="ashipstats_8c_html_ab269500d0b1bf25a199ad004377cfdf3"><div class="ttname"><a href="shipstats_8c.html#ab269500d0b1bf25a199ad004377cfdf3">ss_statsGet</a></div><div class="ttdeci">double ss_statsGet(const ShipStats *s, const char *name)</div><div class="ttdoc">Gets a ship stat value by name.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00811">shipstats.c:811</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a146b9b3ff4859efd40dd4e1fec098804"><div class="ttname"><a href="shipstats_8c.html#a146b9b3ff4859efd40dd4e1fec098804">ss_statsMerge</a></div><div class="ttdeci">int ss_statsMerge(ShipStats *dest, const ShipStats *src)</div><div class="ttdoc">Merges two different ship stats.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00307">shipstats.c:307</a></div></div>
-<div class="ttc" id="ashipstats_8c_html_a087d33fe46ccc83b95aff161016ee995"><div class="ttname"><a href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">ss_free</a></div><div class="ttdeci">void ss_free(ShipStatList *ll)</div><div class="ttdoc">Frees a list of ship stats.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00732">shipstats.c:732</a></div></div>
+<div class="ttc" id="ashipstats_8c_html_a087d33fe46ccc83b95aff161016ee995"><div class="ttname"><a href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">ss_free</a></div><div class="ttdeci">void ss_free(ShipStatList *ll)</div><div class="ttdoc">Frees a list of ship stats.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00672">shipstats.c:672</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a81ffbc3cd40c7fa3ecd122eb7738e52da2842fc868ce59f0f86a8391e7203055d"><div class="ttname"><a href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52da2842fc868ce59f0f86a8391e7203055d">SS_DATA_TYPE_DOUBLE_ABSOLUTE</a></div><div class="ttdeci">@ SS_DATA_TYPE_DOUBLE_ABSOLUTE</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00027">shipstats.c:27</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a81ffbc3cd40c7fa3ecd122eb7738e52dad42f7baed76bbc06c3137bd0b7a60ead"><div class="ttname"><a href="shipstats_8c.html#a81ffbc3cd40c7fa3ecd122eb7738e52dad42f7baed76bbc06c3137bd0b7a60ead">SS_DATA_TYPE_DOUBLE</a></div><div class="ttdeci">@ SS_DATA_TYPE_DOUBLE</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00026">shipstats.c:26</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_a952de344198f9dca87a8fec61d10c1ec"><div class="ttname"><a href="shipstats_8c.html#a952de344198f9dca87a8fec61d10c1ec">ss_nameFromType</a></div><div class="ttdeci">const char * ss_nameFromType(ShipStatsType type)</div><div class="ttdoc">Gets the name from type.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00433">shipstats.c:433</a></div></div>
