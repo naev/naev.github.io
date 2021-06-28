@@ -133,19 +133,31 @@
 	<td class="summary">Opens a new linopt.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_col">set_col (index, name, coefficient[, kind="real"[, lb=nil[, ub=nil]]])</a></td>
+	<td class="name" nowrap><a href="#size">size (lp)</a></td>
+	<td class="summary">Adds columns to the linear program.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#add_cols">add_cols (lp, cols)</a></td>
+	<td class="summary">Adds columns to the linear program.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#add_rows">add_rows (lp, rows)</a></td>
+	<td class="summary">Adds rows to the linear program.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_col">set_col (lp, index, name, coefficient[, kind="real"[, lb=nil[, ub=nil]]])</a></td>
 	<td class="summary">Adds an optimization column.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_row">set_row (index, name[, lb=nil[, ub=nil]])</a></td>
+	<td class="name" nowrap><a href="#set_row">set_row (lp, index, name[, lb=nil[, ub=nil]])</a></td>
 	<td class="summary">Adds an optimization row.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#load_matrix">load_matrix (row_indices, col_indices, coefficients)</a></td>
+	<td class="name" nowrap><a href="#load_matrix">load_matrix (lp, row_indices, col_indices, coefficients)</a></td>
 	<td class="summary">Loads the entire matrix for the linear program.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#solve">solve ()</a></td>
+	<td class="name" nowrap><a href="#solve">solve (lp)</a></td>
 	<td class="summary">Solves the linear optimization problem.</td>
 	</tr>
 </table>
@@ -251,8 +263,88 @@
 
 </dd>
     <dt>
+    <a name = "size"></a>
+    <strong>size (lp)</strong>
+    </dt>
+    <dd>
+    Adds columns to the linear program.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lp</span>
+            <span class="types"><span class="type">LinOpt</span></span>
+         Linear program to modify.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Number of columns in the linear program.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Number of rows in the linear program.</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "add_cols"></a>
+    <strong>add_cols (lp, cols)</strong>
+    </dt>
+    <dd>
+    Adds columns to the linear program.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lp</span>
+            <span class="types"><span class="type">LinOpt</span></span>
+         Linear program to modify.
+        </li>
+        <li><span class="parameter">cols</span>
+            <span class="types"><span class="type">number</span></span>
+         Number of columns to add.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "add_rows"></a>
+    <strong>add_rows (lp, rows)</strong>
+    </dt>
+    <dd>
+    Adds rows to the linear program.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lp</span>
+            <span class="types"><span class="type">LinOpt</span></span>
+         Linear program to modify.
+        </li>
+        <li><span class="parameter">rows</span>
+            <span class="types"><span class="type">number</span></span>
+         Number of rows to add.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "set_col"></a>
-    <strong>set_col (index, name, coefficient[, kind="real"[, lb=nil[, ub=nil]]])</strong>
+    <strong>set_col (lp, index, name, coefficient[, kind="real"[, lb=nil[, ub=nil]]])</strong>
     </dt>
     <dd>
     Adds an optimization column.
@@ -260,6 +352,10 @@
 
     <h3>Parameters:</h3>
     <ul>
+        <li><span class="parameter">lp</span>
+            <span class="types"><span class="type">LinOpt</span></span>
+         Linear program to modify.
+        </li>
         <li><span class="parameter">index</span>
             <span class="types"><span class="type">number</span></span>
          Index of the column to set.
@@ -296,7 +392,7 @@
 </dd>
     <dt>
     <a name = "set_row"></a>
-    <strong>set_row (index, name[, lb=nil[, ub=nil]])</strong>
+    <strong>set_row (lp, index, name[, lb=nil[, ub=nil]])</strong>
     </dt>
     <dd>
     Adds an optimization row.
@@ -304,6 +400,10 @@
 
     <h3>Parameters:</h3>
     <ul>
+        <li><span class="parameter">lp</span>
+            <span class="types"><span class="type">LinOpt</span></span>
+         Linear program to modify.
+        </li>
         <li><span class="parameter">index</span>
             <span class="types"><span class="type">number</span></span>
          Index of the row to set.
@@ -331,7 +431,7 @@
 </dd>
     <dt>
     <a name = "load_matrix"></a>
-    <strong>load_matrix (row_indices, col_indices, coefficients)</strong>
+    <strong>load_matrix (lp, row_indices, col_indices, coefficients)</strong>
     </dt>
     <dd>
     Loads the entire matrix for the linear program.
@@ -339,6 +439,10 @@
 
     <h3>Parameters:</h3>
     <ul>
+        <li><span class="parameter">lp</span>
+            <span class="types"><span class="type">LinOpt</span></span>
+         Linear program to modify.
+        </li>
         <li><span class="parameter">row_indices</span>
             <span class="types"><span class="type">number</span></span>
          Indices of the rows.
@@ -360,12 +464,19 @@
 </dd>
     <dt>
     <a name = "solve"></a>
-    <strong>solve ()</strong>
+    <strong>solve (lp)</strong>
     </dt>
     <dd>
     Solves the linear optimization problem.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lp</span>
+            <span class="types"><span class="type">LinOpt</span></span>
+         Linear program to modify.
+        </li>
+    </ul>
 
     <h3>Returns:</h3>
     <ol>
@@ -388,7 +499,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-06-28 04:38:56 </i>
+<i style="float:right;">Last updated 2021-06-28 06:11:15 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">

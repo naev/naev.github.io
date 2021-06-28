@@ -74,303 +74,341 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a39e17cbd5c61221eb2aba1afc3b187cc">linoptL_gc</a>( lua_State *L );</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#aec0183c111a7a755d4837b760385a1dd">linoptL_eq</a>( lua_State *L );</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a8114f0dde51b84caf7da1fc7f1b528a0">linoptL_new</a>( lua_State *L );</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">linoptL_setcol</a>( lua_State *L );</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">linoptL_setrow</a>( lua_State *L );</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">linoptL_loadmatrix</a>( lua_State *L );</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">linoptL_solve</a>( lua_State *L );</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a04fd0f5aba6a32d070421baf9f5f2d5d">   40</a></span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg <a class="code" href="nlua__linopt_8c.html#a04fd0f5aba6a32d070421baf9f5f2d5d">linoptL_methods</a>[] = {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;   { <span class="stringliteral">&quot;__gc&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a39e17cbd5c61221eb2aba1afc3b187cc">linoptL_gc</a> },</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;   { <span class="stringliteral">&quot;__eq&quot;</span>, <a class="code" href="nlua__linopt_8c.html#aec0183c111a7a755d4837b760385a1dd">linoptL_eq</a> },</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;   { <span class="stringliteral">&quot;new&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a8114f0dde51b84caf7da1fc7f1b528a0">linoptL_new</a> },</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;   { <span class="stringliteral">&quot;set_col&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">linoptL_setcol</a> },</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;   { <span class="stringliteral">&quot;set_row&quot;</span>, <a class="code" href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">linoptL_setrow</a> },</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;   { <span class="stringliteral">&quot;load_matrix&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">linoptL_loadmatrix</a> },</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;   { <span class="stringliteral">&quot;solve&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">linoptL_solve</a> },</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;   {0,0}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}; </div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#afc8bb30c3e62e5ddd97b9f3d01944e52">   60</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#afc8bb30c3e62e5ddd97b9f3d01944e52">nlua_loadLinOpt</a>( nlua_env env )</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;{</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   nlua_register(env, LINOPT_METATABLE, <a class="code" href="nlua__linopt_8c.html#a04fd0f5aba6a32d070421baf9f5f2d5d">linoptL_methods</a>, 1);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#aea68bd6b87c0f2e74276ca2eaa0a6cf9">   79</a></span>&#160;LuaLinOpt_t* <a class="code" href="nlua__linopt_8c.html#aea68bd6b87c0f2e74276ca2eaa0a6cf9">lua_tolinopt</a>( lua_State *L, <span class="keywordtype">int</span> ind )</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;   <span class="keywordflow">return</span> (LuaLinOpt_t*) lua_touserdata(L,ind);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">   90</a></span>&#160;LuaLinOpt_t* <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>( lua_State *L, <span class="keywordtype">int</span> ind )</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="nlua__linopt_8c.html#a970566978c25d126f8cd7202285212ee">lua_islinopt</a>(L,ind))</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="nlua__linopt_8c.html#aea68bd6b87c0f2e74276ca2eaa0a6cf9">lua_tolinopt</a>(L,ind);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   luaL_typerror(L, ind, LINOPT_METATABLE);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a3e9d211da744ac7b87a11c78c287b0ba">  104</a></span>&#160;LuaLinOpt_t* <a class="code" href="nlua__linopt_8c.html#a3e9d211da744ac7b87a11c78c287b0ba">lua_pushlinopt</a>( lua_State *L, LuaLinOpt_t linopt )</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;{</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   LuaLinOpt_t *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = (LuaLinOpt_t*) lua_newuserdata(L, <span class="keyword">sizeof</span>(LuaLinOpt_t));</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = linopt;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   luaL_getmetatable(L, LINOPT_METATABLE);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   lua_setmetatable(L, -2);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
-<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a970566978c25d126f8cd7202285212ee">  120</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a970566978c25d126f8cd7202285212ee">lua_islinopt</a>( lua_State *L, <span class="keywordtype">int</span> ind )</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;{</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;   <span class="keywordflow">if</span> (lua_getmetatable(L,ind)==0)</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;   lua_getfield(L, LUA_REGISTRYINDEX, LINOPT_METATABLE);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;   ret = 0;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;   <span class="keywordflow">if</span> (lua_rawequal(L, -1, -2))  <span class="comment">/* does it have the correct mt? */</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      ret = 1;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;   lua_pop(L, 2);  <span class="comment">/* remove both metatables */</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a39e17cbd5c61221eb2aba1afc3b187cc">  143</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a39e17cbd5c61221eb2aba1afc3b187cc">linoptL_gc</a>( lua_State *L )</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;{</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;   LuaLinOpt_t *lp = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;   glp_delete_prob(lp-&gt;prob);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#aec0183c111a7a755d4837b760385a1dd">  159</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#aec0183c111a7a755d4837b760385a1dd">linoptL_eq</a>( lua_State *L )</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;{</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   LuaLinOpt_t *lp1, *lp2;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;   lp1 = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;   lp2 = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,2);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;   lua_pushboolean( L, (memcmp( lp1, lp2, <span class="keyword">sizeof</span>(LuaLinOpt_t))==0) );</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;}</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a8114f0dde51b84caf7da1fc7f1b528a0">  179</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a8114f0dde51b84caf7da1fc7f1b528a0">linoptL_new</a>( lua_State *L )</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;{</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;   LuaLinOpt_t lp;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;   <span class="keywordtype">int</span> max;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;   <span class="comment">/* Input. */</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;   name     = luaL_optstring(L,1,NULL);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;   lp.ncols = luaL_checkinteger(L,2);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;   lp.nrows = luaL_checkinteger(L,3);</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;   max      = lua_toboolean(L,4);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a7825ff6629fed3f002ea6b919cce3dc2">linoptL_size</a>( lua_State *L );</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a9b0635d75ceae0ce9150a8f3ed1faa7e">linoptL_addcols</a>( lua_State *L );</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a7842bc2ebbe7a9161dd0c2fbd79cd75b">linoptL_addrows</a>( lua_State *L );</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">linoptL_setcol</a>( lua_State *L );</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">linoptL_setrow</a>( lua_State *L );</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">linoptL_loadmatrix</a>( lua_State *L );</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">linoptL_solve</a>( lua_State *L );</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a04fd0f5aba6a32d070421baf9f5f2d5d">   43</a></span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg <a class="code" href="nlua__linopt_8c.html#a04fd0f5aba6a32d070421baf9f5f2d5d">linoptL_methods</a>[] = {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;   { <span class="stringliteral">&quot;__gc&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a39e17cbd5c61221eb2aba1afc3b187cc">linoptL_gc</a> },</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;   { <span class="stringliteral">&quot;__eq&quot;</span>, <a class="code" href="nlua__linopt_8c.html#aec0183c111a7a755d4837b760385a1dd">linoptL_eq</a> },</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;   { <span class="stringliteral">&quot;new&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a8114f0dde51b84caf7da1fc7f1b528a0">linoptL_new</a> },</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;   { <span class="stringliteral">&quot;size&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a7825ff6629fed3f002ea6b919cce3dc2">linoptL_size</a> },</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;   { <span class="stringliteral">&quot;add_cols&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a9b0635d75ceae0ce9150a8f3ed1faa7e">linoptL_addcols</a> },</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;   { <span class="stringliteral">&quot;add_rows&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a7842bc2ebbe7a9161dd0c2fbd79cd75b">linoptL_addrows</a> },</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;   { <span class="stringliteral">&quot;set_col&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">linoptL_setcol</a> },</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;   { <span class="stringliteral">&quot;set_row&quot;</span>, <a class="code" href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">linoptL_setrow</a> },</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;   { <span class="stringliteral">&quot;load_matrix&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">linoptL_loadmatrix</a> },</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;   { <span class="stringliteral">&quot;solve&quot;</span>, <a class="code" href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">linoptL_solve</a> },</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;   {0,0}</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}; </div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#afc8bb30c3e62e5ddd97b9f3d01944e52">   66</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#afc8bb30c3e62e5ddd97b9f3d01944e52">nlua_loadLinOpt</a>( nlua_env env )</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   nlua_register(env, LINOPT_METATABLE, <a class="code" href="nlua__linopt_8c.html#a04fd0f5aba6a32d070421baf9f5f2d5d">linoptL_methods</a>, 1);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#aea68bd6b87c0f2e74276ca2eaa0a6cf9">   85</a></span>&#160;LuaLinOpt_t* <a class="code" href="nlua__linopt_8c.html#aea68bd6b87c0f2e74276ca2eaa0a6cf9">lua_tolinopt</a>( lua_State *L, <span class="keywordtype">int</span> ind )</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;{</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;   <span class="keywordflow">return</span> (LuaLinOpt_t*) lua_touserdata(L,ind);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">   96</a></span>&#160;LuaLinOpt_t* <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>( lua_State *L, <span class="keywordtype">int</span> ind )</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;{</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="nlua__linopt_8c.html#a970566978c25d126f8cd7202285212ee">lua_islinopt</a>(L,ind))</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="nlua__linopt_8c.html#aea68bd6b87c0f2e74276ca2eaa0a6cf9">lua_tolinopt</a>(L,ind);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;   luaL_typerror(L, ind, LINOPT_METATABLE);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a3e9d211da744ac7b87a11c78c287b0ba">  110</a></span>&#160;LuaLinOpt_t* <a class="code" href="nlua__linopt_8c.html#a3e9d211da744ac7b87a11c78c287b0ba">lua_pushlinopt</a>( lua_State *L, LuaLinOpt_t linopt )</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;{</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   LuaLinOpt_t *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = (LuaLinOpt_t*) lua_newuserdata(L, <span class="keyword">sizeof</span>(LuaLinOpt_t));</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = linopt;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   luaL_getmetatable(L, LINOPT_METATABLE);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   lua_setmetatable(L, -2);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}</div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a970566978c25d126f8cd7202285212ee">  126</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a970566978c25d126f8cd7202285212ee">lua_islinopt</a>( lua_State *L, <span class="keywordtype">int</span> ind )</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;{</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;   <span class="keywordflow">if</span> (lua_getmetatable(L,ind)==0)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;   lua_getfield(L, LUA_REGISTRYINDEX, LINOPT_METATABLE);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;   ret = 0;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;   <span class="keywordflow">if</span> (lua_rawequal(L, -1, -2))  <span class="comment">/* does it have the correct mt? */</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      ret = 1;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;   lua_pop(L, 2);  <span class="comment">/* remove both metatables */</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;}</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a39e17cbd5c61221eb2aba1afc3b187cc">  149</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a39e17cbd5c61221eb2aba1afc3b187cc">linoptL_gc</a>( lua_State *L )</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;{</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   LuaLinOpt_t *lp = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;   glp_delete_prob(lp-&gt;prob);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;}</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#aec0183c111a7a755d4837b760385a1dd">  165</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#aec0183c111a7a755d4837b760385a1dd">linoptL_eq</a>( lua_State *L )</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;{</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;   LuaLinOpt_t *lp1, *lp2;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;   lp1 = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;   lp2 = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,2);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;   lua_pushboolean( L, (memcmp( lp1, lp2, <span class="keyword">sizeof</span>(LuaLinOpt_t))==0) );</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;}</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a8114f0dde51b84caf7da1fc7f1b528a0">  185</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a8114f0dde51b84caf7da1fc7f1b528a0">linoptL_new</a>( lua_State *L )</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;{</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;   LuaLinOpt_t lp;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;   <span class="keywordtype">int</span> max;</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;   <span class="comment">/* Initialize and create. */</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;   lp.prob = glp_create_prob();</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;   glp_set_prob_name( lp.prob, name );</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;   glp_add_cols( lp.prob, lp.ncols );</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;   glp_add_rows( lp.prob, lp.nrows );</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;   <span class="keywordflow">if</span> (max)</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      glp_set_obj_dir( lp.prob, GLP_MAX );</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;   <a class="code" href="nlua__linopt_8c.html#a3e9d211da744ac7b87a11c78c287b0ba">lua_pushlinopt</a>( L, lp );</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;}</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
-<div class="line"><a name="l00215"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">  215</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">linoptL_setcol</a>( lua_State *L )</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;{</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;   <span class="keywordtype">int</span> idx           = luaL_checkinteger(L,2);</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name  = luaL_checkstring(L,3);</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;   <span class="keywordtype">double</span> coef       = luaL_checknumber(L,4);</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *skind = luaL_optstring(L,5,<span class="stringliteral">&quot;real&quot;</span>);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;   <span class="keywordtype">int</span> haslb, hasub, type, kind;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   <span class="keywordtype">double</span> lb, ub;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;   <span class="comment">/* glpk stuff */</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;   glp_set_col_name( lp-&gt;prob, idx, name );</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;   glp_set_obj_coef( lp-&gt;prob, idx, coef );</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;   <span class="comment">/* Determine bounds. */</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;   haslb = !lua_isnoneornil(L,6);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;   hasub = !lua_isnoneornil(L,7);</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;   lb    = luaL_optnumber(L,6,0.0);</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;   ub    = luaL_optnumber(L,7,0.0);</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;   <span class="keywordflow">if</span> (haslb &amp;&amp; hasub)</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      type = GLP_DB;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (haslb)</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;      type = GLP_LO;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (hasub)</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      type = GLP_UP;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      type = GLP_FR;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;   glp_set_col_bnds( lp-&gt;prob, idx, type, lb, ub );</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;   <span class="comment">/* Input. */</span></div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;   name     = luaL_optstring(L,1,NULL);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;   lp.ncols = luaL_checkinteger(L,2);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;   lp.nrows = luaL_checkinteger(L,3);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;   max      = lua_toboolean(L,4);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;   <span class="comment">/* Initialize and create. */</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;   lp.prob = glp_create_prob();</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;   glp_set_prob_name( lp.prob, name );</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;   glp_add_cols( lp.prob, lp.ncols );</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;   glp_add_rows( lp.prob, lp.nrows );</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;   <span class="keywordflow">if</span> (max)</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;      glp_set_obj_dir( lp.prob, GLP_MAX );</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;   <a class="code" href="nlua__linopt_8c.html#a3e9d211da744ac7b87a11c78c287b0ba">lua_pushlinopt</a>( L, lp );</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
+<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a7825ff6629fed3f002ea6b919cce3dc2">  218</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a7825ff6629fed3f002ea6b919cce3dc2">linoptL_size</a>( lua_State *L )</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;{</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;   LuaLinOpt_t *lp = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   lua_pushinteger( L, glp_get_num_cols( lp-&gt;prob ) );</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;   lua_pushinteger( L, glp_get_num_rows( lp-&gt;prob ) );</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   <span class="keywordflow">return</span> 2;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;}</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00234"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a9b0635d75ceae0ce9150a8f3ed1faa7e">  234</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a9b0635d75ceae0ce9150a8f3ed1faa7e">linoptL_addcols</a>( lua_State *L )</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;{</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;   <span class="keywordtype">int</span> toadd         = luaL_checkinteger(L,2);</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;   glp_add_cols( lp-&gt;prob, toadd );</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;   lp-&gt;ncols += toadd;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;   <span class="comment">/* Get kind. */</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;   <span class="keywordflow">if</span> (strcmp(skind,<span class="stringliteral">&quot;real&quot;</span>)==0)</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;      kind = GLP_CV;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(skind,<span class="stringliteral">&quot;integer&quot;</span>)==0)</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      kind = GLP_IV;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(skind,<span class="stringliteral">&quot;binary&quot;</span>)==0)</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      kind = GLP_BV;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Unknown column kind &#39;%s&#39;!&quot;</span>), skind);</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;   glp_set_col_kind( lp-&gt;prob, idx, kind );</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;}</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
-<div class="line"><a name="l00268"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">  268</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">linoptL_setrow</a>( lua_State *L )</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;{</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;   <span class="keywordtype">int</span> idx           = luaL_checkinteger(L,2);</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name  = luaL_checkstring(L,3);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;   <span class="keywordtype">int</span> haslb, hasub, type;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   <span class="keywordtype">double</span> lb, ub;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   <span class="comment">/* glpk stuff */</span></div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   glp_set_row_name( lp-&gt;prob, idx, name );</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   <span class="comment">/* Determine bounds. */</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   haslb = !lua_isnoneornil(L,4);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;   hasub = !lua_isnoneornil(L,5);</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;   lb    = luaL_optnumber(L,4,0.0);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;   ub    = luaL_optnumber(L,5,0.0);</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;   <span class="keywordflow">if</span> (haslb &amp;&amp; hasub)</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;      type = GLP_DB;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (haslb)</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;      type = GLP_LO;</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (hasub)</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      type = GLP_UP;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      type = GLP_FR;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;   glp_set_row_bnds( lp-&gt;prob, idx, type, lb, ub );</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;}</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
-<div class="line"><a name="l00306"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">  306</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">linoptL_loadmatrix</a>( lua_State *L )</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;{</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;   <span class="keywordtype">size_t</span> i, n;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   <span class="keywordtype">int</span> *ia, *ja;</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;   <span class="keywordtype">double</span> *ar;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;   luaL_checktype(L, 2, LUA_TTABLE);</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;   luaL_checktype(L, 3, LUA_TTABLE);</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;   luaL_checktype(L, 4, LUA_TTABLE);</div>
+<div class="line"><a name="l00251"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a7842bc2ebbe7a9161dd0c2fbd79cd75b">  251</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a7842bc2ebbe7a9161dd0c2fbd79cd75b">linoptL_addrows</a>( lua_State *L )</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;   <span class="keywordtype">int</span> toadd         = luaL_checkinteger(L,2);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;   glp_add_rows( lp-&gt;prob, toadd );</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;   lp-&gt;nrows += toadd;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;}</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160; </div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">  273</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">linoptL_setcol</a>( lua_State *L )</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;{</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   <span class="keywordtype">int</span> idx           = luaL_checkinteger(L,2);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name  = luaL_checkstring(L,3);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;   <span class="keywordtype">double</span> coef       = luaL_checknumber(L,4);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *skind = luaL_optstring(L,5,<span class="stringliteral">&quot;real&quot;</span>);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   <span class="keywordtype">int</span> haslb, hasub, type, kind;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;   <span class="keywordtype">double</span> lb, ub;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;   <span class="comment">/* glpk stuff */</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;   glp_set_col_name( lp-&gt;prob, idx, name );</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   glp_set_obj_coef( lp-&gt;prob, idx, coef );</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;   <span class="comment">/* Determine bounds. */</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   haslb = !lua_isnoneornil(L,6);</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;   hasub = !lua_isnoneornil(L,7);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;   lb    = luaL_optnumber(L,6,0.0);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   ub    = luaL_optnumber(L,7,0.0);</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;   <span class="keywordflow">if</span> (haslb &amp;&amp; hasub)</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      type = GLP_DB;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (haslb)</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;      type = GLP_LO;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (hasub)</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      type = GLP_UP;</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      type = GLP_FR;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;   glp_set_col_bnds( lp-&gt;prob, idx, type, lb, ub );</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   <span class="comment">/* Get kind. */</span></div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;   <span class="keywordflow">if</span> (strcmp(skind,<span class="stringliteral">&quot;real&quot;</span>)==0)</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      kind = GLP_CV;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(skind,<span class="stringliteral">&quot;integer&quot;</span>)==0)</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      kind = GLP_IV;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(skind,<span class="stringliteral">&quot;binary&quot;</span>)==0)</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      kind = GLP_BV;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Unknown column kind &#39;%s&#39;!&quot;</span>), skind);</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   glp_set_col_kind( lp-&gt;prob, idx, kind );</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;}</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;   <span class="comment">/* Make sure size is ok. */</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;   n = lua_objlen(L,2);</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="preprocessor">#if DEBUGGING</span></div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   <span class="keywordflow">if</span> ((n != lua_objlen(L,3)) || (n != lua_objlen(L,4)))</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Table lengths don&#39;t match!&quot;</span>));</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;   <span class="comment">/* Load everything from tables, has to be 1-index based. */</span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;   ia = calloc( n+1, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) );</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   ja = calloc( n+1, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) );</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   ar = calloc( n+1, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>) );</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   <span class="keywordflow">for</span> (i=1; i&lt;=n; i++) {</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      lua_rawgeti(L, 2, i);</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      lua_rawgeti(L, 3, i);</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      lua_rawgeti(L, 4, i);</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="preprocessor">#if DEBUGGING</span></div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      ia[i] = luaL_checkinteger(L,-3);</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;      ja[i] = luaL_checkinteger(L,-2);</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      ar[i] = luaL_checknumber(L,-1);</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="preprocessor">#else </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      ia[i] = lua_tointeger(L,-3);</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      ja[i] = lua_tointeger(L,-2);</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;      ar[i] = lua_tonumber(L,-1);</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;      lua_pop(L,3);</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;   }</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;   <span class="comment">/* Set up the matrix. */</span></div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;   glp_load_matrix( lp-&gt;prob, n, ia, ja, ar );</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;   <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   free(ia);</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;   free(ja);</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;   free(ar);</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;}</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
+<div class="line"><a name="l00327"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">  327</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">linoptL_setrow</a>( lua_State *L )</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;{</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   <span class="keywordtype">int</span> idx           = luaL_checkinteger(L,2);</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name  = luaL_checkstring(L,3);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   <span class="keywordtype">int</span> haslb, hasub, type;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;   <span class="keywordtype">double</span> lb, ub;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   <span class="comment">/* glpk stuff */</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   glp_set_row_name( lp-&gt;prob, idx, name );</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;   <span class="comment">/* Determine bounds. */</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;   haslb = !lua_isnoneornil(L,4);</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;   hasub = !lua_isnoneornil(L,5);</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;   lb    = luaL_optnumber(L,4,0.0);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   ub    = luaL_optnumber(L,5,0.0);</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;   <span class="keywordflow">if</span> (haslb &amp;&amp; hasub)</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      type = GLP_DB;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (haslb)</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      type = GLP_LO;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (hasub)</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      type = GLP_UP;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;      type = GLP_FR;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;   glp_set_row_bnds( lp-&gt;prob, idx, type, lb, ub );</div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160; </div>
-<div class="line"><a name="l00361"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">  361</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">linoptL_solve</a>( lua_State *L )</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;{</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   <span class="keywordtype">double</span> z;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   <span class="comment">//const char *name;</span></div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;   <span class="keywordtype">int</span> i, ismip;</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <span class="comment">/* Parameters. */</span></div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;   ismip = (glp_get_num_int( lp-&gt;prob ) &gt; 0);</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;   <span class="comment">/* Optimization. */</span></div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   <span class="keywordflow">if</span> (ismip) {</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;      glp_iocp parm;</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      glp_init_iocp(&amp;parm);</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      parm.presolve = GLP_ON;</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;      <span class="comment">//parm.msg_lev = GLP_MSG_ERR;</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;      glp_intopt( lp-&gt;prob, &amp;parm );</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      <span class="comment">/* TODO handle errors. */</span></div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;      z = glp_mip_obj_val( lp-&gt;prob );</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;   }</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;      glp_smcp parm;</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;      glp_init_smcp(&amp;parm);</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;      <span class="comment">//parm.msg_lev = GLP_MSG_ERR;</span></div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;      glp_simplex( lp-&gt;prob, &amp;parm );</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;      <span class="comment">/* TODO handle errors. */</span></div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;      z = glp_get_obj_val( lp-&gt;prob );</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   }</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160; </div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   <span class="comment">/* Output function value. */</span></div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   lua_pushnumber(L,z);</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160; </div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;   <span class="comment">/* Go over variables and store them. */</span></div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;   lua_newtable(L); <span class="comment">/* t */</span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;   <span class="keywordflow">for</span> (i=1; i&lt;=lp-&gt;ncols; i++) {</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;      <span class="keywordflow">if</span> (ismip)</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;         z = glp_mip_col_val( lp-&gt;prob, i );</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;         z = glp_get_col_prim( lp-&gt;prob, i );</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      lua_pushnumber( L, z ); <span class="comment">/* t, z */</span></div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;      lua_rawseti( L, -2, i ); <span class="comment">/* t */</span></div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;   }</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   <span class="comment">/* Go over constraints and store them. */</span></div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;   lua_newtable(L); <span class="comment">/* t */</span></div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;   <span class="keywordflow">for</span> (i=1; i&lt;=lp-&gt;nrows; i++) {</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;      <span class="keywordflow">if</span> (ismip)</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;         z = glp_mip_row_val( lp-&gt;prob, i );</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;         z = glp_get_row_prim( lp-&gt;prob, i );</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;      lua_pushnumber( L, z ); <span class="comment">/* t, z */</span></div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;      lua_rawseti( L, -2, i ); <span class="comment">/* t */</span></div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;   }</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160; </div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;   <span class="keywordflow">return</span> 3;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;}</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;}</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
+<div class="line"><a name="l00366"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">  366</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">linoptL_loadmatrix</a>( lua_State *L )</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;{</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <span class="keywordtype">size_t</span> i, n;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;   <span class="keywordtype">int</span> *ia, *ja;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;   <span class="keywordtype">double</span> *ar;</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   luaL_checktype(L, 2, LUA_TTABLE);</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;   luaL_checktype(L, 3, LUA_TTABLE);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;   luaL_checktype(L, 4, LUA_TTABLE);</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160; </div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;   <span class="comment">/* Make sure size is ok. */</span></div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;   n = lua_objlen(L,2);</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="preprocessor">#if DEBUGGING</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;   <span class="keywordflow">if</span> ((n != lua_objlen(L,3)) || (n != lua_objlen(L,4)))</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Table lengths don&#39;t match!&quot;</span>));</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160; </div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;   <span class="comment">/* Load everything from tables, has to be 1-index based. */</span></div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   ia = calloc( n+1, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) );</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   ja = calloc( n+1, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) );</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;   ar = calloc( n+1, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>) );</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   <span class="keywordflow">for</span> (i=1; i&lt;=n; i++) {</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;      lua_rawgeti(L, 2, i);</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;      lua_rawgeti(L, 3, i);</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;      lua_rawgeti(L, 4, i);</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="preprocessor">#if DEBUGGING</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;      ia[i] = luaL_checkinteger(L,-3);</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;      ja[i] = luaL_checkinteger(L,-2);</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;      ar[i] = luaL_checknumber(L,-1);</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="preprocessor">#else </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;      ia[i] = lua_tointeger(L,-3);</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      ja[i] = lua_tointeger(L,-2);</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;      ar[i] = lua_tonumber(L,-1);</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      lua_pop(L,3);</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;   }</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160; </div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;   <span class="comment">/* Set up the matrix. */</span></div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   glp_load_matrix( lp-&gt;prob, n, ia, ja, ar );</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160; </div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;   <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;   free(ia);</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;   free(ja);</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;   free(ar);</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;}</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160; </div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160; </div>
+<div class="line"><a name="l00422"></a><span class="lineno"><a class="line" href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">  422</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">linoptL_solve</a>( lua_State *L )</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;{</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;   LuaLinOpt_t *lp   = <a class="code" href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a>(L,1);</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;   <span class="keywordtype">double</span> z;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;   <span class="comment">//const char *name;</span></div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;   <span class="keywordtype">int</span> i, ismip;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160; </div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;   <span class="comment">/* Parameters. */</span></div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;   ismip = (glp_get_num_int( lp-&gt;prob ) &gt; 0);</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;   <span class="comment">/* Optimization. */</span></div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;   <span class="keywordflow">if</span> (ismip) {</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;      glp_iocp parm;</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;      glp_init_iocp(&amp;parm);</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;      parm.presolve = GLP_ON; <span class="comment">/* Need to presolve first. */</span></div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;      <span class="comment">//parm.msg_lev = GLP_MSG_ERR;</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;      glp_intopt( lp-&gt;prob, &amp;parm );</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;      <span class="comment">/* TODO handle errors. */</span></div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;      z = glp_mip_obj_val( lp-&gt;prob );</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;   }</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;      glp_smcp parm;</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;      glp_init_smcp(&amp;parm);</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;      <span class="comment">//parm.msg_lev = GLP_MSG_ERR;</span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;      glp_simplex( lp-&gt;prob, &amp;parm );</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;      <span class="comment">/* TODO handle errors. */</span></div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;      z = glp_get_obj_val( lp-&gt;prob );</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;   }</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160; </div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;   <span class="comment">/* Output function value. */</span></div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;   lua_pushnumber(L,z);</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160; </div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;   <span class="comment">/* Go over variables and store them. */</span></div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;   lua_newtable(L); <span class="comment">/* t */</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;   <span class="keywordflow">for</span> (i=1; i&lt;=lp-&gt;ncols; i++) {</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;      <span class="keywordflow">if</span> (ismip)</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;         z = glp_mip_col_val( lp-&gt;prob, i );</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;         z = glp_get_col_prim( lp-&gt;prob, i );</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;      lua_pushnumber( L, z ); <span class="comment">/* t, z */</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;      lua_rawseti( L, -2, i ); <span class="comment">/* t */</span></div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;   }</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160; </div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;   <span class="comment">/* Go over constraints and store them. */</span></div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;   lua_newtable(L); <span class="comment">/* t */</span></div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;   <span class="keywordflow">for</span> (i=1; i&lt;=lp-&gt;nrows; i++) {</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;      <span class="keywordflow">if</span> (ismip)</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;         z = glp_mip_row_val( lp-&gt;prob, i );</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;         z = glp_get_row_prim( lp-&gt;prob, i );</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;      lua_pushnumber( L, z ); <span class="comment">/* t, z */</span></div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;      lua_rawseti( L, -2, i ); <span class="comment">/* t */</span></div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;   }</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160; </div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;   <span class="keywordflow">return</span> 3;</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;}</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="anlua__linopt_8c_html_a08780d9cb646f645e3c8c2d1e5329a1f"><div class="ttname"><a href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">linoptL_setcol</a></div><div class="ttdeci">static int linoptL_setcol(lua_State *L)</div><div class="ttdoc">Adds an optimization column.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00215">nlua_linopt.c:215</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_ae6b08a54d23e11ed4472d9bde8e237b0"><div class="ttname"><a href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">linoptL_setrow</a></div><div class="ttdeci">static int linoptL_setrow(lua_State *L)</div><div class="ttdoc">Adds an optimization row.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00268">nlua_linopt.c:268</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_aea68bd6b87c0f2e74276ca2eaa0a6cf9"><div class="ttname"><a href="nlua__linopt_8c.html#aea68bd6b87c0f2e74276ca2eaa0a6cf9">lua_tolinopt</a></div><div class="ttdeci">LuaLinOpt_t * lua_tolinopt(lua_State *L, int ind)</div><div class="ttdoc">Lua bindings to interact with linopts.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00079">nlua_linopt.c:79</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_a55efb615738fe0b7f317ebb70e2f7665"><div class="ttname"><a href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a></div><div class="ttdeci">LuaLinOpt_t * luaL_checklinopt(lua_State *L, int ind)</div><div class="ttdoc">Gets linopt at index or raises error if there is no linopt at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00090">nlua_linopt.c:90</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_afc8bb30c3e62e5ddd97b9f3d01944e52"><div class="ttname"><a href="nlua__linopt_8c.html#afc8bb30c3e62e5ddd97b9f3d01944e52">nlua_loadLinOpt</a></div><div class="ttdeci">int nlua_loadLinOpt(nlua_env env)</div><div class="ttdoc">Loads the linopt library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00060">nlua_linopt.c:60</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_a3e9d211da744ac7b87a11c78c287b0ba"><div class="ttname"><a href="nlua__linopt_8c.html#a3e9d211da744ac7b87a11c78c287b0ba">lua_pushlinopt</a></div><div class="ttdeci">LuaLinOpt_t * lua_pushlinopt(lua_State *L, LuaLinOpt_t linopt)</div><div class="ttdoc">Pushes a linopt on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00104">nlua_linopt.c:104</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_a8114f0dde51b84caf7da1fc7f1b528a0"><div class="ttname"><a href="nlua__linopt_8c.html#a8114f0dde51b84caf7da1fc7f1b528a0">linoptL_new</a></div><div class="ttdeci">static int linoptL_new(lua_State *L)</div><div class="ttdoc">Opens a new linopt.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00179">nlua_linopt.c:179</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a08780d9cb646f645e3c8c2d1e5329a1f"><div class="ttname"><a href="nlua__linopt_8c.html#a08780d9cb646f645e3c8c2d1e5329a1f">linoptL_setcol</a></div><div class="ttdeci">static int linoptL_setcol(lua_State *L)</div><div class="ttdoc">Adds an optimization column.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00273">nlua_linopt.c:273</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_ae6b08a54d23e11ed4472d9bde8e237b0"><div class="ttname"><a href="nlua__linopt_8c.html#ae6b08a54d23e11ed4472d9bde8e237b0">linoptL_setrow</a></div><div class="ttdeci">static int linoptL_setrow(lua_State *L)</div><div class="ttdoc">Adds an optimization row.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00327">nlua_linopt.c:327</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a7842bc2ebbe7a9161dd0c2fbd79cd75b"><div class="ttname"><a href="nlua__linopt_8c.html#a7842bc2ebbe7a9161dd0c2fbd79cd75b">linoptL_addrows</a></div><div class="ttdeci">static int linoptL_addrows(lua_State *L)</div><div class="ttdoc">Adds rows to the linear program.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00251">nlua_linopt.c:251</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_aea68bd6b87c0f2e74276ca2eaa0a6cf9"><div class="ttname"><a href="nlua__linopt_8c.html#aea68bd6b87c0f2e74276ca2eaa0a6cf9">lua_tolinopt</a></div><div class="ttdeci">LuaLinOpt_t * lua_tolinopt(lua_State *L, int ind)</div><div class="ttdoc">Lua bindings to interact with linopts.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00085">nlua_linopt.c:85</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a55efb615738fe0b7f317ebb70e2f7665"><div class="ttname"><a href="nlua__linopt_8c.html#a55efb615738fe0b7f317ebb70e2f7665">luaL_checklinopt</a></div><div class="ttdeci">LuaLinOpt_t * luaL_checklinopt(lua_State *L, int ind)</div><div class="ttdoc">Gets linopt at index or raises error if there is no linopt at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00096">nlua_linopt.c:96</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_afc8bb30c3e62e5ddd97b9f3d01944e52"><div class="ttname"><a href="nlua__linopt_8c.html#afc8bb30c3e62e5ddd97b9f3d01944e52">nlua_loadLinOpt</a></div><div class="ttdeci">int nlua_loadLinOpt(nlua_env env)</div><div class="ttdoc">Loads the linopt library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00066">nlua_linopt.c:66</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a3e9d211da744ac7b87a11c78c287b0ba"><div class="ttname"><a href="nlua__linopt_8c.html#a3e9d211da744ac7b87a11c78c287b0ba">lua_pushlinopt</a></div><div class="ttdeci">LuaLinOpt_t * lua_pushlinopt(lua_State *L, LuaLinOpt_t linopt)</div><div class="ttdoc">Pushes a linopt on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00110">nlua_linopt.c:110</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a8114f0dde51b84caf7da1fc7f1b528a0"><div class="ttname"><a href="nlua__linopt_8c.html#a8114f0dde51b84caf7da1fc7f1b528a0">linoptL_new</a></div><div class="ttdeci">static int linoptL_new(lua_State *L)</div><div class="ttdoc">Opens a new linopt.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00185">nlua_linopt.c:185</a></div></div>
 <div class="ttc" id="astructLuaLinOpt__s_html"><div class="ttname"><a href="structLuaLinOpt__s.html">LuaLinOpt_s</a></div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00025">nlua_linopt.c:25</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_a04fd0f5aba6a32d070421baf9f5f2d5d"><div class="ttname"><a href="nlua__linopt_8c.html#a04fd0f5aba6a32d070421baf9f5f2d5d">linoptL_methods</a></div><div class="ttdeci">static const luaL_Reg linoptL_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00040">nlua_linopt.c:40</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a04fd0f5aba6a32d070421baf9f5f2d5d"><div class="ttname"><a href="nlua__linopt_8c.html#a04fd0f5aba6a32d070421baf9f5f2d5d">linoptL_methods</a></div><div class="ttdeci">static const luaL_Reg linoptL_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00043">nlua_linopt.c:43</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
-<div class="ttc" id="anlua__linopt_8c_html_aec0183c111a7a755d4837b760385a1dd"><div class="ttname"><a href="nlua__linopt_8c.html#aec0183c111a7a755d4837b760385a1dd">linoptL_eq</a></div><div class="ttdeci">static int linoptL_eq(lua_State *L)</div><div class="ttdoc">Compares two linopts to see if they are the same.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00159">nlua_linopt.c:159</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_a39e17cbd5c61221eb2aba1afc3b187cc"><div class="ttname"><a href="nlua__linopt_8c.html#a39e17cbd5c61221eb2aba1afc3b187cc">linoptL_gc</a></div><div class="ttdeci">static int linoptL_gc(lua_State *L)</div><div class="ttdoc">Frees a linopt.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00143">nlua_linopt.c:143</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_a258f8ff72ec9b789b54437a6038c55ba"><div class="ttname"><a href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">linoptL_solve</a></div><div class="ttdeci">static int linoptL_solve(lua_State *L)</div><div class="ttdoc">Solves the linear optimization problem.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00361">nlua_linopt.c:361</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_aec0183c111a7a755d4837b760385a1dd"><div class="ttname"><a href="nlua__linopt_8c.html#aec0183c111a7a755d4837b760385a1dd">linoptL_eq</a></div><div class="ttdeci">static int linoptL_eq(lua_State *L)</div><div class="ttdoc">Compares two linopts to see if they are the same.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00165">nlua_linopt.c:165</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a39e17cbd5c61221eb2aba1afc3b187cc"><div class="ttname"><a href="nlua__linopt_8c.html#a39e17cbd5c61221eb2aba1afc3b187cc">linoptL_gc</a></div><div class="ttdeci">static int linoptL_gc(lua_State *L)</div><div class="ttdoc">Frees a linopt.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00149">nlua_linopt.c:149</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a9b0635d75ceae0ce9150a8f3ed1faa7e"><div class="ttname"><a href="nlua__linopt_8c.html#a9b0635d75ceae0ce9150a8f3ed1faa7e">linoptL_addcols</a></div><div class="ttdeci">static int linoptL_addcols(lua_State *L)</div><div class="ttdoc">Adds columns to the linear program.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00234">nlua_linopt.c:234</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a258f8ff72ec9b789b54437a6038c55ba"><div class="ttname"><a href="nlua__linopt_8c.html#a258f8ff72ec9b789b54437a6038c55ba">linoptL_solve</a></div><div class="ttdeci">static int linoptL_solve(lua_State *L)</div><div class="ttdoc">Solves the linear optimization problem.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00422">nlua_linopt.c:422</a></div></div>
 <div class="ttc" id="arng_8c_html_a3a6c194a55c239306d07bbf83f5972e9"><div class="ttname"><a href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a></div><div class="ttdeci">static const double c[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00281">rng.c:281</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_a970566978c25d126f8cd7202285212ee"><div class="ttname"><a href="nlua__linopt_8c.html#a970566978c25d126f8cd7202285212ee">lua_islinopt</a></div><div class="ttdeci">int lua_islinopt(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a linopt.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00120">nlua_linopt.c:120</a></div></div>
-<div class="ttc" id="anlua__linopt_8c_html_a037f4ca64a84de5982e7c8910eb070fb"><div class="ttname"><a href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">linoptL_loadmatrix</a></div><div class="ttdeci">static int linoptL_loadmatrix(lua_State *L)</div><div class="ttdoc">Loads the entire matrix for the linear program.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00306">nlua_linopt.c:306</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a7825ff6629fed3f002ea6b919cce3dc2"><div class="ttname"><a href="nlua__linopt_8c.html#a7825ff6629fed3f002ea6b919cce3dc2">linoptL_size</a></div><div class="ttdeci">static int linoptL_size(lua_State *L)</div><div class="ttdoc">Adds columns to the linear program.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00218">nlua_linopt.c:218</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a970566978c25d126f8cd7202285212ee"><div class="ttname"><a href="nlua__linopt_8c.html#a970566978c25d126f8cd7202285212ee">lua_islinopt</a></div><div class="ttdeci">int lua_islinopt(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a linopt.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00126">nlua_linopt.c:126</a></div></div>
+<div class="ttc" id="anlua__linopt_8c_html_a037f4ca64a84de5982e7c8910eb070fb"><div class="ttname"><a href="nlua__linopt_8c.html#a037f4ca64a84de5982e7c8910eb070fb">linoptL_loadmatrix</a></div><div class="ttdeci">static int linoptL_loadmatrix(lua_State *L)</div><div class="ttdoc">Loads the entire matrix for the linear program.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__linopt_8c_source.html#l00366">nlua_linopt.c:366</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
