@@ -67,168 +67,170 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="structalSound__.html#a05c9b4ac1fa4f3132f9b8f1a0ceae27e">   25</a></span>&#160;   <span class="keywordtype">char</span> *<a class="code" href="structalSound__.html#a05c9b4ac1fa4f3132f9b8f1a0ceae27e">filename</a>; </div>
 <div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structalSound__.html#a4845beee580ba51db96a229ad86542b4">   26</a></span>&#160;   <span class="keywordtype">char</span> *<a class="code" href="structalSound__.html#a4845beee580ba51db96a229ad86542b4">name</a>; </div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structalSound__.html#a9fc1ce67c554912463ecbc2108271651">   27</a></span>&#160;   <span class="keywordtype">double</span> <a class="code" href="structalSound__.html#a9fc1ce67c554912463ecbc2108271651">length</a>; </div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="structalSound__.html#ae8c9dc1953d62561e4b28c5fc665b5b7">   28</a></span>&#160;   ALuint <a class="code" href="structalSound__.html#ae8c9dc1953d62561e4b28c5fc665b5b7">buf</a>; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;} <a class="code" href="structalSound.html">alSound</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="structalSound__.html#af992b5967de51aa5fb58a21e59af56f4">   28</a></span>&#160;   <span class="keywordtype">int</span> <a class="code" href="structalSound__.html#af992b5967de51aa5fb58a21e59af56f4">channels</a>; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structalSound__.html#ae8c9dc1953d62561e4b28c5fc665b5b7">   29</a></span>&#160;   ALuint <a class="code" href="structalSound__.html#ae8c9dc1953d62561e4b28c5fc665b5b7">buf</a>; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;} <a class="code" href="structalSound.html">alSound</a>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> voice_state_ {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;   VOICE_STOPPED, </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;   VOICE_PLAYING, </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;   VOICE_FADEOUT, </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;   VOICE_DESTROY  </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;} voice_state_t;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> voice_state_ {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;   VOICE_STOPPED, </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;   VOICE_PLAYING, </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;   VOICE_FADEOUT, </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;   VOICE_DESTROY  </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;} voice_state_t;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structalVoice__.html">   52</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structalVoice__.html">alVoice_</a> {</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="structalVoice__.html#aac0ad6e7dda51da5f8229d5db10b6300">   53</a></span>&#160;   <span class="keyword">struct </span><a class="code" href="structalVoice__.html">alVoice_</a> *<a class="code" href="structalVoice__.html#aac0ad6e7dda51da5f8229d5db10b6300">prev</a>; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structalVoice__.html#abe6b2f457bd02a0a91dfba15c6998d56">   54</a></span>&#160;   <span class="keyword">struct </span><a class="code" href="structalVoice__.html">alVoice_</a> *<a class="code" href="structalVoice__.html#abe6b2f457bd02a0a91dfba15c6998d56">next</a>; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structalVoice__.html#a60bb8dae224a57684e9a623a6fd0ec55">   56</a></span>&#160;   <span class="keywordtype">int</span> <a class="code" href="structalVoice__.html#a60bb8dae224a57684e9a623a6fd0ec55">id</a>; </div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="structalVoice__.html#af61c047d0a37aa5527a2f2e3b9c6c560">   58</a></span>&#160;   voice_state_t <a class="code" href="structalVoice__.html#af61c047d0a37aa5527a2f2e3b9c6c560">state</a>; </div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structalVoice__.html#a2f3faf1e50e1372708d2ad9641bcbfa7">   59</a></span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structalVoice__.html#a2f3faf1e50e1372708d2ad9641bcbfa7">flags</a>; </div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structalVoice__.html#ad8c45ba8f917f5848c75e596032b149a">   61</a></span>&#160;   ALfloat <a class="code" href="structalVoice__.html#ad8c45ba8f917f5848c75e596032b149a">pos</a>[3]; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structalVoice__.html#aa8dffbaa98359c8e904ad8721e317d3f">   62</a></span>&#160;   ALfloat <a class="code" href="structalVoice__.html#aa8dffbaa98359c8e904ad8721e317d3f">vel</a>[3]; </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structalVoice__.html#ad9c70116ebcf12d19b0da9365fd4929b">   63</a></span>&#160;   ALuint <a class="code" href="structalVoice__.html#ad9c70116ebcf12d19b0da9365fd4929b">source</a>; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structalVoice__.html#a706ba5c2917a7d91f7782aa5425b856b">   64</a></span>&#160;   ALuint <a class="code" href="structalVoice__.html#a706ba5c2917a7d91f7782aa5425b856b">buffer</a>; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;} <a class="code" href="structalVoice.html">alVoice</a>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="structalVoice__.html">   53</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structalVoice__.html">alVoice_</a> {</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structalVoice__.html#aac0ad6e7dda51da5f8229d5db10b6300">   54</a></span>&#160;   <span class="keyword">struct </span><a class="code" href="structalVoice__.html">alVoice_</a> *<a class="code" href="structalVoice__.html#aac0ad6e7dda51da5f8229d5db10b6300">prev</a>; </div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="structalVoice__.html#abe6b2f457bd02a0a91dfba15c6998d56">   55</a></span>&#160;   <span class="keyword">struct </span><a class="code" href="structalVoice__.html">alVoice_</a> *<a class="code" href="structalVoice__.html#abe6b2f457bd02a0a91dfba15c6998d56">next</a>; </div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="structalVoice__.html#a60bb8dae224a57684e9a623a6fd0ec55">   57</a></span>&#160;   <span class="keywordtype">int</span> <a class="code" href="structalVoice__.html#a60bb8dae224a57684e9a623a6fd0ec55">id</a>; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structalVoice__.html#af61c047d0a37aa5527a2f2e3b9c6c560">   59</a></span>&#160;   voice_state_t <a class="code" href="structalVoice__.html#af61c047d0a37aa5527a2f2e3b9c6c560">state</a>; </div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structalVoice__.html#a2f3faf1e50e1372708d2ad9641bcbfa7">   60</a></span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structalVoice__.html#a2f3faf1e50e1372708d2ad9641bcbfa7">flags</a>; </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structalVoice__.html#ad8c45ba8f917f5848c75e596032b149a">   62</a></span>&#160;   ALfloat <a class="code" href="structalVoice__.html#ad8c45ba8f917f5848c75e596032b149a">pos</a>[3]; </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structalVoice__.html#aa8dffbaa98359c8e904ad8721e317d3f">   63</a></span>&#160;   ALfloat <a class="code" href="structalVoice__.html#aa8dffbaa98359c8e904ad8721e317d3f">vel</a>[3]; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structalVoice__.html#ad9c70116ebcf12d19b0da9365fd4929b">   64</a></span>&#160;   ALuint <a class="code" href="structalVoice__.html#ad9c70116ebcf12d19b0da9365fd4929b">source</a>; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="structalVoice__.html#a706ba5c2917a7d91f7782aa5425b856b">   65</a></span>&#160;   ALuint <a class="code" href="structalVoice__.html#a706ba5c2917a7d91f7782aa5425b856b">buffer</a>; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} <a class="code" href="structalVoice.html">alVoice</a>;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment"> * Sound list.</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">extern</span> <a class="code" href="structalVoice.html">alVoice</a> *<a class="code" href="sound_8c.html#a773ff22e2a17143678203f83ec3c2e67">voice_active</a>; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment"> * Voice management.</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">void</span> <a class="code" href="sound_8c.html#a10aeda34034d97e6f9420929dc9bf686">voice_lock</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keywordtype">void</span> <a class="code" href="sound_8c.html#ad7dbd2c5d4dfab7c14ccd671ca5f9827">voice_unlock</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<a class="code" href="structalVoice.html">alVoice</a>* <a class="code" href="sound_8c.html#a61e8bccbdd03f18f07ed6553ed4d866b">voice_new</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">int</span> <a class="code" href="sound_8c.html#adecfaa96b281a459a72c27b10f843886">voice_add</a>( <a class="code" href="structalVoice.html">alVoice</a>* v );</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<a class="code" href="structalVoice.html">alVoice</a>* <a class="code" href="sound_8c.html#a170fd22e30930d3b20c2f00edb1fd561">voice_get</a>( <span class="keywordtype">int</span> <span class="keywordtype">id</span> );</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"> * Sound list.</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">extern</span> <a class="code" href="structalVoice.html">alVoice</a> *<a class="code" href="sound_8c.html#a773ff22e2a17143678203f83ec3c2e67">voice_active</a>; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment"> * Voice management.</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keywordtype">void</span> <a class="code" href="sound_8c.html#a10aeda34034d97e6f9420929dc9bf686">voice_lock</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">void</span> <a class="code" href="sound_8c.html#ad7dbd2c5d4dfab7c14ccd671ca5f9827">voice_unlock</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<a class="code" href="structalVoice.html">alVoice</a>* <a class="code" href="sound_8c.html#a61e8bccbdd03f18f07ed6553ed4d866b">voice_new</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">int</span> <a class="code" href="sound_8c.html#adecfaa96b281a459a72c27b10f843886">voice_add</a>( <a class="code" href="structalVoice.html">alVoice</a>* v );</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<a class="code" href="structalVoice.html">alVoice</a>* <a class="code" href="sound_8c.html#a170fd22e30930d3b20c2f00edb1fd561">voice_get</a>( <span class="keywordtype">int</span> <span class="keywordtype">id</span> );</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment"> * Vorbis stuff.</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">extern</span> ov_callbacks sound_al_ovcall;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">extern</span> ov_callbacks sound_al_ovcall_noclose;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment"> * Vorbis stuff.</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">extern</span> ov_callbacks sound_al_ovcall;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">extern</span> ov_callbacks sound_al_ovcall_noclose;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment"> * Context info.</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="structalInfo__s.html">   94</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structalInfo__s.html">alInfo_s</a> {</div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="structalInfo__s.html#add54f309d06eefb759d20d103a96a6da">   95</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#add54f309d06eefb759d20d103a96a6da">efx</a>; </div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="structalInfo__s.html#a9f9e1390c6d5000944da2e03e43cc4a7">   96</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#a9f9e1390c6d5000944da2e03e43cc4a7">efx_major</a>; </div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="structalInfo__s.html#a31905d81400772b62004148fca81c949">   97</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#a31905d81400772b62004148fca81c949">efx_minor</a>; </div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="structalInfo__s.html#afea055c4bf4e00faa3af63d7fa71d7e2">   98</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#afea055c4bf4e00faa3af63d7fa71d7e2">efx_auxSends</a>; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   <span class="comment">/* Effect types. */</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="structalInfo__s.html#ada58fac03030ea0f9c0116a6830fd7c0">  100</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#ada58fac03030ea0f9c0116a6830fd7c0">efx_reverb</a>; </div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="structalInfo__s.html#a11e56a658f88ab9c5a9ad033193ec5e1">  101</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#a11e56a658f88ab9c5a9ad033193ec5e1">efx_echo</a>; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;} alInfo_t;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">extern</span> alInfo_t al_info;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment"> * Context info.</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="structalInfo__s.html">   95</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structalInfo__s.html">alInfo_s</a> {</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="structalInfo__s.html#add54f309d06eefb759d20d103a96a6da">   96</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#add54f309d06eefb759d20d103a96a6da">efx</a>; </div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="structalInfo__s.html#a9f9e1390c6d5000944da2e03e43cc4a7">   97</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#a9f9e1390c6d5000944da2e03e43cc4a7">efx_major</a>; </div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="structalInfo__s.html#a31905d81400772b62004148fca81c949">   98</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#a31905d81400772b62004148fca81c949">efx_minor</a>; </div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="structalInfo__s.html#afea055c4bf4e00faa3af63d7fa71d7e2">   99</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#afea055c4bf4e00faa3af63d7fa71d7e2">efx_auxSends</a>; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;   <span class="comment">/* Effect types. */</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="structalInfo__s.html#ada58fac03030ea0f9c0116a6830fd7c0">  101</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#ada58fac03030ea0f9c0116a6830fd7c0">efx_reverb</a>; </div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="structalInfo__s.html#a11e56a658f88ab9c5a9ad033193ec5e1">  102</a></span>&#160;   ALint <a class="code" href="structalInfo__s.html#a11e56a658f88ab9c5a9ad033193ec5e1">efx_echo</a>; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;} alInfo_t;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">extern</span> alInfo_t al_info;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment"> * Creation.</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keywordtype">int</span> sound_al_init (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">void</span> sound_al_free_sources_locked (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordtype">void</span> sound_al_exit_locked (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment"> * Creation.</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">int</span> sound_al_init (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordtype">void</span> sound_al_free_sources_locked (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keywordtype">void</span> sound_al_exit_locked (<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment"> * Sound creation.</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keywordtype">int</span> sound_al_buffer( ALuint *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, SDL_RWops *rw, <span class="keyword">const</span> <span class="keywordtype">char</span> *name );</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keywordtype">int</span> sound_al_load( <a class="code" href="structalSound.html">alSound</a> *snd, SDL_RWops *rw, <span class="keyword">const</span> <span class="keywordtype">char</span> *name );</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keywordtype">void</span> sound_al_free( <a class="code" href="structalSound.html">alSound</a> *snd );</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment"> * Sound creation.</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keywordtype">int</span> sound_al_buffer( ALuint *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, SDL_RWops *rw, <span class="keyword">const</span> <span class="keywordtype">char</span> *name );</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keywordtype">int</span> sound_al_load( <a class="code" href="structalSound.html">alSound</a> *snd, SDL_RWops *rw, <span class="keyword">const</span> <span class="keywordtype">char</span> *name );</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keywordtype">void</span> sound_al_free( <a class="code" href="structalSound.html">alSound</a> *snd );</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment"> * Sound settings.</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keywordtype">int</span> sound_al_volume( <span class="keyword">const</span> <span class="keywordtype">double</span> vol );</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keywordtype">double</span> sound_al_getVolume (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keywordtype">double</span> sound_al_getVolumeLog(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment"> * Sound settings.</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keywordtype">int</span> sound_al_volume( <span class="keyword">const</span> <span class="keywordtype">double</span> vol );</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keywordtype">double</span> sound_al_getVolume (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="keywordtype">double</span> sound_al_getVolumeLog(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment"> * Sound playing.</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keywordtype">int</span> sound_al_play( <a class="code" href="structalVoice.html">alVoice</a> *v, <a class="code" href="structalSound.html">alSound</a> *s );</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keywordtype">int</span> sound_al_playPos( <a class="code" href="structalVoice.html">alVoice</a> *v, <a class="code" href="structalSound.html">alSound</a> *s,</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      <span class="keywordtype">double</span> px, <span class="keywordtype">double</span> py, <span class="keywordtype">double</span> vx, <span class="keywordtype">double</span> vy );</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keywordtype">int</span> sound_al_updatePos( <a class="code" href="structalVoice.html">alVoice</a> *v,</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      <span class="keywordtype">double</span> px, <span class="keywordtype">double</span> py, <span class="keywordtype">double</span> vx, <span class="keywordtype">double</span> vy );</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keywordtype">void</span> sound_al_updateVoice( <a class="code" href="structalVoice.html">alVoice</a> *v );</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="comment"> * Sound management.</span></div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keywordtype">void</span> sound_al_update (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="keywordtype">void</span> sound_al_stop( <a class="code" href="structalVoice.html">alVoice</a> *v );</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="keywordtype">void</span> sound_al_pause (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="keywordtype">void</span> sound_al_resume (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="keywordtype">void</span> sound_al_setSpeed( <span class="keywordtype">double</span> s );</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keywordtype">void</span> sound_al_setSpeedVolume( <span class="keywordtype">double</span> vol );</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="comment"> * Sound playing.</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keywordtype">int</span> sound_al_play( <a class="code" href="structalVoice.html">alVoice</a> *v, <a class="code" href="structalSound.html">alSound</a> *s );</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keywordtype">int</span> sound_al_playPos( <a class="code" href="structalVoice.html">alVoice</a> *v, <a class="code" href="structalSound.html">alSound</a> *s,</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      <span class="keywordtype">double</span> px, <span class="keywordtype">double</span> py, <span class="keywordtype">double</span> vx, <span class="keywordtype">double</span> vy );</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="keywordtype">int</span> sound_al_updatePos( <a class="code" href="structalVoice.html">alVoice</a> *v,</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;      <span class="keywordtype">double</span> px, <span class="keywordtype">double</span> py, <span class="keywordtype">double</span> vx, <span class="keywordtype">double</span> vy );</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keywordtype">void</span> sound_al_updateVoice( <a class="code" href="structalVoice.html">alVoice</a> *v );</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment"> * Sound management.</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="keywordtype">void</span> sound_al_update (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="keywordtype">void</span> sound_al_stop( <a class="code" href="structalVoice.html">alVoice</a> *v );</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="keywordtype">void</span> sound_al_pause (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="keywordtype">void</span> sound_al_resume (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keywordtype">void</span> sound_al_setSpeed( <span class="keywordtype">double</span> s );</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="keywordtype">void</span> sound_al_setSpeedVolume( <span class="keywordtype">double</span> vol );</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="comment"> * Listener.</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="keywordtype">int</span> sound_al_updateListener( <span class="keywordtype">double</span> dir, <span class="keywordtype">double</span> px, <span class="keywordtype">double</span> py,</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordtype">double</span> vx, <span class="keywordtype">double</span> vy );</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="comment"> * Groups.</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keywordtype">int</span> sound_al_createGroup( <span class="keywordtype">int</span> size );</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keywordtype">int</span> sound_al_playGroup( <span class="keywordtype">int</span> group, <a class="code" href="structalSound.html">alSound</a> *s, <span class="keywordtype">int</span> once );</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="keywordtype">void</span> sound_al_stopGroup( <span class="keywordtype">int</span> group );</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="keywordtype">void</span> sound_al_pauseGroup( <span class="keywordtype">int</span> group );</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="keywordtype">void</span> sound_al_resumeGroup( <span class="keywordtype">int</span> group );</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keywordtype">void</span> sound_al_speedGroup( <span class="keywordtype">int</span> group, <span class="keywordtype">int</span> enable );</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="keywordtype">void</span> sound_al_volumeGroup( <span class="keywordtype">int</span> group, <span class="keywordtype">double</span> volume );</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment"> * Listener.</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="keywordtype">int</span> sound_al_updateListener( <span class="keywordtype">double</span> dir, <span class="keywordtype">double</span> px, <span class="keywordtype">double</span> py,</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      <span class="keywordtype">double</span> vx, <span class="keywordtype">double</span> vy );</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="comment"> * Groups.</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keywordtype">int</span> sound_al_createGroup( <span class="keywordtype">int</span> size );</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="keywordtype">int</span> sound_al_playGroup( <span class="keywordtype">int</span> group, <a class="code" href="structalSound.html">alSound</a> *s, <span class="keywordtype">int</span> once );</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="keywordtype">void</span> sound_al_stopGroup( <span class="keywordtype">int</span> group );</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="keywordtype">void</span> sound_al_pauseGroup( <span class="keywordtype">int</span> group );</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keywordtype">void</span> sound_al_resumeGroup( <span class="keywordtype">int</span> group );</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="keywordtype">void</span> sound_al_speedGroup( <span class="keywordtype">int</span> group, <span class="keywordtype">int</span> enable );</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keywordtype">void</span> sound_al_volumeGroup( <span class="keywordtype">int</span> group, <span class="keywordtype">double</span> volume );</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="comment"> * Env.</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="keywordtype">int</span> sound_al_env( SoundEnv_t env, <span class="keywordtype">double</span> param );</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="comment"> * Env.</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="keywordtype">int</span> sound_al_env( SoundEnv_t env, <span class="keywordtype">double</span> param );</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SOUND_OPENAL_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SOUND_OPENAL_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructalInfo__s_html_ada58fac03030ea0f9c0116a6830fd7c0"><div class="ttname"><a href="structalInfo__s.html#ada58fac03030ea0f9c0116a6830fd7c0">alInfo_s::efx_reverb</a></div><div class="ttdeci">ALint efx_reverb</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00100">sound_openal.h:100</a></div></div>
-<div class="ttc" id="astructalVoice___html_ad8c45ba8f917f5848c75e596032b149a"><div class="ttname"><a href="structalVoice__.html#ad8c45ba8f917f5848c75e596032b149a">alVoice_::pos</a></div><div class="ttdeci">ALfloat pos[3]</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00061">sound_openal.h:61</a></div></div>
-<div class="ttc" id="astructalVoice___html_a60bb8dae224a57684e9a623a6fd0ec55"><div class="ttname"><a href="structalVoice__.html#a60bb8dae224a57684e9a623a6fd0ec55">alVoice_::id</a></div><div class="ttdeci">int id</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00056">sound_openal.h:56</a></div></div>
-<div class="ttc" id="astructalVoice___html_af61c047d0a37aa5527a2f2e3b9c6c560"><div class="ttname"><a href="structalVoice__.html#af61c047d0a37aa5527a2f2e3b9c6c560">alVoice_::state</a></div><div class="ttdeci">voice_state_t state</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00058">sound_openal.h:58</a></div></div>
-<div class="ttc" id="astructalInfo__s_html_a9f9e1390c6d5000944da2e03e43cc4a7"><div class="ttname"><a href="structalInfo__s.html#a9f9e1390c6d5000944da2e03e43cc4a7">alInfo_s::efx_major</a></div><div class="ttdeci">ALint efx_major</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00096">sound_openal.h:96</a></div></div>
-<div class="ttc" id="astructalVoice___html_ad9c70116ebcf12d19b0da9365fd4929b"><div class="ttname"><a href="structalVoice__.html#ad9c70116ebcf12d19b0da9365fd4929b">alVoice_::source</a></div><div class="ttdeci">ALuint source</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00063">sound_openal.h:63</a></div></div>
-<div class="ttc" id="astructalVoice___html_a2f3faf1e50e1372708d2ad9641bcbfa7"><div class="ttname"><a href="structalVoice__.html#a2f3faf1e50e1372708d2ad9641bcbfa7">alVoice_::flags</a></div><div class="ttdeci">unsigned int flags</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00059">sound_openal.h:59</a></div></div>
+<div class="ttc" id="astructalInfo__s_html_ada58fac03030ea0f9c0116a6830fd7c0"><div class="ttname"><a href="structalInfo__s.html#ada58fac03030ea0f9c0116a6830fd7c0">alInfo_s::efx_reverb</a></div><div class="ttdeci">ALint efx_reverb</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00101">sound_openal.h:101</a></div></div>
+<div class="ttc" id="astructalVoice___html_ad8c45ba8f917f5848c75e596032b149a"><div class="ttname"><a href="structalVoice__.html#ad8c45ba8f917f5848c75e596032b149a">alVoice_::pos</a></div><div class="ttdeci">ALfloat pos[3]</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00062">sound_openal.h:62</a></div></div>
+<div class="ttc" id="astructalVoice___html_a60bb8dae224a57684e9a623a6fd0ec55"><div class="ttname"><a href="structalVoice__.html#a60bb8dae224a57684e9a623a6fd0ec55">alVoice_::id</a></div><div class="ttdeci">int id</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00057">sound_openal.h:57</a></div></div>
+<div class="ttc" id="astructalVoice___html_af61c047d0a37aa5527a2f2e3b9c6c560"><div class="ttname"><a href="structalVoice__.html#af61c047d0a37aa5527a2f2e3b9c6c560">alVoice_::state</a></div><div class="ttdeci">voice_state_t state</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00059">sound_openal.h:59</a></div></div>
+<div class="ttc" id="astructalInfo__s_html_a9f9e1390c6d5000944da2e03e43cc4a7"><div class="ttname"><a href="structalInfo__s.html#a9f9e1390c6d5000944da2e03e43cc4a7">alInfo_s::efx_major</a></div><div class="ttdeci">ALint efx_major</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00097">sound_openal.h:97</a></div></div>
+<div class="ttc" id="astructalVoice___html_ad9c70116ebcf12d19b0da9365fd4929b"><div class="ttname"><a href="structalVoice__.html#ad9c70116ebcf12d19b0da9365fd4929b">alVoice_::source</a></div><div class="ttdeci">ALuint source</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00064">sound_openal.h:64</a></div></div>
+<div class="ttc" id="astructalVoice___html_a2f3faf1e50e1372708d2ad9641bcbfa7"><div class="ttname"><a href="structalVoice__.html#a2f3faf1e50e1372708d2ad9641bcbfa7">alVoice_::flags</a></div><div class="ttdeci">unsigned int flags</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00060">sound_openal.h:60</a></div></div>
 <div class="ttc" id="astructalSound___html_a05c9b4ac1fa4f3132f9b8f1a0ceae27e"><div class="ttname"><a href="structalSound__.html#a05c9b4ac1fa4f3132f9b8f1a0ceae27e">alSound_::filename</a></div><div class="ttdeci">char * filename</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00025">sound_openal.h:25</a></div></div>
-<div class="ttc" id="astructalInfo__s_html"><div class="ttname"><a href="structalInfo__s.html">alInfo_s</a></div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00094">sound_openal.h:94</a></div></div>
+<div class="ttc" id="astructalInfo__s_html"><div class="ttname"><a href="structalInfo__s.html">alInfo_s</a></div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00095">sound_openal.h:95</a></div></div>
 <div class="ttc" id="asound_8c_html_a61e8bccbdd03f18f07ed6553ed4d866b"><div class="ttname"><a href="sound_8c.html#a61e8bccbdd03f18f07ed6553ed4d866b">voice_new</a></div><div class="ttdeci">alVoice * voice_new(void)</div><div class="ttdoc">Gets a new voice ready to be used.</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00824">sound.c:824</a></div></div>
-<div class="ttc" id="astructalInfo__s_html_afea055c4bf4e00faa3af63d7fa71d7e2"><div class="ttname"><a href="structalInfo__s.html#afea055c4bf4e00faa3af63d7fa71d7e2">alInfo_s::efx_auxSends</a></div><div class="ttdeci">ALint efx_auxSends</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00098">sound_openal.h:98</a></div></div>
-<div class="ttc" id="astructalInfo__s_html_a31905d81400772b62004148fca81c949"><div class="ttname"><a href="structalInfo__s.html#a31905d81400772b62004148fca81c949">alInfo_s::efx_minor</a></div><div class="ttdeci">ALint efx_minor</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00097">sound_openal.h:97</a></div></div>
+<div class="ttc" id="astructalInfo__s_html_afea055c4bf4e00faa3af63d7fa71d7e2"><div class="ttname"><a href="structalInfo__s.html#afea055c4bf4e00faa3af63d7fa71d7e2">alInfo_s::efx_auxSends</a></div><div class="ttdeci">ALint efx_auxSends</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00099">sound_openal.h:99</a></div></div>
+<div class="ttc" id="astructalInfo__s_html_a31905d81400772b62004148fca81c949"><div class="ttname"><a href="structalInfo__s.html#a31905d81400772b62004148fca81c949">alInfo_s::efx_minor</a></div><div class="ttdeci">ALint efx_minor</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00098">sound_openal.h:98</a></div></div>
 <div class="ttc" id="asound_8c_html_adecfaa96b281a459a72c27b10f843886"><div class="ttname"><a href="sound_8c.html#adecfaa96b281a459a72c27b10f843886">voice_add</a></div><div class="ttdeci">int voice_add(alVoice *v)</div><div class="ttdoc">Adds a voice to the active voice stack.</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00847">sound.c:847</a></div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00049">news.c:49</a></div></div>
 <div class="ttc" id="astructalSound___html"><div class="ttname"><a href="structalSound__.html">alSound_</a></div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00024">sound_openal.h:24</a></div></div>
-<div class="ttc" id="astructalInfo__s_html_add54f309d06eefb759d20d103a96a6da"><div class="ttname"><a href="structalInfo__s.html#add54f309d06eefb759d20d103a96a6da">alInfo_s::efx</a></div><div class="ttdeci">ALint efx</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00095">sound_openal.h:95</a></div></div>
+<div class="ttc" id="astructalInfo__s_html_add54f309d06eefb759d20d103a96a6da"><div class="ttname"><a href="structalInfo__s.html#add54f309d06eefb759d20d103a96a6da">alInfo_s::efx</a></div><div class="ttdeci">ALint efx</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00096">sound_openal.h:96</a></div></div>
 <div class="ttc" id="asound_8c_html_a773ff22e2a17143678203f83ec3c2e67"><div class="ttname"><a href="sound_8c.html#a773ff22e2a17143678203f83ec3c2e67">voice_active</a></div><div class="ttdeci">alVoice * voice_active</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00063">sound.c:63</a></div></div>
-<div class="ttc" id="astructalVoice___html"><div class="ttname"><a href="structalVoice__.html">alVoice_</a></div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00052">sound_openal.h:52</a></div></div>
-<div class="ttc" id="astructalVoice___html_a706ba5c2917a7d91f7782aa5425b856b"><div class="ttname"><a href="structalVoice__.html#a706ba5c2917a7d91f7782aa5425b856b">alVoice_::buffer</a></div><div class="ttdeci">ALuint buffer</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00064">sound_openal.h:64</a></div></div>
-<div class="ttc" id="astructalInfo__s_html_a11e56a658f88ab9c5a9ad033193ec5e1"><div class="ttname"><a href="structalInfo__s.html#a11e56a658f88ab9c5a9ad033193ec5e1">alInfo_s::efx_echo</a></div><div class="ttdeci">ALint efx_echo</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00101">sound_openal.h:101</a></div></div>
-<div class="ttc" id="astructalSound___html_ae8c9dc1953d62561e4b28c5fc665b5b7"><div class="ttname"><a href="structalSound__.html#ae8c9dc1953d62561e4b28c5fc665b5b7">alSound_::buf</a></div><div class="ttdeci">ALuint buf</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00028">sound_openal.h:28</a></div></div>
+<div class="ttc" id="astructalVoice___html"><div class="ttname"><a href="structalVoice__.html">alVoice_</a></div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00053">sound_openal.h:53</a></div></div>
+<div class="ttc" id="astructalVoice___html_a706ba5c2917a7d91f7782aa5425b856b"><div class="ttname"><a href="structalVoice__.html#a706ba5c2917a7d91f7782aa5425b856b">alVoice_::buffer</a></div><div class="ttdeci">ALuint buffer</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00065">sound_openal.h:65</a></div></div>
+<div class="ttc" id="astructalInfo__s_html_a11e56a658f88ab9c5a9ad033193ec5e1"><div class="ttname"><a href="structalInfo__s.html#a11e56a658f88ab9c5a9ad033193ec5e1">alInfo_s::efx_echo</a></div><div class="ttdeci">ALint efx_echo</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00102">sound_openal.h:102</a></div></div>
+<div class="ttc" id="astructalSound___html_af992b5967de51aa5fb58a21e59af56f4"><div class="ttname"><a href="structalSound__.html#af992b5967de51aa5fb58a21e59af56f4">alSound_::channels</a></div><div class="ttdeci">int channels</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00028">sound_openal.h:28</a></div></div>
+<div class="ttc" id="astructalSound___html_ae8c9dc1953d62561e4b28c5fc665b5b7"><div class="ttname"><a href="structalSound__.html#ae8c9dc1953d62561e4b28c5fc665b5b7">alSound_::buf</a></div><div class="ttdeci">ALuint buf</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00029">sound_openal.h:29</a></div></div>
 <div class="ttc" id="astructalSound_html"><div class="ttname"><a href="structalSound.html">alSound</a></div><div class="ttdoc">Contains a sound buffer.</div></div>
 <div class="ttc" id="asound_8c_html_a170fd22e30930d3b20c2f00edb1fd561"><div class="ttname"><a href="sound_8c.html#a170fd22e30930d3b20c2f00edb1fd561">voice_get</a></div><div class="ttdeci">alVoice * voice_get(int id)</div><div class="ttdoc">Gets a voice by identifier.</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00883">sound.c:883</a></div></div>
 <div class="ttc" id="astructalSound___html_a4845beee580ba51db96a229ad86542b4"><div class="ttname"><a href="structalSound__.html#a4845beee580ba51db96a229ad86542b4">alSound_::name</a></div><div class="ttdeci">char * name</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00026">sound_openal.h:26</a></div></div>
 <div class="ttc" id="asound_8c_html_ad7dbd2c5d4dfab7c14ccd671ca5f9827"><div class="ttname"><a href="sound_8c.html#ad7dbd2c5d4dfab7c14ccd671ca5f9827">voice_unlock</a></div><div class="ttdeci">void voice_unlock(void)</div><div class="ttdoc">Unlocks the voices.</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00813">sound.c:813</a></div></div>
 <div class="ttc" id="asound_8c_html_a10aeda34034d97e6f9420929dc9bf686"><div class="ttname"><a href="sound_8c.html#a10aeda34034d97e6f9420929dc9bf686">voice_lock</a></div><div class="ttdeci">void voice_lock(void)</div><div class="ttdoc">Locks the voices.</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00804">sound.c:804</a></div></div>
 <div class="ttc" id="astructalSound___html_a9fc1ce67c554912463ecbc2108271651"><div class="ttname"><a href="structalSound__.html#a9fc1ce67c554912463ecbc2108271651">alSound_::length</a></div><div class="ttdeci">double length</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00027">sound_openal.h:27</a></div></div>
-<div class="ttc" id="astructalVoice___html_abe6b2f457bd02a0a91dfba15c6998d56"><div class="ttname"><a href="structalVoice__.html#abe6b2f457bd02a0a91dfba15c6998d56">alVoice_::next</a></div><div class="ttdeci">struct alVoice_ * next</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00054">sound_openal.h:54</a></div></div>
-<div class="ttc" id="astructalVoice___html_aac0ad6e7dda51da5f8229d5db10b6300"><div class="ttname"><a href="structalVoice__.html#aac0ad6e7dda51da5f8229d5db10b6300">alVoice_::prev</a></div><div class="ttdeci">struct alVoice_ * prev</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00053">sound_openal.h:53</a></div></div>
-<div class="ttc" id="astructalVoice___html_aa8dffbaa98359c8e904ad8721e317d3f"><div class="ttname"><a href="structalVoice__.html#aa8dffbaa98359c8e904ad8721e317d3f">alVoice_::vel</a></div><div class="ttdeci">ALfloat vel[3]</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00062">sound_openal.h:62</a></div></div>
+<div class="ttc" id="astructalVoice___html_abe6b2f457bd02a0a91dfba15c6998d56"><div class="ttname"><a href="structalVoice__.html#abe6b2f457bd02a0a91dfba15c6998d56">alVoice_::next</a></div><div class="ttdeci">struct alVoice_ * next</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00055">sound_openal.h:55</a></div></div>
+<div class="ttc" id="astructalVoice___html_aac0ad6e7dda51da5f8229d5db10b6300"><div class="ttname"><a href="structalVoice__.html#aac0ad6e7dda51da5f8229d5db10b6300">alVoice_::prev</a></div><div class="ttdeci">struct alVoice_ * prev</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00054">sound_openal.h:54</a></div></div>
+<div class="ttc" id="astructalVoice___html_aa8dffbaa98359c8e904ad8721e317d3f"><div class="ttname"><a href="structalVoice__.html#aa8dffbaa98359c8e904ad8721e317d3f">alVoice_::vel</a></div><div class="ttdeci">ALfloat vel[3]</div><div class="ttdef"><b>Definition:</b> <a href="sound__openal_8h_source.html#l00063">sound_openal.h:63</a></div></div>
 <div class="ttc" id="astructalVoice_html"><div class="ttname"><a href="structalVoice.html">alVoice</a></div><div class="ttdoc">Represents a voice in the game.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
