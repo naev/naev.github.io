@@ -959,7 +959,7 @@ $(function() {
 <div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;   (void) str;</div>
 <div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;   <span class="keywordtype">int</span> p, y;</div>
 <div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;   glTexture *t;</div>
-<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;   <span class="keywordtype">int</span> w, h, lw;</div>
+<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;   <span class="keywordtype">int</span> w, h, lw, tw, th;</div>
 <div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[128];</div>
 <div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;   <span class="keywordtype">int</span> m;</div>
 <div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160; </div>
@@ -970,379 +970,381 @@ $(function() {
 <div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;   p = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstStandings&quot;</span> );</div>
 <div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160; </div>
 <div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;   <span class="comment">/* Render logo. */</span></div>
-<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;   t = <a class="code" href="faction_8c.html#a16315bc6d19608a6d043c8cb40bc6fe7">faction_logoSmall</a>( info_factions[p] );</div>
+<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;   t = <a class="code" href="faction_8c.html#a4f155231085486b91187243140fd9e73">faction_logo</a>( info_factions[p] );</div>
 <div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;   <span class="keywordflow">if</span> (t != NULL) {</div>
-<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;      window_modifyImage( wid, <span class="stringliteral">&quot;imgLogo&quot;</span>, t, 0, 0 );</div>
-<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;      y  = -40;</div>
-<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;      <a class="code" href="toolkit_8c.html#a1405c59a98ff4909c3e878d483f0c9ea">window_moveWidget</a>( wid, <span class="stringliteral">&quot;imgLogo&quot;</span>, lw+40 + (w-(lw+60)-t-&gt;w)/2, y );</div>
-<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;      y -= t-&gt;h;</div>
-<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;   }</div>
-<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;      window_modifyImage( wid, <span class="stringliteral">&quot;imgLogo&quot;</span>, NULL, 0, 0 );</div>
-<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;      y = -20;</div>
-<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;   }</div>
-<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160; </div>
-<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;   <span class="comment">/* Modify text. */</span></div>
-<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;   y -= 20;</div>
-<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtName&quot;</span>, <a class="code" href="faction_8c.html#a151299399a3ae201cf6e3f1406f01b19">faction_longname</a>( info_factions[p] ) );</div>
-<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;   <a class="code" href="toolkit_8c.html#a1405c59a98ff4909c3e878d483f0c9ea">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtName&quot;</span>, lw+40, y );</div>
-<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;   y -= 40;</div>
-<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;   m = round( <a class="code" href="faction_8c.html#a8548b8d1baa6764d610e052a17519c31">faction_getPlayer</a>( info_factions[p] ) );</div>
-<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <span class="stringliteral">&quot;%+d%%   [ %s ]&quot;</span>, m,</div>
-<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;      <a class="code" href="faction_8c.html#ab1bb5cd671ae24d8b195254fd272a23c">faction_getStandingText</a>( info_factions[p] ) );</div>
-<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtStanding&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;   <a class="code" href="toolkit_8c.html#a1405c59a98ff4909c3e878d483f0c9ea">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtStanding&quot;</span>, lw+40, y );</div>
-<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;}</div>
-<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160; </div>
-<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160; </div>
-<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_openMissions( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid )</div>
-<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;{</div>
-<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
-<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160; </div>
-<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;   <span class="comment">/* Get the dimensions. */</span></div>
-<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;   <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
-<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160; </div>
-<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;   <span class="comment">/* buttons */</span></div>
-<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;   window_addButton( wid, -20, 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;         <span class="stringliteral">&quot;closeMissions&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), info_close );</div>
-<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;   window_addButtonKey( wid, -20, 40 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;         <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>, <span class="stringliteral">&quot;btnAbortMission&quot;</span>, _(<span class="stringliteral">&quot;Abort&quot;</span>),</div>
-<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;         mission_menu_abort, SDLK_a );</div>
-<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160; </div>
-<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;   <span class="comment">/* text */</span></div>
-<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;   window_addText( wid, 300+40, -60,</div>
-<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;         200, 40, 0, <span class="stringliteral">&quot;txtSReward&quot;</span>,</div>
-<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;         &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, _(<span class="stringliteral">&quot;#nReward:#0&quot;</span>) );</div>
-<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;   window_addText( wid, 300+40, -80,</div>
-<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;         200, 40, 0, <span class="stringliteral">&quot;txtReward&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, NULL );</div>
-<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;   window_addText( wid, 300+40, -120,</div>
-<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;         w - (300+40+40), h - <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> - 120, 0,</div>
-<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;         <span class="stringliteral">&quot;txtDesc&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, NULL );</div>
-<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160; </div>
-<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;   <span class="comment">/* Put a map. */</span></div>
-<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;   map_show( wid, 20, 20, 300, 260, 0.75 );</div>
-<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160; </div>
-<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;   <span class="comment">/* list */</span></div>
-<div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160;   mission_menu_genList(wid ,1);</div>
-<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;}</div>
-<div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> mission_menu_genList( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">int</span> first )</div>
-<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;{</div>
-<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;   <span class="keywordtype">int</span> i,j;</div>
-<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;   <span class="keywordtype">char</span>** misn_names;</div>
-<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
-<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160; </div>
-<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;   <span class="keywordflow">if</span> (!first)</div>
-<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstMission&quot;</span> );</div>
-<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160; </div>
-<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;   <span class="comment">/* Get the dimensions. */</span></div>
-<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160;   <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
-<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160; </div>
-<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;   <span class="comment">/* list */</span></div>
-<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;   misn_names = malloc(<span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*) * MISSION_MAX);</div>
-<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;   j = 0;</div>
-<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;MISSION_MAX; i++)</div>
-<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i]-&gt;<span class="keywordtype">id</span> != 0)</div>
-<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160;         misn_names[j++] = (<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i]-&gt;title != NULL) ?</div>
-<div class="line"><a name="l01119"></a><span class="lineno"> 1119</span>&#160;               strdup(<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i]-&gt;title) : NULL;</div>
-<div class="line"><a name="l01120"></a><span class="lineno"> 1120</span>&#160; </div>
-<div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160;   <span class="keywordflow">if</span> (j==0) { <span class="comment">/* no missions */</span></div>
-<div class="line"><a name="l01122"></a><span class="lineno"> 1122</span>&#160;      misn_names[0] = strdup(_(<span class="stringliteral">&quot;No Missions&quot;</span>));</div>
-<div class="line"><a name="l01123"></a><span class="lineno"> 1123</span>&#160;      j = 1;</div>
-<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;   }</div>
-<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;   window_addList( wid, 20, -40,</div>
-<div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160;         300, h-340,</div>
-<div class="line"><a name="l01127"></a><span class="lineno"> 1127</span>&#160;         <span class="stringliteral">&quot;lstMission&quot;</span>, misn_names, j, 0, mission_menu_update, NULL );</div>
-<div class="line"><a name="l01128"></a><span class="lineno"> 1128</span>&#160;}</div>
-<div class="line"><a name="l01133"></a><span class="lineno"> 1133</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> mission_menu_update( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l01134"></a><span class="lineno"> 1134</span>&#160;{</div>
-<div class="line"><a name="l01135"></a><span class="lineno"> 1135</span>&#160;   (void)str;</div>
-<div class="line"><a name="l01136"></a><span class="lineno"> 1136</span>&#160;   <span class="keywordtype">char</span> *active_misn;</div>
-<div class="line"><a name="l01137"></a><span class="lineno"> 1137</span>&#160;   <a class="code" href="structMission.html">Mission</a>* misn;</div>
-<div class="line"><a name="l01138"></a><span class="lineno"> 1138</span>&#160; </div>
-<div class="line"><a name="l01139"></a><span class="lineno"> 1139</span>&#160;   active_misn = toolkit_getList( wid, <span class="stringliteral">&quot;lstMission&quot;</span> );</div>
-<div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160;   <span class="keywordflow">if</span> ((active_misn==NULL) || (strcmp(active_misn,_(<span class="stringliteral">&quot;No Missions&quot;</span>))==0)) {</div>
-<div class="line"><a name="l01141"></a><span class="lineno"> 1141</span>&#160;      window_modifyText( wid, <span class="stringliteral">&quot;txtReward&quot;</span>, _(<span class="stringliteral">&quot;None&quot;</span>) );</div>
-<div class="line"><a name="l01142"></a><span class="lineno"> 1142</span>&#160;      window_modifyText( wid, <span class="stringliteral">&quot;txtDesc&quot;</span>,</div>
-<div class="line"><a name="l01143"></a><span class="lineno"> 1143</span>&#160;            _(<span class="stringliteral">&quot;You currently have no active missions.&quot;</span>) );</div>
-<div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160;      window_disableButton( wid, <span class="stringliteral">&quot;btnAbortMission&quot;</span> );</div>
-<div class="line"><a name="l01145"></a><span class="lineno"> 1145</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01146"></a><span class="lineno"> 1146</span>&#160;   }</div>
-<div class="line"><a name="l01147"></a><span class="lineno"> 1147</span>&#160; </div>
-<div class="line"><a name="l01148"></a><span class="lineno"> 1148</span>&#160;   <span class="comment">/* Modify the text. */</span></div>
-<div class="line"><a name="l01149"></a><span class="lineno"> 1149</span>&#160;   misn = <a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[ toolkit_getListPos(wid, <span class="stringliteral">&quot;lstMission&quot;</span> ) ];</div>
-<div class="line"><a name="l01150"></a><span class="lineno"> 1150</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtReward&quot;</span>, misn-&gt;reward );</div>
-<div class="line"><a name="l01151"></a><span class="lineno"> 1151</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDesc&quot;</span>, misn-&gt;desc );</div>
-<div class="line"><a name="l01152"></a><span class="lineno"> 1152</span>&#160;   window_enableButton( wid, <span class="stringliteral">&quot;btnAbortMission&quot;</span> );</div>
-<div class="line"><a name="l01153"></a><span class="lineno"> 1153</span>&#160; </div>
-<div class="line"><a name="l01154"></a><span class="lineno"> 1154</span>&#160;   <span class="comment">/* Select the system. */</span></div>
-<div class="line"><a name="l01155"></a><span class="lineno"> 1155</span>&#160;   <span class="keywordflow">if</span> (misn-&gt;markers != NULL)</div>
-<div class="line"><a name="l01156"></a><span class="lineno"> 1156</span>&#160;      map_center( <a class="code" href="space_8c.html#a94669d7b156a00e769ebef6840fee35f">system_getIndex</a>( misn-&gt;markers[0].sys )-&gt;name );</div>
-<div class="line"><a name="l01157"></a><span class="lineno"> 1157</span>&#160;}</div>
-<div class="line"><a name="l01162"></a><span class="lineno"> 1162</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> mission_menu_abort( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l01163"></a><span class="lineno"> 1163</span>&#160;{</div>
-<div class="line"><a name="l01164"></a><span class="lineno"> 1164</span>&#160;   (void)str;</div>
-<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;   <span class="keywordtype">int</span> pos;</div>
-<div class="line"><a name="l01166"></a><span class="lineno"> 1166</span>&#160;   <a class="code" href="structMission.html">Mission</a> *misn;</div>
-<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160; </div>
-<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Abort Mission&quot;</span>),</div>
-<div class="line"><a name="l01170"></a><span class="lineno"> 1170</span>&#160;            _(<span class="stringliteral">&quot;Are you sure you want to abort this mission?&quot;</span>) )) {</div>
-<div class="line"><a name="l01171"></a><span class="lineno"> 1171</span>&#160; </div>
-<div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;      <span class="comment">/* Get the mission. */</span></div>
-<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160;      pos = toolkit_getListPos(wid, <span class="stringliteral">&quot;lstMission&quot;</span> );</div>
-<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160;      misn = <a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[pos];</div>
-<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160; </div>
-<div class="line"><a name="l01176"></a><span class="lineno"> 1176</span>&#160;      <span class="comment">/* We run the &quot;abort&quot; function if it&#39;s found. */</span></div>
-<div class="line"><a name="l01177"></a><span class="lineno"> 1177</span>&#160;      ret = <a class="code" href="nlua__misn_8c.html#a5219aad9bb3dfb97b609cfc0a5f1affd">misn_tryRun</a>( misn, <span class="stringliteral">&quot;abort&quot;</span> );</div>
-<div class="line"><a name="l01178"></a><span class="lineno"> 1178</span>&#160; </div>
-<div class="line"><a name="l01179"></a><span class="lineno"> 1179</span>&#160;      <span class="comment">/* Now clean up mission. */</span></div>
-<div class="line"><a name="l01180"></a><span class="lineno"> 1180</span>&#160;      <span class="keywordflow">if</span> (ret != 2) {</div>
-<div class="line"><a name="l01181"></a><span class="lineno"> 1181</span>&#160;         <a class="code" href="mission_8c.html#a2e21b5d28d28af487d690175756f3f11">mission_cleanup</a>( misn );</div>
-<div class="line"><a name="l01182"></a><span class="lineno"> 1182</span>&#160;         <a class="code" href="mission_8c.html#a92aa0e2847371f97f34078c4d3a56407">mission_shift</a>(pos);</div>
-<div class="line"><a name="l01183"></a><span class="lineno"> 1183</span>&#160;      }</div>
-<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160; </div>
-<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;      <span class="comment">/* Reset markers. */</span></div>
-<div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160;      <a class="code" href="mission_8c.html#a4a8af8fb9ff0ef11d268432dfdd3091f">mission_sysMark</a>();</div>
-<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160; </div>
-<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;      <span class="comment">/* Reset claims. */</span></div>
-<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;      <a class="code" href="claim_8c.html#aef69b8c06e4b9b193d7d891213262ae3">claim_activateAll</a>();</div>
-<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160; </div>
-<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;      <span class="comment">/* Regenerate list. */</span></div>
-<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;      mission_menu_genList(wid ,0);</div>
-<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160; </div>
-<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160;      <span class="comment">/* Regenerate bar if landed. */</span></div>
-<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160;      <a class="code" href="land_8c.html#a005d4e974a6f9a7e7fe8b20a9cc2e5ec">bar_regen</a>();</div>
-<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;   }</div>
-<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;}</div>
-<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160; </div>
-<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;<span class="comment">/* amount of screen available for logs: -20 below button, -20 above button, -40 from top, -20 x2 between logs.*/</span></div>
-<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;<span class="preprocessor">#define LOGSPACING (h - 120 - BUTTON_HEIGHT )</span></div>
-<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160; </div>
-<div class="line"><a name="l01206"></a><span class="lineno"> 1206</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> shiplog_menu_update( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l01207"></a><span class="lineno"> 1207</span>&#160;{</div>
-<div class="line"><a name="l01208"></a><span class="lineno"> 1208</span>&#160;   <span class="keywordtype">int</span> regenerateEntries=0;</div>
-<div class="line"><a name="l01209"></a><span class="lineno"> 1209</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
-<div class="line"><a name="l01210"></a><span class="lineno"> 1210</span>&#160;   <span class="keywordtype">int</span> logType, log;</div>
-<div class="line"><a name="l01211"></a><span class="lineno"> 1211</span>&#160;   <span class="keywordtype">int</span> nentries;</div>
-<div class="line"><a name="l01212"></a><span class="lineno"> 1212</span>&#160;   <span class="keywordtype">char</span> **logentries;</div>
-<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160; </div>
-<div class="line"><a name="l01214"></a><span class="lineno"> 1214</span>&#160;   <span class="keywordflow">if</span> (!logWidgetsReady)</div>
-<div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160; </div>
-<div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160;   <span class="comment">/* This is called when something is selected.</span></div>
-<div class="line"><a name="l01218"></a><span class="lineno"> 1218</span>&#160;<span class="comment">    * If a new log type has been selected, need to regenerate the log lists.</span></div>
-<div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;<span class="comment">    * If a new log has been selected, need to regenerate the entries. */</span></div>
-<div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;   <span class="keywordflow">if</span> (strcmp(str, <span class="stringliteral">&quot;lstLogEntries&quot;</span> ) != 0) {</div>
-<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;      <span class="comment">/* has selected a type of log or a log */</span></div>
-<div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;      <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
-<div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160;      logWidgetsReady=0;</div>
-<div class="line"><a name="l01224"></a><span class="lineno"> 1224</span>&#160; </div>
-<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;      logType = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogType&quot;</span> );</div>
-<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;      log = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
-<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160; </div>
-<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;      <span class="keywordflow">if</span> ( logType != selectedLogType ) {</div>
-<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;         <span class="comment">/* new log type selected */</span></div>
-<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;         selectedLogType = logType;</div>
-<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;         <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
-<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;         logs = NULL;</div>
-<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;         <a class="code" href="shiplog_8c.html#a47a2c7d1ef493e694bd267a1d1913969">shiplog_listLogsOfType</a>(info_getLogTypeFilter(selectedLogType), &amp;nlogs, &amp;logs, &amp;logIDs, 1);</div>
-<div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;         <span class="keywordflow">if</span> ( selectedLog &gt;= nlogs )</div>
-<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;            selectedLog = 0;</div>
-<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;         window_addList( wid, 20, 60 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>  + LOGSPACING / 2,</div>
-<div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160;                         w-40, LOGSPACING / 4,</div>
-<div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;                         <span class="stringliteral">&quot;lstLogs&quot;</span>, logs, nlogs, 0, shiplog_menu_update, NULL );</div>
-<div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160; </div>
-<div class="line"><a name="l01240"></a><span class="lineno"> 1240</span>&#160;         toolkit_setListPos( wid, <span class="stringliteral">&quot;lstLogs&quot;</span>, selectedLog );</div>
-<div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;         regenerateEntries=1;</div>
-<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;      }</div>
-<div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;      <span class="keywordflow">if</span> ( regenerateEntries || selectedLog != log ) {</div>
-<div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;         selectedLog = log;</div>
-<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160;         <span class="comment">/* list log entries of selected log type */</span></div>
-<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160;         <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogEntries&quot;</span> );</div>
-<div class="line"><a name="l01247"></a><span class="lineno"> 1247</span>&#160;         <a class="code" href="shiplog_8c.html#a3f08cbc7855f80187ed3d0d79e86d3d8">shiplog_listLog</a>(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &amp;nentries, &amp;logentries,1);</div>
-<div class="line"><a name="l01248"></a><span class="lineno"> 1248</span>&#160;         window_addList( wid, 20, 40 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l01249"></a><span class="lineno"> 1249</span>&#160;                         w-40, LOGSPACING / 2-20,</div>
-<div class="line"><a name="l01250"></a><span class="lineno"> 1250</span>&#160;                         <span class="stringliteral">&quot;lstLogEntries&quot;</span>, logentries, nentries, 0, shiplog_menu_update, info_shiplogView );</div>
-<div class="line"><a name="l01251"></a><span class="lineno"> 1251</span>&#160;         toolkit_setListPos( wid, <span class="stringliteral">&quot;lstLogEntries&quot;</span>, 0 );</div>
-<div class="line"><a name="l01252"></a><span class="lineno"> 1252</span>&#160; </div>
-<div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;      }</div>
-<div class="line"><a name="l01254"></a><span class="lineno"> 1254</span>&#160;      logWidgetsReady=1;</div>
-<div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;   }</div>
-<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;}</div>
-<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160; </div>
-<div class="line"><a name="l01258"></a><span class="lineno"> 1258</span>&#160; </div>
-<div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* info_getLogTypeFilter( <span class="keywordtype">int</span> lstPos )</div>
-<div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160;{</div>
-<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;   <span class="keywordflow">if</span> (lstPos &lt; 1)</div>
-<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160;      <span class="keywordflow">return</span> NULL; <span class="comment">/* &quot;All&quot; */</span></div>
-<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;   <span class="keywordflow">return</span> logTypes[lstPos];</div>
-<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;}</div>
-<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160; </div>
-<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160; </div>
-<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> shiplog_menu_genList( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">int</span> first )</div>
-<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;{</div>
-<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
-<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;   <span class="keywordtype">int</span> nentries;</div>
-<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;   <span class="keywordtype">char</span> **logentries;</div>
-<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160; </div>
-<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;   <span class="comment">/* Needs 3 lists:</span></div>
-<div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;<span class="comment">    * 1. List of log types (and All)</span></div>
-<div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160;<span class="comment">    * 2. List of logs of the selected type (and All)</span></div>
-<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;<span class="comment">    * 3. Listing of the selected log</span></div>
-<div class="line"><a name="l01284"></a><span class="lineno"> 1284</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l01285"></a><span class="lineno"> 1285</span>&#160;   <span class="keywordflow">if</span> (!first) {</div>
-<div class="line"><a name="l01286"></a><span class="lineno"> 1286</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogType&quot;</span> );</div>
-<div class="line"><a name="l01287"></a><span class="lineno"> 1287</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
-<div class="line"><a name="l01288"></a><span class="lineno"> 1288</span>&#160;      logs = NULL;</div>
-<div class="line"><a name="l01289"></a><span class="lineno"> 1289</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogEntries&quot;</span> );</div>
-<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;   }</div>
-<div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;   <span class="comment">/* Get the dimensions. */</span></div>
-<div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;   <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
-<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160; </div>
-<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;   <span class="comment">/* list log types */</span></div>
-<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;   shiplog_listTypes(&amp;ntypes, &amp;logTypes, 1);</div>
-<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;   <span class="keywordflow">if</span> ( selectedLogType &gt;= ntypes )</div>
-<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;      selectedLogType = 0;</div>
-<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;   <span class="comment">/* list logs of selected type */</span></div>
-<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;   <a class="code" href="shiplog_8c.html#a47a2c7d1ef493e694bd267a1d1913969">shiplog_listLogsOfType</a>(info_getLogTypeFilter(selectedLogType), &amp;nlogs, &amp;logs, &amp;logIDs, 1);</div>
-<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;   <span class="keywordflow">if</span> ( selectedLog &gt;= nlogs )</div>
-<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;      selectedLog = 0;</div>
-<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;   <span class="comment">/* list log entries of selected log */</span></div>
-<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;   <a class="code" href="shiplog_8c.html#a3f08cbc7855f80187ed3d0d79e86d3d8">shiplog_listLog</a>(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &amp;nentries, &amp;logentries, 1);</div>
-<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;   logWidgetsReady=0;</div>
-<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;   window_addList( wid, 20, 80 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + 3*LOGSPACING/4 ,</div>
-<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;                   w-40, LOGSPACING / 4,</div>
-<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;         <span class="stringliteral">&quot;lstLogType&quot;</span>, logTypes, ntypes, 0, shiplog_menu_update, NULL );</div>
-<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160;   window_addList( wid, 20, 60 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + LOGSPACING / 2,</div>
-<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160;                   w-40, LOGSPACING / 4,</div>
-<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;         <span class="stringliteral">&quot;lstLogs&quot;</span>, logs, nlogs, 0, shiplog_menu_update, NULL );</div>
-<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160;   window_addList( wid, 20, 40 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160;                   w-40, LOGSPACING / 2-20,</div>
-<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160;                   <span class="stringliteral">&quot;lstLogEntries&quot;</span>, logentries, nentries, 0, shiplog_menu_update, info_shiplogView );</div>
-<div class="line"><a name="l01314"></a><span class="lineno"> 1314</span>&#160;   logWidgetsReady=1;</div>
-<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160;}</div>
-<div class="line"><a name="l01316"></a><span class="lineno"> 1316</span>&#160; </div>
-<div class="line"><a name="l01317"></a><span class="lineno"> 1317</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_shiplogMenuDelete( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l01318"></a><span class="lineno"> 1318</span>&#160;{</div>
-<div class="line"><a name="l01319"></a><span class="lineno"> 1319</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[256];</div>
-<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160;   <span class="keywordtype">int</span> ret, logid;</div>
-<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;   (void) str;</div>
-<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160; </div>
-<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;   <span class="keywordflow">if</span> ( logIDs[selectedLog] == LOG_ID_ALL ) {</div>
-<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( <span class="stringliteral">&quot;&quot;</span>, _(<span class="stringliteral">&quot;You are currently viewing all logs in the selected log type. Please select a log title to delete.&quot;</span>) );</div>
-<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;   }</div>
-<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160; </div>
-<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, 256,</div>
-<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160;         _(<span class="stringliteral">&quot;This will delete ALL \&quot;%s\&quot; log entries. This operation cannot be undone. Are you sure?&quot;</span>),</div>
-<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;         logs[selectedLog]);</div>
-<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;   ret = <a class="code" href="dialogue_8c.html#a7dcd6dd96c62ee9ebe3ce210e1fb087c">dialogue_YesNoRaw</a>( <span class="stringliteral">&quot;&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;   <span class="keywordflow">if</span> ( ret ) {</div>
-<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;      <span class="comment">/* There could be several logs of the same name, so make sure we get the correct one. */</span></div>
-<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;      <span class="comment">/* selectedLog-1 since not including the &quot;All&quot; */</span></div>
-<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;      logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), selectedLog-1 );</div>
-<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;      <span class="keywordflow">if</span> ( logid &gt;= 0 )</div>
-<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;         <a class="code" href="shiplog_8c.html#a7c1d9efe18e8dccde8aa98540760bb4f">shiplog_delete</a>( logid );</div>
-<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;      selectedLog = 0;</div>
-<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;      selectedLogType = 0;</div>
-<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;      shiplog_menu_genList(wid, 0);</div>
-<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;   }</div>
-<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;}</div>
-<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160; </div>
-<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_shiplogView( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *str )</div>
-<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;{</div>
-<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;   <span class="keywordtype">char</span> **logentries;</div>
-<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;   <span class="keywordtype">int</span> nentries;</div>
-<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;   (void) str;</div>
-<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160; </div>
-<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;   i = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogEntries&quot;</span> );</div>
-<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;   <span class="keywordflow">if</span> ( i &lt; 0 )</div>
-<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;   <a class="code" href="shiplog_8c.html#a3f08cbc7855f80187ed3d0d79e86d3d8">shiplog_listLog</a>(</div>
-<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;         logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &amp;nentries,</div>
-<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;         &amp;logentries, 1);</div>
-<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160; </div>
-<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;   <span class="keywordflow">if</span> ( i &lt; nentries )</div>
-<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;      <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Log message&quot;</span>), logentries[i] );</div>
-<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160; </div>
-<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nentries; i++)</div>
-<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;      free( logentries[i] );</div>
-<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;   free( logentries );</div>
-<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;}</div>
-<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160; </div>
-<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_shiplogAdd( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *str )</div>
-<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;{</div>
-<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;   <span class="keywordtype">char</span> *tmp;</div>
-<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;   <span class="keywordtype">int</span> logType, log;</div>
-<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;   <span class="keywordtype">int</span> logid;</div>
-<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;   (void) str;</div>
-<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160; </div>
-<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;   logType = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogType&quot;</span> );</div>
-<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;   log = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
-<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;   <span class="keywordflow">if</span> ( log &lt; 0 || logIDs[log] == LOG_ID_ALL ) {</div>
-<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;      tmp = <a class="code" href="dialogue_8c.html#afc7588b04437de7d47ef7ee0e8d2db49">dialogue_inputRaw</a>( _(<span class="stringliteral">&quot;Add a log entry&quot;</span>), 0, 4096, _(<span class="stringliteral">&quot;Add an entry to your diary:&quot;</span>) );</div>
-<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;      <span class="keywordflow">if</span> ( ( tmp != NULL ) &amp;&amp; ( strlen(tmp) &gt; 0 ) ) {</div>
-<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;         <span class="keywordflow">if</span> ( <a class="code" href="shiplog_8c.html#ac140fd1aebc129bac460c52f5a738b61">shiplog_getID</a>( <span class="stringliteral">&quot;Diary&quot;</span> ) == -1 )</div>
-<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;              <a class="code" href="shiplog_8c.html#ab3b8d46f2a51fcbad8251d4e7934072c">shiplog_create</a>( <span class="stringliteral">&quot;Diary&quot;</span>, _(<span class="stringliteral">&quot;Your Diary&quot;</span>), <span class="stringliteral">&quot;Diary&quot;</span>, 0, 0 );</div>
-<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;         <a class="code" href="shiplog_8c.html#a8d4097509833fdffc9fea9a3fc51678d">shiplog_append</a>( <span class="stringliteral">&quot;Diary&quot;</span>, tmp );</div>
-<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;         free( tmp );</div>
-<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;      }</div>
-<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;   } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;      tmp = <a class="code" href="dialogue_8c.html#a3c9bf3d5c017403c97ece41567aa9920">dialogue_input</a>( _(<span class="stringliteral">&quot;Add a log entry&quot;</span>), 0, 4096, _(<span class="stringliteral">&quot;Add an entry to the log titled &#39;%s&#39;:&quot;</span>), logs[log] );</div>
-<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;      <span class="keywordflow">if</span> ( ( tmp != NULL ) &amp;&amp; ( strlen(tmp) &gt; 0 ) ) {</div>
-<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(logType), log-1 );</div>
-<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;         <span class="keywordflow">if</span> ( logid &gt;= 0 )</div>
-<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;            <a class="code" href="shiplog_8c.html#a20c09a94f410029e3e1f7f85966c829c">shiplog_appendByID</a>( logid, tmp );</div>
-<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;            <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Cannot add log&quot;</span>), _(<span class="stringliteral">&quot;Cannot find this log!  Something went wrong here!&quot;</span>) );</div>
-<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;         free( tmp );</div>
-<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;      }</div>
-<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;   }</div>
-<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;   shiplog_menu_genList( wid, 0 );</div>
-<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160; </div>
-<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;}</div>
+<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;      tw = t-&gt;w * (double)FACTION_LOGO_SM / <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( t-&gt;w, t-&gt;h );</div>
+<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;      th = t-&gt;h * (double)FACTION_LOGO_SM / <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( t-&gt;w, t-&gt;h );</div>
+<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;      window_modifyImage( wid, <span class="stringliteral">&quot;imgLogo&quot;</span>, t, tw, th );</div>
+<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;      y  = -40;</div>
+<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;      <a class="code" href="toolkit_8c.html#a1405c59a98ff4909c3e878d483f0c9ea">window_moveWidget</a>( wid, <span class="stringliteral">&quot;imgLogo&quot;</span>, lw+40 + (w-(lw+60)-tw)/2, y );</div>
+<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;      y -= th;</div>
+<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;   }</div>
+<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;      window_modifyImage( wid, <span class="stringliteral">&quot;imgLogo&quot;</span>, NULL, 0, 0 );</div>
+<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160;      y = -20;</div>
+<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;   }</div>
+<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160; </div>
+<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;   <span class="comment">/* Modify text. */</span></div>
+<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;   y -= 20;</div>
+<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtName&quot;</span>, <a class="code" href="faction_8c.html#a151299399a3ae201cf6e3f1406f01b19">faction_longname</a>( info_factions[p] ) );</div>
+<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;   <a class="code" href="toolkit_8c.html#a1405c59a98ff4909c3e878d483f0c9ea">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtName&quot;</span>, lw+40, y );</div>
+<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;   y -= 40;</div>
+<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;   m = round( <a class="code" href="faction_8c.html#a8548b8d1baa6764d610e052a17519c31">faction_getPlayer</a>( info_factions[p] ) );</div>
+<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <span class="stringliteral">&quot;%+d%%   [ %s ]&quot;</span>, m,</div>
+<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;      <a class="code" href="faction_8c.html#ab1bb5cd671ae24d8b195254fd272a23c">faction_getStandingText</a>( info_factions[p] ) );</div>
+<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtStanding&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;   <a class="code" href="toolkit_8c.html#a1405c59a98ff4909c3e878d483f0c9ea">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtStanding&quot;</span>, lw+40, y );</div>
+<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;}</div>
+<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160; </div>
+<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160; </div>
+<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_openMissions( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid )</div>
+<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;{</div>
+<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
+<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160; </div>
+<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;   <span class="comment">/* Get the dimensions. */</span></div>
+<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;   <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
+<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160; </div>
+<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;   <span class="comment">/* buttons */</span></div>
+<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;   window_addButton( wid, -20, 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;         <span class="stringliteral">&quot;closeMissions&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), info_close );</div>
+<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;   window_addButtonKey( wid, -20, 40 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;         <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>, <span class="stringliteral">&quot;btnAbortMission&quot;</span>, _(<span class="stringliteral">&quot;Abort&quot;</span>),</div>
+<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;         mission_menu_abort, SDLK_a );</div>
+<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160; </div>
+<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;   <span class="comment">/* text */</span></div>
+<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;   window_addText( wid, 300+40, -60,</div>
+<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;         200, 40, 0, <span class="stringliteral">&quot;txtSReward&quot;</span>,</div>
+<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;         &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, _(<span class="stringliteral">&quot;#nReward:#0&quot;</span>) );</div>
+<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;   window_addText( wid, 300+40, -80,</div>
+<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;         200, 40, 0, <span class="stringliteral">&quot;txtReward&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, NULL );</div>
+<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;   window_addText( wid, 300+40, -120,</div>
+<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160;         w - (300+40+40), h - <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> - 120, 0,</div>
+<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;         <span class="stringliteral">&quot;txtDesc&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, NULL );</div>
+<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160; </div>
+<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;   <span class="comment">/* Put a map. */</span></div>
+<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;   map_show( wid, 20, 20, 300, 260, 0.75 );</div>
+<div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160; </div>
+<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;   <span class="comment">/* list */</span></div>
+<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;   mission_menu_genList(wid ,1);</div>
+<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;}</div>
+<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> mission_menu_genList( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">int</span> first )</div>
+<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;{</div>
+<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;   <span class="keywordtype">int</span> i,j;</div>
+<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;   <span class="keywordtype">char</span>** misn_names;</div>
+<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
+<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160; </div>
+<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160;   <span class="keywordflow">if</span> (!first)</div>
+<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstMission&quot;</span> );</div>
+<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160; </div>
+<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;   <span class="comment">/* Get the dimensions. */</span></div>
+<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;   <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
+<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160; </div>
+<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;   <span class="comment">/* list */</span></div>
+<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;   misn_names = malloc(<span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*) * MISSION_MAX);</div>
+<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160;   j = 0;</div>
+<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;MISSION_MAX; i++)</div>
+<div class="line"><a name="l01119"></a><span class="lineno"> 1119</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i]-&gt;<span class="keywordtype">id</span> != 0)</div>
+<div class="line"><a name="l01120"></a><span class="lineno"> 1120</span>&#160;         misn_names[j++] = (<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i]-&gt;title != NULL) ?</div>
+<div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160;               strdup(<a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[i]-&gt;title) : NULL;</div>
+<div class="line"><a name="l01122"></a><span class="lineno"> 1122</span>&#160; </div>
+<div class="line"><a name="l01123"></a><span class="lineno"> 1123</span>&#160;   <span class="keywordflow">if</span> (j==0) { <span class="comment">/* no missions */</span></div>
+<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;      misn_names[0] = strdup(_(<span class="stringliteral">&quot;No Missions&quot;</span>));</div>
+<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;      j = 1;</div>
+<div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160;   }</div>
+<div class="line"><a name="l01127"></a><span class="lineno"> 1127</span>&#160;   window_addList( wid, 20, -40,</div>
+<div class="line"><a name="l01128"></a><span class="lineno"> 1128</span>&#160;         300, h-340,</div>
+<div class="line"><a name="l01129"></a><span class="lineno"> 1129</span>&#160;         <span class="stringliteral">&quot;lstMission&quot;</span>, misn_names, j, 0, mission_menu_update, NULL );</div>
+<div class="line"><a name="l01130"></a><span class="lineno"> 1130</span>&#160;}</div>
+<div class="line"><a name="l01135"></a><span class="lineno"> 1135</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> mission_menu_update( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l01136"></a><span class="lineno"> 1136</span>&#160;{</div>
+<div class="line"><a name="l01137"></a><span class="lineno"> 1137</span>&#160;   (void)str;</div>
+<div class="line"><a name="l01138"></a><span class="lineno"> 1138</span>&#160;   <span class="keywordtype">char</span> *active_misn;</div>
+<div class="line"><a name="l01139"></a><span class="lineno"> 1139</span>&#160;   <a class="code" href="structMission.html">Mission</a>* misn;</div>
+<div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160; </div>
+<div class="line"><a name="l01141"></a><span class="lineno"> 1141</span>&#160;   active_misn = toolkit_getList( wid, <span class="stringliteral">&quot;lstMission&quot;</span> );</div>
+<div class="line"><a name="l01142"></a><span class="lineno"> 1142</span>&#160;   <span class="keywordflow">if</span> ((active_misn==NULL) || (strcmp(active_misn,_(<span class="stringliteral">&quot;No Missions&quot;</span>))==0)) {</div>
+<div class="line"><a name="l01143"></a><span class="lineno"> 1143</span>&#160;      window_modifyText( wid, <span class="stringliteral">&quot;txtReward&quot;</span>, _(<span class="stringliteral">&quot;None&quot;</span>) );</div>
+<div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160;      window_modifyText( wid, <span class="stringliteral">&quot;txtDesc&quot;</span>,</div>
+<div class="line"><a name="l01145"></a><span class="lineno"> 1145</span>&#160;            _(<span class="stringliteral">&quot;You currently have no active missions.&quot;</span>) );</div>
+<div class="line"><a name="l01146"></a><span class="lineno"> 1146</span>&#160;      window_disableButton( wid, <span class="stringliteral">&quot;btnAbortMission&quot;</span> );</div>
+<div class="line"><a name="l01147"></a><span class="lineno"> 1147</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01148"></a><span class="lineno"> 1148</span>&#160;   }</div>
+<div class="line"><a name="l01149"></a><span class="lineno"> 1149</span>&#160; </div>
+<div class="line"><a name="l01150"></a><span class="lineno"> 1150</span>&#160;   <span class="comment">/* Modify the text. */</span></div>
+<div class="line"><a name="l01151"></a><span class="lineno"> 1151</span>&#160;   misn = <a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[ toolkit_getListPos(wid, <span class="stringliteral">&quot;lstMission&quot;</span> ) ];</div>
+<div class="line"><a name="l01152"></a><span class="lineno"> 1152</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtReward&quot;</span>, misn-&gt;reward );</div>
+<div class="line"><a name="l01153"></a><span class="lineno"> 1153</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDesc&quot;</span>, misn-&gt;desc );</div>
+<div class="line"><a name="l01154"></a><span class="lineno"> 1154</span>&#160;   window_enableButton( wid, <span class="stringliteral">&quot;btnAbortMission&quot;</span> );</div>
+<div class="line"><a name="l01155"></a><span class="lineno"> 1155</span>&#160; </div>
+<div class="line"><a name="l01156"></a><span class="lineno"> 1156</span>&#160;   <span class="comment">/* Select the system. */</span></div>
+<div class="line"><a name="l01157"></a><span class="lineno"> 1157</span>&#160;   <span class="keywordflow">if</span> (misn-&gt;markers != NULL)</div>
+<div class="line"><a name="l01158"></a><span class="lineno"> 1158</span>&#160;      map_center( <a class="code" href="space_8c.html#a94669d7b156a00e769ebef6840fee35f">system_getIndex</a>( misn-&gt;markers[0].sys )-&gt;name );</div>
+<div class="line"><a name="l01159"></a><span class="lineno"> 1159</span>&#160;}</div>
+<div class="line"><a name="l01164"></a><span class="lineno"> 1164</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> mission_menu_abort( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;{</div>
+<div class="line"><a name="l01166"></a><span class="lineno"> 1166</span>&#160;   (void)str;</div>
+<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;   <span class="keywordtype">int</span> pos;</div>
+<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160;   <a class="code" href="structMission.html">Mission</a> *misn;</div>
+<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l01170"></a><span class="lineno"> 1170</span>&#160; </div>
+<div class="line"><a name="l01171"></a><span class="lineno"> 1171</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Abort Mission&quot;</span>),</div>
+<div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;            _(<span class="stringliteral">&quot;Are you sure you want to abort this mission?&quot;</span>) )) {</div>
+<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160; </div>
+<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160;      <span class="comment">/* Get the mission. */</span></div>
+<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160;      pos = toolkit_getListPos(wid, <span class="stringliteral">&quot;lstMission&quot;</span> );</div>
+<div class="line"><a name="l01176"></a><span class="lineno"> 1176</span>&#160;      misn = <a class="code" href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a>[pos];</div>
+<div class="line"><a name="l01177"></a><span class="lineno"> 1177</span>&#160; </div>
+<div class="line"><a name="l01178"></a><span class="lineno"> 1178</span>&#160;      <span class="comment">/* We run the &quot;abort&quot; function if it&#39;s found. */</span></div>
+<div class="line"><a name="l01179"></a><span class="lineno"> 1179</span>&#160;      ret = <a class="code" href="nlua__misn_8c.html#a5219aad9bb3dfb97b609cfc0a5f1affd">misn_tryRun</a>( misn, <span class="stringliteral">&quot;abort&quot;</span> );</div>
+<div class="line"><a name="l01180"></a><span class="lineno"> 1180</span>&#160; </div>
+<div class="line"><a name="l01181"></a><span class="lineno"> 1181</span>&#160;      <span class="comment">/* Now clean up mission. */</span></div>
+<div class="line"><a name="l01182"></a><span class="lineno"> 1182</span>&#160;      <span class="keywordflow">if</span> (ret != 2) {</div>
+<div class="line"><a name="l01183"></a><span class="lineno"> 1183</span>&#160;         <a class="code" href="mission_8c.html#a2e21b5d28d28af487d690175756f3f11">mission_cleanup</a>( misn );</div>
+<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160;         <a class="code" href="mission_8c.html#a92aa0e2847371f97f34078c4d3a56407">mission_shift</a>(pos);</div>
+<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;      }</div>
+<div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160; </div>
+<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;      <span class="comment">/* Reset markers. */</span></div>
+<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;      <a class="code" href="mission_8c.html#a4a8af8fb9ff0ef11d268432dfdd3091f">mission_sysMark</a>();</div>
+<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160; </div>
+<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;      <span class="comment">/* Reset claims. */</span></div>
+<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;      <a class="code" href="claim_8c.html#aef69b8c06e4b9b193d7d891213262ae3">claim_activateAll</a>();</div>
+<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160; </div>
+<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;      <span class="comment">/* Regenerate list. */</span></div>
+<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160;      mission_menu_genList(wid ,0);</div>
+<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160; </div>
+<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;      <span class="comment">/* Regenerate bar if landed. */</span></div>
+<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;      <a class="code" href="land_8c.html#a005d4e974a6f9a7e7fe8b20a9cc2e5ec">bar_regen</a>();</div>
+<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;   }</div>
+<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;}</div>
+<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160; </div>
+<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160;<span class="comment">/* amount of screen available for logs: -20 below button, -20 above button, -40 from top, -20 x2 between logs.*/</span></div>
+<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160;<span class="preprocessor">#define LOGSPACING (h - 120 - BUTTON_HEIGHT )</span></div>
+<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160; </div>
+<div class="line"><a name="l01208"></a><span class="lineno"> 1208</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> shiplog_menu_update( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l01209"></a><span class="lineno"> 1209</span>&#160;{</div>
+<div class="line"><a name="l01210"></a><span class="lineno"> 1210</span>&#160;   <span class="keywordtype">int</span> regenerateEntries=0;</div>
+<div class="line"><a name="l01211"></a><span class="lineno"> 1211</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
+<div class="line"><a name="l01212"></a><span class="lineno"> 1212</span>&#160;   <span class="keywordtype">int</span> logType, log;</div>
+<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160;   <span class="keywordtype">int</span> nentries;</div>
+<div class="line"><a name="l01214"></a><span class="lineno"> 1214</span>&#160;   <span class="keywordtype">char</span> **logentries;</div>
+<div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160; </div>
+<div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160;   <span class="keywordflow">if</span> (!logWidgetsReady)</div>
+<div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01218"></a><span class="lineno"> 1218</span>&#160; </div>
+<div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;   <span class="comment">/* This is called when something is selected.</span></div>
+<div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;<span class="comment">    * If a new log type has been selected, need to regenerate the log lists.</span></div>
+<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;<span class="comment">    * If a new log has been selected, need to regenerate the entries. */</span></div>
+<div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;   <span class="keywordflow">if</span> (strcmp(str, <span class="stringliteral">&quot;lstLogEntries&quot;</span> ) != 0) {</div>
+<div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160;      <span class="comment">/* has selected a type of log or a log */</span></div>
+<div class="line"><a name="l01224"></a><span class="lineno"> 1224</span>&#160;      <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
+<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;      logWidgetsReady=0;</div>
+<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160; </div>
+<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;      logType = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogType&quot;</span> );</div>
+<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;      log = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
+<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160; </div>
+<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;      <span class="keywordflow">if</span> ( logType != selectedLogType ) {</div>
+<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;         <span class="comment">/* new log type selected */</span></div>
+<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;         selectedLogType = logType;</div>
+<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;         <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
+<div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;         logs = NULL;</div>
+<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;         <a class="code" href="shiplog_8c.html#a47a2c7d1ef493e694bd267a1d1913969">shiplog_listLogsOfType</a>(info_getLogTypeFilter(selectedLogType), &amp;nlogs, &amp;logs, &amp;logIDs, 1);</div>
+<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;         <span class="keywordflow">if</span> ( selectedLog &gt;= nlogs )</div>
+<div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160;            selectedLog = 0;</div>
+<div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;         window_addList( wid, 20, 60 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>  + LOGSPACING / 2,</div>
+<div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160;                         w-40, LOGSPACING / 4,</div>
+<div class="line"><a name="l01240"></a><span class="lineno"> 1240</span>&#160;                         <span class="stringliteral">&quot;lstLogs&quot;</span>, logs, nlogs, 0, shiplog_menu_update, NULL );</div>
+<div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160; </div>
+<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;         toolkit_setListPos( wid, <span class="stringliteral">&quot;lstLogs&quot;</span>, selectedLog );</div>
+<div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;         regenerateEntries=1;</div>
+<div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;      }</div>
+<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160;      <span class="keywordflow">if</span> ( regenerateEntries || selectedLog != log ) {</div>
+<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160;         selectedLog = log;</div>
+<div class="line"><a name="l01247"></a><span class="lineno"> 1247</span>&#160;         <span class="comment">/* list log entries of selected log type */</span></div>
+<div class="line"><a name="l01248"></a><span class="lineno"> 1248</span>&#160;         <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogEntries&quot;</span> );</div>
+<div class="line"><a name="l01249"></a><span class="lineno"> 1249</span>&#160;         <a class="code" href="shiplog_8c.html#a3f08cbc7855f80187ed3d0d79e86d3d8">shiplog_listLog</a>(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &amp;nentries, &amp;logentries,1);</div>
+<div class="line"><a name="l01250"></a><span class="lineno"> 1250</span>&#160;         window_addList( wid, 20, 40 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l01251"></a><span class="lineno"> 1251</span>&#160;                         w-40, LOGSPACING / 2-20,</div>
+<div class="line"><a name="l01252"></a><span class="lineno"> 1252</span>&#160;                         <span class="stringliteral">&quot;lstLogEntries&quot;</span>, logentries, nentries, 0, shiplog_menu_update, info_shiplogView );</div>
+<div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;         toolkit_setListPos( wid, <span class="stringliteral">&quot;lstLogEntries&quot;</span>, 0 );</div>
+<div class="line"><a name="l01254"></a><span class="lineno"> 1254</span>&#160; </div>
+<div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;      }</div>
+<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;      logWidgetsReady=1;</div>
+<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160;   }</div>
+<div class="line"><a name="l01258"></a><span class="lineno"> 1258</span>&#160;}</div>
+<div class="line"><a name="l01259"></a><span class="lineno"> 1259</span>&#160; </div>
+<div class="line"><a name="l01260"></a><span class="lineno"> 1260</span>&#160; </div>
+<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* info_getLogTypeFilter( <span class="keywordtype">int</span> lstPos )</div>
+<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160;{</div>
+<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;   <span class="keywordflow">if</span> (lstPos &lt; 1)</div>
+<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;      <span class="keywordflow">return</span> NULL; <span class="comment">/* &quot;All&quot; */</span></div>
+<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;   <span class="keywordflow">return</span> logTypes[lstPos];</div>
+<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;}</div>
+<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160; </div>
+<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160; </div>
+<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> shiplog_menu_genList( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">int</span> first )</div>
+<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;{</div>
+<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;   <span class="keywordtype">int</span> w, h;</div>
+<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;   <span class="keywordtype">int</span> nentries;</div>
+<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;   <span class="keywordtype">char</span> **logentries;</div>
+<div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160; </div>
+<div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160;   <span class="comment">/* Needs 3 lists:</span></div>
+<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;<span class="comment">    * 1. List of log types (and All)</span></div>
+<div class="line"><a name="l01284"></a><span class="lineno"> 1284</span>&#160;<span class="comment">    * 2. List of logs of the selected type (and All)</span></div>
+<div class="line"><a name="l01285"></a><span class="lineno"> 1285</span>&#160;<span class="comment">    * 3. Listing of the selected log</span></div>
+<div class="line"><a name="l01286"></a><span class="lineno"> 1286</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l01287"></a><span class="lineno"> 1287</span>&#160;   <span class="keywordflow">if</span> (!first) {</div>
+<div class="line"><a name="l01288"></a><span class="lineno"> 1288</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogType&quot;</span> );</div>
+<div class="line"><a name="l01289"></a><span class="lineno"> 1289</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
+<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;      logs = NULL;</div>
+<div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogEntries&quot;</span> );</div>
+<div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;   }</div>
+<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;   <span class="comment">/* Get the dimensions. */</span></div>
+<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;   <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
+<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160; </div>
+<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;   <span class="comment">/* list log types */</span></div>
+<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;   shiplog_listTypes(&amp;ntypes, &amp;logTypes, 1);</div>
+<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;   <span class="keywordflow">if</span> ( selectedLogType &gt;= ntypes )</div>
+<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;      selectedLogType = 0;</div>
+<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;   <span class="comment">/* list logs of selected type */</span></div>
+<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;   <a class="code" href="shiplog_8c.html#a47a2c7d1ef493e694bd267a1d1913969">shiplog_listLogsOfType</a>(info_getLogTypeFilter(selectedLogType), &amp;nlogs, &amp;logs, &amp;logIDs, 1);</div>
+<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;   <span class="keywordflow">if</span> ( selectedLog &gt;= nlogs )</div>
+<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;      selectedLog = 0;</div>
+<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;   <span class="comment">/* list log entries of selected log */</span></div>
+<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;   <a class="code" href="shiplog_8c.html#a3f08cbc7855f80187ed3d0d79e86d3d8">shiplog_listLog</a>(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &amp;nentries, &amp;logentries, 1);</div>
+<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;   logWidgetsReady=0;</div>
+<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;   window_addList( wid, 20, 80 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + 3*LOGSPACING/4 ,</div>
+<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160;                   w-40, LOGSPACING / 4,</div>
+<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160;         <span class="stringliteral">&quot;lstLogType&quot;</span>, logTypes, ntypes, 0, shiplog_menu_update, NULL );</div>
+<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;   window_addList( wid, 20, 60 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + LOGSPACING / 2,</div>
+<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160;                   w-40, LOGSPACING / 4,</div>
+<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160;         <span class="stringliteral">&quot;lstLogs&quot;</span>, logs, nlogs, 0, shiplog_menu_update, NULL );</div>
+<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160;   window_addList( wid, 20, 40 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l01314"></a><span class="lineno"> 1314</span>&#160;                   w-40, LOGSPACING / 2-20,</div>
+<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160;                   <span class="stringliteral">&quot;lstLogEntries&quot;</span>, logentries, nentries, 0, shiplog_menu_update, info_shiplogView );</div>
+<div class="line"><a name="l01316"></a><span class="lineno"> 1316</span>&#160;   logWidgetsReady=1;</div>
+<div class="line"><a name="l01317"></a><span class="lineno"> 1317</span>&#160;}</div>
+<div class="line"><a name="l01318"></a><span class="lineno"> 1318</span>&#160; </div>
+<div class="line"><a name="l01319"></a><span class="lineno"> 1319</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_shiplogMenuDelete( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160;{</div>
+<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[256];</div>
+<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;   <span class="keywordtype">int</span> ret, logid;</div>
+<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;   (void) str;</div>
+<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160; </div>
+<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;   <span class="keywordflow">if</span> ( logIDs[selectedLog] == LOG_ID_ALL ) {</div>
+<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( <span class="stringliteral">&quot;&quot;</span>, _(<span class="stringliteral">&quot;You are currently viewing all logs in the selected log type. Please select a log title to delete.&quot;</span>) );</div>
+<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;   }</div>
+<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160; </div>
+<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, 256,</div>
+<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;         _(<span class="stringliteral">&quot;This will delete ALL \&quot;%s\&quot; log entries. This operation cannot be undone. Are you sure?&quot;</span>),</div>
+<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;         logs[selectedLog]);</div>
+<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;   ret = <a class="code" href="dialogue_8c.html#a7dcd6dd96c62ee9ebe3ce210e1fb087c">dialogue_YesNoRaw</a>( <span class="stringliteral">&quot;&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;   <span class="keywordflow">if</span> ( ret ) {</div>
+<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;      <span class="comment">/* There could be several logs of the same name, so make sure we get the correct one. */</span></div>
+<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;      <span class="comment">/* selectedLog-1 since not including the &quot;All&quot; */</span></div>
+<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;      logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), selectedLog-1 );</div>
+<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;      <span class="keywordflow">if</span> ( logid &gt;= 0 )</div>
+<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;         <a class="code" href="shiplog_8c.html#a7c1d9efe18e8dccde8aa98540760bb4f">shiplog_delete</a>( logid );</div>
+<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;      selectedLog = 0;</div>
+<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;      selectedLogType = 0;</div>
+<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;      shiplog_menu_genList(wid, 0);</div>
+<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;   }</div>
+<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;}</div>
+<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160; </div>
+<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_shiplogView( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *str )</div>
+<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;{</div>
+<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;   <span class="keywordtype">char</span> **logentries;</div>
+<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;   <span class="keywordtype">int</span> nentries;</div>
+<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;   (void) str;</div>
+<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160; </div>
+<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;   i = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogEntries&quot;</span> );</div>
+<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;   <span class="keywordflow">if</span> ( i &lt; 0 )</div>
+<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;   <a class="code" href="shiplog_8c.html#a3f08cbc7855f80187ed3d0d79e86d3d8">shiplog_listLog</a>(</div>
+<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;         logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &amp;nentries,</div>
+<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;         &amp;logentries, 1);</div>
+<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160; </div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;   <span class="keywordflow">if</span> ( i &lt; nentries )</div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;      <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Log message&quot;</span>), logentries[i] );</div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160; </div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nentries; i++)</div>
+<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;      free( logentries[i] );</div>
+<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;   free( logentries );</div>
+<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;}</div>
+<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160; </div>
+<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_shiplogAdd( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *str )</div>
+<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;{</div>
+<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;   <span class="keywordtype">char</span> *tmp;</div>
+<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;   <span class="keywordtype">int</span> logType, log;</div>
+<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;   <span class="keywordtype">int</span> logid;</div>
+<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;   (void) str;</div>
+<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160; </div>
+<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;   logType = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogType&quot;</span> );</div>
+<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;   log = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
+<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;   <span class="keywordflow">if</span> ( log &lt; 0 || logIDs[log] == LOG_ID_ALL ) {</div>
+<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;      tmp = <a class="code" href="dialogue_8c.html#afc7588b04437de7d47ef7ee0e8d2db49">dialogue_inputRaw</a>( _(<span class="stringliteral">&quot;Add a log entry&quot;</span>), 0, 4096, _(<span class="stringliteral">&quot;Add an entry to your diary:&quot;</span>) );</div>
+<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;      <span class="keywordflow">if</span> ( ( tmp != NULL ) &amp;&amp; ( strlen(tmp) &gt; 0 ) ) {</div>
+<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;         <span class="keywordflow">if</span> ( <a class="code" href="shiplog_8c.html#ac140fd1aebc129bac460c52f5a738b61">shiplog_getID</a>( <span class="stringliteral">&quot;Diary&quot;</span> ) == -1 )</div>
+<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;              <a class="code" href="shiplog_8c.html#ab3b8d46f2a51fcbad8251d4e7934072c">shiplog_create</a>( <span class="stringliteral">&quot;Diary&quot;</span>, _(<span class="stringliteral">&quot;Your Diary&quot;</span>), <span class="stringliteral">&quot;Diary&quot;</span>, 0, 0 );</div>
+<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;         <a class="code" href="shiplog_8c.html#a8d4097509833fdffc9fea9a3fc51678d">shiplog_append</a>( <span class="stringliteral">&quot;Diary&quot;</span>, tmp );</div>
+<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;         free( tmp );</div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;      }</div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;   } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;      tmp = <a class="code" href="dialogue_8c.html#a3c9bf3d5c017403c97ece41567aa9920">dialogue_input</a>( _(<span class="stringliteral">&quot;Add a log entry&quot;</span>), 0, 4096, _(<span class="stringliteral">&quot;Add an entry to the log titled &#39;%s&#39;:&quot;</span>), logs[log] );</div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;      <span class="keywordflow">if</span> ( ( tmp != NULL ) &amp;&amp; ( strlen(tmp) &gt; 0 ) ) {</div>
+<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(logType), log-1 );</div>
+<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;         <span class="keywordflow">if</span> ( logid &gt;= 0 )</div>
+<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;            <a class="code" href="shiplog_8c.html#a20c09a94f410029e3e1f7f85966c829c">shiplog_appendByID</a>( logid, tmp );</div>
+<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;            <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Cannot add log&quot;</span>), _(<span class="stringliteral">&quot;Cannot find this log!  Something went wrong here!&quot;</span>) );</div>
+<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;         free( tmp );</div>
+<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;      }</div>
+<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;   }</div>
+<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;   shiplog_menu_genList( wid, 0 );</div>
 <div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160; </div>
-<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160; </div>
-<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_openShipLog( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid )</div>
-<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;{</div>
-<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;   <span class="keywordtype">int</span> w, h, texth;</div>
-<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;   <span class="comment">/* re-initialise the statics */</span></div>
-<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;   selectedLog = 0;</div>
-<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;   selectedLogType = 0;</div>
-<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160; </div>
-<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;   <span class="comment">/* Get the dimensions. */</span></div>
-<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160;   <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
-<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;   <span class="comment">/* buttons */</span></div>
-<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;   window_addButton( wid, -20, 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;         <span class="stringliteral">&quot;closeShipLog&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), info_close );</div>
-<div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160;   window_addButton( wid, -20 - 1*(20+<a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>), 20,</div>
-<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;         <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>, <span class="stringliteral">&quot;btnDeleteLog&quot;</span>, _(<span class="stringliteral">&quot;Delete&quot;</span>),</div>
-<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;         info_shiplogMenuDelete );</div>
-<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;   window_addButton( wid, -20 - 2*(20+<a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>), 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>,</div>
-<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;         <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>, <span class="stringliteral">&quot;btnViewLog&quot;</span>, _(<span class="stringliteral">&quot;View Entry&quot;</span>),</div>
-<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;         info_shiplogView );</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;   window_addButton( wid, -20 - 3*(20+<a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>), 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>,</div>
-<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;         <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>, <span class="stringliteral">&quot;btnAddLog&quot;</span>, _(<span class="stringliteral">&quot;Add Entry&quot;</span>),</div>
-<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;         info_shiplogAdd );</div>
-<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;   <span class="comment">/* Description text */</span></div>
-<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;   texth = <a class="code" href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, w, <span class="stringliteral">&quot;Select log type&quot;</span> );</div>
-<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;   window_addText( wid, 20, 80 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + LOGSPACING,</div>
-<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;                   w - 40, texth, 0,</div>
-<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;                   <span class="stringliteral">&quot;logDesc1&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, _(<span class="stringliteral">&quot;Select log type:&quot;</span>) );</div>
-<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160; </div>
-<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;   window_addText( wid, 20, 60 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + 3* LOGSPACING / 4,</div>
-<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;                   w - 40, texth, 0,</div>
-<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;                   <span class="stringliteral">&quot;logDesc2&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, _(<span class="stringliteral">&quot;Select log title:&quot;</span>) );</div>
-<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160; </div>
-<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;   window_addText( wid, 20, 25 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + LOGSPACING / 2,</div>
-<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160;                   w - 40, texth, 0,</div>
-<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;                   <span class="stringliteral">&quot;logDesc3&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, _(<span class="stringliteral">&quot;Log entries:&quot;</span>) );</div>
-<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160; </div>
-<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;<span class="preprocessor">#undef LOGSPACING</span></div>
-<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;   <span class="comment">/* list */</span></div>
-<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;   shiplog_menu_genList(wid ,1);</div>
-<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160;}</div>
+<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;}</div>
+<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160; </div>
+<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160; </div>
+<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> info_openShipLog( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid )</div>
+<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;{</div>
+<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;   <span class="keywordtype">int</span> w, h, texth;</div>
+<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;   <span class="comment">/* re-initialise the statics */</span></div>
+<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160;   selectedLog = 0;</div>
+<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;   selectedLogType = 0;</div>
+<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160; </div>
+<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;   <span class="comment">/* Get the dimensions. */</span></div>
+<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;   <a class="code" href="toolkit_8c.html#a4067c353fcbcab43177712cc29018a5e">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
+<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;   <span class="comment">/* buttons */</span></div>
+<div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160;   window_addButton( wid, -20, 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;         <span class="stringliteral">&quot;closeShipLog&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), info_close );</div>
+<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;   window_addButton( wid, -20 - 1*(20+<a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>), 20,</div>
+<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;         <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>, <span class="stringliteral">&quot;btnDeleteLog&quot;</span>, _(<span class="stringliteral">&quot;Delete&quot;</span>),</div>
+<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;         info_shiplogMenuDelete );</div>
+<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;   window_addButton( wid, -20 - 2*(20+<a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>), 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>,</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;         <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>, <span class="stringliteral">&quot;btnViewLog&quot;</span>, _(<span class="stringliteral">&quot;View Entry&quot;</span>),</div>
+<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;         info_shiplogView );</div>
+<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;   window_addButton( wid, -20 - 3*(20+<a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>), 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>,</div>
+<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;         <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>, <span class="stringliteral">&quot;btnAddLog&quot;</span>, _(<span class="stringliteral">&quot;Add Entry&quot;</span>),</div>
+<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;         info_shiplogAdd );</div>
+<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;   <span class="comment">/* Description text */</span></div>
+<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;   texth = <a class="code" href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, w, <span class="stringliteral">&quot;Select log type&quot;</span> );</div>
+<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;   window_addText( wid, 20, 80 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + LOGSPACING,</div>
+<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;                   w - 40, texth, 0,</div>
+<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;                   <span class="stringliteral">&quot;logDesc1&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, _(<span class="stringliteral">&quot;Select log type:&quot;</span>) );</div>
+<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160; </div>
+<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;   window_addText( wid, 20, 60 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + 3* LOGSPACING / 4,</div>
+<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160;                   w - 40, texth, 0,</div>
+<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;                   <span class="stringliteral">&quot;logDesc2&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, _(<span class="stringliteral">&quot;Select log title:&quot;</span>) );</div>
+<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160; </div>
+<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;   window_addText( wid, 20, 25 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + LOGSPACING / 2,</div>
+<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;                   w - 40, texth, 0,</div>
+<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;                   <span class="stringliteral">&quot;logDesc3&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, _(<span class="stringliteral">&quot;Log entries:&quot;</span>) );</div>
+<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160; </div>
+<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;<span class="preprocessor">#undef LOGSPACING</span></div>
+<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160;   <span class="comment">/* list */</span></div>
+<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160;   shiplog_menu_genList(wid ,1);</div>
+<div class="line"><a name="l01450"></a><span class="lineno"> 1450</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructCommodity_html"><div class="ttname"><a href="structCommodity.html">Commodity</a></div><div class="ttdoc">Represents a commodity.</div></div>
 <div class="ttc" id="agui_8c_html_a73f6bd57ebcac87e954420ccd8c21a8d"><div class="ttname"><a href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d">gui_load</a></div><div class="ttdeci">int gui_load(const char *name)</div><div class="ttdoc">Attempts to load the actual GUI.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02157">gui.c:2157</a></div></div>
@@ -1356,7 +1358,7 @@ $(function() {
 <div class="ttc" id="ashiplog_8c_html_ac140fd1aebc129bac460c52f5a738b61"><div class="ttname"><a href="shiplog_8c.html#ac140fd1aebc129bac460c52f5a738b61">shiplog_getID</a></div><div class="ttdeci">int shiplog_getID(const char *idstr)</div><div class="ttdoc">Checks to see if the log family exists.</div><div class="ttdef"><b>Definition:</b> <a href="shiplog_8c_source.html#l00668">shiplog.c:668</a></div></div>
 <div class="ttc" id="acolour_8c_html_ad1679692c3064f5db9eafee4c44dccbb"><div class="ttname"><a href="colour_8c.html#ad1679692c3064f5db9eafee4c44dccbb">cFontRed</a></div><div class="ttdeci">const glColour cFontRed</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00116">colour.c:116</a></div></div>
 <div class="ttc" id="aland_8c_html_a83ae8aa54491a1fd25f773b83a87fec0"><div class="ttname"><a href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a></div><div class="ttdeci">int landed</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00075">land.c:75</a></div></div>
-<div class="ttc" id="afaction_8c_html_a1c26106ea4216e46af4fc2e75ddc71c6"><div class="ttname"><a href="faction_8c.html#a1c26106ea4216e46af4fc2e75ddc71c6">faction_isKnown</a></div><div class="ttdeci">int faction_isKnown(int id)</div><div class="ttdoc">Is the faction known?</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00236">faction.c:236</a></div></div>
+<div class="ttc" id="afaction_8c_html_a1c26106ea4216e46af4fc2e75ddc71c6"><div class="ttname"><a href="faction_8c.html#a1c26106ea4216e46af4fc2e75ddc71c6">faction_isKnown</a></div><div class="ttdeci">int faction_isKnown(int id)</div><div class="ttdoc">Is the faction known?</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00235">faction.c:235</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_aef2a1755ddc98df6d2940ee516a93c65"><div class="ttname"><a href="pilot__weapon_8c.html#aef2a1755ddc98df6d2940ee516a93c65">pilot_weapSetInrangeCheck</a></div><div class="ttdeci">int pilot_weapSetInrangeCheck(Pilot *p, int id)</div><div class="ttdoc">Checks the current weapon set inrange property.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00342">pilot_weapon.c:342</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_ab2eb694dee2c9276a51a8d83f0112472"><div class="ttname"><a href="toolkit_8c.html#ab2eb694dee2c9276a51a8d83f0112472">window_get</a></div><div class="ttdeci">unsigned int window_get(const char *wdwname)</div><div class="ttdoc">Gets the ID of a window.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00603">toolkit.c:603</a></div></div>
 <div class="ttc" id="anstring_8c_html_ad02680e374cbaee934840aa7c9123dd4"><div class="ttname"><a href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a></div><div class="ttdeci">int scnprintf(char *text, size_t maxlen, const char *fmt,...)</div><div class="ttdoc">Like snprintf(), but returns the number of characters ACTUALLY &quot;printed&quot; into the buffer....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00180">nstring.c:180</a></div></div>
@@ -1366,6 +1368,7 @@ $(function() {
 <div class="ttc" id="aclaim_8c_html_aef69b8c06e4b9b193d7d891213262ae3"><div class="ttname"><a href="claim_8c.html#aef69b8c06e4b9b193d7d891213262ae3">claim_activateAll</a></div><div class="ttdeci">void claim_activateAll(void)</div><div class="ttdoc">Activates all the claims.</div><div class="ttdef"><b>Definition:</b> <a href="claim_8c_source.html#l00243">claim.c:243</a></div></div>
 <div class="ttc" id="ashiplog_8c_html_a3f08cbc7855f80187ed3d0d79e86d3d8"><div class="ttname"><a href="shiplog_8c.html#a3f08cbc7855f80187ed3d0d79e86d3d8">shiplog_listLog</a></div><div class="ttdeci">void shiplog_listLog(int logid, const char *type, int *nentries, char ***logentries, int incempty)</div><div class="ttdoc">Get all log entries matching logid, or if logid==LOG_ID_ALL, matching type, or if type==NULL,...</div><div class="ttdef"><b>Definition:</b> <a href="shiplog_8c_source.html#l00607">shiplog.c:607</a></div></div>
 <div class="ttc" id="ashiplog_8c_html_a7c1d9efe18e8dccde8aa98540760bb4f"><div class="ttname"><a href="shiplog_8c.html#a7c1d9efe18e8dccde8aa98540760bb4f">shiplog_delete</a></div><div class="ttdeci">void shiplog_delete(int logid)</div><div class="ttdoc">Deletes a log (e.g. a cancelled mission may wish to do this, or the user might).</div><div class="ttdef"><b>Definition:</b> <a href="shiplog_8c_source.html#l00267">shiplog.c:267</a></div></div>
+<div class="ttc" id="afaction_8c_html_a4f155231085486b91187243140fd9e73"><div class="ttname"><a href="faction_8c.html#a4f155231085486b91187243140fd9e73">faction_logo</a></div><div class="ttdeci">glTexture * faction_logo(int f)</div><div class="ttdoc">Gets the faction's logo (ideally 256x256).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00346">faction.c:346</a></div></div>
 <div class="ttc" id="ashiplog_8c_html_a47a2c7d1ef493e694bd267a1d1913969"><div class="ttname"><a href="shiplog_8c.html#a47a2c7d1ef493e694bd267a1d1913969">shiplog_listLogsOfType</a></div><div class="ttdeci">void shiplog_listLogsOfType(const char *type, int *nlogs, char ***logsOut, int **logIDs, int includeAll)</div><div class="ttdoc">Lists matching logs (which haven't expired via &quot;removeAfter&quot;) into the provided arrays.</div><div class="ttdef"><b>Definition:</b> <a href="shiplog_8c_source.html#l00522">shiplog.c:522</a></div></div>
 <div class="ttc" id="aspace_8c_html_a94669d7b156a00e769ebef6840fee35f"><div class="ttname"><a href="space_8c.html#a94669d7b156a00e769ebef6840fee35f">system_getIndex</a></div><div class="ttdeci">StarSystem * system_getIndex(int id)</div><div class="ttdoc">Get the system by its index.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00884">space.c:884</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_af87ed79d7c7ae46b64b6688e036ddee4"><div class="ttname"><a href="toolkit_8c.html#af87ed79d7c7ae46b64b6688e036ddee4">widget_exists</a></div><div class="ttdeci">int widget_exists(const unsigned int wid, const char *wgtname)</div><div class="ttdoc">Checks to see if a widget exists.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l01069">toolkit.c:1069</a></div></div>
@@ -1376,7 +1379,7 @@ $(function() {
 <div class="ttc" id="anstring_8c_html_a51eb14440b6aa3d77c5735cfc2626c96"><div class="ttname"><a href="nstring_8c.html#a51eb14440b6aa3d77c5735cfc2626c96">num2str</a></div><div class="ttdeci">int num2str(char dest[NUM2STRLEN], double n, int decimals)</div><div class="ttdoc">Converts an electronic warfare value to a string.</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00202">nstring.c:202</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_ae4e5874757785f40fef3ae504f534321"><div class="ttname"><a href="toolkit_8c.html#ae4e5874757785f40fef3ae504f534321">window_destroy</a></div><div class="ttdeci">void window_destroy(const unsigned int wid)</div><div class="ttdoc">Kills the window.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00989">toolkit.c:989</a></div></div>
 <div class="ttc" id="afont_8c_html_a41b3c9521462440c62eb76b43f606274"><div class="ttname"><a href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a></div><div class="ttdeci">glFont gl_smallFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00162">font.c:162</a></div></div>
-<div class="ttc" id="afaction_8c_html_ab1bb5cd671ae24d8b195254fd272a23c"><div class="ttname"><a href="faction_8c.html#ab1bb5cd671ae24d8b195254fd272a23c">faction_getStandingText</a></div><div class="ttdeci">const char * faction_getStandingText(int f)</div><div class="ttdoc">Gets the player's standing in human readable form.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01029">faction.c:1029</a></div></div>
+<div class="ttc" id="afaction_8c_html_ab1bb5cd671ae24d8b195254fd272a23c"><div class="ttname"><a href="faction_8c.html#ab1bb5cd671ae24d8b195254fd272a23c">faction_getStandingText</a></div><div class="ttdeci">const char * faction_getStandingText(int f)</div><div class="ttdoc">Gets the player's standing in human readable form.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01011">faction.c:1011</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
 <div class="ttc" id="amission_8c_html_a2e21b5d28d28af487d690175756f3f11"><div class="ttname"><a href="mission_8c.html#a2e21b5d28d28af487d690175756f3f11">mission_cleanup</a></div><div class="ttdeci">void mission_cleanup(Mission *misn)</div><div class="ttdoc">Cleans up a mission.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00490">mission.c:490</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_ab53c2d8294b14599380aa7f3b9c30c92"><div class="ttname"><a href="toolkit_8c.html#ab53c2d8294b14599380aa7f3b9c30c92">window_isTop</a></div><div class="ttdeci">int window_isTop(const unsigned int wid)</div><div class="ttdoc">Checks to see if a window is at the top.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00524">toolkit.c:524</a></div></div>
@@ -1385,9 +1388,9 @@ $(function() {
 <div class="ttc" id="apilot__cargo_8c_html_a3f4a64090c109787f8a8ddac379a8860"><div class="ttname"><a href="pilot__cargo_8c.html#a3f4a64090c109787f8a8ddac379a8860">pilot_cargoUsed</a></div><div class="ttdeci">int pilot_cargoUsed(Pilot *pilot)</div><div class="ttdoc">Gets how much cargo ship has on board.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00192">pilot_cargo.c:192</a></div></div>
 <div class="ttc" id="astructMission_html"><div class="ttname"><a href="structMission.html">Mission</a></div><div class="ttdoc">Represents an active mission.</div></div>
 <div class="ttc" id="atoolkit_8c_html_ac4e151952c28e3f20edceb86c0243e00"><div class="ttname"><a href="toolkit_8c.html#ac4e151952c28e3f20edceb86c0243e00">window_setCancel</a></div><div class="ttdeci">void window_setCancel(const unsigned int wid, void(*cancel)(unsigned int, char *))</div><div class="ttdoc">Sets the default cancel function of the window.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00823">toolkit.c:823</a></div></div>
-<div class="ttc" id="afaction_8c_html_a8548b8d1baa6764d610e052a17519c31"><div class="ttname"><a href="faction_8c.html#a8548b8d1baa6764d610e052a17519c31">faction_getPlayer</a></div><div class="ttdeci">double faction_getPlayer(int f)</div><div class="ttdoc">Gets the player's standing with a faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00866">faction.c:866</a></div></div>
+<div class="ttc" id="afaction_8c_html_a8548b8d1baa6764d610e052a17519c31"><div class="ttname"><a href="faction_8c.html#a8548b8d1baa6764d610e052a17519c31">faction_getPlayer</a></div><div class="ttdeci">double faction_getPlayer(int f)</div><div class="ttdoc">Gets the player's standing with a faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00848">faction.c:848</a></div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00049">news.c:49</a></div></div>
-<div class="ttc" id="afaction_8c_html_a0b2a86a8c830a267c2c6bd51c85e4816"><div class="ttname"><a href="faction_8c.html#a0b2a86a8c830a267c2c6bd51c85e4816">faction_getKnown</a></div><div class="ttdeci">int * faction_getKnown()</div><div class="ttdoc">Gets all the known factions in an array (array.h).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00180">faction.c:180</a></div></div>
+<div class="ttc" id="afaction_8c_html_a0b2a86a8c830a267c2c6bd51c85e4816"><div class="ttname"><a href="faction_8c.html#a0b2a86a8c830a267c2c6bd51c85e4816">faction_getKnown</a></div><div class="ttdeci">int * faction_getKnown()</div><div class="ttdoc">Gets all the known factions in an array (array.h).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00179">faction.c:179</a></div></div>
 <div class="ttc" id="adialogue_8c_html_a3c9bf3d5c017403c97ece41567aa9920"><div class="ttname"><a href="dialogue_8c.html#a3c9bf3d5c017403c97ece41567aa9920">dialogue_input</a></div><div class="ttdeci">char * dialogue_input(const char *title, int min, int max, const char *fmt,...)</div><div class="ttdoc">Creates a dialogue that allows the player to write a message.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00450">dialogue.c:450</a></div></div>
 <div class="ttc" id="afont_8c_html_a78aea6a63643c7b50d178fbf20bcc265"><div class="ttname"><a href="font_8c.html#a78aea6a63643c7b50d178fbf20bcc265">gl_print</a></div><div class="ttdeci">void gl_print(const glFont *ft_font, const double x, const double y, const glColour *c, const char *fmt,...)</div><div class="ttdoc">Prints text on screen like printf.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00696">font.c:696</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_a0cf32f3de8f3cee4fad62da57f755a19"><div class="ttname"><a href="toolkit_8c.html#a0cf32f3de8f3cee4fad62da57f755a19">window_onClose</a></div><div class="ttdeci">void window_onClose(unsigned int wid, void(*fptr)(unsigned int, char *))</div><div class="ttdoc">Sets the default close function of the window.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00775">toolkit.c:775</a></div></div>
@@ -1408,7 +1411,7 @@ $(function() {
 <div class="ttc" id="apilot__cargo_8c_html_a2e5120b801bf8025293bb2f5d2f789ea"><div class="ttname"><a href="pilot__cargo_8c.html#a2e5120b801bf8025293bb2f5d2f789ea">pilot_cargoFree</a></div><div class="ttdeci">int pilot_cargoFree(Pilot *p)</div><div class="ttdoc">Gets the pilot's free cargo space.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00061">pilot_cargo.c:61</a></div></div>
 <div class="ttc" id="adialogue_8c_html_afc7588b04437de7d47ef7ee0e8d2db49"><div class="ttname"><a href="dialogue_8c.html#afc7588b04437de7d47ef7ee0e8d2db49">dialogue_inputRaw</a></div><div class="ttdeci">char * dialogue_inputRaw(const char *title, int min, int max, const char *msg)</div><div class="ttdoc">Creates a dialogue that allows the player to write a message.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00478">dialogue.c:478</a></div></div>
 <div class="ttc" id="adialogue_8c_html_adf6b3adbdff74aef8d75d595483000d0"><div class="ttname"><a href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a></div><div class="ttdeci">void dialogue_msgRaw(const char *caption, const char *msg)</div><div class="ttdoc">Opens a dialogue window with an ok button and a fixed message.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00273">dialogue.c:273</a></div></div>
-<div class="ttc" id="afaction_8c_html_ac7c5ef2816b34fea76372d884f6e997f"><div class="ttname"><a href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a></div><div class="ttdeci">const char * faction_name(int f)</div><div class="ttdoc">Gets a factions &quot;real&quot; (internal) name.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00269">faction.c:269</a></div></div>
+<div class="ttc" id="afaction_8c_html_ac7c5ef2816b34fea76372d884f6e997f"><div class="ttname"><a href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a></div><div class="ttdeci">const char * faction_name(int f)</div><div class="ttdoc">Gets a factions &quot;real&quot; (internal) name.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00268">faction.c:268</a></div></div>
 <div class="ttc" id="afont_8c_html_a70108689d1f2c28b6e91f763e3918e9b"><div class="ttname"><a href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a></div><div class="ttdeci">glFont gl_defFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00161">font.c:161</a></div></div>
 <div class="ttc" id="ashiplog_8c_html_ab3b8d46f2a51fcbad8251d4e7934072c"><div class="ttname"><a href="shiplog_8c.html#ab3b8d46f2a51fcbad8251d4e7934072c">shiplog_create</a></div><div class="ttdeci">int shiplog_create(const char *idstr, const char *logname, const char *type, int overwrite, int maxLen)</div><div class="ttdoc">Creates a new log with given title of given type.</div><div class="ttdef"><b>Definition:</b> <a href="shiplog_8c_source.html#l00054">shiplog.c:54</a></div></div>
 <div class="ttc" id="adialogue_8c_html_a7dcd6dd96c62ee9ebe3ce210e1fb087c"><div class="ttname"><a href="dialogue_8c.html#a7dcd6dd96c62ee9ebe3ce210e1fb087c">dialogue_YesNoRaw</a></div><div class="ttdeci">int dialogue_YesNoRaw(const char *caption, const char *msg)</div><div class="ttdoc">Runs a dialogue with both yes and no options.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00381">dialogue.c:381</a></div></div>
@@ -1429,12 +1432,11 @@ $(function() {
 <div class="ttc" id="amission_8c_html_aebe38a244b1417b2c2e0cda1473717e5"><div class="ttname"><a href="mission_8c.html#aebe38a244b1417b2c2e0cda1473717e5">player_missions</a></div><div class="ttdeci">Mission * player_missions[MISSION_MAX]</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00051">mission.c:51</a></div></div>
 <div class="ttc" id="ainfo_8h_html_af99a3852883b8a94bcbb79bff429dfe6"><div class="ttname"><a href="info_8h.html#af99a3852883b8a94bcbb79bff429dfe6">menu_info</a></div><div class="ttdeci">void menu_info(int window)</div><div class="ttdoc">Opens the information menu.</div><div class="ttdef"><b>Definition:</b> <a href="info_8c_source.html#l00121">info.c:121</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_a1979597b2171ed1225dcf2a1ceaef1bf"><div class="ttname"><a href="pilot__weapon_8c.html#a1979597b2171ed1225dcf2a1ceaef1bf">pilot_weapSetInrange</a></div><div class="ttdeci">void pilot_weapSetInrange(Pilot *p, int id, int inrange)</div><div class="ttdoc">Changes the weapon set inrange property.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00357">pilot_weapon.c:357</a></div></div>
-<div class="ttc" id="afaction_8c_html_a151299399a3ae201cf6e3f1406f01b19"><div class="ttname"><a href="faction_8c.html#a151299399a3ae201cf6e3f1406f01b19">faction_longname</a></div><div class="ttdeci">const char * faction_longname(int f)</div><div class="ttdoc">Gets the faction's long name (formal, human-readable).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00313">faction.c:313</a></div></div>
+<div class="ttc" id="afaction_8c_html_a151299399a3ae201cf6e3f1406f01b19"><div class="ttname"><a href="faction_8c.html#a151299399a3ae201cf6e3f1406f01b19">faction_longname</a></div><div class="ttdeci">const char * faction_longname(int f)</div><div class="ttdoc">Gets the faction's long name (formal, human-readable).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00312">faction.c:312</a></div></div>
 <div class="ttc" id="aboard_8c_html_a94be6e055d514b19c7cb5f56f492f016"><div class="ttname"><a href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a></div><div class="ttdeci">#define BUTTON_HEIGHT</div><div class="ttdef"><b>Definition:</b> <a href="board_8c_source.html#l00035">board.c:35</a></div></div>
 <div class="ttc" id="agui_8c_html_ae05bab0fbea0f8f32cf930237934ac1f"><div class="ttname"><a href="gui_8c.html#ae05bab0fbea0f8f32cf930237934ac1f">gui_pick</a></div><div class="ttdeci">char * gui_pick(void)</div><div class="ttdoc">Determines which GUI should be used.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02139">gui.c:2139</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_aef13dabed6b043c7095537d17b4ae41b"><div class="ttname"><a href="pilot__weapon_8c.html#aef13dabed6b043c7095537d17b4ae41b">pilot_weaponAuto</a></div><div class="ttdeci">void pilot_weaponAuto(Pilot *p)</div><div class="ttdoc">Tries to automatically set and create the pilot's weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01255">pilot_weapon.c:1255</a></div></div>
 <div class="ttc" id="adialogue_8c_html_ae8b0f2a9c0c463432861e466c1961d92"><div class="ttname"><a href="dialogue_8c.html#ae8b0f2a9c0c463432861e466c1961d92">dialogue_isOpen</a></div><div class="ttdeci">int dialogue_isOpen(void)</div><div class="ttdoc">Checks to see if a dialogue is open.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00102">dialogue.c:102</a></div></div>
-<div class="ttc" id="afaction_8c_html_a16315bc6d19608a6d043c8cb40bc6fe7"><div class="ttname"><a href="faction_8c.html#a16315bc6d19608a6d043c8cb40bc6fe7">faction_logoSmall</a></div><div class="ttdeci">glTexture * faction_logoSmall(int f)</div><div class="ttdoc">Gets the faction's small logo (64x64 or smaller).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00347">faction.c:347</a></div></div>
 <div class="ttc" id="apilot_8c_html_acc666ef17539350a3df40f558df3c84e"><div class="ttname"><a href="pilot_8c.html#acc666ef17539350a3df40f558df3c84e">pilot_getJumps</a></div><div class="ttdeci">int pilot_getJumps(const Pilot *p)</div><div class="ttdoc">Gets the amount of jumps the pilot has left.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01317">pilot.c:1317</a></div></div>
 <div class="ttc" id="anlua__misn_8c_html_a5219aad9bb3dfb97b609cfc0a5f1affd"><div class="ttname"><a href="nlua__misn_8c.html#a5219aad9bb3dfb97b609cfc0a5f1affd">misn_tryRun</a></div><div class="ttdeci">int misn_tryRun(Mission *misn, const char *func)</div><div class="ttdoc">Tries to run a mission, but doesn't err if it fails.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__misn_8c_source.html#l00160">nlua_misn.c:160</a></div></div>
 <div class="ttc" id="amission_8c_html_a4a8af8fb9ff0ef11d268432dfdd3091f"><div class="ttname"><a href="mission_8c.html#a4a8af8fb9ff0ef11d268432dfdd3091f">mission_sysMark</a></div><div class="ttdeci">void mission_sysMark(void)</div><div class="ttdoc">Marks all active systems that need marking.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00393">mission.c:393</a></div></div>

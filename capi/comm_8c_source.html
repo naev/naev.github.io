@@ -268,7 +268,7 @@ $(function() {
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;      <span class="keywordtype">int</span> <span class="keyword">override</span>, <span class="keywordtype">int</span> bribed, <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;{</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;   <span class="keywordtype">int</span> namex, standx, logox, y;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   <span class="keywordtype">int</span> namew, standw, logow, width;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   <span class="keywordtype">int</span> namew, standw, logow, logoh, width;</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;   glTexture *logo;</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *stand;</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid;</div>
@@ -285,7 +285,7 @@ $(function() {
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a> = gfx;</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;   logo = NULL;</div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;   <span class="keywordflow">if</span> ( <a class="code" href="faction_8c.html#a1c26106ea4216e46af4fc2e75ddc71c6">faction_isKnown</a>(faction) )</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      logo = <a class="code" href="faction_8c.html#a16315bc6d19608a6d043c8cb40bc6fe7">faction_logoSmall</a>(faction);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      logo = <a class="code" href="faction_8c.html#a4f155231085486b91187243140fd9e73">faction_logo</a>(faction);</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   <span class="comment">/* Get standing colour / text. */</span></div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   stand = <a class="code" href="faction_8c.html#afff569ed6450f87e95235a17ae258f50">faction_getStandingBroad</a>( faction, bribed, <span class="keyword">override</span> );</div>
@@ -302,352 +302,354 @@ $(function() {
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;   standw = <a class="code" href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a>( NULL, stand );</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;   width  = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>(namew, standw);</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;   logow = logo == NULL ? 0 : logo-&gt;w;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;   <span class="keywordflow">if</span> (width + logow &gt; <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>) {</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      font = &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;      namew  = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>(<a class="code" href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a>( font, name ), <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> - logow);</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      standw = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>(<a class="code" href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a>( font, stand ), <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> - logow);</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      width  = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>(namew, standw);</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;   }</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      font = &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   namex  = <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>/2 -  namew/2 + logow/2;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   standx = <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>/2 - standw/2 + logow/2;</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   <span class="keywordflow">if</span> (logo != NULL) {</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;      y  = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( font-&gt;h*2 + 15, logo-&gt;h );</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;      logox = <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>/2 - logow/2 - width/2 - 2;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   }</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;      logox = 0;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      y = font-&gt;h*2 + 15;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   }</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   <span class="comment">/* Create the window. */</span></div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   wid = <a class="code" href="toolkit_8c.html#a098bfecb537787de38f9865becc29ced">window_create</a>( <span class="stringliteral">&quot;wdwComm&quot;</span>, _(<span class="stringliteral">&quot;Communication Channel&quot;</span>), -1, -1,</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;         20 + <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> + 20 + <a class="code" href="comm_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a> + 20,</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;         30 + <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> + y + 5 + 20 );</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   <a class="code" href="toolkit_8c.html#ac4e151952c28e3f20edceb86c0243e00">window_setCancel</a>( wid, <a class="code" href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">comm_close</a> );</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   <span class="comment">/* Create the image. */</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;   window_addRect( wid, 19, -30, <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>+1, <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> + y + 5,</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;         <span class="stringliteral">&quot;rctGFX&quot;</span>, &amp;<a class="code" href="colour_8c.html#ab8e89d2c4f409102da4bdb01ef68961c">cGrey10</a>, 1 );</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a> != NULL) {</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      aspect = <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;w / <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;h;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;      gw = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>,  <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;w );</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      gh = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a>, <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;h );</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;w &gt; <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> || <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;h &gt; <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a>) {</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;         gh = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a>, <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> / aspect );</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;         gw = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>, <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> * aspect );</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      }</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      window_addImage( wid, 20 + (<a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>-gw)/2,</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            -30 - (<a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a>-gh)/2,</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;            gw, gh, <span class="stringliteral">&quot;imgGFX&quot;</span>, <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>, 0 );</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;   }</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;   <span class="comment">/* Faction logo. */</span></div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;   <span class="keywordflow">if</span> (logo != NULL) {</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      window_addImage( wid, 19 + logox, -30 - <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> - 4,</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;            0, 0, <span class="stringliteral">&quot;imgFaction&quot;</span>, logo, 0 );</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;      y -= (logo-&gt;h - (<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h*2 + 15)) / 2;</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;   }</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   <span class="comment">/* Name. */</span></div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   window_addText( wid, 19 + namex, -30 - <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> - y + font-&gt;h*2 + 10,</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;         <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> - namex - logow, 20, 0, <span class="stringliteral">&quot;txtName&quot;</span>, font, &amp;<a class="code" href="colour_8c.html#aa0601ca54aed9efd2dddd294138c2ad6">cWhite</a>, name );</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   <span class="comment">/* Standing. */</span></div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   window_addText( wid, 19 + standx, -30 - <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> - y + font-&gt;h + 5,</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;         <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> - standx - logow, 20, 0, <span class="stringliteral">&quot;txtStanding&quot;</span>, font, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, stand );</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;   <span class="comment">/* Buttons. */</span></div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   window_addButton( wid, -20, 20, <a class="code" href="comm_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="comm_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;         <span class="stringliteral">&quot;btnClose&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), <a class="code" href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">comm_close</a> );</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;   <span class="keywordflow">return</span> wid;</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;}</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;   logow = logo == NULL ? 0 : logo-&gt;w * (double)FACTION_LOGO_SM / <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( logo-&gt;w, logo-&gt;h );</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   logoh = logo == NULL ? 0 : logo-&gt;h * (double)FACTION_LOGO_SM / <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( logo-&gt;w, logo-&gt;h );</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160; </div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   <span class="keywordflow">if</span> (width + logow &gt; <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>) {</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;      font = &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      namew  = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>(<a class="code" href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a>( font, name ), <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> - logow);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      standw = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>(<a class="code" href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a>( font, stand ), <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> - logow);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;      width  = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>(namew, standw);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;   }</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;      font = &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   namex  = <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>/2 -  namew/2 + logow/2;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;   standx = <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>/2 - standw/2 + logow/2;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;   <span class="keywordflow">if</span> (logo != NULL) {</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;      y  = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( font-&gt;h*2 + 15, logoh );</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      logox = <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>/2 - logow/2 - width/2 - 2;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   }</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      logox = 0;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      y = font-&gt;h*2 + 15;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   }</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   <span class="comment">/* Create the window. */</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;   wid = <a class="code" href="toolkit_8c.html#a098bfecb537787de38f9865becc29ced">window_create</a>( <span class="stringliteral">&quot;wdwComm&quot;</span>, _(<span class="stringliteral">&quot;Communication Channel&quot;</span>), -1, -1,</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;         20 + <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> + 20 + <a class="code" href="comm_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a> + 20,</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;         30 + <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> + y + 5 + 20 );</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   <a class="code" href="toolkit_8c.html#ac4e151952c28e3f20edceb86c0243e00">window_setCancel</a>( wid, <a class="code" href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">comm_close</a> );</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;   <span class="comment">/* Create the image. */</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;   window_addRect( wid, 19, -30, <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>+1, <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> + y + 5,</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;         <span class="stringliteral">&quot;rctGFX&quot;</span>, &amp;<a class="code" href="colour_8c.html#ab8e89d2c4f409102da4bdb01ef68961c">cGrey10</a>, 1 );</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a> != NULL) {</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;      aspect = <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;w / <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;h;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      gw = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>,  <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;w );</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;      gh = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a>, <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;h );</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;w &gt; <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> || <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>-&gt;h &gt; <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a>) {</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;         gh = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a>, <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> / aspect );</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;         gw = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>, <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> * aspect );</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;      }</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      window_addImage( wid, 20 + (<a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a>-gw)/2,</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;            -30 - (<a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a>-gh)/2,</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;            gw, gh, <span class="stringliteral">&quot;imgGFX&quot;</span>, <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>, 0 );</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;   }</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;   <span class="comment">/* Faction logo. */</span></div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;   <span class="keywordflow">if</span> (logo != NULL) {</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      window_addImage( wid, 19 + logox, -30 - <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> - 4,</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;            logow, logoh, <span class="stringliteral">&quot;imgFaction&quot;</span>, logo, 0 );</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;      y -= (logoh - (<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h*2 + 15)) / 2;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;   }</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160; </div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   <span class="comment">/* Name. */</span></div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   window_addText( wid, 19 + namex, -30 - <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> - y + font-&gt;h*2 + 10,</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;         <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> - namex - logow, 20, 0, <span class="stringliteral">&quot;txtName&quot;</span>, font, &amp;<a class="code" href="colour_8c.html#aa0601ca54aed9efd2dddd294138c2ad6">cWhite</a>, name );</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <span class="comment">/* Standing. */</span></div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;   window_addText( wid, 19 + standx, -30 - <a class="code" href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a> - y + font-&gt;h + 5,</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;         <a class="code" href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a> - standx - logow, 20, 0, <span class="stringliteral">&quot;txtStanding&quot;</span>, font, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, stand );</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160; </div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;   <span class="comment">/* Buttons. */</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;   window_addButton( wid, -20, 20, <a class="code" href="comm_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="comm_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;         <span class="stringliteral">&quot;btnClose&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), <a class="code" href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">comm_close</a> );</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160; </div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;   <span class="keywordflow">return</span> wid;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;}</div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160; </div>
-<div class="line"><a name="l00385"></a><span class="lineno"><a class="line" href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">  385</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">comm_close</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *unused )</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;{</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(<a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>);</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a> = NULL;</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;   <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>  = NULL;</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a> = NULL;</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   <span class="comment">/* Close the window. */</span></div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;   <a class="code" href="toolkit_8c.html#ab8e15aaf8161daa46af61a2031f53c5e">window_close</a>( wid, unused );</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;}</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160; </div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160; </div>
+<div class="line"><a name="l00386"></a><span class="lineno"><a class="line" href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">  386</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">comm_close</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *unused )</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;{</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(<a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a>);</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;   <a class="code" href="comm_8c.html#ae792aa419fc4b0a6bd81c51d5d24d725">comm_graphic</a> = NULL;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>  = NULL;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a> = NULL;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;   <span class="comment">/* Close the window. */</span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;   <a class="code" href="toolkit_8c.html#ab8e15aaf8161daa46af61a2031f53c5e">window_close</a>( wid, unused );</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;}</div>
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160; </div>
-<div class="line"><a name="l00402"></a><span class="lineno"><a class="line" href="comm_8c.html#a1ecad595a7f2c85b75cb7b340f174093">  402</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="comm_8c.html#a1ecad595a7f2c85b75cb7b340f174093">comm_bribePilot</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *unused )</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;{</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   (void) unused;</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;   <span class="keywordtype">int</span> answer;</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;   credits_t price;</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;   <span class="keywordtype">char</span> pricestr[ECON_CRED_STRLEN];</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;   <span class="comment">/* Unbribable. */</span></div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;   str = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;bribe_no&quot;</span> );</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;   <span class="keywordflow">if</span> (str != NULL) {</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), <span class="stringliteral">&quot;%s&quot;</span>, str );</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;   }</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160; </div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;   <span class="comment">/* Get amount pilot wants. */</span></div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">comm_getNumber</a>( &amp;<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>, <span class="stringliteral">&quot;bribe&quot;</span> )) {</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;      WARN(_(<span class="stringliteral">&quot;Pilot &#39;%s&#39; accepts bribes but doesn&#39;t give price!&quot;</span>), <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;name );</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;      <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = 0.;</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;   }</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;   price = (credits_t) <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160; </div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;   <span class="comment">/* Check to see if already bribed. */</span></div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;   <span class="keywordflow">if</span> (price == 0) {</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;\&quot;Money won&#39;t save your hide now!\&quot;&quot;</span>));</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;   }</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160; </div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;   <span class="comment">/* Bribe message. */</span></div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;   price2str( pricestr, price, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, -1 );</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;   str = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;bribe_prompt&quot;</span> );</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;   <span class="keywordflow">if</span> (str == NULL)</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;      answer = <a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;\&quot;I&#39;m gonna need at least %s to not leave you as a hunk of floating debris.\&quot;\n\nPay %s?&quot;</span>), pricestr, pricestr );</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;      answer = <a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;%s\n\nPay %s?&quot;</span>), str, pricestr );</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160; </div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;   <span class="comment">/* Said no. */</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;   <span class="keywordflow">if</span> (answer == 0) {</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;You decide not to pay.&quot;</span>));</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;   }</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160; </div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;   <span class="comment">/* Check if has the money. */</span></div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ac888443eb7b9ae225d7f8dd4144ada39">player_hasCredits</a>( price )) {</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;You don&#39;t have enough credits for the bribery.&quot;</span>));</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;   }</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160; </div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( -price );</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;   str = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;bribe_paid&quot;</span> );</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;   <span class="keywordflow">if</span> (str == NULL)</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;\&quot;Pleasure to do business with you.\&quot;&quot;</span>));</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), <span class="stringliteral">&quot;%s&quot;</span>, str);</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160; </div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;   <span class="comment">/* Mark as bribed and don&#39;t allow bribing again. */</span></div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;   pilot_setFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_BRIBED );</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;   <a class="code" href="pilot_8c.html#a32d7e9e1580a4488e0b29bbc9735c084">pilot_rmHostile</a>( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a> );</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160; </div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;   <span class="comment">/* Stop hyperspace if necessary. */</span></div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;   pilot_rmFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_PREP );</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;   pilot_rmFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_BRAKE );</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;   pilot_rmFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_BEGIN );</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160; </div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;   <span class="comment">/* Don&#39;t allow rebribe. */</span></div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai != NULL) {</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;      nlua_getenv(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai-&gt;env, <span class="stringliteral">&quot;mem&quot;</span>);</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;      lua_pushnumber(naevL, 0);</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;      lua_setfield(naevL, -2, <span class="stringliteral">&quot;bribe&quot;</span>);</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;      lua_pop(naevL,1);</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;   }</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160; </div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;   <span class="comment">/* Reopen window. */</span></div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;   <a class="code" href="toolkit_8c.html#ae4e5874757785f40fef3ae504f534321">window_destroy</a>( wid );</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;   <a class="code" href="comm_8c.html#a03bb47eaef530da0788ce7337858307f">comm_openPilot</a>( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;id );</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;}</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160; </div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160; </div>
+<div class="line"><a name="l00403"></a><span class="lineno"><a class="line" href="comm_8c.html#a1ecad595a7f2c85b75cb7b340f174093">  403</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="comm_8c.html#a1ecad595a7f2c85b75cb7b340f174093">comm_bribePilot</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *unused )</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;{</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;   (void) unused;</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;   <span class="keywordtype">int</span> answer;</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;   credits_t price;</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;   <span class="keywordtype">char</span> pricestr[ECON_CRED_STRLEN];</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160; </div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;   <span class="comment">/* Unbribable. */</span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;   str = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;bribe_no&quot;</span> );</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;   <span class="keywordflow">if</span> (str != NULL) {</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), <span class="stringliteral">&quot;%s&quot;</span>, str );</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;   }</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;   <span class="comment">/* Get amount pilot wants. */</span></div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">comm_getNumber</a>( &amp;<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>, <span class="stringliteral">&quot;bribe&quot;</span> )) {</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;      WARN(_(<span class="stringliteral">&quot;Pilot &#39;%s&#39; accepts bribes but doesn&#39;t give price!&quot;</span>), <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;name );</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;      <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = 0.;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;   }</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;   price = (credits_t) <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160; </div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;   <span class="comment">/* Check to see if already bribed. */</span></div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;   <span class="keywordflow">if</span> (price == 0) {</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;\&quot;Money won&#39;t save your hide now!\&quot;&quot;</span>));</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;   }</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;   <span class="comment">/* Bribe message. */</span></div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;   price2str( pricestr, price, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, -1 );</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;   str = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;bribe_prompt&quot;</span> );</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;   <span class="keywordflow">if</span> (str == NULL)</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;      answer = <a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;\&quot;I&#39;m gonna need at least %s to not leave you as a hunk of floating debris.\&quot;\n\nPay %s?&quot;</span>), pricestr, pricestr );</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;      answer = <a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;%s\n\nPay %s?&quot;</span>), str, pricestr );</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;   <span class="comment">/* Said no. */</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;   <span class="keywordflow">if</span> (answer == 0) {</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;You decide not to pay.&quot;</span>));</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;   }</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160; </div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;   <span class="comment">/* Check if has the money. */</span></div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ac888443eb7b9ae225d7f8dd4144ada39">player_hasCredits</a>( price )) {</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;You don&#39;t have enough credits for the bribery.&quot;</span>));</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;   }</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160; </div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( -price );</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;   str = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;bribe_paid&quot;</span> );</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;   <span class="keywordflow">if</span> (str == NULL)</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), _(<span class="stringliteral">&quot;\&quot;Pleasure to do business with you.\&quot;&quot;</span>));</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Pilot&quot;</span>), <span class="stringliteral">&quot;%s&quot;</span>, str);</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160; </div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;   <span class="comment">/* Mark as bribed and don&#39;t allow bribing again. */</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;   pilot_setFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_BRIBED );</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;   <a class="code" href="pilot_8c.html#a32d7e9e1580a4488e0b29bbc9735c084">pilot_rmHostile</a>( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a> );</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160; </div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;   <span class="comment">/* Stop hyperspace if necessary. */</span></div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;   pilot_rmFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_PREP );</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;   pilot_rmFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_BRAKE );</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;   pilot_rmFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_BEGIN );</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160; </div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;   <span class="comment">/* Don&#39;t allow rebribe. */</span></div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai != NULL) {</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;      nlua_getenv(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai-&gt;env, <span class="stringliteral">&quot;mem&quot;</span>);</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;      lua_pushnumber(naevL, 0);</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;      lua_setfield(naevL, -2, <span class="stringliteral">&quot;bribe&quot;</span>);</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;      lua_pop(naevL,1);</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;   }</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160; </div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;   <span class="comment">/* Reopen window. */</span></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;   <a class="code" href="toolkit_8c.html#ae4e5874757785f40fef3ae504f534321">window_destroy</a>( wid );</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;   <a class="code" href="comm_8c.html#a03bb47eaef530da0788ce7337858307f">comm_openPilot</a>( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;id );</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;}</div>
 <div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160; </div>
-<div class="line"><a name="l00487"></a><span class="lineno"><a class="line" href="comm_8c.html#ae424589591c6406d7e22d48d77013b41">  487</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="comm_8c.html#ae424589591c6406d7e22d48d77013b41">comm_bribePlanet</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *unused )</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;{</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;   (void) unused;</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;   <span class="keywordtype">int</span> answer;</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;   credits_t price;</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160; </div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;   <span class="comment">/* Get price. */</span></div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;   price = <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribe_price;</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160; </div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;   <span class="comment">/* No bribing. */</span></div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribe_price &lt;= 0.) {</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;      <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribe_msg );</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;   }</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160; </div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;   <span class="comment">/* Yes/No input. */</span></div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   answer = <a class="code" href="dialogue_8c.html#a7dcd6dd96c62ee9ebe3ce210e1fb087c">dialogue_YesNoRaw</a>( _(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribe_msg );</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160; </div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;   <span class="comment">/* Said no. */</span></div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;   <span class="keywordflow">if</span> (answer == 0) {</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), _(<span class="stringliteral">&quot;You decide not to pay.&quot;</span>));</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;   }</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160; </div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;   <span class="comment">/* Check if has the money. */</span></div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ac888443eb7b9ae225d7f8dd4144ada39">player_hasCredits</a>( price )) {</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), _(<span class="stringliteral">&quot;You don&#39;t have enough credits for the bribery.&quot;</span>));</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;   }</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160; </div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;   <span class="comment">/* Pay the money. */</span></div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( -price );</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;   <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), _(<span class="stringliteral">&quot;You have permission to dock.&quot;</span>));</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160; </div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;   <span class="comment">/* Mark as bribed and don&#39;t allow bribing again. */</span></div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;   <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribed = 1;</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160; </div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;   <span class="comment">/* Reopen window. */</span></div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;   <a class="code" href="toolkit_8c.html#ae4e5874757785f40fef3ae504f534321">window_destroy</a>( wid );</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;   <a class="code" href="comm_8c.html#a23f084e12895c10bf5f6952fcdb9d4f4">comm_openPlanet</a>( <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a> );</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;}</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160; </div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160; </div>
+<div class="line"><a name="l00488"></a><span class="lineno"><a class="line" href="comm_8c.html#ae424589591c6406d7e22d48d77013b41">  488</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="comm_8c.html#ae424589591c6406d7e22d48d77013b41">comm_bribePlanet</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *unused )</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;{</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;   (void) unused;</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;   <span class="keywordtype">int</span> answer;</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;   credits_t price;</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160; </div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;   <span class="comment">/* Get price. */</span></div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;   price = <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribe_price;</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160; </div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;   <span class="comment">/* No bribing. */</span></div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribe_price &lt;= 0.) {</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;      <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribe_msg );</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;   }</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160; </div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <span class="comment">/* Yes/No input. */</span></div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;   answer = <a class="code" href="dialogue_8c.html#a7dcd6dd96c62ee9ebe3ce210e1fb087c">dialogue_YesNoRaw</a>( _(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribe_msg );</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160; </div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;   <span class="comment">/* Said no. */</span></div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;   <span class="keywordflow">if</span> (answer == 0) {</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), _(<span class="stringliteral">&quot;You decide not to pay.&quot;</span>));</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;   }</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160; </div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;   <span class="comment">/* Check if has the money. */</span></div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ac888443eb7b9ae225d7f8dd4144ada39">player_hasCredits</a>( price )) {</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), _(<span class="stringliteral">&quot;You don&#39;t have enough credits for the bribery.&quot;</span>));</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;   }</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160; </div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;   <span class="comment">/* Pay the money. */</span></div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( -price );</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;   <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>(_(<span class="stringliteral">&quot;Bribe Starport&quot;</span>), _(<span class="stringliteral">&quot;You have permission to dock.&quot;</span>));</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160; </div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;   <span class="comment">/* Mark as bribed and don&#39;t allow bribing again. */</span></div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a>-&gt;bribed = 1;</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160; </div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;   <span class="comment">/* Reopen window. */</span></div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;   <a class="code" href="toolkit_8c.html#ae4e5874757785f40fef3ae504f534321">window_destroy</a>( wid );</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;   <a class="code" href="comm_8c.html#a23f084e12895c10bf5f6952fcdb9d4f4">comm_openPlanet</a>( <a class="code" href="comm_8c.html#a80bee4f434ac0307411f2a9eb1438751">comm_planet</a> );</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;}</div>
 <div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160; </div>
-<div class="line"><a name="l00536"></a><span class="lineno"><a class="line" href="comm_8c.html#aba5e09c5c455d1983caa970a8afcd83d">  536</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="comm_8c.html#aba5e09c5c455d1983caa970a8afcd83d">comm_requestFuel</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *unused )</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;{</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;   (void) wid;</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;   (void) unused;</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;   <span class="keywordtype">double</span> val;</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *msg;</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;   credits_t price;</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;   <span class="keywordtype">char</span> creditstr[ECON_CRED_STRLEN];</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160; </div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;   <span class="comment">/* Check to see if ship has a no refuel message. */</span></div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;   msg = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;refuel_no&quot;</span> );</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;   <span class="keywordflow">if</span> (msg != NULL) {</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;      <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), msg );</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;   }</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160; </div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;   <span class="comment">/* Must need refueling. */</span></div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;fuel &gt;= <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;fuel_max) {</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;Your fuel deposits are already full.&quot;</span>) );</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;   }</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160; </div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;   <span class="comment">/* See if pilot has enough fuel. */</span></div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;fuel &lt; 200.) {</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>),</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;            _(<span class="stringliteral">&quot;\&quot;Sorry, I don&#39;t have enough fuel to spare at the moment.\&quot;&quot;</span>) );</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;   }</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160; </div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;   <span class="comment">/* See if player can get refueled. */</span></div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;   val = 0.;</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;   ret = <a class="code" href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">comm_getNumber</a>( &amp;val, <span class="stringliteral">&quot;refuel&quot;</span> );</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;   msg = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;refuel_msg&quot;</span> );</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   <span class="keywordflow">if</span> ((ret != 0) || (msg == NULL) || pilot_isFlag(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_MANUAL_CONTROL)) {</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;\&quot;Sorry, I&#39;m busy now.\&quot;&quot;</span>) );</div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;   }</div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;   price = (credits_t) val;</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160; </div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;   <span class="comment">/* Check to see if is already refueling. */</span></div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_REFUELING)) {</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;Pilot is already refueling you.&quot;</span>) );</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;   }</div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160; </div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   <span class="comment">/* See if player really wants to pay. */</span></div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;   <span class="keywordflow">if</span> (price &gt; 0) {</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;      price2str( creditstr, price, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, -1 );</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;      ret = <a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;%s\n\nPay %s?&quot;</span>), msg, creditstr );</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;      <span class="keywordflow">if</span> (ret == 0) {</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;         <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;You decide not to pay.&quot;</span>) );</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;         <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;      }</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;   }</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), <span class="stringliteral">&quot;%s&quot;</span>, msg );</div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160; </div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;   <span class="comment">/* Check if he has the money. */</span></div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ac888443eb7b9ae225d7f8dd4144ada39">player_hasCredits</a>( price )) {</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;      credits2str( creditstr, price - <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, -1 );</div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;You need %s more!&quot;</span>), creditstr );</div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;   }</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160; </div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;   <span class="comment">/* Take money. */</span></div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( -price );</div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;   <a class="code" href="pilot_8c.html#a69eaf151890915d9b94f5aff87ec1539">pilot_modCredits</a>( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, price );</div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160; </div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;   <span class="comment">/* Start refueling. */</span></div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;   pilot_rmFlag(  <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_PREP);</div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;   pilot_rmFlag(  <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_BRAKE );</div>
-<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;   pilot_rmFlag(  <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_BEGIN);</div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;   pilot_setFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_REFUELING);</div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;   <a class="code" href="ai_8c.html#a3345ea1a3509bf6ccd0fcea954b00269">ai_refuel</a>(     <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;id );</div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160; </div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;   <span class="comment">/* Last message. */</span></div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;   <span class="keywordflow">if</span> (price &gt; 0)</div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;\&quot;On my way.\&quot;&quot;</span>) );</div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;}</div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160; </div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160; </div>
+<div class="line"><a name="l00537"></a><span class="lineno"><a class="line" href="comm_8c.html#aba5e09c5c455d1983caa970a8afcd83d">  537</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="comm_8c.html#aba5e09c5c455d1983caa970a8afcd83d">comm_requestFuel</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span> *unused )</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;{</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;   (void) wid;</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;   (void) unused;</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;   <span class="keywordtype">double</span> val;</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *msg;</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;   credits_t price;</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;   <span class="keywordtype">char</span> creditstr[ECON_CRED_STRLEN];</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160; </div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;   <span class="comment">/* Check to see if ship has a no refuel message. */</span></div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;   msg = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;refuel_no&quot;</span> );</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;   <span class="keywordflow">if</span> (msg != NULL) {</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;      <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), msg );</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;   }</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160; </div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   <span class="comment">/* Must need refueling. */</span></div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;fuel &gt;= <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;fuel_max) {</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;Your fuel deposits are already full.&quot;</span>) );</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;   }</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160; </div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;   <span class="comment">/* See if pilot has enough fuel. */</span></div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;fuel &lt; 200.) {</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>),</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;            _(<span class="stringliteral">&quot;\&quot;Sorry, I don&#39;t have enough fuel to spare at the moment.\&quot;&quot;</span>) );</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;   }</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160; </div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;   <span class="comment">/* See if player can get refueled. */</span></div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;   val = 0.;</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;   ret = <a class="code" href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">comm_getNumber</a>( &amp;val, <span class="stringliteral">&quot;refuel&quot;</span> );</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   msg = <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="stringliteral">&quot;refuel_msg&quot;</span> );</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;   <span class="keywordflow">if</span> ((ret != 0) || (msg == NULL) || pilot_isFlag(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_MANUAL_CONTROL)) {</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;\&quot;Sorry, I&#39;m busy now.\&quot;&quot;</span>) );</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;   }</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;   price = (credits_t) val;</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160; </div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;   <span class="comment">/* Check to see if is already refueling. */</span></div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_REFUELING)) {</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;Pilot is already refueling you.&quot;</span>) );</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;   }</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160; </div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;   <span class="comment">/* See if player really wants to pay. */</span></div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;   <span class="keywordflow">if</span> (price &gt; 0) {</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;      price2str( creditstr, price, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, -1 );</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;      ret = <a class="code" href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;%s\n\nPay %s?&quot;</span>), msg, creditstr );</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;      <span class="keywordflow">if</span> (ret == 0) {</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;         <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;You decide not to pay.&quot;</span>) );</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;         <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;      }</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;   }</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), <span class="stringliteral">&quot;%s&quot;</span>, msg );</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160; </div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;   <span class="comment">/* Check if he has the money. */</span></div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ac888443eb7b9ae225d7f8dd4144ada39">player_hasCredits</a>( price )) {</div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;      credits2str( creditstr, price - <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, -1 );</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;You need %s more!&quot;</span>), creditstr );</div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;   }</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160; </div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;   <span class="comment">/* Take money. */</span></div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( -price );</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;   <a class="code" href="pilot_8c.html#a69eaf151890915d9b94f5aff87ec1539">pilot_modCredits</a>( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, price );</div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160; </div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;   <span class="comment">/* Start refueling. */</span></div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;   pilot_rmFlag(  <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_PREP);</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;   pilot_rmFlag(  <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_BRAKE );</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;   pilot_rmFlag(  <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_HYP_BEGIN);</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;   pilot_setFlag( <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, PILOT_REFUELING);</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;   <a class="code" href="ai_8c.html#a3345ea1a3509bf6ccd0fcea954b00269">ai_refuel</a>(     <a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;id );</div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160; </div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;   <span class="comment">/* Last message. */</span></div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;   <span class="keywordflow">if</span> (price &gt; 0)</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;      <a class="code" href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a>( _(<span class="stringliteral">&quot;Request Fuel&quot;</span>), _(<span class="stringliteral">&quot;\&quot;On my way.\&quot;&quot;</span>) );</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;}</div>
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160; </div>
-<div class="line"><a name="l00629"></a><span class="lineno"><a class="line" href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">  629</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">comm_getNumber</a>( <span class="keywordtype">double</span> *val, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;{</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160; </div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai == NULL)</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160; </div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   <span class="comment">/* Set up the state. */</span></div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   nlua_getenv(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai-&gt;env, <span class="stringliteral">&quot;mem&quot;</span>);</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160; </div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;   <span class="comment">/* Get number amount. */</span></div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;   lua_getfield(naevL, -1, str);</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   <span class="comment">/* Check to see if it&#39;s a number. */</span></div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;   <span class="keywordflow">if</span> (!lua_isnumber(naevL, -1))</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;      ret = 1;</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;      *val = lua_tonumber(naevL, -1);</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;      ret = 0;</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   }</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;   <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   lua_pop(naevL, 2);</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;}</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160; </div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160; </div>
+<div class="line"><a name="l00630"></a><span class="lineno"><a class="line" href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">  630</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">comm_getNumber</a>( <span class="keywordtype">double</span> *val, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;{</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160; </div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai == NULL)</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160; </div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   <span class="comment">/* Set up the state. */</span></div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   nlua_getenv(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai-&gt;env, <span class="stringliteral">&quot;mem&quot;</span>);</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160; </div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;   <span class="comment">/* Get number amount. */</span></div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   lua_getfield(naevL, -1, str);</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;   <span class="comment">/* Check to see if it&#39;s a number. */</span></div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;   <span class="keywordflow">if</span> (!lua_isnumber(naevL, -1))</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;      ret = 1;</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;      *val = lua_tonumber(naevL, -1);</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;      ret = 0;</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;   }</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;   lua_pop(naevL, 2);</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;}</div>
 <div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160; </div>
-<div class="line"><a name="l00666"></a><span class="lineno"><a class="line" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">  666</a></span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="keywordtype">char</span> *str )</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;{</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *ret;</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160; </div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai == NULL)</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160; </div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;   <span class="comment">/* Get memory table. */</span></div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;   nlua_getenv(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai-&gt;env, <span class="stringliteral">&quot;mem&quot;</span>);</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160; </div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;   <span class="comment">/* Get str message. */</span></div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;   lua_getfield(naevL, -1, str );</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;   <span class="keywordflow">if</span> (!lua_isstring(naevL, -1))</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;      ret = NULL;</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;      ret = lua_tostring(naevL, -1);</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;   lua_pop(naevL, 2);</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160; </div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;}</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160; </div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160; </div>
+<div class="line"><a name="l00667"></a><span class="lineno"><a class="line" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">  667</a></span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a>( <span class="keywordtype">char</span> *str )</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;{</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *ret;</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160; </div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai == NULL)</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160; </div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;   <span class="comment">/* Get memory table. */</span></div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;   nlua_getenv(<a class="code" href="comm_8c.html#a19c164048282f28eececdbff7c4013f3">comm_pilot</a>-&gt;ai-&gt;env, <span class="stringliteral">&quot;mem&quot;</span>);</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160; </div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;   <span class="comment">/* Get str message. */</span></div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;   lua_getfield(naevL, -1, str );</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;   <span class="keywordflow">if</span> (!lua_isstring(naevL, -1))</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;      ret = NULL;</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;      ret = lua_tostring(naevL, -1);</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;   lua_pop(naevL, 2);</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160; </div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;}</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="acomm_8c_html_a2a2865598dcdd3316a3c923f7a16e074"><div class="ttname"><a href="comm_8c.html#a2a2865598dcdd3316a3c923f7a16e074">GRAPHIC_HEIGHT</a></div><div class="ttdeci">#define GRAPHIC_HEIGHT</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00036">comm.c:36</a></div></div>
 <div class="ttc" id="acolour_8c_html_aa0601ca54aed9efd2dddd294138c2ad6"><div class="ttname"><a href="colour_8c.html#aa0601ca54aed9efd2dddd294138c2ad6">cWhite</a></div><div class="ttdeci">const glColour cWhite</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00029">colour.c:29</a></div></div>
-<div class="ttc" id="acomm_8c_html_aba5e09c5c455d1983caa970a8afcd83d"><div class="ttname"><a href="comm_8c.html#aba5e09c5c455d1983caa970a8afcd83d">comm_requestFuel</a></div><div class="ttdeci">static void comm_requestFuel(unsigned int wid, char *unused)</div><div class="ttdoc">Tries to request help from the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00536">comm.c:536</a></div></div>
+<div class="ttc" id="acomm_8c_html_aba5e09c5c455d1983caa970a8afcd83d"><div class="ttname"><a href="comm_8c.html#aba5e09c5c455d1983caa970a8afcd83d">comm_requestFuel</a></div><div class="ttdeci">static void comm_requestFuel(unsigned int wid, char *unused)</div><div class="ttdoc">Tries to request help from the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00537">comm.c:537</a></div></div>
 <div class="ttc" id="aplayer_8c_html_aa0322f53be24a008fb07fd4db15ba54d"><div class="ttname"><a href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a></div><div class="ttdeci">credits_t player_modCredits(credits_t amount)</div><div class="ttdoc">Modifies the amount of credits the player has.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00891">player.c:891</a></div></div>
 <div class="ttc" id="acomm_8c_html_ae98035e5bee7146fab48f941818a2bc7"><div class="ttname"><a href="comm_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a></div><div class="ttdeci">#define BUTTON_WIDTH</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00032">comm.c:32</a></div></div>
 <div class="ttc" id="astructPlanet_html"><div class="ttname"><a href="structPlanet.html">Planet</a></div><div class="ttdoc">Represents a planet.</div></div>
-<div class="ttc" id="acomm_8c_html_ad76da96c61f49c23538ef6b0ff370292"><div class="ttname"><a href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a></div><div class="ttdeci">static const char * comm_getString(char *str)</div><div class="ttdoc">Gets a string from the pilot's memory.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00666">comm.c:666</a></div></div>
+<div class="ttc" id="acomm_8c_html_ad76da96c61f49c23538ef6b0ff370292"><div class="ttname"><a href="comm_8c.html#ad76da96c61f49c23538ef6b0ff370292">comm_getString</a></div><div class="ttdeci">static const char * comm_getString(char *str)</div><div class="ttdoc">Gets a string from the pilot's memory.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00667">comm.c:667</a></div></div>
 <div class="ttc" id="apilot_8c_html_a79cca646d86f820231fed535fb07c434"><div class="ttname"><a href="pilot_8c.html#a79cca646d86f820231fed535fb07c434">pilot_isFriendly</a></div><div class="ttdeci">int pilot_isFriendly(const Pilot *p)</div><div class="ttdoc">Checks to see if pilot is friendly to the player.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00685">pilot.c:685</a></div></div>
 <div class="ttc" id="acolour_8c_html_ab8e89d2c4f409102da4bdb01ef68961c"><div class="ttname"><a href="colour_8c.html#ab8e89d2c4f409102da4bdb01ef68961c">cGrey10</a></div><div class="ttdeci">const glColour cGrey10</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00042">colour.c:42</a></div></div>
-<div class="ttc" id="afaction_8c_html_a1c26106ea4216e46af4fc2e75ddc71c6"><div class="ttname"><a href="faction_8c.html#a1c26106ea4216e46af4fc2e75ddc71c6">faction_isKnown</a></div><div class="ttdeci">int faction_isKnown(int id)</div><div class="ttdoc">Is the faction known?</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00236">faction.c:236</a></div></div>
+<div class="ttc" id="afaction_8c_html_a1c26106ea4216e46af4fc2e75ddc71c6"><div class="ttname"><a href="faction_8c.html#a1c26106ea4216e46af4fc2e75ddc71c6">faction_isKnown</a></div><div class="ttdeci">int faction_isKnown(int id)</div><div class="ttdoc">Is the faction known?</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00235">faction.c:235</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_ab2eb694dee2c9276a51a8d83f0112472"><div class="ttname"><a href="toolkit_8c.html#ab2eb694dee2c9276a51a8d83f0112472">window_get</a></div><div class="ttdeci">unsigned int window_get(const char *wdwname)</div><div class="ttdoc">Gets the ID of a window.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00603">toolkit.c:603</a></div></div>
 <div class="ttc" id="adialogue_8c_html_a998d3b33bf0170a39f3af77879820726"><div class="ttname"><a href="dialogue_8c.html#a998d3b33bf0170a39f3af77879820726">dialogue_msg</a></div><div class="ttdeci">void dialogue_msg(const char *caption, const char *fmt,...)</div><div class="ttdoc">Opens a dialogue window with an ok button and a message.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00228">dialogue.c:228</a></div></div>
 <div class="ttc" id="acomm_8c_html_a94be6e055d514b19c7cb5f56f492f016"><div class="ttname"><a href="comm_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a></div><div class="ttdeci">#define BUTTON_HEIGHT</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00033">comm.c:33</a></div></div>
+<div class="ttc" id="afaction_8c_html_a4f155231085486b91187243140fd9e73"><div class="ttname"><a href="faction_8c.html#a4f155231085486b91187243140fd9e73">faction_logo</a></div><div class="ttdeci">glTexture * faction_logo(int f)</div><div class="ttdoc">Gets the faction's logo (ideally 256x256).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00346">faction.c:346</a></div></div>
 <div class="ttc" id="adialogue_8c_html_af0c53a4831c187751bacb8ed02cef525"><div class="ttname"><a href="dialogue_8c.html#af0c53a4831c187751bacb8ed02cef525">dialogue_YesNo</a></div><div class="ttdeci">int dialogue_YesNo(const char *caption, const char *fmt,...)</div><div class="ttdoc">Runs a dialogue with both yes and no options.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00358">dialogue.c:358</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_ab8e15aaf8161daa46af61a2031f53c5e"><div class="ttname"><a href="toolkit_8c.html#ab8e15aaf8161daa46af61a2031f53c5e">window_close</a></div><div class="ttdeci">void window_close(unsigned int wid, char *str)</div><div class="ttdoc">Helper function to automatically close the window calling it.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00975">toolkit.c:975</a></div></div>
 <div class="ttc" id="acolour_8c_html_a094118be9a47399c70d77fc91a810174"><div class="ttname"><a href="colour_8c.html#a094118be9a47399c70d77fc91a810174">cNeutral</a></div><div class="ttdeci">const glColour cNeutral</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00092">colour.c:92</a></div></div>
@@ -667,8 +669,8 @@ $(function() {
 <div class="ttc" id="atoolkit_8c_html_ad8479bf4996e2d929886b4f7317ddcbb"><div class="ttname"><a href="toolkit_8c.html#ad8479bf4996e2d929886b4f7317ddcbb">window_exists</a></div><div class="ttdeci">int window_exists(const char *wdwname)</div><div class="ttdoc">Checks to see if a window exists.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00545">toolkit.c:545</a></div></div>
 <div class="ttc" id="acomm_8c_html_a23f084e12895c10bf5f6952fcdb9d4f4"><div class="ttname"><a href="comm_8c.html#a23f084e12895c10bf5f6952fcdb9d4f4">comm_openPlanet</a></div><div class="ttdeci">int comm_openPlanet(Planet *planet)</div><div class="ttdoc">Opens a communication dialogue with a planet.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00219">comm.c:219</a></div></div>
 <div class="ttc" id="acomm_8c_html_a03bb47eaef530da0788ce7337858307f"><div class="ttname"><a href="comm_8c.html#a03bb47eaef530da0788ce7337858307f">comm_openPilot</a></div><div class="ttdeci">int comm_openPilot(unsigned int pilot)</div><div class="ttdoc">Opens the communication dialogue with a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00087">comm.c:87</a></div></div>
-<div class="ttc" id="acomm_8c_html_ae424589591c6406d7e22d48d77013b41"><div class="ttname"><a href="comm_8c.html#ae424589591c6406d7e22d48d77013b41">comm_bribePlanet</a></div><div class="ttdeci">static void comm_bribePlanet(unsigned int wid, char *unused)</div><div class="ttdoc">Tries to bribe the planet.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00487">comm.c:487</a></div></div>
-<div class="ttc" id="afaction_8c_html_a314bc7683265aab5e7e85d3bc98c10a7"><div class="ttname"><a href="faction_8c.html#a314bc7683265aab5e7e85d3bc98c10a7">faction_getColour</a></div><div class="ttdeci">const glColour * faction_getColour(int f)</div><div class="ttdoc">Gets the colour of the faction based on it's standing with the player.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00996">faction.c:996</a></div></div>
+<div class="ttc" id="acomm_8c_html_ae424589591c6406d7e22d48d77013b41"><div class="ttname"><a href="comm_8c.html#ae424589591c6406d7e22d48d77013b41">comm_bribePlanet</a></div><div class="ttdeci">static void comm_bribePlanet(unsigned int wid, char *unused)</div><div class="ttdoc">Tries to bribe the planet.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00488">comm.c:488</a></div></div>
+<div class="ttc" id="afaction_8c_html_a314bc7683265aab5e7e85d3bc98c10a7"><div class="ttname"><a href="faction_8c.html#a314bc7683265aab5e7e85d3bc98c10a7">faction_getColour</a></div><div class="ttdeci">const glColour * faction_getColour(int f)</div><div class="ttdoc">Gets the colour of the faction based on it's standing with the player.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00978">faction.c:978</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00045">naev.h:45</a></div></div>
 <div class="ttc" id="acomm_8c_html_a463184202326ab44293201717badb150"><div class="ttname"><a href="comm_8c.html#a463184202326ab44293201717badb150">comm_open</a></div><div class="ttdeci">static unsigned int comm_open(glTexture *gfx, int faction, int override, int bribed, const char *name)</div><div class="ttdoc">Sets up the comm window.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00270">comm.c:270</a></div></div>
 <div class="ttc" id="acomm_8c_html_ac27fe9a9ed6391874d2ad6e1841afecb"><div class="ttname"><a href="comm_8c.html#ac27fe9a9ed6391874d2ad6e1841afecb">GRAPHIC_WIDTH</a></div><div class="ttdeci">#define GRAPHIC_WIDTH</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00035">comm.c:35</a></div></div>
@@ -688,7 +690,7 @@ $(function() {
 <div class="ttc" id="adialogue_8c_html_a7dcd6dd96c62ee9ebe3ce210e1fb087c"><div class="ttname"><a href="dialogue_8c.html#a7dcd6dd96c62ee9ebe3ce210e1fb087c">dialogue_YesNoRaw</a></div><div class="ttdeci">int dialogue_YesNoRaw(const char *caption, const char *msg)</div><div class="ttdoc">Runs a dialogue with both yes and no options.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00381">dialogue.c:381</a></div></div>
 <div class="ttc" id="acolour_8c_html_af122c3c970ac91f72585c4cd555ec03a"><div class="ttname"><a href="colour_8c.html#af122c3c970ac91f72585c4cd555ec03a">cHostile</a></div><div class="ttdeci">const glColour cHostile</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00094">colour.c:94</a></div></div>
 <div class="ttc" id="afont_8c_html_a54ef6885d2c4aba9620cf9034f1e0587"><div class="ttname"><a href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a></div><div class="ttdeci">int gl_printWidthRaw(const glFont *ft_font, const char *text)</div><div class="ttdoc">Gets the width that it would take to print some text.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00983">font.c:983</a></div></div>
-<div class="ttc" id="afaction_8c_html_afff569ed6450f87e95235a17ae258f50"><div class="ttname"><a href="faction_8c.html#afff569ed6450f87e95235a17ae258f50">faction_getStandingBroad</a></div><div class="ttdeci">const char * faction_getStandingBroad(int f, int bribed, int override)</div><div class="ttdoc">Gets the broad faction standing.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01082">faction.c:1082</a></div></div>
+<div class="ttc" id="afaction_8c_html_afff569ed6450f87e95235a17ae258f50"><div class="ttname"><a href="faction_8c.html#afff569ed6450f87e95235a17ae258f50">faction_getStandingBroad</a></div><div class="ttdeci">const char * faction_getStandingBroad(int f, int bribed, int override)</div><div class="ttdoc">Gets the broad faction standing.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01064">faction.c:1064</a></div></div>
 <div class="ttc" id="aship_8c_html_ac905ef6256cd051326913079f7452aca"><div class="ttname"><a href="ship_8c.html#ac905ef6256cd051326913079f7452aca">ship_loadCommGFX</a></div><div class="ttdeci">glTexture * ship_loadCommGFX(Ship *s)</div><div class="ttdoc">Loads the ship's comm graphic.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00340">ship.c:340</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ac8701471143b28a786b0028420edfeb6"><div class="ttname"><a href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a></div><div class="ttdeci">Player_t player</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00071">player.c:71</a></div></div>
 <div class="ttc" id="arng_8c_html_a3a6c194a55c239306d07bbf83f5972e9"><div class="ttname"><a href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a></div><div class="ttdeci">static const double c[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00281">rng.c:281</a></div></div>
@@ -696,14 +698,13 @@ $(function() {
 <div class="ttc" id="ahook_8c_html_a358987e6df9f49e54e9c31660700737a"><div class="ttname"><a href="hook_8c.html#a358987e6df9f49e54e9c31660700737a">hooks_runParam</a></div><div class="ttdeci">int hooks_runParam(const char *stack, const HookParam *param)</div><div class="ttdoc">Runs all the hooks of stack.</div><div class="ttdef"><b>Definition:</b> <a href="hook_8c_source.html#l00987">hook.c:987</a></div></div>
 <div class="ttc" id="acolour_8c_html_a0dbd5c8a06b69839b2a1428702b47705"><div class="ttname"><a href="colour_8c.html#a0dbd5c8a06b69839b2a1428702b47705">cFriend</a></div><div class="ttdeci">const glColour cFriend</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00093">colour.c:93</a></div></div>
 <div class="ttc" id="aescort_8c_html_a9ed3e348f4e3ce2cbee2227937e7f12a"><div class="ttname"><a href="escort_8c.html#a9ed3e348f4e3ce2cbee2227937e7f12a">escort_playerCommand</a></div><div class="ttdeci">int escort_playerCommand(Pilot *e)</div><div class="ttdoc">Open a dialog for the player to issue a command to an escort.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00279">escort.c:279</a></div></div>
-<div class="ttc" id="acomm_8c_html_a7f2cbd3562f0358134af5e58f3fcb887"><div class="ttname"><a href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">comm_getNumber</a></div><div class="ttdeci">static int comm_getNumber(double *val, char *str)</div><div class="ttdoc">Gets the amount the communicating pilot wants as a bribe.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00629">comm.c:629</a></div></div>
-<div class="ttc" id="acomm_8c_html_ad72034ae21d3c17655cee87e9aace76f"><div class="ttname"><a href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">comm_close</a></div><div class="ttdeci">static void comm_close(unsigned int wid, char *unused)</div><div class="ttdoc">Closes the comm window.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00385">comm.c:385</a></div></div>
+<div class="ttc" id="acomm_8c_html_a7f2cbd3562f0358134af5e58f3fcb887"><div class="ttname"><a href="comm_8c.html#a7f2cbd3562f0358134af5e58f3fcb887">comm_getNumber</a></div><div class="ttdeci">static int comm_getNumber(double *val, char *str)</div><div class="ttdoc">Gets the amount the communicating pilot wants as a bribe.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00630">comm.c:630</a></div></div>
+<div class="ttc" id="acomm_8c_html_ad72034ae21d3c17655cee87e9aace76f"><div class="ttname"><a href="comm_8c.html#ad72034ae21d3c17655cee87e9aace76f">comm_close</a></div><div class="ttdeci">static void comm_close(unsigned int wid, char *unused)</div><div class="ttdoc">Closes the comm window.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00386">comm.c:386</a></div></div>
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
-<div class="ttc" id="afaction_8c_html_a16315bc6d19608a6d043c8cb40bc6fe7"><div class="ttname"><a href="faction_8c.html#a16315bc6d19608a6d043c8cb40bc6fe7">faction_logoSmall</a></div><div class="ttdeci">glTexture * faction_logoSmall(int f)</div><div class="ttdoc">Gets the faction's small logo (64x64 or smaller).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00347">faction.c:347</a></div></div>
 <div class="ttc" id="agui_8c_html_ae62f951a861023b09fbb17b2cfddb0d2"><div class="ttname"><a href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a></div><div class="ttdeci">void player_message(const char *fmt,...)</div><div class="ttdoc">Adds a mesg to the queue to be displayed on screen.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00405">gui.c:405</a></div></div>
 <div class="ttc" id="acomm_8c_html_a7aede14a32d78fc4bb2e3729828dad3b"><div class="ttname"><a href="comm_8c.html#a7aede14a32d78fc4bb2e3729828dad3b">comm_addPilotSpecialButtons</a></div><div class="ttdeci">static void comm_addPilotSpecialButtons(unsigned int wid)</div><div class="ttdoc">Adds the pilot special buttons to a window.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00201">comm.c:201</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a7c2e82d39b2e4d067cde05ee5c971e74"><div class="ttname"><a href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a></div><div class="ttdeci">glTexture * gl_dupTexture(glTexture *texture)</div><div class="ttdoc">Duplicates a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00807">opengl_tex.c:807</a></div></div>
-<div class="ttc" id="acomm_8c_html_a1ecad595a7f2c85b75cb7b340f174093"><div class="ttname"><a href="comm_8c.html#a1ecad595a7f2c85b75cb7b340f174093">comm_bribePilot</a></div><div class="ttdeci">static void comm_bribePilot(unsigned int wid, char *unused)</div><div class="ttdoc">Tries to bribe the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00402">comm.c:402</a></div></div>
+<div class="ttc" id="acomm_8c_html_a1ecad595a7f2c85b75cb7b340f174093"><div class="ttname"><a href="comm_8c.html#a1ecad595a7f2c85b75cb7b340f174093">comm_bribePilot</a></div><div class="ttdeci">static void comm_bribePilot(unsigned int wid, char *unused)</div><div class="ttdoc">Tries to bribe the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00403">comm.c:403</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
