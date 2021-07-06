@@ -45,6 +45,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -55,8 +56,11 @@ $(function() {
 <p>Handles the Lua outfit bindings.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;nlua_outfit.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="array_8h_source.html">array.h</a>&quot;</code><br />
 <code>#include &quot;log.h&quot;</code><br />
+<code>#include &quot;damagetype.h&quot;</code><br />
 <code>#include &quot;nlua_pilot.h&quot;</code><br />
+<code>#include &quot;nlua_ship.h&quot;</code><br />
 <code>#include &quot;nlua_tex.h&quot;</code><br />
 <code>#include &quot;nluadef.h&quot;</code><br />
 <code>#include &quot;rng.h&quot;</code><br />
@@ -66,56 +70,68 @@ Include dependency graph for nlua_outfit.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="nlua__outfit_8c__incl.png" border="0" usemap="#_2home_2runner_2work_2naev_8github_8io_2naev_8github_8io_2staging_2src_2nlua__outfit_8c" alt=""/></div>
 <map name="_2home_2runner_2work_2naev_8github_8io_2naev_8github_8io_2staging_2src_2nlua__outfit_8c" id="_2home_2runner_2work_2naev_8github_8io_2naev_8github_8io_2staging_2src_2nlua__outfit_8c">
-<area shape="rect" title="Handles the Lua outfit bindings." alt="" coords="127,5,369,61"/>
-<area shape="rect" href="nlua__outfit_8h_source.html" title=" " alt="" coords="422,408,525,435"/>
-<area shape="rect" href="log_8h_source.html" title=" " alt="" coords="70,707,125,733"/>
-<area shape="rect" href="nlua__pilot_8h_source.html" title=" " alt="" coords="285,109,384,136"/>
-<area shape="rect" href="nlua__tex_8h_source.html" title=" " alt="" coords="152,557,243,584"/>
-<area shape="rect" href="nluadef_8h_source.html" title=" " alt="" coords="101,632,184,659"/>
-<area shape="rect" href="rng_8h_source.html" title=" " alt="" coords="409,109,463,136"/>
-<area shape="rect" href="slots_8h_source.html" title=" " alt="" coords="487,109,553,136"/>
-<area shape="rect" href="nlua_8h_source.html" title=" " alt="" coords="523,632,586,659"/>
-<area shape="rect" href="outfit_8h_source.html" title=" " alt="" coords="1014,483,1082,509"/>
-<area shape="rect" href="collision_8h_source.html" title=" " alt="" coords="1221,557,1309,584"/>
-<area shape="rect" href="opengl_8h_source.html" title=" " alt="" coords="785,707,863,733"/>
-<area shape="rect" href="commodity_8h_source.html" title=" " alt="" coords="771,557,877,584"/>
-<area shape="rect" href="shipstats_8h_source.html" title=" " alt="" coords="952,557,1045,584"/>
-<area shape="rect" href="sound_8h_source.html" title=" " alt="" coords="1334,557,1407,584"/>
-<area shape="rect" href="spfx_8h_source.html" title=" " alt="" coords="1502,557,1565,584"/>
-<area shape="rect" href="nxml_8h_source.html" title=" " alt="" coords="709,632,776,659"/>
-<area shape="rect" href="physics_8h_source.html" title=" " alt="" coords="1308,931,1391,957"/>
-<area shape="rect" href="nstring_8h_source.html" title=" " alt="" coords="53,781,131,808"/>
-<area shape="rect" href="attributes_8h_source.html" title=" " alt="" coords="121,856,218,883"/>
-<area shape="rect" href="ncompat_8h_source.html" title=" " alt="" coords="5,856,96,883"/>
-<area shape="rect" href="colour_8h_source.html" title=" " alt="" coords="445,931,518,957"/>
-<area shape="rect" href="opengl__matrix_8h_source.html" title=" " alt="" coords="608,781,736,808"/>
-<area shape="rect" href="opengl__render_8h_source.html" title=" " alt="" coords="1050,781,1177,808"/>
-<area shape="rect" href="opengl__tex_8h_source.html" title=" " alt="" coords="1091,856,1197,883"/>
-<area shape="rect" href="opengl__vbo_8h_source.html" title=" " alt="" coords="519,856,628,883"/>
-<area shape="rect" href="opengl__shader_8h_source.html" title=" " alt="" coords="760,781,888,808"/>
-<area shape="rect" title=" " alt="" coords="913,781,1026,808"/>
-<area shape="rect" href="ntime_8h_source.html" title=" " alt="" coords="1837,632,1909,659"/>
-<area shape="rect" href="pilot_8h_source.html" title=" " alt="" coords="1435,184,1498,211"/>
-<area shape="rect" href="pilot__flags_8h_source.html" title=" " alt="" coords="1161,259,1263,285"/>
-<area shape="rect" href="ai_8h_source.html" title=" " alt="" coords="1431,557,1478,584"/>
-<area shape="rect" href="faction_8h_source.html" title=" " alt="" coords="267,557,346,584"/>
-<area shape="rect" href="ship_8h_source.html" title=" " alt="" coords="1103,408,1164,435"/>
-<area shape="rect" href="space_8h_source.html" title=" " alt="" coords="743,259,815,285"/>
-<area shape="rect" href="pilot__cargo_8h_source.html" title=" " alt="" coords="1287,259,1393,285"/>
-<area shape="rect" href="pilot__heat_8h_source.html" title=" " alt="" coords="1417,259,1516,285"/>
-<area shape="rect" href="pilot__hook_8h_source.html" title=" " alt="" coords="1541,259,1643,285"/>
-<area shape="rect" href="pilot__outfit_8h_source.html" title=" " alt="" coords="1668,259,1772,285"/>
-<area shape="rect" href="pilot__weapon_8h_source.html" title=" " alt="" coords="1797,259,1918,285"/>
-<area shape="rect" href="pilot__ew_8h_source.html" title=" " alt="" coords="1943,259,2031,285"/>
-<area shape="rect" href="explosion_8h_source.html" title=" " alt="" coords="923,333,1021,360"/>
-<area shape="rect" href="mission_8h_source.html" title=" " alt="" coords="569,483,655,509"/>
-<area shape="rect" href="tech_8h_source.html" title=" " alt="" coords="785,333,847,360"/>
-<area shape="rect" href="claim_8h_source.html" title=" " alt="" coords="574,557,645,584"/>
+<area shape="rect" title="Handles the Lua outfit bindings." alt="" coords="575,5,817,61"/>
+<area shape="rect" href="nlua__outfit_8h_source.html" title=" " alt="" coords="455,408,558,435"/>
+<area shape="rect" href="log_8h_source.html" title=" " alt="" coords="169,707,223,733"/>
+<area shape="rect" href="array_8h.html" title="Provides macros to work with dynamic arrays." alt="" coords="88,184,155,211"/>
+<area shape="rect" href="damagetype_8h_source.html" title=" " alt="" coords="1731,184,1847,211"/>
+<area shape="rect" href="nlua__pilot_8h_source.html" title=" " alt="" coords="780,109,879,136"/>
+<area shape="rect" href="nlua__ship_8h_source.html" title=" " alt="" coords="1549,333,1645,360"/>
+<area shape="rect" href="nlua__tex_8h_source.html" title=" " alt="" coords="249,557,340,584"/>
+<area shape="rect" href="nluadef_8h_source.html" title=" " alt="" coords="5,632,88,659"/>
+<area shape="rect" href="rng_8h_source.html" title=" " alt="" coords="1782,109,1837,136"/>
+<area shape="rect" href="slots_8h_source.html" title=" " alt="" coords="1861,109,1926,136"/>
+<area shape="rect" href="nlua_8h_source.html" title=" " alt="" coords="665,632,727,659"/>
+<area shape="rect" href="outfit_8h_source.html" title=" " alt="" coords="1125,483,1193,509"/>
+<area shape="rect" href="collision_8h_source.html" title=" " alt="" coords="1268,557,1356,584"/>
+<area shape="rect" href="opengl_8h_source.html" title=" " alt="" coords="913,707,991,733"/>
+<area shape="rect" href="commodity_8h_source.html" title=" " alt="" coords="767,557,873,584"/>
+<area shape="rect" href="shipstats_8h_source.html" title=" " alt="" coords="1049,557,1143,584"/>
+<area shape="rect" href="sound_8h_source.html" title=" " alt="" coords="1381,557,1454,584"/>
+<area shape="rect" href="spfx_8h_source.html" title=" " alt="" coords="1655,557,1718,584"/>
+<area shape="rect" href="nxml_8h_source.html" title=" " alt="" coords="948,632,1015,659"/>
+<area shape="rect" href="physics_8h_source.html" title=" " alt="" coords="1480,931,1563,957"/>
+<area shape="rect" href="nstring_8h_source.html" title=" " alt="" coords="163,781,242,808"/>
+<area shape="rect" href="attributes_8h_source.html" title=" " alt="" coords="55,856,153,883"/>
+<area shape="rect" href="ncompat_8h_source.html" title=" " alt="" coords="177,856,268,883"/>
+<area shape="rect" href="colour_8h_source.html" title=" " alt="" coords="583,931,657,957"/>
+<area shape="rect" href="opengl__matrix_8h_source.html" title=" " alt="" coords="657,781,785,808"/>
+<area shape="rect" href="opengl__render_8h_source.html" title=" " alt="" coords="861,781,987,808"/>
+<area shape="rect" href="opengl__tex_8h_source.html" title=" " alt="" coords="820,856,927,883"/>
+<area shape="rect" href="opengl__vbo_8h_source.html" title=" " alt="" coords="1063,856,1172,883"/>
+<area shape="rect" href="opengl__shader_8h_source.html" title=" " alt="" coords="1137,781,1265,808"/>
+<area shape="rect" title=" " alt="" coords="1290,781,1403,808"/>
+<area shape="rect" href="ntime_8h_source.html" title=" " alt="" coords="1744,632,1816,659"/>
+<area shape="rect" href="pilot_8h_source.html" title=" " alt="" coords="999,184,1062,211"/>
+<area shape="rect" href="pilot__flags_8h_source.html" title=" " alt="" coords="1549,259,1651,285"/>
+<area shape="rect" href="ai_8h_source.html" title=" " alt="" coords="1585,557,1631,584"/>
+<area shape="rect" href="faction_8h_source.html" title=" " alt="" coords="365,557,443,584"/>
+<area shape="rect" href="ship_8h_source.html" title=" " alt="" coords="1363,408,1424,435"/>
+<area shape="rect" href="space_8h_source.html" title=" " alt="" coords="432,259,504,285"/>
+<area shape="rect" href="pilot__cargo_8h_source.html" title=" " alt="" coords="528,259,635,285"/>
+<area shape="rect" href="pilot__heat_8h_source.html" title=" " alt="" coords="659,259,757,285"/>
+<area shape="rect" href="pilot__hook_8h_source.html" title=" " alt="" coords="782,259,885,285"/>
+<area shape="rect" href="pilot__outfit_8h_source.html" title=" " alt="" coords="909,259,1013,285"/>
+<area shape="rect" href="pilot__weapon_8h_source.html" title=" " alt="" coords="1038,259,1159,285"/>
+<area shape="rect" href="pilot__ew_8h_source.html" title=" " alt="" coords="1184,259,1272,285"/>
+<area shape="rect" href="explosion_8h_source.html" title=" " alt="" coords="1110,333,1207,360"/>
+<area shape="rect" href="mission_8h_source.html" title=" " alt="" coords="540,483,625,509"/>
+<area shape="rect" href="tech_8h_source.html" title=" " alt="" coords="930,333,993,360"/>
+<area shape="rect" href="claim_8h_source.html" title=" " alt="" coords="671,557,742,584"/>
 </map>
 </div>
 </div>
 <p><a href="nlua__outfit_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a78272224fdd00a0a12feca2e2d3a5a15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>SETFIELD</b>(name,  value)</td></tr>
+<tr class="separator:a78272224fdd00a0a12feca2e2d3a5a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d40aefd5db80d14eddab1b2b5703c58"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>SETFIELDI</b>(name,  value)</td></tr>
+<tr class="separator:a6d40aefd5db80d14eddab1b2b5703c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac13dae92d3aba421260f1b75714fab7d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>SETFIELDB</b>(name,  value)</td></tr>
+<tr class="separator:ac13dae92d3aba421260f1b75714fab7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad3a545fdd5f5d6b18bc1b83cc50ecbd6"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">outfitL_eq</a> (lua_State *L)</td></tr>
@@ -124,6 +140,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a7a9deef587c0980f051e91f6bf0d2aa5"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">outfitL_get</a> (lua_State *L)</td></tr>
 <tr class="memdesc:a7a9deef587c0980f051e91f6bf0d2aa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a outfit.  <a href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">More...</a><br /></td></tr>
 <tr class="separator:a7a9deef587c0980f051e91f6bf0d2aa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ed844a576a577fb8b536f9e8edccf63"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">outfitL_getAll</a> (lua_State *L)</td></tr>
+<tr class="memdesc:a6ed844a576a577fb8b536f9e8edccf63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all the outfits.  <a href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">More...</a><br /></td></tr>
+<tr class="separator:a6ed844a576a577fb8b536f9e8edccf63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b89af3181dc31a21579bf50d6e37d96"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">outfitL_name</a> (lua_State *L)</td></tr>
 <tr class="memdesc:a8b89af3181dc31a21579bf50d6e37d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the translated name of the outfit.  <a href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">More...</a><br /></td></tr>
 <tr class="separator:a8b89af3181dc31a21579bf50d6e37d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,8 +183,11 @@ Functions</h2></td></tr>
 <tr class="memdesc:a5cd2fc085b3cf68409f3dcbd45be9a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a shipstat from an Outfit by name, or a table containing all the ship stats if not specified.  <a href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">More...</a><br /></td></tr>
 <tr class="separator:a5cd2fc085b3cf68409f3dcbd45be9a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93389959c0a86fc08e9758d9cdf4b3a1"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">outfitL_weapStats</a> (lua_State *L)</td></tr>
-<tr class="memdesc:a93389959c0a86fc08e9758d9cdf4b3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the DPS and EPS for weapons.  <a href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">More...</a><br /></td></tr>
+<tr class="memdesc:a93389959c0a86fc08e9758d9cdf4b3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes statistics for weapons.  <a href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">More...</a><br /></td></tr>
 <tr class="separator:a93389959c0a86fc08e9758d9cdf4b3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a225b36736ce94784d658f0beff2c4bab"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">outfitL_specificStats</a> (lua_State *L)</td></tr>
+<tr class="memdesc:a225b36736ce94784d658f0beff2c4bab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns raw data specific to each outfit type.  <a href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">More...</a><br /></td></tr>
+<tr class="separator:a225b36736ce94784d658f0beff2c4bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1dc242e42b2ca866396e7b169f787f73"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__outfit_8c.html#a1dc242e42b2ca866396e7b169f787f73">nlua_loadOutfit</a> (nlua_env env)</td></tr>
 <tr class="memdesc:a1dc242e42b2ca866396e7b169f787f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the outfit library.  <a href="nlua__outfit_8c.html#a1dc242e42b2ca866396e7b169f787f73">More...</a><br /></td></tr>
 <tr class="separator:a1dc242e42b2ca866396e7b169f787f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,7 +216,104 @@ Variables</h2></td></tr>
 <div class="textblock"><p>Handles the Lua outfit bindings. </p>
 
 <p class="definition">Definition in file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a78272224fdd00a0a12feca2e2d3a5a15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78272224fdd00a0a12feca2e2d3a5a15">&#9670;&nbsp;</a></span>SETFIELD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SETFIELD</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">value&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">   lua_pushnumber( L, value ); \</div>
+<div class="line">   lua_setfield( L, -2, name )</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00643">643</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+
+</div>
+</div>
+<a id="ac13dae92d3aba421260f1b75714fab7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac13dae92d3aba421260f1b75714fab7d">&#9670;&nbsp;</a></span>SETFIELDB</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SETFIELDB</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">value&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">   lua_pushboolean( L, value ); \</div>
+<div class="line">   lua_setfield( L, -2, name )</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00649">649</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+
+</div>
+</div>
+<a id="a6d40aefd5db80d14eddab1b2b5703c58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d40aefd5db80d14eddab1b2b5703c58">&#9670;&nbsp;</a></span>SETFIELDI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SETFIELDI</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">value&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">   lua_pushinteger( L, value ); \</div>
+<div class="line">   lua_setfield( L, -2, name )</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00646">646</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="af5c0034ebc214a08db293445b69471ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af5c0034ebc214a08db293445b69471ad">&#9670;&nbsp;</a></span>lua_isoutfit()</h2>
 
@@ -231,7 +350,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if ind is a outfit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00167">167</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00174">174</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -271,7 +390,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Newly pushed outfit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00151">151</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00158">158</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -317,7 +436,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit found at the index in the state. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00101">101</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00108">108</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -357,7 +476,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit found at the index in the state. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00112">112</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00119">119</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -397,7 +516,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The outfit (doesn't return if fails - raises Lua error ). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00126">126</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00133">133</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -426,7 +545,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00073">73</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00080">80</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -466,7 +585,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> cpu </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00337">337</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00361">361</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -506,7 +625,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> description </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00448">448</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00472">472</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -546,7 +665,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> __eq </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00194">194</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00201">201</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -586,7 +705,46 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> get </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00219">219</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00224">224</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+
+</div>
+</div>
+<a id="a6ed844a576a577fb8b536f9e8edccf63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ed844a576a577fb8b536f9e8edccf63">&#9670;&nbsp;</a></span>outfitL_getAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int outfitL_getAll </td>
+          <td>(</td>
+          <td class="paramtype">lua_State *&#160;</td>
+          <td class="paramname"><em>L</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all the outfits. </p>
+<p><em>Lua return parameter:</em> Table Table containing all the outfits. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">L</td><td>Lua State </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of variables on the Lua State stack.<br  />
+ </dd></dl>
+<p><em>Lua function:</em> get </p>
+
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00251">251</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -625,7 +783,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> shipstat </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00482">482</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00506">506</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -665,7 +823,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> icon </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00414">414</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00438">438</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -704,7 +862,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> limit </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00394">394</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00418">418</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -744,7 +902,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> mass </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00354">354</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00378">378</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -786,7 +944,7 @@ Variables</h2></td></tr>
 <p><em>Lua function:</em> name </p>
 <p>Return the outfit name.</p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00253">253</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00277">277</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -828,7 +986,7 @@ Variables</h2></td></tr>
 <p><em>Lua function:</em> nameRaw </p>
 <p>Return the outfit name.</p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00279">279</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00303">303</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -868,7 +1026,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> price </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00431">431</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00455">455</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -908,7 +1066,46 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> slot </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00375">375</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00399">399</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+
+</div>
+</div>
+<a id="a225b36736ce94784d658f0beff2c4bab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a225b36736ce94784d658f0beff2c4bab">&#9670;&nbsp;</a></span>outfitL_specificStats()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int outfitL_specificStats </td>
+          <td>(</td>
+          <td class="paramtype">lua_State *&#160;</td>
+          <td class="paramname"><em>L</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns raw data specific to each outfit type. </p>
+<p><em>Lua return parameter:</em> A table containing the raw values. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">L</td><td>Lua State </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of variables on the Lua State stack.<br  />
+ </dd></dl>
+<p><em>Lua function:</em> specificstats </p>
+
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00658">658</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -948,7 +1145,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> type </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00301">301</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00325">325</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -989,7 +1186,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> typeBroad </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00320">320</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00344">344</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1029,7 +1226,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> unique </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00465">465</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00489">489</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1057,8 +1254,8 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Computes the DPS and EPS for weapons. </p>
-<p><em>Lua function parameter:</em> Outfit o Outfit to compute for. <em>Lua function parameter:</em>[opt=nil] Pilot p Pilot to use ship stats when computing. <em>Lua return parameter:</em> number DPS of the outfit. <em>Lua return parameter:</em> number EPS of the outfit. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Computes statistics for weapons. </p>
+<p><em>Lua function parameter:</em> Outfit o Outfit to compute for. <em>Lua function parameter:</em>[opt=nil] Pilot p Pilot to use ship stats when computing. <em>Lua return parameter:</em> number Damage per secondof the outfit. <em>Lua return parameter:</em> number Disable per second of the outfit. <em>Lua return parameter:</em> number Energy per second of the outfit. <em>Lua return parameter:</em> number Range of the outfit. <em>Lua return parameter:</em> number trackmin Minimum tracking value of the outfit. <em>Lua return parameter:</em> number trackmax Maximum tracking value of the outfit. <em>Lua return parameter:</em> number lockon Time to lockon. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">L</td><td>Lua State </td></tr>
   </table>
@@ -1068,7 +1265,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> weapstats </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00504">504</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00533">533</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1096,6 +1293,7 @@ Variables</h2></td></tr>
 <div class="line">   { <span class="stringliteral">&quot;__tostring&quot;</span>, <a class="code" href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">outfitL_name</a> },</div>
 <div class="line">   { <span class="stringliteral">&quot;__eq&quot;</span>, <a class="code" href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">outfitL_eq</a> },</div>
 <div class="line">   { <span class="stringliteral">&quot;get&quot;</span>, <a class="code" href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">outfitL_get</a> },</div>
+<div class="line">   { <span class="stringliteral">&quot;getAll&quot;</span>, <a class="code" href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">outfitL_getAll</a> },</div>
 <div class="line">   { <span class="stringliteral">&quot;name&quot;</span>, <a class="code" href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">outfitL_name</a> },</div>
 <div class="line">   { <span class="stringliteral">&quot;nameRaw&quot;</span>, <a class="code" href="nlua__outfit_8c.html#a701119280a4609a5edb10e69eec29aa6">outfitL_nameRaw</a> },</div>
 <div class="line">   { <span class="stringliteral">&quot;type&quot;</span>, <a class="code" href="nlua__outfit_8c.html#a4092bfea31b8277dd8286cff4da710fa">outfitL_type</a> },</div>
@@ -1110,32 +1308,35 @@ Variables</h2></td></tr>
 <div class="line">   { <span class="stringliteral">&quot;unique&quot;</span>, <a class="code" href="nlua__outfit_8c.html#af759c64122002de410e50cbf65e57b25">outfitL_unique</a> },</div>
 <div class="line">   { <span class="stringliteral">&quot;shipstat&quot;</span>, <a class="code" href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">outfitL_getShipStat</a> },</div>
 <div class="line">   { <span class="stringliteral">&quot;weapstats&quot;</span>, <a class="code" href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">outfitL_weapStats</a> },</div>
+<div class="line">   { <span class="stringliteral">&quot;specificstats&quot;</span>, <a class="code" href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">outfitL_specificStats</a> },</div>
 <div class="line">   {0,0}</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Outfit metatable methods. </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00044">44</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__outfit_8c_source.html#l00049">49</a> of file <a class="el" href="nlua__outfit_8c_source.html">nlua_outfit.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="anlua__outfit_8c_html_a93389959c0a86fc08e9758d9cdf4b3a1"><div class="ttname"><a href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">outfitL_weapStats</a></div><div class="ttdeci">static int outfitL_weapStats(lua_State *L)</div><div class="ttdoc">Computes the DPS and EPS for weapons.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00504">nlua_outfit.c:504</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a589d66c9bee72973de87ccca469ce3f9"><div class="ttname"><a href="nlua__outfit_8c.html#a589d66c9bee72973de87ccca469ce3f9">outfitL_icon</a></div><div class="ttdeci">static int outfitL_icon(lua_State *L)</div><div class="ttdoc">Gets the store icon for an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00414">nlua_outfit.c:414</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a4092bfea31b8277dd8286cff4da710fa"><div class="ttname"><a href="nlua__outfit_8c.html#a4092bfea31b8277dd8286cff4da710fa">outfitL_type</a></div><div class="ttdeci">static int outfitL_type(lua_State *L)</div><div class="ttdoc">Gets the type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00301">nlua_outfit.c:301</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a96d203c634f2504b948fffac6f62e6b1"><div class="ttname"><a href="nlua__outfit_8c.html#a96d203c634f2504b948fffac6f62e6b1">outfitL_price</a></div><div class="ttdeci">static int outfitL_price(lua_State *L)</div><div class="ttdoc">Gets the price of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00431">nlua_outfit.c:431</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a93389959c0a86fc08e9758d9cdf4b3a1"><div class="ttname"><a href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">outfitL_weapStats</a></div><div class="ttdeci">static int outfitL_weapStats(lua_State *L)</div><div class="ttdoc">Computes statistics for weapons.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00533">nlua_outfit.c:533</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a589d66c9bee72973de87ccca469ce3f9"><div class="ttname"><a href="nlua__outfit_8c.html#a589d66c9bee72973de87ccca469ce3f9">outfitL_icon</a></div><div class="ttdeci">static int outfitL_icon(lua_State *L)</div><div class="ttdoc">Gets the store icon for an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00438">nlua_outfit.c:438</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a4092bfea31b8277dd8286cff4da710fa"><div class="ttname"><a href="nlua__outfit_8c.html#a4092bfea31b8277dd8286cff4da710fa">outfitL_type</a></div><div class="ttdeci">static int outfitL_type(lua_State *L)</div><div class="ttdoc">Gets the type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00325">nlua_outfit.c:325</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a96d203c634f2504b948fffac6f62e6b1"><div class="ttname"><a href="nlua__outfit_8c.html#a96d203c634f2504b948fffac6f62e6b1">outfitL_price</a></div><div class="ttdeci">static int outfitL_price(lua_State *L)</div><div class="ttdoc">Gets the price of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00455">nlua_outfit.c:455</a></div></div>
 <div class="ttc" id="astructWeapon___html_a09f28374c8f9088e299dc968dc7f8dad"><div class="ttname"><a href="structWeapon__.html#a09f28374c8f9088e299dc968dc7f8dad">Weapon_::outfit</a></div><div class="ttdeci">const Outfit * outfit</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l00059">weapon.c:59</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a701119280a4609a5edb10e69eec29aa6"><div class="ttname"><a href="nlua__outfit_8c.html#a701119280a4609a5edb10e69eec29aa6">outfitL_nameRaw</a></div><div class="ttdeci">static int outfitL_nameRaw(lua_State *L)</div><div class="ttdoc">Gets the raw (untranslated) name of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00279">nlua_outfit.c:279</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_af759c64122002de410e50cbf65e57b25"><div class="ttname"><a href="nlua__outfit_8c.html#af759c64122002de410e50cbf65e57b25">outfitL_unique</a></div><div class="ttdeci">static int outfitL_unique(lua_State *L)</div><div class="ttdoc">Gets whether or not an outfit is unique.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00465">nlua_outfit.c:465</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a7daede25dd40a48a186eed841cd44381"><div class="ttname"><a href="nlua__outfit_8c.html#a7daede25dd40a48a186eed841cd44381">outfitL_description</a></div><div class="ttdeci">static int outfitL_description(lua_State *L)</div><div class="ttdoc">Gets the description of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00448">nlua_outfit.c:448</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a21a97de8cf3be650c1f4185725b9656b"><div class="ttname"><a href="nlua__outfit_8c.html#a21a97de8cf3be650c1f4185725b9656b">outfitL_typeBroad</a></div><div class="ttdeci">static int outfitL_typeBroad(lua_State *L)</div><div class="ttdoc">Gets the broad type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00320">nlua_outfit.c:320</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a0199ebad69f5fd9a67b98d0e28405719"><div class="ttname"><a href="nlua__outfit_8c.html#a0199ebad69f5fd9a67b98d0e28405719">outfitL_limit</a></div><div class="ttdeci">static int outfitL_limit(lua_State *L)</div><div class="ttdoc">Gets the limit string of the outfit. Only one outfit can be equipped at the same time for each limit ...</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00394">nlua_outfit.c:394</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a1b9ab32868975dfdf2c777bc9211f9c6"><div class="ttname"><a href="nlua__outfit_8c.html#a1b9ab32868975dfdf2c777bc9211f9c6">outfitL_slot</a></div><div class="ttdeci">static int outfitL_slot(lua_State *L)</div><div class="ttdoc">Gets the slot name, size and property of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00375">nlua_outfit.c:375</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a5cd2fc085b3cf68409f3dcbd45be9a41"><div class="ttname"><a href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">outfitL_getShipStat</a></div><div class="ttdeci">static int outfitL_getShipStat(lua_State *L)</div><div class="ttdoc">Gets a shipstat from an Outfit by name, or a table containing all the ship stats if not specified.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00482">nlua_outfit.c:482</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a7a9deef587c0980f051e91f6bf0d2aa5"><div class="ttname"><a href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">outfitL_get</a></div><div class="ttdeci">static int outfitL_get(lua_State *L)</div><div class="ttdoc">Gets a outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00219">nlua_outfit.c:219</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a112c2467be101da69182fdda786144b9"><div class="ttname"><a href="nlua__outfit_8c.html#a112c2467be101da69182fdda786144b9">outfitL_cpu</a></div><div class="ttdeci">static int outfitL_cpu(lua_State *L)</div><div class="ttdoc">Gets the cpu usage of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00337">nlua_outfit.c:337</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a01b02976d92d2f791fbc57551dd64b44"><div class="ttname"><a href="nlua__outfit_8c.html#a01b02976d92d2f791fbc57551dd64b44">outfitL_mass</a></div><div class="ttdeci">static int outfitL_mass(lua_State *L)</div><div class="ttdoc">Gets the mass of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00354">nlua_outfit.c:354</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a8b89af3181dc31a21579bf50d6e37d96"><div class="ttname"><a href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">outfitL_name</a></div><div class="ttdeci">static int outfitL_name(lua_State *L)</div><div class="ttdoc">Gets the translated name of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00253">nlua_outfit.c:253</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_ad3a545fdd5f5d6b18bc1b83cc50ecbd6"><div class="ttname"><a href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">outfitL_eq</a></div><div class="ttdeci">static int outfitL_eq(lua_State *L)</div><div class="ttdoc">Checks to see if two outfits are the same.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00194">nlua_outfit.c:194</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a701119280a4609a5edb10e69eec29aa6"><div class="ttname"><a href="nlua__outfit_8c.html#a701119280a4609a5edb10e69eec29aa6">outfitL_nameRaw</a></div><div class="ttdeci">static int outfitL_nameRaw(lua_State *L)</div><div class="ttdoc">Gets the raw (untranslated) name of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00303">nlua_outfit.c:303</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_af759c64122002de410e50cbf65e57b25"><div class="ttname"><a href="nlua__outfit_8c.html#af759c64122002de410e50cbf65e57b25">outfitL_unique</a></div><div class="ttdeci">static int outfitL_unique(lua_State *L)</div><div class="ttdoc">Gets whether or not an outfit is unique.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00489">nlua_outfit.c:489</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a7daede25dd40a48a186eed841cd44381"><div class="ttname"><a href="nlua__outfit_8c.html#a7daede25dd40a48a186eed841cd44381">outfitL_description</a></div><div class="ttdeci">static int outfitL_description(lua_State *L)</div><div class="ttdoc">Gets the description of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00472">nlua_outfit.c:472</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a21a97de8cf3be650c1f4185725b9656b"><div class="ttname"><a href="nlua__outfit_8c.html#a21a97de8cf3be650c1f4185725b9656b">outfitL_typeBroad</a></div><div class="ttdeci">static int outfitL_typeBroad(lua_State *L)</div><div class="ttdoc">Gets the broad type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00344">nlua_outfit.c:344</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a225b36736ce94784d658f0beff2c4bab"><div class="ttname"><a href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">outfitL_specificStats</a></div><div class="ttdeci">static int outfitL_specificStats(lua_State *L)</div><div class="ttdoc">Returns raw data specific to each outfit type.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00658">nlua_outfit.c:658</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a0199ebad69f5fd9a67b98d0e28405719"><div class="ttname"><a href="nlua__outfit_8c.html#a0199ebad69f5fd9a67b98d0e28405719">outfitL_limit</a></div><div class="ttdeci">static int outfitL_limit(lua_State *L)</div><div class="ttdoc">Gets the limit string of the outfit. Only one outfit can be equipped at the same time for each limit ...</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00418">nlua_outfit.c:418</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a6ed844a576a577fb8b536f9e8edccf63"><div class="ttname"><a href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">outfitL_getAll</a></div><div class="ttdeci">static int outfitL_getAll(lua_State *L)</div><div class="ttdoc">Gets all the outfits.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00251">nlua_outfit.c:251</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a1b9ab32868975dfdf2c777bc9211f9c6"><div class="ttname"><a href="nlua__outfit_8c.html#a1b9ab32868975dfdf2c777bc9211f9c6">outfitL_slot</a></div><div class="ttdeci">static int outfitL_slot(lua_State *L)</div><div class="ttdoc">Gets the slot name, size and property of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00399">nlua_outfit.c:399</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a5cd2fc085b3cf68409f3dcbd45be9a41"><div class="ttname"><a href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">outfitL_getShipStat</a></div><div class="ttdeci">static int outfitL_getShipStat(lua_State *L)</div><div class="ttdoc">Gets a shipstat from an Outfit by name, or a table containing all the ship stats if not specified.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00506">nlua_outfit.c:506</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a7a9deef587c0980f051e91f6bf0d2aa5"><div class="ttname"><a href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">outfitL_get</a></div><div class="ttdeci">static int outfitL_get(lua_State *L)</div><div class="ttdoc">Gets a outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00224">nlua_outfit.c:224</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a112c2467be101da69182fdda786144b9"><div class="ttname"><a href="nlua__outfit_8c.html#a112c2467be101da69182fdda786144b9">outfitL_cpu</a></div><div class="ttdeci">static int outfitL_cpu(lua_State *L)</div><div class="ttdoc">Gets the cpu usage of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00361">nlua_outfit.c:361</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a01b02976d92d2f791fbc57551dd64b44"><div class="ttname"><a href="nlua__outfit_8c.html#a01b02976d92d2f791fbc57551dd64b44">outfitL_mass</a></div><div class="ttdeci">static int outfitL_mass(lua_State *L)</div><div class="ttdoc">Gets the mass of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00378">nlua_outfit.c:378</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a8b89af3181dc31a21579bf50d6e37d96"><div class="ttname"><a href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">outfitL_name</a></div><div class="ttdeci">static int outfitL_name(lua_State *L)</div><div class="ttdoc">Gets the translated name of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00277">nlua_outfit.c:277</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_ad3a545fdd5f5d6b18bc1b83cc50ecbd6"><div class="ttname"><a href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">outfitL_eq</a></div><div class="ttdeci">static int outfitL_eq(lua_State *L)</div><div class="ttdoc">Checks to see if two outfits are the same.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00201">nlua_outfit.c:201</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
