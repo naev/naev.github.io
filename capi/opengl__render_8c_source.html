@@ -482,265 +482,285 @@ $(function() {
 <div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;         tx, ty, texture-&gt;srw, texture-&gt;srh, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, 0. );</div>
 <div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;}</div>
 <div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160; </div>
-<div class="line"><a name="l00655"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a82c845d10d9a06bf95bdeb6546ea40d4">  655</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a82c845d10d9a06bf95bdeb6546ea40d4">gl_blitStatic</a>( <span class="keyword">const</span> glTexture* texture,</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> bx, <span class="keyword">const</span> <span class="keywordtype">double</span> by, <span class="keyword">const</span> glColour* <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> )</div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;{</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;   <span class="keywordtype">double</span> x,y;</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160; </div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;   <span class="comment">/* here we use absolute coords */</span></div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   x = bx;</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   y = by;</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160; </div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   <span class="comment">/* actual blitting */</span></div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   <a class="code" href="opengl__render_8c.html#af786c6ea29902c4086d82ab1d6f3edf2">gl_blitTexture</a>( texture, x, y, texture-&gt;sw, texture-&gt;sh,</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;         0., 0., texture-&gt;srw, texture-&gt;srh, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, 0. );</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;}</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160; </div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160; </div>
-<div class="line"><a name="l00679"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#ae452ed0fa0e8b19ed0ee3da05946892b">  679</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#ae452ed0fa0e8b19ed0ee3da05946892b">gl_drawCircle</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> cx, <span class="keyword">const</span> <span class="keywordtype">double</span> cy,</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> r, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">int</span> filled )</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;{</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;   gl_Matrix4 projection;</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160; </div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;   <span class="comment">/* Set the vertex. */</span></div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;   projection = gl_view_matrix;</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;   projection = gl_Matrix4_Translate(projection, cx, cy, 0);</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;   projection = gl_Matrix4_Scale(projection, r, r, 1);</div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160; </div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;   <span class="comment">/* Draw! */</span></div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;   <a class="code" href="opengl__render_8c.html#a1d38ccdb1b924e53ca9c681a981d02a5">gl_drawCircleH</a>( &amp;projection, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, filled );</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;}</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160; </div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160; </div>
-<div class="line"><a name="l00701"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a1d38ccdb1b924e53ca9c681a981d02a5">  701</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a1d38ccdb1b924e53ca9c681a981d02a5">gl_drawCircleH</a>( <span class="keyword">const</span> gl_Matrix4 *H, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">int</span> filled )</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;{</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;   <span class="comment">// TODO handle shearing and different x/y scaling</span></div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;   GLfloat r = H-&gt;m[0][0] / gl_view_matrix.m[0][0];</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;   <span class="keywordflow">if</span> (filled) {</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;      glUseProgram( shaders.circle_filled.program );</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160; </div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;      glEnableVertexAttribArray( shaders.circle_filled.vertex );</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;      <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_circleVBO, shaders.circle_filled.vertex,</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            0, 2, GL_FLOAT, 0 );</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;      <span class="comment">/* Set shader uniforms. */</span></div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;      gl_uniformColor( shaders.circle_filled.color, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> );</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;      gl_Matrix4_Uniform( shaders.circle_filled.projection, *H );</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;      glUniform1f( shaders.circle_filled.radius, r );</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160; </div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;      <span class="comment">/* Draw. */</span></div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160; </div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;      <span class="comment">/* Clear state. */</span></div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;      glDisableVertexAttribArray( shaders.circle_filled.vertex );</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   }</div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;      glUseProgram( shaders.circle.program );</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160; </div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;      glEnableVertexAttribArray( shaders.circle.vertex );</div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;      <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_circleVBO, shaders.circle.vertex,</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;            0, 2, GL_FLOAT, 0 );</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160; </div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;      <span class="comment">/* Set shader uniforms. */</span></div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;      gl_uniformColor( shaders.circle.color, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> );</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;      gl_Matrix4_Uniform( shaders.circle.projection, *H );</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;      glUniform1f( shaders.circle.radius, r );</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160; </div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;      <span class="comment">/* Draw. */</span></div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160; </div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;      <span class="comment">/* Clear state. */</span></div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;      glDisableVertexAttribArray( shaders.circle.vertex );</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   }</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;   glUseProgram(0);</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160; </div>
+<div class="line"><a name="l00659"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#af5451785c10029308644ef86dfaf8634">  659</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#af5451785c10029308644ef86dfaf8634">gl_blitScaleAspect</a>( <span class="keyword">const</span> glTexture* texture,</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;   <span class="keywordtype">double</span> bx, <span class="keywordtype">double</span> by, <span class="keywordtype">double</span> bw, <span class="keywordtype">double</span> bh,</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> )</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;{</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   <span class="keywordtype">double</span> scale;</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   <span class="keywordtype">double</span> nw, nh;</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160; </div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   scale = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( bw / texture-&gt;w, bh / texture-&gt;h );</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160; </div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   nw = scale * texture-&gt;w;</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;   nh = scale * texture-&gt;h;</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160; </div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;   bx += (bw-nw)/2.;</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;   by += (bh-nh)/2.;</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160; </div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;   <a class="code" href="opengl__render_8c.html#acc3ca6037519f6509cb3db3874ffa456">gl_blitScale</a>( texture, bx, by, nw, nh, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> );</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;}</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160; </div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160; </div>
+<div class="line"><a name="l00686"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a82c845d10d9a06bf95bdeb6546ea40d4">  686</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a82c845d10d9a06bf95bdeb6546ea40d4">gl_blitStatic</a>( <span class="keyword">const</span> glTexture* texture,</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> bx, <span class="keyword">const</span> <span class="keywordtype">double</span> by, <span class="keyword">const</span> glColour* <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> )</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;{</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;   <span class="keywordtype">double</span> x,y;</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160; </div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;   <span class="comment">/* here we use absolute coords */</span></div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;   x = bx;</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;   y = by;</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160; </div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;   <span class="comment">/* actual blitting */</span></div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   <a class="code" href="opengl__render_8c.html#af786c6ea29902c4086d82ab1d6f3edf2">gl_blitTexture</a>( texture, x, y, texture-&gt;sw, texture-&gt;sh,</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;         0., 0., texture-&gt;srw, texture-&gt;srh, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, 0. );</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;}</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160; </div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160; </div>
+<div class="line"><a name="l00710"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#ae452ed0fa0e8b19ed0ee3da05946892b">  710</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#ae452ed0fa0e8b19ed0ee3da05946892b">gl_drawCircle</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> cx, <span class="keyword">const</span> <span class="keywordtype">double</span> cy,</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> r, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">int</span> filled )</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;{</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   gl_Matrix4 projection;</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160; </div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;   <span class="comment">/* Set the vertex. */</span></div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;   projection = gl_view_matrix;</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;   projection = gl_Matrix4_Translate(projection, cx, cy, 0);</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;   projection = gl_Matrix4_Scale(projection, r, r, 1);</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160; </div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   <span class="comment">/* Draw! */</span></div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;   <a class="code" href="opengl__render_8c.html#a1d38ccdb1b924e53ca9c681a981d02a5">gl_drawCircleH</a>( &amp;projection, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, filled );</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;}</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160; </div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160; </div>
+<div class="line"><a name="l00732"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a1d38ccdb1b924e53ca9c681a981d02a5">  732</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a1d38ccdb1b924e53ca9c681a981d02a5">gl_drawCircleH</a>( <span class="keyword">const</span> gl_Matrix4 *H, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">int</span> filled )</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;{</div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;   <span class="comment">// TODO handle shearing and different x/y scaling</span></div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;   GLfloat r = H-&gt;m[0][0] / gl_view_matrix.m[0][0];</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160; </div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;   <span class="keywordflow">if</span> (filled) {</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;      glUseProgram( shaders.circle_filled.program );</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160; </div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;      glEnableVertexAttribArray( shaders.circle_filled.vertex );</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;      <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_circleVBO, shaders.circle_filled.vertex,</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;            0, 2, GL_FLOAT, 0 );</div>
 <div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160; </div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   <span class="comment">/* Check errors. */</span></div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   gl_checkErr();</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;}</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160; </div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;      <span class="comment">/* Set shader uniforms. */</span></div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;      gl_uniformColor( shaders.circle_filled.color, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> );</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;      gl_Matrix4_Uniform( shaders.circle_filled.projection, *H );</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;      glUniform1f( shaders.circle_filled.radius, r );</div>
 <div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160; </div>
-<div class="line"><a name="l00759"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a3135a12a0be9172d643cf03ce0a7e1fd">  759</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a3135a12a0be9172d643cf03ce0a7e1fd">gl_drawCirclePartial</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> cx, <span class="keyword">const</span> <span class="keywordtype">double</span> cy,</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> r, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">double</span> angle, <span class="keywordtype">double</span> arc )</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;{</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;   gl_Matrix4 projection;</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160; </div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;   <span class="comment">/* Set the vertex. */</span></div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;   projection = gl_view_matrix;</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;   projection = gl_Matrix4_Translate(projection, cx, cy, 0);</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;   projection = gl_Matrix4_Scale(projection, r, r, 1);</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;   <span class="comment">/* Draw! */</span></div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;   <a class="code" href="opengl__render_8c.html#abd03ef1a170bc64cee4aa30c6f08a617">gl_drawCirclePartialH</a>( &amp;projection, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, angle, arc );</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;}</div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160; </div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160; </div>
-<div class="line"><a name="l00782"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#abd03ef1a170bc64cee4aa30c6f08a617">  782</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#abd03ef1a170bc64cee4aa30c6f08a617">gl_drawCirclePartialH</a>( <span class="keyword">const</span> gl_Matrix4 *H, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">double</span> angle, <span class="keywordtype">double</span> arc )</div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;{</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;   <span class="comment">// TODO handle shearing and different x/y scaling</span></div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;   GLfloat r = H-&gt;m[0][0] / gl_view_matrix.m[0][0];</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160; </div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;   <span class="comment">/* Draw. */</span></div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;   glUseProgram( shaders.circle_partial.program );</div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160; </div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;   glEnableVertexAttribArray( shaders.circle_partial.vertex );</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;   <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_circleVBO, shaders.circle_partial.vertex,</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;         0, 2, GL_FLOAT, 0 );</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160; </div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;   <span class="comment">/* Set shader uniforms. */</span></div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;   gl_uniformColor( shaders.circle_partial.color, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> );</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   gl_Matrix4_Uniform( shaders.circle_partial.projection, *H );</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;   glUniform1f( shaders.circle_partial.radius, r );</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   glUniform1f( shaders.circle_partial.angle1, angle );</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;   glUniform1f( shaders.circle_partial.angle2, arc );</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160; </div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;   <span class="comment">/* Draw. */</span></div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;      <span class="comment">/* Draw. */</span></div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160; </div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;      <span class="comment">/* Clear state. */</span></div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;      glDisableVertexAttribArray( shaders.circle_filled.vertex );</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;   }</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;      glUseProgram( shaders.circle.program );</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160; </div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;      glEnableVertexAttribArray( shaders.circle.vertex );</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;      <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_circleVBO, shaders.circle.vertex,</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;            0, 2, GL_FLOAT, 0 );</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160; </div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;      <span class="comment">/* Set shader uniforms. */</span></div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;      gl_uniformColor( shaders.circle.color, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> );</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;      gl_Matrix4_Uniform( shaders.circle.projection, *H );</div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;      glUniform1f( shaders.circle.radius, r );</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160; </div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;      <span class="comment">/* Draw. */</span></div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160; </div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;      <span class="comment">/* Clear state. */</span></div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;      glDisableVertexAttribArray( shaders.circle.vertex );</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;   }</div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;   glUseProgram(0);</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160; </div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;   <span class="comment">/* Check errors. */</span></div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   gl_checkErr();</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;}</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160; </div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160; </div>
+<div class="line"><a name="l00790"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a3135a12a0be9172d643cf03ce0a7e1fd">  790</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a3135a12a0be9172d643cf03ce0a7e1fd">gl_drawCirclePartial</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> cx, <span class="keyword">const</span> <span class="keywordtype">double</span> cy,</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> r, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">double</span> angle, <span class="keywordtype">double</span> arc )</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;{</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;   gl_Matrix4 projection;</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160; </div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;   <span class="comment">/* Set the vertex. */</span></div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   projection = gl_view_matrix;</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;   projection = gl_Matrix4_Translate(projection, cx, cy, 0);</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   projection = gl_Matrix4_Scale(projection, r, r, 1);</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160; </div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;   <span class="comment">/* Draw! */</span></div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;   <a class="code" href="opengl__render_8c.html#abd03ef1a170bc64cee4aa30c6f08a617">gl_drawCirclePartialH</a>( &amp;projection, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, angle, arc );</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;}</div>
 <div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160; </div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;   <span class="comment">/* Clear state. */</span></div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;   glDisableVertexAttribArray( shaders.circle_partial.vertex );</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160; </div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;   glUseProgram(0);</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;   gl_checkErr();</div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;}</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160; </div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160; </div>
-<div class="line"><a name="l00821"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a32b943a1cec97a41249ad2fb894b56f4">  821</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a32b943a1cec97a41249ad2fb894b56f4">gl_drawLine</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> x1, <span class="keyword">const</span> <span class="keywordtype">double</span> y1,</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> x2, <span class="keyword">const</span> <span class="keywordtype">double</span> y2, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> )</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;{</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   gl_Matrix4 projection;</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>, s;</div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160; </div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   a = atan2( y2-y1, x2-x1 );</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;   s = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) );</div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160; </div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   projection = gl_view_matrix;</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160; </div>
+<div class="line"><a name="l00813"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#abd03ef1a170bc64cee4aa30c6f08a617">  813</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#abd03ef1a170bc64cee4aa30c6f08a617">gl_drawCirclePartialH</a>( <span class="keyword">const</span> gl_Matrix4 *H, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">double</span> angle, <span class="keywordtype">double</span> arc )</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;{</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;   <span class="comment">// TODO handle shearing and different x/y scaling</span></div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;   GLfloat r = H-&gt;m[0][0] / gl_view_matrix.m[0][0];</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160; </div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;   <span class="comment">/* Draw. */</span></div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   glUseProgram( shaders.circle_partial.program );</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160; </div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   glEnableVertexAttribArray( shaders.circle_partial.vertex );</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;   <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_circleVBO, shaders.circle_partial.vertex,</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;         0, 2, GL_FLOAT, 0 );</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160; </div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   <span class="comment">/* Set shader uniforms. */</span></div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;   gl_uniformColor( shaders.circle_partial.color, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> );</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   gl_Matrix4_Uniform( shaders.circle_partial.projection, *H );</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;   glUniform1f( shaders.circle_partial.radius, r );</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;   glUniform1f( shaders.circle_partial.angle1, angle );</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   glUniform1f( shaders.circle_partial.angle2, arc );</div>
 <div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160; </div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   projection = gl_Matrix4_Translate(projection, x1, y1, 0);</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   projection = <a class="code" href="opengl__matrix_8c.html#ae335e25f8f815c0fdcb5c716a01c4a31">gl_Matrix4_Rotate2d</a>(projection, a);</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;   projection = gl_Matrix4_Scale(projection, s, s, 1);</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160; </div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;   gl_beginSolidProgram(projection, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>);</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;   <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_lineVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );</div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;   glDrawArrays( GL_LINES, 0, 2 );</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;   gl_endSolidProgram();</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   <span class="comment">/* Draw. */</span></div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160; </div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;   <span class="comment">/* Clear state. */</span></div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;   glDisableVertexAttribArray( shaders.circle_partial.vertex );</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160; </div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;   glUseProgram(0);</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;   gl_checkErr();</div>
 <div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;}</div>
 <div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160; </div>
 <div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160; </div>
-<div class="line"><a name="l00851"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#aff163c825993f656b74cbeffbf11175d">  851</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#aff163c825993f656b74cbeffbf11175d">gl_clipRect</a>( <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h )</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;{</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;   <span class="keywordtype">double</span> rx, ry, rw, rh;</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;   rx = (x + <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.x) / <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.mxscale;</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;   ry = (y + <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.y) / <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.myscale;</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;   rw = w / <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.mxscale;</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;   rh = h / <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.myscale;</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;   glScissor( rx, ry, rw, rh );</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;   glEnable( GL_SCISSOR_TEST );</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;}</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160; </div>
+<div class="line"><a name="l00852"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a32b943a1cec97a41249ad2fb894b56f4">  852</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a32b943a1cec97a41249ad2fb894b56f4">gl_drawLine</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> x1, <span class="keyword">const</span> <span class="keywordtype">double</span> y1,</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> x2, <span class="keyword">const</span> <span class="keywordtype">double</span> y2, <span class="keyword">const</span> glColour *<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> )</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;{</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;   gl_Matrix4 projection;</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>, s;</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160; </div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;   a = atan2( y2-y1, x2-x1 );</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;   s = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) );</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160; </div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;   projection = gl_view_matrix;</div>
 <div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160; </div>
-<div class="line"><a name="l00866"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a70c906f1000dfc534d1ce1cdea4bbfb6">  866</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a70c906f1000dfc534d1ce1cdea4bbfb6">gl_unclipRect</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;{</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   glDisable( GL_SCISSOR_TEST );</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;   glScissor( 0, 0, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rw, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rh );</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;}</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160; </div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;   projection = gl_Matrix4_Translate(projection, x1, y1, 0);</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;   projection = <a class="code" href="opengl__matrix_8c.html#ae335e25f8f815c0fdcb5c716a01c4a31">gl_Matrix4_Rotate2d</a>(projection, a);</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;   projection = gl_Matrix4_Scale(projection, s, s, 1);</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160; </div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   gl_beginSolidProgram(projection, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>);</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_lineVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;   glDrawArrays( GL_LINES, 0, 2 );</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;   gl_endSolidProgram();</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;}</div>
 <div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160; </div>
-<div class="line"><a name="l00878"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a51d8489e55cb742eaf5556d59b00c551">  878</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="opengl__render_8c.html#a51d8489e55cb742eaf5556d59b00c551">gl_initRender</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;{</div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;   GLfloat vertex[10];</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160; </div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;   <span class="comment">/* Initialize the VBO. */</span></div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;   <a class="code" href="opengl__render_8c.html#acb405d83b58ba615ba2ed199365a562a">gl_renderVBO</a> = <a class="code" href="opengl__vbo_8c.html#ad92fa31557bc231f3aca020171d7253e">gl_vboCreateStream</a>( <span class="keyword">sizeof</span>(GLfloat) *</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;         <a class="code" href="opengl__render_8c.html#a387d37641621276d5769d25f133fb315">OPENGL_RENDER_VBO_SIZE</a>*(2 + 2 + 4), NULL );</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;   <a class="code" href="opengl__render_8c.html#a7a3e4207962b70b04b2343e900df8dfc">gl_renderVBOtexOffset</a> = <span class="keyword">sizeof</span>(GLfloat) * <a class="code" href="opengl__render_8c.html#a387d37641621276d5769d25f133fb315">OPENGL_RENDER_VBO_SIZE</a>*2;</div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;   <a class="code" href="opengl__render_8c.html#a19c27dc007c75d6a38a1878ce710e7e8">gl_renderVBOcolOffset</a> = <span class="keyword">sizeof</span>(GLfloat) * <a class="code" href="opengl__render_8c.html#a387d37641621276d5769d25f133fb315">OPENGL_RENDER_VBO_SIZE</a>*(2+2);</div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160; </div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;   vertex[0] = 0.;</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;   vertex[1] = 0.;</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   vertex[2] = 1.;</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;   vertex[3] = 0.;</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;   vertex[4] = 0.;</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;   vertex[5] = 1.;</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;   vertex[6] = 1.;</div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   vertex[7] = 1.;</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;   gl_squareVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160; </div>
-<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;   vertex[0] = -1.;</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;   vertex[1] = -1.;</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;   vertex[2] = 1.;</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   vertex[3] = -1.;</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;   vertex[4] = -1.;</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;   vertex[5] = 1.;</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;   vertex[6] = 1.;</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;   vertex[7] = 1.;</div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;   gl_circleVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160; </div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;   vertex[0] = 0.;</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   vertex[1] = 0.;</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   vertex[2] = 1.;</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;   vertex[3] = 0.;</div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;   vertex[4] = 1.;</div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;   vertex[5] = 1.;</div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;   vertex[6] = 0.;</div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;   vertex[7] = 1.;</div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;   vertex[8] = 0.;</div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;   vertex[9] = 0.;</div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;   gl_squareEmptyVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160; </div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;   vertex[0] = 0.;</div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;   vertex[1] = -1.;</div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;   vertex[2] = 0.;</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;   vertex[3] = 1.;</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;   vertex[4] = -1.;</div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;   vertex[5] = 0.;</div>
-<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;   vertex[6] = 1.;</div>
-<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;   vertex[7] = 0.;</div>
-<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;   gl_crossVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
-<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160; </div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;   vertex[0] = 0.;</div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;   vertex[1] = 0.;</div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;   vertex[2] = 1.;</div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;   vertex[3] = 0.;</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;   gl_lineVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 4, vertex );</div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160; </div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;   vertex[0] = 0.5*cos(4.*M_PI/3.);</div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   vertex[1] = 0.5*sin(4.*M_PI/3.);</div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;   vertex[2] = 0.5*cos(0.);</div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;   vertex[3] = 0.5*sin(0.);</div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;   vertex[4] = 0.5*cos(2.*M_PI/3.);</div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;   vertex[5] = 0.5*sin(2.*M_PI/3.);</div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;   vertex[6] = vertex[0];</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;   vertex[7] = vertex[1];</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;   gl_triangleVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160; </div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;   gl_checkErr();</div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160; </div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;}</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160; </div>
+<div class="line"><a name="l00882"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#aff163c825993f656b74cbeffbf11175d">  882</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#aff163c825993f656b74cbeffbf11175d">gl_clipRect</a>( <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h )</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;{</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;   <span class="keywordtype">double</span> rx, ry, rw, rh;</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;   rx = (x + <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.x) / <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.mxscale;</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;   ry = (y + <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.y) / <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.myscale;</div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;   rw = w / <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.mxscale;</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;   rh = h / <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.myscale;</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;   glScissor( rx, ry, rw, rh );</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   glEnable( GL_SCISSOR_TEST );</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;}</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160; </div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160; </div>
+<div class="line"><a name="l00897"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a70c906f1000dfc534d1ce1cdea4bbfb6">  897</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a70c906f1000dfc534d1ce1cdea4bbfb6">gl_unclipRect</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;{</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;   glDisable( GL_SCISSOR_TEST );</div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;   glScissor( 0, 0, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rw, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rh );</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;}</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160; </div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160; </div>
+<div class="line"><a name="l00909"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a51d8489e55cb742eaf5556d59b00c551">  909</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="opengl__render_8c.html#a51d8489e55cb742eaf5556d59b00c551">gl_initRender</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;{</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;   GLfloat vertex[10];</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160; </div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;   <span class="comment">/* Initialize the VBO. */</span></div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;   <a class="code" href="opengl__render_8c.html#acb405d83b58ba615ba2ed199365a562a">gl_renderVBO</a> = <a class="code" href="opengl__vbo_8c.html#ad92fa31557bc231f3aca020171d7253e">gl_vboCreateStream</a>( <span class="keyword">sizeof</span>(GLfloat) *</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;         <a class="code" href="opengl__render_8c.html#a387d37641621276d5769d25f133fb315">OPENGL_RENDER_VBO_SIZE</a>*(2 + 2 + 4), NULL );</div>
+<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;   <a class="code" href="opengl__render_8c.html#a7a3e4207962b70b04b2343e900df8dfc">gl_renderVBOtexOffset</a> = <span class="keyword">sizeof</span>(GLfloat) * <a class="code" href="opengl__render_8c.html#a387d37641621276d5769d25f133fb315">OPENGL_RENDER_VBO_SIZE</a>*2;</div>
+<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;   <a class="code" href="opengl__render_8c.html#a19c27dc007c75d6a38a1878ce710e7e8">gl_renderVBOcolOffset</a> = <span class="keyword">sizeof</span>(GLfloat) * <a class="code" href="opengl__render_8c.html#a387d37641621276d5769d25f133fb315">OPENGL_RENDER_VBO_SIZE</a>*(2+2);</div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160; </div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;   vertex[0] = 0.;</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;   vertex[1] = 0.;</div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;   vertex[2] = 1.;</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;   vertex[3] = 0.;</div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;   vertex[4] = 0.;</div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;   vertex[5] = 1.;</div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;   vertex[6] = 1.;</div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;   vertex[7] = 1.;</div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;   gl_squareVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160; </div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;   vertex[0] = -1.;</div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;   vertex[1] = -1.;</div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;   vertex[2] = 1.;</div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;   vertex[3] = -1.;</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;   vertex[4] = -1.;</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;   vertex[5] = 1.;</div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;   vertex[6] = 1.;</div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;   vertex[7] = 1.;</div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   gl_circleVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
+<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160; </div>
+<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;   vertex[0] = 0.;</div>
+<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;   vertex[1] = 0.;</div>
+<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;   vertex[2] = 1.;</div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;   vertex[3] = 0.;</div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;   vertex[4] = 1.;</div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;   vertex[5] = 1.;</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;   vertex[6] = 0.;</div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;   vertex[7] = 1.;</div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;   vertex[8] = 0.;</div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;   vertex[9] = 0.;</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;   gl_squareEmptyVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
 <div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160; </div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160; </div>
-<div class="line"><a name="l00955"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a01b2e3e71b0f980457453e8eac0333ce">  955</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a01b2e3e71b0f980457453e8eac0333ce">gl_exitRender</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;{</div>
-<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;   <span class="comment">/* Destroy the VBO. */</span></div>
-<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( <a class="code" href="opengl__render_8c.html#acb405d83b58ba615ba2ed199365a562a">gl_renderVBO</a> );</div>
-<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_squareVBO );</div>
-<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_circleVBO );</div>
-<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_squareEmptyVBO );</div>
-<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_crossVBO );</div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_lineVBO );</div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_triangleVBO );</div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   <a class="code" href="opengl__render_8c.html#acb405d83b58ba615ba2ed199365a562a">gl_renderVBO</a> = NULL;</div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;}</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;   vertex[0] = 0.;</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;   vertex[1] = -1.;</div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;   vertex[2] = 0.;</div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;   vertex[3] = 1.;</div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;   vertex[4] = -1.;</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;   vertex[5] = 0.;</div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;   vertex[6] = 1.;</div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;   vertex[7] = 0.;</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;   gl_crossVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160; </div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;   vertex[0] = 0.;</div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;   vertex[1] = 0.;</div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;   vertex[2] = 1.;</div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;   vertex[3] = 0.;</div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   gl_lineVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 4, vertex );</div>
+<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160; </div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;   vertex[0] = 0.5*cos(4.*M_PI/3.);</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;   vertex[1] = 0.5*sin(4.*M_PI/3.);</div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;   vertex[2] = 0.5*cos(0.);</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;   vertex[3] = 0.5*sin(0.);</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;   vertex[4] = 0.5*cos(2.*M_PI/3.);</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;   vertex[5] = 0.5*sin(2.*M_PI/3.);</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;   vertex[6] = vertex[0];</div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;   vertex[7] = vertex[1];</div>
+<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;   gl_triangleVBO = <a class="code" href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a>( <span class="keyword">sizeof</span>(GLfloat) * 8, vertex );</div>
+<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160; </div>
+<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;   gl_checkErr();</div>
+<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160; </div>
+<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;}</div>
+<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160; </div>
+<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160; </div>
+<div class="line"><a name="l00986"></a><span class="lineno"><a class="line" href="opengl__render_8c.html#a01b2e3e71b0f980457453e8eac0333ce">  986</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__render_8c.html#a01b2e3e71b0f980457453e8eac0333ce">gl_exitRender</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;{</div>
+<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;   <span class="comment">/* Destroy the VBO. */</span></div>
+<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( <a class="code" href="opengl__render_8c.html#acb405d83b58ba615ba2ed199365a562a">gl_renderVBO</a> );</div>
+<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_squareVBO );</div>
+<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_circleVBO );</div>
+<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_squareEmptyVBO );</div>
+<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_crossVBO );</div>
+<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_lineVBO );</div>
+<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;   <a class="code" href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a>( gl_triangleVBO );</div>
+<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;   <a class="code" href="opengl__render_8c.html#acb405d83b58ba615ba2ed199365a562a">gl_renderVBO</a> = NULL;</div>
+<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aopengl__render_8c_html_a333d8aaa63616fac7f4d5fb79a272749"><div class="ttname"><a href="opengl__render_8c.html#a333d8aaa63616fac7f4d5fb79a272749">gl_gameToScreenCoords</a></div><div class="ttdeci">void gl_gameToScreenCoords(double *nx, double *ny, double bx, double by)</div><div class="ttdoc">Converts in-game coordinates to screen coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00407">opengl_render.c:407</a></div></div>
 <div class="ttc" id="acolour_8c_html_aa0601ca54aed9efd2dddd294138c2ad6"><div class="ttname"><a href="colour_8c.html#aa0601ca54aed9efd2dddd294138c2ad6">cWhite</a></div><div class="ttdeci">const glColour cWhite</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00029">colour.c:29</a></div></div>
 <div class="ttc" id="aopengl__vbo_8c_html_acec4f799c6a06738c21ddfef975d9c36"><div class="ttname"><a href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a></div><div class="ttdeci">void gl_vboActivateAttribOffset(gl_vbo *vbo, GLuint index, GLuint offset, GLint size, GLenum type, GLsizei stride)</div><div class="ttdoc">Activates a VBO's offset.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__vbo_8c_source.html#l00251">opengl_vbo.c:251</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a34fc79719c1b57dbda0b7ecd84f9354e"><div class="ttname"><a href="opengl__render_8c.html#a34fc79719c1b57dbda0b7ecd84f9354e">gl_renderRectH</a></div><div class="ttdeci">void gl_renderRectH(const gl_Matrix4 *H, const glColour *c, int filled)</div><div class="ttdoc">Renders a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00143">opengl_render.c:143</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_a70c906f1000dfc534d1ce1cdea4bbfb6"><div class="ttname"><a href="opengl__render_8c.html#a70c906f1000dfc534d1ce1cdea4bbfb6">gl_unclipRect</a></div><div class="ttdeci">void gl_unclipRect(void)</div><div class="ttdoc">Clears the 2d clipping planes.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00866">opengl_render.c:866</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_a3135a12a0be9172d643cf03ce0a7e1fd"><div class="ttname"><a href="opengl__render_8c.html#a3135a12a0be9172d643cf03ce0a7e1fd">gl_drawCirclePartial</a></div><div class="ttdeci">void gl_drawCirclePartial(const double cx, const double cy, const double r, const glColour *c, double angle, double arc)</div><div class="ttdoc">Draws a partial circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00759">opengl_render.c:759</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_a70c906f1000dfc534d1ce1cdea4bbfb6"><div class="ttname"><a href="opengl__render_8c.html#a70c906f1000dfc534d1ce1cdea4bbfb6">gl_unclipRect</a></div><div class="ttdeci">void gl_unclipRect(void)</div><div class="ttdoc">Clears the 2d clipping planes.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00897">opengl_render.c:897</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_a3135a12a0be9172d643cf03ce0a7e1fd"><div class="ttname"><a href="opengl__render_8c.html#a3135a12a0be9172d643cf03ce0a7e1fd">gl_drawCirclePartial</a></div><div class="ttdeci">void gl_drawCirclePartial(const double cx, const double cy, const double r, const glColour *c, double angle, double arc)</div><div class="ttdoc">Draws a partial circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00790">opengl_render.c:790</a></div></div>
 <div class="ttc" id="aopengl_8c_html_ae34e0efdcb12b0be6286521bb6740706"><div class="ttname"><a href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a></div><div class="ttdeci">glInfo gl_screen</div><div class="ttdef"><b>Definition:</b> <a href="opengl_8c_source.html#l00055">opengl.c:55</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_a32b943a1cec97a41249ad2fb894b56f4"><div class="ttname"><a href="opengl__render_8c.html#a32b943a1cec97a41249ad2fb894b56f4">gl_drawLine</a></div><div class="ttdeci">void gl_drawLine(const double x1, const double y1, const double x2, const double y2, const glColour *c)</div><div class="ttdoc">Draws a line.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00821">opengl_render.c:821</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_a32b943a1cec97a41249ad2fb894b56f4"><div class="ttname"><a href="opengl__render_8c.html#a32b943a1cec97a41249ad2fb894b56f4">gl_drawLine</a></div><div class="ttdeci">void gl_drawLine(const double x1, const double y1, const double x2, const double y2, const glColour *c)</div><div class="ttdoc">Draws a line.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00852">opengl_render.c:852</a></div></div>
 <div class="ttc" id="aopengl__vbo_8c_html_a3ed82fcb9630d1b36f51a806adc4f3a1"><div class="ttname"><a href="opengl__vbo_8c.html#a3ed82fcb9630d1b36f51a806adc4f3a1">gl_vboDestroy</a></div><div class="ttdeci">void gl_vboDestroy(gl_vbo *vbo)</div><div class="ttdoc">Destroys a VBO.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__vbo_8c_source.html#l00272">opengl_vbo.c:272</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_acb405d83b58ba615ba2ed199365a562a"><div class="ttname"><a href="opengl__render_8c.html#acb405d83b58ba615ba2ed199365a562a">gl_renderVBO</a></div><div class="ttdeci">static gl_vbo * gl_renderVBO</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00047">opengl_render.c:47</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_aece4d3ffb8b57a4ff2027c1d11577e56"><div class="ttname"><a href="opengl__render_8c.html#aece4d3ffb8b57a4ff2027c1d11577e56">gl_blitSpriteInterpolateScale</a></div><div class="ttdeci">void gl_blitSpriteInterpolateScale(const glTexture *sa, const glTexture *sb, double inter, const double bx, const double by, double scalew, double scaleh, const int sx, const int sy, const glColour *c)</div><div class="ttdoc">Blits a sprite interpolating, position is relative to the player.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00529">opengl_render.c:529</a></div></div>
@@ -750,31 +770,33 @@ $(function() {
 <div class="ttc" id="acamera_8c_html_a9b9c32a9db0384cfe620fd22d0b7bd6a"><div class="ttname"><a href="camera_8c.html#a9b9c32a9db0384cfe620fd22d0b7bd6a">cam_getPos</a></div><div class="ttdeci">void cam_getPos(double *x, double *y)</div><div class="ttdoc">Gets the camera position.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00122">camera.c:122</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_ac5838ea8033923e0ad0079c0cbbb9477"><div class="ttname"><a href="opengl__render_8c.html#ac5838ea8033923e0ad0079c0cbbb9477">gl_screenToGameCoords</a></div><div class="ttdeci">void gl_screenToGameCoords(double *nx, double *ny, int bx, int by)</div><div class="ttdoc">Converts screen coordinates to in-game coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00430">opengl_render.c:430</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a06dde45f3ce9494c2660f62c6513ea93"><div class="ttname"><a href="opengl__render_8c.html#a06dde45f3ce9494c2660f62c6513ea93">gl_blitScaleSprite</a></div><div class="ttdeci">void gl_blitScaleSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const double bw, const double bh, const glColour *c)</div><div class="ttdoc">Blits a scaled sprite, position is in absolute screen coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00598">opengl_render.c:598</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_af5451785c10029308644ef86dfaf8634"><div class="ttname"><a href="opengl__render_8c.html#af5451785c10029308644ef86dfaf8634">gl_blitScaleAspect</a></div><div class="ttdeci">void gl_blitScaleAspect(const glTexture *texture, double bx, double by, double bw, double bh, const glColour *c)</div><div class="ttdoc">Blits a texture scaling it to fit a rectangle, but conserves aspect ratio.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00659">opengl_render.c:659</a></div></div>
 <div class="ttc" id="aopengl__vbo_8c_html_ad92fa31557bc231f3aca020171d7253e"><div class="ttname"><a href="opengl__vbo_8c.html#ad92fa31557bc231f3aca020171d7253e">gl_vboCreateStream</a></div><div class="ttdeci">gl_vbo * gl_vboCreateStream(GLsizei size, void *data)</div><div class="ttdoc">Creates a stream vbo.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__vbo_8c_source.html#l00160">opengl_vbo.c:160</a></div></div>
 <div class="ttc" id="aopengl__matrix_8c_html_ae335e25f8f815c0fdcb5c716a01c4a31"><div class="ttname"><a href="opengl__matrix_8c.html#ae335e25f8f815c0fdcb5c716a01c4a31">gl_Matrix4_Rotate2d</a></div><div class="ttdeci">gl_Matrix4 gl_Matrix4_Rotate2d(gl_Matrix4 m, double angle)</div><div class="ttdoc">Rotates an angle, in radians, around the z axis.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__matrix_8c_source.html#l00125">opengl_matrix.c:125</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a38fb942b78a0280b2d54ab5a3e5df462"><div class="ttname"><a href="opengl__render_8c.html#a38fb942b78a0280b2d54ab5a3e5df462">gl_blitStaticSprite</a></div><div class="ttdeci">void gl_blitStaticSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const glColour *c)</div><div class="ttdoc">Blits a sprite, position is in absolute screen coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00568">opengl_render.c:568</a></div></div>
 <div class="ttc" id="aopengl__vbo_8c_html_a92514f507d7bfa25488fe578641932b3"><div class="ttname"><a href="opengl__vbo_8c.html#a92514f507d7bfa25488fe578641932b3">gl_vboCreateStatic</a></div><div class="ttdeci">gl_vbo * gl_vboCreateStatic(GLsizei size, void *data)</div><div class="ttdoc">Creates a stream vbo.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__vbo_8c_source.html#l00199">opengl_vbo.c:199</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a387d37641621276d5769d25f133fb315"><div class="ttname"><a href="opengl__render_8c.html#a387d37641621276d5769d25f133fb315">OPENGL_RENDER_VBO_SIZE</a></div><div class="ttdeci">#define OPENGL_RENDER_VBO_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00044">opengl_render.c:44</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a3ea473a161c37673042a3fecbb4ca9f9"><div class="ttname"><a href="opengl__render_8c.html#a3ea473a161c37673042a3fecbb4ca9f9">gl_blitTextureInterpolate</a></div><div class="ttdeci">void gl_blitTextureInterpolate(const glTexture *ta, const glTexture *tb, const double inter, const double x, const double y, const double w, const double h, const double tx, const double ty, const double tw, const double th, const glColour *c)</div><div class="ttdoc">Texture blitting backend for interpolated texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00328">opengl_render.c:328</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_abd03ef1a170bc64cee4aa30c6f08a617"><div class="ttname"><a href="opengl__render_8c.html#abd03ef1a170bc64cee4aa30c6f08a617">gl_drawCirclePartialH</a></div><div class="ttdeci">void gl_drawCirclePartialH(const gl_Matrix4 *H, const glColour *c, double angle, double arc)</div><div class="ttdoc">Draws a partial circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00782">opengl_render.c:782</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_ae452ed0fa0e8b19ed0ee3da05946892b"><div class="ttname"><a href="opengl__render_8c.html#ae452ed0fa0e8b19ed0ee3da05946892b">gl_drawCircle</a></div><div class="ttdeci">void gl_drawCircle(const double cx, const double cy, const double r, const glColour *c, int filled)</div><div class="ttdoc">Draws a circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00679">opengl_render.c:679</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_abd03ef1a170bc64cee4aa30c6f08a617"><div class="ttname"><a href="opengl__render_8c.html#abd03ef1a170bc64cee4aa30c6f08a617">gl_drawCirclePartialH</a></div><div class="ttdeci">void gl_drawCirclePartialH(const gl_Matrix4 *H, const glColour *c, double angle, double arc)</div><div class="ttdoc">Draws a partial circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00813">opengl_render.c:813</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_ae452ed0fa0e8b19ed0ee3da05946892b"><div class="ttname"><a href="opengl__render_8c.html#ae452ed0fa0e8b19ed0ee3da05946892b">gl_drawCircle</a></div><div class="ttdeci">void gl_drawCircle(const double cx, const double cy, const double r, const glColour *c, int filled)</div><div class="ttdoc">Draws a circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00710">opengl_render.c:710</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_af786c6ea29902c4086d82ab1d6f3edf2"><div class="ttname"><a href="opengl__render_8c.html#af786c6ea29902c4086d82ab1d6f3edf2">gl_blitTexture</a></div><div class="ttdeci">void gl_blitTexture(const glTexture *texture, const double x, const double y, const double w, const double h, const double tx, const double ty, const double tw, const double th, const glColour *c, const double angle)</div><div class="ttdoc">Texture blitting backend.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00250">opengl_render.c:250</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_aff163c825993f656b74cbeffbf11175d"><div class="ttname"><a href="opengl__render_8c.html#aff163c825993f656b74cbeffbf11175d">gl_clipRect</a></div><div class="ttdeci">void gl_clipRect(int x, int y, int w, int h)</div><div class="ttdoc">Sets up 2d clipping planes around a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00851">opengl_render.c:851</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_aff163c825993f656b74cbeffbf11175d"><div class="ttname"><a href="opengl__render_8c.html#aff163c825993f656b74cbeffbf11175d">gl_clipRect</a></div><div class="ttdeci">void gl_clipRect(int x, int y, int w, int h)</div><div class="ttdoc">Sets up 2d clipping planes around a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00882">opengl_render.c:882</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a4a0e51ed10e9ea167662391f9c00a380"><div class="ttname"><a href="opengl__render_8c.html#a4a0e51ed10e9ea167662391f9c00a380">gl_blitSprite</a></div><div class="ttdeci">void gl_blitSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const glColour *c)</div><div class="ttdoc">Blits a sprite, position is relative to the player.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00458">opengl_render.c:458</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_ad95fff9931ab11c7a6afeb58d121777c"><div class="ttname"><a href="opengl__render_8c.html#ad95fff9931ab11c7a6afeb58d121777c">gl_renderRectEmpty</a></div><div class="ttdeci">void gl_renderRectEmpty(double x, double y, double w, double h, const glColour *c)</div><div class="ttdoc">Renders a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00124">opengl_render.c:124</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_adb73863bfb45e9cdfd50ed5e01dbbd03"><div class="ttname"><a href="opengl__render_8c.html#adb73863bfb45e9cdfd50ed5e01dbbd03">gl_renderCross</a></div><div class="ttdeci">void gl_renderCross(double x, double y, double r, const glColour *c)</div><div class="ttdoc">Renders a cross at a given position.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00195">opengl_render.c:195</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a6f375c3296366a20b3d2336a035ec691"><div class="ttname"><a href="opengl__render_8c.html#a6f375c3296366a20b3d2336a035ec691">gl_renderTriangleEmpty</a></div><div class="ttdeci">void gl_renderTriangleEmpty(double x, double y, double a, double s, double length, const glColour *c)</div><div class="ttdoc">Renders a triangle at a given position.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00219">opengl_render.c:219</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="aopengl__render_8c_html_a7a3e4207962b70b04b2343e900df8dfc"><div class="ttname"><a href="opengl__render_8c.html#a7a3e4207962b70b04b2343e900df8dfc">gl_renderVBOtexOffset</a></div><div class="ttdeci">static int gl_renderVBOtexOffset</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00054">opengl_render.c:54</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_a1d38ccdb1b924e53ca9c681a981d02a5"><div class="ttname"><a href="opengl__render_8c.html#a1d38ccdb1b924e53ca9c681a981d02a5">gl_drawCircleH</a></div><div class="ttdeci">void gl_drawCircleH(const gl_Matrix4 *H, const glColour *c, int filled)</div><div class="ttdoc">Draws a circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00701">opengl_render.c:701</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_a1d38ccdb1b924e53ca9c681a981d02a5"><div class="ttname"><a href="opengl__render_8c.html#a1d38ccdb1b924e53ca9c681a981d02a5">gl_drawCircleH</a></div><div class="ttdeci">void gl_drawCircleH(const gl_Matrix4 *H, const glColour *c, int filled)</div><div class="ttdoc">Draws a circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00732">opengl_render.c:732</a></div></div>
 <div class="ttc" id="acamera_8c_html_aa5f7b75f8350f1e0606d0a698390f3e1"><div class="ttname"><a href="camera_8c.html#aa5f7b75f8350f1e0606d0a698390f3e1">cam_getZoom</a></div><div class="ttdeci">double cam_getZoom(void)</div><div class="ttdoc">Gets the camera zoom.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00099">camera.c:99</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a19c27dc007c75d6a38a1878ce710e7e8"><div class="ttname"><a href="opengl__render_8c.html#a19c27dc007c75d6a38a1878ce710e7e8">gl_renderVBOcolOffset</a></div><div class="ttdeci">static int gl_renderVBOcolOffset</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00055">opengl_render.c:55</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_a51d8489e55cb742eaf5556d59b00c551"><div class="ttname"><a href="opengl__render_8c.html#a51d8489e55cb742eaf5556d59b00c551">gl_initRender</a></div><div class="ttdeci">int gl_initRender(void)</div><div class="ttdoc">Initializes the OpenGL rendering routines.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00878">opengl_render.c:878</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_a01b2e3e71b0f980457453e8eac0333ce"><div class="ttname"><a href="opengl__render_8c.html#a01b2e3e71b0f980457453e8eac0333ce">gl_exitRender</a></div><div class="ttdeci">void gl_exitRender(void)</div><div class="ttdoc">Cleans up the OpenGL rendering routines.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00955">opengl_render.c:955</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_a51d8489e55cb742eaf5556d59b00c551"><div class="ttname"><a href="opengl__render_8c.html#a51d8489e55cb742eaf5556d59b00c551">gl_initRender</a></div><div class="ttdeci">int gl_initRender(void)</div><div class="ttdoc">Initializes the OpenGL rendering routines.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00909">opengl_render.c:909</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_a01b2e3e71b0f980457453e8eac0333ce"><div class="ttname"><a href="opengl__render_8c.html#a01b2e3e71b0f980457453e8eac0333ce">gl_exitRender</a></div><div class="ttdeci">void gl_exitRender(void)</div><div class="ttdoc">Cleans up the OpenGL rendering routines.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00986">opengl_render.c:986</a></div></div>
 <div class="ttc" id="arng_8c_html_a3a6c194a55c239306d07bbf83f5972e9"><div class="ttname"><a href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a></div><div class="ttdeci">static const double c[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00281">rng.c:281</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a1e428781a5f08429de391e9b9fe60b30"><div class="ttname"><a href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a></div><div class="ttdeci">void gl_renderRect(double x, double y, double w, double h, const glColour *c)</div><div class="ttdoc">Renders a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00102">opengl_render.c:102</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a553271a7465d8c5f1827e58ca7b3bea5"><div class="ttname"><a href="opengl__render_8c.html#a553271a7465d8c5f1827e58ca7b3bea5">gl_blitSpriteInterpolate</a></div><div class="ttdeci">void gl_blitSpriteInterpolate(const glTexture *sa, const glTexture *sb, double inter, const double bx, const double by, const int sx, const int sy, const glColour *c)</div><div class="ttdoc">Blits a sprite interpolating, position is relative to the player.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00502">opengl_render.c:502</a></div></div>
-<div class="ttc" id="aopengl__render_8c_html_a82c845d10d9a06bf95bdeb6546ea40d4"><div class="ttname"><a href="opengl__render_8c.html#a82c845d10d9a06bf95bdeb6546ea40d4">gl_blitStatic</a></div><div class="ttdeci">void gl_blitStatic(const glTexture *texture, const double bx, const double by, const glColour *c)</div><div class="ttdoc">Blits a texture to a position.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00655">opengl_render.c:655</a></div></div>
+<div class="ttc" id="aopengl__render_8c_html_a82c845d10d9a06bf95bdeb6546ea40d4"><div class="ttname"><a href="opengl__render_8c.html#a82c845d10d9a06bf95bdeb6546ea40d4">gl_blitStatic</a></div><div class="ttdeci">void gl_blitStatic(const glTexture *texture, const double bx, const double by, const glColour *c)</div><div class="ttdoc">Blits a texture to a position.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00686">opengl_render.c:686</a></div></div>
+<div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
 <div class="ttc" id="agui_8c_html_a7870a2bde3241982310bfdb418868cc1"><div class="ttname"><a href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1">gui_getOffset</a></div><div class="ttdeci">void gui_getOffset(double *x, double *y)</div><div class="ttdoc">Gets the GUI offset.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l02391">gui.c:2391</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
