@@ -62,12 +62,28 @@ $(function() {
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> <a class="code" href="debug_8c.html#a9a3131817d6598380f1d9ec89c0c807d">debug_enableFPUExcept</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUG_H */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#ifdef DEBUGGING</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define debug_isFlag(f)     (debug_flags[f])     </span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define debug_setFlag(f)    (debug_flags[f] = 1) </span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define debug_rmFlag(f)     (debug_flags[f] = 0) </span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">enum {</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;   DEBUG_MARK_EMITTER,        </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;   <span class="comment">/* Sentinel. */</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;   DEBUG_FLAGS_MAX      </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;};</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">char</span> DebugFlags[ DEBUG_FLAGS_MAX ];</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">/* Initialize debugging flags. */</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">extern</span> DebugFlags debug_flags;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUG_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="adebug_8c_html_a9a3131817d6598380f1d9ec89c0c807d"><div class="ttname"><a href="debug_8c.html#a9a3131817d6598380f1d9ec89c0c807d">debug_enableFPUExcept</a></div><div class="ttdeci">void debug_enableFPUExcept(void)</div><div class="ttdoc">Enables FPU exceptions. Artificially limited to Linux until link issues are figured out.</div><div class="ttdef"><b>Definition:</b> <a href="debug_8c_source.html#l00229">debug.c:229</a></div></div>
-<div class="ttc" id="adebug_8c_html_a7e1cddd809d8272d4d5f38f890d9301c"><div class="ttname"><a href="debug_8c.html#a7e1cddd809d8272d4d5f38f890d9301c">debug_sigClose</a></div><div class="ttdeci">void debug_sigClose(void)</div><div class="ttdoc">Closes the SignalHandler for Linux.</div><div class="ttdef"><b>Definition:</b> <a href="debug_8c_source.html#l00218">debug.c:218</a></div></div>
-<div class="ttc" id="adebug_8c_html_a3f06348a1d0074f2afbd50dd625294b4"><div class="ttname"><a href="debug_8c.html#a3f06348a1d0074f2afbd50dd625294b4">debug_sigInit</a></div><div class="ttdeci">void debug_sigInit(void)</div><div class="ttdoc">Sets up the SignalHandler for Linux.</div><div class="ttdef"><b>Definition:</b> <a href="debug_8c_source.html#l00168">debug.c:168</a></div></div>
+<div class="ttc" id="adebug_8c_html_a9a3131817d6598380f1d9ec89c0c807d"><div class="ttname"><a href="debug_8c.html#a9a3131817d6598380f1d9ec89c0c807d">debug_enableFPUExcept</a></div><div class="ttdeci">void debug_enableFPUExcept(void)</div><div class="ttdoc">Enables FPU exceptions. Artificially limited to Linux until link issues are figured out.</div><div class="ttdef"><b>Definition:</b> <a href="debug_8c_source.html#l00236">debug.c:236</a></div></div>
+<div class="ttc" id="adebug_8c_html_a7e1cddd809d8272d4d5f38f890d9301c"><div class="ttname"><a href="debug_8c.html#a7e1cddd809d8272d4d5f38f890d9301c">debug_sigClose</a></div><div class="ttdeci">void debug_sigClose(void)</div><div class="ttdoc">Closes the SignalHandler for Linux.</div><div class="ttdef"><b>Definition:</b> <a href="debug_8c_source.html#l00225">debug.c:225</a></div></div>
+<div class="ttc" id="adebug_8c_html_a3f06348a1d0074f2afbd50dd625294b4"><div class="ttname"><a href="debug_8c.html#a3f06348a1d0074f2afbd50dd625294b4">debug_sigInit</a></div><div class="ttdeci">void debug_sigInit(void)</div><div class="ttdoc">Sets up the SignalHandler for Linux.</div><div class="ttdef"><b>Definition:</b> <a href="debug_8c_source.html#l00175">debug.c:175</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
