@@ -377,24 +377,24 @@ $(function() {
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160; </div>
 <div class="line"><a name="l00385"></a><span class="lineno"><a class="line" href="weapon_8c.html#aeb0047de94544bad7470cba0709a097e">  385</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="weapon_8c.html#aeb0047de94544bad7470cba0709a097e">think_beam</a>( <a class="code" href="structWeapon.html">Weapon</a>* w, <span class="keyword">const</span> <span class="keywordtype">double</span> dt )</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;{</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   (void)dt;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   Pilot *p, *t;</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;   AsteroidAnchor *field;</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   Asteroid *ast;</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   <span class="keywordtype">double</span> diff, mod;</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;   Vector2d v;</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;   <span class="comment">/* Get pilot, if pilot is dead beam is destroyed. */</span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;   p = <a class="code" href="pilot_8c.html#a249f03095a08ed9f99e344bd6ab1127c">pilot_get</a>(w-&gt;parent);</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;   <span class="keywordflow">if</span> (p == NULL) {</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      w-&gt;timer = -1.; <span class="comment">/* Hack to make it get destroyed next update. */</span></div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;   }</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160; </div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;   <span class="comment">/* Check if pilot has enough energy left to keep beam active. */</span></div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;   mod = (w-&gt;outfit-&gt;type == OUTFIT_TYPE_BEAM) ? p-&gt;stats.fwd_energy : p-&gt;stats.tur_energy;</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;   p-&gt;energy -= mod * dt*w-&gt;outfit-&gt;u.bem.energy;</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   if (p-&gt;energy &lt; 0.) {</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   Pilot *p, *t;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   AsteroidAnchor *field;</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;   Asteroid *ast;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   <span class="keywordtype">double</span> diff, mod;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   Vector2d v;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160; </div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;   <span class="comment">/* Get pilot, if pilot is dead beam is destroyed. */</span></div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;   p = <a class="code" href="pilot_8c.html#a249f03095a08ed9f99e344bd6ab1127c">pilot_get</a>(w-&gt;parent);</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;   <span class="keywordflow">if</span> (p == NULL) {</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;      w-&gt;timer = -1.; <span class="comment">/* Hack to make it get destroyed next update. */</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;   }</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160; </div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;   <span class="comment">/* Check if pilot has enough energy left to keep beam active. */</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;   mod = (w-&gt;outfit-&gt;type == OUTFIT_TYPE_BEAM) ? p-&gt;stats.fwd_energy : p-&gt;stats.tur_energy;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;   p-&gt;energy -= mod * dt*w-&gt;outfit-&gt;u.bem.energy;</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;   <a class="code" href="pilot__heat_8c.html#af8f7adf1f79a63c9ab44018abf5d68dc">pilot_heatAddSlotTime</a>( p, w-&gt;mount, dt );</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   <span class="keywordflow">if</span> (p-&gt;energy &lt; 0.) {</div>
 <div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;      p-&gt;energy = 0.;</div>
 <div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;      w-&gt;timer = -1;</div>
 <div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;      <span class="keywordflow">return</span>;</div>
@@ -1907,6 +1907,7 @@ $(function() {
 <div class="ttc" id="anaev_8h_html_a9a1a80dcaf876a3295a7653159a0e90a"><div class="ttname"><a href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a></div><div class="ttdeci">#define pow2(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00052">naev.h:52</a></div></div>
 <div class="ttc" id="aweapon_8c_html_adea7a5cc9b3871ccf18d1c7bf05b0709"><div class="ttname"><a href="weapon_8c.html#adea7a5cc9b3871ccf18d1c7bf05b0709">weapon_vboSize</a></div><div class="ttdeci">static size_t weapon_vboSize</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l00094">weapon.c:94</a></div></div>
 <div class="ttc" id="aarray_8h_html_ac9a99c83677f4324066a52dc8e5cf91f"><div class="ttname"><a href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a></div><div class="ttdeci">#define array_begin(array)</div><div class="ttdoc">Returns a pointer to the beginning of the reserved memory space.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00198">array.h:198</a></div></div>
+<div class="ttc" id="apilot__heat_8c_html_af8f7adf1f79a63c9ab44018abf5d68dc"><div class="ttname"><a href="pilot__heat_8c.html#af8f7adf1f79a63c9ab44018abf5d68dc">pilot_heatAddSlotTime</a></div><div class="ttdeci">void pilot_heatAddSlotTime(const Pilot *p, PilotOutfitSlot *o, double dt)</div><div class="ttdoc">Adds heat to an outfit slot over a period of time.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__heat_8c_source.html#l00166">pilot_heat.c:166</a></div></div>
 <div class="ttc" id="aweapon_8c_html_aac67a98e6807df7f61814099cd8bcb76"><div class="ttname"><a href="weapon_8c.html#aac67a98e6807df7f61814099cd8bcb76">weapon_free</a></div><div class="ttdeci">static void weapon_free(Weapon *w)</div><div class="ttdoc">Frees the weapon.</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l01875">weapon.c:1875</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="anaev_8h_html_a8fa5e6968bb39c7ec03c486af1e7b335"><div class="ttname"><a href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a></div><div class="ttdeci">#define CLAMP(a, b, x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00047">naev.h:47</a></div></div>
@@ -1957,7 +1958,7 @@ $(function() {
 <div class="ttc" id="astructWeapon___html_a04a892821574499cd38f976b2cf0d45d"><div class="ttname"><a href="structWeapon__.html#a04a892821574499cd38f976b2cf0d45d">Weapon_::think</a></div><div class="ttdeci">void(* think)(struct Weapon_ *, const double)</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l00080">weapon.c:80</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_ab380cb3792d2cb6da39ffdf7fbb45cb0"><div class="ttname"><a href="pilot__outfit_8c.html#ab380cb3792d2cb6da39ffdf7fbb45cb0">pilot_getMount</a></div><div class="ttdeci">int pilot_getMount(const Pilot *p, const PilotOutfitSlot *w, Vector2d *v)</div><div class="ttdoc">Gets the mount position of a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00157">pilot_outfit.c:157</a></div></div>
 <div class="ttc" id="acollision_8c_html_ac70e75e0d21e33b564ca79d894b51c52"><div class="ttname"><a href="collision_8c.html#ac70e75e0d21e33b564ca79d894b51c52">CollideSprite</a></div><div class="ttdeci">int CollideSprite(const glTexture *at, const int asx, const int asy, const Vector2d *ap, const glTexture *bt, const int bsx, const int bsy, const Vector2d *bp, Vector2d *crash)</div><div class="ttdoc">Checks whether or not two sprites collide.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00105">collision.c:105</a></div></div>
-<div class="ttc" id="apilot__heat_8c_html_a98db31030dec04d20bd2783618ed5f5f"><div class="ttname"><a href="pilot__heat_8c.html#a98db31030dec04d20bd2783618ed5f5f">pilot_heatAccuracyMod</a></div><div class="ttdeci">double pilot_heatAccuracyMod(double T)</div><div class="ttdoc">Returns a 0:1 modifier representing accuracy (0. being normal).</div><div class="ttdef"><b>Definition:</b> <a href="pilot__heat_8c_source.html#l00287">pilot_heat.c:287</a></div></div>
+<div class="ttc" id="apilot__heat_8c_html_a98db31030dec04d20bd2783618ed5f5f"><div class="ttname"><a href="pilot__heat_8c.html#a98db31030dec04d20bd2783618ed5f5f">pilot_heatAccuracyMod</a></div><div class="ttdeci">double pilot_heatAccuracyMod(double T)</div><div class="ttdoc">Returns a 0:1 modifier representing accuracy (0. being normal).</div><div class="ttdef"><b>Definition:</b> <a href="pilot__heat_8c_source.html#l00305">pilot_heat.c:305</a></div></div>
 <div class="ttc" id="aweapon_8c_html_a5700432e72f64db304cc5c098443b717"><div class="ttname"><a href="weapon_8c.html#a5700432e72f64db304cc5c098443b717">weapon_update</a></div><div class="ttdeci">static void weapon_update(Weapon *w, const double dt, WeaponLayer layer)</div><div class="ttdoc">Updates an individual weapon.</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l00830">weapon.c:830</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ab74da2f96888f02c56583775b20686df"><div class="ttname"><a href="outfit_8c.html#ab74da2f96888f02c56583775b20686df">outfit_spfxArmour</a></div><div class="ttdeci">int outfit_spfxArmour(const Outfit *o)</div><div class="ttdoc">Gets the outfit's sound effect.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00627">outfit.c:627</a></div></div>
 <!-- start footer part -->
