@@ -87,13 +87,18 @@ $(function() {
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      state = 1;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   <span class="comment">/* Toggle the markers. */</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   <span class="keywordflow">if</span> (state)</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      debug_setFlag(DEBUG_MARK_EMITTER);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      debug_rmFlag(DEBUG_MARK_EMITTER);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#if DEBUGGING</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   <span class="keywordflow">if</span> (state)</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      debug_setFlag(DEBUG_MARK_EMITTER);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      debug_rmFlag(DEBUG_MARK_EMITTER);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   (void) state;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   NLUA_ERROR(L, _(<span class="stringliteral">&quot;Requires a debug build.&quot;</span>));</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__debug_8c_html_a5a36e5ed31eece4dbac9b767d244614e"><div class="ttname"><a href="nlua__debug_8c.html#a5a36e5ed31eece4dbac9b767d244614e">debugL_showEmitters</a></div><div class="ttdeci">static int debugL_showEmitters(lua_State *L)</div><div class="ttdoc">Toggles the emitter marker.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__debug_8c_source.html#l00056">nlua_debug.c:56</a></div></div>
 <div class="ttc" id="anlua__debug_8c_html_a34fa4f6565e5ec26587bbe7695445187"><div class="ttname"><a href="nlua__debug_8c.html#a34fa4f6565e5ec26587bbe7695445187">nlua_loadDebug</a></div><div class="ttdeci">int nlua_loadDebug(nlua_env env)</div><div class="ttdoc">Loads the Debug library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__debug_8c_source.html#l00038">nlua_debug.c:38</a></div></div>
