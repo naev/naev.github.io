@@ -163,6 +163,7 @@ var menudata={children:[
 {text:"v",url:"globals_vars_v.html#index_v"},
 {text:"w",url:"globals_vars_w.html#index_w"},
 {text:"z",url:"globals_vars_z.html#index_z"}]},
+{text:"Typedefs",url:"globals_type.html"},
 {text:"Enumerations",url:"globals_enum.html"},
 {text:"Enumerator",url:"globals_eval.html"},
 {text:"Macros",url:"globals_defs.html",children:[
