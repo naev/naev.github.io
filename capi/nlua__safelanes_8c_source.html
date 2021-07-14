@@ -97,29 +97,31 @@ $(function() {
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   lanes = <a class="code" href="safelanes_8c.html#a0a3b10e1b87469eb943fd640ee73b3aa">safelanes_get</a>( faction, sys );</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;   lua_newtable( L );</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(lanes); i++) {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      <span class="keywordflow">for</span> (j=0; j&lt;2; j++) {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;         <span class="keywordflow">switch</span> (lanes[i].point_type[i]) {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">case</span> SAFELANE_LOC_PLANET:</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;               <a class="code" href="nlua__planet_8c.html#a117882fa52b90627d2dba39aebc16d5f">lua_pushplanet</a>( L, lanes[i].point_id[j] );</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;               <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="keywordflow">case</span> SAFELANE_LOC_DEST_SYS:</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;               jump.srcid = <a class="code" href="space_8c.html#ac29abd4d5a6285d602e381c1d50c11b6">system_index</a>( sys );</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;               jump.destid = lanes[i].point_id[j];</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;               <a class="code" href="nlua__jump_8c.html#a46a1798c4a3cc21d668f670362188297">lua_pushjump</a>( L, jump );</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;               <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;               NLUA_ERROR( L, _(<span class="stringliteral">&quot;What the?&quot;</span>) );</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;         }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;         lua_rawseti( L, -2, i+1 );</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      lua_pushstring( L, <span class="stringliteral">&quot;faction&quot;</span> ); <span class="comment">/* key */</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      <a class="code" href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a>( L, lanes[i].faction ); <span class="comment">/* value */</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      lua_rawset( L, -3 );</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( lanes );</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      lua_newtable( L );</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      <span class="keywordflow">for</span> (j=0; j&lt;2; j++) {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;         <span class="keywordflow">switch</span> (lanes[i].point_type[j]) {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keywordflow">case</span> SAFELANE_LOC_PLANET:</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;               <a class="code" href="nlua__planet_8c.html#a117882fa52b90627d2dba39aebc16d5f">lua_pushplanet</a>( L, lanes[i].point_id[j] );</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keywordflow">case</span> SAFELANE_LOC_DEST_SYS:</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;               jump.srcid = <a class="code" href="space_8c.html#ac29abd4d5a6285d602e381c1d50c11b6">system_index</a>( sys );</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;               jump.destid = lanes[i].point_id[j];</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;               <a class="code" href="nlua__jump_8c.html#a46a1798c4a3cc21d668f670362188297">lua_pushjump</a>( L, jump );</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;               NLUA_ERROR( L, _(<span class="stringliteral">&quot;What the?&quot;</span>) );</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;         }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;         lua_rawseti( L, -2, j+1 );</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      }</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      lua_pushstring( L, <span class="stringliteral">&quot;faction&quot;</span> ); <span class="comment">/* key */</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      <a class="code" href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a>( L, lanes[i].faction ); <span class="comment">/* value */</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      lua_rawset( L, -3 );</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      lua_rawseti( L, -2, i+1 );</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   }</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( lanes );</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__system_8c_html_ac82764173ba742629506ded30a9668a6"><div class="ttname"><a href="nlua__system_8c.html#ac82764173ba742629506ded30a9668a6">luaL_validsystem</a></div><div class="ttdeci">StarSystem * luaL_validsystem(lua_State *L, int ind)</div><div class="ttdoc">Gets system (or system name) at index raising an error if type doesn't match.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00159">nlua_system.c:159</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_a60de2d2728c0f49a28028bde39239ee5"><div class="ttname"><a href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a></div><div class="ttdeci">LuaFaction luaL_validfaction(lua_State *L, int ind)</div><div class="ttdoc">Gets faction (or faction name) at index, raising an error if type isn't a valid faction.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00149">nlua_faction.c:149</a></div></div>
