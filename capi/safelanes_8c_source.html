@@ -712,8 +712,8 @@ $(function() {
 <div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160; </div>
 <div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;         ei_best = edgeind_opts[0];</div>
 <div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(edgeind_opts) &gt; 1) {</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;            <span class="comment">/* There&#39;s an actual choice. Search for the best option. */</span></div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;            score_best = -HUGE_VAL;</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;            <span class="comment">/* There&#39;s an actual choice. Search for the best option. Lower is better. */</span></div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;            score_best = +HUGE_VAL;</div>
 <div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;            <span class="keywordflow">for</span> (eii=0; eii&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(edgeind_opts); eii++) {</div>
 <div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;               ei = edgeind_opts[eii];</div>
 <div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;               sis = <a class="code" href="safelanes_8c.html#a39fd88db24a147f9d871f4aac542965a">edge_stack</a>[ei][0];</div>
@@ -737,7 +737,7 @@ $(function() {
 <div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;               Linv = <a class="code" href="safelanes_8c.html#a590233128d5b243c7cf9efecf469d46d">safelanes_initialConductivity</a>(ei);</div>
 <div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;               score *= <a class="code" href="safelanes_8c.html#a29874299171f0e96c480b139d19adef4">ALPHA</a> * Linv * Linv;</div>
 <div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160; </div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;               <span class="keywordflow">if</span> (score &gt; score_best) {</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;               <span class="keywordflow">if</span> (score &lt; score_best) {</div>
 <div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;                  ei_best = ei;</div>
 <div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;                  score_best = score;</div>
 <div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;               }</div>
