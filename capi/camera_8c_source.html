@@ -87,8 +87,8 @@ $(function() {
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"> * Prototypes.</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#ada543bf448c92eb1c93428cfb54fc3e1">cam_updateFly</a>( <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y, <span class="keywordtype">double</span> dt );</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#a9b57ecac8225cabb8b48a8667abc2cc0">cam_updatePilot</a>( Pilot *follow, <span class="keywordtype">double</span> dt );</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#a258a2ee22311572013dbbb51599a4ed9">cam_updatePilotZoom</a>( Pilot *follow, Pilot *target, <span class="keywordtype">double</span> dt );</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#a30a918c40f38a899f7e7ed2f0245f088">cam_updatePilot</a>( <span class="keyword">const</span> Pilot *follow, <span class="keywordtype">double</span> dt );</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#aec6e3d4339a2369aad64e5614c90af1a">cam_updatePilotZoom</a>( <span class="keyword">const</span> Pilot *follow, <span class="keyword">const</span> Pilot *target, <span class="keywordtype">double</span> dt );</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#af74d802a8d66c0ba754259a7836ff800">cam_updateManualZoom</a>( <span class="keywordtype">double</span> dt );</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
@@ -215,7 +215,7 @@ $(function() {
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;         }</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;         <span class="keywordflow">else</span> {</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            <a class="code" href="camera_8c.html#ada543bf448c92eb1c93428cfb54fc3e1">cam_updateFly</a>( p-&gt;solid-&gt;pos.x, p-&gt;solid-&gt;pos.y, dt );</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            <a class="code" href="camera_8c.html#a258a2ee22311572013dbbb51599a4ed9">cam_updatePilotZoom</a>( p, NULL, dt );</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            <a class="code" href="camera_8c.html#aec6e3d4339a2369aad64e5614c90af1a">cam_updatePilotZoom</a>( p, NULL, dt );</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;         }</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      }</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      <span class="keywordflow">else</span></div>
@@ -228,7 +228,7 @@ $(function() {
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;         <span class="keywordflow">if</span> (p == NULL)</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            <a class="code" href="camera_8c.html#acfa9d3f7fe9e6fe0b8c985bad4186bec">camera_followpilot</a> = 0;</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            <a class="code" href="camera_8c.html#a9b57ecac8225cabb8b48a8667abc2cc0">cam_updatePilot</a>( p, dt );</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            <a class="code" href="camera_8c.html#a30a918c40f38a899f7e7ed2f0245f088">cam_updatePilot</a>( p, dt );</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      }</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;   }</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
@@ -278,10 +278,10 @@ $(function() {
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;}</div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="camera_8c.html#a9b57ecac8225cabb8b48a8667abc2cc0">  300</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#a9b57ecac8225cabb8b48a8667abc2cc0">cam_updatePilot</a>( Pilot *follow, <span class="keywordtype">double</span> dt )</div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="camera_8c.html#a30a918c40f38a899f7e7ed2f0245f088">  300</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#a30a918c40f38a899f7e7ed2f0245f088">cam_updatePilot</a>( <span class="keyword">const</span> Pilot *follow, <span class="keywordtype">double</span> dt )</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;{</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   Pilot *target;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;   <span class="keywordtype">double</span> diag2, <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>, r, dir, k;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>, r, dir, k;</div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;   <span class="keywordtype">double</span> x,y, dx,dy, mx,my, targ_x,targ_y, bias_x,bias_y, vx,vy;</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;   <span class="comment">/* Get target. */</span></div>
@@ -294,7 +294,7 @@ $(function() {
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="comment">    * we&#39;ll just use the largest of the two. */</span></div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;   <span class="comment">/*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/</span></div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;   <span class="comment">/*diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );*/</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;   diag2 = 100*100;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> diag2 = 100*100;</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;   x = follow-&gt;solid-&gt;pos.x;</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;   y = follow-&gt;solid-&gt;pos.y;</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
@@ -362,7 +362,7 @@ $(function() {
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160; </div>
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;   <span class="comment">/* Update zoom. */</span></div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   <a class="code" href="camera_8c.html#a258a2ee22311572013dbbb51599a4ed9">cam_updatePilotZoom</a>( follow, target, dt );</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   <a class="code" href="camera_8c.html#aec6e3d4339a2369aad64e5614c90af1a">cam_updatePilotZoom</a>( follow, target, dt );</div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;}</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160; </div>
 <div class="line"><a name="l00390"></a><span class="lineno"><a class="line" href="camera_8c.html#af74d802a8d66c0ba754259a7836ff800">  390</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#af74d802a8d66c0ba754259a7836ff800">cam_updateManualZoom</a>( <span class="keywordtype">double</span> dt )</div>
@@ -381,7 +381,7 @@ $(function() {
 <div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;}</div>
 <div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160; </div>
 <div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160; </div>
-<div class="line"><a name="l00409"></a><span class="lineno"><a class="line" href="camera_8c.html#a258a2ee22311572013dbbb51599a4ed9">  409</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#a258a2ee22311572013dbbb51599a4ed9">cam_updatePilotZoom</a>( Pilot *follow, Pilot *target, <span class="keywordtype">double</span> dt )</div>
+<div class="line"><a name="l00409"></a><span class="lineno"><a class="line" href="camera_8c.html#aec6e3d4339a2369aad64e5614c90af1a">  409</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="camera_8c.html#aec6e3d4339a2369aad64e5614c90af1a">cam_updatePilotZoom</a>( <span class="keyword">const</span> Pilot *follow, <span class="keyword">const</span> Pilot *target, <span class="keywordtype">double</span> dt )</div>
 <div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;{</div>
 <div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>, x,y, z,tz, dx, dy;</div>
 <div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;   <span class="keywordtype">double</span> zfar, znear;</div>
@@ -418,42 +418,45 @@ $(function() {
 <div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="comment">    * Set Zoom to pilot target.</span></div>
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="comment">    */</span></div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;   z = <a class="code" href="camera_8c.html#aa5f7b75f8350f1e0606d0a698390f3e1">cam_getZoom</a>();</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;   <span class="keywordflow">if</span> (target != NULL) {</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;      <span class="comment">/* Get current relative target position. */</span></div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;      <a class="code" href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1">gui_getOffset</a>( &amp;x, &amp;y );</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;      x += target-&gt;solid-&gt;pos.x - follow-&gt;solid-&gt;pos.x;</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;      y += target-&gt;solid-&gt;pos.y - follow-&gt;solid-&gt;pos.y;</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160; </div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;      <span class="comment">/* Get distance ratio. */</span></div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;      dx = (SCREEN_W/2.) / (<a class="code" href="naev_8h.html#a9b649f4d878e64a80b4cd2cad45f43b3">FABS</a>(x) + 2*target-&gt;ship-&gt;gfx_space-&gt;sw);</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;      dy = (SCREEN_H/2.) / (<a class="code" href="naev_8h.html#a9b649f4d878e64a80b4cd2cad45f43b3">FABS</a>(y) + 2*target-&gt;ship-&gt;gfx_space-&gt;sh);</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag( follow, PILOT_STEALTH )) {</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;      tz = zfar;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;   }</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;      <span class="keywordflow">if</span> (target != NULL) {</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;         <span class="comment">/* Get current relative target position. */</span></div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;         <a class="code" href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1">gui_getOffset</a>( &amp;x, &amp;y );</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;         x += target-&gt;solid-&gt;pos.x - follow-&gt;solid-&gt;pos.x;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;         y += target-&gt;solid-&gt;pos.y - follow-&gt;solid-&gt;pos.y;</div>
 <div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160; </div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;      <span class="comment">/* Get zoom. */</span></div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;      tz = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( dx, dy );</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;   }</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;      tz = znear; <span class="comment">/* Aim at in. */</span></div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160; </div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;   <span class="comment">/* Gradually zoom in/out. */</span></div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>  = <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>(-conf.zoom_speed, conf.zoom_speed, tz - z);</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> *= dt / <a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>; <span class="comment">/* Remove dt dependence. */</span></div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; 0) </div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;      <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> *= 2.;</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;   <a class="code" href="camera_8c.html#a490e45f6dbb55ac9bb5308a8f33b4d22">camera_Z</a> =  <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>( zfar, znear, z + <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>);</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;}</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160; </div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160; </div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;         <span class="comment">/* Get distance ratio. */</span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;         dx = (SCREEN_W/2.) / (<a class="code" href="naev_8h.html#a9b649f4d878e64a80b4cd2cad45f43b3">FABS</a>(x) + 2*target-&gt;ship-&gt;gfx_space-&gt;sw);</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;         dy = (SCREEN_H/2.) / (<a class="code" href="naev_8h.html#a9b649f4d878e64a80b4cd2cad45f43b3">FABS</a>(y) + 2*target-&gt;ship-&gt;gfx_space-&gt;sh);</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160; </div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;         <span class="comment">/* Get zoom. */</span></div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;         tz = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( dx, dy );</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;      }</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;         tz = znear; <span class="comment">/* Aim at in. */</span></div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;   }</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160; </div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;   <span class="comment">/* Gradually zoom in/out. */</span></div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>  = <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>(-conf.zoom_speed, conf.zoom_speed, tz - z);</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> *= dt / <a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>; <span class="comment">/* Remove dt dependence. */</span></div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; 0) </div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;      <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> *= 2.;</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;   <a class="code" href="camera_8c.html#a490e45f6dbb55ac9bb5308a8f33b4d22">camera_Z</a> =  <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>( zfar, znear, z + <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>);</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;}</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160; </div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="acamera_8c_html_a66ab20236dca75d4537284f0688b6d8f"><div class="ttname"><a href="camera_8c.html#a66ab20236dca75d4537284f0688b6d8f">cam_setTargetPilot</a></div><div class="ttdeci">void cam_setTargetPilot(unsigned int follow, int soft_over)</div><div class="ttdoc">Sets the target to follow.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00132">camera.c:132</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a333d8aaa63616fac7f4d5fb79a272749"><div class="ttname"><a href="opengl__render_8c.html#a333d8aaa63616fac7f4d5fb79a272749">gl_gameToScreenCoords</a></div><div class="ttdeci">void gl_gameToScreenCoords(double *nx, double *ny, double bx, double by)</div><div class="ttdoc">Converts in-game coordinates to screen coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00407">opengl_render.c:407</a></div></div>
 <div class="ttc" id="apause_8c_html_ac06299328a86594523b6f357dffafa32"><div class="ttname"><a href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a></div><div class="ttdeci">double dt_mod</div><div class="ttdef"><b>Definition:</b> <a href="pause_8c_source.html#l00027">pause.c:27</a></div></div>
-<div class="ttc" id="acamera_8c_html_a9b57ecac8225cabb8b48a8667abc2cc0"><div class="ttname"><a href="camera_8c.html#a9b57ecac8225cabb8b48a8667abc2cc0">cam_updatePilot</a></div><div class="ttdeci">static void cam_updatePilot(Pilot *follow, double dt)</div><div class="ttdoc">Updates a camera following a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00300">camera.c:300</a></div></div>
 <div class="ttc" id="acamera_8c_html_a70deec3a4e4464a93e4bc4e405a3c75b"><div class="ttname"><a href="camera_8c.html#a70deec3a4e4464a93e4bc4e405a3c75b">zoom_override</a></div><div class="ttdeci">static int zoom_override</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00032">camera.c:32</a></div></div>
 <div class="ttc" id="anaev_8h_html_a9b649f4d878e64a80b4cd2cad45f43b3"><div class="ttname"><a href="naev_8h.html#a9b649f4d878e64a80b4cd2cad45f43b3">FABS</a></div><div class="ttdeci">#define FABS(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00043">naev.h:43</a></div></div>
 <div class="ttc" id="acamera_8c_html_a996fd35e15939fa27c42c0dcdc6365c9"><div class="ttname"><a href="camera_8c.html#a996fd35e15939fa27c42c0dcdc6365c9">cam_setTargetPos</a></div><div class="ttdeci">void cam_setTargetPos(double x, double y, int soft_over)</div><div class="ttdoc">Sets the camera target to a position.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00170">camera.c:170</a></div></div>
 <div class="ttc" id="asound_8c_html_a77d5945a1f11637faa21ee11ba9b57c5"><div class="ttname"><a href="sound_8c.html#a77d5945a1f11637faa21ee11ba9b57c5">sound_updateListener</a></div><div class="ttdeci">int sound_updateListener(double dir, double px, double py, double vx, double vy)</div><div class="ttdoc">Updates the sound listener.</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00515">sound.c:515</a></div></div>
 <div class="ttc" id="acamera_8c_html_a24139f7bd5d3114c4d930961bc80edf7"><div class="ttname"><a href="camera_8c.html#a24139f7bd5d3114c4d930961bc80edf7">cam_zoomOverride</a></div><div class="ttdeci">void cam_zoomOverride(int enable)</div><div class="ttdoc">Overrides the zoom system.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00062">camera.c:62</a></div></div>
-<div class="ttc" id="acamera_8c_html_a258a2ee22311572013dbbb51599a4ed9"><div class="ttname"><a href="camera_8c.html#a258a2ee22311572013dbbb51599a4ed9">cam_updatePilotZoom</a></div><div class="ttdeci">static void cam_updatePilotZoom(Pilot *follow, Pilot *target, double dt)</div><div class="ttdoc">Updates the camera zoom.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00409">camera.c:409</a></div></div>
 <div class="ttc" id="acamera_8c_html_a1f63b81cd5c618ea8fbfc9236fcb363c"><div class="ttname"><a href="camera_8c.html#a1f63b81cd5c618ea8fbfc9236fcb363c">cam_setZoom</a></div><div class="ttdeci">void cam_setZoom(double zoom)</div><div class="ttdoc">Sets the camera zoom.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00075">camera.c:75</a></div></div>
 <div class="ttc" id="acamera_8c_html_acfa9d3f7fe9e6fe0b8c985bad4186bec"><div class="ttname"><a href="camera_8c.html#acfa9d3f7fe9e6fe0b8c985bad4186bec">camera_followpilot</a></div><div class="ttdeci">static unsigned int camera_followpilot</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00031">camera.c:31</a></div></div>
 <div class="ttc" id="acamera_8c_html_af74d802a8d66c0ba754259a7836ff800"><div class="ttname"><a href="camera_8c.html#af74d802a8d66c0ba754259a7836ff800">cam_updateManualZoom</a></div><div class="ttdeci">static void cam_updateManualZoom(double dt)</div><div class="ttdoc">Updates the manual zoom target.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00390">camera.c:390</a></div></div>
@@ -471,6 +474,7 @@ $(function() {
 <div class="ttc" id="acamera_8c_html_af6597d186bfa228351ae1606ecc09210"><div class="ttname"><a href="camera_8c.html#af6597d186bfa228351ae1606ecc09210">cam_getTarget</a></div><div class="ttdeci">int cam_getTarget(void)</div><div class="ttdoc">Returns the camera's current target.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00200">camera.c:200</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00045">naev.h:45</a></div></div>
 <div class="ttc" id="anaev_8h_html_a9a1a80dcaf876a3295a7653159a0e90a"><div class="ttname"><a href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a></div><div class="ttdeci">#define pow2(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00052">naev.h:52</a></div></div>
+<div class="ttc" id="acamera_8c_html_aec6e3d4339a2369aad64e5614c90af1a"><div class="ttname"><a href="camera_8c.html#aec6e3d4339a2369aad64e5614c90af1a">cam_updatePilotZoom</a></div><div class="ttdeci">static void cam_updatePilotZoom(const Pilot *follow, const Pilot *target, double dt)</div><div class="ttdoc">Updates the camera zoom.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00409">camera.c:409</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="anaev_8h_html_a8fa5e6968bb39c7ec03c486af1e7b335"><div class="ttname"><a href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a></div><div class="ttdeci">#define CLAMP(a, b, x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00047">naev.h:47</a></div></div>
 <div class="ttc" id="acamera_8c_html_a490e45f6dbb55ac9bb5308a8f33b4d22"><div class="ttname"><a href="camera_8c.html#a490e45f6dbb55ac9bb5308a8f33b4d22">camera_Z</a></div><div class="ttdeci">static double camera_Z</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00034">camera.c:34</a></div></div>
@@ -483,6 +487,7 @@ $(function() {
 <div class="ttc" id="aplayer_8c_html_ac8701471143b28a786b0028420edfeb6"><div class="ttname"><a href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a></div><div class="ttdeci">Player_t player</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00071">player.c:71</a></div></div>
 <div class="ttc" id="acamera_8c_html_ae26175a80be325daad67514e8c91d639"><div class="ttname"><a href="camera_8c.html#ae26175a80be325daad67514e8c91d639">camera_Y</a></div><div class="ttdeci">static double camera_Y</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00036">camera.c:36</a></div></div>
 <div class="ttc" id="arng_8c_html_a3a6c194a55c239306d07bbf83f5972e9"><div class="ttname"><a href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a></div><div class="ttdeci">static const double c[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00281">rng.c:281</a></div></div>
+<div class="ttc" id="acamera_8c_html_a30a918c40f38a899f7e7ed2f0245f088"><div class="ttname"><a href="camera_8c.html#a30a918c40f38a899f7e7ed2f0245f088">cam_updatePilot</a></div><div class="ttdeci">static void cam_updatePilot(const Pilot *follow, double dt)</div><div class="ttdoc">Updates a camera following a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00300">camera.c:300</a></div></div>
 <div class="ttc" id="acamera_8c_html_ad273322a00f09a510ceeaa2b02cb679e"><div class="ttname"><a href="camera_8c.html#ad273322a00f09a510ceeaa2b02cb679e">target_X</a></div><div class="ttdeci">static double target_X</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00042">camera.c:42</a></div></div>
 <div class="ttc" id="acamera_8c_html_aeb562b8c352a5e4faba8fbab6ff6062d"><div class="ttname"><a href="camera_8c.html#aeb562b8c352a5e4faba8fbab6ff6062d">cam_update</a></div><div class="ttdeci">void cam_update(double dt)</div><div class="ttdoc">Updates the camera.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00211">camera.c:211</a></div></div>
 <div class="ttc" id="acamera_8c_html_ae48667b6b947caf22a98f3b88f27fcfc"><div class="ttname"><a href="camera_8c.html#ae48667b6b947caf22a98f3b88f27fcfc">camera_X</a></div><div class="ttdeci">static double camera_X</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00035">camera.c:35</a></div></div>
