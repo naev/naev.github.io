@@ -668,20 +668,138 @@ $(function() {
 <div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   <span class="comment">/* We hit. */</span></div>
 <div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;   <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;}</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160; </div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160; </div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> linePointOnSegment( <span class="keywordtype">double</span> d1, <span class="keywordtype">double</span> x1, <span class="keywordtype">double</span> y1, <span class="keywordtype">double</span> x2, <span class="keywordtype">double</span> y2, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y )</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;{</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;   <span class="comment">//double d1 = hypot( x2-x1, y2-y1 ); /* Distance between end-points. */</span></div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;   <span class="keywordtype">double</span> d2 = hypot( x-x1,  y-y1 );  <span class="comment">/* Distance from point to one end. */</span></div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   <span class="keywordtype">double</span> d3 = hypot( x2-x,  y2-y );  <span class="comment">/* Distance to the other end. */</span></div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;   <span class="keywordflow">return</span> fabs(d1 - d2 - d3) &lt; 1e-8;   <span class="comment">/* True if smaller than some tolerance. */</span></div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;}</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160; </div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160; </div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;<span class="preprocessor">#define FX( A, B, C, x )   (-(A * x + C) / B)</span></div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;<span class="preprocessor">#define FY( A, B, C , y )  (-(B * y + C) / A)</span></div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160; </div>
+<div class="line"><a name="l00772"></a><span class="lineno"><a class="line" href="collision_8c.html#a08768e1d2c7bd2c373822922435d2d28">  772</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="collision_8c.html#a08768e1d2c7bd2c373822922435d2d28">CollideLineCircle</a>( <span class="keyword">const</span> Vector2d* p1, <span class="keyword">const</span> Vector2d* p2,</div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;      <span class="keyword">const</span> Vector2d *cc, <span class="keywordtype">double</span> cr, Vector2d crash[2] )</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;{</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;   <span class="keywordtype">double</span> x0 = cc-&gt;x;</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   <span class="keywordtype">double</span> y0 = cc-&gt;y;</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;   <span class="keywordtype">double</span> x1 = p1-&gt;x;</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   <span class="keywordtype">double</span> y1 = p1-&gt;y;</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;   <span class="keywordtype">double</span> x2 = p2-&gt;x;</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;   <span class="keywordtype">double</span> y2 = p2-&gt;y;</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160; </div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;   <span class="keywordtype">double</span> A = y2 - y1;</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;   <span class="keywordtype">double</span> B = x1 - x2;</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a> = x2 * y1 - x1 * y2;</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160; </div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;   <span class="keywordtype">double</span> a = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(A) + <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(B);</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a>, <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>;</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160; </div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;   <span class="keywordtype">int</span> bnz, cnt;</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160; </div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;   <span class="keywordtype">double</span> x, y, d1;</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160; </div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;   <span class="comment">/* Non-vertical case. */</span></div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;   <span class="keywordflow">if</span> (fabs(B) &gt;= 1e-8) {</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;      b = 2. * (A * <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a> + A * B * y0 - <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(B) * x0);</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;      <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(<a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a>) + 2. * B * <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a> * y0 - <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(B) * (<a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(cr) - <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(x0) - <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(y0));</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;      bnz = 1;</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   }</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;   <span class="comment">/* Have to have special care when line is vertical. */</span></div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;      b = 2. * (B * <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a> + A * B * x0 - <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(A) * y0);</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;      <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(<a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a>) + 2. * A * <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a> * x0 - <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(A) * (<a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(cr) - <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(x0) - <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(y0));</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;      bnz = 0;</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;   }</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;   <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(b) - 4. * a * <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>; <span class="comment">/* Discriminant. */</span></div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> &lt; 0.)</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160; </div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;   cnt = 0;</div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;   d1 = hypot( x2-x1, y2-y1 );</div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;   <span class="comment">/* Line is tangent, so only one intersection. */</span></div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> == 0.) {</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;      <span class="keywordflow">if</span> (bnz) {</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;         x = -b / (2. * <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>);</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;         y = FX(A, B, <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a>, x);</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;         <span class="keywordflow">if</span> (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;            crash[cnt].x = x;</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;            crash[cnt].y = y;</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;            cnt++;</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;         }</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;      } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;         y = -b / (2. * <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>);</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;         x = FY(A, B, <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a>, y);</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;         <span class="keywordflow">if</span> (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;            crash[cnt].x = x;</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;            crash[cnt].y = y;</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;            cnt++;</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;         }</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;      }</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   }</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;   <span class="comment">/* Two intersections. */</span></div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;      <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> = sqrt(<a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>);</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;      <span class="keywordflow">if</span> (bnz) {</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;         x = (-b + <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>) / (2. * a);</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;         y = FX(A, B, <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a>, x);</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;         <span class="keywordflow">if</span> (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;            crash[cnt].x = x;</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;            crash[cnt].y = y;</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;            cnt++;</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;         }</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;         x = (-b - <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>) / (2. * a);</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;         y = FX(A, B, <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a>, x);</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;         <span class="keywordflow">if</span> (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;            crash[cnt].x = x;</div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;            crash[cnt].y = y;</div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;            cnt++;</div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;         }</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;      } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;         y = (-b + <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>) / (2. * a);</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;         x = FY(A, B, <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a>, y);</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;         <span class="keywordflow">if</span> (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;            crash[cnt].x = x;</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;            crash[cnt].y = y;</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;            cnt++;</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;         }</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;         y = (-b - <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a>) / (2. * a);</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;         x = FY(A, B, <a class="code" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a>, y);</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;         <span class="keywordflow">if</span> (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;            crash[cnt].x = x;</div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;            crash[cnt].y = y;</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;            cnt++;</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;         }</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;      }</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;   }</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;   <span class="keywordflow">return</span> cnt;</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;}</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;<span class="preprocessor">#undef FX</span></div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;<span class="preprocessor">#undef FY</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="acollision_8c_html_a08768e1d2c7bd2c373822922435d2d28"><div class="ttname"><a href="collision_8c.html#a08768e1d2c7bd2c373822922435d2d28">CollideLineCircle</a></div><div class="ttdeci">int CollideLineCircle(const Vector2d *p1, const Vector2d *p2, const Vector2d *cc, double cr, Vector2d crash[2])</div><div class="ttdoc">Checks to see if a line collides with a circle.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00772">collision.c:772</a></div></div>
 <div class="ttc" id="acollision_8c_html_a9752b8c43299f3b392c0ec4eab11fc18"><div class="ttname"><a href="collision_8c.html#a9752b8c43299f3b392c0ec4eab11fc18">CollideLineSprite</a></div><div class="ttdeci">int CollideLineSprite(const Vector2d *ap, double ad, double al, const glTexture *bt, const int bsx, const int bsy, const Vector2d *bp, Vector2d crash[2])</div><div class="ttdoc">Checks to see if a line collides with a sprite.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00483">collision.c:483</a></div></div>
 <div class="ttc" id="acollision_8c_html_a437eb9d7da88924ce0c899b3d6ecb2f3"><div class="ttname"><a href="collision_8c.html#a437eb9d7da88924ce0c899b3d6ecb2f3">LineOnPolygon</a></div><div class="ttdeci">static int LineOnPolygon(const CollPoly *at, const Vector2d *ap, float x1, float y1, float x2, float y2, Vector2d *crash)</div><div class="ttdoc">Checks whether or not a line intersects a polygon.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00387">collision.c:387</a></div></div>
 <div class="ttc" id="acollision_8c_html_a4264c9be67d77e24a358cbe59854b836"><div class="ttname"><a href="collision_8c.html#a4264c9be67d77e24a358cbe59854b836">CollideSpritePolygon</a></div><div class="ttdeci">int CollideSpritePolygon(const CollPoly *at, const Vector2d *ap, const glTexture *bt, const int bsx, const int bsy, const Vector2d *bp, Vector2d *crash)</div><div class="ttdoc">Checks whether or not a sprite collides with a polygon.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00188">collision.c:188</a></div></div>
 <div class="ttc" id="anaev_8h_html_a9b649f4d878e64a80b4cd2cad45f43b3"><div class="ttname"><a href="naev_8h.html#a9b649f4d878e64a80b4cd2cad45f43b3">FABS</a></div><div class="ttdeci">#define FABS(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00043">naev.h:43</a></div></div>
 <div class="ttc" id="acollision_8c_html_aaec54364143f5067fad2d3bc1ae213a4"><div class="ttname"><a href="collision_8c.html#aaec54364143f5067fad2d3bc1ae213a4">CollidePolygon</a></div><div class="ttdeci">int CollidePolygon(const CollPoly *at, const Vector2d *ap, const CollPoly *bt, const Vector2d *bp, Vector2d *crash)</div><div class="ttdoc">Checks whether or not two polygons collide. /!\ The function is not symmetric: the points of polygon ...</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00264">collision.c:264</a></div></div>
+<div class="ttc" id="arng_8c_html_a3ae63274d1e5a52f21db2df3bc5eee03"><div class="ttname"><a href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a></div><div class="ttdeci">static const double a[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00264">rng.c:264</a></div></div>
 <div class="ttc" id="arng_8c_html_a5e71a6e0c14542f60c8007edc2eaf286"><div class="ttname"><a href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a></div><div class="ttdeci">static const double d[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00290">rng.c:290</a></div></div>
 <div class="ttc" id="acollision_8c_html_a0e326dd6ce927f2b0770e68b23181216"><div class="ttname"><a href="collision_8c.html#a0e326dd6ce927f2b0770e68b23181216">CollideLinePolygon</a></div><div class="ttdeci">int CollideLinePolygon(const Vector2d *ap, double ad, double al, const CollPoly *bt, const Vector2d *bp, Vector2d crash[2])</div><div class="ttdoc">Checks to see if a line collides with a polygon.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00633">collision.c:633</a></div></div>
+<div class="ttc" id="asafelanes_8c_html_aa58e17c4af561cdaa005b3580c3fa7fb"><div class="ttname"><a href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a></div><div class="ttdeci">static cholmod_common C</div><div class="ttdef"><b>Definition:</b> <a href="safelanes_8c_source.html#l00087">safelanes.c:87</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00045">naev.h:45</a></div></div>
 <div class="ttc" id="acollision_8c_html_a4db4a972bb258bc896382c62ba2d00cd"><div class="ttname"><a href="collision_8c.html#a4db4a972bb258bc896382c62ba2d00cd">LoadPolygon</a></div><div class="ttdeci">void LoadPolygon(CollPoly *polygon, xmlNodePtr node)</div><div class="ttdoc">Loads a polygon from an xml node.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00036">collision.c:36</a></div></div>
+<div class="ttc" id="anaev_8h_html_a9a1a80dcaf876a3295a7653159a0e90a"><div class="ttname"><a href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a></div><div class="ttdeci">#define pow2(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00052">naev.h:52</a></div></div>
 <div class="ttc" id="acollision_8c_html_afa3a270917ce8944e8243bb03ac78f19"><div class="ttname"><a href="collision_8c.html#afa3a270917ce8944e8243bb03ac78f19">CollideLineLine</a></div><div class="ttdeci">int CollideLineLine(double s1x, double s1y, double e1x, double e1y, double s2x, double s2y, double e2x, double e2y, Vector2d *crash)</div><div class="ttdoc">Checks to see if two lines collide.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00429">collision.c:429</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a60419b6706a6eb61b5c349a377aa6dfd"><div class="ttname"><a href="opengl__tex_8c.html#a60419b6706a6eb61b5c349a377aa6dfd">gl_isTrans</a></div><div class="ttdeci">int gl_isTrans(const glTexture *t, const int x, const int y)</div><div class="ttdoc">Checks to see if a pixel is transparent in a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00839">opengl_tex.c:839</a></div></div>
 <div class="ttc" id="acollision_8c_html_a220f67ceff8a65a8532920f620269a53"><div class="ttname"><a href="collision_8c.html#a220f67ceff8a65a8532920f620269a53">pointInPolygon</a></div><div class="ttdeci">static int pointInPolygon(const CollPoly *at, const Vector2d *ap, float x, float y)</div><div class="ttdoc">Checks whether or not a point is inside a polygon.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00339">collision.c:339</a></div></div>
+<div class="ttc" id="arng_8c_html_a3a6c194a55c239306d07bbf83f5972e9"><div class="ttname"><a href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a></div><div class="ttdeci">static const double c[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00281">rng.c:281</a></div></div>
+<div class="ttc" id="arng_8c_html_a6dbc3ea54b9ab71917fe57fa11372346"><div class="ttname"><a href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a></div><div class="ttdeci">static const double b[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00273">rng.c:273</a></div></div>
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
 <div class="ttc" id="acollision_8c_html_ac70e75e0d21e33b564ca79d894b51c52"><div class="ttname"><a href="collision_8c.html#ac70e75e0d21e33b564ca79d894b51c52">CollideSprite</a></div><div class="ttdeci">int CollideSprite(const glTexture *at, const int asx, const int asy, const Vector2d *ap, const glTexture *bt, const int bsx, const int bsy, const Vector2d *bp, Vector2d *crash)</div><div class="ttdoc">Checks whether or not two sprites collide.</div><div class="ttdef"><b>Definition:</b> <a href="collision_8c_source.html#l00105">collision.c:105</a></div></div>
 <!-- start footer part -->

@@ -46,7 +46,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
@@ -122,15 +121,6 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFaction__.html">Faction_</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Description of a lane-building faction.  <a href="structFaction__.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMatWrap__.html">MatWrap_</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Some BLAS-compatible matrix data whose size/ordreing isn't pre-determined.  <a href="structMatWrap__.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ab44abceaa2b1d35b728e755c2c1850a0"><td class="memItemLeft" align="right" valign="top"><a id="ab44abceaa2b1d35b728e755c2c1850a0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MULTI_INDEX</b>(i,  j)&#160;&#160;&#160;((i*(i-1))/2 + j)</td></tr>
-<tr class="separator:ab44abceaa2b1d35b728e755c2c1850a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -140,7 +130,7 @@ typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr class="separator:ad97b022cdb9ed20d3c8d438abb126de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87107ac1f804d94f8e38afe692fc8e53"><td class="memItemLeft" align="right" valign="top"><a id="a87107ac1f804d94f8e38afe692fc8e53"></a>
 typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a87107ac1f804d94f8e38afe692fc8e53">FactionMask</a></td></tr>
-<tr class="memdesc:a87107ac1f804d94f8e38afe692fc8e53"><td class="mdescLeft">&#160;</td><td class="mdescRight">A bet that we'll never willingly point this algorithm at 32 factions. <br /></td></tr>
+<tr class="memdesc:a87107ac1f804d94f8e38afe692fc8e53"><td class="mdescLeft">&#160;</td><td class="mdescRight">A set of lane-building factions, represented as a bitfield. <br /></td></tr>
 <tr class="separator:a87107ac1f804d94f8e38afe692fc8e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -149,11 +139,9 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13acd0d908d9c31a4a0a87b61ef8eae116a">STORAGE_MODE_LOWER_TRIANGULAR_PART</a> = -1, 
 <a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13ad751e97a20624dcf96e90c9cebf6cde8">STORAGE_MODE_UNSYMMETRIC</a> = 0, 
 <a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13a71715610c33a16273628f4dd03b2ddaf">STORAGE_MODE_UPPER_TRIANGULAR_PART</a> = +1, 
-<a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13a1a2838b9d343551f39b940a4001bb6f1">UNSORTED</a> = 0, 
+<a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13a9699db058625ef9b33efb36230f8c870">SORTED</a> = 1, 
 <br />
-&#160;&#160;<a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13a9699db058625ef9b33efb36230f8c870">SORTED</a> = 1, 
-<a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13a354211f87eeb315ebd33134994728cff">UNPACKED</a> = 0, 
-<a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13a8f626cb9c789e0dd4b7c9dad49465938">PACKED</a> = 1, 
+&#160;&#160;<a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13a8f626cb9c789e0dd4b7c9dad49465938">PACKED</a> = 1, 
 <a class="el" href="safelanes_8c.html#a39fca1837c5ce7715cbf571669660c13abad7b999e1db067c5da48cd92123b168">MODE_NUMERICAL</a> = 1
 <br />
  }</td></tr>
@@ -166,13 +154,13 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9f0e70f96850181d7834453dc00f6522"><td class="memItemLeft" align="right" valign="top"><a id="a9f0e70f96850181d7834453dc00f6522"></a>
-static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a9f0e70f96850181d7834453dc00f6522">safelanes_changeFromOptimizer</a> (void)</td></tr>
-<tr class="memdesc:a9f0e70f96850181d7834453dc00f6522"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a round of optimization, and return the relative change to U~. <br /></td></tr>
-<tr class="separator:a9f0e70f96850181d7834453dc00f6522"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d5d41d9bb9fb8838785a63072c6655b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a1d5d41d9bb9fb8838785a63072c6655b">safelanes_activateByGradient</a> (MatWrap Lambda_tilde)</td></tr>
-<tr class="memdesc:a1d5d41d9bb9fb8838785a63072c6655b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Per-system, per-faction, activates the affordable lane with best (grad phi)/L.  <a href="safelanes_8c.html#a1d5d41d9bb9fb8838785a63072c6655b">More...</a><br /></td></tr>
-<tr class="separator:a1d5d41d9bb9fb8838785a63072c6655b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33e112e6f62799894139247ccd9928c7"><td class="memItemLeft" align="right" valign="top"><a id="a33e112e6f62799894139247ccd9928c7"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a33e112e6f62799894139247ccd9928c7">safelanes_buildOneTurn</a> (void)</td></tr>
+<tr class="memdesc:a33e112e6f62799894139247ccd9928c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a round of optimization. Return how many builds (upper bound) have to happen next turn. <br /></td></tr>
+<tr class="separator:a33e112e6f62799894139247ccd9928c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1be678497fe009de2960e38120068134"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a1be678497fe009de2960e38120068134">safelanes_activateByGradient</a> (cholmod_dense *Lambda_tilde)</td></tr>
+<tr class="memdesc:a1be678497fe009de2960e38120068134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Per-system, per-faction, activates the affordable lane with best (grad phi)/L.  <a href="safelanes_8c.html#a1be678497fe009de2960e38120068134">More...</a><br /></td></tr>
+<tr class="separator:a1be678497fe009de2960e38120068134"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c2cc6590abb29f43b76939a27b31e56"><td class="memItemLeft" align="right" valign="top"><a id="a3c2cc6590abb29f43b76939a27b31e56"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a3c2cc6590abb29f43b76939a27b31e56">safelanes_initStacks</a> (void)</td></tr>
 <tr class="memdesc:a3c2cc6590abb29f43b76939a27b31e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the local faction/object stacks. <br /></td></tr>
@@ -263,45 +251,21 @@ static <a class="el" href="safelanes_8c.html#a87107ac1f804d94f8e38afe692fc8e53">
 static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a764dddb62b02b7700a032d592cb9d3af">cmp_key</a> (const void *p1, const void *p2)</td></tr>
 <tr class="memdesc:a764dddb62b02b7700a032d592cb9d3af"><td class="mdescLeft">&#160;</td><td class="mdescRight">It's a qsort comparator. Set the cmp_key_ref pointer prior to use, or else. <br /></td></tr>
 <tr class="separator:a764dddb62b02b7700a032d592cb9d3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaac2802c92506304eaf0fcfc2a6c1940"><td class="memItemLeft" align="right" valign="top"><a id="aaac2802c92506304eaf0fcfc2a6c1940"></a>
-static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#aaac2802c92506304eaf0fcfc2a6c1940">frobenius_norm</a> (cholmod_dense *m)</td></tr>
-<tr class="memdesc:aaac2802c92506304eaf0fcfc2a6c1940"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the Frobenius norm sqrt(Tr(m* m)). Matrix form is restricted to stuff we care about. <br /></td></tr>
-<tr class="separator:aaac2802c92506304eaf0fcfc2a6c1940"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af27921d22c2ec23325c803c1fe8a65fc"><td class="memItemLeft" align="right" valign="top"><a id="af27921d22c2ec23325c803c1fe8a65fc"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>triplet_entry</b> (cholmod_triplet *m, int i, int j, double v)</td></tr>
 <tr class="separator:af27921d22c2ec23325c803c1fe8a65fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedee2670555c6af6bcd063bae4fa1f3a"><td class="memItemLeft" align="right" valign="top"><a id="aedee2670555c6af6bcd063bae4fa1f3a"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#aedee2670555c6af6bcd063bae4fa1f3a">matwrap_init</a> (MatWrap *A, enum CBLAS_ORDER order, int nrow, int ncol)</td></tr>
-<tr class="memdesc:aedee2670555c6af6bcd063bae4fa1f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a matrix fitting this description. <br /></td></tr>
-<tr class="separator:aedee2670555c6af6bcd063bae4fa1f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdfd99942465e9cf0e4ed922597e5dab"><td class="memItemLeft" align="right" valign="top"><a id="afdfd99942465e9cf0e4ed922597e5dab"></a>
-static MatWrap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#afdfd99942465e9cf0e4ed922597e5dab">matwrap_from_cholmod</a> (cholmod_dense *m)</td></tr>
-<tr class="memdesc:afdfd99942465e9cf0e4ed922597e5dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a MatWrap representing the given cholmod_dense. It's just a wrapper, referencing the same memory. <br /></td></tr>
-<tr class="separator:afdfd99942465e9cf0e4ed922597e5dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8d9a4f8f999764bb0a508d777dca972"><td class="memItemLeft" align="right" valign="top"><a id="ab8d9a4f8f999764bb0a508d777dca972"></a>
-static MatWrap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#ab8d9a4f8f999764bb0a508d777dca972">matwrap_transpose</a> (MatWrap A)</td></tr>
-<tr class="memdesc:ab8d9a4f8f999764bb0a508d777dca972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a MatWrap representing the input's transpose. It's just a wrapper, referencing the same memory. <br /></td></tr>
-<tr class="separator:ab8d9a4f8f999764bb0a508d777dca972"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a329e66029a986846b9c7339b9e1c3627"><td class="memItemLeft" align="right" valign="top"><a id="a329e66029a986846b9c7339b9e1c3627"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a329e66029a986846b9c7339b9e1c3627">matwrap_reorder_in_place</a> (MatWrap *A)</td></tr>
-<tr class="memdesc:a329e66029a986846b9c7339b9e1c3627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert in-place from column-major to row-major, or vice-versa. <br /></td></tr>
-<tr class="separator:a329e66029a986846b9c7339b9e1c3627"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00531504d0ee7af083eb43f3b70c081d"><td class="memItemLeft" align="right" valign="top"><a id="a00531504d0ee7af083eb43f3b70c081d"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a00531504d0ee7af083eb43f3b70c081d">matwrap_sliceByPresence</a> (MatWrap *A, double *sysPresence, MatWrap *out)</td></tr>
-<tr class="memdesc:a00531504d0ee7af083eb43f3b70c081d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the matrix-slice of m, selecting those rows where the corresponding presence value is positive. <br /></td></tr>
-<tr class="separator:a00531504d0ee7af083eb43f3b70c081d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61a4ee0a263b1cabc8ec68ad19129ad0"><td class="memItemLeft" align="right" valign="top"><a id="a61a4ee0a263b1cabc8ec68ad19129ad0"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a61a4ee0a263b1cabc8ec68ad19129ad0">matwrap_mul</a> (MatWrap A, MatWrap B, MatWrap *<a class="el" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a>)</td></tr>
-<tr class="memdesc:a61a4ee0a263b1cabc8ec68ad19129ad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize C with the product A*B. <br /></td></tr>
-<tr class="separator:a61a4ee0a263b1cabc8ec68ad19129ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44d7e08533071b7961cea73eb05b6858"><td class="memItemLeft" align="right" valign="top"><a id="a44d7e08533071b7961cea73eb05b6858"></a>
-static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a44d7e08533071b7961cea73eb05b6858">matwrap_mul_elem</a> (MatWrap A, MatWrap B, int i, int j)</td></tr>
-<tr class="memdesc:a44d7e08533071b7961cea73eb05b6858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the i,j entry of A*B. <br /></td></tr>
-<tr class="separator:a44d7e08533071b7961cea73eb05b6858"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44d3b06dca0856d3dec5bd6cd3d0f21d"><td class="memItemLeft" align="right" valign="top"><a id="a44d3b06dca0856d3dec5bd6cd3d0f21d"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a44d3b06dca0856d3dec5bd6cd3d0f21d">matwrap_free</a> (MatWrap A)</td></tr>
-<tr class="memdesc:a44d3b06dca0856d3dec5bd6cd3d0f21d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans up resources allocated by matwrap_init (or indirectly by matwrap_mul, etc.). <br /></td></tr>
-<tr class="separator:a44d3b06dca0856d3dec5bd6cd3d0f21d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f418133dbe149b0edab9e3c7f0cc85d"><td class="memItemLeft" align="right" valign="top"><a id="a0f418133dbe149b0edab9e3c7f0cc85d"></a>
+static cholmod_dense *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a0f418133dbe149b0edab9e3c7f0cc85d">safelanes_sliceByPresence</a> (cholmod_dense *m, double *sysPresence)</td></tr>
+<tr class="memdesc:a0f418133dbe149b0edab9e3c7f0cc85d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the matrix-slice of m, selecting those rows where the corresponding presence value is positive. <br /></td></tr>
+<tr class="separator:a0f418133dbe149b0edab9e3c7f0cc85d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac515c7ab71216ef25bfeefc6c553a4a7"><td class="memItemLeft" align="right" valign="top"><a id="ac515c7ab71216ef25bfeefc6c553a4a7"></a>
+static cholmod_dense *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#ac515c7ab71216ef25bfeefc6c553a4a7">ncholmod_ddmult</a> (cholmod_dense *A, int transA, cholmod_dense *B)</td></tr>
+<tr class="memdesc:ac515c7ab71216ef25bfeefc6c553a4a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dense times dense matrix. Return A*B, or A'*B if transA is true. <br /></td></tr>
+<tr class="separator:ac515c7ab71216ef25bfeefc6c553a4a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ea03f969db4b056116db0b103b3ab76"><td class="memItemLeft" align="right" valign="top"><a id="a6ea03f969db4b056116db0b103b3ab76"></a>
+static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a6ea03f969db4b056116db0b103b3ab76">safelanes_row_dot_row</a> (cholmod_dense *A, cholmod_dense *B, int i, int j)</td></tr>
+<tr class="memdesc:a6ea03f969db4b056116db0b103b3ab76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the i,j entry of A*B', or equivalently the dot product of row i of A with row j of B. <br /></td></tr>
+<tr class="separator:a6ea03f969db4b056116db0b103b3ab76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11a9dc4d76b5a3e13ce678b9ce171e53"><td class="memItemLeft" align="right" valign="top"><a id="a11a9dc4d76b5a3e13ce678b9ce171e53"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a11a9dc4d76b5a3e13ce678b9ce171e53">array_push_back_edge</a> (<a class="el" href="safelanes_8c.html#ad97b022cdb9ed20d3c8d438abb126de7">Edge</a> **<a class="el" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>, int v0, int v1)</td></tr>
 <tr class="memdesc:a11a9dc4d76b5a3e13ce678b9ce171e53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Like array_push_back( a, Edge{v0, v1} ), but achievable in C. :-P. <br /></td></tr>
@@ -314,9 +278,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safe
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a3350c6b4bd09dd6de9f15506e5f89beb">safelanes_destroy</a> (void)</td></tr>
 <tr class="memdesc:a3350c6b4bd09dd6de9f15506e5f89beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the safelanes system. <br /></td></tr>
 <tr class="separator:a3350c6b4bd09dd6de9f15506e5f89beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a3b10e1b87469eb943fd640ee73b3aa"><td class="memItemLeft" align="right" valign="top">SafeLane *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a0a3b10e1b87469eb943fd640ee73b3aa">safelanes_get</a> (int faction, const StarSystem *system)</td></tr>
-<tr class="memdesc:a0a3b10e1b87469eb943fd640ee73b3aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the safelanes system.  <a href="safelanes_8c.html#a0a3b10e1b87469eb943fd640ee73b3aa">More...</a><br /></td></tr>
-<tr class="separator:a0a3b10e1b87469eb943fd640ee73b3aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8ac9a56c1f66bfa79fd56fcbf035e95"><td class="memItemLeft" align="right" valign="top">SafeLane *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#af8ac9a56c1f66bfa79fd56fcbf035e95">safelanes_get</a> (int faction, int standing, const StarSystem *system)</td></tr>
+<tr class="memdesc:af8ac9a56c1f66bfa79fd56fcbf035e95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a set of safelanes for a faction and system.  <a href="safelanes_8c.html#af8ac9a56c1f66bfa79fd56fcbf035e95">More...</a><br /></td></tr>
+<tr class="separator:af8ac9a56c1f66bfa79fd56fcbf035e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9470ea6bf4b3c6bec36363d552de22a8"><td class="memItemLeft" align="right" valign="top"><a id="a9470ea6bf4b3c6bec36363d552de22a8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a9470ea6bf4b3c6bec36363d552de22a8">safelanes_recalculate</a> (void)</td></tr>
 <tr class="memdesc:a9470ea6bf4b3c6bec36363d552de22a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the safe lane locations in response to the universe changing (e.g., diff applied). <br /></td></tr>
@@ -328,10 +292,6 @@ Variables</h2></td></tr>
 <tr class="separator:a29874299171f0e96c480b139d19adef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cc38ea9856a355811db270472cbff0e"><td class="memItemLeft" align="right" valign="top">static const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a8cc38ea9856a355811db270472cbff0e">JUMP_CONDUCTIVITY</a> = .001</td></tr>
 <tr class="separator:a8cc38ea9856a355811db270472cbff0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf0db6b6b5480398f7a38828811a347e"><td class="memItemLeft" align="right" valign="top">static const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#adf0db6b6b5480398f7a38828811a347e">CONVERGENCE_THRESHOLD</a> = 1e-12</td></tr>
-<tr class="separator:adf0db6b6b5480398f7a38828811a347e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fd1aab8b5b562114c342d2242f955e9"><td class="memItemLeft" align="right" valign="top">static const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a3fd1aab8b5b562114c342d2242f955e9">MAX_ITERATIONS</a> = 20</td></tr>
-<tr class="separator:a3fd1aab8b5b562114c342d2242f955e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17426dcdae8c03c86a1f31d64467cacb"><td class="memItemLeft" align="right" valign="top">static const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a17426dcdae8c03c86a1f31d64467cacb">MIN_ANGLE</a> = M_PI/18</td></tr>
 <tr class="separator:a17426dcdae8c03c86a1f31d64467cacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa58e17c4af561cdaa005b3580c3fa7fb"><td class="memItemLeft" align="right" valign="top">static cholmod_common&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#aa58e17c4af561cdaa005b3580c3fa7fb">C</a></td></tr>
@@ -398,11 +358,7 @@ Variables</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a39fca1837c5ce7715cbf571669660c13a71715610c33a16273628f4dd03b2ddaf"></a>STORAGE_MODE_UPPER_TRIANGULAR_PART&#160;</td><td class="fielddoc"><p>A CHOLMOD "stype" value: matrix is interpreted as symmetric. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a39fca1837c5ce7715cbf571669660c13a1a2838b9d343551f39b940a4001bb6f1"></a>UNSORTED&#160;</td><td class="fielddoc"><p>a named bool </p>
-</td></tr>
 <tr><td class="fieldname"><a id="a39fca1837c5ce7715cbf571669660c13a9699db058625ef9b33efb36230f8c870"></a>SORTED&#160;</td><td class="fielddoc"><p>a named bool </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a39fca1837c5ce7715cbf571669660c13a354211f87eeb315ebd33134994728cff"></a>UNPACKED&#160;</td><td class="fielddoc"><p>a named bool </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a39fca1837c5ce7715cbf571669660c13a8f626cb9c789e0dd4b7c9dad49465938"></a>PACKED&#160;</td><td class="fielddoc"><p>a named bool </p>
 </td></tr>
@@ -410,7 +366,7 @@ Variables</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00049">49</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00047">47</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -429,13 +385,13 @@ Variables</h2></td></tr>
 <p>Object type: like SafeLaneLocType, but with Naev stack indexing in mind. </p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Converge these after beefing up nlua APIs (#1862 or just jump point from internal indices). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00066">66</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00062">62</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a1d5d41d9bb9fb8838785a63072c6655b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d5d41d9bb9fb8838785a63072c6655b">&#9670;&nbsp;</a></span>safelanes_activateByGradient()</h2>
+<a id="a1be678497fe009de2960e38120068134"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1be678497fe009de2960e38120068134">&#9670;&nbsp;</a></span>safelanes_activateByGradient()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -444,9 +400,9 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void safelanes_activateByGradient </td>
+          <td class="memname">static int safelanes_activateByGradient </td>
           <td>(</td>
-          <td class="paramtype">MatWrap&#160;</td>
+          <td class="paramtype">cholmod_dense *&#160;</td>
           <td class="paramname"><em>Lambda_tilde</em></td><td>)</td>
           <td></td>
         </tr>
@@ -459,15 +415,16 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Per-system, per-faction, activates the affordable lane with best (grad phi)/L. </p>
+<dl class="section return"><dt>Returns</dt><dd>How many builds (upper bound) have to happen next turn. </dd></dl>
 <p>&lt; Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated.</p>
 <p>&lt; System si's U and Lambda rows start at sys_base; its lal rows start at lal_base.</p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00699">699</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00689">689</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
-<a id="a0a3b10e1b87469eb943fd640ee73b3aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a3b10e1b87469eb943fd640ee73b3aa">&#9670;&nbsp;</a></span>safelanes_get()</h2>
+<a id="af8ac9a56c1f66bfa79fd56fcbf035e95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8ac9a56c1f66bfa79fd56fcbf035e95">&#9670;&nbsp;</a></span>safelanes_get()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -477,6 +434,12 @@ Variables</h2></td></tr>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>faction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>standing</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -492,17 +455,18 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Shuts down the safelanes system. </p>
+<p>Gets a set of safelanes for a faction and system. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">faction</td><td>ID of the faction whose lanes we want, or a negative value signifying "all of them". </td></tr>
+    <tr><td class="paramname">standing</td><td>Bit-mask indicating what standing to get. </td></tr>
     <tr><td class="paramname">system</td><td>Star system whose lanes we want. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>) of matching SafeLane structures. Caller frees. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00196">196</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00179">179</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -533,7 +497,7 @@ Variables</h2></td></tr>
 <p>Returns the initial conductivity value (1/length) for edge ei. The live value is stored in the stiffness matrix;. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="safelanes_8c.html#a1b2ff9d83db3703564b4f73ca049a3fa" title="Sets up the stiffness matrix.">safelanes_initStiff</a> above. When <a class="el" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a> lane is activated, its conductivity is updated to (1+<a class="el" href="safelanes_8c.html#a29874299171f0e96c480b139d19adef4">ALPHA</a>)/length. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00565">565</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00567">567</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -564,7 +528,7 @@ Variables</h2></td></tr>
 <p>Updates the stiffness matrix to account for the given edge being activated. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="safelanes_8c.html#a1b2ff9d83db3703564b4f73ca049a3fa" title="Sets up the stiffness matrix.">safelanes_initStiff</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00576">576</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00578">578</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -615,7 +579,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter settings, statistics, and workspace used internally by CHOLMOD. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00099">99</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00087">87</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -640,32 +604,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>To qsort() a list of indices by table value, point this at your table and use cmp_key. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00118">118</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
-
-</div>
-</div>
-<a id="adf0db6b6b5480398f7a38828811a347e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf0db6b6b5480398f7a38828811a347e">&#9670;&nbsp;</a></span>CONVERGENCE_THRESHOLD</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const double CONVERGENCE_THRESHOLD = 1e-12</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Stop optimizing after a relative change of U~ this small. </p>
-
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00046">46</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00106">106</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -690,7 +629,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): Everything eligible to be a lane. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00102">102</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00090">90</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -715,7 +654,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): The faction IDs that can build lanes. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00104">104</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00092">92</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -740,7 +679,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Fluxes (bunch of F columns in the KU=F problem). </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00115">115</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00103">103</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -790,7 +729,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): Per edge, ID of faction that built a lane there, if any, else 0. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00105">105</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00093">93</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -815,32 +754,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): Per edge, the set of factions that may build it. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00106">106</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
-
-</div>
-</div>
-<a id="a3fd1aab8b5b562114c342d2242f955e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fd1aab8b5b562114c342d2242f955e9">&#9670;&nbsp;</a></span>MAX_ITERATIONS</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const double MAX_ITERATIONS = 20</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Stop optimizing after this many iterations, at most. </p>
-
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00047">47</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00094">94</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -865,7 +779,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Path triangles can't be more acute. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00048">48</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00046">46</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -890,7 +804,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Array: (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): For each builder faction, The (P*)P in: grad_u(phi)=(Q*)Q U~ (P*)P. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00117">117</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00105">105</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -915,7 +829,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): Per faction, per system, the amount of presence not yet spent on lanes. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00107">107</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00095">95</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -940,7 +854,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>(Q*)Q where Q is the ExV difference matrix. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00114">114</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00102">102</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -965,7 +879,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>K matrix, UT triplets: internal edges (E*3), implicit jump connections, anchor conditions. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00113">113</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00101">101</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -990,7 +904,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): For each system index, the id of its first edge, + sentinel. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00103">103</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00091">91</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -1015,7 +929,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): For each system index, the id of its first vertex, + sentinel. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00101">101</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00089">89</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -1038,9 +952,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): One vertex ID per connected component. Used to initialize "stiff". </p>
+<p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): One vertex ID per connected component. Used to set up "stiff". </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00111">111</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00099">99</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -1063,9 +977,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): Conductivity (1/len) of each potential lane. Used to initialize "stiff". </p>
+<p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): Conductivity (1/len) of each potential lane. Used to set up "stiff". </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00110">110</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00098">98</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -1088,9 +1002,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): The vertex ID pairs connected by 2-way jumps. Used to initialize "stiff". </p>
+<p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): The vertex ID pairs connected by 2-way jumps. Used to set up "stiff". </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00109">109</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00097">97</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -1113,9 +1027,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): Vertex ids that are planets. Used to initialize "ftilde", "PPl". </p>
+<p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): The vertex IDs of planets, to set up ftilde/PPl. Unrelated to planet IDs. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00108">108</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00096">96</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -1140,7 +1054,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>The partition of {system indices} into connected components (connected by 2-way jumps). </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00112">112</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00100">100</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -1165,7 +1079,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Potentials (bunch of U columns in the KU=F problem). </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00116">116</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00104">104</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -1190,7 +1104,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>): Everything eligible to be a lane endpoint. </p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00100">100</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00088">88</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
