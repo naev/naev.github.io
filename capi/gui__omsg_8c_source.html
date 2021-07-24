@@ -77,7 +77,7 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="structomsg__s.html#a8a1018dc54ba9ba14d71e250f220ef50">   38</a></span>&#160;   <span class="keywordtype">int</span> <a class="code" href="structomsg__s.html#a8a1018dc54ba9ba14d71e250f220ef50">nlines</a>;       </div>
 <div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="structomsg__s.html#a801d37e1e444c2f4b016feca57044f11">   39</a></span>&#160;   <span class="keywordtype">double</span> <a class="code" href="structomsg__s.html#a801d37e1e444c2f4b016feca57044f11">duration</a>;  </div>
 <div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="structomsg__s.html#ace5371385cc6286bbfa97c3d45bd7976">   40</a></span>&#160;   <span class="keywordtype">int</span> <a class="code" href="structomsg__s.html#ace5371385cc6286bbfa97c3d45bd7976">font</a>;         </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structomsg__s.html#a9ff6d79837629f1e6cad2ac90d2034be">   41</a></span>&#160;   <span class="keyword">const</span> glColour *<a class="code" href="structomsg__s.html#a9ff6d79837629f1e6cad2ac90d2034be">col</a>;    </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structomsg__s.html#a3ac3a00410168d2747d808cb7ef22992">   41</a></span>&#160;   glColour <a class="code" href="structomsg__s.html#a3ac3a00410168d2747d808cb7ef22992">col</a>;     </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;} omsg_t;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">static</span> omsg_t *omsg_array           = NULL;  </div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> omsg_idgen      = 0;     </div>
@@ -233,7 +233,7 @@ $(function() {
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;      <span class="comment">/* Render. */</span></div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      font = omsg_getFont( omsg-&gt;font );</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      col = *omsg-&gt;col;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      col = omsg-&gt;col;</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      <span class="keywordflow">if</span> (omsg-&gt;duration &lt; 1.)</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;         col.a = omsg-&gt;duration;</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      <a class="code" href="font_8c.html#a31d45dd9ccab0e3b594290f9807d1b37">gl_printRestoreClear</a>();</div>
@@ -255,69 +255,69 @@ $(function() {
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;}</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> omsg_add( <span class="keyword">const</span> <span class="keywordtype">char</span> *msg, <span class="keywordtype">double</span> duration, <span class="keywordtype">int</span> fontsize )</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;{</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;   omsg_t *omsg;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;   <span class="keywordtype">int</span> font;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   <span class="comment">/* Create if necessary. */</span></div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;   <span class="keywordflow">if</span> (omsg_array == NULL)</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      omsg_array = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( omsg_t );</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;   <span class="comment">/* Get font size. */</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;   font = omsg_getFontID( fontsize );</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;   <span class="comment">/* Create the message. */</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;   omsg           = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;omsg_array );</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   memset( omsg, 0, <span class="keyword">sizeof</span>(omsg_t) );</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;   omsg-&gt;id       = ++omsg_idgen;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   omsg-&gt;duration = duration;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;   omsg-&gt;font     = font;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   omsg-&gt;col      = &amp;<a class="code" href="colour_8c.html#aa0601ca54aed9efd2dddd294138c2ad6">cWhite</a>;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   omsg_setMsg( omsg, msg );</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   <span class="keywordflow">return</span> omsg-&gt;id;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;}</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; </div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> omsg_add( <span class="keyword">const</span> <span class="keywordtype">char</span> *msg, <span class="keywordtype">double</span> duration, <span class="keywordtype">int</span> fontsize, <span class="keyword">const</span> glColour *col )</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;{</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;   omsg_t *omsg;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;   <span class="keywordtype">int</span> font;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;   <span class="comment">/* Create if necessary. */</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   <span class="keywordflow">if</span> (omsg_array == NULL)</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      omsg_array = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( omsg_t );</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;   <span class="comment">/* Get font size. */</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;   font = omsg_getFontID( fontsize );</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;   <span class="comment">/* Create the message. */</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   omsg           = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;omsg_array );</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;   memset( omsg, 0, <span class="keyword">sizeof</span>(omsg_t) );</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   omsg-&gt;id       = ++omsg_idgen;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;   omsg-&gt;duration = duration;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   omsg-&gt;font     = font;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   omsg-&gt;col      = *col;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;   omsg_setMsg( omsg, msg );</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   <span class="keywordflow">return</span> omsg-&gt;id;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="keywordtype">int</span> omsg_change( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg, <span class="keywordtype">double</span> duration )</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;{</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   omsg_t *omsg;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   omsg = omsg_get(<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;   <span class="keywordflow">if</span> (omsg == NULL)</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;   omsg_setMsg( omsg, msg );</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;   omsg-&gt;duration = duration;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;}</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="keywordtype">int</span> omsg_change( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg, <span class="keywordtype">double</span> duration )</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;{</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   omsg_t *omsg;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;   omsg = omsg_get(<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;   <span class="keywordflow">if</span> (omsg == NULL)</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;   omsg_setMsg( omsg, msg );</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   omsg-&gt;duration = duration;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;}</div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="keywordtype">int</span> omsg_exists( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;{</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;   <span class="keywordflow">return</span> (omsg_get(<span class="keywordtype">id</span>) != NULL);</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;}</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="keywordtype">int</span> omsg_exists( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;{</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;   <span class="keywordflow">return</span> (omsg_get(<span class="keywordtype">id</span>) != NULL);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;}</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="keywordtype">void</span> omsg_rm( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;{</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;   omsg_t *omsg;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   omsg = omsg_get(<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   <span class="keywordflow">if</span> (omsg == NULL)</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   <span class="comment">/* Destroy. */</span></div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   omsg_free( omsg );</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;omsg_array, &amp;omsg[0], &amp;omsg[1] );</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;}</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="keywordtype">void</span> omsg_rm( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;{</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   omsg_t *omsg;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   omsg = omsg_get(<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;   <span class="keywordflow">if</span> (omsg == NULL)</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   <span class="comment">/* Destroy. */</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   omsg_free( omsg );</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;   <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;omsg_array, &amp;omsg[0], &amp;omsg[1] );</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;}</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="acolour_8c_html_aa0601ca54aed9efd2dddd294138c2ad6"><div class="ttname"><a href="colour_8c.html#aa0601ca54aed9efd2dddd294138c2ad6">cWhite</a></div><div class="ttdeci">const glColour cWhite</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00029">colour.c:29</a></div></div>
+<div class="ttc" id="astructomsg__s_html_a3ac3a00410168d2747d808cb7ef22992"><div class="ttname"><a href="structomsg__s.html#a3ac3a00410168d2747d808cb7ef22992">omsg_s::col</a></div><div class="ttdeci">glColour col</div><div class="ttdef"><b>Definition:</b> <a href="gui__omsg_8c_source.html#l00041">gui_omsg.c:41</a></div></div>
 <div class="ttc" id="afont_8c_html_aa71328b847f962c6f7b9ef29cf161575"><div class="ttname"><a href="font_8c.html#aa71328b847f962c6f7b9ef29cf161575">gl_printWidthForText</a></div><div class="ttdeci">int gl_printWidthForText(const glFont *ft_font, const char *text, const int width, int *outw)</div><div class="ttdoc">Gets the number of characters in text that fit into width, assuming your intent is to word-wrap at sa...</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00540">font.c:540</a></div></div>
 <div class="ttc" id="astructomsg__s_html_ace5371385cc6286bbfa97c3d45bd7976"><div class="ttname"><a href="structomsg__s.html#ace5371385cc6286bbfa97c3d45bd7976">omsg_s::font</a></div><div class="ttdeci">int font</div><div class="ttdef"><b>Definition:</b> <a href="gui__omsg_8c_source.html#l00040">gui_omsg.c:40</a></div></div>
 <div class="ttc" id="afont_8c_html_acbc92f9d9c6ffe02d2723a1bae75be33"><div class="ttname"><a href="font_8c.html#acbc92f9d9c6ffe02d2723a1bae75be33">gl_fontInit</a></div><div class="ttdeci">int gl_fontInit(glFont *font, const char *fname, const unsigned int h, const char *prefix, unsigned int flags)</div><div class="ttdoc">Initializes a font.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01486">font.c:1486</a></div></div>
@@ -340,7 +340,6 @@ $(function() {
 <div class="ttc" id="aarray_8h_html_a04e810cfeccd1cd523f9b28e68aca564"><div class="ttname"><a href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a></div><div class="ttdeci">#define array_free(ptr_array)</div><div class="ttdoc">Frees memory allocated and sets array to NULL.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00162">array.h:162</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
 <div class="ttc" id="astructomsg__s_html"><div class="ttname"><a href="structomsg__s.html">omsg_s</a></div><div class="ttdoc">Message struct.</div><div class="ttdef"><b>Definition:</b> <a href="gui__omsg_8c_source.html#l00035">gui_omsg.c:35</a></div></div>
-<div class="ttc" id="astructomsg__s_html_a9ff6d79837629f1e6cad2ac90d2034be"><div class="ttname"><a href="structomsg__s.html#a9ff6d79837629f1e6cad2ac90d2034be">omsg_s::col</a></div><div class="ttdeci">const glColour * col</div><div class="ttdef"><b>Definition:</b> <a href="gui__omsg_8c_source.html#l00041">gui_omsg.c:41</a></div></div>
 <div class="ttc" id="astructomsg__font__s_html_adaab59ebeb5fd8560c554956ee07c987"><div class="ttname"><a href="structomsg__font__s.html#adaab59ebeb5fd8560c554956ee07c987">omsg_font_s::font</a></div><div class="ttdeci">glFont font</div><div class="ttdef"><b>Definition:</b> <a href="gui__omsg_8c_source.html#l00027">gui_omsg.c:27</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
