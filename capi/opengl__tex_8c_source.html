@@ -335,7 +335,7 @@ $(function() {
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;   md5_state_t md5;</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;   md5_byte_t *md5val;</div>
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;   <span class="keywordflow">if</span> (name != NULL) {</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;   <span class="keywordflow">if</span> ((name != NULL) &amp;&amp; !(flags &amp; OPENGL_TEX_SKIPCACHE)) {</div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( name, <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a> );</div>
 <div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      <span class="keywordflow">if</span> (texture != NULL) {</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;         <span class="keywordflow">if</span> (freesur)</div>
@@ -427,7 +427,7 @@ $(function() {
 <div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;   glTexture *texture;</div>
 <div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160; </div>
 <div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;   <span class="comment">/* Make sure doesn&#39;t already exist. */</span></div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;   <span class="keywordflow">if</span> (name != NULL) {</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;   <span class="keywordflow">if</span> ((name != NULL) &amp;&amp; !(flags &amp; OPENGL_TEX_SKIPCACHE)) {</div>
 <div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( name, <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a> );</div>
 <div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;      <span class="keywordflow">if</span> (texture != NULL)</div>
 <div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;         <span class="keywordflow">return</span> texture;</div>
@@ -523,291 +523,313 @@ $(function() {
 <div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;   glTexture *t;</div>
 <div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160; </div>
 <div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;   <span class="comment">/* Check if it already exists. */</span></div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;   t = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( path, 1, 1 );</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;   <span class="keywordflow">if</span> (t != NULL)</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;      <span class="keywordflow">return</span> t;</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160; </div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;   <span class="comment">/* Load the image */</span></div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="opengl__tex_8c.html#a657f66ee5fe1f4688ed5d8974e3bb00c">gl_loadNewImage</a>( path, flags );</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;}</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160; </div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160; </div>
-<div class="line"><a name="l00605"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#ad7045b3c88c2bfde939d4a24bd0de57e">  605</a></span>&#160;glTexture* <a class="code" href="opengl__tex_8c.html#ad7045b3c88c2bfde939d4a24bd0de57e">gl_newImageRWops</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* path, SDL_RWops *rw, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;{</div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;   glTexture *t;</div>
-<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160; </div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;   <span class="comment">/* Check if it already exists. */</span></div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;   t = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( path, 1, 1 );</div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;   <span class="keywordflow">if</span> (t != NULL)</div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;      <span class="keywordflow">return</span> t;</div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160; </div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;   <span class="comment">/* Load the image */</span></div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">gl_loadNewImageRWops</a>( path, rw, flags );</div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;}</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;   <span class="keywordflow">if</span> (!(flags &amp; OPENGL_TEX_SKIPCACHE)) {</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;      t = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( path, 1, 1 );</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;      <span class="keywordflow">if</span> (t != NULL)</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;         <span class="keywordflow">return</span> t;</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;   }</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160; </div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;   <span class="comment">/* Load the image */</span></div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="opengl__tex_8c.html#a657f66ee5fe1f4688ed5d8974e3bb00c">gl_loadNewImage</a>( path, flags );</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;}</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160; </div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160; </div>
+<div class="line"><a name="l00607"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#ad7045b3c88c2bfde939d4a24bd0de57e">  607</a></span>&#160;glTexture* <a class="code" href="opengl__tex_8c.html#ad7045b3c88c2bfde939d4a24bd0de57e">gl_newImageRWops</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* path, SDL_RWops *rw, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;{</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;   glTexture *t;</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160; </div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;   <span class="comment">/* Check if it already exists. */</span></div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;   <span class="keywordflow">if</span> (!(flags &amp; OPENGL_TEX_SKIPCACHE)) {</div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;      t = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( path, 1, 1 );</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;      <span class="keywordflow">if</span> (t != NULL)</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;         <span class="keywordflow">return</span> t;</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;   }</div>
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160; </div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160; </div>
-<div class="line"><a name="l00626"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a657f66ee5fe1f4688ed5d8974e3bb00c">  626</a></span>&#160;<span class="keyword">static</span> glTexture* <a class="code" href="opengl__tex_8c.html#a657f66ee5fe1f4688ed5d8974e3bb00c">gl_loadNewImage</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* path, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;{</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;   glTexture *texture;</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;   SDL_RWops *rw;</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160; </div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;   <span class="keywordflow">if</span> (path==NULL) {</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;      WARN(_(<span class="stringliteral">&quot;Trying to load image from NULL path.&quot;</span>));</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   }</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160; </div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   <span class="comment">/* Load from packfile */</span></div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   rw = PHYSFSRWOPS_openRead( path );</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   <span class="keywordflow">if</span> (rw == NULL) {</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;      WARN(_(<span class="stringliteral">&quot;Failed to load surface &#39;%s&#39; from ndata.&quot;</span>), path);</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   }</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160; </div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;   texture = <a class="code" href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">gl_loadNewImageRWops</a>( path, rw, flags );</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160; </div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;   SDL_RWclose( rw );</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;   <span class="keywordflow">return</span> texture;</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;}</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;   <span class="comment">/* Load the image */</span></div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">gl_loadNewImageRWops</a>( path, rw, flags );</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;}</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160; </div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160; </div>
+<div class="line"><a name="l00630"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a657f66ee5fe1f4688ed5d8974e3bb00c">  630</a></span>&#160;<span class="keyword">static</span> glTexture* <a class="code" href="opengl__tex_8c.html#a657f66ee5fe1f4688ed5d8974e3bb00c">gl_loadNewImage</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* path, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;{</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   glTexture *texture;</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   SDL_RWops *rw;</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160; </div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   <span class="keywordflow">if</span> (path==NULL) {</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;      WARN(_(<span class="stringliteral">&quot;Trying to load image from NULL path.&quot;</span>));</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   }</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160; </div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;   <span class="comment">/* Load from packfile */</span></div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   rw = PHYSFSRWOPS_openRead( path );</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;   <span class="keywordflow">if</span> (rw == NULL) {</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;      WARN(_(<span class="stringliteral">&quot;Failed to load surface &#39;%s&#39; from ndata.&quot;</span>), path);</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;   }</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160; </div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   texture = <a class="code" href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">gl_loadNewImageRWops</a>( path, rw, flags );</div>
 <div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160; </div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160; </div>
-<div class="line"><a name="l00658"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">  658</a></span>&#160;<span class="keyword">static</span> glTexture* <a class="code" href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">gl_loadNewImageRWops</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *path, SDL_RWops *rw, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;{</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;   glTexture *texture;</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   SDL_Surface *surface;</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160; </div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   <span class="comment">/* Placeholder for warnings. */</span></div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   <span class="keywordflow">if</span> (path==NULL)</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;      path = _(<span class="stringliteral">&quot;unknown&quot;</span>);</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   SDL_RWclose( rw );</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;   <span class="keywordflow">return</span> texture;</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;}</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160; </div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160; </div>
+<div class="line"><a name="l00662"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">  662</a></span>&#160;<span class="keyword">static</span> glTexture* <a class="code" href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">gl_loadNewImageRWops</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *path, SDL_RWops *rw, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;{</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   glTexture *texture;</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   SDL_Surface *surface;</div>
 <div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160; </div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;   surface = IMG_Load_RW( rw, 0 );</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   flags  |= OPENGL_TEX_VFLIP;</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;   <span class="keywordflow">if</span> (surface == NULL) {</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to load image &#39;%s&#39;.&quot;</span>), path );</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;   }</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160; </div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;   <span class="keywordflow">if</span> (surface == NULL) {</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;      WARN(_(<span class="stringliteral">&quot;&#39;%s&#39; could not be opened&quot;</span>), path );</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;   }</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160; </div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;   <span class="keywordflow">if</span> (flags &amp; OPENGL_TEX_MAPTRANS)</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a67b7c09ca0d20a996cfd61b065701ded">gl_loadImagePadTrans</a>( path, surface, rw, flags, surface-&gt;w, surface-&gt;h, 1, 1, 1 );</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a43634a0eb37f6ceb4767c6f02ea4f698">gl_loadImagePad</a>( path, surface, flags, surface-&gt;w, surface-&gt;h, 1, 1, 1 );</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160; </div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;   <span class="keywordflow">return</span> texture;</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;}</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160; </div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;   <span class="comment">/* Placeholder for warnings. */</span></div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   <span class="keywordflow">if</span> (path==NULL)</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;      path = _(<span class="stringliteral">&quot;unknown&quot;</span>);</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160; </div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;   surface = IMG_Load_RW( rw, 0 );</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;   flags  |= OPENGL_TEX_VFLIP;</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;   <span class="keywordflow">if</span> (surface == NULL) {</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to load image &#39;%s&#39;.&quot;</span>), path );</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;   }</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160; </div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;   <span class="keywordflow">if</span> (surface == NULL) {</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;      WARN(_(<span class="stringliteral">&quot;&#39;%s&#39; could not be opened&quot;</span>), path );</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;   }</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160; </div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;   <span class="keywordflow">if</span> (flags &amp; OPENGL_TEX_MAPTRANS)</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a67b7c09ca0d20a996cfd61b065701ded">gl_loadImagePadTrans</a>( path, surface, rw, flags, surface-&gt;w, surface-&gt;h, 1, 1, 1 );</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a43634a0eb37f6ceb4767c6f02ea4f698">gl_loadImagePad</a>( path, surface, flags, surface-&gt;w, surface-&gt;h, 1, 1, 1 );</div>
 <div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160; </div>
-<div class="line"><a name="l00697"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#adef18f796b003fa66617d9bc3d4d198d">  697</a></span>&#160;glTexture* <a class="code" href="opengl__tex_8c.html#adef18f796b003fa66617d9bc3d4d198d">gl_newSprite</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* path, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>,</div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;{</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;   glTexture* texture;</div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;   texture = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( path, flags );</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;   <span class="keywordflow">if</span> (texture == NULL)</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160; </div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;   <span class="comment">/* will possibly overwrite an existing textur properties</span></div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="comment">    * so we have to load same texture always the same sprites */</span></div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;   texture-&gt;sx    = (double) <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>;</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   texture-&gt;sy    = (double) <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>;</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;   texture-&gt;sw    = texture-&gt;w / texture-&gt;sx;</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;   texture-&gt;sh    = texture-&gt;h / texture-&gt;sy;</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   texture-&gt;srw   = texture-&gt;sw / texture-&gt;w;</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;   texture-&gt;srh   = texture-&gt;sh / texture-&gt;h;</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   <span class="keywordflow">return</span> texture;</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;}</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160; </div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160; </div>
-<div class="line"><a name="l00727"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a44889dfa4147fc533da69e4810cc291b">  727</a></span>&#160;glTexture* <a class="code" href="opengl__tex_8c.html#a44889dfa4147fc533da69e4810cc291b">gl_newSpriteRWops</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* path, SDL_RWops *rw,</div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;{</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;   glTexture* texture;</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;   texture = <a class="code" href="opengl__tex_8c.html#ad7045b3c88c2bfde939d4a24bd0de57e">gl_newImageRWops</a>( path, rw, flags );</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;   <span class="keywordflow">if</span> (texture == NULL)</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160; </div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;   <span class="comment">/* will possibly overwrite an existing textur properties</span></div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;<span class="comment">    * so we have to load same texture always the same sprites */</span></div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;   texture-&gt;sx    = (double) <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>;</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;   texture-&gt;sy    = (double) <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>;</div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;   texture-&gt;sw    = texture-&gt;w / texture-&gt;sx;</div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   texture-&gt;sh    = texture-&gt;h / texture-&gt;sy;</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   texture-&gt;srw   = texture-&gt;sw / texture-&gt;w;</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;   texture-&gt;srh   = texture-&gt;sh / texture-&gt;h;</div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;   <span class="keywordflow">return</span> texture;</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;}</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160; </div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160; </div>
-<div class="line"><a name="l00752"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">  752</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( glTexture* texture )</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;{</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;   glTexList *cur, *last;</div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160; </div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;   <span class="keywordflow">if</span> (texture == NULL)</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160; </div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;   <span class="comment">/* see if we can find it in stack */</span></div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;   last = NULL;</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   <span class="keywordflow">for</span> (cur=<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a>; cur!=NULL; cur=cur-&gt;next) {</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;      <span class="keywordflow">if</span> (cur-&gt;tex == texture) { <span class="comment">/* found it */</span></div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;         cur-&gt;used--;</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;         <span class="keywordflow">if</span> (cur-&gt;used &lt;= 0) { <span class="comment">/* not used anymore */</span></div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;            <span class="comment">/* free the texture */</span></div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;            glDeleteTextures( 1, &amp;texture-&gt;texture );</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;            free(texture-&gt;trans);</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;            free(texture-&gt;name);</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;            free(texture);</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160; </div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;            <span class="comment">/* free the list node */</span></div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;            <span class="keywordflow">if</span> (last == NULL) { <span class="comment">/* case there&#39;s no texture before it */</span></div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;               <span class="keywordflow">if</span> (cur-&gt;next != NULL)</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;                  <a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a> = cur-&gt;next;</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;               <span class="keywordflow">else</span> <span class="comment">/* case it&#39;s the last texture */</span></div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;                  <a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a> = NULL;</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;            }</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;            <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;               last-&gt;next = cur-&gt;next;</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;            free(cur);</div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;         }</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;         <span class="keywordflow">return</span>; <span class="comment">/* we already found it so we can exit */</span></div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;      }</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;      last = cur;</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;   }</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160; </div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;   <span class="comment">/* Not found */</span></div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;   <span class="keywordflow">if</span> (texture-&gt;name != NULL) <span class="comment">/* Surfaces will have NULL names */</span></div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;      WARN(_(<span class="stringliteral">&quot;Attempting to free texture &#39;%s&#39; not found in stack!&quot;</span>), texture-&gt;name);</div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160; </div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;   <span class="comment">/* Free anyways */</span></div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;   glDeleteTextures( 1, &amp;texture-&gt;texture );</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;   free(texture-&gt;trans);</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;   free(texture-&gt;name);</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;   free(texture);</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160; </div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;   gl_checkErr();</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;}</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160; </div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160; </div>
-<div class="line"><a name="l00807"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">  807</a></span>&#160;glTexture* <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( glTexture *texture )</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;{</div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;   glTexList *cur;</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160; </div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;   <span class="comment">/* No segfaults kthxbye. */</span></div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;   <span class="keywordflow">if</span> (texture == NULL)</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160; </div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;   <span class="comment">/* check to see if it already exists */</span></div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a> != NULL) {</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;      <span class="keywordflow">for</span> (cur=<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a>; cur!=NULL; cur=cur-&gt;next) {</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;         <span class="keywordflow">if</span> (texture == cur-&gt;tex) {</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;            cur-&gt;used += 1;</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;            <span class="keywordflow">return</span> cur-&gt;tex;</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;         }</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;      }</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;   }</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160; </div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   <span class="comment">/* Invalid texture. */</span></div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;   WARN(_(<span class="stringliteral">&quot;Unable to duplicate texture &#39;%s&#39;.&quot;</span>), texture-&gt;name);</div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;}</div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160; </div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160; </div>
-<div class="line"><a name="l00839"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a60419b6706a6eb61b5c349a377aa6dfd">  839</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="opengl__tex_8c.html#a60419b6706a6eb61b5c349a377aa6dfd">gl_isTrans</a>( <span class="keyword">const</span> glTexture* t, <span class="keyword">const</span> <span class="keywordtype">int</span> x, <span class="keyword">const</span> <span class="keywordtype">int</span> y )</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;{</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160; </div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;   <span class="comment">/* Get the position in the sheet. */</span></div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;   i = y*(int)(t-&gt;w) + x ;</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   <span class="comment">/* Now we have to pull out the individual bit. */</span></div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;   <span class="keywordflow">return</span> !(t-&gt;trans[ i/8 ] &amp; (1 &lt;&lt; (i%8)));</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;}</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160; </div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160; </div>
-<div class="line"><a name="l00861"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#ac82dd1e609bebffb3a93d93f42b28e49">  861</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__tex_8c.html#ac82dd1e609bebffb3a93d93f42b28e49">gl_getSpriteFromDir</a>( <span class="keywordtype">int</span>* x, <span class="keywordtype">int</span>* y, <span class="keyword">const</span> glTexture* t, <span class="keyword">const</span> <span class="keywordtype">double</span> dir )</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;   <span class="keywordflow">return</span> texture;</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;}</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160; </div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160; </div>
+<div class="line"><a name="l00701"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#adef18f796b003fa66617d9bc3d4d198d">  701</a></span>&#160;glTexture* <a class="code" href="opengl__tex_8c.html#adef18f796b003fa66617d9bc3d4d198d">gl_newSprite</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* path, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>,</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;{</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;   glTexture* texture;</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;   <span class="comment">/* Check if it already exists. */</span></div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;   <span class="keywordflow">if</span> (!(flags &amp; OPENGL_TEX_SKIPCACHE)) {</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( path, <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a> );</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;      <span class="keywordflow">if</span> (texture != NULL)</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;         <span class="keywordflow">return</span> texture;</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   }</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   <span class="comment">/* Create new image. */</span></div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;   texture = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( path, flags | OPENGL_TEX_SKIPCACHE );</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;   <span class="keywordflow">if</span> (texture == NULL)</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160; </div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;   <span class="comment">/* will possibly overwrite an existing textur properties</span></div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="comment">    * so we have to load same texture always the same sprites */</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   texture-&gt;sx    = (double) <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>;</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;   texture-&gt;sy    = (double) <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>;</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;   texture-&gt;sw    = texture-&gt;w / texture-&gt;sx;</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   texture-&gt;sh    = texture-&gt;h / texture-&gt;sy;</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   texture-&gt;srw   = texture-&gt;sw / texture-&gt;w;</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   texture-&gt;srh   = texture-&gt;sh / texture-&gt;h;</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;   <span class="keywordflow">return</span> texture;</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;}</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160; </div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160; </div>
+<div class="line"><a name="l00740"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a44889dfa4147fc533da69e4810cc291b">  740</a></span>&#160;glTexture* <a class="code" href="opengl__tex_8c.html#a44889dfa4147fc533da69e4810cc291b">gl_newSpriteRWops</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* path, SDL_RWops *rw,</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;{</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;   glTexture* texture;</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160; </div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   <span class="comment">/* Check if it already exists. */</span></div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   <span class="keywordflow">if</span> (!(flags &amp; OPENGL_TEX_SKIPCACHE)) {</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( path, <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a> );</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;      <span class="keywordflow">if</span> (texture != NULL)</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;         <span class="keywordflow">return</span> texture;</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;   }</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160; </div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;   <span class="comment">/* Create new image. */</span></div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;   texture = <a class="code" href="opengl__tex_8c.html#ad7045b3c88c2bfde939d4a24bd0de57e">gl_newImageRWops</a>( path, rw, flags | OPENGL_TEX_SKIPCACHE );</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;   <span class="keywordflow">if</span> (texture == NULL)</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160; </div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;   <span class="comment">/* will possibly overwrite an existing textur properties</span></div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;<span class="comment">    * so we have to load same texture always the same sprites */</span></div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;   texture-&gt;sx    = (double) <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>;</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;   texture-&gt;sy    = (double) <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>;</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   texture-&gt;sw    = texture-&gt;w / texture-&gt;sx;</div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;   texture-&gt;sh    = texture-&gt;h / texture-&gt;sy;</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;   texture-&gt;srw   = texture-&gt;sw / texture-&gt;w;</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;   texture-&gt;srh   = texture-&gt;sh / texture-&gt;h;</div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;   <span class="keywordflow">return</span> texture;</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;}</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160; </div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
+<div class="line"><a name="l00774"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">  774</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( glTexture* texture )</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;{</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   glTexList *cur, *last;</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160; </div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   <span class="keywordflow">if</span> (texture == NULL)</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160; </div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;   <span class="comment">/* see if we can find it in stack */</span></div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;   last = NULL;</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;   <span class="keywordflow">for</span> (cur=<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a>; cur!=NULL; cur=cur-&gt;next) {</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;      <span class="keywordflow">if</span> (cur-&gt;tex == texture) { <span class="comment">/* found it */</span></div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;         cur-&gt;used--;</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;         <span class="keywordflow">if</span> (cur-&gt;used &lt;= 0) { <span class="comment">/* not used anymore */</span></div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;            <span class="comment">/* free the texture */</span></div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;            glDeleteTextures( 1, &amp;texture-&gt;texture );</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;            free(texture-&gt;trans);</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;            free(texture-&gt;name);</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;            free(texture);</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160; </div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;            <span class="comment">/* free the list node */</span></div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;            <span class="keywordflow">if</span> (last == NULL) { <span class="comment">/* case there&#39;s no texture before it */</span></div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;               <span class="keywordflow">if</span> (cur-&gt;next != NULL)</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;                  <a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a> = cur-&gt;next;</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;               <span class="keywordflow">else</span> <span class="comment">/* case it&#39;s the last texture */</span></div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;                  <a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a> = NULL;</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;            }</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;               last-&gt;next = cur-&gt;next;</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;            free(cur);</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;         }</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;         <span class="keywordflow">return</span>; <span class="comment">/* we already found it so we can exit */</span></div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;      }</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;      last = cur;</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;   }</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160; </div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;   <span class="comment">/* Not found */</span></div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;   <span class="keywordflow">if</span> (texture-&gt;name != NULL) <span class="comment">/* Surfaces will have NULL names */</span></div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;      WARN(_(<span class="stringliteral">&quot;Attempting to free texture &#39;%s&#39; not found in stack!&quot;</span>), texture-&gt;name);</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160; </div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;   <span class="comment">/* Free anyways */</span></div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;   glDeleteTextures( 1, &amp;texture-&gt;texture );</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;   free(texture-&gt;trans);</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;   free(texture-&gt;name);</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;   free(texture);</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160; </div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   gl_checkErr();</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;}</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160; </div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160; </div>
+<div class="line"><a name="l00829"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">  829</a></span>&#160;glTexture* <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( glTexture *texture )</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;{</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;   glTexList *cur;</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160; </div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   <span class="comment">/* No segfaults kthxbye. */</span></div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;   <span class="keywordflow">if</span> (texture == NULL)</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160; </div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;   <span class="comment">/* check to see if it already exists */</span></div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a> != NULL) {</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;      <span class="keywordflow">for</span> (cur=<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a>; cur!=NULL; cur=cur-&gt;next) {</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;         <span class="keywordflow">if</span> (texture == cur-&gt;tex) {</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;            cur-&gt;used += 1;</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;            <span class="keywordflow">return</span> cur-&gt;tex;</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;         }</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;      }</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   }</div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160; </div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;   <span class="comment">/* Invalid texture. */</span></div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;   WARN(_(<span class="stringliteral">&quot;Unable to duplicate texture &#39;%s&#39;.&quot;</span>), texture-&gt;name);</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;}</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160; </div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160; </div>
+<div class="line"><a name="l00861"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a60419b6706a6eb61b5c349a377aa6dfd">  861</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="opengl__tex_8c.html#a60419b6706a6eb61b5c349a377aa6dfd">gl_isTrans</a>( <span class="keyword">const</span> glTexture* t, <span class="keyword">const</span> <span class="keywordtype">int</span> x, <span class="keyword">const</span> <span class="keywordtype">int</span> y )</div>
 <div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;{</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;   <span class="keywordtype">int</span> s, <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>;</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;   <span class="keywordtype">double</span> shard, rdir;</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160; </div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;<span class="preprocessor">#ifdef DEBUGGING</span></div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   <span class="keywordflow">if</span> ((dir &gt; 2.*M_PI) || (dir &lt; 0.)) {</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;      WARN(_(<span class="stringliteral">&quot;Angle not between 0 and 2.*M_PI [%f].&quot;</span>), dir);</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;   }</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160; </div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;   <span class="comment">/* what each image represents in angle */</span></div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;   shard = 2.*M_PI / (t-&gt;sy*t-&gt;sx);</div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160; </div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;   <span class="comment">/* real dir is slightly moved downwards */</span></div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;   rdir = dir + shard/2.;</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160; </div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;   <span class="comment">/* now calculate the sprite we need */</span></div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;   s = (int)(rdir / shard);</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;   <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a> = t-&gt;sx;</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;   <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a> = t-&gt;sy;</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160; </div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;   <span class="comment">/* makes sure the sprite is &quot;in range&quot; */</span></div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;   <span class="keywordflow">if</span> (s &gt; (<a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>*<a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>-1))</div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;      s = s % (<a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>*<a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>);</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160; </div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;   <span class="comment">/* Get the position in the sheet. */</span></div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;   i = y*(int)(t-&gt;w) + x ;</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   <span class="comment">/* Now we have to pull out the individual bit. */</span></div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   <span class="keywordflow">return</span> !(t-&gt;trans[ i/8 ] &amp; (1 &lt;&lt; (i%8)));</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;}</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160; </div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160; </div>
+<div class="line"><a name="l00883"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#ac82dd1e609bebffb3a93d93f42b28e49">  883</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__tex_8c.html#ac82dd1e609bebffb3a93d93f42b28e49">gl_getSpriteFromDir</a>( <span class="keywordtype">int</span>* x, <span class="keywordtype">int</span>* y, <span class="keyword">const</span> glTexture* t, <span class="keyword">const</span> <span class="keywordtype">double</span> dir )</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;{</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;   <span class="keywordtype">int</span> s, <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>;</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;   <span class="keywordtype">double</span> shard, rdir;</div>
 <div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160; </div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;   (*x) = s % <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>;</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;   (*y) = s / <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>;</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;}</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160; </div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160; </div>
-<div class="line"><a name="l00896"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#abc831e2621a20e093ff343f8fab3653d">  896</a></span>&#160;glTexture** <a class="code" href="opengl__tex_8c.html#abc831e2621a20e093ff343f8fab3653d">gl_copyTexArray</a>( glTexture **<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>, <span class="keywordtype">int</span> *n )</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;{</div>
-<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;   glTexture **t;</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;<span class="preprocessor">#ifdef DEBUGGING</span></div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;   <span class="keywordflow">if</span> ((dir &gt; 2.*M_PI) || (dir &lt; 0.)) {</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;      WARN(_(<span class="stringliteral">&quot;Angle not between 0 and 2.*M_PI [%f].&quot;</span>), dir);</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;   }</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160; </div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   <span class="comment">/* what each image represents in angle */</span></div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;   shard = 2.*M_PI / (t-&gt;sy*t-&gt;sx);</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160; </div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;   <span class="comment">/* real dir is slightly moved downwards */</span></div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;   rdir = dir + shard/2.;</div>
 <div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160; </div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>) == 0) {</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;      *n = 0;</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;   }</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   <span class="comment">/* now calculate the sprite we need */</span></div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;   s = (int)(rdir / shard);</div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;   <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a> = t-&gt;sx;</div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;   <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a> = t-&gt;sy;</div>
 <div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160; </div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;   t = malloc( <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>) * <span class="keyword">sizeof</span>(glTexture*) );</div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>); i++)</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;      t[i] = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>[i] );</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   *n = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>);</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   <span class="keywordflow">return</span> t;</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;}</div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160; </div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;   <span class="comment">/* makes sure the sprite is &quot;in range&quot; */</span></div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;   <span class="keywordflow">if</span> (s &gt; (<a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>*<a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>-1))</div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;      s = s % (<a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>*<a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>);</div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160; </div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   (*x) = s % <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>;</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;   (*y) = s / <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>;</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;}</div>
 <div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160; </div>
-<div class="line"><a name="l00919"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#aeaf524d40bc377735f6928c85165cb2c">  919</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="opengl__tex_8c.html#aeaf524d40bc377735f6928c85165cb2c">gl_initTextures</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;{</div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;}</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160; </div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160; </div>
-<div class="line"><a name="l00928"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a0b4ec0454c3b0d780276f50013a8b2fd">  928</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__tex_8c.html#a0b4ec0454c3b0d780276f50013a8b2fd">gl_exitTextures</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;{</div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;   glTexList *<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>;</div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160; </div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;   <span class="comment">/* Make sure there&#39;s no texture leak */</span></div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a> != NULL) {</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;      DEBUG(_(<span class="stringliteral">&quot;Texture leak detected!&quot;</span>));</div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;      <span class="keywordflow">for</span> (<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>=<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a>; <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>!=NULL; <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>=<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>-&gt;next)</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;         DEBUG( n_( <span class="stringliteral">&quot;   &#39;%s&#39; opened %d time&quot;</span>, <span class="stringliteral">&quot;   &#39;%s&#39; opened %d times&quot;</span>, <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>-&gt;used ), <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>-&gt;tex-&gt;name, <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>-&gt;used );</div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   }</div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;}</div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160; </div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160; </div>
-<div class="line"><a name="l00944"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a31d2bbaf062ed6cfe031521ea545dce9">  944</a></span>&#160;glTexture** <a class="code" href="opengl__tex_8c.html#a31d2bbaf062ed6cfe031521ea545dce9">gl_addTexArray</a>( glTexture **<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>, <span class="keywordtype">int</span> *n, glTexture *t )</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;{</div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>==NULL) {</div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;      <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a> = malloc( <span class="keyword">sizeof</span>(glTexture*) );</div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;      <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>[0] = t;</div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;      *n = 1;</div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>;</div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;   }</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160; </div>
-<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;   *n += 1;</div>
-<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;   <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a> = realloc( <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>, (*n)*<span class="keyword">sizeof</span>(glTexture*) );</div>
-<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;   <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>[*n-1] = t;</div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>;</div>
-<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;}</div>
-<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160; </div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160; </div>
+<div class="line"><a name="l00918"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#abc831e2621a20e093ff343f8fab3653d">  918</a></span>&#160;glTexture** <a class="code" href="opengl__tex_8c.html#abc831e2621a20e093ff343f8fab3653d">gl_copyTexArray</a>( glTexture **<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>, <span class="keywordtype">int</span> *n )</div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;{</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;   glTexture **t;</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160; </div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>) == 0) {</div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;      *n = 0;</div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;   }</div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160; </div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;   t = malloc( <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>) * <span class="keyword">sizeof</span>(glTexture*) );</div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>); i++)</div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;      t[i] = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>[i] );</div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;   *n = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>);</div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;   <span class="keywordflow">return</span> t;</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;}</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160; </div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160; </div>
+<div class="line"><a name="l00941"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#aeaf524d40bc377735f6928c85165cb2c">  941</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="opengl__tex_8c.html#aeaf524d40bc377735f6928c85165cb2c">gl_initTextures</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;{</div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;}</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160; </div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160; </div>
+<div class="line"><a name="l00950"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a0b4ec0454c3b0d780276f50013a8b2fd">  950</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl__tex_8c.html#a0b4ec0454c3b0d780276f50013a8b2fd">gl_exitTextures</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;{</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;   glTexList *<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>;</div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160; </div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;   <span class="comment">/* Make sure there&#39;s no texture leak */</span></div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a> != NULL) {</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;      DEBUG(_(<span class="stringliteral">&quot;Texture leak detected!&quot;</span>));</div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;      <span class="keywordflow">for</span> (<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>=<a class="code" href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a>; <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>!=NULL; <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>=<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>-&gt;next)</div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;         DEBUG( n_( <span class="stringliteral">&quot;   &#39;%s&#39; opened %d time&quot;</span>, <span class="stringliteral">&quot;   &#39;%s&#39; opened %d times&quot;</span>, <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>-&gt;used ), <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>-&gt;tex-&gt;name, <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>-&gt;used );</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;   }</div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;}</div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160; </div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160; </div>
+<div class="line"><a name="l00966"></a><span class="lineno"><a class="line" href="opengl__tex_8c.html#a31d2bbaf062ed6cfe031521ea545dce9">  966</a></span>&#160;glTexture** <a class="code" href="opengl__tex_8c.html#a31d2bbaf062ed6cfe031521ea545dce9">gl_addTexArray</a>( glTexture **<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>, <span class="keywordtype">int</span> *n, glTexture *t )</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;{</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>==NULL) {</div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;      <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a> = malloc( <span class="keyword">sizeof</span>(glTexture*) );</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;      <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>[0] = t;</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;      *n = 1;</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>;</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;   }</div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160; </div>
+<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;   *n += 1;</div>
+<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;   <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a> = realloc( <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>, (*n)*<span class="keyword">sizeof</span>(glTexture*) );</div>
+<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;   <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>[*n-1] = t;</div>
+<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">tex</a>;</div>
+<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;}</div>
+<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aopengl__tex_8c_html_ae064781b97760d58cf036b24cd3cab6f"><div class="ttname"><a href="opengl__tex_8c.html#ae064781b97760d58cf036b24cd3cab6f">gl_loadSurface</a></div><div class="ttdeci">static GLuint gl_loadSurface(SDL_Surface *surface, unsigned int flags, int freesur)</div><div class="ttdoc">Loads a surface into an opengl texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00292">opengl_tex.c:292</a></div></div>
 <div class="ttc" id="astructglTexList___html_a9a316c771fa0d656b4337606c6012beb"><div class="ttname"><a href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">glTexList_::sy</a></div><div class="ttdeci">int sy</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00046">opengl_tex.c:46</a></div></div>
@@ -815,43 +837,43 @@ $(function() {
 <div class="ttc" id="astructglTexList___html_a15928ae2f5a8a95cd594a34f9b318eb0"><div class="ttname"><a href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">glTexList_::sx</a></div><div class="ttdeci">int sx</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00045">opengl_tex.c:45</a></div></div>
 <div class="ttc" id="aopengl_8c_html_ae34e0efdcb12b0be6286521bb6740706"><div class="ttname"><a href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a></div><div class="ttdeci">glInfo gl_screen</div><div class="ttdef"><b>Definition:</b> <a href="opengl_8c_source.html#l00055">opengl.c:55</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a1073728002cd319745c8224536d433fa"><div class="ttname"><a href="opengl__tex_8c.html#a1073728002cd319745c8224536d433fa">gl_loadImage</a></div><div class="ttdeci">glTexture * gl_loadImage(SDL_Surface *surface, unsigned int flags)</div><div class="ttdoc">Loads the SDL_Surface to a glTexture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00505">opengl_tex.c:505</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_ac82dd1e609bebffb3a93d93f42b28e49"><div class="ttname"><a href="opengl__tex_8c.html#ac82dd1e609bebffb3a93d93f42b28e49">gl_getSpriteFromDir</a></div><div class="ttdeci">void gl_getSpriteFromDir(int *x, int *y, const glTexture *t, const double dir)</div><div class="ttdoc">Sets x and y to be the appropriate sprite for glTexture using dir.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00861">opengl_tex.c:861</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_ac82dd1e609bebffb3a93d93f42b28e49"><div class="ttname"><a href="opengl__tex_8c.html#ac82dd1e609bebffb3a93d93f42b28e49">gl_getSpriteFromDir</a></div><div class="ttdeci">void gl_getSpriteFromDir(int *x, int *y, const glTexture *t, const double dir)</div><div class="ttdoc">Sets x and y to be the appropriate sprite for glTexture using dir.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00883">opengl_tex.c:883</a></div></div>
 <div class="ttc" id="astructglTexList___html"><div class="ttname"><a href="structglTexList__.html">glTexList_</a></div><div class="ttdoc">Represents a node in the texture list.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00037">opengl_tex.c:37</a></div></div>
 <div class="ttc" id="anfile_8c_html_aad87661051454a7623211941a0e7f368"><div class="ttname"><a href="nfile_8c.html#aad87661051454a7623211941a0e7f368">nfile_dirMakeExist</a></div><div class="ttdeci">int nfile_dirMakeExist(const char *path)</div><div class="ttdoc">Creates a directory if it doesn't exist.</div><div class="ttdef"><b>Definition:</b> <a href="nfile_8c_source.html#l00275">nfile.c:275</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
-<div class="ttc" id="aopengl__tex_8c_html_a31d2bbaf062ed6cfe031521ea545dce9"><div class="ttname"><a href="opengl__tex_8c.html#a31d2bbaf062ed6cfe031521ea545dce9">gl_addTexArray</a></div><div class="ttdeci">glTexture ** gl_addTexArray(glTexture **tex, int *n, glTexture *t)</div><div class="ttdoc">Adds an element to a texture array.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00944">opengl_tex.c:944</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_a31d2bbaf062ed6cfe031521ea545dce9"><div class="ttname"><a href="opengl__tex_8c.html#a31d2bbaf062ed6cfe031521ea545dce9">gl_addTexArray</a></div><div class="ttdeci">glTexture ** gl_addTexArray(glTexture **tex, int *n, glTexture *t)</div><div class="ttdoc">Adds an element to a texture array.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00966">opengl_tex.c:966</a></div></div>
 <div class="ttc" id="anfile_8c_html_a7fda7bb9d25afcaa8093e39765c50053"><div class="ttname"><a href="nfile_8c.html#a7fda7bb9d25afcaa8093e39765c50053">nfile_readFile</a></div><div class="ttdeci">char * nfile_readFile(size_t *filesize, const char *path)</div><div class="ttdoc">Tries to read a file.</div><div class="ttdef"><b>Definition:</b> <a href="nfile_8c_source.html#l00438">nfile.c:438</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_abc831e2621a20e093ff343f8fab3653d"><div class="ttname"><a href="opengl__tex_8c.html#abc831e2621a20e093ff343f8fab3653d">gl_copyTexArray</a></div><div class="ttdeci">glTexture ** gl_copyTexArray(glTexture **tex, int *n)</div><div class="ttdoc">Copy a texture array.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00896">opengl_tex.c:896</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_abc831e2621a20e093ff343f8fab3653d"><div class="ttname"><a href="opengl__tex_8c.html#abc831e2621a20e093ff343f8fab3653d">gl_copyTexArray</a></div><div class="ttdeci">glTexture ** gl_copyTexArray(glTexture **tex, int *n)</div><div class="ttdoc">Copy a texture array.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00918">opengl_tex.c:918</a></div></div>
 <div class="ttc" id="astructglTexList___html_a483511d51310e3b30b265529c4ebb0ec"><div class="ttname"><a href="structglTexList__.html#a483511d51310e3b30b265529c4ebb0ec">glTexList_::tex</a></div><div class="ttdeci">glTexture * tex</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00039">opengl_tex.c:39</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_accc45b12c213093707167d8ff91579a8"><div class="ttname"><a href="opengl__tex_8c.html#accc45b12c213093707167d8ff91579a8">gl_texParameters</a></div><div class="ttdeci">static GLuint gl_texParameters(unsigned int flags)</div><div class="ttdoc">Sets default texture parameters.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00172">opengl_tex.c:172</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_ae7c1e2ed8f7e1980ddab05925e2983fe"><div class="ttname"><a href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a></div><div class="ttdeci">void gl_freeTexture(glTexture *texture)</div><div class="ttdoc">Frees a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00752">opengl_tex.c:752</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_ae7c1e2ed8f7e1980ddab05925e2983fe"><div class="ttname"><a href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a></div><div class="ttdeci">void gl_freeTexture(glTexture *texture)</div><div class="ttdoc">Frees a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00774">opengl_tex.c:774</a></div></div>
 <div class="ttc" id="anstring_8c_html_a1af9acc6b6efdca3576cb8223d95f401"><div class="ttname"><a href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a></div><div class="ttdeci">int asprintf(char **strp, const char *fmt,...)</div><div class="ttdoc">Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00162">nstring.c:162</a></div></div>
 <div class="ttc" id="anfile_8c_html_aad0ebad1fdb61d2bb00eb30dfca65bb2"><div class="ttname"><a href="nfile_8c.html#aad0ebad1fdb61d2bb00eb30dfca65bb2">nfile_cachePath</a></div><div class="ttdeci">const char * nfile_cachePath(void)</div><div class="ttdoc">Gets Naev's cache path (for cached data such as generated textures)</div><div class="ttdef"><b>Definition:</b> <a href="nfile_8c_source.html#l00165">nfile.c:165</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a2e000d8e9ac2e5593f6e143c804122c0"><div class="ttname"><a href="opengl__tex_8c.html#a2e000d8e9ac2e5593f6e143c804122c0">gl_fboCreate</a></div><div class="ttdeci">int gl_fboCreate(GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height)</div><div class="ttdoc">Creates a framebuffer and its associated texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00211">opengl_tex.c:211</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_adef18f796b003fa66617d9bc3d4d198d"><div class="ttname"><a href="opengl__tex_8c.html#adef18f796b003fa66617d9bc3d4d198d">gl_newSprite</a></div><div class="ttdeci">glTexture * gl_newSprite(const char *path, const int sx, const int sy, const unsigned int flags)</div><div class="ttdoc">Loads the texture immediately, but also sets it as a sprite.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00697">opengl_tex.c:697</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_adef18f796b003fa66617d9bc3d4d198d"><div class="ttname"><a href="opengl__tex_8c.html#adef18f796b003fa66617d9bc3d4d198d">gl_newSprite</a></div><div class="ttdeci">glTexture * gl_newSprite(const char *path, const int sx, const int sy, const unsigned int flags)</div><div class="ttdoc">Loads the texture immediately, but also sets it as a sprite.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00701">opengl_tex.c:701</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a84a9bfc807d621ed72f4a9d70b3c56d7"><div class="ttname"><a href="opengl__tex_8c.html#a84a9bfc807d621ed72f4a9d70b3c56d7">gl_texAdd</a></div><div class="ttdeci">static int gl_texAdd(glTexture *tex, int sx, int sy)</div><div class="ttdoc">Adds a texture to the list under the name of path.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00545">opengl_tex.c:545</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_aeaf524d40bc377735f6928c85165cb2c"><div class="ttname"><a href="opengl__tex_8c.html#aeaf524d40bc377735f6928c85165cb2c">gl_initTextures</a></div><div class="ttdeci">int gl_initTextures(void)</div><div class="ttdoc">Initializes the opengl texture subsystem.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00919">opengl_tex.c:919</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_ac9d8785a837609c4c6c48b971472da1f"><div class="ttname"><a href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">gl_loadNewImageRWops</a></div><div class="ttdeci">static glTexture * gl_loadNewImageRWops(const char *path, SDL_RWops *rw, unsigned int flags)</div><div class="ttdoc">Only loads the image, does not add to stack unlike gl_newImage.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00658">opengl_tex.c:658</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_a44889dfa4147fc533da69e4810cc291b"><div class="ttname"><a href="opengl__tex_8c.html#a44889dfa4147fc533da69e4810cc291b">gl_newSpriteRWops</a></div><div class="ttdeci">glTexture * gl_newSpriteRWops(const char *path, SDL_RWops *rw, const int sx, const int sy, const unsigned int flags)</div><div class="ttdoc">Loads the texture immediately, but also sets it as a sprite.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00727">opengl_tex.c:727</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_aeaf524d40bc377735f6928c85165cb2c"><div class="ttname"><a href="opengl__tex_8c.html#aeaf524d40bc377735f6928c85165cb2c">gl_initTextures</a></div><div class="ttdeci">int gl_initTextures(void)</div><div class="ttdoc">Initializes the opengl texture subsystem.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00941">opengl_tex.c:941</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_ac9d8785a837609c4c6c48b971472da1f"><div class="ttname"><a href="opengl__tex_8c.html#ac9d8785a837609c4c6c48b971472da1f">gl_loadNewImageRWops</a></div><div class="ttdeci">static glTexture * gl_loadNewImageRWops(const char *path, SDL_RWops *rw, unsigned int flags)</div><div class="ttdoc">Only loads the image, does not add to stack unlike gl_newImage.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00662">opengl_tex.c:662</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_a44889dfa4147fc533da69e4810cc291b"><div class="ttname"><a href="opengl__tex_8c.html#a44889dfa4147fc533da69e4810cc291b">gl_newSpriteRWops</a></div><div class="ttdeci">glTexture * gl_newSpriteRWops(const char *path, SDL_RWops *rw, const int sx, const int sy, const unsigned int flags)</div><div class="ttdoc">Loads the texture immediately, but also sets it as a sprite.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00740">opengl_tex.c:740</a></div></div>
 <div class="ttc" id="anaev_8h_html_ae688d728e1acdfe5988c7db45d6f0166"><div class="ttname"><a href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a></div><div class="ttdeci">#define PATH_MAX</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00056">naev.h:56</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a2e428a0a9c070e7c2dbd3f6cdc7b2af6"><div class="ttname"><a href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a></div><div class="ttdeci">static glTexture * gl_texExists(const char *path, int sx, int sy)</div><div class="ttdoc">Check to see if a texture matching a path already exists.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00519">opengl_tex.c:519</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_adfa45fa034dbb00fe7f44a59c6e66a39"><div class="ttname"><a href="opengl__tex_8c.html#adfa45fa034dbb00fe7f44a59c6e66a39">texture_list</a></div><div class="ttdeci">static glTexList * texture_list</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00048">opengl_tex.c:48</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="aopengl__tex_8c_html_aa8d85cf8a7de50dc363accad23e65095"><div class="ttname"><a href="opengl__tex_8c.html#aa8d85cf8a7de50dc363accad23e65095">SDL_MapTrans</a></div><div class="ttdeci">static uint8_t * SDL_MapTrans(SDL_Surface *s, int w, int h)</div><div class="ttdoc">Maps the surface transparency.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00125">opengl_tex.c:125</a></div></div>
 <div class="ttc" id="anfile_8c_html_aba07d771e0a86b19d7fbf614ae58aa74"><div class="ttname"><a href="nfile_8c.html#aba07d771e0a86b19d7fbf614ae58aa74">nfile_fileExists</a></div><div class="ttdeci">int nfile_fileExists(const char *path)</div><div class="ttdoc">Checks to see if a file exists.</div><div class="ttdef"><b>Definition:</b> <a href="nfile_8c_source.html#l00326">nfile.c:326</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_a60419b6706a6eb61b5c349a377aa6dfd"><div class="ttname"><a href="opengl__tex_8c.html#a60419b6706a6eb61b5c349a377aa6dfd">gl_isTrans</a></div><div class="ttdeci">int gl_isTrans(const glTexture *t, const int x, const int y)</div><div class="ttdoc">Checks to see if a pixel is transparent in a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00839">opengl_tex.c:839</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_a657f66ee5fe1f4688ed5d8974e3bb00c"><div class="ttname"><a href="opengl__tex_8c.html#a657f66ee5fe1f4688ed5d8974e3bb00c">gl_loadNewImage</a></div><div class="ttdeci">static glTexture * gl_loadNewImage(const char *path, unsigned int flags)</div><div class="ttdoc">Only loads the image, does not add to stack unlike gl_newImage.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00626">opengl_tex.c:626</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_a60419b6706a6eb61b5c349a377aa6dfd"><div class="ttname"><a href="opengl__tex_8c.html#a60419b6706a6eb61b5c349a377aa6dfd">gl_isTrans</a></div><div class="ttdeci">int gl_isTrans(const glTexture *t, const int x, const int y)</div><div class="ttdoc">Checks to see if a pixel is transparent in a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00861">opengl_tex.c:861</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_a657f66ee5fe1f4688ed5d8974e3bb00c"><div class="ttname"><a href="opengl__tex_8c.html#a657f66ee5fe1f4688ed5d8974e3bb00c">gl_loadNewImage</a></div><div class="ttdeci">static glTexture * gl_loadNewImage(const char *path, unsigned int flags)</div><div class="ttdoc">Only loads the image, does not add to stack unlike gl_newImage.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00630">opengl_tex.c:630</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a67b7c09ca0d20a996cfd61b065701ded"><div class="ttname"><a href="opengl__tex_8c.html#a67b7c09ca0d20a996cfd61b065701ded">gl_loadImagePadTrans</a></div><div class="ttdeci">glTexture * gl_loadImagePadTrans(const char *name, SDL_Surface *surface, SDL_RWops *rw, unsigned int flags, int w, int h, int sx, int sy, int freesur)</div><div class="ttdoc">Wrapper for gl_loadImagePad that includes transparency mapping.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00344">opengl_tex.c:344</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_a0b4ec0454c3b0d780276f50013a8b2fd"><div class="ttname"><a href="opengl__tex_8c.html#a0b4ec0454c3b0d780276f50013a8b2fd">gl_exitTextures</a></div><div class="ttdeci">void gl_exitTextures(void)</div><div class="ttdoc">Cleans up the opengl texture subsystem.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00928">opengl_tex.c:928</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_ad7045b3c88c2bfde939d4a24bd0de57e"><div class="ttname"><a href="opengl__tex_8c.html#ad7045b3c88c2bfde939d4a24bd0de57e">gl_newImageRWops</a></div><div class="ttdeci">glTexture * gl_newImageRWops(const char *path, SDL_RWops *rw, const unsigned int flags)</div><div class="ttdoc">Loads an image as a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00605">opengl_tex.c:605</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_a0b4ec0454c3b0d780276f50013a8b2fd"><div class="ttname"><a href="opengl__tex_8c.html#a0b4ec0454c3b0d780276f50013a8b2fd">gl_exitTextures</a></div><div class="ttdeci">void gl_exitTextures(void)</div><div class="ttdoc">Cleans up the opengl texture subsystem.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00950">opengl_tex.c:950</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_ad7045b3c88c2bfde939d4a24bd0de57e"><div class="ttname"><a href="opengl__tex_8c.html#ad7045b3c88c2bfde939d4a24bd0de57e">gl_newImageRWops</a></div><div class="ttdeci">glTexture * gl_newImageRWops(const char *path, SDL_RWops *rw, const unsigned int flags)</div><div class="ttdoc">Loads an image as a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00607">opengl_tex.c:607</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a43634a0eb37f6ceb4767c6f02ea4f698"><div class="ttname"><a href="opengl__tex_8c.html#a43634a0eb37f6ceb4767c6f02ea4f698">gl_loadImagePad</a></div><div class="ttdeci">glTexture * gl_loadImagePad(const char *name, SDL_Surface *surface, unsigned int flags, int w, int h, int sx, int sy, int freesur)</div><div class="ttdoc">Loads the already padded SDL_Surface to a glTexture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00455">opengl_tex.c:455</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ac11623fb12c9ea15b80ec32d90c6898d"><div class="ttname"><a href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a></div><div class="ttdeci">glTexture * gl_newImage(const char *path, const unsigned int flags)</div><div class="ttdoc">Loads an image as a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00579">opengl_tex.c:579</a></div></div>
 <div class="ttc" id="astructglTexList___html_aa051878f99ebae7dd93fa7c23c4b90fa"><div class="ttname"><a href="structglTexList__.html#aa051878f99ebae7dd93fa7c23c4b90fa">glTexList_::next</a></div><div class="ttdeci">struct glTexList_ * next</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00038">opengl_tex.c:38</a></div></div>
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
 <div class="ttc" id="anfile_8c_html_a36f98f3cba056a156d1b67d3894e045f"><div class="ttname"><a href="nfile_8c.html#a36f98f3cba056a156d1b67d3894e045f">nfile_writeFile</a></div><div class="ttdeci">int nfile_writeFile(const char *data, size_t len, const char *path)</div><div class="ttdoc">Tries to write a file.</div><div class="ttdef"><b>Definition:</b> <a href="nfile_8c_source.html#l00551">nfile.c:551</a></div></div>
 <div class="ttc" id="astructglTexList___html_a92f46ba41a4d46b99aff4a6534cd22e7"><div class="ttname"><a href="structglTexList__.html#a92f46ba41a4d46b99aff4a6534cd22e7">glTexList_::used</a></div><div class="ttdeci">int used</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00040">opengl_tex.c:40</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_a7c2e82d39b2e4d067cde05ee5c971e74"><div class="ttname"><a href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a></div><div class="ttdeci">glTexture * gl_dupTexture(glTexture *texture)</div><div class="ttdoc">Duplicates a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00807">opengl_tex.c:807</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_a7c2e82d39b2e4d067cde05ee5c971e74"><div class="ttname"><a href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a></div><div class="ttdeci">glTexture * gl_dupTexture(glTexture *texture)</div><div class="ttdoc">Duplicates a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00829">opengl_tex.c:829</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
