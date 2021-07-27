@@ -453,15 +453,15 @@
 	<td class="summary">Gets the free cargo space the pilot has.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#cargoHas">cargoHas (p, type)</a></td>
+	<td class="name" nowrap><a href="#cargoHas">cargoHas (p, cargo)</a></td>
 	<td class="summary">Checks to see how many tonnes of a specific type of cargo the pilot has.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#cargoAdd">cargoAdd (p, type, quantity)</a></td>
+	<td class="name" nowrap><a href="#cargoAdd">cargoAdd (p, cargo, quantity)</a></td>
 	<td class="summary">Tries to add cargo to the pilot's ship.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#cargoRm">cargoRm (p, type, quantity)</a></td>
+	<td class="name" nowrap><a href="#cargoRm">cargoRm (p, cargo, quantity)</a></td>
 	<td class="summary">Tries to remove cargo from the pilot's ship.</td>
 	</tr>
 	<tr>
@@ -3204,7 +3204,7 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 </dd>
     <dt>
     <a name = "cargoHas"></a>
-    <strong>cargoHas (p, type)</strong>
+    <strong>cargoHas (p, cargo)</strong>
     </dt>
     <dd>
     Checks to see how many tonnes of a specific type of cargo the pilot has.
@@ -3216,9 +3216,11 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
             <span class="types"><span class="type">Pilot</span></span>
          The pilot to get the cargo count of.
         </li>
-        <li><span class="parameter">type</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Raw (untranslated) name of the cargo to count.
+        <li><span class="parameter">cargo</span>
+            <span class="types"><span class="type">Commodity</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Type of cargo to check, either
+       as a Commodity object or as the raw (untranslated) name of a
+       commodity.
         </li>
     </ul>
 
@@ -3235,7 +3237,7 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 </dd>
     <dt>
     <a name = "cargoAdd"></a>
-    <strong>cargoAdd (p, type, quantity)</strong>
+    <strong>cargoAdd (p, cargo, quantity)</strong>
     </dt>
     <dd>
     Tries to add cargo to the pilot's ship.
@@ -3247,9 +3249,11 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
             <span class="types"><span class="type">Pilot</span></span>
          The pilot to add cargo to.
         </li>
-        <li><span class="parameter">type</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Raw (untranslated) name of the cargo to add.
+        <li><span class="parameter">cargo</span>
+            <span class="types"><span class="type">Commodity</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Type of cargo to add, either as
+       a Commodity object or as the raw (untranslated) name of a
+       commodity.
         </li>
         <li><span class="parameter">quantity</span>
             <span class="types"><span class="type">number</span></span>
@@ -3274,7 +3278,7 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 </dd>
     <dt>
     <a name = "cargoRm"></a>
-    <strong>cargoRm (p, type, quantity)</strong>
+    <strong>cargoRm (p, cargo, quantity)</strong>
     </dt>
     <dd>
     Tries to remove cargo from the pilot's ship.
@@ -3286,9 +3290,12 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
             <span class="types"><span class="type">Pilot</span></span>
          The pilot to remove cargo from.
         </li>
-        <li><span class="parameter">type</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Raw (untranslated) name of the cargo to remove.
+        <li><span class="parameter">cargo</span>
+            <span class="types"><span class="type">Commodity</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Type of cargo to remove, either
+       as a Commodity object or as the raw (untranslated) name of a
+       commodity. You can also pass the special value "__all" to
+       remove all cargo from the pilot, except for mission cargo.
         </li>
         <li><span class="parameter">quantity</span>
             <span class="types"><span class="type">number</span></span>
@@ -3307,9 +3314,8 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">n = pilot.cargoRm( player.pilot(), <span class="string">"Food"</span>, <span class="number">20</span> )</pre></li>
-        <li><pre class="example">n = pilot.cargoRm( player.pilot(), <span class="string">"__allExceptMisn"</span> ) <span class="comment">-- Removes all cargo from the player, excepted mission cargo</span></pre></li>
-        <li><pre class="example">n = pilot.cargoRm( player.pilot(), <span class="string">"__all"</span> ) <span class="comment">-- Removes all cargo from the player</span></pre></li>
+        <li><pre class="example">n = pilot.cargoRm(player.pilot(), <span class="string">"Food"</span>, <span class="number">20</span>)</pre></li>
+        <li><pre class="example">n = pilot.cargoRm(player.pilot(), <span class="string">"__all"</span>) <span class="comment">-- Removes all cargo from the player</span></pre></li>
     </ul>
 
 </dd>
@@ -4247,7 +4253,7 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-07-27 16:49:37 </i>
+<i style="float:right;">Last updated 2021-07-27 17:44:12 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">

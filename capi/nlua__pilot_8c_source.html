@@ -2412,90 +2412,84 @@ $(function() {
 <div class="line"><a name="l03322"></a><span class="lineno"> 3322</span>&#160;}</div>
 <div class="line"><a name="l03323"></a><span class="lineno"> 3323</span>&#160; </div>
 <div class="line"><a name="l03324"></a><span class="lineno"> 3324</span>&#160; </div>
-<div class="line"><a name="l03333"></a><span class="lineno"><a class="line" href="nlua__pilot_8c.html#a79c4c444efe0e9af1af03391a9db10e6"> 3333</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__pilot_8c.html#a79c4c444efe0e9af1af03391a9db10e6">pilotL_cargoHas</a>( lua_State *L )</div>
-<div class="line"><a name="l03334"></a><span class="lineno"> 3334</span>&#160;{</div>
-<div class="line"><a name="l03335"></a><span class="lineno"> 3335</span>&#160;   Pilot *p;</div>
-<div class="line"><a name="l03336"></a><span class="lineno"> 3336</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l03337"></a><span class="lineno"> 3337</span>&#160;   <span class="keywordtype">int</span> quantity;</div>
-<div class="line"><a name="l03338"></a><span class="lineno"> 3338</span>&#160; </div>
-<div class="line"><a name="l03339"></a><span class="lineno"> 3339</span>&#160;   p = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,1);</div>
-<div class="line"><a name="l03340"></a><span class="lineno"> 3340</span>&#160;   str = luaL_checkstring( L, 2 );</div>
-<div class="line"><a name="l03341"></a><span class="lineno"> 3341</span>&#160;   quantity = <a class="code" href="pilot__cargo_8c.html#aec387208a217df2f8f1d6d78d9268575">pilot_cargoOwned</a>( p, str );</div>
-<div class="line"><a name="l03342"></a><span class="lineno"> 3342</span>&#160;   lua_pushnumber( L, quantity );</div>
-<div class="line"><a name="l03343"></a><span class="lineno"> 3343</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l03344"></a><span class="lineno"> 3344</span>&#160;}</div>
-<div class="line"><a name="l03345"></a><span class="lineno"> 3345</span>&#160; </div>
-<div class="line"><a name="l03346"></a><span class="lineno"> 3346</span>&#160; </div>
-<div class="line"><a name="l03358"></a><span class="lineno"><a class="line" href="nlua__pilot_8c.html#a5aa07d21bc7aae0f46d174f23c31d297"> 3358</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__pilot_8c.html#a5aa07d21bc7aae0f46d174f23c31d297">pilotL_cargoAdd</a>( lua_State *L )</div>
-<div class="line"><a name="l03359"></a><span class="lineno"> 3359</span>&#160;{</div>
-<div class="line"><a name="l03360"></a><span class="lineno"> 3360</span>&#160;   Pilot *p;</div>
-<div class="line"><a name="l03361"></a><span class="lineno"> 3361</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l03362"></a><span class="lineno"> 3362</span>&#160;   <span class="keywordtype">int</span> quantity;</div>
-<div class="line"><a name="l03363"></a><span class="lineno"> 3363</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *cargo;</div>
-<div class="line"><a name="l03364"></a><span class="lineno"> 3364</span>&#160; </div>
-<div class="line"><a name="l03365"></a><span class="lineno"> 3365</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l03366"></a><span class="lineno"> 3366</span>&#160; </div>
-<div class="line"><a name="l03367"></a><span class="lineno"> 3367</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l03368"></a><span class="lineno"> 3368</span>&#160;   p = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,1);</div>
-<div class="line"><a name="l03369"></a><span class="lineno"> 3369</span>&#160;   str      = luaL_checkstring( L, 2 );</div>
-<div class="line"><a name="l03370"></a><span class="lineno"> 3370</span>&#160;   quantity = luaL_checknumber( L, 3 );</div>
-<div class="line"><a name="l03371"></a><span class="lineno"> 3371</span>&#160; </div>
-<div class="line"><a name="l03372"></a><span class="lineno"> 3372</span>&#160;   <span class="comment">/* Get cargo. */</span></div>
-<div class="line"><a name="l03373"></a><span class="lineno"> 3373</span>&#160;   cargo    = commodity_get( str );</div>
-<div class="line"><a name="l03374"></a><span class="lineno"> 3374</span>&#160;   <span class="keywordflow">if</span> (cargo == NULL) {</div>
-<div class="line"><a name="l03375"></a><span class="lineno"> 3375</span>&#160;      NLUA_ERROR( L, _(<span class="stringliteral">&quot;Cargo &#39;%s&#39; does not exist!&quot;</span>), str );</div>
-<div class="line"><a name="l03376"></a><span class="lineno"> 3376</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l03377"></a><span class="lineno"> 3377</span>&#160;   }</div>
-<div class="line"><a name="l03378"></a><span class="lineno"> 3378</span>&#160; </div>
-<div class="line"><a name="l03379"></a><span class="lineno"> 3379</span>&#160;   <span class="keywordflow">if</span> (quantity &lt; 0) {</div>
-<div class="line"><a name="l03380"></a><span class="lineno"> 3380</span>&#160;      NLUA_ERROR( L, _(<span class="stringliteral">&quot;Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)&quot;</span>) );</div>
-<div class="line"><a name="l03381"></a><span class="lineno"> 3381</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l03382"></a><span class="lineno"> 3382</span>&#160;   }</div>
-<div class="line"><a name="l03383"></a><span class="lineno"> 3383</span>&#160; </div>
-<div class="line"><a name="l03384"></a><span class="lineno"> 3384</span>&#160;   <span class="comment">/* Try to add the cargo. */</span></div>
-<div class="line"><a name="l03385"></a><span class="lineno"> 3385</span>&#160;   quantity = <a class="code" href="pilot__cargo_8c.html#adb4b4fd878b025c1e21dc2741d2df156">pilot_cargoAdd</a>( p, cargo, quantity, 0 );</div>
-<div class="line"><a name="l03386"></a><span class="lineno"> 3386</span>&#160;   lua_pushnumber( L, quantity );</div>
-<div class="line"><a name="l03387"></a><span class="lineno"> 3387</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l03388"></a><span class="lineno"> 3388</span>&#160;}</div>
-<div class="line"><a name="l03389"></a><span class="lineno"> 3389</span>&#160; </div>
-<div class="line"><a name="l03390"></a><span class="lineno"> 3390</span>&#160; </div>
-<div class="line"><a name="l03404"></a><span class="lineno"><a class="line" href="nlua__pilot_8c.html#a518103f2a9e6bc55a96da31f6104a816"> 3404</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__pilot_8c.html#a518103f2a9e6bc55a96da31f6104a816">pilotL_cargoRm</a>( lua_State *L )</div>
-<div class="line"><a name="l03405"></a><span class="lineno"> 3405</span>&#160;{</div>
-<div class="line"><a name="l03406"></a><span class="lineno"> 3406</span>&#160;   Pilot *p;</div>
-<div class="line"><a name="l03407"></a><span class="lineno"> 3407</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l03408"></a><span class="lineno"> 3408</span>&#160;   <span class="keywordtype">int</span> quantity;</div>
-<div class="line"><a name="l03409"></a><span class="lineno"> 3409</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *cargo;</div>
-<div class="line"><a name="l03410"></a><span class="lineno"> 3410</span>&#160; </div>
-<div class="line"><a name="l03411"></a><span class="lineno"> 3411</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l03412"></a><span class="lineno"> 3412</span>&#160; </div>
-<div class="line"><a name="l03413"></a><span class="lineno"> 3413</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l03414"></a><span class="lineno"> 3414</span>&#160;   p     = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,1);</div>
-<div class="line"><a name="l03415"></a><span class="lineno"> 3415</span>&#160;   str   = luaL_checkstring(L,2);</div>
-<div class="line"><a name="l03416"></a><span class="lineno"> 3416</span>&#160; </div>
-<div class="line"><a name="l03417"></a><span class="lineno"> 3417</span>&#160;   <span class="keywordflow">if</span> (strcmp(str, <span class="stringliteral">&quot;__allExceptMisn&quot;</span>) == 0)</div>
-<div class="line"><a name="l03418"></a><span class="lineno"> 3418</span>&#160;      quantity = <a class="code" href="pilot__cargo_8c.html#a2311926fc5d4d92d2bdc6b03fb86c07e">pilot_cargoRmAll</a>( p, 0 );</div>
-<div class="line"><a name="l03419"></a><span class="lineno"> 3419</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp(str, <span class="stringliteral">&quot;__all&quot;</span>) == 0)</div>
-<div class="line"><a name="l03420"></a><span class="lineno"> 3420</span>&#160;      quantity = <a class="code" href="pilot__cargo_8c.html#a2311926fc5d4d92d2bdc6b03fb86c07e">pilot_cargoRmAll</a>( p, 1 );</div>
-<div class="line"><a name="l03421"></a><span class="lineno"> 3421</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l03422"></a><span class="lineno"> 3422</span>&#160;      quantity = luaL_checknumber( L, 3 );</div>
-<div class="line"><a name="l03423"></a><span class="lineno"> 3423</span>&#160; </div>
-<div class="line"><a name="l03424"></a><span class="lineno"> 3424</span>&#160;      <span class="comment">/* Get cargo. */</span></div>
-<div class="line"><a name="l03425"></a><span class="lineno"> 3425</span>&#160;      cargo    = commodity_get( str );</div>
-<div class="line"><a name="l03426"></a><span class="lineno"> 3426</span>&#160;      <span class="keywordflow">if</span> (cargo == NULL) {</div>
-<div class="line"><a name="l03427"></a><span class="lineno"> 3427</span>&#160;         NLUA_ERROR( L, _(<span class="stringliteral">&quot;Cargo &#39;%s&#39; does not exist!&quot;</span>), str );</div>
-<div class="line"><a name="l03428"></a><span class="lineno"> 3428</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l03429"></a><span class="lineno"> 3429</span>&#160;      }</div>
-<div class="line"><a name="l03430"></a><span class="lineno"> 3430</span>&#160; </div>
-<div class="line"><a name="l03431"></a><span class="lineno"> 3431</span>&#160;      <span class="keywordflow">if</span> (quantity &lt; 0) {</div>
-<div class="line"><a name="l03432"></a><span class="lineno"> 3432</span>&#160;         NLUA_ERROR( L, _(<span class="stringliteral">&quot;Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)&quot;</span>) );</div>
-<div class="line"><a name="l03433"></a><span class="lineno"> 3433</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l03434"></a><span class="lineno"> 3434</span>&#160;      }</div>
-<div class="line"><a name="l03435"></a><span class="lineno"> 3435</span>&#160; </div>
-<div class="line"><a name="l03436"></a><span class="lineno"> 3436</span>&#160;      <span class="comment">/* Try to remove the cargo. */</span></div>
-<div class="line"><a name="l03437"></a><span class="lineno"> 3437</span>&#160;      quantity = <a class="code" href="pilot__cargo_8c.html#abd14eb4ef2d8aeb244500bedd030413f">pilot_cargoRm</a>( p, cargo, quantity );</div>
-<div class="line"><a name="l03438"></a><span class="lineno"> 3438</span>&#160;   }</div>
+<div class="line"><a name="l03335"></a><span class="lineno"><a class="line" href="nlua__pilot_8c.html#a79c4c444efe0e9af1af03391a9db10e6"> 3335</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__pilot_8c.html#a79c4c444efe0e9af1af03391a9db10e6">pilotL_cargoHas</a>( lua_State *L )</div>
+<div class="line"><a name="l03336"></a><span class="lineno"> 3336</span>&#160;{</div>
+<div class="line"><a name="l03337"></a><span class="lineno"> 3337</span>&#160;   Pilot *p;</div>
+<div class="line"><a name="l03338"></a><span class="lineno"> 3338</span>&#160;   <span class="keyword">const</span> <a class="code" href="structCommodity.html">Commodity</a> *cargo;</div>
+<div class="line"><a name="l03339"></a><span class="lineno"> 3339</span>&#160;   <span class="keywordtype">int</span> quantity;</div>
+<div class="line"><a name="l03340"></a><span class="lineno"> 3340</span>&#160; </div>
+<div class="line"><a name="l03341"></a><span class="lineno"> 3341</span>&#160;   p = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L, 1);</div>
+<div class="line"><a name="l03342"></a><span class="lineno"> 3342</span>&#160;   cargo = <a class="code" href="nlua__commodity_8c.html#a25d17053e28ffbf31849f93c63dbed57">luaL_validcommodity</a>(L, 2);</div>
+<div class="line"><a name="l03343"></a><span class="lineno"> 3343</span>&#160;   quantity = <a class="code" href="pilot__cargo_8c.html#aec387208a217df2f8f1d6d78d9268575">pilot_cargoOwned</a>(p, cargo-&gt;name);</div>
+<div class="line"><a name="l03344"></a><span class="lineno"> 3344</span>&#160;   lua_pushnumber(L, quantity);</div>
+<div class="line"><a name="l03345"></a><span class="lineno"> 3345</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l03346"></a><span class="lineno"> 3346</span>&#160;}</div>
+<div class="line"><a name="l03347"></a><span class="lineno"> 3347</span>&#160; </div>
+<div class="line"><a name="l03348"></a><span class="lineno"> 3348</span>&#160; </div>
+<div class="line"><a name="l03362"></a><span class="lineno"><a class="line" href="nlua__pilot_8c.html#a5aa07d21bc7aae0f46d174f23c31d297"> 3362</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__pilot_8c.html#a5aa07d21bc7aae0f46d174f23c31d297">pilotL_cargoAdd</a>( lua_State *L )</div>
+<div class="line"><a name="l03363"></a><span class="lineno"> 3363</span>&#160;{</div>
+<div class="line"><a name="l03364"></a><span class="lineno"> 3364</span>&#160;   Pilot *p;</div>
+<div class="line"><a name="l03365"></a><span class="lineno"> 3365</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l03366"></a><span class="lineno"> 3366</span>&#160;   <span class="keywordtype">int</span> quantity;</div>
+<div class="line"><a name="l03367"></a><span class="lineno"> 3367</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *cargo;</div>
+<div class="line"><a name="l03368"></a><span class="lineno"> 3368</span>&#160; </div>
+<div class="line"><a name="l03369"></a><span class="lineno"> 3369</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l03370"></a><span class="lineno"> 3370</span>&#160; </div>
+<div class="line"><a name="l03371"></a><span class="lineno"> 3371</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l03372"></a><span class="lineno"> 3372</span>&#160;   p = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L, 1);</div>
+<div class="line"><a name="l03373"></a><span class="lineno"> 3373</span>&#160;   cargo = <a class="code" href="nlua__commodity_8c.html#a25d17053e28ffbf31849f93c63dbed57">luaL_validcommodity</a>(L, 2);</div>
+<div class="line"><a name="l03374"></a><span class="lineno"> 3374</span>&#160;   quantity = luaL_checknumber(L, 3);</div>
+<div class="line"><a name="l03375"></a><span class="lineno"> 3375</span>&#160; </div>
+<div class="line"><a name="l03376"></a><span class="lineno"> 3376</span>&#160;   <span class="keywordflow">if</span> (quantity &lt; 0) {</div>
+<div class="line"><a name="l03377"></a><span class="lineno"> 3377</span>&#160;      NLUA_ERROR( L, _(<span class="stringliteral">&quot;Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)&quot;</span>) );</div>
+<div class="line"><a name="l03378"></a><span class="lineno"> 3378</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l03379"></a><span class="lineno"> 3379</span>&#160;   }</div>
+<div class="line"><a name="l03380"></a><span class="lineno"> 3380</span>&#160; </div>
+<div class="line"><a name="l03381"></a><span class="lineno"> 3381</span>&#160;   <span class="comment">/* Try to add the cargo. */</span></div>
+<div class="line"><a name="l03382"></a><span class="lineno"> 3382</span>&#160;   quantity = <a class="code" href="pilot__cargo_8c.html#adb4b4fd878b025c1e21dc2741d2df156">pilot_cargoAdd</a>( p, cargo, quantity, 0 );</div>
+<div class="line"><a name="l03383"></a><span class="lineno"> 3383</span>&#160;   lua_pushnumber( L, quantity );</div>
+<div class="line"><a name="l03384"></a><span class="lineno"> 3384</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l03385"></a><span class="lineno"> 3385</span>&#160;}</div>
+<div class="line"><a name="l03386"></a><span class="lineno"> 3386</span>&#160; </div>
+<div class="line"><a name="l03387"></a><span class="lineno"> 3387</span>&#160; </div>
+<div class="line"><a name="l03403"></a><span class="lineno"><a class="line" href="nlua__pilot_8c.html#a518103f2a9e6bc55a96da31f6104a816"> 3403</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__pilot_8c.html#a518103f2a9e6bc55a96da31f6104a816">pilotL_cargoRm</a>( lua_State *L )</div>
+<div class="line"><a name="l03404"></a><span class="lineno"> 3404</span>&#160;{</div>
+<div class="line"><a name="l03405"></a><span class="lineno"> 3405</span>&#160;   Pilot *p;</div>
+<div class="line"><a name="l03406"></a><span class="lineno"> 3406</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l03407"></a><span class="lineno"> 3407</span>&#160;   <span class="keywordtype">int</span> quantity;</div>
+<div class="line"><a name="l03408"></a><span class="lineno"> 3408</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *cargo = NULL;</div>
+<div class="line"><a name="l03409"></a><span class="lineno"> 3409</span>&#160; </div>
+<div class="line"><a name="l03410"></a><span class="lineno"> 3410</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l03411"></a><span class="lineno"> 3411</span>&#160; </div>
+<div class="line"><a name="l03412"></a><span class="lineno"> 3412</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l03413"></a><span class="lineno"> 3413</span>&#160;   p = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L, 1);</div>
+<div class="line"><a name="l03414"></a><span class="lineno"> 3414</span>&#160; </div>
+<div class="line"><a name="l03415"></a><span class="lineno"> 3415</span>&#160;   <span class="keywordflow">if</span> (lua_isstring(L, 2)) {</div>
+<div class="line"><a name="l03416"></a><span class="lineno"> 3416</span>&#160;      str = lua_tostring(L, 2);</div>
+<div class="line"><a name="l03417"></a><span class="lineno"> 3417</span>&#160; </div>
+<div class="line"><a name="l03418"></a><span class="lineno"> 3418</span>&#160;      <span class="comment">/* Check for special strings. */</span></div>
+<div class="line"><a name="l03419"></a><span class="lineno"> 3419</span>&#160;      <span class="keywordflow">if</span> (strcmp(str, <span class="stringliteral">&quot;__all&quot;</span>) == 0) {</div>
+<div class="line"><a name="l03420"></a><span class="lineno"> 3420</span>&#160;         quantity = <a class="code" href="pilot__cargo_8c.html#a2311926fc5d4d92d2bdc6b03fb86c07e">pilot_cargoRmAll</a>(p, 0);</div>
+<div class="line"><a name="l03421"></a><span class="lineno"> 3421</span>&#160;         lua_pushnumber(L, quantity);</div>
+<div class="line"><a name="l03422"></a><span class="lineno"> 3422</span>&#160;         <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l03423"></a><span class="lineno"> 3423</span>&#160;      }</div>
+<div class="line"><a name="l03424"></a><span class="lineno"> 3424</span>&#160;   }</div>
+<div class="line"><a name="l03425"></a><span class="lineno"> 3425</span>&#160; </div>
+<div class="line"><a name="l03426"></a><span class="lineno"> 3426</span>&#160;   <span class="comment">/* No special string handling, just handle as a normal commodity. */</span></div>
+<div class="line"><a name="l03427"></a><span class="lineno"> 3427</span>&#160;   cargo = <a class="code" href="nlua__commodity_8c.html#a25d17053e28ffbf31849f93c63dbed57">luaL_validcommodity</a>(L, 2);</div>
+<div class="line"><a name="l03428"></a><span class="lineno"> 3428</span>&#160;   quantity = luaL_checknumber(L, 3);</div>
+<div class="line"><a name="l03429"></a><span class="lineno"> 3429</span>&#160; </div>
+<div class="line"><a name="l03430"></a><span class="lineno"> 3430</span>&#160;   <span class="keywordflow">if</span> (quantity &lt; 0) {</div>
+<div class="line"><a name="l03431"></a><span class="lineno"> 3431</span>&#160;      NLUA_ERROR(L,</div>
+<div class="line"><a name="l03432"></a><span class="lineno"> 3432</span>&#160;            _(<span class="stringliteral">&quot;Quantity must be positive for pilot.cargoRm (if adding, use&quot;</span></div>
+<div class="line"><a name="l03433"></a><span class="lineno"> 3433</span>&#160;               <span class="stringliteral">&quot; pilot.cargoAdd)&quot;</span>));</div>
+<div class="line"><a name="l03434"></a><span class="lineno"> 3434</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l03435"></a><span class="lineno"> 3435</span>&#160;   }</div>
+<div class="line"><a name="l03436"></a><span class="lineno"> 3436</span>&#160; </div>
+<div class="line"><a name="l03437"></a><span class="lineno"> 3437</span>&#160;   <span class="comment">/* Try to remove the cargo. */</span></div>
+<div class="line"><a name="l03438"></a><span class="lineno"> 3438</span>&#160;   quantity = <a class="code" href="pilot__cargo_8c.html#abd14eb4ef2d8aeb244500bedd030413f">pilot_cargoRm</a>(p, cargo, quantity);</div>
 <div class="line"><a name="l03439"></a><span class="lineno"> 3439</span>&#160; </div>
-<div class="line"><a name="l03440"></a><span class="lineno"> 3440</span>&#160;   lua_pushnumber( L, quantity );</div>
+<div class="line"><a name="l03440"></a><span class="lineno"> 3440</span>&#160;   lua_pushnumber(L, quantity);</div>
 <div class="line"><a name="l03441"></a><span class="lineno"> 3441</span>&#160;   <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l03442"></a><span class="lineno"> 3442</span>&#160;}</div>
 <div class="line"><a name="l03443"></a><span class="lineno"> 3443</span>&#160; </div>
@@ -3238,7 +3232,7 @@ $(function() {
 <div class="ttc" id="anlua__faction_8c_html_abb855cec1f27c510cb0001b5845d0acf"><div class="ttname"><a href="nlua__faction_8c.html#abb855cec1f27c510cb0001b5845d0acf">lua_tofaction</a></div><div class="ttdeci">LuaFaction lua_tofaction(lua_State *L, int ind)</div><div class="ttdoc">Gets faction at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00136">nlua_faction.c:136</a></div></div>
 <div class="ttc" id="aai_8c_html_a553ddf4ac629e214ede55c9c28206d9a"><div class="ttname"><a href="ai_8c.html#a553ddf4ac629e214ede55c9c28206d9a">ai_cleartasks</a></div><div class="ttdeci">void ai_cleartasks(Pilot *p)</div><div class="ttdoc">Clears the pilot's tasks.</div><div class="ttdef"><b>Definition:</b> <a href="ai_8c_source.html#l00518">ai.c:518</a></div></div>
 <div class="ttc" id="aweapon_8c_html_a67dc7197b332fde74241113978e4812a"><div class="ttname"><a href="weapon_8c.html#a67dc7197b332fde74241113978e4812a">weapon_clear</a></div><div class="ttdeci">void weapon_clear(void)</div><div class="ttdoc">Clears all the weapons, does NOT free the layers.</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l01920">weapon.c:1920</a></div></div>
-<div class="ttc" id="anlua__pilot_8c_html_a79c4c444efe0e9af1af03391a9db10e6"><div class="ttname"><a href="nlua__pilot_8c.html#a79c4c444efe0e9af1af03391a9db10e6">pilotL_cargoHas</a></div><div class="ttdeci">static int pilotL_cargoHas(lua_State *L)</div><div class="ttdoc">Checks to see how many tonnes of a specific type of cargo the pilot has.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03333">nlua_pilot.c:3333</a></div></div>
+<div class="ttc" id="anlua__pilot_8c_html_a79c4c444efe0e9af1af03391a9db10e6"><div class="ttname"><a href="nlua__pilot_8c.html#a79c4c444efe0e9af1af03391a9db10e6">pilotL_cargoHas</a></div><div class="ttdeci">static int pilotL_cargoHas(lua_State *L)</div><div class="ttdoc">Checks to see how many tonnes of a specific type of cargo the pilot has.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03335">nlua_pilot.c:3335</a></div></div>
 <div class="ttc" id="anlua__planet_8c_html_a5ebaf92feb292ab0a3f2322364542762"><div class="ttname"><a href="nlua__planet_8c.html#a5ebaf92feb292ab0a3f2322364542762">lua_isplanet</a></div><div class="ttdeci">int lua_isplanet(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a planet.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__planet_8c_source.html#l00206">nlua_planet.c:206</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_aa65048b48322e2002a1b30b17c02a660"><div class="ttname"><a href="nlua__pilot_8c.html#aa65048b48322e2002a1b30b17c02a660">pilotL_control</a></div><div class="ttdeci">static int pilotL_control(lua_State *L)</div><div class="ttdoc">Sets manual control of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03709">nlua_pilot.c:3709</a></div></div>
 <div class="ttc" id="apilot_8c_html_a8661bcacfba49c24f84a092a682696ed"><div class="ttname"><a href="pilot_8c.html#a8661bcacfba49c24f84a092a682696ed">pilot_hasIllegal</a></div><div class="ttdeci">int pilot_hasIllegal(const Pilot *p, int faction)</div><div class="ttdoc">Checks to see if the pilot has illegal stuf to a faction.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03609">pilot.c:3609</a></div></div>
@@ -3324,7 +3318,7 @@ $(function() {
 <div class="ttc" id="apilot__cargo_8c_html_a2311926fc5d4d92d2bdc6b03fb86c07e"><div class="ttname"><a href="pilot__cargo_8c.html#a2311926fc5d4d92d2bdc6b03fb86c07e">pilot_cargoRmAll</a></div><div class="ttdeci">int pilot_cargoRmAll(Pilot *pilot, int cleanup)</div><div class="ttdoc">Gets rid of all cargo from pilot. Can remove mission cargo.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00348">pilot_cargo.c:348</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_a36f1c9a5314a1921045f97c1988ade79"><div class="ttname"><a href="nlua__pilot_8c.html#a36f1c9a5314a1921045f97c1988ade79">pilotL_setLeader</a></div><div class="ttdeci">static int pilotL_setLeader(lua_State *L)</div><div class="ttdoc">Set a pilots leader.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l04369">nlua_pilot.c:4369</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_a17cf024c6171059885430c695d28f5de"><div class="ttname"><a href="nlua__pilot_8c.html#a17cf024c6171059885430c695d28f5de">pilotL_setFriendly</a></div><div class="ttdeci">static int pilotL_setFriendly(lua_State *L)</div><div class="ttdoc">Controls the pilot's friendliness towards the player.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l02191">nlua_pilot.c:2191</a></div></div>
-<div class="ttc" id="anlua__pilot_8c_html_a5aa07d21bc7aae0f46d174f23c31d297"><div class="ttname"><a href="nlua__pilot_8c.html#a5aa07d21bc7aae0f46d174f23c31d297">pilotL_cargoAdd</a></div><div class="ttdeci">static int pilotL_cargoAdd(lua_State *L)</div><div class="ttdoc">Tries to add cargo to the pilot's ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03358">nlua_pilot.c:3358</a></div></div>
+<div class="ttc" id="anlua__pilot_8c_html_a5aa07d21bc7aae0f46d174f23c31d297"><div class="ttname"><a href="nlua__pilot_8c.html#a5aa07d21bc7aae0f46d174f23c31d297">pilotL_cargoAdd</a></div><div class="ttdeci">static int pilotL_cargoAdd(lua_State *L)</div><div class="ttdoc">Tries to add cargo to the pilot's ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03362">nlua_pilot.c:3362</a></div></div>
 <div class="ttc" id="apilot_8c_html_a6cad03bfbd651805816da951ee92fdbf"><div class="ttname"><a href="pilot_8c.html#a6cad03bfbd651805816da951ee92fdbf">pilot_setFriendly</a></div><div class="ttdeci">void pilot_setFriendly(Pilot *p)</div><div class="ttdoc">Marks pilot as friendly to player.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01297">pilot.c:1297</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_aa9cefc41eaf728d5641f0cb36c40018e"><div class="ttname"><a href="pilot__outfit_8c.html#aa9cefc41eaf728d5641f0cb36c40018e">pilot_addAmmo</a></div><div class="ttdeci">int pilot_addAmmo(Pilot *pilot, PilotOutfitSlot *s, const Outfit *ammo, int quantity)</div><div class="ttdoc">Adds some ammo to the pilot stock.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00693">pilot_outfit.c:693</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a8ac6f494b5f0972d7d6e87efbc73f3af"><div class="ttname"><a href="outfit_8c.html#a8ac6f494b5f0972d7d6e87efbc73f3af">outfit_amount</a></div><div class="ttdeci">int outfit_amount(const Outfit *o)</div><div class="ttdoc">Gets the amount an outfit can hold.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00682">outfit.c:682</a></div></div>
@@ -3335,7 +3329,7 @@ $(function() {
 <div class="ttc" id="aship_8c_html_a2495d24bde6ebf3f53c19b7601a0cfec"><div class="ttname"><a href="ship_8c.html#a2495d24bde6ebf3f53c19b7601a0cfec">ship_get</a></div><div class="ttdeci">Ship * ship_get(const char *name)</div><div class="ttdoc">Gets a ship based on its name.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00068">ship.c:68</a></div></div>
 <div class="ttc" id="apilot_8c_html_a93217656a2fd2f732e4163dbb1b399d4"><div class="ttname"><a href="pilot_8c.html#a93217656a2fd2f732e4163dbb1b399d4">pilot_setHostile</a></div><div class="ttdeci">void pilot_setHostile(Pilot *p)</div><div class="ttdoc">Marks pilot as hostile to player.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01073">pilot.c:1073</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_aa66973fda8b9f5d4a95780ed7816e4cc"><div class="ttname"><a href="nlua__pilot_8c.html#aa66973fda8b9f5d4a95780ed7816e4cc">pilotL_followers</a></div><div class="ttdeci">static int pilotL_followers(lua_State *L)</div><div class="ttdoc">Get all of a pilots followers.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l04428">nlua_pilot.c:4428</a></div></div>
-<div class="ttc" id="anlua__pilot_8c_html_a518103f2a9e6bc55a96da31f6104a816"><div class="ttname"><a href="nlua__pilot_8c.html#a518103f2a9e6bc55a96da31f6104a816">pilotL_cargoRm</a></div><div class="ttdeci">static int pilotL_cargoRm(lua_State *L)</div><div class="ttdoc">Tries to remove cargo from the pilot's ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03404">nlua_pilot.c:3404</a></div></div>
+<div class="ttc" id="anlua__pilot_8c_html_a518103f2a9e6bc55a96da31f6104a816"><div class="ttname"><a href="nlua__pilot_8c.html#a518103f2a9e6bc55a96da31f6104a816">pilotL_cargoRm</a></div><div class="ttdeci">static int pilotL_cargoRm(lua_State *L)</div><div class="ttdoc">Tries to remove cargo from the pilot's ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03403">nlua_pilot.c:3403</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_a6d68570d31566dc9dc04ef02329bb1c3"><div class="ttname"><a href="nlua__pilot_8c.html#a6d68570d31566dc9dc04ef02329bb1c3">pilotL_setTarget</a></div><div class="ttdeci">static int pilotL_setTarget(lua_State *L)</div><div class="ttdoc">Sets the pilot target of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l01096">nlua_pilot.c:1096</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_ad97885bacec83d36010e18d7ffce18fc"><div class="ttname"><a href="nlua__pilot_8c.html#ad97885bacec83d36010e18d7ffce18fc">pilotL_ew</a></div><div class="ttdeci">static int pilotL_ew(lua_State *L)</div><div class="ttdoc">Gets the pilot's evasion.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l01857">nlua_pilot.c:1857</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_a1b75a4bbb1d7a4a0038cb067bd2d063b"><div class="ttname"><a href="nlua__pilot_8c.html#a1b75a4bbb1d7a4a0038cb067bd2d063b">pilotL_cargoFree</a></div><div class="ttdeci">static int pilotL_cargoFree(lua_State *L)</div><div class="ttdoc">Gets the free cargo space the pilot has.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03317">nlua_pilot.c:3317</a></div></div>
@@ -3347,7 +3341,7 @@ $(function() {
 <div class="ttc" id="anlua__pilot_8c_html_a88dad8a9c0783a5c3cf597184ad263ba"><div class="ttname"><a href="nlua__pilot_8c.html#a88dad8a9c0783a5c3cf597184ad263ba">pilotL_rename</a></div><div class="ttdeci">static int pilotL_rename(lua_State *L)</div><div class="ttdoc">Changes the pilot's name.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l01798">nlua_pilot.c:1798</a></div></div>
 <div class="ttc" id="anlua__planet_8c_html_a2c4322a0726e1047d7dd499bfbdf2d15"><div class="ttname"><a href="nlua__planet_8c.html#a2c4322a0726e1047d7dd499bfbdf2d15">luaL_validplanet</a></div><div class="ttdeci">Planet * luaL_validplanet(lua_State *L, int ind)</div><div class="ttdoc">Gets a planet directly.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__planet_8c_source.html#l00162">nlua_planet.c:162</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_a5689ed59da49879ff25490c8f4636d5c"><div class="ttname"><a href="nlua__pilot_8c.html#a5689ed59da49879ff25490c8f4636d5c">pilotL_taskname</a></div><div class="ttdeci">static int pilotL_taskname(lua_State *L)</div><div class="ttdoc">Gets the name of the task the pilot is currently doing.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03789">nlua_pilot.c:3789</a></div></div>
-<div class="ttc" id="apilot__cargo_8c_html_abd14eb4ef2d8aeb244500bedd030413f"><div class="ttname"><a href="pilot__cargo_8c.html#abd14eb4ef2d8aeb244500bedd030413f">pilot_cargoRm</a></div><div class="ttdeci">int pilot_cargoRm(Pilot *pilot, Commodity *cargo, int quantity)</div><div class="ttdoc">Tries to get rid of quantity cargo from pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00390">pilot_cargo.c:390</a></div></div>
+<div class="ttc" id="apilot__cargo_8c_html_abd14eb4ef2d8aeb244500bedd030413f"><div class="ttname"><a href="pilot__cargo_8c.html#abd14eb4ef2d8aeb244500bedd030413f">pilot_cargoRm</a></div><div class="ttdeci">int pilot_cargoRm(Pilot *pilot, Commodity *cargo, int quantity)</div><div class="ttdoc">Tries to get rid of quantity cargo from pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00389">pilot_cargo.c:389</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00045">naev.h:45</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_a272561733ec8dfd98112e08fa74a5e76"><div class="ttname"><a href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a></div><div class="ttdeci">LuaFaction * lua_pushfaction(lua_State *L, LuaFaction faction)</div><div class="ttdoc">Pushes a faction on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00176">nlua_faction.c:176</a></div></div>
 <div class="ttc" id="apilot_8c_html_a56143a90fcb5ffadb3c837f52f85b2aa"><div class="ttname"><a href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a></div><div class="ttdeci">Pilot *const  * pilot_getAll(void)</div><div class="ttdoc">Gets the pilot stack.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00093">pilot.c:93</a></div></div>
@@ -3423,6 +3417,7 @@ $(function() {
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_a3b508681db6a31bf6682927357cf70b7"><div class="ttname"><a href="nlua__pilot_8c.html#a3b508681db6a31bf6682927357cf70b7">pilotL_credits</a></div><div class="ttdeci">static int pilotL_credits(lua_State *L)</div><div class="ttdoc">Handles the pilots credits.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03502">nlua_pilot.c:3502</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_a39678e27653385bc8b4320808df61e5e"><div class="ttname"><a href="nlua__pilot_8c.html#a39678e27653385bc8b4320808df61e5e">pilotL_getHostiles</a></div><div class="ttdeci">static int pilotL_getHostiles(lua_State *L)</div><div class="ttdoc">Gets hostile pilots to a pilot within a certain distance.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l00899">nlua_pilot.c:899</a></div></div>
+<div class="ttc" id="anlua__commodity_8c_html_a25d17053e28ffbf31849f93c63dbed57"><div class="ttname"><a href="nlua__commodity_8c.html#a25d17053e28ffbf31849f93c63dbed57">luaL_validcommodity</a></div><div class="ttdeci">Commodity * luaL_validcommodity(lua_State *L, int ind)</div><div class="ttdoc">Makes sure the commodity is valid or raises a Lua error.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__commodity_8c_source.html#l00114">nlua_commodity.c:114</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_a85ffa725973e54a5f9ccb33904b200ce"><div class="ttname"><a href="nlua__pilot_8c.html#a85ffa725973e54a5f9ccb33904b200ce">pilotL_clear</a></div><div class="ttdeci">static int pilotL_clear(lua_State *L)</div><div class="ttdoc">Clears the current system of pilots. Used for epic battles and such.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l00752">nlua_pilot.c:752</a></div></div>
 <div class="ttc" id="anlua__pilot_8c_html_a988b2cb32ee9e922d0c6cabf5e453ac2"><div class="ttname"><a href="nlua__pilot_8c.html#a988b2cb32ee9e922d0c6cabf5e453ac2">pilotL_setPosition</a></div><div class="ttdeci">static int pilotL_setPosition(lua_State *L)</div><div class="ttdoc">Sets the pilot's position.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l01957">nlua_pilot.c:1957</a></div></div>
 <div class="ttc" id="aescort_8c_html_a415471f3591ce3f0f1ce0f9a77a6040b"><div class="ttname"><a href="escort_8c.html#a415471f3591ce3f0f1ce0f9a77a6040b">escort_addList</a></div><div class="ttdeci">int escort_addList(Pilot *p, char *ship, EscortType_t type, unsigned int id, int persist)</div><div class="ttdoc">Adds an escort to the escort list of a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00044">escort.c:44</a></div></div>
