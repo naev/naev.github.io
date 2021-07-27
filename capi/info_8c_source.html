@@ -1142,13 +1142,13 @@ $(function() {
 <div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;      logType = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogType&quot;</span> );</div>
 <div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;      log = toolkit_getListPos( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
 <div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160; </div>
-<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;      <span class="keywordflow">if</span> ( logType != selectedLogType ) {</div>
+<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;      <span class="keywordflow">if</span> (logType != selectedLogType) {</div>
 <div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;         <span class="comment">/* new log type selected */</span></div>
 <div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;         selectedLogType = logType;</div>
 <div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;         <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogs&quot;</span> );</div>
 <div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;         logs = NULL;</div>
-<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;         <a class="code" href="shiplog_8c.html#a47a2c7d1ef493e694bd267a1d1913969">shiplog_listLogsOfType</a>(info_getLogTypeFilter(selectedLogType), &amp;nlogs, &amp;logs, &amp;logIDs, 1);</div>
-<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;         <span class="keywordflow">if</span> ( selectedLog &gt;= nlogs )</div>
+<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;         <a class="code" href="shiplog_8c.html#a47a2c7d1ef493e694bd267a1d1913969">shiplog_listLogsOfType</a>( info_getLogTypeFilter(selectedLogType), &amp;nlogs, &amp;logs, &amp;logIDs, 1 );</div>
+<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;         <span class="keywordflow">if</span> (selectedLog &gt;= nlogs)</div>
 <div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160;            selectedLog = 0;</div>
 <div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;         window_addList( wid, 20, 60 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>  + LOGSPACING / 2,</div>
 <div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160;                         w-40, LOGSPACING / 4,</div>
@@ -1157,11 +1157,11 @@ $(function() {
 <div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;         toolkit_setListPos( wid, <span class="stringliteral">&quot;lstLogs&quot;</span>, selectedLog );</div>
 <div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;         regenerateEntries=1;</div>
 <div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;      }</div>
-<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160;      <span class="keywordflow">if</span> ( regenerateEntries || selectedLog != log ) {</div>
-<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160;         selectedLog = log;</div>
+<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160;      <span class="keywordflow">if</span> (regenerateEntries || selectedLog != log) {</div>
+<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160;         selectedLog = <a class="code" href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a>( 0, nlogs-1, log );</div>
 <div class="line"><a name="l01247"></a><span class="lineno"> 1247</span>&#160;         <span class="comment">/* list log entries of selected log type */</span></div>
 <div class="line"><a name="l01248"></a><span class="lineno"> 1248</span>&#160;         <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, <span class="stringliteral">&quot;lstLogEntries&quot;</span> );</div>
-<div class="line"><a name="l01249"></a><span class="lineno"> 1249</span>&#160;         <a class="code" href="shiplog_8c.html#a3f08cbc7855f80187ed3d0d79e86d3d8">shiplog_listLog</a>(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &amp;nentries, &amp;logentries,1);</div>
+<div class="line"><a name="l01249"></a><span class="lineno"> 1249</span>&#160;         <a class="code" href="shiplog_8c.html#a3f08cbc7855f80187ed3d0d79e86d3d8">shiplog_listLog</a>( logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &amp;nentries, &amp;logentries, 1 );</div>
 <div class="line"><a name="l01250"></a><span class="lineno"> 1250</span>&#160;         window_addList( wid, 20, 40 + <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
 <div class="line"><a name="l01251"></a><span class="lineno"> 1251</span>&#160;                         w-40, LOGSPACING / 2-20,</div>
 <div class="line"><a name="l01252"></a><span class="lineno"> 1252</span>&#160;                         <span class="stringliteral">&quot;lstLogEntries&quot;</span>, logentries, nentries, 0, shiplog_menu_update, info_shiplogView );</div>
