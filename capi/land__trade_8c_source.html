@@ -222,7 +222,7 @@ $(function() {
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;   snprintf( buf_globalstd, <span class="keyword">sizeof</span>(buf_globalstd), _(<span class="stringliteral">&quot;%.1f ¤&quot;</span>), globalstd ); <span class="comment">/* TODO credit2str could learn to do this... */</span></div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;   <span class="comment">/* modify text */</span></div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;   buf_purchase_price[0]=<span class="charliteral">&#39;\0&#39;</span>;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;   owned=<a class="code" href="pilot__cargo_8c.html#aec387208a217df2f8f1d6d78d9268575">pilot_cargoOwned</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, com-&gt;name );</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;   owned=<a class="code" href="pilot__cargo_8c.html#a908bcdd5ac4b35789e849d7b2ae42a24">pilot_cargoOwned</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, com );</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;   <span class="keywordflow">if</span> ( owned &gt; 0 )</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;      credits2str( buf_purchase_price, com-&gt;lastPurchasePrice, -1 );</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;   credits2str( buf_credits, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, 2 );</div>
@@ -245,162 +245,160 @@ $(function() {
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDesc&quot;</span>, _(com-&gt;description) );</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;   <span class="comment">/* Button enabling/disabling */</span></div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;   <span class="keywordflow">if</span> (commodity_canBuy( com-&gt;name ))</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;   <span class="keywordflow">if</span> (commodity_canBuy( com ))</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;      window_enableButton( wid, <span class="stringliteral">&quot;btnCommodityBuy&quot;</span> );</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;   <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;      window_disableButtonSoft( wid, <span class="stringliteral">&quot;btnCommodityBuy&quot;</span> );</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   <span class="keywordflow">if</span> (commodity_canSell( com-&gt;name ))</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   <span class="keywordflow">if</span> (commodity_canSell( com ))</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      window_enableButton( wid, <span class="stringliteral">&quot;btnCommoditySell&quot;</span> );</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      window_disableButtonSoft( wid, <span class="stringliteral">&quot;btnCommoditySell&quot;</span> );</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;}</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="keywordtype">int</span> commodity_canBuy( <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="keywordtype">int</span> commodity_canBuy( <span class="keyword">const</span> <a class="code" href="structCommodity.html">Commodity</a>* com )</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;{</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;   <span class="keywordtype">int</span> failure;</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> q, price;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *com;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ECON_CRED_STRLEN];</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;   failure = 0;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;   q = <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a>();</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;   com = commodity_get( name );</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;   price = <a class="code" href="space_8c.html#af2dc109b87432180d5ec7e735a34fe5a">planet_commodityPrice</a>( <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, com ) * q;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ac888443eb7b9ae225d7f8dd4144ada39">player_hasCredits</a>( price )) {</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      credits2str( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, price - <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, 2 );</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;      <a class="code" href="land_8c.html#aa14a271da771f41dc7fcfc166ec58920">land_errDialogueBuild</a>(_(<span class="stringliteral">&quot;You need %s more.&quot;</span>), <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;      failure = 1;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;   }</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#a3d2750f2f71a52a635dcee386b093cd0">pilot_cargoFree</a>(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p) &lt;= 0) {</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;      <a class="code" href="land_8c.html#aa14a271da771f41dc7fcfc166ec58920">land_errDialogueBuild</a>(_(<span class="stringliteral">&quot;No cargo space available!&quot;</span>));</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;      failure = 1;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;   }</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;   <span class="keywordflow">return</span> !failure;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;}</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="keywordtype">int</span> commodity_canSell( <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;{</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;   <span class="keywordtype">int</span> failure;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ECON_CRED_STRLEN];</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;   failure = 0;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;   q = <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a>();</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;   price = <a class="code" href="space_8c.html#af2dc109b87432180d5ec7e735a34fe5a">planet_commodityPrice</a>( <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, com ) * q;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ac888443eb7b9ae225d7f8dd4144ada39">player_hasCredits</a>( price )) {</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      credits2str( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, price - <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, 2 );</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      <a class="code" href="land_8c.html#aa14a271da771f41dc7fcfc166ec58920">land_errDialogueBuild</a>(_(<span class="stringliteral">&quot;You need %s more.&quot;</span>), <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      failure = 1;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;   }</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#a3d2750f2f71a52a635dcee386b093cd0">pilot_cargoFree</a>(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p) &lt;= 0) {</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;      <a class="code" href="land_8c.html#aa14a271da771f41dc7fcfc166ec58920">land_errDialogueBuild</a>(_(<span class="stringliteral">&quot;No cargo space available!&quot;</span>));</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      failure = 1;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;   }</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;   <span class="keywordflow">return</span> !failure;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;}</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="keywordtype">int</span> commodity_canSell( <span class="keyword">const</span> <a class="code" href="structCommodity.html">Commodity</a>* com )</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;{</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;   <span class="keywordtype">int</span> failure;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160; </div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;   failure = 0;</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;   failure = 0;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160; </div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#aec387208a217df2f8f1d6d78d9268575">pilot_cargoOwned</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, name ) == 0) {</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      <a class="code" href="land_8c.html#aa14a271da771f41dc7fcfc166ec58920">land_errDialogueBuild</a>(_(<span class="stringliteral">&quot;You can&#39;t sell something you don&#39;t have!&quot;</span>));</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      failure = 1;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   }</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   <span class="keywordflow">return</span> !failure;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
-<div class="line"><a name="l00274"></a><span class="lineno"><a class="line" href="land__trade_8c.html#a911bb1bb2b757242cc88e7f219ad0f1d">  274</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land__trade_8c.html#a911bb1bb2b757242cc88e7f219ad0f1d">commodity_buy</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;{</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   (void)str;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *com;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> q;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   credits_t price;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;   HookParam hparam[3];</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;   <span class="comment">/* Get selected. */</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;   q     = <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a>();</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   i     = toolkit_getImageArrayPos( wid, <span class="stringliteral">&quot;iarTrade&quot;</span> );</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;   com   = <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;commodities[i];</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;   price = <a class="code" href="space_8c.html#af2dc109b87432180d5ec7e735a34fe5a">planet_commodityPrice</a>( <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, com );</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;   <span class="comment">/* Check stuff. */</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a3c413da9c773a248f216cc34d15f5ab8">land_errDialogue</a>( com-&gt;name, <span class="stringliteral">&quot;buyCommodity&quot;</span> ))</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   <span class="comment">/* Make the buy. */</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   q = <a class="code" href="pilot__cargo_8c.html#adb4b4fd878b025c1e21dc2741d2df156">pilot_cargoAdd</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, com, q, 0 );</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   com-&gt;lastPurchasePrice = price; <span class="comment">/* To show the player how much they paid for it */</span></div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;   price *= q;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( -price );</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;   <a class="code" href="land__trade_8c.html#a86d0c99a884328e37a9b5d5770c4e9f7">commodity_update</a>(wid, NULL);</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;   <span class="comment">/* Run hooks. */</span></div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   hparam[0].type    = HOOK_PARAM_STRING;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   hparam[0].u.str   = com-&gt;name;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;   hparam[1].type    = HOOK_PARAM_NUMBER;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;   hparam[1].u.num   = q;</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;   hparam[2].type    = HOOK_PARAM_SENTINEL;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;   <a class="code" href="hook_8c.html#a358987e6df9f49e54e9c31660700737a">hooks_runParam</a>( <span class="stringliteral">&quot;comm_buy&quot;</span>, hparam );</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;   <span class="keywordflow">if</span> (land_takeoff)</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(1);</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;}</div>
-<div class="line"><a name="l00315"></a><span class="lineno"><a class="line" href="land__trade_8c.html#a4c91050a24f5a601409ff65f74bf043f">  315</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land__trade_8c.html#a4c91050a24f5a601409ff65f74bf043f">commodity_sell</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;{</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;   (void)str;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *com;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> q;</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;   credits_t price;</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   HookParam hparam[3];</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160; </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;   <span class="comment">/* Get parameters. */</span></div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   q     = <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a>();</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   i     = toolkit_getImageArrayPos( wid, <span class="stringliteral">&quot;iarTrade&quot;</span> );</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   com   = <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;commodities[i];</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;   price = <a class="code" href="space_8c.html#af2dc109b87432180d5ec7e735a34fe5a">planet_commodityPrice</a>( <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, com );</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   <span class="comment">/* Check stuff. */</span></div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a3c413da9c773a248f216cc34d15f5ab8">land_errDialogue</a>( com-&gt;name, <span class="stringliteral">&quot;sellCommodity&quot;</span> ))</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;   <span class="comment">/* Remove commodity. */</span></div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   q = <a class="code" href="pilot__cargo_8c.html#abd14eb4ef2d8aeb244500bedd030413f">pilot_cargoRm</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, com, q );</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   price = price * (credits_t)q;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( price );</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;   <span class="keywordflow">if</span> ( <a class="code" href="pilot__cargo_8c.html#aec387208a217df2f8f1d6d78d9268575">pilot_cargoOwned</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, com-&gt;name) == 0 ) <span class="comment">/* None left, set purchase price to zero, in case missions add cargo. */</span></div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;     com-&gt;lastPurchasePrice = 0;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;   <a class="code" href="land__trade_8c.html#a86d0c99a884328e37a9b5d5770c4e9f7">commodity_update</a>(wid, NULL);</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   <span class="comment">/* Run hooks. */</span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;   hparam[0].type    = HOOK_PARAM_STRING;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;   hparam[0].u.str   = com-&gt;name;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   hparam[1].type    = HOOK_PARAM_NUMBER;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;   hparam[1].u.num   = q;</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   hparam[2].type    = HOOK_PARAM_SENTINEL;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;   <a class="code" href="hook_8c.html#a358987e6df9f49e54e9c31660700737a">hooks_runParam</a>( <span class="stringliteral">&quot;comm_sell&quot;</span>, hparam );</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;   <span class="keywordflow">if</span> (land_takeoff)</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;      <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(1);</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;}</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
-<div class="line"><a name="l00357"></a><span class="lineno"><a class="line" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">  357</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;{</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;   SDL_Keymod mods;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;   <span class="keywordtype">int</span> q;</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160; </div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;   mods = SDL_GetModState();</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   q = 10;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   <span class="keywordflow">if</span> (mods &amp; (KMOD_LCTRL | KMOD_RCTRL))</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;      q *= 5;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;   <span class="keywordflow">if</span> (mods &amp; (KMOD_LSHIFT | KMOD_RSHIFT))</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;      q *= 10;</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160; </div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;   <span class="keywordflow">return</span> q;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;}</div>
-<div class="line"><a name="l00379"></a><span class="lineno"><a class="line" href="land__trade_8c.html#a8eb5c2c698add9d184e4b12de3613f6e">  379</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land__trade_8c.html#a8eb5c2c698add9d184e4b12de3613f6e">commodity_renderMod</a>( <span class="keywordtype">double</span> bx, <span class="keywordtype">double</span> by, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">void</span> *data )</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;{</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;   (void) data;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;   (void) h;</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;   <span class="keywordtype">int</span> q;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[8];</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160; </div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;   q = <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a>();</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   <span class="keywordflow">if</span> (q != commodity_mod) {</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;      <a class="code" href="land__trade_8c.html#a86d0c99a884328e37a9b5d5770c4e9f7">commodity_update</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_COMMODITY), NULL );</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;      commodity_mod = q;</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   }</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, 8, <span class="stringliteral">&quot;%dx&quot;</span>, q );</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;   <a class="code" href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, w, bx, by, &amp;<a class="code" href="colour_8c.html#ada17ce69a8e6e4a2ff207823b72f8741">cFontWhite</a>, -1, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;}</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__cargo_8c.html#a908bcdd5ac4b35789e849d7b2ae42a24">pilot_cargoOwned</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, com ) == 0) {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;      <a class="code" href="land_8c.html#aa14a271da771f41dc7fcfc166ec58920">land_errDialogueBuild</a>(_(<span class="stringliteral">&quot;You can&#39;t sell something you don&#39;t have!&quot;</span>));</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      failure = 1;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;   }</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   <span class="keywordflow">return</span> !failure;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
+<div class="line"><a name="l00272"></a><span class="lineno"><a class="line" href="land__trade_8c.html#a911bb1bb2b757242cc88e7f219ad0f1d">  272</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land__trade_8c.html#a911bb1bb2b757242cc88e7f219ad0f1d">commodity_buy</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;{</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   (void)str;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *com;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> q;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;   credits_t price;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   HookParam hparam[3];</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;   <span class="comment">/* Get selected. */</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;   q     = <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a>();</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;   i     = toolkit_getImageArrayPos( wid, <span class="stringliteral">&quot;iarTrade&quot;</span> );</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;   com   = <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;commodities[i];</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   price = <a class="code" href="space_8c.html#af2dc109b87432180d5ec7e735a34fe5a">planet_commodityPrice</a>( <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, com );</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;   <span class="comment">/* Check stuff. */</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a3c413da9c773a248f216cc34d15f5ab8">land_errDialogue</a>( com-&gt;name, <span class="stringliteral">&quot;buyCommodity&quot;</span> ))</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;   <span class="comment">/* Make the buy. */</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;   q = <a class="code" href="pilot__cargo_8c.html#ad0ce5a2d8b3fc828b2977df39093fa81">pilot_cargoAdd</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, com, q, 0 );</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   com-&gt;lastPurchasePrice = price; <span class="comment">/* To show the player how much they paid for it */</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   price *= q;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( -price );</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;   <a class="code" href="land__trade_8c.html#a86d0c99a884328e37a9b5d5770c4e9f7">commodity_update</a>(wid, NULL);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;   <span class="comment">/* Run hooks. */</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;   hparam[0].type    = HOOK_PARAM_STRING;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;   hparam[0].u.str   = com-&gt;name;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;   hparam[1].type    = HOOK_PARAM_NUMBER;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   hparam[1].u.num   = q;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;   hparam[2].type    = HOOK_PARAM_SENTINEL;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;   <a class="code" href="hook_8c.html#a358987e6df9f49e54e9c31660700737a">hooks_runParam</a>( <span class="stringliteral">&quot;comm_buy&quot;</span>, hparam );</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;   <span class="keywordflow">if</span> (land_takeoff)</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(1);</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;}</div>
+<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="land__trade_8c.html#a4c91050a24f5a601409ff65f74bf043f">  313</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land__trade_8c.html#a4c91050a24f5a601409ff65f74bf043f">commodity_sell</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;{</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;   (void)str;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *com;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> q;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   credits_t price;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   HookParam hparam[3];</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   <span class="comment">/* Get parameters. */</span></div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;   q     = <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a>();</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;   i     = toolkit_getImageArrayPos( wid, <span class="stringliteral">&quot;iarTrade&quot;</span> );</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   com   = <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;commodities[i];</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   price = <a class="code" href="space_8c.html#af2dc109b87432180d5ec7e735a34fe5a">planet_commodityPrice</a>( <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, com );</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;   <span class="comment">/* Check stuff. */</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a3c413da9c773a248f216cc34d15f5ab8">land_errDialogue</a>( com-&gt;name, <span class="stringliteral">&quot;sellCommodity&quot;</span> ))</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;   <span class="comment">/* Remove commodity. */</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;   q = <a class="code" href="pilot__cargo_8c.html#a7259d0ae3690ce865b5d681c31d44322">pilot_cargoRm</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, com, q );</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;   price = price * (credits_t)q;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   <a class="code" href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a>( price );</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   <span class="keywordflow">if</span> ( <a class="code" href="pilot__cargo_8c.html#a908bcdd5ac4b35789e849d7b2ae42a24">pilot_cargoOwned</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, com ) == 0 ) <span class="comment">/* None left, set purchase price to zero, in case missions add cargo. */</span></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;     com-&gt;lastPurchasePrice = 0;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;   <a class="code" href="land__trade_8c.html#a86d0c99a884328e37a9b5d5770c4e9f7">commodity_update</a>(wid, NULL);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160; </div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;   <span class="comment">/* Run hooks. */</span></div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;   hparam[0].type    = HOOK_PARAM_STRING;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   hparam[0].u.str   = com-&gt;name;</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;   hparam[1].type    = HOOK_PARAM_NUMBER;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;   hparam[1].u.num   = q;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   hparam[2].type    = HOOK_PARAM_SENTINEL;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;   <a class="code" href="hook_8c.html#a358987e6df9f49e54e9c31660700737a">hooks_runParam</a>( <span class="stringliteral">&quot;comm_sell&quot;</span>, hparam );</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   <span class="keywordflow">if</span> (land_takeoff)</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(1);</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;}</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
+<div class="line"><a name="l00355"></a><span class="lineno"><a class="line" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">  355</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;{</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;   SDL_Keymod mods;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;   <span class="keywordtype">int</span> q;</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160; </div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;   mods = SDL_GetModState();</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;   q = 10;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;   <span class="keywordflow">if</span> (mods &amp; (KMOD_LCTRL | KMOD_RCTRL))</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;      q *= 5;</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   <span class="keywordflow">if</span> (mods &amp; (KMOD_LSHIFT | KMOD_RSHIFT))</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;      q *= 10;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   <span class="keywordflow">return</span> q;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;}</div>
+<div class="line"><a name="l00377"></a><span class="lineno"><a class="line" href="land__trade_8c.html#a8eb5c2c698add9d184e4b12de3613f6e">  377</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land__trade_8c.html#a8eb5c2c698add9d184e4b12de3613f6e">commodity_renderMod</a>( <span class="keywordtype">double</span> bx, <span class="keywordtype">double</span> by, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">void</span> *data )</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;{</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;   (void) data;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;   (void) h;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;   <span class="keywordtype">int</span> q;</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[8];</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160; </div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   q = <a class="code" href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a>();</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   <span class="keywordflow">if</span> (q != commodity_mod) {</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;      <a class="code" href="land__trade_8c.html#a86d0c99a884328e37a9b5d5770c4e9f7">commodity_update</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_COMMODITY), NULL );</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;      commodity_mod = q;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   }</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, 8, <span class="stringliteral">&quot;%dx&quot;</span>, q );</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   <a class="code" href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, w, bx, by, &amp;<a class="code" href="colour_8c.html#ada17ce69a8e6e4a2ff207823b72f8741">cFontWhite</a>, -1, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructCommodity_html"><div class="ttname"><a href="structCommodity.html">Commodity</a></div><div class="ttdoc">Represents a commodity.</div></div>
 <div class="ttc" id="aeconomy_8c_html_a662f907fb4a549b666db73bbd7ae49ee"><div class="ttname"><a href="economy_8c.html#a662f907fb4a549b666db73bbd7ae49ee">economy_getAveragePrice</a></div><div class="ttdeci">int economy_getAveragePrice(const Commodity *com, credits_t *mean, double *std)</div><div class="ttdoc">Gets the average price of a good as seen by the player (anywhere).</div><div class="ttdef"><b>Definition:</b> <a href="economy_8c_source.html#l00224">economy.c:224</a></div></div>
@@ -410,6 +408,7 @@ $(function() {
 <div class="ttc" id="aplayer_8c_html_aa0322f53be24a008fb07fd4db15ba54d"><div class="ttname"><a href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a></div><div class="ttdeci">credits_t player_modCredits(credits_t amount)</div><div class="ttdoc">Modifies the amount of credits the player has.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00894">player.c:894</a></div></div>
 <div class="ttc" id="acolour_8c_html_a4bec8711639c9c89415ff9b28bf2b233"><div class="ttname"><a href="colour_8c.html#a4bec8711639c9c89415ff9b28bf2b233">cBlack</a></div><div class="ttdeci">const glColour cBlack</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00044">colour.c:44</a></div></div>
 <div class="ttc" id="apilot__cargo_8c_html_a3d2750f2f71a52a635dcee386b093cd0"><div class="ttname"><a href="pilot__cargo_8c.html#a3d2750f2f71a52a635dcee386b093cd0">pilot_cargoFree</a></div><div class="ttdeci">int pilot_cargoFree(const Pilot *p)</div><div class="ttdoc">Gets the pilot's free cargo space.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00061">pilot_cargo.c:61</a></div></div>
+<div class="ttc" id="apilot__cargo_8c_html_a908bcdd5ac4b35789e849d7b2ae42a24"><div class="ttname"><a href="pilot__cargo_8c.html#a908bcdd5ac4b35789e849d7b2ae42a24">pilot_cargoOwned</a></div><div class="ttdeci">int pilot_cargoOwned(const Pilot *pilot, const Commodity *cargo)</div><div class="ttdoc">Gets how many of the commodity the player.p has.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00043">pilot_cargo.c:43</a></div></div>
 <div class="ttc" id="afont_8c_html_a41b3c9521462440c62eb76b43f606274"><div class="ttname"><a href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a></div><div class="ttdeci">glFont gl_smallFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00162">font.c:162</a></div></div>
 <div class="ttc" id="aland_8c_html_a54fabfb94ee06a4a710d52da3dd74fb1"><div class="ttname"><a href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a></div><div class="ttdeci">unsigned int land_getWid(int window)</div><div class="ttdoc">Gets the WID of a window by type.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00915">land.c:915</a></div></div>
 <div class="ttc" id="aland_8c_html_af98aef9fef204fcfb4a275db1ba33cdd"><div class="ttname"><a href="land_8c.html#af98aef9fef204fcfb4a275db1ba33cdd">land_buttonTakeoff</a></div><div class="ttdeci">void land_buttonTakeoff(unsigned int wid, char *unused)</div><div class="ttdoc">Wrapper for takeoff mission button.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00875">land.c:875</a></div></div>
@@ -418,29 +417,28 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_af2dc109b87432180d5ec7e735a34fe5a"><div class="ttname"><a href="space_8c.html#af2dc109b87432180d5ec7e735a34fe5a">planet_commodityPrice</a></div><div class="ttdeci">credits_t planet_commodityPrice(const Planet *p, const Commodity *c)</div><div class="ttdoc">Gets the price of a commodity at a planet.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00274">space.c:274</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ac888443eb7b9ae225d7f8dd4144ada39"><div class="ttname"><a href="player_8c.html#ac888443eb7b9ae225d7f8dd4144ada39">player_hasCredits</a></div><div class="ttdeci">int player_hasCredits(credits_t amount)</div><div class="ttdoc">Checks to see if the player has enough credits.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00882">player.c:882</a></div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00049">news.c:49</a></div></div>
-<div class="ttc" id="apilot__cargo_8c_html_aec387208a217df2f8f1d6d78d9268575"><div class="ttname"><a href="pilot__cargo_8c.html#aec387208a217df2f8f1d6d78d9268575">pilot_cargoOwned</a></div><div class="ttdeci">int pilot_cargoOwned(const Pilot *pilot, const char *commodityname)</div><div class="ttdoc">Gets how many of the commodity the player.p has.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00043">pilot_cargo.c:43</a></div></div>
-<div class="ttc" id="aland__trade_8c_html_a04a12cc4365d667fa0677f9766d7009b"><div class="ttname"><a href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a></div><div class="ttdeci">int commodity_getMod(void)</div><div class="ttdoc">Gets the current modifier status.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00357">land_trade.c:357</a></div></div>
+<div class="ttc" id="aland__trade_8c_html_a04a12cc4365d667fa0677f9766d7009b"><div class="ttname"><a href="land__trade_8c.html#a04a12cc4365d667fa0677f9766d7009b">commodity_getMod</a></div><div class="ttdeci">int commodity_getMod(void)</div><div class="ttdoc">Gets the current modifier status.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00355">land_trade.c:355</a></div></div>
 <div class="ttc" id="afont_8c_html_a762ad865d8d9c5368c95543c7bb57aa2"><div class="ttname"><a href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a></div><div class="ttdeci">int gl_printMidRaw(const glFont *ft_font, int width, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Displays text centered in position and width.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00794">font.c:794</a></div></div>
-<div class="ttc" id="apilot__cargo_8c_html_abd14eb4ef2d8aeb244500bedd030413f"><div class="ttname"><a href="pilot__cargo_8c.html#abd14eb4ef2d8aeb244500bedd030413f">pilot_cargoRm</a></div><div class="ttdeci">int pilot_cargoRm(Pilot *pilot, Commodity *cargo, int quantity)</div><div class="ttdoc">Tries to get rid of quantity cargo from pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00389">pilot_cargo.c:389</a></div></div>
 <div class="ttc" id="anaev_8h_html_ae688d728e1acdfe5988c7db45d6f0166"><div class="ttname"><a href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a></div><div class="ttdeci">#define PATH_MAX</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00056">naev.h:56</a></div></div>
-<div class="ttc" id="aland__trade_8c_html_a8eb5c2c698add9d184e4b12de3613f6e"><div class="ttname"><a href="land__trade_8c.html#a8eb5c2c698add9d184e4b12de3613f6e">commodity_renderMod</a></div><div class="ttdeci">void commodity_renderMod(double bx, double by, double w, double h, void *data)</div><div class="ttdoc">Renders the commodity buying modifier.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00379">land_trade.c:379</a></div></div>
+<div class="ttc" id="aland__trade_8c_html_a8eb5c2c698add9d184e4b12de3613f6e"><div class="ttname"><a href="land__trade_8c.html#a8eb5c2c698add9d184e4b12de3613f6e">commodity_renderMod</a></div><div class="ttdeci">void commodity_renderMod(double bx, double by, double w, double h, void *data)</div><div class="ttdoc">Renders the commodity buying modifier.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00377">land_trade.c:377</a></div></div>
 <div class="ttc" id="aspace_8c_html_a601fbaabb7c33c9b28a1c8371eab46ca"><div class="ttname"><a href="space_8c.html#a601fbaabb7c33c9b28a1c8371eab46ca">planet_averagePlanetPrice</a></div><div class="ttdeci">int planet_averagePlanetPrice(const Planet *p, const Commodity *c, credits_t *mean, double *std)</div><div class="ttdoc">Gets the average price of a commodity at a planet that has been seen so far.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00323">space.c:323</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="aland__trade_8c_html_a86d0c99a884328e37a9b5d5770c4e9f7"><div class="ttname"><a href="land__trade_8c.html#a86d0c99a884328e37a9b5d5770c4e9f7">commodity_update</a></div><div class="ttdeci">void commodity_update(unsigned int wid, char *str)</div><div class="ttdoc">Updates the commodity window.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00146">land_trade.c:146</a></div></div>
-<div class="ttc" id="apilot__cargo_8c_html_adb4b4fd878b025c1e21dc2741d2df156"><div class="ttname"><a href="pilot__cargo_8c.html#adb4b4fd878b025c1e21dc2741d2df156">pilot_cargoAdd</a></div><div class="ttdeci">int pilot_cargoAdd(Pilot *pilot, Commodity *cargo, int quantity, unsigned int id)</div><div class="ttdoc">Tries to add quantity of cargo to pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00172">pilot_cargo.c:172</a></div></div>
+<div class="ttc" id="apilot__cargo_8c_html_ad0ce5a2d8b3fc828b2977df39093fa81"><div class="ttname"><a href="pilot__cargo_8c.html#ad0ce5a2d8b3fc828b2977df39093fa81">pilot_cargoAdd</a></div><div class="ttdeci">int pilot_cargoAdd(Pilot *pilot, const Commodity *cargo, int quantity, unsigned int id)</div><div class="ttdoc">Tries to add quantity of cargo to pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00172">pilot_cargo.c:172</a></div></div>
 <div class="ttc" id="afont_8c_html_a70108689d1f2c28b6e91f763e3918e9b"><div class="ttname"><a href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a></div><div class="ttdeci">glFont gl_defFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00161">font.c:161</a></div></div>
 <div class="ttc" id="aland_8c_html_a8506febc63cb945a2d0368acd57b8656"><div class="ttname"><a href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a></div><div class="ttdeci">void takeoff(int delay)</div><div class="ttdoc">Makes the player take off if landed.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01344">land.c:1344</a></div></div>
 <div class="ttc" id="aland_8c_html_a3c413da9c773a248f216cc34d15f5ab8"><div class="ttname"><a href="land_8c.html#a3c413da9c773a248f216cc34d15f5ab8">land_errDialogue</a></div><div class="ttdeci">int land_errDialogue(const char *name, char *type)</div><div class="ttdoc">Generates error dialogues used by several landing tabs.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00197">land.c:197</a></div></div>
 <div class="ttc" id="afont_8c_html_a0f1a2e63659f8c8e5d3abb1f6766cc97"><div class="ttname"><a href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a></div><div class="ttdeci">int gl_printHeightRaw(const glFont *ft_font, const int width, const char *text)</div><div class="ttdoc">Gets the height of a non-formatted string.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01049">font.c:1049</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ac8701471143b28a786b0028420edfeb6"><div class="ttname"><a href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a></div><div class="ttdeci">Player_t player</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00071">player.c:71</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
+<div class="ttc" id="apilot__cargo_8c_html_a7259d0ae3690ce865b5d681c31d44322"><div class="ttname"><a href="pilot__cargo_8c.html#a7259d0ae3690ce865b5d681c31d44322">pilot_cargoRm</a></div><div class="ttdeci">int pilot_cargoRm(Pilot *pilot, const Commodity *cargo, int quantity)</div><div class="ttdoc">Tries to get rid of quantity cargo from pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__cargo_8c_source.html#l00389">pilot_cargo.c:389</a></div></div>
 <div class="ttc" id="aland_8c_html_aa14a271da771f41dc7fcfc166ec58920"><div class="ttname"><a href="land_8c.html#aa14a271da771f41dc7fcfc166ec58920">land_errDialogueBuild</a></div><div class="ttdeci">void land_errDialogueBuild(const char *fmt,...)</div><div class="ttdoc">Generates error dialogues used by several landing tabs.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00229">land.c:229</a></div></div>
 <div class="ttc" id="aland_8c_html_a92e7bb796bc10b51b1a64271a8086c42"><div class="ttname"><a href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a></div><div class="ttdeci">Planet * land_planet</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00081">land.c:81</a></div></div>
 <div class="ttc" id="ahook_8c_html_a358987e6df9f49e54e9c31660700737a"><div class="ttname"><a href="hook_8c.html#a358987e6df9f49e54e9c31660700737a">hooks_runParam</a></div><div class="ttdeci">int hooks_runParam(const char *stack, const HookParam *param)</div><div class="ttdoc">Runs all the hooks of stack.</div><div class="ttdef"><b>Definition:</b> <a href="hook_8c_source.html#l00988">hook.c:988</a></div></div>
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
-<div class="ttc" id="aland__trade_8c_html_a911bb1bb2b757242cc88e7f219ad0f1d"><div class="ttname"><a href="land__trade_8c.html#a911bb1bb2b757242cc88e7f219ad0f1d">commodity_buy</a></div><div class="ttdeci">void commodity_buy(unsigned int wid, char *str)</div><div class="ttdoc">Buys the selected commodity.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00274">land_trade.c:274</a></div></div>
+<div class="ttc" id="aland__trade_8c_html_a911bb1bb2b757242cc88e7f219ad0f1d"><div class="ttname"><a href="land__trade_8c.html#a911bb1bb2b757242cc88e7f219ad0f1d">commodity_buy</a></div><div class="ttdeci">void commodity_buy(unsigned int wid, char *str)</div><div class="ttdoc">Buys the selected commodity.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00272">land_trade.c:272</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a7c2e82d39b2e4d067cde05ee5c971e74"><div class="ttname"><a href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a></div><div class="ttdeci">glTexture * gl_dupTexture(glTexture *texture)</div><div class="ttdoc">Duplicates a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00829">opengl_tex.c:829</a></div></div>
-<div class="ttc" id="aland__trade_8c_html_a4c91050a24f5a601409ff65f74bf043f"><div class="ttname"><a href="land__trade_8c.html#a4c91050a24f5a601409ff65f74bf043f">commodity_sell</a></div><div class="ttdeci">void commodity_sell(unsigned int wid, char *str)</div><div class="ttdoc">Attempts to sell a commodity.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00315">land_trade.c:315</a></div></div>
+<div class="ttc" id="aland__trade_8c_html_a4c91050a24f5a601409ff65f74bf043f"><div class="ttname"><a href="land__trade_8c.html#a4c91050a24f5a601409ff65f74bf043f">commodity_sell</a></div><div class="ttdeci">void commodity_sell(unsigned int wid, char *str)</div><div class="ttdoc">Attempts to sell a commodity.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00313">land_trade.c:313</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
