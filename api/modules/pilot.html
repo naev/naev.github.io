@@ -173,8 +173,12 @@
 	<td class="summary">Gets the pilots available in the system by a certain criteria.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getHostiles">getHostiles (pilot[, dist=infinity[, disabled=false]])</a></td>
-	<td class="summary">Gets hostile pilots to a pilot within a certain distance.</td>
+	<td class="name" nowrap><a href="#getAllies">getAllies (pilot[, dist=infinity[, pos=pilot.pos[, Whether=false[, disabled=false]]]])</a></td>
+	<td class="summary">Gets friendly pilots to a pilot (or faction) within a certain distance.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getHostiles">getHostiles (pilot[, dist=infinity[, pos=pilot.pos[, Whether=false[, disabled=false]]]])</a></td>
+	<td class="summary">Gets hostile pilots to a pilot (or faction) within a certain distance.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#getVisible">getVisible (pilot[, disabled=false])</a></td>
@@ -856,23 +860,33 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 
 </dd>
     <dt>
-    <a name = "getHostiles"></a>
-    <strong>getHostiles (pilot[, dist=infinity[, disabled=false]])</strong>
+    <a name = "getAllies"></a>
+    <strong>getAllies (pilot[, dist=infinity[, pos=pilot.pos[, Whether=false[, disabled=false]]]])</strong>
     </dt>
     <dd>
-    Gets hostile pilots to a pilot within a certain distance.
+    Gets friendly pilots to a pilot (or faction) within a certain distance.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">pilot</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Pilot to get hostiles of.
+            <span class="types"><span class="type">Pilot</span> or <a class="type" href="../modules/pilot.html#faction">faction</a></span>
+         Pilot or to get allies of.
         </li>
         <li><span class="parameter">dist</span>
             <span class="types"><span class="type">number</span></span>
-         Distance to look for hostiles.
+         Distance to look for allies.
          (<em>default</em> infinity)
+        </li>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         Position to check from.
+         (<em>default</em> pilot.pos)
+        </li>
+        <li><span class="parameter">Whether</span>
+            <span class="types"><span class="type">boolean</span></span>
+         or not to only check for pilots in range (only in the case of pilot, not faction)
+         (<em>default</em> false)
         </li>
         <li><span class="parameter">disabled</span>
             <span class="types"><span class="type">boolean</span></span>
@@ -890,6 +904,63 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">p:getAllies( <span class="number">5000</span> ) <span class="comment">-- get allies within 5000</span></pre></li>
+        <li><pre class="example">pilot.getAllies( faction.get(<span class="string">"Pirate"</span>), <span class="number">5000</span>, vec2.new(<span class="number">0</span>,<span class="number">0</span>) ) <span class="comment">-- Got allies of "Pirate" faction 5000 units from origin</span></pre></li>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "getHostiles"></a>
+    <strong>getHostiles (pilot[, dist=infinity[, pos=pilot.pos[, Whether=false[, disabled=false]]]])</strong>
+    </dt>
+    <dd>
+    Gets hostile pilots to a pilot (or faction) within a certain distance.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pilot</span>
+            <span class="types"><span class="type">Pilot</span> or <a class="type" href="../modules/pilot.html#faction">faction</a></span>
+         Pilot or to get hostiles of.
+        </li>
+        <li><span class="parameter">dist</span>
+            <span class="types"><span class="type">number</span></span>
+         Distance to look for hostiles.
+         (<em>default</em> infinity)
+        </li>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         Position to check from.
+         (<em>default</em> pilot.pos)
+        </li>
+        <li><span class="parameter">Whether</span>
+            <span class="types"><span class="type">boolean</span></span>
+         or not to only check for pilots in range (only in the case of pilot, not faction)
+         (<em>default</em> false)
+        </li>
+        <li><span class="parameter">disabled</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to count disabled pilots.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">{Pilot,...}</span></span>
+        A table containing the pilots.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">p:getHostiles( <span class="number">5000</span> ) <span class="comment">-- get hostiles within 5000</span></pre></li>
+        <li><pre class="example">pilot.getHostiles( faction.get(<span class="string">"Pirate"</span>), <span class="number">5000</span>, vec2.new(<span class="number">0</span>,<span class="number">0</span>) ) <span class="comment">-- Got hostiles of "Pirate" faction 5000 units from origin</span></pre></li>
+    </ul>
 
 </dd>
     <dt>
@@ -4253,7 +4324,7 @@ How param works (by <span class="global">type</span> of value passed): &lt;br/&g
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-07-29 01:39:55 </i>
+<i style="float:right;">Last updated 2021-07-29 13:20:56 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">

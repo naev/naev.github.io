@@ -62,23 +62,26 @@ $(function() {
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define VECTOR_METATABLE   &quot;vec2&quot;   </span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span><span class="comment">/*</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> * Vector library.</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__vec2_8c.html#a76312e79237ee6bab5c6b84f53a89472">nlua_loadVector</a>( nlua_env env );</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"> * Vector operations.</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;Vector2d* <a class="code" href="nlua__vec2_8c.html#a84a1567cd2d6e722397d0c163900db78">lua_tovector</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;Vector2d* <a class="code" href="nlua__vec2_8c.html#a0f9187191ed28e11271aa0730f6ba40b">luaL_checkvector</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;Vector2d* <a class="code" href="nlua__vec2_8c.html#a7b6737c7b888b17008e5325e217c52c9">lua_pushvector</a>( lua_State *L, Vector2d vec );</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__vec2_8c.html#a85317e561ace29e45c2f52fa4e80d221">lua_isvector</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* NLUA_VEC2_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span><span class="comment">/* Helper. */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define luaL_optvector(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkvector)</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> * Vector library.</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__vec2_8c.html#a76312e79237ee6bab5c6b84f53a89472">nlua_loadVector</a>( nlua_env env );</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> * Vector operations.</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;Vector2d* <a class="code" href="nlua__vec2_8c.html#a84a1567cd2d6e722397d0c163900db78">lua_tovector</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;Vector2d* <a class="code" href="nlua__vec2_8c.html#a0f9187191ed28e11271aa0730f6ba40b">luaL_checkvector</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;Vector2d* <a class="code" href="nlua__vec2_8c.html#a7b6737c7b888b17008e5325e217c52c9">lua_pushvector</a>( lua_State *L, Vector2d vec );</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__vec2_8c.html#a85317e561ace29e45c2f52fa4e80d221">lua_isvector</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* NLUA_VEC2_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__vec2_8c_html_a84a1567cd2d6e722397d0c163900db78"><div class="ttname"><a href="nlua__vec2_8c.html#a84a1567cd2d6e722397d0c163900db78">lua_tovector</a></div><div class="ttdeci">Vector2d * lua_tovector(lua_State *L, int ind)</div><div class="ttdoc">Represents a 2D vector in Lua.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__vec2_8c_source.html#l00107">nlua_vec2.c:107</a></div></div>
 <div class="ttc" id="anlua__vec2_8c_html_a7b6737c7b888b17008e5325e217c52c9"><div class="ttname"><a href="nlua__vec2_8c.html#a7b6737c7b888b17008e5325e217c52c9">lua_pushvector</a></div><div class="ttdeci">Vector2d * lua_pushvector(lua_State *L, Vector2d vec)</div><div class="ttdoc">Pushes a vector on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__vec2_8c_source.html#l00133">nlua_vec2.c:133</a></div></div>

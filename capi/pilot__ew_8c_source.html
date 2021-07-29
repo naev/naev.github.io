@@ -403,8 +403,8 @@ $(function() {
 <div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160; </div>
 <div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;      <span class="comment">/* Stealthed pilots don&#39;t reduce stealth. */</span></div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;      <span class="keywordflow">if</span> (pilot_isFlag(t, PILOT_STEALTH))</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;      <span class="comment">//if (pilot_isFlag(t, PILOT_STEALTH))</span></div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;      <span class="comment">//   continue;</span></div>
 <div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160; </div>
 <div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;      <span class="comment">/* Compute distance. */</span></div>
 <div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;      dist = vect_dist2( &amp;p-&gt;solid-&gt;pos, &amp;t-&gt;solid-&gt;pos );</div>
@@ -460,65 +460,67 @@ $(function() {
 <div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;            <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;You have been uncovered!&quot;</span>));</div>
 <div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (isplayer)</div>
 <div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;            <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>(_(<span class="stringliteral">&quot;You have uncovered &#39;%s&#39;!&quot;</span>), p-&gt;name);</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;      }</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;   }</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;}</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160; </div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;         <a class="code" href="ai_8c.html#ab9b12c9bda0c29b462a3b0db68fcef48">ai_discovered</a>( p );</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;      }</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;   }</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;}</div>
 <div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160; </div>
-<div class="line"><a name="l00541"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">  541</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">pilot_stealth</a>( Pilot *p )</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;{</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;   <span class="keywordtype">int</span> n;</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160; </div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag( p, PILOT_STEALTH ))</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160; </div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;   <span class="comment">/* Can&#39;t stealth if locked on. */</span></div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;   <span class="keywordflow">if</span> (p-&gt;lockons &gt; 0)</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160; </div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;   <span class="comment">/* Can&#39;t stealth if pilots nearby. */</span></div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;   pilot_setFlag( p, PILOT_STEALTH );</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   n = pilot_ewStealthGetNearby( p, NULL, NULL, NULL );</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;   <span class="keywordflow">if</span> (n&gt;0) {</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;      pilot_rmFlag( p, PILOT_STEALTH );</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;   }</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160; </div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;   <span class="comment">/* Turn off outfits. */</span></div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;   <a class="code" href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a>( p );</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;   <span class="comment">/* Got into stealth. */</span></div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>(p);</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;   p-&gt;ew_stealth_timer = 0.;</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160; </div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;   <span class="comment">/* Run hook. */</span></div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;   <span class="keyword">const</span> HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 1 };</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;   <a class="code" href="pilot__hook_8c.html#a7c92ba8cb8325aaa04dfbc7efd10dd9c">pilot_runHookParam</a>( p, PILOT_HOOK_STEALTH, &amp;hparam, 1 );</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;}</div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160; </div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160; </div>
+<div class="line"><a name="l00542"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">  542</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">pilot_stealth</a>( Pilot *p )</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;{</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;   <span class="keywordtype">int</span> n;</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160; </div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag( p, PILOT_STEALTH ))</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160; </div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;   <span class="comment">/* Can&#39;t stealth if locked on. */</span></div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;   <span class="keywordflow">if</span> (p-&gt;lockons &gt; 0)</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160; </div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;   <span class="comment">/* Can&#39;t stealth if pilots nearby. */</span></div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   pilot_setFlag( p, PILOT_STEALTH );</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;   n = pilot_ewStealthGetNearby( p, NULL, NULL, NULL );</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;   <span class="keywordflow">if</span> (n&gt;0) {</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;      pilot_rmFlag( p, PILOT_STEALTH );</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;   }</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160; </div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;   <span class="comment">/* Turn off outfits. */</span></div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;   <a class="code" href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a>( p );</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160; </div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;   <span class="comment">/* Got into stealth. */</span></div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>(p);</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;   p-&gt;ew_stealth_timer = 0.;</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160; </div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;   <span class="comment">/* Run hook. */</span></div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;   <span class="keyword">const</span> HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 1 };</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   <a class="code" href="pilot__hook_8c.html#a7c92ba8cb8325aaa04dfbc7efd10dd9c">pilot_runHookParam</a>( p, PILOT_HOOK_STEALTH, &amp;hparam, 1 );</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;}</div>
 <div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160; </div>
-<div class="line"><a name="l00577"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">  577</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a>( Pilot *p )</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;{</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;   <span class="keywordflow">if</span> (!pilot_isFlag( p, PILOT_STEALTH ))</div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;   pilot_rmFlag( p, PILOT_STEALTH );</div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   p-&gt;ew_stealth_timer = 0.;</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>(p);</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160; </div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;   <span class="comment">/* Run hook. */</span></div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;   <span class="keyword">const</span> HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 0 };</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;   <a class="code" href="pilot__hook_8c.html#a7c92ba8cb8325aaa04dfbc7efd10dd9c">pilot_runHookParam</a>( p, PILOT_HOOK_STEALTH, &amp;hparam, 1 );</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;}</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160; </div>
+<div class="line"><a name="l00578"></a><span class="lineno"><a class="line" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">  578</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a>( Pilot *p )</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;{</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;   <span class="keywordflow">if</span> (!pilot_isFlag( p, PILOT_STEALTH ))</div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   pilot_rmFlag( p, PILOT_STEALTH );</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;   p-&gt;ew_stealth_timer = 0.;</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>(p);</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160; </div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;   <span class="comment">/* Run hook. */</span></div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;   <span class="keyword">const</span> HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 0 };</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;   <a class="code" href="pilot__hook_8c.html#a7c92ba8cb8325aaa04dfbc7efd10dd9c">pilot_runHookParam</a>( p, PILOT_HOOK_STEALTH, &amp;hparam, 1 );</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="apilot__ew_8c_html_accc57907c09c3b5f45249b121a776886"><div class="ttname"><a href="pilot__ew_8c.html#accc57907c09c3b5f45249b121a776886">pilot_sensorRange</a></div><div class="ttdeci">double pilot_sensorRange(void)</div><div class="ttdoc">Returns the default sensor range for the current system.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00234">pilot_ew.c:234</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_ab00918f1a61e73c7bce2c129a7e96813"><div class="ttname"><a href="pilot__ew_8c.html#ab00918f1a61e73c7bce2c129a7e96813">pilot_inRangeAsteroid</a></div><div class="ttdeci">int pilot_inRangeAsteroid(const Pilot *p, int ast, int fie)</div><div class="ttdoc">Check to see if an asteroid is in sensor range of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00353">pilot_ew.c:353</a></div></div>
 <div class="ttc" id="astructPlanet_html"><div class="ttname"><a href="structPlanet.html">Planet</a></div><div class="ttdoc">Represents a planet.</div></div>
 <div class="ttc" id="apilot_8c_html_a79cca646d86f820231fed535fb07c434"><div class="ttname"><a href="pilot_8c.html#a79cca646d86f820231fed535fb07c434">pilot_isFriendly</a></div><div class="ttdeci">int pilot_isFriendly(const Pilot *p)</div><div class="ttdoc">Checks to see if pilot is friendly to the player.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00689">pilot.c:689</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_ac26ea1a439fc7863471c9a5c79485607"><div class="ttname"><a href="pilot__ew_8c.html#ac26ea1a439fc7863471c9a5c79485607">pilot_ewUpdate</a></div><div class="ttdeci">static void pilot_ewUpdate(Pilot *p)</div><div class="ttdoc">Updates all the internal values.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00103">pilot_ew.c:103</a></div></div>
-<div class="ttc" id="apilot_8c_html_a8661bcacfba49c24f84a092a682696ed"><div class="ttname"><a href="pilot_8c.html#a8661bcacfba49c24f84a092a682696ed">pilot_hasIllegal</a></div><div class="ttdeci">int pilot_hasIllegal(const Pilot *p, int faction)</div><div class="ttdoc">Checks to see if the pilot has illegal stuf to a faction.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03609">pilot.c:3609</a></div></div>
+<div class="ttc" id="apilot_8c_html_a8661bcacfba49c24f84a092a682696ed"><div class="ttname"><a href="pilot_8c.html#a8661bcacfba49c24f84a092a682696ed">pilot_hasIllegal</a></div><div class="ttdeci">int pilot_hasIllegal(const Pilot *p, int faction)</div><div class="ttdoc">Checks to see if the pilot has illegal stuf to a faction.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l03611">pilot.c:3611</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a32fa4f20807df10a0d9731e384d65f48"><div class="ttname"><a href="pilot__ew_8c.html#a32fa4f20807df10a0d9731e384d65f48">pilot_ewScanCheck</a></div><div class="ttdeci">int pilot_ewScanCheck(const Pilot *p)</div><div class="ttdoc">Checks to see if a scan is done.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00092">pilot_ew.c:92</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a69e155b5a354ff956e013b1cc8f9cad8"><div class="ttname"><a href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a></div><div class="ttdeci">void pilot_calcStats(Pilot *pilot)</div><div class="ttdoc">Recalculates the pilot's stats based on his outfits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00930">pilot_outfit.c:930</a></div></div>
+<div class="ttc" id="aai_8c_html_ab9b12c9bda0c29b462a3b0db68fcef48"><div class="ttname"><a href="ai_8c.html#ab9b12c9bda0c29b462a3b0db68fcef48">ai_discovered</a></div><div class="ttdeci">void ai_discovered(Pilot *discovered)</div><div class="ttdoc">Triggers the discovered() function in the pilot's AI.</div><div class="ttdef"><b>Definition:</b> <a href="ai_8c_source.html#l00894">ai.c:894</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a312a5cce2f4d86e2e702e97c2d2552e2"><div class="ttname"><a href="pilot__ew_8c.html#a312a5cce2f4d86e2e702e97c2d2552e2">pilot_ewUpdateDynamic</a></div><div class="ttdeci">void pilot_ewUpdateDynamic(Pilot *p, double dt)</div><div class="ttdoc">Updates the pilot's dynamic electronic warfare properties.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00131">pilot_ew.c:131</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
 <div class="ttc" id="arng_8c_html_a5e71a6e0c14542f60c8007edc2eaf286"><div class="ttname"><a href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a></div><div class="ttdeci">static const double d[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00290">rng.c:290</a></div></div>
@@ -529,7 +531,7 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_af8913dd6c1b130c9cf317beb15613484"><div class="ttname"><a href="space_8c.html#af8913dd6c1b130c9cf317beb15613484">space_isInField</a></div><div class="ttdeci">int space_isInField(const Vector2d *p)</div><div class="ttdoc">See if the position is in an asteroid field.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04118">space.c:4118</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_ae4a8d1c46d4a662c8ab34cb36013b096"><div class="ttname"><a href="pilot__ew_8c.html#ae4a8d1c46d4a662c8ab34cb36013b096">pilot_ewScanTime</a></div><div class="ttdeci">double pilot_ewScanTime(const Pilot *p)</div><div class="ttdoc">Gets the time it takes to scan a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00053">pilot_ew.c:53</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a3add591d32821f58c56fb96a261aa267"><div class="ttname"><a href="pilot__ew_8c.html#a3add591d32821f58c56fb96a261aa267">pilot_ewJumpPoint</a></div><div class="ttdeci">static double pilot_ewJumpPoint(const Pilot *p)</div><div class="ttdoc">Gets the electronic warfare jump point modifier.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00199">pilot_ew.c:199</a></div></div>
-<div class="ttc" id="astructPilot___html_adfb1ffae5f5653864bcec8a54bc075ab"><div class="ttname"><a href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">Pilot_::target</a></div><div class="ttdeci">unsigned int target</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8h_source.html#l00342">pilot.h:342</a></div></div>
+<div class="ttc" id="astructPilot___html_adfb1ffae5f5653864bcec8a54bc075ab"><div class="ttname"><a href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">Pilot_::target</a></div><div class="ttdeci">unsigned int target</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8h_source.html#l00343">pilot.h:343</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_adb48928a65263bff1281e62a4b17da8b"><div class="ttname"><a href="pilot__ew_8c.html#adb48928a65263bff1281e62a4b17da8b">pilot_ewAsteroid</a></div><div class="ttdeci">static double pilot_ewAsteroid(const Pilot *p)</div><div class="ttdoc">Gets the electronic warfare asteroid modifier.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00181">pilot_ew.c:181</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a5034c923fad0642b2131542daedfc050"><div class="ttname"><a href="pilot__ew_8c.html#a5034c923fad0642b2131542daedfc050">ew_interference</a></div><div class="ttdeci">static double ew_interference</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00034">pilot_ew.c:34</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00045">naev.h:45</a></div></div>
@@ -540,13 +542,13 @@ $(function() {
 <div class="ttc" id="anaev_8h_html_a8fa5e6968bb39c7ec03c486af1e7b335"><div class="ttname"><a href="naev_8h.html#a8fa5e6968bb39c7ec03c486af1e7b335">CLAMP</a></div><div class="ttdeci">#define CLAMP(a, b, x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00047">naev.h:47</a></div></div>
 <div class="ttc" id="afaction_8c_html_afea2f8de538c247a62bdd5d2d4c69f2b"><div class="ttname"><a href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a></div><div class="ttdeci">int areAllies(int a, int b)</div><div class="ttdoc">Checks whether two factions are allies or not.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01219">faction.c:1219</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a9205b78a74cacef55b89b3d2cc4685bf"><div class="ttname"><a href="pilot__ew_8c.html#a9205b78a74cacef55b89b3d2cc4685bf">pilot_ewScanStart</a></div><div class="ttdeci">void pilot_ewScanStart(Pilot *p)</div><div class="ttdoc">Initializes the scan timer for a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00065">pilot_ew.c:65</a></div></div>
-<div class="ttc" id="apilot__ew_8c_html_a6c5a5fc00f060b01b7f54cde48bb32a8"><div class="ttname"><a href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a></div><div class="ttdeci">void pilot_destealth(Pilot *p)</div><div class="ttdoc">Destealths a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00577">pilot_ew.c:577</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_a6c5a5fc00f060b01b7f54cde48bb32a8"><div class="ttname"><a href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a></div><div class="ttdeci">void pilot_destealth(Pilot *p)</div><div class="ttdoc">Destealths a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00578">pilot_ew.c:578</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a1f95f4ae0f4739bbb254f9662f39fac4"><div class="ttname"><a href="pilot__ew_8c.html#a1f95f4ae0f4739bbb254f9662f39fac4">pilot_inRangePilot</a></div><div class="ttdeci">int pilot_inRangePilot(const Pilot *p, const Pilot *target, double *dist2)</div><div class="ttdoc">Check to see if a pilot is in sensor range of another.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00271">pilot_ew.c:271</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_aab9be0d524d212b94dd9d9520349b832"><div class="ttname"><a href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a></div><div class="ttdeci">int pilot_outfitOffAll(Pilot *p)</div><div class="ttdoc">Disables all active outfits for a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01474">pilot_weapon.c:1474</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_a49c761c41fb035d49699b214fd55edc1"><div class="ttname"><a href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a></div><div class="ttdeci">void player_autonavResetSpeed(void)</div><div class="ttdoc">Resets the game speed.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00054">player_autonav.c:54</a></div></div>
 <div class="ttc" id="aspace_8c_html_a80fc91b008974b39b78ee551d5abc684"><div class="ttname"><a href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a></div><div class="ttdeci">StarSystem * cur_system</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00102">space.c:102</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a1f33423ce2a41f129a335ad6af5d585a"><div class="ttname"><a href="pilot__ew_8c.html#a1f33423ce2a41f129a335ad6af5d585a">pilot_ewUpdateStealth</a></div><div class="ttdeci">void pilot_ewUpdateStealth(Pilot *p, double dt)</div><div class="ttdoc">Updates the stealth mode and checks to see if it is getting broken.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00500">pilot_ew.c:500</a></div></div>
-<div class="ttc" id="apilot__ew_8c_html_af7780816d90c72f566e5c6e097adb230"><div class="ttname"><a href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">pilot_stealth</a></div><div class="ttdeci">int pilot_stealth(Pilot *p)</div><div class="ttdoc">Stealths a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00541">pilot_ew.c:541</a></div></div>
+<div class="ttc" id="apilot__ew_8c_html_af7780816d90c72f566e5c6e097adb230"><div class="ttname"><a href="pilot__ew_8c.html#af7780816d90c72f566e5c6e097adb230">pilot_stealth</a></div><div class="ttdeci">int pilot_stealth(Pilot *p)</div><div class="ttdoc">Stealths a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00542">pilot_ew.c:542</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_aae8ec77a4f451e8e3c7912c353f90496"><div class="ttname"><a href="pilot__ew_8c.html#aae8ec77a4f451e8e3c7912c353f90496">pilot_ewUpdateStatic</a></div><div class="ttdeci">void pilot_ewUpdateStatic(Pilot *p)</div><div class="ttdoc">Updates the pilot's static electronic warfare properties.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00117">pilot_ew.c:117</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_af85be17278e2a8bffde0ad285e84a34f"><div class="ttname"><a href="pilot__ew_8c.html#af85be17278e2a8bffde0ad285e84a34f">pilot_inRangePlanet</a></div><div class="ttdeci">int pilot_inRangePlanet(const Pilot *p, int target)</div><div class="ttdoc">Check to see if a planet is in sensor range of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00317">pilot_ew.c:317</a></div></div>
 <div class="ttc" id="apilot__hook_8c_html_a7c92ba8cb8325aaa04dfbc7efd10dd9c"><div class="ttname"><a href="pilot__hook_8c.html#a7c92ba8cb8325aaa04dfbc7efd10dd9c">pilot_runHookParam</a></div><div class="ttdeci">int pilot_runHookParam(Pilot *p, int hook_type, const HookParam *param, int nparam)</div><div class="ttdoc">Tries to run a pilot hook if he has it.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__hook_8c_source.html#l00043">pilot_hook.c:43</a></div></div>
