@@ -548,20 +548,20 @@ $(function() {
 <div class="line"><a name="l00723"></a><span class="lineno"><a class="line" href="outfit_8c.html#a6bc1f1d6511b8998981166d7cbf1efc3">  723</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="outfit_8c.html#a6bc1f1d6511b8998981166d7cbf1efc3">outfit_range</a>( <span class="keyword">const</span> Outfit* o )</div>
 <div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;{</div>
 <div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   Outfit *amm;</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;   <span class="keywordtype">double</span> at;</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;   <span class="keywordtype">double</span> at, speedinc;</div>
 <div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160; </div>
 <div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#adeb116d088c9caaa78688b0fee8f7aa4">outfit_isBolt</a>(o)) <span class="keywordflow">return</span> o-&gt;u.blt.falloff + (o-&gt;u.blt.range - o-&gt;u.blt.falloff)/2.;</div>
 <div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a>(o)) <span class="keywordflow">return</span> o-&gt;u.bem.range;</div>
 <div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;   <span class="keywordflow">else</span> if (<a class="code" href="outfit_8c.html#ab24f9c5d257de22db07258fbc39e98db">outfit_isAmmo</a>(o)) {</div>
 <div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;      <span class="keywordflow">if</span> (o-&gt;u.amm.thrust) {</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;         at = o-&gt;u.amm.speed / o-&gt;u.amm.thrust;</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;         <span class="keywordflow">if</span> (at &lt; o-&gt;u.amm.duration)</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;            <span class="keywordflow">return</span> o-&gt;u.amm.speed * (o-&gt;u.amm.duration - at / 2.);</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160; </div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;         <span class="comment">/* Maximum speed will never be reached. */</span></div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(o-&gt;u.amm.duration) * o-&gt;u.amm.thrust / 2.;</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;      }</div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160; </div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;         speedinc = o-&gt;u.amm.speed_max - o-&gt;u.amm.speed;</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;         at = speedinc / o-&gt;u.amm.thrust;</div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;         <span class="keywordflow">if</span> (at &lt; o-&gt;u.amm.duration)</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;            <span class="keywordflow">return</span> speedinc * (o-&gt;u.amm.duration - at / 2.) + o-&gt;u.amm.speed * o-&gt;u.amm.duration;</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160; </div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;         <span class="comment">/* Maximum speed will never be reached. */</span></div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(o-&gt;u.amm.duration) * o-&gt;u.amm.thrust / 2. + o-&gt;u.amm.duration * o-&gt;u.amm.speed;</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;      }</div>
 <div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;      <span class="keywordflow">return</span> o-&gt;u.amm.speed * o-&gt;u.amm.duration;</div>
 <div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   }</div>
 <div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o)) {</div>
