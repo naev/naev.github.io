@@ -79,7 +79,7 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
-  <li><a href="../modules/fleet.html">fleet</a></li>
+  <li><strong>fleet</strong></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
@@ -89,7 +89,7 @@
   <li><a href="../modules/colour.html">colour</a></li>
   <li><a href="../modules/commodity.html">commodity</a></li>
   <li><a href="../modules/data.html">data</a></li>
-  <li><strong>debug</strong></li>
+  <li><a href="../modules/debug.html">debug</a></li>
   <li><a href="../modules/diff.html">diff</a></li>
   <li><a href="../modules/evt.html">evt</a></li>
   <li><a href="../modules/faction.html">faction</a></li>
@@ -132,17 +132,16 @@
 
 <div id="content">
 
-<h1>Module <code>debug</code></h1>
-<p>Handles the Lua debug bindings.</p>
-<p>
-<p> These bindings control the debug flags.</p>
+<h1>Module <code>fleet</code></h1>
+<p>Functions for adding fleets of pilots.</p>
+<p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#showEmitters">showEmitters ([state=true])</a></td>
-	<td class="summary">Toggles the emitter marker.</td>
+	<td class="name" nowrap><a href="#add">add (count, ship, faction, location, pilotname, parameters)</a></td>
+	<td class="summary">Wrapper for pilot.add() that can operate on tables of ships.</td>
 	</tr>
 </table>
 
@@ -154,29 +153,49 @@
 
     <dl class="function">
     <dt>
-    <a name = "showEmitters"></a>
-    <strong>showEmitters ([state=true])</strong>
+    <a name = "add"></a>
+    <strong>add (count, ship, faction, location, pilotname, parameters)</strong>
     </dt>
     <dd>
-    Toggles the emitter marker.
+    Wrapper for pilot.add() that can operate on tables of ships.
+<p>      <em>TODO</em>: With a little work we can support a table of parameters tables, but no one even wants that. (Yet?)
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">state</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether to set or unset markers.
-         (<em>default</em> true)
+        <li><span class="parameter">count</span>
+         Number of times to repeat the pattern.
+        </li>
+        <li><span class="parameter">ship</span>
+         Ship(s) to add.
+        </li>
+        <li><span class="parameter">faction</span>
+         Faction(s) to give the pilot.
+        </li>
+        <li><span class="parameter">location</span>
+         Location(s) to jump in from, take off from, or appear at.
+        </li>
+        <li><span class="parameter">pilotname</span>
+         Name(s) to give each pilot.
+        </li>
+        <li><span class="parameter">parameters</span>
+         Common table of extra parameters to pass pilot.add(), e.g. {ai="escort"}.
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        Table of created pilots.
+    </ol>
 
 
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example"><span class="global">debug</span>.showEmitters() <span class="comment">-- Trail emitters are marked with crosses.</span></pre></li>
-        <li><pre class="example"><span class="global">debug</span>.showEmitters(<span class="keyword">false</span>) <span class="comment">-- Remove the markers.</span></pre></li>
+        <li><pre class="example">pilots = fleet.add( <span class="number">1</span>, <span class="string">"Hyena"</span>, <span class="string">"Pirate"</span> ) <span class="comment">-- Creates a facsimile of a Pirate Hyena.</span></pre></li>
+        <li><pre class="example">pilots = fleet.add( <span class="number">1</span>, <span class="string">"Hyena"</span>, <span class="string">"Pirate"</span>, <span class="keyword">nil</span>, <span class="keyword">nil</span>, {ai=<span class="string">"pirate_norun"</span>} ) <span class="comment">-- Ditto, but use the "norun" AI variant.</span></pre></li>
+        <li><pre class="example">pilots = fleet.add( <span class="number">2</span>, { <span class="string">"Rhino"</span>, <span class="string">"Koala"</span> }, <span class="string">"Trader"</span> ) <span class="comment">-- Creates four Trader ships.</span></pre></li>
     </ul>
 
 </dd>
