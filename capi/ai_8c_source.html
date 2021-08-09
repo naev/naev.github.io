@@ -398,7 +398,7 @@ $(function() {
 <div class="line"><a name="l00443"></a><span class="lineno"><a class="line" href="ai_8c.html#a8301365a8d7d4f62dbc1f361a0c50408">  443</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="ai_8c.html#a8301365a8d7d4f62dbc1f361a0c50408">ai_run</a>( nlua_env env, <span class="keywordtype">int</span> nargs )</div>
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;{</div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;   <span class="keywordflow">if</span> (nlua_pcall(env, nargs, 0)) { <span class="comment">/* error has occurred */</span></div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai error: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai &#39;%s&#39; error: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;name, lua_tostring(naevL,-1));</div>
 <div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;      lua_pop(naevL,1);</div>
 <div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;   }</div>
 <div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;}</div>
@@ -434,7 +434,7 @@ $(function() {
 <div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;   <span class="keywordflow">if</span> (lua_isnil(naevL,-1))</div>
 <div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;      WARN( _(<span class="stringliteral">&quot;AI profile &#39;%s&#39; has no default memory for pilot &#39;%s&#39;.&quot;</span>),</div>
 <div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;            <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, p-&gt;name );</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;   lua_pushnil(naevL);               <span class="comment">/* pm, nt, dt, nil */</span></div>
 <div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;   <span class="keywordflow">while</span> (lua_next(naevL,-2) != 0) { <span class="comment">/* pm, nt, dt, k, v */</span></div>
 <div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;      lua_pushvalue(naevL,-2);       <span class="comment">/* pm, nt, dt, k, v, k */</span></div>
@@ -780,7 +780,7 @@ $(function() {
 <div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160; </div>
 <div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;   <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, attacker);</div>
 <div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;   <span class="keywordflow">if</span> (nlua_pcall(<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;env, 1, 0)) {</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai -&gt; &#39;attacked&#39;: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, lua_tostring(naevL, -1));</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai &#39;%s&#39; -&gt; &#39;attacked&#39;: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;name, lua_tostring(naevL, -1));</div>
 <div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;      lua_pop(naevL, 1);</div>
 <div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;   }</div>
 <div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;}</div>
@@ -807,7 +807,7 @@ $(function() {
 <div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;   }</div>
 <div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160; </div>
 <div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;   <span class="keywordflow">if</span> (nlua_pcall(<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;env, 0, 0)) {</div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai -&gt; &#39;discovered&#39;: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, lua_tostring(naevL, -1));</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai &#39;%s&#39; -&gt; &#39;discovered&#39;: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;name, lua_tostring(naevL, -1));</div>
 <div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;      lua_pop(naevL, 1);</div>
 <div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;   }</div>
 <div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;}</div>
@@ -818,7 +818,7 @@ $(function() {
 <div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;   <a class="code" href="structTask.html">Task</a> *t;</div>
 <div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160; </div>
 <div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;ref_refuel==LUA_NOREF) {</div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;      WARN(_(<span class="stringliteral">&quot;Pilot &#39;%s&#39; is trying to refuel when no &#39;refuel&#39; function is defined!&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name);</div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;      WARN(_(<span class="stringliteral">&quot;Pilot &#39;%s&#39; (ai &#39;%s&#39;) is trying to refuel when no &#39;refuel&#39; function is defined!&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;name);</div>
 <div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;   }</div>
 <div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160; </div>
@@ -866,7 +866,7 @@ $(function() {
 <div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, distressed-&gt;target);</div>
 <div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160; </div>
 <div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;   <span class="keywordflow">if</span> (nlua_pcall(<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;env, 2, 0)) {</div>
-<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai -&gt; &#39;distress&#39;: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai &#39;%s&#39; -&gt; &#39;distress&#39;: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;name, lua_tostring(naevL,-1));</div>
 <div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;      lua_pop(naevL,1);</div>
 <div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;   }</div>
 <div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;}</div>
@@ -896,7 +896,7 @@ $(function() {
 <div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;      lua_setfenv(naevL, -2);</div>
 <div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, pilot-&gt;id);</div>
 <div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;      <span class="keywordflow">if</span> (nlua_pcall(env, 1, 0)) { <span class="comment">/* Error has occurred. */</span></div>
-<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;         WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; equip -&gt; &#39;%s&#39;: %s&quot;</span>), pilot-&gt;name, func, lua_tostring(naevL, -1));</div>
+<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;         WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; equip &#39;%s&#39; -&gt; &#39;%s&#39;: %s&quot;</span>), pilot-&gt;name, pilot-&gt;ai-&gt;name, func, lua_tostring(naevL, -1));</div>
 <div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;         lua_pop(naevL, 1);</div>
 <div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;      }</div>
 <div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;   }</div>
@@ -916,7 +916,7 @@ $(function() {
 <div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160; </div>
 <div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;   <span class="comment">/* Run function. */</span></div>
 <div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;   <span class="keywordflow">if</span> (nlua_pcall(<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;env, 0, 0)) { <span class="comment">/* error has occurred */</span></div>
-<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai -&gt; &#39;%s&#39;: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, <span class="stringliteral">&quot;create&quot;</span>, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;      WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; ai &#39;%s&#39; -&gt; &#39;%s&#39;: %s&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;name, <span class="stringliteral">&quot;create&quot;</span>, lua_tostring(naevL,-1));</div>
 <div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;      lua_pop(naevL,1);</div>
 <div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;   }</div>
 <div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160; </div>
@@ -1947,7 +1947,7 @@ $(function() {
 <div class="line"><a name="l02385"></a><span class="lineno"> 2385</span>&#160;   ret = 0;</div>
 <div class="line"><a name="l02386"></a><span class="lineno"> 2386</span>&#160; </div>
 <div class="line"><a name="l02387"></a><span class="lineno"> 2387</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;nav_planet &lt; 0) {</div>
-<div class="line"><a name="l02388"></a><span class="lineno"> 2388</span>&#160;      NLUA_ERROR( L, _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; has no land target&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name );</div>
+<div class="line"><a name="l02388"></a><span class="lineno"> 2388</span>&#160;      NLUA_ERROR( L, _(<span class="stringliteral">&quot;Pilot &#39;%s&#39; (ai &#39;%s&#39;) has no land target&quot;</span>), <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;name, <a class="code" href="ai_8c.html#aa86703e53147272b3b7cca2ace44e8ad">cur_pilot</a>-&gt;ai-&gt;name );</div>
 <div class="line"><a name="l02389"></a><span class="lineno"> 2389</span>&#160;      <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l02390"></a><span class="lineno"> 2390</span>&#160;   }</div>
 <div class="line"><a name="l02391"></a><span class="lineno"> 2391</span>&#160; </div>
