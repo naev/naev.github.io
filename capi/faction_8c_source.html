@@ -91,7 +91,7 @@ $(function() {
 <div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structFaction__.html#ab0c34afe5a6e0602425bf3f906d767cd">   59</a></span>&#160;   <span class="keywordtype">char</span> *<a class="code" href="structFaction__.html#ab0c34afe5a6e0602425bf3f906d767cd">ai</a>; </div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   <span class="comment">/* Graphics. */</span></div>
 <div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structFaction__.html#aebd90c40efb35d8f89d3a01b9b2d0bc5">   62</a></span>&#160;   glTexture *<a class="code" href="structFaction__.html#aebd90c40efb35d8f89d3a01b9b2d0bc5">logo</a>; </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structFaction__.html#ae6028e90dd28d787c603ce7953916d68">   63</a></span>&#160;   <span class="keyword">const</span> glColour *<a class="code" href="structFaction__.html#ae6028e90dd28d787c603ce7953916d68">colour</a>; </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structFaction__.html#ac66f396670355b4b1f90a4c3ff9c1f73">   63</a></span>&#160;   glColour <a class="code" href="structFaction__.html#ac66f396670355b4b1f90a4c3ff9c1f73">colour</a>; </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   <span class="comment">/* Enemies */</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="structFaction__.html#a0a132473600918edee57d2325027e750">   66</a></span>&#160;   <span class="keywordtype">int</span> *<a class="code" href="structFaction__.html#a0a132473600918edee57d2325027e750">enemies</a>; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   <span class="comment">/* Allies */</span></div>
@@ -323,7 +323,7 @@ $(function() {
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;   }</div>
 <div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[f].colour;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   <span class="keywordflow">return</span> &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[f].colour;</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;}</div>
 <div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160; </div>
 <div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
@@ -1037,516 +1037,512 @@ $(function() {
 <div class="line"><a name="l01285"></a><span class="lineno"> 1285</span>&#160;   xmlNodePtr node;</div>
 <div class="line"><a name="l01286"></a><span class="lineno"> 1286</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>;</div>
 <div class="line"><a name="l01287"></a><span class="lineno"> 1287</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>], *dat, *ctmp;</div>
-<div class="line"><a name="l01288"></a><span class="lineno"> 1288</span>&#160;   glColour *col;</div>
-<div class="line"><a name="l01289"></a><span class="lineno"> 1289</span>&#160;   <span class="keywordtype">size_t</span> ndat;</div>
-<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160; </div>
-<div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;   <span class="comment">/* Clear memory. */</span></div>
-<div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;   memset( temp, 0, <span class="keyword">sizeof</span>(<a class="code" href="structFaction.html">Faction</a>) );</div>
-<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;   temp-&gt;equip_env = LUA_NOREF;</div>
-<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;   temp-&gt;env = LUA_NOREF;</div>
-<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;   temp-&gt;sched_env = LUA_NOREF;</div>
-<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160; </div>
-<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a> = 0;</div>
-<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;   node   = parent-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;      <span class="comment">/* Only care about nodes. */</span></div>
-<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;      xml_onlyNodes(node);</div>
-<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160; </div>
-<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;      <span class="comment">/* Can be 0 or negative, so we have to take that into account. */</span></div>
-<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;player&quot;</span>)) {</div>
-<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;         temp-&gt;player_def = xml_getFloat(node);</div>
-<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;         <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a> = 1;</div>
-<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160;      }</div>
-<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160; </div>
-<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;name&quot;</span>,temp-&gt;name);</div>
-<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;longname&quot;</span>,temp-&gt;longname);</div>
-<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;display&quot;</span>,temp-&gt;displayname);</div>
-<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;ai&quot;</span>,temp-&gt;ai);</div>
-<div class="line"><a name="l01314"></a><span class="lineno"> 1314</span>&#160;      xmlr_float(node,<span class="stringliteral">&quot;lane_length_per_presence&quot;</span>,temp-&gt;lane_length_per_presence);</div>
-<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;colour&quot;</span>)) {</div>
-<div class="line"><a name="l01316"></a><span class="lineno"> 1316</span>&#160;         ctmp = xml_get(node);</div>
-<div class="line"><a name="l01317"></a><span class="lineno"> 1317</span>&#160;         <span class="keywordflow">if</span> (ctmp != NULL)</div>
-<div class="line"><a name="l01318"></a><span class="lineno"> 1318</span>&#160;            temp-&gt;colour = <a class="code" href="colour_8c.html#a6a08a39786aed0aa065be233c786e81f">col_fromName</a>(xml_raw(node));</div>
-<div class="line"><a name="l01319"></a><span class="lineno"> 1319</span>&#160;         <span class="comment">/* If no named colour is present, RGB attributes are used. */</span></div>
-<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160;         <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;            <span class="comment">/* Initialize in case a colour channel is absent. */</span></div>
-<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;            col = calloc( 1, <span class="keyword">sizeof</span>(glColour) );</div>
-<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160; </div>
-<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;            xmlr_attr_float(node,<span class="stringliteral">&quot;r&quot;</span>,col-&gt;r);</div>
-<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;            xmlr_attr_float(node,<span class="stringliteral">&quot;g&quot;</span>,col-&gt;g);</div>
-<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;            xmlr_attr_float(node,<span class="stringliteral">&quot;b&quot;</span>,col-&gt;b);</div>
-<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160; </div>
-<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;            col-&gt;a = 1.;</div>
-<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160;            temp-&gt;colour = col;</div>
-<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;         }</div>
-<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;      }</div>
-<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160; </div>
-<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;spawn&quot;</span>)) {</div>
-<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;sched_env != LUA_NOREF)</div>
-<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;            WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has duplicate &#39;spawn&#39; tag.&quot;</span>), temp-&gt;name);</div>
-<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;         snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), FACTIONS_PATH<span class="stringliteral">&quot;spawn/%s.lua&quot;</span>, xml_raw(node) );</div>
-<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;         temp-&gt;sched_env = nlua_newEnv(1);</div>
-<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;         <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( temp-&gt;sched_env );</div>
-<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;         dat = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, &amp;ndat );</div>
-<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;         <span class="keywordflow">if</span> (nlua_dobufenv(temp-&gt;sched_env, dat, ndat, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>) != 0) {</div>
-<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;            WARN(_(<span class="stringliteral">&quot;Failed to run spawn script: %s\n&quot;</span></div>
-<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;                  <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;                  <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
-<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;                  <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;            nlua_freeEnv( temp-&gt;sched_env );</div>
-<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;            temp-&gt;sched_env = LUA_NOREF;</div>
-<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;         }</div>
-<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;         free(dat);</div>
-<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;      }</div>
-<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160; </div>
-<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;standing&quot;</span>)) {</div>
-<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;env != LUA_NOREF)</div>
-<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;            WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has duplicate &#39;standing&#39; tag.&quot;</span>), temp-&gt;name);</div>
-<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;         <a class="code" href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11">faction_addStandingScript</a>( temp, xml_raw(node) );</div>
-<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;      }</div>
-<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160; </div>
-<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;known&quot;</span>)) {</div>
-<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;         faction_setFlag(temp, <a class="code" href="faction_8c.html#a5cc43a31f094e976f8ba2e06613537a2">FACTION_KNOWN</a>);</div>
-<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;      }</div>
-<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160; </div>
-<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;equip&quot;</span>)) {</div>
-<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;equip_env != LUA_NOREF)</div>
-<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160;            WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has duplicate &#39;equip&#39; tag.&quot;</span>), temp-&gt;name);</div>
-<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;         snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), FACTIONS_PATH<span class="stringliteral">&quot;equip/%s.lua&quot;</span>, xml_raw(node) );</div>
-<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;         temp-&gt;equip_env = nlua_newEnv(1);</div>
-<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;         <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( temp-&gt;equip_env );</div>
-<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;         dat = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, &amp;ndat );</div>
-<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;         <span class="keywordflow">if</span> (nlua_dobufenv(temp-&gt;equip_env, dat, ndat, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>) != 0) {</div>
-<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;            WARN(_(<span class="stringliteral">&quot;Failed to run equip script: %s\n&quot;</span></div>
-<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;                  <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;                  <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
-<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;                  <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, lua_tostring(naevL, -1));</div>
-<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;            nlua_freeEnv( temp-&gt;equip_env );</div>
-<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;            temp-&gt;equip_env = LUA_NOREF;</div>
-<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;         }</div>
-<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;         free(dat);</div>
-<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;      }</div>
-<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160; </div>
-<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;logo&quot;</span>)) {</div>
-<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;logo != NULL)</div>
-<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;            WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has duplicate &#39;logo&#39; tag.&quot;</span>), temp-&gt;name);</div>
-<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;         snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), FACTION_LOGO_PATH<span class="stringliteral">&quot;%s.webp&quot;</span>, xml_get(node) );</div>
-<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;         temp-&gt;logo = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, 0);</div>
-<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;      }</div>
-<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160; </div>
-<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;static&quot;</span>)) {</div>
-<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;         faction_setFlag(temp, <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a>);</div>
-<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;      }</div>
-<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160; </div>
-<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;invisible&quot;</span>)) {</div>
-<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;         faction_setFlag(temp, <a class="code" href="faction_8c.html#a2a66a85cd08771161c2825e4118382ea">FACTION_INVISIBLE</a>);</div>
-<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;      }</div>
+<div class="line"><a name="l01288"></a><span class="lineno"> 1288</span>&#160;   <span class="keywordtype">size_t</span> ndat;</div>
+<div class="line"><a name="l01289"></a><span class="lineno"> 1289</span>&#160; </div>
+<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;   <span class="comment">/* Clear memory. */</span></div>
+<div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;   memset( temp, 0, <span class="keyword">sizeof</span>(<a class="code" href="structFaction.html">Faction</a>) );</div>
+<div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;   temp-&gt;equip_env = LUA_NOREF;</div>
+<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;   temp-&gt;env = LUA_NOREF;</div>
+<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;   temp-&gt;sched_env = LUA_NOREF;</div>
+<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160; </div>
+<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a> = 0;</div>
+<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;   node   = parent-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;      <span class="comment">/* Only care about nodes. */</span></div>
+<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;      xml_onlyNodes(node);</div>
+<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160; </div>
+<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;      <span class="comment">/* Can be 0 or negative, so we have to take that into account. */</span></div>
+<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;player&quot;</span>)) {</div>
+<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;         temp-&gt;player_def = xml_getFloat(node);</div>
+<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;         <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a> = 1;</div>
+<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;      }</div>
+<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160; </div>
+<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;name&quot;</span>,temp-&gt;name);</div>
+<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;longname&quot;</span>,temp-&gt;longname);</div>
+<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;display&quot;</span>,temp-&gt;displayname);</div>
+<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;ai&quot;</span>,temp-&gt;ai);</div>
+<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160;      xmlr_float(node,<span class="stringliteral">&quot;lane_length_per_presence&quot;</span>,temp-&gt;lane_length_per_presence);</div>
+<div class="line"><a name="l01314"></a><span class="lineno"> 1314</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;colour&quot;</span>)) {</div>
+<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160;         ctmp = xml_get(node);</div>
+<div class="line"><a name="l01316"></a><span class="lineno"> 1316</span>&#160;         <span class="keywordflow">if</span> (ctmp != NULL)</div>
+<div class="line"><a name="l01317"></a><span class="lineno"> 1317</span>&#160;            temp-&gt;colour = *<a class="code" href="colour_8c.html#a6a08a39786aed0aa065be233c786e81f">col_fromName</a>(xml_raw(node));</div>
+<div class="line"><a name="l01318"></a><span class="lineno"> 1318</span>&#160;         <span class="comment">/* If no named colour is present, RGB attributes are used. */</span></div>
+<div class="line"><a name="l01319"></a><span class="lineno"> 1319</span>&#160;         <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160;            <span class="comment">/* Initialize in case a colour channel is absent. */</span></div>
+<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;            xmlr_attr_float(node,<span class="stringliteral">&quot;r&quot;</span>,temp-&gt;colour.r);</div>
+<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;            xmlr_attr_float(node,<span class="stringliteral">&quot;g&quot;</span>,temp-&gt;colour.g);</div>
+<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;            xmlr_attr_float(node,<span class="stringliteral">&quot;b&quot;</span>,temp-&gt;colour.b);</div>
+<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;            temp-&gt;colour.a = 1.;</div>
+<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;            col_gammaToLinear( &amp;temp-&gt;colour );</div>
+<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;         }</div>
+<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;      }</div>
+<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160; </div>
+<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;spawn&quot;</span>)) {</div>
+<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;sched_env != LUA_NOREF)</div>
+<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;            WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has duplicate &#39;spawn&#39; tag.&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;         snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), FACTIONS_PATH<span class="stringliteral">&quot;spawn/%s.lua&quot;</span>, xml_raw(node) );</div>
+<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;         temp-&gt;sched_env = nlua_newEnv(1);</div>
+<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;         <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( temp-&gt;sched_env );</div>
+<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;         dat = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, &amp;ndat );</div>
+<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;         <span class="keywordflow">if</span> (nlua_dobufenv(temp-&gt;sched_env, dat, ndat, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>) != 0) {</div>
+<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;            WARN(_(<span class="stringliteral">&quot;Failed to run spawn script: %s\n&quot;</span></div>
+<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;                  <span class="stringliteral">&quot;%s\n&quot;</span></div>
+<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;                  <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
+<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;                  <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;            nlua_freeEnv( temp-&gt;sched_env );</div>
+<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;            temp-&gt;sched_env = LUA_NOREF;</div>
+<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;         }</div>
+<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;         free(dat);</div>
+<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;      }</div>
+<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160; </div>
+<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;standing&quot;</span>)) {</div>
+<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;env != LUA_NOREF)</div>
+<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;            WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has duplicate &#39;standing&#39; tag.&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;         <a class="code" href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11">faction_addStandingScript</a>( temp, xml_raw(node) );</div>
+<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;      }</div>
+<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160; </div>
+<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;known&quot;</span>)) {</div>
+<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;         faction_setFlag(temp, <a class="code" href="faction_8c.html#a5cc43a31f094e976f8ba2e06613537a2">FACTION_KNOWN</a>);</div>
+<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;      }</div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160; </div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;equip&quot;</span>)) {</div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;equip_env != LUA_NOREF)</div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;            WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has duplicate &#39;equip&#39; tag.&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;         snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), FACTIONS_PATH<span class="stringliteral">&quot;equip/%s.lua&quot;</span>, xml_raw(node) );</div>
+<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;         temp-&gt;equip_env = nlua_newEnv(1);</div>
+<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;         <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( temp-&gt;equip_env );</div>
+<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160;         dat = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, &amp;ndat );</div>
+<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;         <span class="keywordflow">if</span> (nlua_dobufenv(temp-&gt;equip_env, dat, ndat, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>) != 0) {</div>
+<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;            WARN(_(<span class="stringliteral">&quot;Failed to run equip script: %s\n&quot;</span></div>
+<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;                  <span class="stringliteral">&quot;%s\n&quot;</span></div>
+<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;                  <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
+<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;                  <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, lua_tostring(naevL, -1));</div>
+<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;            nlua_freeEnv( temp-&gt;equip_env );</div>
+<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;            temp-&gt;equip_env = LUA_NOREF;</div>
+<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;         }</div>
+<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;         free(dat);</div>
+<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;      }</div>
+<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160; </div>
+<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;logo&quot;</span>)) {</div>
+<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;logo != NULL)</div>
+<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;            WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has duplicate &#39;logo&#39; tag.&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;         snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), FACTION_LOGO_PATH<span class="stringliteral">&quot;%s.webp&quot;</span>, xml_get(node) );</div>
+<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;         temp-&gt;logo = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, 0);</div>
+<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;      }</div>
+<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160; </div>
+<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;static&quot;</span>)) {</div>
+<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;         faction_setFlag(temp, <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a>);</div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;      }</div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160; </div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;invisible&quot;</span>)) {</div>
+<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;         faction_setFlag(temp, <a class="code" href="faction_8c.html#a2a66a85cd08771161c2825e4118382ea">FACTION_INVISIBLE</a>);</div>
+<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;      }</div>
+<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160; </div>
+<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;      <span class="comment">/* Avoid warnings. */</span></div>
+<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;allies&quot;</span>) || xml_isNode(node,<span class="stringliteral">&quot;enemies&quot;</span>))</div>
+<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160; </div>
-<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;      <span class="comment">/* Avoid warnings. */</span></div>
-<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;allies&quot;</span>) || xml_isNode(node,<span class="stringliteral">&quot;enemies&quot;</span>))</div>
-<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160; </div>
-<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;      DEBUG(_(<span class="stringliteral">&quot;Unknown node &#39;%s&#39; in faction &#39;%s&#39;&quot;</span>),node-&gt;name,temp-&gt;name);</div>
-<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160; </div>
-<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;   <span class="keywordflow">if</span> (temp-&gt;name == NULL)</div>
-<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to read data from &#39;%s&#39;&quot;</span>), FACTION_DATA_PATH);</div>
-<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>==0)</div>
-<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;      DEBUG(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; missing player tag.&quot;</span>), temp-&gt;name);</div>
-<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;   <span class="keywordflow">if</span> ((temp-&gt;env==LUA_NOREF) &amp;&amp; !faction_isFlag( temp, <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> ))</div>
-<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;      WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has no Lua and isn&#39;t static!&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;      DEBUG(_(<span class="stringliteral">&quot;Unknown node &#39;%s&#39; in faction &#39;%s&#39;&quot;</span>),node-&gt;name,temp-&gt;name);</div>
+<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160; </div>
+<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;   <span class="keywordflow">if</span> (temp-&gt;name == NULL)</div>
+<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to read data from &#39;%s&#39;&quot;</span>), FACTION_DATA_PATH);</div>
+<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>==0)</div>
+<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;      DEBUG(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; missing player tag.&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;   <span class="keywordflow">if</span> ((temp-&gt;env==LUA_NOREF) &amp;&amp; !faction_isFlag( temp, <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> ))</div>
+<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;      WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; has no Lua and isn&#39;t static!&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160; </div>
+<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;}</div>
+<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160; </div>
 <div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160; </div>
-<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;}</div>
-<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160; </div>
-<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160; </div>
-<div class="line"><a name="l01426"></a><span class="lineno"><a class="line" href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11"> 1426</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11">faction_addStandingScript</a>( <a class="code" href="structFaction.html">Faction</a>* temp, <span class="keyword">const</span> <span class="keywordtype">char</span>* scriptname ) {</div>
-<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>], *dat;</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;   <span class="keywordtype">size_t</span> ndat;</div>
-<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160; </div>
-<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), FACTIONS_PATH<span class="stringliteral">&quot;standing/%s.lua&quot;</span>, scriptname );</div>
-<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;   temp-&gt;env = nlua_newEnv(1);</div>
-<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;   <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( temp-&gt;env );</div>
-<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;   dat = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, &amp;ndat );</div>
-<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;   <span class="keywordflow">if</span> (nlua_dobufenv(temp-&gt;env, dat, ndat, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>) != 0) {</div>
-<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;      WARN(_(<span class="stringliteral">&quot;Failed to run standing script: %s\n&quot;</span></div>
-<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;            <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;            <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
-<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;            <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;      nlua_freeEnv( temp-&gt;env );</div>
-<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160;      temp-&gt;env = LUA_NOREF;</div>
-<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;   }</div>
-<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160;   free(dat);</div>
-<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;}</div>
-<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160; </div>
-<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160; </div>
-<div class="line"><a name="l01451"></a><span class="lineno"><a class="line" href="faction_8c.html#af256214a358e144bd7c0b848ec472a54"> 1451</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="faction_8c.html#af256214a358e144bd7c0b848ec472a54">faction_parseSocial</a>( xmlNodePtr parent )</div>
-<div class="line"><a name="l01452"></a><span class="lineno"> 1452</span>&#160;{</div>
-<div class="line"><a name="l01453"></a><span class="lineno"> 1453</span>&#160;   xmlNodePtr node, cur;</div>
-<div class="line"><a name="l01454"></a><span class="lineno"> 1454</span>&#160;   <a class="code" href="structFaction.html">Faction</a> *base;</div>
-<div class="line"><a name="l01455"></a><span class="lineno"> 1455</span>&#160;   <span class="keywordtype">int</span> *tmp;</div>
-<div class="line"><a name="l01456"></a><span class="lineno"> 1456</span>&#160; </div>
-<div class="line"><a name="l01457"></a><span class="lineno"> 1457</span>&#160;   <span class="comment">/* Get name. */</span></div>
-<div class="line"><a name="l01458"></a><span class="lineno"> 1458</span>&#160;   base = NULL;</div>
-<div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160;      xml_onlyNodes(node);</div>
-<div class="line"><a name="l01462"></a><span class="lineno"> 1462</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;name&quot;</span>)) {</div>
-<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160;         base = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[ <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>( xml_get(node) ) ];</div>
-<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;      }</div>
-<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160; </div>
-<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;   assert( base != NULL );</div>
+<div class="line"><a name="l01422"></a><span class="lineno"><a class="line" href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11"> 1422</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11">faction_addStandingScript</a>( <a class="code" href="structFaction.html">Faction</a>* temp, <span class="keyword">const</span> <span class="keywordtype">char</span>* scriptname ) {</div>
+<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>], *dat;</div>
+<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;   <span class="keywordtype">size_t</span> ndat;</div>
+<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160; </div>
+<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), FACTIONS_PATH<span class="stringliteral">&quot;standing/%s.lua&quot;</span>, scriptname );</div>
+<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;   temp-&gt;env = nlua_newEnv(1);</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;   <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( temp-&gt;env );</div>
+<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;   dat = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, &amp;ndat );</div>
+<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;   <span class="keywordflow">if</span> (nlua_dobufenv(temp-&gt;env, dat, ndat, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>) != 0) {</div>
+<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;      WARN(_(<span class="stringliteral">&quot;Failed to run standing script: %s\n&quot;</span></div>
+<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;            <span class="stringliteral">&quot;%s\n&quot;</span></div>
+<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;            <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
+<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;            <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;      nlua_freeEnv( temp-&gt;env );</div>
+<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;      temp-&gt;env = LUA_NOREF;</div>
+<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;   }</div>
+<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;   free(dat);</div>
+<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;}</div>
+<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160; </div>
+<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160; </div>
+<div class="line"><a name="l01447"></a><span class="lineno"><a class="line" href="faction_8c.html#af256214a358e144bd7c0b848ec472a54"> 1447</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="faction_8c.html#af256214a358e144bd7c0b848ec472a54">faction_parseSocial</a>( xmlNodePtr parent )</div>
+<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160;{</div>
+<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160;   xmlNodePtr node, cur;</div>
+<div class="line"><a name="l01450"></a><span class="lineno"> 1450</span>&#160;   <a class="code" href="structFaction.html">Faction</a> *base;</div>
+<div class="line"><a name="l01451"></a><span class="lineno"> 1451</span>&#160;   <span class="keywordtype">int</span> *tmp;</div>
+<div class="line"><a name="l01452"></a><span class="lineno"> 1452</span>&#160; </div>
+<div class="line"><a name="l01453"></a><span class="lineno"> 1453</span>&#160;   <span class="comment">/* Get name. */</span></div>
+<div class="line"><a name="l01454"></a><span class="lineno"> 1454</span>&#160;   base = NULL;</div>
+<div class="line"><a name="l01455"></a><span class="lineno"> 1455</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l01456"></a><span class="lineno"> 1456</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01457"></a><span class="lineno"> 1457</span>&#160;      xml_onlyNodes(node);</div>
+<div class="line"><a name="l01458"></a><span class="lineno"> 1458</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;name&quot;</span>)) {</div>
+<div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160;         base = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[ <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>( xml_get(node) ) ];</div>
+<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160;      }</div>
+<div class="line"><a name="l01462"></a><span class="lineno"> 1462</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160; </div>
+<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;   assert( base != NULL );</div>
+<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160; </div>
+<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;   <span class="comment">/* Create arrays, not much memory so it doesn&#39;t really matter. */</span></div>
+<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;   base-&gt;allies = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
+<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;   base-&gt;enemies = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
 <div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160; </div>
-<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;   <span class="comment">/* Create arrays, not much memory so it doesn&#39;t really matter. */</span></div>
-<div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160;   base-&gt;allies = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
-<div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160;   base-&gt;enemies = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
+<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;   <span class="comment">/* Parse social stuff. */</span></div>
+<div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160;   <span class="keywordflow">do</span> {</div>
 <div class="line"><a name="l01473"></a><span class="lineno"> 1473</span>&#160; </div>
-<div class="line"><a name="l01474"></a><span class="lineno"> 1474</span>&#160;   <span class="comment">/* Parse social stuff. */</span></div>
-<div class="line"><a name="l01475"></a><span class="lineno"> 1475</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01474"></a><span class="lineno"> 1474</span>&#160;      <span class="comment">/* Grab the allies */</span></div>
+<div class="line"><a name="l01475"></a><span class="lineno"> 1475</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;allies&quot;</span>)) {</div>
+<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
 <div class="line"><a name="l01477"></a><span class="lineno"> 1477</span>&#160; </div>
-<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;      <span class="comment">/* Grab the allies */</span></div>
-<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;allies&quot;</span>)) {</div>
-<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160; </div>
-<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;ally&quot;</span>)) {</div>
-<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;               tmp = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;base-&gt;allies );</div>
-<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;               *tmp = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(xml_get(cur));</div>
-<div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;            }</div>
-<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;      }</div>
+<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;ally&quot;</span>)) {</div>
+<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;               tmp = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;base-&gt;allies );</div>
+<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;               *tmp = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(xml_get(cur));</div>
+<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;            }</div>
+<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;      }</div>
+<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160; </div>
+<div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;      <span class="comment">/* Grab the enemies */</span></div>
+<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;enemies&quot;</span>)) {</div>
+<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
 <div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160; </div>
-<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;      <span class="comment">/* Grab the enemies */</span></div>
-<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;enemies&quot;</span>)) {</div>
-<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160; </div>
-<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;enemy&quot;</span>)) {</div>
-<div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;               tmp = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;base-&gt;enemies );</div>
-<div class="line"><a name="l01497"></a><span class="lineno"> 1497</span>&#160;               *tmp = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(xml_get(cur));</div>
-<div class="line"><a name="l01498"></a><span class="lineno"> 1498</span>&#160;            }</div>
-<div class="line"><a name="l01499"></a><span class="lineno"> 1499</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l01500"></a><span class="lineno"> 1500</span>&#160;      }</div>
-<div class="line"><a name="l01501"></a><span class="lineno"> 1501</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160;}</div>
-<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160; </div>
-<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160; </div>
-<div class="line"><a name="l01508"></a><span class="lineno"><a class="line" href="faction_8c.html#a645c4d663e2fb15e934c144370127735"> 1508</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="faction_8c.html#a645c4d663e2fb15e934c144370127735">factions_reset</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;{</div>
-<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++) {</div>
-<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160;      <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].player = <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].player_def;</div>
-<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160;      <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].flags = <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].oflags;</div>
-<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160;   }</div>
-<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;}</div>
-<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160; </div>
-<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160; </div>
-<div class="line"><a name="l01523"></a><span class="lineno"><a class="line" href="faction_8c.html#a5e9bfba9e9ce5130506562438acdffec"> 1523</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="faction_8c.html#a5e9bfba9e9ce5130506562438acdffec">factions_load</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;{</div>
-<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160;   xmlNodePtr factions, node;</div>
-<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;   <span class="keywordtype">int</span> i, j, k, r;</div>
-<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;   <a class="code" href="structFaction.html">Faction</a> *f, *sf;</div>
-<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160; </div>
-<div class="line"><a name="l01529"></a><span class="lineno"> 1529</span>&#160; </div>
-<div class="line"><a name="l01530"></a><span class="lineno"> 1530</span>&#160;   <span class="comment">/* Load the document. */</span></div>
-<div class="line"><a name="l01531"></a><span class="lineno"> 1531</span>&#160;   xmlDocPtr doc = <a class="code" href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a>( FACTION_DATA_PATH );</div>
-<div class="line"><a name="l01532"></a><span class="lineno"> 1532</span>&#160;   <span class="keywordflow">if</span> (doc == NULL)</div>
-<div class="line"><a name="l01533"></a><span class="lineno"> 1533</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160; </div>
-<div class="line"><a name="l01535"></a><span class="lineno"> 1535</span>&#160;   node = doc-&gt;xmlChildrenNode; <span class="comment">/* Factions node */</span></div>
-<div class="line"><a name="l01536"></a><span class="lineno"> 1536</span>&#160;   <span class="keywordflow">if</span> (!xml_isNode(node,<a class="code" href="faction_8c.html#af3c126320c13c2a780d737b58cf3de9f">XML_FACTION_ID</a>)) {</div>
-<div class="line"><a name="l01537"></a><span class="lineno"> 1537</span>&#160;      ERR(_(<span class="stringliteral">&quot;Malformed %s file: missing root element &#39;%s&#39;&quot;</span>), FACTION_DATA_PATH, <a class="code" href="faction_8c.html#af3c126320c13c2a780d737b58cf3de9f">XML_FACTION_ID</a>);</div>
-<div class="line"><a name="l01538"></a><span class="lineno"> 1538</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01539"></a><span class="lineno"> 1539</span>&#160;   }</div>
-<div class="line"><a name="l01540"></a><span class="lineno"> 1540</span>&#160; </div>
-<div class="line"><a name="l01541"></a><span class="lineno"> 1541</span>&#160;   factions = node-&gt;xmlChildrenNode; <span class="comment">/* first faction node */</span></div>
-<div class="line"><a name="l01542"></a><span class="lineno"> 1542</span>&#160;   <span class="keywordflow">if</span> (factions == NULL) {</div>
-<div class="line"><a name="l01543"></a><span class="lineno"> 1543</span>&#160;      ERR(_(<span class="stringliteral">&quot;Malformed %s file: does not contain elements&quot;</span>), FACTION_DATA_PATH);</div>
-<div class="line"><a name="l01544"></a><span class="lineno"> 1544</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01545"></a><span class="lineno"> 1545</span>&#160;   }</div>
-<div class="line"><a name="l01546"></a><span class="lineno"> 1546</span>&#160; </div>
-<div class="line"><a name="l01547"></a><span class="lineno"> 1547</span>&#160;   <span class="comment">/* player faction is hard-coded */</span></div>
-<div class="line"><a name="l01548"></a><span class="lineno"> 1548</span>&#160;   <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <a class="code" href="structFaction.html">Faction</a> );</div>
-<div class="line"><a name="l01549"></a><span class="lineno"> 1549</span>&#160;   f = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> );</div>
-<div class="line"><a name="l01550"></a><span class="lineno"> 1550</span>&#160;   memset( f, 0, <span class="keyword">sizeof</span>(<a class="code" href="structFaction.html">Faction</a>) );</div>
-<div class="line"><a name="l01551"></a><span class="lineno"> 1551</span>&#160;   f-&gt;name        = strdup(<span class="stringliteral">&quot;Player&quot;</span>);</div>
-<div class="line"><a name="l01552"></a><span class="lineno"> 1552</span>&#160;   f-&gt;flags       = <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> | <a class="code" href="faction_8c.html#a2a66a85cd08771161c2825e4118382ea">FACTION_INVISIBLE</a>;</div>
-<div class="line"><a name="l01553"></a><span class="lineno"> 1553</span>&#160;   f-&gt;equip_env   = LUA_NOREF;</div>
-<div class="line"><a name="l01554"></a><span class="lineno"> 1554</span>&#160;   f-&gt;env         = LUA_NOREF;</div>
-<div class="line"><a name="l01555"></a><span class="lineno"> 1555</span>&#160;   f-&gt;sched_env   = LUA_NOREF;</div>
-<div class="line"><a name="l01556"></a><span class="lineno"> 1556</span>&#160;   f-&gt;allies      = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
-<div class="line"><a name="l01557"></a><span class="lineno"> 1557</span>&#160;   f-&gt;enemies     = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
-<div class="line"><a name="l01558"></a><span class="lineno"> 1558</span>&#160; </div>
-<div class="line"><a name="l01559"></a><span class="lineno"> 1559</span>&#160;   <span class="comment">/* First pass - gets factions */</span></div>
-<div class="line"><a name="l01560"></a><span class="lineno"> 1560</span>&#160;   node = factions;</div>
-<div class="line"><a name="l01561"></a><span class="lineno"> 1561</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01562"></a><span class="lineno"> 1562</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<a class="code" href="faction_8c.html#a94d7d8b6a24bee3687d284827f08fbbc">XML_FACTION_TAG</a>)) {</div>
-<div class="line"><a name="l01563"></a><span class="lineno"> 1563</span>&#160;         f = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> );</div>
-<div class="line"><a name="l01564"></a><span class="lineno"> 1564</span>&#160; </div>
-<div class="line"><a name="l01565"></a><span class="lineno"> 1565</span>&#160;         <span class="comment">/* Load faction. */</span></div>
-<div class="line"><a name="l01566"></a><span class="lineno"> 1566</span>&#160;         <a class="code" href="faction_8c.html#a415332bc452baf3be2e575853e0ee50e">faction_parse</a>( f, node );</div>
-<div class="line"><a name="l01567"></a><span class="lineno"> 1567</span>&#160;         f-&gt;oflags = f-&gt;flags;</div>
-<div class="line"><a name="l01568"></a><span class="lineno"> 1568</span>&#160;      }</div>
-<div class="line"><a name="l01569"></a><span class="lineno"> 1569</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l01570"></a><span class="lineno"> 1570</span>&#160; </div>
-<div class="line"><a name="l01571"></a><span class="lineno"> 1571</span>&#160;   <span class="comment">/* Second pass - sets allies and enemies */</span></div>
-<div class="line"><a name="l01572"></a><span class="lineno"> 1572</span>&#160;   node = factions;</div>
-<div class="line"><a name="l01573"></a><span class="lineno"> 1573</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01574"></a><span class="lineno"> 1574</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<a class="code" href="faction_8c.html#a94d7d8b6a24bee3687d284827f08fbbc">XML_FACTION_TAG</a>))</div>
-<div class="line"><a name="l01575"></a><span class="lineno"> 1575</span>&#160;         <a class="code" href="faction_8c.html#af256214a358e144bd7c0b848ec472a54">faction_parseSocial</a>(node);</div>
-<div class="line"><a name="l01576"></a><span class="lineno"> 1576</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;enemy&quot;</span>)) {</div>
+<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;               tmp = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;base-&gt;enemies );</div>
+<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;               *tmp = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(xml_get(cur));</div>
+<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;            }</div>
+<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;      }</div>
+<div class="line"><a name="l01497"></a><span class="lineno"> 1497</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l01498"></a><span class="lineno"> 1498</span>&#160;}</div>
+<div class="line"><a name="l01499"></a><span class="lineno"> 1499</span>&#160; </div>
+<div class="line"><a name="l01500"></a><span class="lineno"> 1500</span>&#160; </div>
+<div class="line"><a name="l01504"></a><span class="lineno"><a class="line" href="faction_8c.html#a645c4d663e2fb15e934c144370127735"> 1504</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="faction_8c.html#a645c4d663e2fb15e934c144370127735">factions_reset</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;{</div>
+<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++) {</div>
+<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;      <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].player = <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].player_def;</div>
+<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;      <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].flags = <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].oflags;</div>
+<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;   }</div>
+<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;}</div>
+<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160; </div>
+<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160; </div>
+<div class="line"><a name="l01519"></a><span class="lineno"><a class="line" href="faction_8c.html#a5e9bfba9e9ce5130506562438acdffec"> 1519</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="faction_8c.html#a5e9bfba9e9ce5130506562438acdffec">factions_load</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01520"></a><span class="lineno"> 1520</span>&#160;{</div>
+<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160;   xmlNodePtr factions, node;</div>
+<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160;   <span class="keywordtype">int</span> i, j, k, r;</div>
+<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160;   <a class="code" href="structFaction.html">Faction</a> *f, *sf;</div>
+<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160; </div>
+<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160; </div>
+<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;   <span class="comment">/* Load the document. */</span></div>
+<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;   xmlDocPtr doc = <a class="code" href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a>( FACTION_DATA_PATH );</div>
+<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160;   <span class="keywordflow">if</span> (doc == NULL)</div>
+<div class="line"><a name="l01529"></a><span class="lineno"> 1529</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01530"></a><span class="lineno"> 1530</span>&#160; </div>
+<div class="line"><a name="l01531"></a><span class="lineno"> 1531</span>&#160;   node = doc-&gt;xmlChildrenNode; <span class="comment">/* Factions node */</span></div>
+<div class="line"><a name="l01532"></a><span class="lineno"> 1532</span>&#160;   <span class="keywordflow">if</span> (!xml_isNode(node,<a class="code" href="faction_8c.html#af3c126320c13c2a780d737b58cf3de9f">XML_FACTION_ID</a>)) {</div>
+<div class="line"><a name="l01533"></a><span class="lineno"> 1533</span>&#160;      ERR(_(<span class="stringliteral">&quot;Malformed %s file: missing root element &#39;%s&#39;&quot;</span>), FACTION_DATA_PATH, <a class="code" href="faction_8c.html#af3c126320c13c2a780d737b58cf3de9f">XML_FACTION_ID</a>);</div>
+<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01535"></a><span class="lineno"> 1535</span>&#160;   }</div>
+<div class="line"><a name="l01536"></a><span class="lineno"> 1536</span>&#160; </div>
+<div class="line"><a name="l01537"></a><span class="lineno"> 1537</span>&#160;   factions = node-&gt;xmlChildrenNode; <span class="comment">/* first faction node */</span></div>
+<div class="line"><a name="l01538"></a><span class="lineno"> 1538</span>&#160;   <span class="keywordflow">if</span> (factions == NULL) {</div>
+<div class="line"><a name="l01539"></a><span class="lineno"> 1539</span>&#160;      ERR(_(<span class="stringliteral">&quot;Malformed %s file: does not contain elements&quot;</span>), FACTION_DATA_PATH);</div>
+<div class="line"><a name="l01540"></a><span class="lineno"> 1540</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01541"></a><span class="lineno"> 1541</span>&#160;   }</div>
+<div class="line"><a name="l01542"></a><span class="lineno"> 1542</span>&#160; </div>
+<div class="line"><a name="l01543"></a><span class="lineno"> 1543</span>&#160;   <span class="comment">/* player faction is hard-coded */</span></div>
+<div class="line"><a name="l01544"></a><span class="lineno"> 1544</span>&#160;   <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <a class="code" href="structFaction.html">Faction</a> );</div>
+<div class="line"><a name="l01545"></a><span class="lineno"> 1545</span>&#160;   f = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> );</div>
+<div class="line"><a name="l01546"></a><span class="lineno"> 1546</span>&#160;   memset( f, 0, <span class="keyword">sizeof</span>(<a class="code" href="structFaction.html">Faction</a>) );</div>
+<div class="line"><a name="l01547"></a><span class="lineno"> 1547</span>&#160;   f-&gt;name        = strdup(<span class="stringliteral">&quot;Player&quot;</span>);</div>
+<div class="line"><a name="l01548"></a><span class="lineno"> 1548</span>&#160;   f-&gt;flags       = <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> | <a class="code" href="faction_8c.html#a2a66a85cd08771161c2825e4118382ea">FACTION_INVISIBLE</a>;</div>
+<div class="line"><a name="l01549"></a><span class="lineno"> 1549</span>&#160;   f-&gt;equip_env   = LUA_NOREF;</div>
+<div class="line"><a name="l01550"></a><span class="lineno"> 1550</span>&#160;   f-&gt;env         = LUA_NOREF;</div>
+<div class="line"><a name="l01551"></a><span class="lineno"> 1551</span>&#160;   f-&gt;sched_env   = LUA_NOREF;</div>
+<div class="line"><a name="l01552"></a><span class="lineno"> 1552</span>&#160;   f-&gt;allies      = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
+<div class="line"><a name="l01553"></a><span class="lineno"> 1553</span>&#160;   f-&gt;enemies     = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
+<div class="line"><a name="l01554"></a><span class="lineno"> 1554</span>&#160; </div>
+<div class="line"><a name="l01555"></a><span class="lineno"> 1555</span>&#160;   <span class="comment">/* First pass - gets factions */</span></div>
+<div class="line"><a name="l01556"></a><span class="lineno"> 1556</span>&#160;   node = factions;</div>
+<div class="line"><a name="l01557"></a><span class="lineno"> 1557</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01558"></a><span class="lineno"> 1558</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<a class="code" href="faction_8c.html#a94d7d8b6a24bee3687d284827f08fbbc">XML_FACTION_TAG</a>)) {</div>
+<div class="line"><a name="l01559"></a><span class="lineno"> 1559</span>&#160;         f = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> );</div>
+<div class="line"><a name="l01560"></a><span class="lineno"> 1560</span>&#160; </div>
+<div class="line"><a name="l01561"></a><span class="lineno"> 1561</span>&#160;         <span class="comment">/* Load faction. */</span></div>
+<div class="line"><a name="l01562"></a><span class="lineno"> 1562</span>&#160;         <a class="code" href="faction_8c.html#a415332bc452baf3be2e575853e0ee50e">faction_parse</a>( f, node );</div>
+<div class="line"><a name="l01563"></a><span class="lineno"> 1563</span>&#160;         f-&gt;oflags = f-&gt;flags;</div>
+<div class="line"><a name="l01564"></a><span class="lineno"> 1564</span>&#160;      }</div>
+<div class="line"><a name="l01565"></a><span class="lineno"> 1565</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l01566"></a><span class="lineno"> 1566</span>&#160; </div>
+<div class="line"><a name="l01567"></a><span class="lineno"> 1567</span>&#160;   <span class="comment">/* Second pass - sets allies and enemies */</span></div>
+<div class="line"><a name="l01568"></a><span class="lineno"> 1568</span>&#160;   node = factions;</div>
+<div class="line"><a name="l01569"></a><span class="lineno"> 1569</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01570"></a><span class="lineno"> 1570</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<a class="code" href="faction_8c.html#a94d7d8b6a24bee3687d284827f08fbbc">XML_FACTION_TAG</a>))</div>
+<div class="line"><a name="l01571"></a><span class="lineno"> 1571</span>&#160;         <a class="code" href="faction_8c.html#af256214a358e144bd7c0b848ec472a54">faction_parseSocial</a>(node);</div>
+<div class="line"><a name="l01572"></a><span class="lineno"> 1572</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l01573"></a><span class="lineno"> 1573</span>&#160; </div>
+<div class="line"><a name="l01574"></a><span class="lineno"> 1574</span>&#160;   <span class="comment">/* Third pass, Make allies/enemies symmetric. */</span></div>
+<div class="line"><a name="l01575"></a><span class="lineno"> 1575</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++) {</div>
+<div class="line"><a name="l01576"></a><span class="lineno"> 1576</span>&#160;      f = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i];</div>
 <div class="line"><a name="l01577"></a><span class="lineno"> 1577</span>&#160; </div>
-<div class="line"><a name="l01578"></a><span class="lineno"> 1578</span>&#160;   <span class="comment">/* Third pass, Make allies/enemies symmetric. */</span></div>
-<div class="line"><a name="l01579"></a><span class="lineno"> 1579</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++) {</div>
-<div class="line"><a name="l01580"></a><span class="lineno"> 1580</span>&#160;      f = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i];</div>
+<div class="line"><a name="l01578"></a><span class="lineno"> 1578</span>&#160;      <span class="comment">/* First run over allies and make sure it&#39;s mutual. */</span></div>
+<div class="line"><a name="l01579"></a><span class="lineno"> 1579</span>&#160;      <span class="keywordflow">for</span> (j=0; j &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(f-&gt;allies); j++) {</div>
+<div class="line"><a name="l01580"></a><span class="lineno"> 1580</span>&#160;         sf = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[ f-&gt;allies[j] ];</div>
 <div class="line"><a name="l01581"></a><span class="lineno"> 1581</span>&#160; </div>
-<div class="line"><a name="l01582"></a><span class="lineno"> 1582</span>&#160;      <span class="comment">/* First run over allies and make sure it&#39;s mutual. */</span></div>
-<div class="line"><a name="l01583"></a><span class="lineno"> 1583</span>&#160;      <span class="keywordflow">for</span> (j=0; j &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(f-&gt;allies); j++) {</div>
-<div class="line"><a name="l01584"></a><span class="lineno"> 1584</span>&#160;         sf = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[ f-&gt;allies[j] ];</div>
-<div class="line"><a name="l01585"></a><span class="lineno"> 1585</span>&#160; </div>
-<div class="line"><a name="l01586"></a><span class="lineno"> 1586</span>&#160;         r = 0;</div>
-<div class="line"><a name="l01587"></a><span class="lineno"> 1587</span>&#160;         <span class="keywordflow">for</span> (k=0; k &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(sf-&gt;allies); k++)</div>
-<div class="line"><a name="l01588"></a><span class="lineno"> 1588</span>&#160;            <span class="keywordflow">if</span> (sf-&gt;allies[k] == i) {</div>
-<div class="line"><a name="l01589"></a><span class="lineno"> 1589</span>&#160;               r = 1;</div>
-<div class="line"><a name="l01590"></a><span class="lineno"> 1590</span>&#160;               <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01591"></a><span class="lineno"> 1591</span>&#160;            }</div>
-<div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160; </div>
-<div class="line"><a name="l01593"></a><span class="lineno"> 1593</span>&#160;         <span class="comment">/* Add ally if necessary. */</span></div>
-<div class="line"><a name="l01594"></a><span class="lineno"> 1594</span>&#160;         <span class="keywordflow">if</span> (r == 0)</div>
-<div class="line"><a name="l01595"></a><span class="lineno"> 1595</span>&#160;            <a class="code" href="faction_8c.html#ae75a71360f26a1244adb1470030c4c1a">faction_addAlly</a>( f-&gt;allies[j], i );</div>
-<div class="line"><a name="l01596"></a><span class="lineno"> 1596</span>&#160;      }</div>
+<div class="line"><a name="l01582"></a><span class="lineno"> 1582</span>&#160;         r = 0;</div>
+<div class="line"><a name="l01583"></a><span class="lineno"> 1583</span>&#160;         <span class="keywordflow">for</span> (k=0; k &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(sf-&gt;allies); k++)</div>
+<div class="line"><a name="l01584"></a><span class="lineno"> 1584</span>&#160;            <span class="keywordflow">if</span> (sf-&gt;allies[k] == i) {</div>
+<div class="line"><a name="l01585"></a><span class="lineno"> 1585</span>&#160;               r = 1;</div>
+<div class="line"><a name="l01586"></a><span class="lineno"> 1586</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01587"></a><span class="lineno"> 1587</span>&#160;            }</div>
+<div class="line"><a name="l01588"></a><span class="lineno"> 1588</span>&#160; </div>
+<div class="line"><a name="l01589"></a><span class="lineno"> 1589</span>&#160;         <span class="comment">/* Add ally if necessary. */</span></div>
+<div class="line"><a name="l01590"></a><span class="lineno"> 1590</span>&#160;         <span class="keywordflow">if</span> (r == 0)</div>
+<div class="line"><a name="l01591"></a><span class="lineno"> 1591</span>&#160;            <a class="code" href="faction_8c.html#ae75a71360f26a1244adb1470030c4c1a">faction_addAlly</a>( f-&gt;allies[j], i );</div>
+<div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160;      }</div>
+<div class="line"><a name="l01593"></a><span class="lineno"> 1593</span>&#160; </div>
+<div class="line"><a name="l01594"></a><span class="lineno"> 1594</span>&#160;      <span class="comment">/* Now run over enemies. */</span></div>
+<div class="line"><a name="l01595"></a><span class="lineno"> 1595</span>&#160;      <span class="keywordflow">for</span> (j=0; j &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(f-&gt;enemies); j++) {</div>
+<div class="line"><a name="l01596"></a><span class="lineno"> 1596</span>&#160;         sf = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[ f-&gt;enemies[j] ];</div>
 <div class="line"><a name="l01597"></a><span class="lineno"> 1597</span>&#160; </div>
-<div class="line"><a name="l01598"></a><span class="lineno"> 1598</span>&#160;      <span class="comment">/* Now run over enemies. */</span></div>
-<div class="line"><a name="l01599"></a><span class="lineno"> 1599</span>&#160;      <span class="keywordflow">for</span> (j=0; j &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(f-&gt;enemies); j++) {</div>
-<div class="line"><a name="l01600"></a><span class="lineno"> 1600</span>&#160;         sf = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[ f-&gt;enemies[j] ];</div>
-<div class="line"><a name="l01601"></a><span class="lineno"> 1601</span>&#160; </div>
-<div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;         r = 0;</div>
-<div class="line"><a name="l01603"></a><span class="lineno"> 1603</span>&#160;         <span class="keywordflow">for</span> (k=0; k &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(sf-&gt;enemies); k++)</div>
-<div class="line"><a name="l01604"></a><span class="lineno"> 1604</span>&#160;            <span class="keywordflow">if</span> (sf-&gt;enemies[k] == i) {</div>
-<div class="line"><a name="l01605"></a><span class="lineno"> 1605</span>&#160;               r = 1;</div>
-<div class="line"><a name="l01606"></a><span class="lineno"> 1606</span>&#160;               <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160;            }</div>
-<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160; </div>
-<div class="line"><a name="l01609"></a><span class="lineno"> 1609</span>&#160;         <span class="keywordflow">if</span> (r == 0)</div>
-<div class="line"><a name="l01610"></a><span class="lineno"> 1610</span>&#160;            <a class="code" href="faction_8c.html#af05c7eaf320f8e63e3016c5cd87ed2ff">faction_addEnemy</a>( f-&gt;enemies[j], i );</div>
-<div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160;      }</div>
-<div class="line"><a name="l01612"></a><span class="lineno"> 1612</span>&#160;   }</div>
+<div class="line"><a name="l01598"></a><span class="lineno"> 1598</span>&#160;         r = 0;</div>
+<div class="line"><a name="l01599"></a><span class="lineno"> 1599</span>&#160;         <span class="keywordflow">for</span> (k=0; k &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(sf-&gt;enemies); k++)</div>
+<div class="line"><a name="l01600"></a><span class="lineno"> 1600</span>&#160;            <span class="keywordflow">if</span> (sf-&gt;enemies[k] == i) {</div>
+<div class="line"><a name="l01601"></a><span class="lineno"> 1601</span>&#160;               r = 1;</div>
+<div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;               <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01603"></a><span class="lineno"> 1603</span>&#160;            }</div>
+<div class="line"><a name="l01604"></a><span class="lineno"> 1604</span>&#160; </div>
+<div class="line"><a name="l01605"></a><span class="lineno"> 1605</span>&#160;         <span class="keywordflow">if</span> (r == 0)</div>
+<div class="line"><a name="l01606"></a><span class="lineno"> 1606</span>&#160;            <a class="code" href="faction_8c.html#af05c7eaf320f8e63e3016c5cd87ed2ff">faction_addEnemy</a>( f-&gt;enemies[j], i );</div>
+<div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160;      }</div>
+<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160;   }</div>
+<div class="line"><a name="l01609"></a><span class="lineno"> 1609</span>&#160; </div>
+<div class="line"><a name="l01610"></a><span class="lineno"> 1610</span>&#160;   xmlFreeDoc(doc);</div>
+<div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160; </div>
+<div class="line"><a name="l01612"></a><span class="lineno"> 1612</span>&#160;   DEBUG( n_( <span class="stringliteral">&quot;Loaded %d Faction&quot;</span>, <span class="stringliteral">&quot;Loaded %d Factions&quot;</span>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>) ), <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>) );</div>
 <div class="line"><a name="l01613"></a><span class="lineno"> 1613</span>&#160; </div>
-<div class="line"><a name="l01614"></a><span class="lineno"> 1614</span>&#160;   xmlFreeDoc(doc);</div>
-<div class="line"><a name="l01615"></a><span class="lineno"> 1615</span>&#160; </div>
-<div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;   DEBUG( n_( <span class="stringliteral">&quot;Loaded %d Faction&quot;</span>, <span class="stringliteral">&quot;Loaded %d Factions&quot;</span>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>) ), <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>) );</div>
+<div class="line"><a name="l01614"></a><span class="lineno"> 1614</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01615"></a><span class="lineno"> 1615</span>&#160;}</div>
+<div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160; </div>
 <div class="line"><a name="l01617"></a><span class="lineno"> 1617</span>&#160; </div>
-<div class="line"><a name="l01618"></a><span class="lineno"> 1618</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01619"></a><span class="lineno"> 1619</span>&#160;}</div>
-<div class="line"><a name="l01620"></a><span class="lineno"> 1620</span>&#160; </div>
-<div class="line"><a name="l01621"></a><span class="lineno"> 1621</span>&#160; </div>
-<div class="line"><a name="l01625"></a><span class="lineno"><a class="line" href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac"> 1625</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac">faction_freeOne</a>( <a class="code" href="structFaction.html">Faction</a> *f )</div>
-<div class="line"><a name="l01626"></a><span class="lineno"> 1626</span>&#160;{</div>
-<div class="line"><a name="l01627"></a><span class="lineno"> 1627</span>&#160;   free(f-&gt;name);</div>
-<div class="line"><a name="l01628"></a><span class="lineno"> 1628</span>&#160;   free(f-&gt;longname);</div>
-<div class="line"><a name="l01629"></a><span class="lineno"> 1629</span>&#160;   free(f-&gt;displayname);</div>
-<div class="line"><a name="l01630"></a><span class="lineno"> 1630</span>&#160;   free(f-&gt;ai);</div>
-<div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(f-&gt;logo);</div>
-<div class="line"><a name="l01632"></a><span class="lineno"> 1632</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(f-&gt;allies);</div>
-<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(f-&gt;enemies);</div>
-<div class="line"><a name="l01634"></a><span class="lineno"> 1634</span>&#160;   <span class="keywordflow">if</span> (f-&gt;sched_env != LUA_NOREF)</div>
-<div class="line"><a name="l01635"></a><span class="lineno"> 1635</span>&#160;      nlua_freeEnv( f-&gt;sched_env );</div>
-<div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;   <span class="keywordflow">if</span> (f-&gt;env != LUA_NOREF)</div>
-<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160;      nlua_freeEnv( f-&gt;env );</div>
-<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160;   <span class="keywordflow">if</span> (!faction_isFlag(f, <a class="code" href="faction_8c.html#ad00d61187470ed4fd2fd34b10c6328e0">FACTION_DYNAMIC</a>) &amp;&amp; (f-&gt;equip_env != LUA_NOREF))</div>
-<div class="line"><a name="l01639"></a><span class="lineno"> 1639</span>&#160;      nlua_freeEnv( f-&gt;equip_env );</div>
-<div class="line"><a name="l01640"></a><span class="lineno"> 1640</span>&#160;}</div>
-<div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160; </div>
-<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160; </div>
-<div class="line"><a name="l01646"></a><span class="lineno"><a class="line" href="faction_8c.html#a8a44b76cb78617017dd85328f51f399b"> 1646</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="faction_8c.html#a8a44b76cb78617017dd85328f51f399b">factions_free</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;{</div>
-<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01649"></a><span class="lineno"> 1649</span>&#160; </div>
-<div class="line"><a name="l01650"></a><span class="lineno"> 1650</span>&#160;   <span class="comment">/* free factions */</span></div>
-<div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++)</div>
-<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160;      <a class="code" href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac">faction_freeOne</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i] );</div>
-<div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>);</div>
-<div class="line"><a name="l01654"></a><span class="lineno"> 1654</span>&#160;   <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> = NULL;</div>
-<div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160;}</div>
-<div class="line"><a name="l01656"></a><span class="lineno"> 1656</span>&#160; </div>
-<div class="line"><a name="l01657"></a><span class="lineno"> 1657</span>&#160; </div>
-<div class="line"><a name="l01664"></a><span class="lineno"><a class="line" href="save_8c.html#a9ef57797601fa43e1e5c7c079b82d489"> 1664</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="faction_8c.html#a9ef57797601fa43e1e5c7c079b82d489">pfaction_save</a>( xmlTextWriterPtr writer )</div>
-<div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160;{</div>
-<div class="line"><a name="l01666"></a><span class="lineno"> 1666</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01667"></a><span class="lineno"> 1667</span>&#160; </div>
-<div class="line"><a name="l01668"></a><span class="lineno"> 1668</span>&#160;   xmlw_startElem(writer,<span class="stringliteral">&quot;factions&quot;</span>);</div>
-<div class="line"><a name="l01669"></a><span class="lineno"> 1669</span>&#160; </div>
-<div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160;   <span class="keywordflow">for</span> (i=1; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++) { <span class="comment">/* player is faction 0 */</span></div>
-<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160;      <span class="comment">/* Must not be static. */</span></div>
-<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;      <span class="keywordflow">if</span> (faction_isFlag( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i], <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> ))</div>
-<div class="line"><a name="l01673"></a><span class="lineno"> 1673</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160; </div>
-<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;      xmlw_startElem(writer,<span class="stringliteral">&quot;faction&quot;</span>);</div>
-<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160; </div>
-<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;      xmlw_attr(writer,<span class="stringliteral">&quot;name&quot;</span>,<span class="stringliteral">&quot;%s&quot;</span>,<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].name);</div>
-<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160;      xmlw_elem(writer, <span class="stringliteral">&quot;standing&quot;</span>, <span class="stringliteral">&quot;%f&quot;</span>, <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>);</div>
-<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160; </div>
-<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;      <span class="keywordflow">if</span> (faction_isKnown_(&amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i]))</div>
-<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;         xmlw_elemEmpty(writer, <span class="stringliteral">&quot;known&quot;</span>);</div>
-<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160; </div>
-<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160;      xmlw_endElem(writer); <span class="comment">/* &quot;faction&quot; */</span></div>
-<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;   }</div>
-<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160; </div>
-<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;   xmlw_endElem(writer); <span class="comment">/* &quot;factions&quot; */</span></div>
+<div class="line"><a name="l01621"></a><span class="lineno"><a class="line" href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac"> 1621</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac">faction_freeOne</a>( <a class="code" href="structFaction.html">Faction</a> *f )</div>
+<div class="line"><a name="l01622"></a><span class="lineno"> 1622</span>&#160;{</div>
+<div class="line"><a name="l01623"></a><span class="lineno"> 1623</span>&#160;   free(f-&gt;name);</div>
+<div class="line"><a name="l01624"></a><span class="lineno"> 1624</span>&#160;   free(f-&gt;longname);</div>
+<div class="line"><a name="l01625"></a><span class="lineno"> 1625</span>&#160;   free(f-&gt;displayname);</div>
+<div class="line"><a name="l01626"></a><span class="lineno"> 1626</span>&#160;   free(f-&gt;ai);</div>
+<div class="line"><a name="l01627"></a><span class="lineno"> 1627</span>&#160;   <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(f-&gt;logo);</div>
+<div class="line"><a name="l01628"></a><span class="lineno"> 1628</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(f-&gt;allies);</div>
+<div class="line"><a name="l01629"></a><span class="lineno"> 1629</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(f-&gt;enemies);</div>
+<div class="line"><a name="l01630"></a><span class="lineno"> 1630</span>&#160;   <span class="keywordflow">if</span> (f-&gt;sched_env != LUA_NOREF)</div>
+<div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;      nlua_freeEnv( f-&gt;sched_env );</div>
+<div class="line"><a name="l01632"></a><span class="lineno"> 1632</span>&#160;   <span class="keywordflow">if</span> (f-&gt;env != LUA_NOREF)</div>
+<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160;      nlua_freeEnv( f-&gt;env );</div>
+<div class="line"><a name="l01634"></a><span class="lineno"> 1634</span>&#160;   <span class="keywordflow">if</span> (!faction_isFlag(f, <a class="code" href="faction_8c.html#ad00d61187470ed4fd2fd34b10c6328e0">FACTION_DYNAMIC</a>) &amp;&amp; (f-&gt;equip_env != LUA_NOREF))</div>
+<div class="line"><a name="l01635"></a><span class="lineno"> 1635</span>&#160;      nlua_freeEnv( f-&gt;equip_env );</div>
+<div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;}</div>
+<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160; </div>
+<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160; </div>
+<div class="line"><a name="l01642"></a><span class="lineno"><a class="line" href="faction_8c.html#a8a44b76cb78617017dd85328f51f399b"> 1642</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="faction_8c.html#a8a44b76cb78617017dd85328f51f399b">factions_free</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;{</div>
+<div class="line"><a name="l01644"></a><span class="lineno"> 1644</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01645"></a><span class="lineno"> 1645</span>&#160; </div>
+<div class="line"><a name="l01646"></a><span class="lineno"> 1646</span>&#160;   <span class="comment">/* free factions */</span></div>
+<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++)</div>
+<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;      <a class="code" href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac">faction_freeOne</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i] );</div>
+<div class="line"><a name="l01649"></a><span class="lineno"> 1649</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>);</div>
+<div class="line"><a name="l01650"></a><span class="lineno"> 1650</span>&#160;   <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> = NULL;</div>
+<div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;}</div>
+<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160; </div>
+<div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160; </div>
+<div class="line"><a name="l01660"></a><span class="lineno"><a class="line" href="save_8c.html#a9ef57797601fa43e1e5c7c079b82d489"> 1660</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="faction_8c.html#a9ef57797601fa43e1e5c7c079b82d489">pfaction_save</a>( xmlTextWriterPtr writer )</div>
+<div class="line"><a name="l01661"></a><span class="lineno"> 1661</span>&#160;{</div>
+<div class="line"><a name="l01662"></a><span class="lineno"> 1662</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01663"></a><span class="lineno"> 1663</span>&#160; </div>
+<div class="line"><a name="l01664"></a><span class="lineno"> 1664</span>&#160;   xmlw_startElem(writer,<span class="stringliteral">&quot;factions&quot;</span>);</div>
+<div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160; </div>
+<div class="line"><a name="l01666"></a><span class="lineno"> 1666</span>&#160;   <span class="keywordflow">for</span> (i=1; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++) { <span class="comment">/* player is faction 0 */</span></div>
+<div class="line"><a name="l01667"></a><span class="lineno"> 1667</span>&#160;      <span class="comment">/* Must not be static. */</span></div>
+<div class="line"><a name="l01668"></a><span class="lineno"> 1668</span>&#160;      <span class="keywordflow">if</span> (faction_isFlag( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i], <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> ))</div>
+<div class="line"><a name="l01669"></a><span class="lineno"> 1669</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160; </div>
+<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160;      xmlw_startElem(writer,<span class="stringliteral">&quot;faction&quot;</span>);</div>
+<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160; </div>
+<div class="line"><a name="l01673"></a><span class="lineno"> 1673</span>&#160;      xmlw_attr(writer,<span class="stringliteral">&quot;name&quot;</span>,<span class="stringliteral">&quot;%s&quot;</span>,<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].name);</div>
+<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160;      xmlw_elem(writer, <span class="stringliteral">&quot;standing&quot;</span>, <span class="stringliteral">&quot;%f&quot;</span>, <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i].<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>);</div>
+<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160; </div>
+<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;      <span class="keywordflow">if</span> (faction_isKnown_(&amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i]))</div>
+<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;         xmlw_elemEmpty(writer, <span class="stringliteral">&quot;known&quot;</span>);</div>
+<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160; </div>
+<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160;      xmlw_endElem(writer); <span class="comment">/* &quot;faction&quot; */</span></div>
+<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;   }</div>
+<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160; </div>
+<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;   xmlw_endElem(writer); <span class="comment">/* &quot;factions&quot; */</span></div>
+<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160; </div>
+<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;}</div>
+<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160; </div>
 <div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160; </div>
-<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160;}</div>
-<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160; </div>
-<div class="line"><a name="l01691"></a><span class="lineno"> 1691</span>&#160; </div>
-<div class="line"><a name="l01698"></a><span class="lineno"><a class="line" href="load_8c.html#aab1fc2a3d13e36e35c1ee154562f7784"> 1698</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="faction_8c.html#aab1fc2a3d13e36e35c1ee154562f7784">pfaction_load</a>( xmlNodePtr parent )</div>
-<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;{</div>
-<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;   xmlNodePtr node, cur, sub;</div>
-<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;   <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;   <span class="keywordtype">int</span> faction;</div>
-<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160; </div>
-<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160; </div>
-<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;factions&quot;</span>)) {</div>
-<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;faction&quot;</span>)) {</div>
-<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;               xmlr_attr_strd(cur, <span class="stringliteral">&quot;name&quot;</span>, str);</div>
-<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160;               faction = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(str);</div>
-<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160; </div>
-<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;               <span class="keywordflow">if</span> (faction != -1) { <span class="comment">/* Faction is valid. */</span></div>
-<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;                  sub = cur-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;                  <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;                     <span class="keywordflow">if</span> (xml_isNode(sub,<span class="stringliteral">&quot;standing&quot;</span>)) {</div>
-<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160; </div>
-<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;                        <span class="comment">/* Must not be static. */</span></div>
-<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160;                        <span class="keywordflow">if</span> (!faction_isFlag( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[faction], <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> ))</div>
-<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;                           <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[faction].player = xml_getFloat(sub);</div>
+<div class="line"><a name="l01694"></a><span class="lineno"><a class="line" href="load_8c.html#aab1fc2a3d13e36e35c1ee154562f7784"> 1694</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="faction_8c.html#aab1fc2a3d13e36e35c1ee154562f7784">pfaction_load</a>( xmlNodePtr parent )</div>
+<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;{</div>
+<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;   xmlNodePtr node, cur, sub;</div>
+<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;   <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160;   <span class="keywordtype">int</span> faction;</div>
+<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160; </div>
+<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160; </div>
+<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;factions&quot;</span>)) {</div>
+<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;faction&quot;</span>)) {</div>
+<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;               xmlr_attr_strd(cur, <span class="stringliteral">&quot;name&quot;</span>, str);</div>
+<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;               faction = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(str);</div>
+<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160; </div>
+<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;               <span class="keywordflow">if</span> (faction != -1) { <span class="comment">/* Faction is valid. */</span></div>
+<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;                  sub = cur-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160;                  <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160;                     <span class="keywordflow">if</span> (xml_isNode(sub,<span class="stringliteral">&quot;standing&quot;</span>)) {</div>
+<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160; </div>
+<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;                        <span class="comment">/* Must not be static. */</span></div>
+<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;                        <span class="keywordflow">if</span> (!faction_isFlag( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[faction], <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> ))</div>
+<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;                           <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[faction].player = xml_getFloat(sub);</div>
+<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160;                        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;                     }</div>
+<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160;                     <span class="keywordflow">if</span> (xml_isNode(sub,<span class="stringliteral">&quot;known&quot;</span>)) {</div>
+<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;                        faction_setFlag(&amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[faction], <a class="code" href="faction_8c.html#a5cc43a31f094e976f8ba2e06613537a2">FACTION_KNOWN</a>);</div>
 <div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;                        <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160;                     }</div>
-<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;                     <span class="keywordflow">if</span> (xml_isNode(sub,<span class="stringliteral">&quot;known&quot;</span>)) {</div>
-<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;                        faction_setFlag(&amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[faction], <a class="code" href="faction_8c.html#a5cc43a31f094e976f8ba2e06613537a2">FACTION_KNOWN</a>);</div>
-<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;                        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;                     }</div>
-<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160;                  } <span class="keywordflow">while</span> (xml_nextNode(sub));</div>
-<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160;               }</div>
-<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160;               free(str);</div>
-<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160;            }</div>
-<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;      }</div>
-<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;                  } <span class="keywordflow">while</span> (xml_nextNode(sub));</div>
+<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;               }</div>
+<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;               free(str);</div>
+<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;            }</div>
+<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160;      }</div>
+<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160; </div>
+<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;}</div>
+<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160; </div>
 <div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160; </div>
-<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;}</div>
-<div class="line"><a name="l01738"></a><span class="lineno"> 1738</span>&#160; </div>
-<div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160; </div>
-<div class="line"><a name="l01746"></a><span class="lineno"><a class="line" href="faction_8c.html#abb385adfededb038cbb6a03b2b4fe9a3"> 1746</a></span>&#160;<span class="keywordtype">int</span> *<a class="code" href="faction_8c.html#abb385adfededb038cbb6a03b2b4fe9a3">faction_getGroup</a>( <span class="keywordtype">int</span> which )</div>
-<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;{</div>
-<div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;   <span class="keywordtype">int</span> *group;</div>
-<div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01742"></a><span class="lineno"><a class="line" href="faction_8c.html#abb385adfededb038cbb6a03b2b4fe9a3"> 1742</a></span>&#160;<span class="keywordtype">int</span> *<a class="code" href="faction_8c.html#abb385adfededb038cbb6a03b2b4fe9a3">faction_getGroup</a>( <span class="keywordtype">int</span> which )</div>
+<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160;{</div>
+<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160;   <span class="keywordtype">int</span> *group;</div>
+<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160; </div>
+<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;   <span class="keywordflow">switch</span>(which) {</div>
+<div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;      <span class="keywordflow">case</span> 0: <span class="comment">/* &#39;all&#39; */</span></div>
+<div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="array_8h.html#a1aa35074425ec7a3b90460677ab627aa">array_copy</a>( <span class="keywordtype">int</span>, <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> );</div>
 <div class="line"><a name="l01750"></a><span class="lineno"> 1750</span>&#160; </div>
-<div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160;   <span class="keywordflow">switch</span>(which) {</div>
-<div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;      <span class="keywordflow">case</span> 0: <span class="comment">/* &#39;all&#39; */</span></div>
-<div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="array_8h.html#a1aa35074425ec7a3b90460677ab627aa">array_copy</a>( <span class="keywordtype">int</span>, <a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> );</div>
-<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160; </div>
-<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160;      <span class="keywordflow">case</span> 1: <span class="comment">/* &#39;friendly&#39; */</span></div>
-<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;         group = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
-<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160;         <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++)</div>
-<div class="line"><a name="l01758"></a><span class="lineno"> 1758</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a>( FACTION_PLAYER, i ))</div>
-<div class="line"><a name="l01759"></a><span class="lineno"> 1759</span>&#160;               <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;group, i );</div>
-<div class="line"><a name="l01760"></a><span class="lineno"> 1760</span>&#160;         <span class="keywordflow">return</span> group;</div>
-<div class="line"><a name="l01761"></a><span class="lineno"> 1761</span>&#160; </div>
-<div class="line"><a name="l01762"></a><span class="lineno"> 1762</span>&#160;      <span class="keywordflow">case</span> 2: <span class="comment">/* &#39;neutral&#39; */</span></div>
-<div class="line"><a name="l01763"></a><span class="lineno"> 1763</span>&#160;         group = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
-<div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160;         <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++)</div>
-<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;            <span class="keywordflow">if</span> (!<a class="code" href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a>( FACTION_PLAYER, i ) &amp;&amp; !<a class="code" href="faction_8c.html#a75dad54f6290c7eeda08799ab26c9f93">areEnemies</a>( FACTION_PLAYER, i ))</div>
-<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;               <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;group, i );</div>
-<div class="line"><a name="l01767"></a><span class="lineno"> 1767</span>&#160;         <span class="keywordflow">return</span> group;</div>
-<div class="line"><a name="l01768"></a><span class="lineno"> 1768</span>&#160; </div>
-<div class="line"><a name="l01769"></a><span class="lineno"> 1769</span>&#160;      <span class="keywordflow">case</span> 3: <span class="comment">/* &#39;hostile&#39; */</span></div>
-<div class="line"><a name="l01770"></a><span class="lineno"> 1770</span>&#160;         group = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
-<div class="line"><a name="l01771"></a><span class="lineno"> 1771</span>&#160;         <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++)</div>
-<div class="line"><a name="l01772"></a><span class="lineno"> 1772</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#a75dad54f6290c7eeda08799ab26c9f93">areEnemies</a>( FACTION_PLAYER, i ))</div>
-<div class="line"><a name="l01773"></a><span class="lineno"> 1773</span>&#160;               <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;group, i );</div>
-<div class="line"><a name="l01774"></a><span class="lineno"> 1774</span>&#160;         <span class="keywordflow">return</span> group;</div>
-<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160; </div>
-<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;      <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160;         <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l01778"></a><span class="lineno"> 1778</span>&#160;   }</div>
-<div class="line"><a name="l01779"></a><span class="lineno"> 1779</span>&#160;}</div>
-<div class="line"><a name="l01780"></a><span class="lineno"> 1780</span>&#160; </div>
-<div class="line"><a name="l01781"></a><span class="lineno"> 1781</span>&#160; </div>
-<div class="line"><a name="l01785"></a><span class="lineno"><a class="line" href="faction_8c.html#a7856c04b39616b2314c9de14dfe5f0f3"> 1785</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="faction_8c.html#a7856c04b39616b2314c9de14dfe5f0f3">factions_clearDynamic</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01786"></a><span class="lineno"> 1786</span>&#160;{</div>
-<div class="line"><a name="l01787"></a><span class="lineno"> 1787</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01788"></a><span class="lineno"> 1788</span>&#160;   <a class="code" href="structFaction.html">Faction</a> *f;</div>
-<div class="line"><a name="l01789"></a><span class="lineno"> 1789</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++) {</div>
-<div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160;      f = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i];</div>
-<div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160;      <span class="keywordflow">if</span> (faction_isFlag(f, <a class="code" href="faction_8c.html#ad00d61187470ed4fd2fd34b10c6328e0">FACTION_DYNAMIC</a>)) {</div>
-<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;         <a class="code" href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac">faction_freeOne</a>( f );</div>
-<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;         <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>, f, f+1 );</div>
-<div class="line"><a name="l01794"></a><span class="lineno"> 1794</span>&#160;         i--;</div>
-<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160;      }</div>
-<div class="line"><a name="l01796"></a><span class="lineno"> 1796</span>&#160;   }</div>
-<div class="line"><a name="l01797"></a><span class="lineno"> 1797</span>&#160;}</div>
-<div class="line"><a name="l01798"></a><span class="lineno"> 1798</span>&#160; </div>
-<div class="line"><a name="l01799"></a><span class="lineno"> 1799</span>&#160; </div>
-<div class="line"><a name="l01808"></a><span class="lineno"><a class="line" href="faction_8c.html#ad22e8d650db5c92de196c04844243398"> 1808</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="faction_8c.html#ad22e8d650db5c92de196c04844243398">faction_dynAdd</a>( <span class="keywordtype">int</span> base, <span class="keyword">const</span> <span class="keywordtype">char</span>* name, <span class="keyword">const</span> <span class="keywordtype">char</span>* display, <span class="keyword">const</span> <span class="keywordtype">char</span>* ai )</div>
-<div class="line"><a name="l01809"></a><span class="lineno"> 1809</span>&#160;{</div>
-<div class="line"><a name="l01810"></a><span class="lineno"> 1810</span>&#160;   <a class="code" href="structFaction.html">Faction</a> *f, *bf;</div>
-<div class="line"><a name="l01811"></a><span class="lineno"> 1811</span>&#160;   <span class="keywordtype">int</span> i, *tmp;</div>
-<div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160; </div>
-<div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160;   f = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> );</div>
-<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160;   memset( f, 0, <span class="keyword">sizeof</span>(<a class="code" href="structFaction.html">Faction</a>) );</div>
-<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;   f-&gt;name        = strdup( name );</div>
-<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;   f-&gt;displayname = display==NULL ? NULL : strdup( display );</div>
-<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;   f-&gt;ai          = (ai==NULL) ? NULL : strdup( ai );</div>
-<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;   f-&gt;allies      = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
-<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160;   f-&gt;enemies     = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
-<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160;   f-&gt;equip_env   = LUA_NOREF;</div>
-<div class="line"><a name="l01821"></a><span class="lineno"> 1821</span>&#160;   f-&gt;env         = LUA_NOREF;</div>
-<div class="line"><a name="l01822"></a><span class="lineno"> 1822</span>&#160;   f-&gt;sched_env   = LUA_NOREF;</div>
-<div class="line"><a name="l01823"></a><span class="lineno"> 1823</span>&#160;   f-&gt;flags       = <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> | <a class="code" href="faction_8c.html#a2a66a85cd08771161c2825e4118382ea">FACTION_INVISIBLE</a> | <a class="code" href="faction_8c.html#ad00d61187470ed4fd2fd34b10c6328e0">FACTION_DYNAMIC</a> | <a class="code" href="faction_8c.html#a5cc43a31f094e976f8ba2e06613537a2">FACTION_KNOWN</a>;</div>
-<div class="line"><a name="l01824"></a><span class="lineno"> 1824</span>&#160;   <a class="code" href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11">faction_addStandingScript</a>( f, <span class="stringliteral">&quot;static&quot;</span> );</div>
-<div class="line"><a name="l01825"></a><span class="lineno"> 1825</span>&#160;   <span class="keywordflow">if</span> (base&gt;=0) {</div>
-<div class="line"><a name="l01826"></a><span class="lineno"> 1826</span>&#160;      bf = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[base];</div>
-<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160; </div>
-<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160;      <span class="keywordflow">if</span> (bf-&gt;ai!=NULL &amp;&amp; f-&gt;ai==NULL)</div>
-<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160;         f-&gt;ai = strdup( bf-&gt;ai );</div>
-<div class="line"><a name="l01830"></a><span class="lineno"> 1830</span>&#160;      <span class="keywordflow">if</span> (bf-&gt;logo!=NULL)</div>
-<div class="line"><a name="l01831"></a><span class="lineno"> 1831</span>&#160;         f-&gt;logo = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( bf-&gt;logo );</div>
-<div class="line"><a name="l01832"></a><span class="lineno"> 1832</span>&#160; </div>
-<div class="line"><a name="l01833"></a><span class="lineno"> 1833</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(bf-&gt;allies); i++) {</div>
-<div class="line"><a name="l01834"></a><span class="lineno"> 1834</span>&#160;         tmp = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;f-&gt;allies );</div>
+<div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160;      <span class="keywordflow">case</span> 1: <span class="comment">/* &#39;friendly&#39; */</span></div>
+<div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;         group = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
+<div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160;         <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++)</div>
+<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a>( FACTION_PLAYER, i ))</div>
+<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160;               <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;group, i );</div>
+<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;         <span class="keywordflow">return</span> group;</div>
+<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160; </div>
+<div class="line"><a name="l01758"></a><span class="lineno"> 1758</span>&#160;      <span class="keywordflow">case</span> 2: <span class="comment">/* &#39;neutral&#39; */</span></div>
+<div class="line"><a name="l01759"></a><span class="lineno"> 1759</span>&#160;         group = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
+<div class="line"><a name="l01760"></a><span class="lineno"> 1760</span>&#160;         <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++)</div>
+<div class="line"><a name="l01761"></a><span class="lineno"> 1761</span>&#160;            <span class="keywordflow">if</span> (!<a class="code" href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a>( FACTION_PLAYER, i ) &amp;&amp; !<a class="code" href="faction_8c.html#a75dad54f6290c7eeda08799ab26c9f93">areEnemies</a>( FACTION_PLAYER, i ))</div>
+<div class="line"><a name="l01762"></a><span class="lineno"> 1762</span>&#160;               <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;group, i );</div>
+<div class="line"><a name="l01763"></a><span class="lineno"> 1763</span>&#160;         <span class="keywordflow">return</span> group;</div>
+<div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160; </div>
+<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;      <span class="keywordflow">case</span> 3: <span class="comment">/* &#39;hostile&#39; */</span></div>
+<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;         group = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
+<div class="line"><a name="l01767"></a><span class="lineno"> 1767</span>&#160;         <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++)</div>
+<div class="line"><a name="l01768"></a><span class="lineno"> 1768</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#a75dad54f6290c7eeda08799ab26c9f93">areEnemies</a>( FACTION_PLAYER, i ))</div>
+<div class="line"><a name="l01769"></a><span class="lineno"> 1769</span>&#160;               <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;group, i );</div>
+<div class="line"><a name="l01770"></a><span class="lineno"> 1770</span>&#160;         <span class="keywordflow">return</span> group;</div>
+<div class="line"><a name="l01771"></a><span class="lineno"> 1771</span>&#160; </div>
+<div class="line"><a name="l01772"></a><span class="lineno"> 1772</span>&#160;      <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l01773"></a><span class="lineno"> 1773</span>&#160;         <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l01774"></a><span class="lineno"> 1774</span>&#160;   }</div>
+<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160;}</div>
+<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160; </div>
+<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160; </div>
+<div class="line"><a name="l01781"></a><span class="lineno"><a class="line" href="faction_8c.html#a7856c04b39616b2314c9de14dfe5f0f3"> 1781</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="faction_8c.html#a7856c04b39616b2314c9de14dfe5f0f3">factions_clearDynamic</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01782"></a><span class="lineno"> 1782</span>&#160;{</div>
+<div class="line"><a name="l01783"></a><span class="lineno"> 1783</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01784"></a><span class="lineno"> 1784</span>&#160;   <a class="code" href="structFaction.html">Faction</a> *f;</div>
+<div class="line"><a name="l01785"></a><span class="lineno"> 1785</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>); i++) {</div>
+<div class="line"><a name="l01786"></a><span class="lineno"> 1786</span>&#160;      f = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i];</div>
+<div class="line"><a name="l01787"></a><span class="lineno"> 1787</span>&#160;      <span class="keywordflow">if</span> (faction_isFlag(f, <a class="code" href="faction_8c.html#ad00d61187470ed4fd2fd34b10c6328e0">FACTION_DYNAMIC</a>)) {</div>
+<div class="line"><a name="l01788"></a><span class="lineno"> 1788</span>&#160;         <a class="code" href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac">faction_freeOne</a>( f );</div>
+<div class="line"><a name="l01789"></a><span class="lineno"> 1789</span>&#160;         <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>, f, f+1 );</div>
+<div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160;         i--;</div>
+<div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160;      }</div>
+<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;   }</div>
+<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;}</div>
+<div class="line"><a name="l01794"></a><span class="lineno"> 1794</span>&#160; </div>
+<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160; </div>
+<div class="line"><a name="l01804"></a><span class="lineno"><a class="line" href="faction_8c.html#ad22e8d650db5c92de196c04844243398"> 1804</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="faction_8c.html#ad22e8d650db5c92de196c04844243398">faction_dynAdd</a>( <span class="keywordtype">int</span> base, <span class="keyword">const</span> <span class="keywordtype">char</span>* name, <span class="keyword">const</span> <span class="keywordtype">char</span>* display, <span class="keyword">const</span> <span class="keywordtype">char</span>* ai )</div>
+<div class="line"><a name="l01805"></a><span class="lineno"> 1805</span>&#160;{</div>
+<div class="line"><a name="l01806"></a><span class="lineno"> 1806</span>&#160;   <a class="code" href="structFaction.html">Faction</a> *f, *bf;</div>
+<div class="line"><a name="l01807"></a><span class="lineno"> 1807</span>&#160;   <span class="keywordtype">int</span> i, *tmp;</div>
+<div class="line"><a name="l01808"></a><span class="lineno"> 1808</span>&#160; </div>
+<div class="line"><a name="l01809"></a><span class="lineno"> 1809</span>&#160;   f = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a> );</div>
+<div class="line"><a name="l01810"></a><span class="lineno"> 1810</span>&#160;   memset( f, 0, <span class="keyword">sizeof</span>(<a class="code" href="structFaction.html">Faction</a>) );</div>
+<div class="line"><a name="l01811"></a><span class="lineno"> 1811</span>&#160;   f-&gt;name        = strdup( name );</div>
+<div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160;   f-&gt;displayname = display==NULL ? NULL : strdup( display );</div>
+<div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160;   f-&gt;ai          = (ai==NULL) ? NULL : strdup( ai );</div>
+<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160;   f-&gt;allies      = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
+<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;   f-&gt;enemies     = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">int</span> );</div>
+<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;   f-&gt;equip_env   = LUA_NOREF;</div>
+<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;   f-&gt;env         = LUA_NOREF;</div>
+<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;   f-&gt;sched_env   = LUA_NOREF;</div>
+<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160;   f-&gt;flags       = <a class="code" href="faction_8c.html#ab0416f2f6053ee44729fb30a012fbc42">FACTION_STATIC</a> | <a class="code" href="faction_8c.html#a2a66a85cd08771161c2825e4118382ea">FACTION_INVISIBLE</a> | <a class="code" href="faction_8c.html#ad00d61187470ed4fd2fd34b10c6328e0">FACTION_DYNAMIC</a> | <a class="code" href="faction_8c.html#a5cc43a31f094e976f8ba2e06613537a2">FACTION_KNOWN</a>;</div>
+<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160;   <a class="code" href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11">faction_addStandingScript</a>( f, <span class="stringliteral">&quot;static&quot;</span> );</div>
+<div class="line"><a name="l01821"></a><span class="lineno"> 1821</span>&#160;   <span class="keywordflow">if</span> (base&gt;=0) {</div>
+<div class="line"><a name="l01822"></a><span class="lineno"> 1822</span>&#160;      bf = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[base];</div>
+<div class="line"><a name="l01823"></a><span class="lineno"> 1823</span>&#160; </div>
+<div class="line"><a name="l01824"></a><span class="lineno"> 1824</span>&#160;      <span class="keywordflow">if</span> (bf-&gt;ai!=NULL &amp;&amp; f-&gt;ai==NULL)</div>
+<div class="line"><a name="l01825"></a><span class="lineno"> 1825</span>&#160;         f-&gt;ai = strdup( bf-&gt;ai );</div>
+<div class="line"><a name="l01826"></a><span class="lineno"> 1826</span>&#160;      <span class="keywordflow">if</span> (bf-&gt;logo!=NULL)</div>
+<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160;         f-&gt;logo = <a class="code" href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a>( bf-&gt;logo );</div>
+<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160; </div>
+<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(bf-&gt;allies); i++) {</div>
+<div class="line"><a name="l01830"></a><span class="lineno"> 1830</span>&#160;         tmp = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;f-&gt;allies );</div>
+<div class="line"><a name="l01831"></a><span class="lineno"> 1831</span>&#160;         *tmp = i;</div>
+<div class="line"><a name="l01832"></a><span class="lineno"> 1832</span>&#160;      }</div>
+<div class="line"><a name="l01833"></a><span class="lineno"> 1833</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(bf-&gt;enemies); i++) {</div>
+<div class="line"><a name="l01834"></a><span class="lineno"> 1834</span>&#160;         tmp = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;f-&gt;enemies );</div>
 <div class="line"><a name="l01835"></a><span class="lineno"> 1835</span>&#160;         *tmp = i;</div>
 <div class="line"><a name="l01836"></a><span class="lineno"> 1836</span>&#160;      }</div>
-<div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(bf-&gt;enemies); i++) {</div>
-<div class="line"><a name="l01838"></a><span class="lineno"> 1838</span>&#160;         tmp = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;f-&gt;enemies );</div>
-<div class="line"><a name="l01839"></a><span class="lineno"> 1839</span>&#160;         *tmp = i;</div>
-<div class="line"><a name="l01840"></a><span class="lineno"> 1840</span>&#160;      }</div>
+<div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160; </div>
+<div class="line"><a name="l01838"></a><span class="lineno"> 1838</span>&#160;      f-&gt;player_def = bf-&gt;player_def;</div>
+<div class="line"><a name="l01839"></a><span class="lineno"> 1839</span>&#160;      f-&gt;player = bf-&gt;player;</div>
+<div class="line"><a name="l01840"></a><span class="lineno"> 1840</span>&#160;      f-&gt;colour = bf-&gt;colour;</div>
 <div class="line"><a name="l01841"></a><span class="lineno"> 1841</span>&#160; </div>
-<div class="line"><a name="l01842"></a><span class="lineno"> 1842</span>&#160;      f-&gt;player_def = bf-&gt;player_def;</div>
-<div class="line"><a name="l01843"></a><span class="lineno"> 1843</span>&#160;      f-&gt;player = bf-&gt;player;</div>
-<div class="line"><a name="l01844"></a><span class="lineno"> 1844</span>&#160;      f-&gt;colour = bf-&gt;colour;</div>
+<div class="line"><a name="l01842"></a><span class="lineno"> 1842</span>&#160;      <span class="comment">/* Lua stuff. */</span></div>
+<div class="line"><a name="l01843"></a><span class="lineno"> 1843</span>&#160;      f-&gt;equip_env = bf-&gt;equip_env;</div>
+<div class="line"><a name="l01844"></a><span class="lineno"> 1844</span>&#160;   }</div>
 <div class="line"><a name="l01845"></a><span class="lineno"> 1845</span>&#160; </div>
-<div class="line"><a name="l01846"></a><span class="lineno"> 1846</span>&#160;      <span class="comment">/* Lua stuff. */</span></div>
-<div class="line"><a name="l01847"></a><span class="lineno"> 1847</span>&#160;      f-&gt;equip_env = bf-&gt;equip_env;</div>
-<div class="line"><a name="l01848"></a><span class="lineno"> 1848</span>&#160;   }</div>
-<div class="line"><a name="l01849"></a><span class="lineno"> 1849</span>&#160; </div>
-<div class="line"><a name="l01850"></a><span class="lineno"> 1850</span>&#160;   <span class="keywordflow">return</span> f-<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>;</div>
-<div class="line"><a name="l01851"></a><span class="lineno"> 1851</span>&#160;}</div>
+<div class="line"><a name="l01846"></a><span class="lineno"> 1846</span>&#160;   <span class="keywordflow">return</span> f-<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>;</div>
+<div class="line"><a name="l01847"></a><span class="lineno"> 1847</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="afaction_8c_html_ad307fe188136328941ce738cf4547dd6"><div class="ttname"><a href="faction_8c.html#ad307fe188136328941ce738cf4547dd6">faction_getAll</a></div><div class="ttdeci">int * faction_getAll()</div><div class="ttdoc">Returns all faction IDs in an array (array.h).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00164">faction.c:164</a></div></div>
 <div class="ttc" id="afaction_8c_html_af00729891e5638808cac53920f8449fa"><div class="ttname"><a href="faction_8c.html#af00729891e5638808cac53920f8449fa">faction_clearKnown</a></div><div class="ttdeci">void faction_clearKnown()</div><div class="ttdoc">Clears the known factions.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00200">faction.c:200</a></div></div>
@@ -1568,13 +1564,13 @@ $(function() {
 <div class="ttc" id="astructFaction___html_aafc00161940b30a7929a8eb45e23b441"><div class="ttname"><a href="structFaction__.html#aafc00161940b30a7929a8eb45e23b441">Faction_::oflags</a></div><div class="ttdeci">unsigned int oflags</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00087">faction.c:87</a></div></div>
 <div class="ttc" id="afaction_8c_html_a415332bc452baf3be2e575853e0ee50e"><div class="ttname"><a href="faction_8c.html#a415332bc452baf3be2e575853e0ee50e">faction_parse</a></div><div class="ttdeci">static int faction_parse(Faction *temp, xmlNodePtr parent)</div><div class="ttdoc">Parses a single faction, but doesn't set the allies/enemies bit.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01283">faction.c:1283</a></div></div>
 <div class="ttc" id="astructFaction___html_ab318485ed21c75405b7d588363ff3a8e"><div class="ttname"><a href="structFaction__.html#ab318485ed21c75405b7d588363ff3a8e">Faction_::flags</a></div><div class="ttdeci">unsigned int flags</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00086">faction.c:86</a></div></div>
-<div class="ttc" id="afaction_8c_html_abb385adfededb038cbb6a03b2b4fe9a3"><div class="ttname"><a href="faction_8c.html#abb385adfededb038cbb6a03b2b4fe9a3">faction_getGroup</a></div><div class="ttdeci">int * faction_getGroup(int which)</div><div class="ttdoc">Returns an array of faction ids.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01746">faction.c:1746</a></div></div>
+<div class="ttc" id="afaction_8c_html_abb385adfededb038cbb6a03b2b4fe9a3"><div class="ttname"><a href="faction_8c.html#abb385adfededb038cbb6a03b2b4fe9a3">faction_getGroup</a></div><div class="ttdeci">int * faction_getGroup(int which)</div><div class="ttdoc">Returns an array of faction ids.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01742">faction.c:1742</a></div></div>
 <div class="ttc" id="astructFaction_html"><div class="ttname"><a href="structFaction.html">Faction</a></div><div class="ttdoc">Represents a faction.</div></div>
 <div class="ttc" id="afaction_8c_html_a4f155231085486b91187243140fd9e73"><div class="ttname"><a href="faction_8c.html#a4f155231085486b91187243140fd9e73">faction_logo</a></div><div class="ttdeci">glTexture * faction_logo(int f)</div><div class="ttdoc">Gets the faction's logo (ideally 256x256).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00361">faction.c:361</a></div></div>
-<div class="ttc" id="afaction_8c_html_acee462a5c561631d39c7568fa14b5d11"><div class="ttname"><a href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11">faction_addStandingScript</a></div><div class="ttdeci">static void faction_addStandingScript(Faction *temp, const char *scriptname)</div><div class="ttdoc">Sets up a standing script for a faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01426">faction.c:1426</a></div></div>
+<div class="ttc" id="afaction_8c_html_acee462a5c561631d39c7568fa14b5d11"><div class="ttname"><a href="faction_8c.html#acee462a5c561631d39c7568fa14b5d11">faction_addStandingScript</a></div><div class="ttdeci">static void faction_addStandingScript(Faction *temp, const char *scriptname)</div><div class="ttdoc">Sets up a standing script for a faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01422">faction.c:1422</a></div></div>
 <div class="ttc" id="afaction_8c_html_a3618d6cdf70c52f72b15c81070693f61"><div class="ttname"><a href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a></div><div class="ttdeci">static Faction * faction_stack</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00090">faction.c:90</a></div></div>
 <div class="ttc" id="astructFaction___html"><div class="ttname"><a href="structFaction__.html">Faction_</a></div><div class="ttdoc">Description of a lane-building faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00055">faction.c:55</a></div></div>
-<div class="ttc" id="acolour_8c_html_a094118be9a47399c70d77fc91a810174"><div class="ttname"><a href="colour_8c.html#a094118be9a47399c70d77fc91a810174">cNeutral</a></div><div class="ttdeci">const glColour cNeutral</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00092">colour.c:92</a></div></div>
+<div class="ttc" id="acolour_8c_html_a094118be9a47399c70d77fc91a810174"><div class="ttname"><a href="colour_8c.html#a094118be9a47399c70d77fc91a810174">cNeutral</a></div><div class="ttdeci">const glColour cNeutral</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00098">colour.c:98</a></div></div>
 <div class="ttc" id="afaction_8c_html_ae8dd3a1fdd3e970e7811ffdeb814b4b0"><div class="ttname"><a href="faction_8c.html#ae8dd3a1fdd3e970e7811ffdeb814b4b0">faction_getScheduler</a></div><div class="ttdeci">nlua_env faction_getScheduler(int f)</div><div class="ttdoc">Gets the state associated to the faction scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00648">faction.c:648</a></div></div>
 <div class="ttc" id="anlua_8c_html_a45e6b8d12cc6f943d058023f8ec74a2d"><div class="ttname"><a href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a></div><div class="ttdeci">int nlua_loadStandard(nlua_env env)</div><div class="ttdoc">Loads the standard Naev Lua API.</div><div class="ttdef"><b>Definition:</b> <a href="nlua_8c_source.html#l00572">nlua.c:572</a></div></div>
 <div class="ttc" id="afaction_8c_html_a0d8832013b3446ddaf7e4f334c9c9766"><div class="ttname"><a href="faction_8c.html#a0d8832013b3446ddaf7e4f334c9c9766">faction_exists</a></div><div class="ttdeci">int faction_exists(const char *name)</div><div class="ttdoc">Checks to see if a faction exists by name.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00140">faction.c:140</a></div></div>
@@ -1601,22 +1597,22 @@ $(function() {
 <div class="ttc" id="afaction_8c_html_a0b2a86a8c830a267c2c6bd51c85e4816"><div class="ttname"><a href="faction_8c.html#a0b2a86a8c830a267c2c6bd51c85e4816">faction_getKnown</a></div><div class="ttdeci">int * faction_getKnown()</div><div class="ttdoc">Gets all the known factions in an array (array.h).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00181">faction.c:181</a></div></div>
 <div class="ttc" id="afaction_8c_html_ab35a73591f042814be3e4e62283e20f9"><div class="ttname"><a href="faction_8c.html#ab35a73591f042814be3e4e62283e20f9">faction_modPlayer</a></div><div class="ttdeci">void faction_modPlayer(int f, double mod, const char *source)</div><div class="ttdoc">Modifies the player's standing with a faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00769">faction.c:769</a></div></div>
 <div class="ttc" id="aarray_8h_html_a6f15b617933d8ed080bd53b043342923"><div class="ttname"><a href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a></div><div class="ttdeci">#define array_create_size(basic_type, capacity)</div><div class="ttdoc">Creates a new dynamic array of ‘basic_type’ with an initial capacity.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00106">array.h:106</a></div></div>
-<div class="ttc" id="afaction_8c_html_a9ef57797601fa43e1e5c7c079b82d489"><div class="ttname"><a href="faction_8c.html#a9ef57797601fa43e1e5c7c079b82d489">pfaction_save</a></div><div class="ttdeci">int pfaction_save(xmlTextWriterPtr writer)</div><div class="ttdoc">Saves player's standings with the factions.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01664">faction.c:1664</a></div></div>
+<div class="ttc" id="afaction_8c_html_a9ef57797601fa43e1e5c7c079b82d489"><div class="ttname"><a href="faction_8c.html#a9ef57797601fa43e1e5c7c079b82d489">pfaction_save</a></div><div class="ttdeci">int pfaction_save(xmlTextWriterPtr writer)</div><div class="ttdoc">Saves player's standings with the factions.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01660">faction.c:1660</a></div></div>
 <div class="ttc" id="afaction_8c_html_a1615a8b42eccbdd34d2d860cf29de3b6"><div class="ttname"><a href="faction_8c.html#a1615a8b42eccbdd34d2d860cf29de3b6">faction_getRaw</a></div><div class="ttdeci">static int faction_getRaw(const char *name)</div><div class="ttdoc">Gets a faction ID by name.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00115">faction.c:115</a></div></div>
 <div class="ttc" id="astructFaction___html_ac5b58c44f6ef35cf870197cb2868d716"><div class="ttname"><a href="structFaction__.html#ac5b58c44f6ef35cf870197cb2868d716">Faction_::player_def</a></div><div class="ttdeci">double player_def</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00072">faction.c:72</a></div></div>
 <div class="ttc" id="afaction_8c_html_a74540981e157e93e15b860c9909704b9"><div class="ttname"><a href="faction_8c.html#a74540981e157e93e15b860c9909704b9">faction_setPlayer</a></div><div class="ttdeci">void faction_setPlayer(int f, double value)</div><div class="ttdoc">Sets the player's standing with a faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00865">faction.c:865</a></div></div>
 <div class="ttc" id="astructFaction___html_aebd90c40efb35d8f89d3a01b9b2d0bc5"><div class="ttname"><a href="structFaction__.html#aebd90c40efb35d8f89d3a01b9b2d0bc5">Faction_::logo</a></div><div class="ttdeci">glTexture * logo</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00062">faction.c:62</a></div></div>
 <div class="ttc" id="afaction_8c_html_a314bc7683265aab5e7e85d3bc98c10a7"><div class="ttname"><a href="faction_8c.html#a314bc7683265aab5e7e85d3bc98c10a7">faction_getColour</a></div><div class="ttdeci">const glColour * faction_getColour(int f)</div><div class="ttdoc">Gets the colour of the faction based on it's standing with the player.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01031">faction.c:1031</a></div></div>
-<div class="ttc" id="afaction_8c_html_a7856c04b39616b2314c9de14dfe5f0f3"><div class="ttname"><a href="faction_8c.html#a7856c04b39616b2314c9de14dfe5f0f3">factions_clearDynamic</a></div><div class="ttdeci">void factions_clearDynamic(void)</div><div class="ttdoc">Clears dynamic factions.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01785">faction.c:1785</a></div></div>
+<div class="ttc" id="afaction_8c_html_a7856c04b39616b2314c9de14dfe5f0f3"><div class="ttname"><a href="faction_8c.html#a7856c04b39616b2314c9de14dfe5f0f3">factions_clearDynamic</a></div><div class="ttdeci">void factions_clearDynamic(void)</div><div class="ttdoc">Clears dynamic factions.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01781">faction.c:1781</a></div></div>
 <div class="ttc" id="astructFaction___html_a0a132473600918edee57d2325027e750"><div class="ttname"><a href="structFaction__.html#a0a132473600918edee57d2325027e750">Faction_::enemies</a></div><div class="ttdeci">int * enemies</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00066">faction.c:66</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c3fb96e542d880f6f5f42594154e0f0"><div class="ttname"><a href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a></div><div class="ttdeci">#define array_erase(ptr_array, first, last)</div><div class="ttdoc">Erases elements in interval [first, last).</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00144">array.h:144</a></div></div>
-<div class="ttc" id="afaction_8c_html_aab1fc2a3d13e36e35c1ee154562f7784"><div class="ttname"><a href="faction_8c.html#aab1fc2a3d13e36e35c1ee154562f7784">pfaction_load</a></div><div class="ttdeci">int pfaction_load(xmlNodePtr parent)</div><div class="ttdoc">Loads the player's faction standings.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01698">faction.c:1698</a></div></div>
+<div class="ttc" id="afaction_8c_html_aab1fc2a3d13e36e35c1ee154562f7784"><div class="ttname"><a href="faction_8c.html#aab1fc2a3d13e36e35c1ee154562f7784">pfaction_load</a></div><div class="ttdeci">int pfaction_load(xmlNodePtr parent)</div><div class="ttdoc">Loads the player's faction standings.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01694">faction.c:1694</a></div></div>
 <div class="ttc" id="afaction_8c_html_a75dad54f6290c7eeda08799ab26c9f93"><div class="ttname"><a href="faction_8c.html#a75dad54f6290c7eeda08799ab26c9f93">areEnemies</a></div><div class="ttdeci">int areEnemies(int a, int b)</div><div class="ttdoc">Checks whether two factions are enemies.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01170">faction.c:1170</a></div></div>
 <div class="ttc" id="aarray_8h_html_a8037aba47ab61629eee083791786b582"><div class="ttname"><a href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a></div><div class="ttdeci">#define array_grow(ptr_array)</div><div class="ttdoc">Increases the number of elements by one and returns the last element.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00123">array.h:123</a></div></div>
 <div class="ttc" id="afaction_8c_html_a5cc43a31f094e976f8ba2e06613537a2"><div class="ttname"><a href="faction_8c.html#a5cc43a31f094e976f8ba2e06613537a2">FACTION_KNOWN</a></div><div class="ttdeci">#define FACTION_KNOWN</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00042">faction.c:42</a></div></div>
 <div class="ttc" id="afaction_8c_html_aab064ed3dbf5930ef0c9494e80a14698"><div class="ttname"><a href="faction_8c.html#aab064ed3dbf5930ef0c9494e80a14698">faction_clearAlly</a></div><div class="ttdeci">void faction_clearAlly(int f)</div><div class="ttdoc">Clears all the ally of a dynamic faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00557">faction.c:557</a></div></div>
-<div class="ttc" id="afaction_8c_html_ad22e8d650db5c92de196c04844243398"><div class="ttname"><a href="faction_8c.html#ad22e8d650db5c92de196c04844243398">faction_dynAdd</a></div><div class="ttdeci">int faction_dynAdd(int base, const char *name, const char *display, const char *ai)</div><div class="ttdoc">Dynamically add a faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01808">faction.c:1808</a></div></div>
-<div class="ttc" id="afaction_8c_html_a645c4d663e2fb15e934c144370127735"><div class="ttname"><a href="faction_8c.html#a645c4d663e2fb15e934c144370127735">factions_reset</a></div><div class="ttdeci">void factions_reset(void)</div><div class="ttdoc">Resets player standing and flags of factions to default.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01508">faction.c:1508</a></div></div>
+<div class="ttc" id="afaction_8c_html_ad22e8d650db5c92de196c04844243398"><div class="ttname"><a href="faction_8c.html#ad22e8d650db5c92de196c04844243398">faction_dynAdd</a></div><div class="ttdeci">int faction_dynAdd(int base, const char *name, const char *display, const char *ai)</div><div class="ttdoc">Dynamically add a faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01804">faction.c:1804</a></div></div>
+<div class="ttc" id="afaction_8c_html_a645c4d663e2fb15e934c144370127735"><div class="ttname"><a href="faction_8c.html#a645c4d663e2fb15e934c144370127735">factions_reset</a></div><div class="ttdeci">void factions_reset(void)</div><div class="ttdoc">Resets player standing and flags of factions to default.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01504">faction.c:1504</a></div></div>
 <div class="ttc" id="afaction_8c_html_a5329784beff5321561651b740f426f72"><div class="ttname"><a href="faction_8c.html#a5329784beff5321561651b740f426f72">faction_colour</a></div><div class="ttdeci">const glColour * faction_colour(int f)</div><div class="ttdoc">Gets the colour of the faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00378">faction.c:378</a></div></div>
 <div class="ttc" id="anaev_8h_html_ae688d728e1acdfe5988c7db45d6f0166"><div class="ttname"><a href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a></div><div class="ttdeci">#define PATH_MAX</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00056">naev.h:56</a></div></div>
 <div class="ttc" id="afaction_8c_html_a8d7d74e353f8f34c1192c2099bc3df68"><div class="ttname"><a href="faction_8c.html#a8d7d74e353f8f34c1192c2099bc3df68">faction_modPlayerRaw</a></div><div class="ttdeci">void faction_modPlayerRaw(int f, double mod)</div><div class="ttdoc">Modifies the player's standing without affecting others.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00831">faction.c:831</a></div></div>
@@ -1631,11 +1627,10 @@ $(function() {
 <div class="ttc" id="astructFaction___html_a8d4da806243efdb7991aaf167425479e"><div class="ttname"><a href="structFaction__.html#a8d4da806243efdb7991aaf167425479e">Faction_::sched_env</a></div><div class="ttdeci">nlua_env sched_env</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00076">faction.c:76</a></div></div>
 <div class="ttc" id="afaction_8c_html_ac7c5ef2816b34fea76372d884f6e997f"><div class="ttname"><a href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a></div><div class="ttdeci">const char * faction_name(int f)</div><div class="ttdoc">Gets a factions &quot;real&quot; (internal) name.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00270">faction.c:270</a></div></div>
 <div class="ttc" id="afaction_8c_html_a9d053387b0a833e463e366329a73cab2"><div class="ttname"><a href="faction_8c.html#a9d053387b0a833e463e366329a73cab2">faction_isInvisible</a></div><div class="ttdeci">int faction_isInvisible(int id)</div><div class="ttdoc">Is the faction invisible?</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00212">faction.c:212</a></div></div>
-<div class="ttc" id="afaction_8c_html_a5e9bfba9e9ce5130506562438acdffec"><div class="ttname"><a href="faction_8c.html#a5e9bfba9e9ce5130506562438acdffec">factions_load</a></div><div class="ttdeci">int factions_load(void)</div><div class="ttdoc">Loads up all the factions from the data file.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01523">faction.c:1523</a></div></div>
-<div class="ttc" id="afaction_8c_html_af256214a358e144bd7c0b848ec472a54"><div class="ttname"><a href="faction_8c.html#af256214a358e144bd7c0b848ec472a54">faction_parseSocial</a></div><div class="ttdeci">static void faction_parseSocial(xmlNodePtr parent)</div><div class="ttdoc">Parses the social tidbits of a faction: allies and enemies.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01451">faction.c:1451</a></div></div>
-<div class="ttc" id="acolour_8c_html_af122c3c970ac91f72585c4cd555ec03a"><div class="ttname"><a href="colour_8c.html#af122c3c970ac91f72585c4cd555ec03a">cHostile</a></div><div class="ttdeci">const glColour cHostile</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00094">colour.c:94</a></div></div>
+<div class="ttc" id="afaction_8c_html_a5e9bfba9e9ce5130506562438acdffec"><div class="ttname"><a href="faction_8c.html#a5e9bfba9e9ce5130506562438acdffec">factions_load</a></div><div class="ttdeci">int factions_load(void)</div><div class="ttdoc">Loads up all the factions from the data file.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01519">faction.c:1519</a></div></div>
+<div class="ttc" id="afaction_8c_html_af256214a358e144bd7c0b848ec472a54"><div class="ttname"><a href="faction_8c.html#af256214a358e144bd7c0b848ec472a54">faction_parseSocial</a></div><div class="ttdeci">static void faction_parseSocial(xmlNodePtr parent)</div><div class="ttdoc">Parses the social tidbits of a faction: allies and enemies.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01447">faction.c:1447</a></div></div>
+<div class="ttc" id="acolour_8c_html_af122c3c970ac91f72585c4cd555ec03a"><div class="ttname"><a href="colour_8c.html#af122c3c970ac91f72585c4cd555ec03a">cHostile</a></div><div class="ttdeci">const glColour cHostile</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00100">colour.c:100</a></div></div>
 <div class="ttc" id="afaction_8c_html_a271f2b96e02df523b342cd7d20cd52f2"><div class="ttname"><a href="faction_8c.html#a271f2b96e02df523b342cd7d20cd52f2">faction_getColourChar</a></div><div class="ttdeci">char faction_getColourChar(int f)</div><div class="ttdoc">Gets the faction character associated to its standing with the player.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01049">faction.c:1049</a></div></div>
-<div class="ttc" id="astructFaction___html_ae6028e90dd28d787c603ce7953916d68"><div class="ttname"><a href="structFaction__.html#ae6028e90dd28d787c603ce7953916d68">Faction_::colour</a></div><div class="ttdeci">const glColour * colour</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00063">faction.c:63</a></div></div>
 <div class="ttc" id="afaction_8c_html_aa75b57879dd467cc7105c896d6747843"><div class="ttname"><a href="faction_8c.html#aa75b57879dd467cc7105c896d6747843">faction_sanitizePlayer</a></div><div class="ttdeci">static void faction_sanitizePlayer(Faction *faction)</div><div class="ttdoc">Sanitizes player faction standing.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00678">faction.c:678</a></div></div>
 <div class="ttc" id="afaction_8c_html_afff569ed6450f87e95235a17ae258f50"><div class="ttname"><a href="faction_8c.html#afff569ed6450f87e95235a17ae258f50">faction_getStandingBroad</a></div><div class="ttdeci">const char * faction_getStandingBroad(int f, int bribed, int override)</div><div class="ttdoc">Gets the broad faction standing.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01117">faction.c:1117</a></div></div>
 <div class="ttc" id="afaction_8c_html_a59a65a0da0a0ace7a7138bebbc3a265f"><div class="ttname"><a href="faction_8c.html#a59a65a0da0a0ace7a7138bebbc3a265f">faction_getEquipper</a></div><div class="ttdeci">nlua_env faction_getEquipper(int f)</div><div class="ttdoc">Gets the equipper state associated to the faction scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00662">faction.c:662</a></div></div>
@@ -1645,21 +1640,22 @@ $(function() {
 <div class="ttc" id="aplayer_8c_html_ac8701471143b28a786b0028420edfeb6"><div class="ttname"><a href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a></div><div class="ttdeci">Player_t player</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00071">player.c:71</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
 <div class="ttc" id="afaction_8c_html_aaa6e96bcfe0042ba8d6094cface47758"><div class="ttname"><a href="faction_8c.html#aaa6e96bcfe0042ba8d6094cface47758">faction_shortname</a></div><div class="ttdeci">const char * faction_shortname(int f)</div><div class="ttdoc">Gets a factions short name (human-readable).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00290">faction.c:290</a></div></div>
-<div class="ttc" id="afaction_8c_html_a09c62984de137de4b7b92baf2eb9faac"><div class="ttname"><a href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac">faction_freeOne</a></div><div class="ttdeci">static void faction_freeOne(Faction *f)</div><div class="ttdoc">Frees a single faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01625">faction.c:1625</a></div></div>
+<div class="ttc" id="afaction_8c_html_a09c62984de137de4b7b92baf2eb9faac"><div class="ttname"><a href="faction_8c.html#a09c62984de137de4b7b92baf2eb9faac">faction_freeOne</a></div><div class="ttdeci">static void faction_freeOne(Faction *f)</div><div class="ttdoc">Frees a single faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01621">faction.c:1621</a></div></div>
 <div class="ttc" id="afaction_8c_html_ae75a71360f26a1244adb1470030c4c1a"><div class="ttname"><a href="faction_8c.html#ae75a71360f26a1244adb1470030c4c1a">faction_addAlly</a></div><div class="ttdeci">void faction_addAlly(int f, int o)</div><div class="ttdoc">Adds an ally to the faction's allies list.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00577">faction.c:577</a></div></div>
 <div class="ttc" id="afaction_8c_html_ac8802d8f4256c3b62598270c52e76d26"><div class="ttname"><a href="faction_8c.html#ac8802d8f4256c3b62598270c52e76d26">faction_modPlayerSingle</a></div><div class="ttdeci">void faction_modPlayerSingle(int f, double mod, const char *source)</div><div class="ttdoc">Modifies the player's standing without affecting others.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00810">faction.c:810</a></div></div>
 <div class="ttc" id="astructFaction___html_a6b47b994e2ad8dbe4e345fd81c1f2ffa"><div class="ttname"><a href="structFaction__.html#a6b47b994e2ad8dbe4e345fd81c1f2ffa">Faction_::equip_env</a></div><div class="ttdeci">nlua_env equip_env</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00083">faction.c:83</a></div></div>
-<div class="ttc" id="afaction_8c_html_a8a44b76cb78617017dd85328f51f399b"><div class="ttname"><a href="faction_8c.html#a8a44b76cb78617017dd85328f51f399b">factions_free</a></div><div class="ttdeci">void factions_free(void)</div><div class="ttdoc">Frees the factions.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01646">faction.c:1646</a></div></div>
+<div class="ttc" id="afaction_8c_html_a8a44b76cb78617017dd85328f51f399b"><div class="ttname"><a href="faction_8c.html#a8a44b76cb78617017dd85328f51f399b">factions_free</a></div><div class="ttdeci">void factions_free(void)</div><div class="ttdoc">Frees the factions.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01642">faction.c:1642</a></div></div>
 <div class="ttc" id="astructFaction___html_a4934d3f7112c38545b9bca3b890f9fb3"><div class="ttname"><a href="structFaction__.html#a4934d3f7112c38545b9bca3b890f9fb3">Faction_::player</a></div><div class="ttdeci">double player</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00073">faction.c:73</a></div></div>
 <div class="ttc" id="astructFaction___html_a982340caa8a784e18b313dbc54e32c6e"><div class="ttname"><a href="structFaction__.html#a982340caa8a784e18b313dbc54e32c6e">Faction_::allies</a></div><div class="ttdeci">int * allies</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00069">faction.c:69</a></div></div>
 <div class="ttc" id="afaction_8c_html_a151299399a3ae201cf6e3f1406f01b19"><div class="ttname"><a href="faction_8c.html#a151299399a3ae201cf6e3f1406f01b19">faction_longname</a></div><div class="ttdeci">const char * faction_longname(int f)</div><div class="ttdoc">Gets the faction's long name (formal, human-readable).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00314">faction.c:314</a></div></div>
 <div class="ttc" id="ahook_8c_html_a358987e6df9f49e54e9c31660700737a"><div class="ttname"><a href="hook_8c.html#a358987e6df9f49e54e9c31660700737a">hooks_runParam</a></div><div class="ttdeci">int hooks_runParam(const char *stack, const HookParam *param)</div><div class="ttdoc">Runs all the hooks of stack.</div><div class="ttdef"><b>Definition:</b> <a href="hook_8c_source.html#l00988">hook.c:988</a></div></div>
-<div class="ttc" id="acolour_8c_html_a0dbd5c8a06b69839b2a1428702b47705"><div class="ttname"><a href="colour_8c.html#a0dbd5c8a06b69839b2a1428702b47705">cFriend</a></div><div class="ttdeci">const glColour cFriend</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00093">colour.c:93</a></div></div>
+<div class="ttc" id="acolour_8c_html_a0dbd5c8a06b69839b2a1428702b47705"><div class="ttname"><a href="colour_8c.html#a0dbd5c8a06b69839b2a1428702b47705">cFriend</a></div><div class="ttdeci">const glColour cFriend</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00099">colour.c:99</a></div></div>
 <div class="ttc" id="afaction_8c_html_a687c49f23fb672b27455c023229dc5af"><div class="ttname"><a href="faction_8c.html#a687c49f23fb672b27455c023229dc5af">faction_rmEnemy</a></div><div class="ttdeci">void faction_rmEnemy(int f, int o)</div><div class="ttdoc">Removes an enemy from the faction's enemies list.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00529">faction.c:529</a></div></div>
-<div class="ttc" id="acolour_8c_html_a6a08a39786aed0aa065be233c786e81f"><div class="ttname"><a href="colour_8c.html#a6a08a39786aed0aa065be233c786e81f">col_fromName</a></div><div class="ttdeci">const glColour * col_fromName(const char *name)</div><div class="ttdoc">Returns a colour from its name.</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00275">colour.c:275</a></div></div>
-<div class="ttc" id="acolour_8c_html_ae8cc0e3bb1cf7ff8a313605895925ee3"><div class="ttname"><a href="colour_8c.html#ae8cc0e3bb1cf7ff8a313605895925ee3">cInert</a></div><div class="ttdeci">const glColour cInert</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00091">colour.c:91</a></div></div>
+<div class="ttc" id="acolour_8c_html_a6a08a39786aed0aa065be233c786e81f"><div class="ttname"><a href="colour_8c.html#a6a08a39786aed0aa065be233c786e81f">col_fromName</a></div><div class="ttdeci">const glColour * col_fromName(const char *name)</div><div class="ttdoc">Returns a colour from its name.</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00324">colour.c:324</a></div></div>
+<div class="ttc" id="acolour_8c_html_ae8cc0e3bb1cf7ff8a313605895925ee3"><div class="ttname"><a href="colour_8c.html#ae8cc0e3bb1cf7ff8a313605895925ee3">cInert</a></div><div class="ttdeci">const glColour cInert</div><div class="ttdef"><b>Definition:</b> <a href="colour_8c_source.html#l00097">colour.c:97</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ac11623fb12c9ea15b80ec32d90c6898d"><div class="ttname"><a href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a></div><div class="ttdeci">glTexture * gl_newImage(const char *path, const unsigned int flags)</div><div class="ttdoc">Loads an image as a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00579">opengl_tex.c:579</a></div></div>
 <div class="ttc" id="arng_8c_html_a6dbc3ea54b9ab71917fe57fa11372346"><div class="ttname"><a href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a></div><div class="ttdeci">static const double b[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00273">rng.c:273</a></div></div>
+<div class="ttc" id="astructFaction___html_ac66f396670355b4b1f90a4c3ff9c1f73"><div class="ttname"><a href="structFaction__.html#ac66f396670355b4b1f90a4c3ff9c1f73">Faction_::colour</a></div><div class="ttdeci">glColour colour</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00063">faction.c:63</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a7c2e82d39b2e4d067cde05ee5c971e74"><div class="ttname"><a href="opengl__tex_8c.html#a7c2e82d39b2e4d067cde05ee5c971e74">gl_dupTexture</a></div><div class="ttdeci">glTexture * gl_dupTexture(glTexture *texture)</div><div class="ttdoc">Duplicates a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00829">opengl_tex.c:829</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
