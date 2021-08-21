@@ -1088,7 +1088,7 @@ $(function() {
 <div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;{</div>
 <div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;   PilotOutfitSlot *slot;</div>
 <div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160;   <span class="keyword">const</span> Outfit *o;</div>
-<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;   <span class="keywordtype">int</span> i, level, <a class="code" href="structPilot__.html#a300b61f06f16b6bd7a2b5309b29fbbc1">id</a>;</div>
+<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;   <span class="keywordtype">int</span> i, level, level0, <a class="code" href="structPilot__.html#a300b61f06f16b6bd7a2b5309b29fbbc1">id</a>;</div>
 <div class="line"><a name="l01284"></a><span class="lineno"> 1284</span>&#160; </div>
 <div class="line"><a name="l01285"></a><span class="lineno"> 1285</span>&#160;   <span class="comment">/* Clear weapons. */</span></div>
 <div class="line"><a name="l01286"></a><span class="lineno"> 1286</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a61ce232dc8450ae672633dcb12d6fb73">pilot_weaponClear</a>( p );</div>
@@ -1098,7 +1098,7 @@ $(function() {
 <div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a9a2fc2265fea8e8f3a35cdb1332e7a1b">pilot_weapSetType</a>( p, 1, WEAPSET_TYPE_CHANGE );</div>
 <div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a9a2fc2265fea8e8f3a35cdb1332e7a1b">pilot_weapSetType</a>( p, 2, WEAPSET_TYPE_CHANGE );</div>
 <div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a9a2fc2265fea8e8f3a35cdb1332e7a1b">pilot_weapSetType</a>( p, 3, WEAPSET_TYPE_CHANGE );</div>
-<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a9a2fc2265fea8e8f3a35cdb1332e7a1b">pilot_weapSetType</a>( p, 4, WEAPSET_TYPE_WEAPON );</div>
+<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a9a2fc2265fea8e8f3a35cdb1332e7a1b">pilot_weapSetType</a>( p, 4, WEAPSET_TYPE_CHANGE );</div>
 <div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a9a2fc2265fea8e8f3a35cdb1332e7a1b">pilot_weapSetType</a>( p, 5, WEAPSET_TYPE_WEAPON );</div>
 <div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a9a2fc2265fea8e8f3a35cdb1332e7a1b">pilot_weapSetType</a>( p, 6, WEAPSET_TYPE_ACTIVE );</div>
 <div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a9a2fc2265fea8e8f3a35cdb1332e7a1b">pilot_weapSetType</a>( p, 7, WEAPSET_TYPE_ACTIVE );</div>
@@ -1125,236 +1125,238 @@ $(function() {
 <div class="line"><a name="l01317"></a><span class="lineno"> 1317</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l01318"></a><span class="lineno"> 1318</span>&#160;      }</div>
 <div class="line"><a name="l01319"></a><span class="lineno"> 1319</span>&#160; </div>
-<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160;      <span class="comment">/* Manually defined group preempts others. */</span></div>
-<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;      <span class="keywordflow">if</span> (o-&gt;group) {</div>
-<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;         <span class="keywordtype">id</span>    = o-&gt;group;</div>
-<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;      }</div>
-<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;      <span class="comment">/* Bolts and beams. */</span></div>
-<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#adeb116d088c9caaa78688b0fee8f7aa4">outfit_isBolt</a>(o) || <a class="code" href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a>(o) ||</div>
-<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;            (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o) &amp;&amp; !<a class="code" href="outfit_8c.html#a35f0196640ba759e2270fd0ccab81976">outfit_isSeeker</a>(o-&gt;u.lau.ammo))) {</div>
-<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160;         <span class="keywordtype">id</span>    = <a class="code" href="outfit_8c.html#a785a20c65e3dd4117bd913a6838597ba">outfit_isTurret</a>(o) ? 2 : 1;</div>
-<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;      }</div>
-<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160;      <span class="comment">/* Seekers. */</span></div>
-<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o) &amp;&amp; <a class="code" href="outfit_8c.html#a35f0196640ba759e2270fd0ccab81976">outfit_isSeeker</a>(o-&gt;u.lau.ammo)) {</div>
-<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;         <span class="keywordtype">id</span>    = 4;</div>
+<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160;      <span class="comment">/* Set level based on secondary flag. */</span></div>
+<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;      level  = <a class="code" href="outfit_8c.html#a022c5270f205ae91c78156c672cf10c0">outfit_isSecondary</a>(o);</div>
+<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;      level0 = level;</div>
+<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160; </div>
+<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;      <span class="comment">/* Manually defined group preempts others. */</span></div>
+<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;      <span class="keywordflow">if</span> (o-&gt;group) {</div>
+<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;         <span class="keywordtype">id</span>    = o-&gt;group;</div>
+<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160;      }</div>
+<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;      <span class="comment">/* Bolts and beams. */</span></div>
+<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#adeb116d088c9caaa78688b0fee8f7aa4">outfit_isBolt</a>(o) || <a class="code" href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a>(o) ||</div>
+<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;            (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o) &amp;&amp; !<a class="code" href="outfit_8c.html#a35f0196640ba759e2270fd0ccab81976">outfit_isSeeker</a>(o-&gt;u.lau.ammo))) {</div>
+<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;         <span class="keywordtype">id</span>    = <a class="code" href="outfit_8c.html#a785a20c65e3dd4117bd913a6838597ba">outfit_isTurret</a>(o) ? 2 : 1;</div>
 <div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;      }</div>
-<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;      <span class="comment">/* Fighter bays. */</span></div>
-<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>(o)) {</div>
-<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;         <span class="keywordtype">id</span>    = 5;</div>
-<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;      }</div>
-<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;      <span class="comment">/* Ignore rest. */</span></div>
-<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;      <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;         slot-&gt;level = -1;</div>
-<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;      <span class="comment">/* Seekers. */</span></div>
+<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o) &amp;&amp; <a class="code" href="outfit_8c.html#a35f0196640ba759e2270fd0ccab81976">outfit_isSeeker</a>(o-&gt;u.lau.ammo)) {</div>
+<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;         <span class="keywordtype">id</span>     = 4;</div>
+<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;         level0 = <a class="code" href="outfit_8c.html#a785a20c65e3dd4117bd913a6838597ba">outfit_isTurret</a>(o);  <span class="comment">/* Seekers have a different logic for level. */</span></div>
+<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;      }</div>
+<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;      <span class="comment">/* Fighter bays. */</span></div>
+<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>(o)) {</div>
+<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;         <span class="keywordtype">id</span>    = 5;</div>
 <div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;      }</div>
-<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160; </div>
-<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;      <span class="comment">/* Set level based on secondary flag. */</span></div>
-<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;      level = <a class="code" href="outfit_8c.html#a022c5270f205ae91c78156c672cf10c0">outfit_isSecondary</a>(o);</div>
-<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160; </div>
-<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;      <span class="comment">/* Add to its base group. */</span></div>
-<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;      <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, <span class="keywordtype">id</span>, slot, level );</div>
-<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160; </div>
-<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;      <span class="comment">/* Also add another copy to another group. */</span></div>
-<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;      <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == 1) { <span class="comment">/* Forward. */</span></div>
-<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 0, slot, level ); <span class="comment">/* Also get added to &#39;All&#39;. */</span></div>
-<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 3, slot, 0 );     <span class="comment">/* Also get added to &#39;Fwd/Tur&#39;. */</span></div>
-<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;      }</div>
-<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == 2) { <span class="comment">/* Turrets. */</span></div>
-<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 0, slot, level ); <span class="comment">/* Also get added to &#39;All&#39;. */</span></div>
-<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 3, slot, 1 );     <span class="comment">/* Also get added to &#39;Fwd/Tur&#39;. */</span></div>
-<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;      }</div>
-<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == 4) <span class="comment">/* Seekers */</span></div>
-<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 0, slot, level ); <span class="comment">/* Also get added to &#39;All&#39;. */</span></div>
-<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;   }</div>
-<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160; </div>
-<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;   <span class="comment">/* Update active weapon set. */</span></div>
-<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a55620c0702782ccaff4d8d67cc652a8f">pilot_weapSetUpdateOutfits</a>( p, &amp;p-&gt;weapon_sets[ p-&gt;active_set ] );</div>
-<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;}</div>
-<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160; </div>
-<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160; </div>
-<div class="line"><a name="l01370"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#aac40e1432dee610b7d971c48d78cca57"> 1370</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__weapon_8c.html#aac40e1432dee610b7d971c48d78cca57">pilot_weaponSetDefault</a>( Pilot *p )</div>
-<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;{</div>
-<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160; </div>
-<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;   <span class="comment">/* If current set isn&#39;t a fire group no need to worry. */</span></div>
-<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;   <span class="keywordflow">if</span> (p-&gt;weapon_sets[ p-&gt;active_set ].type != WEAPSET_TYPE_CHANGE) {</div>
-<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;      <span class="comment">/* Update active weapon set. */</span></div>
-<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;      <a class="code" href="pilot__weapon_8c.html#a55620c0702782ccaff4d8d67cc652a8f">pilot_weapSetUpdateOutfits</a>( p, &amp;p-&gt;weapon_sets[ p-&gt;active_set ] );</div>
-<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;   }</div>
-<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160; </div>
-<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;   <span class="comment">/* Find first fire group. */</span></div>
-<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;PILOT_WEAPON_SETS; i++)</div>
-<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;      <span class="keywordflow">if</span> (p-&gt;weapon_sets[i].type == WEAPSET_TYPE_CHANGE)</div>
-<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160; </div>
-<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;   <span class="comment">/* Set active set to first if all fire groups or first non-fire group. */</span></div>
-<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;   <span class="keywordflow">if</span> (i &gt;= PILOT_WEAPON_SETS)</div>
-<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;      p-&gt;active_set = 0;</div>
-<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;      p-&gt;active_set = i;</div>
-<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160; </div>
-<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;   <span class="comment">/* Update active weapon set. */</span></div>
-<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a55620c0702782ccaff4d8d67cc652a8f">pilot_weapSetUpdateOutfits</a>( p, &amp;p-&gt;weapon_sets[ p-&gt;active_set ] );</div>
-<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;}</div>
-<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160; </div>
-<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160; </div>
-<div class="line"><a name="l01402"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#a224a9e2832e39ee1065c3d2c5fce2e59"> 1402</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__weapon_8c.html#a224a9e2832e39ee1065c3d2c5fce2e59">pilot_weaponSafe</a>( Pilot *p )</div>
-<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;{</div>
-<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;   <span class="keywordtype">int</span> i, j;</div>
-<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;   <span class="keywordtype">int</span> n, l;</div>
-<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;   PilotWeaponSet *ws;</div>
-<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160; </div>
-<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;   <span class="keywordflow">for</span> (j=0; j&lt;PILOT_WEAPON_SETS; j++) {</div>
-<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;      ws = &amp;p-&gt;weapon_sets[j];</div>
-<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;      l = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ws-&gt;slots);</div>
-<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;      n = 0;</div>
-<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;l; i++) {</div>
-<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;         <span class="keywordflow">if</span> (ws-&gt;slots[i].slot-&gt;outfit != NULL)</div>
-<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160; </div>
-<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160;         <span class="comment">/* Move down. */</span></div>
-<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;         memmove( &amp;ws-&gt;slots[i], &amp;ws-&gt;slots[i+1], <span class="keyword">sizeof</span>(PilotWeaponSetOutfit) * (l-i-1) );</div>
-<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160;         n++;</div>
-<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;      }</div>
-<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;      <span class="comment">/* Remove surplus. */</span></div>
-<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;      <span class="keywordflow">if</span> (n &gt; 0)</div>
-<div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160;         <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ws-&gt;slots, &amp;ws-&gt;slots[l-n], &amp;ws-&gt;slots[l] );</div>
-<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160; </div>
-<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;      <span class="comment">/* See if we must overwrite levels. */</span></div>
-<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;      <span class="keywordflow">if</span> ((ws-&gt;type == WEAPSET_TYPE_WEAPON) ||</div>
-<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;            (ws-&gt;type == WEAPSET_TYPE_ACTIVE))</div>
-<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ws-&gt;slots); i++)</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;            ws-&gt;slots[i].level = 0;</div>
-<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;   }</div>
-<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160; </div>
-<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;   <span class="comment">/* Update range. */</span></div>
-<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a6a81c075abd70c464af15ed909a512e8">pilot_weapSetUpdateRange</a>( p, ws );</div>
-<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;}</div>
-<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160; </div>
-<div class="line"><a name="l01442"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#af9de324289e035181ed762a1d6933c2c"> 1442</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__weapon_8c.html#af9de324289e035181ed762a1d6933c2c">pilot_outfitOff</a>( Pilot *p, PilotOutfitSlot *o )</div>
-<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;{</div>
-<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;   <span class="comment">/* Must not be disabled or cooling down. */</span></div>
-<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;   <span class="keywordflow">if</span> ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))</div>
-<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160; </div>
-<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a6a9bbb8d9a682eac42e02f314dd5518c">outfit_isAfterburner</a>( o-&gt;outfit )) <span class="comment">/* Afterburners */</span></div>
-<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160;      <a class="code" href="pilot__weapon_8c.html#a35d8dfa9e87db873e5655fcf35da3244">pilot_afterburnOver</a>( p );</div>
-<div class="line"><a name="l01450"></a><span class="lineno"> 1450</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a>( o-&gt;outfit )) {</div>
-<div class="line"><a name="l01451"></a><span class="lineno"> 1451</span>&#160;      <span class="comment">/* Beams use stimer to represent minimum time until shutdown. */</span></div>
-<div class="line"><a name="l01452"></a><span class="lineno"> 1452</span>&#160;      <span class="keywordflow">if</span> (o-&gt;u.beamid&gt;0) {</div>
-<div class="line"><a name="l01453"></a><span class="lineno"> 1453</span>&#160;         <a class="code" href="weapon_8c.html#a110f6917dea0c25c008387af7a078d32">beam_end</a>( p-&gt;id, o-&gt;u.beamid );</div>
-<div class="line"><a name="l01454"></a><span class="lineno"> 1454</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a0893f5723825f1d85fffb51cbddc661b">pilot_stopBeam</a>(p, o);</div>
-<div class="line"><a name="l01455"></a><span class="lineno"> 1455</span>&#160;      }</div>
-<div class="line"><a name="l01456"></a><span class="lineno"> 1456</span>&#160;   }</div>
-<div class="line"><a name="l01457"></a><span class="lineno"> 1457</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!o-&gt;active)</div>
-<div class="line"><a name="l01458"></a><span class="lineno"> 1458</span>&#160;      <span class="comment">/* Case of a mod we can&#39;t toggle. */</span></div>
-<div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(o-&gt;outfit) &amp;&amp; o-&gt;outfit-&gt;u.mod.lua_ontoggle != LUA_NOREF)</div>
-<div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160;      <span class="comment">/* TODO toggle Lua outfit. */</span></div>
-<div class="line"><a name="l01462"></a><span class="lineno"> 1462</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="pilot__outfit_8c.html#ac1be41ec54fa9f77b58247880493ba6c">pilot_outfitLOntoggle</a>( p, o, 0 );</div>
-<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;      o-&gt;stimer = <a class="code" href="outfit_8c.html#adc1e8d9e31e9db7691c17aa94395bcf4">outfit_cooldown</a>( o-&gt;outfit );</div>
-<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;      o-&gt;state  = PILOT_OUTFIT_COOLDOWN;</div>
-<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;   }</div>
-<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160; </div>
-<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160;}</div>
-<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160; </div>
-<div class="line"><a name="l01478"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#ac2df8f166079a6e0026872dd297f8c0e"> 1478</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__weapon_8c.html#ac2df8f166079a6e0026872dd297f8c0e">pilot_outfitOn</a>( Pilot *p, PilotOutfitSlot *o )</div>
-<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160;{</div>
-<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a6a9bbb8d9a682eac42e02f314dd5518c">outfit_isAfterburner</a>(o-&gt;outfit))</div>
-<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;      <a class="code" href="pilot__weapon_8c.html#a61c4692ac5e08062910ede357b63c851">pilot_afterburn</a>( p );</div>
-<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(o-&gt;outfit) &amp;&amp; o-&gt;outfit-&gt;u.mod.lua_ontoggle != LUA_NOREF)</div>
-<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;      <span class="comment">/* TODO toggle Lua outfit. */</span></div>
-<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="pilot__outfit_8c.html#ac1be41ec54fa9f77b58247880493ba6c">pilot_outfitLOntoggle</a>( p, o, 1 );</div>
-<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;      o-&gt;state  = PILOT_OUTFIT_ON;</div>
-<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;      o-&gt;stimer = <a class="code" href="outfit_8c.html#ada2f6a54782a53868bc2db9a478523a1">outfit_duration</a>( o-&gt;outfit );</div>
-<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;   }</div>
-<div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160; </div>
-<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;}</div>
-<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160; </div>
-<div class="line"><a name="l01499"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832"> 1499</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a>( Pilot *p )</div>
-<div class="line"><a name="l01500"></a><span class="lineno"> 1500</span>&#160;{</div>
-<div class="line"><a name="l01501"></a><span class="lineno"> 1501</span>&#160;   PilotOutfitSlot *o;</div>
-<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160;   <span class="keywordtype">int</span> nchg;</div>
-<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160; </div>
-<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;   nchg = 0;</div>
-<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(p-&gt;outfits); i++) {</div>
-<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160;      o = p-&gt;outfits[i];</div>
-<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;      <span class="comment">/* Picky about our outfits. */</span></div>
-<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;      <span class="keywordflow">if</span> (o-&gt;outfit == NULL)</div>
-<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;      <span class="keywordflow">if</span> (o-&gt;state == PILOT_OUTFIT_ON)</div>
-<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160;         nchg += <a class="code" href="pilot__weapon_8c.html#af9de324289e035181ed762a1d6933c2c">pilot_outfitOff</a>( p, o );</div>
-<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160;   }</div>
-<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160;   <span class="keywordflow">return</span> (nchg &gt; 0);</div>
-<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;}</div>
-<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160; </div>
-<div class="line"><a name="l01520"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#a61c4692ac5e08062910ede357b63c851"> 1520</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__weapon_8c.html#a61c4692ac5e08062910ede357b63c851">pilot_afterburn</a> (Pilot *p)</div>
-<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160;{</div>
-<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160;   <span class="keywordtype">double</span> afb_mod;</div>
-<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160; </div>
-<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;   <span class="keywordflow">if</span> (p == NULL)</div>
-<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160; </div>
-<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_HYP_PREP) || pilot_isFlag(p, PILOT_HYPERSPACE) ||</div>
-<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160;         pilot_isFlag(p, PILOT_LANDING) || pilot_isFlag(p, PILOT_TAKEOFF) ||</div>
-<div class="line"><a name="l01529"></a><span class="lineno"> 1529</span>&#160;         pilot_isDisabled(p) || pilot_isFlag(p, PILOT_COOLDOWN))</div>
-<div class="line"><a name="l01530"></a><span class="lineno"> 1530</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01531"></a><span class="lineno"> 1531</span>&#160; </div>
-<div class="line"><a name="l01532"></a><span class="lineno"> 1532</span>&#160;   <span class="comment">/* Not under manual control if is player. */</span></div>
-<div class="line"><a name="l01533"></a><span class="lineno"> 1533</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag( p, PILOT_MANUAL_CONTROL ) &amp;&amp; pilot_isFlag( p, PILOT_PLAYER ))</div>
-<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01535"></a><span class="lineno"> 1535</span>&#160; </div>
-<div class="line"><a name="l01537"></a><span class="lineno"> 1537</span>&#160;   <span class="keywordflow">if</span> (p-&gt;afterburner == NULL)</div>
-<div class="line"><a name="l01538"></a><span class="lineno"> 1538</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01539"></a><span class="lineno"> 1539</span>&#160; </div>
-<div class="line"><a name="l01540"></a><span class="lineno"> 1540</span>&#160;   <span class="comment">/* The afterburner only works if its efficiency is high enough. */</span></div>
-<div class="line"><a name="l01541"></a><span class="lineno"> 1541</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__heat_8c.html#a0cb23c26381fb66ba9e4291215a2079e">pilot_heatEfficiencyMod</a>( p-&gt;afterburner-&gt;heat_T,</div>
-<div class="line"><a name="l01542"></a><span class="lineno"> 1542</span>&#160;         p-&gt;afterburner-&gt;outfit-&gt;u.afb.heat_base,</div>
-<div class="line"><a name="l01543"></a><span class="lineno"> 1543</span>&#160;         p-&gt;afterburner-&gt;outfit-&gt;u.afb.heat_cap ) &lt; 0.3)</div>
-<div class="line"><a name="l01544"></a><span class="lineno"> 1544</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01545"></a><span class="lineno"> 1545</span>&#160; </div>
-<div class="line"><a name="l01546"></a><span class="lineno"> 1546</span>&#160;   <span class="keywordflow">if</span> (p-&gt;afterburner-&gt;state == PILOT_OUTFIT_OFF) {</div>
-<div class="line"><a name="l01547"></a><span class="lineno"> 1547</span>&#160;      p-&gt;afterburner-&gt;state  = PILOT_OUTFIT_ON;</div>
-<div class="line"><a name="l01548"></a><span class="lineno"> 1548</span>&#160;      p-&gt;afterburner-&gt;stimer = <a class="code" href="outfit_8c.html#ada2f6a54782a53868bc2db9a478523a1">outfit_duration</a>( p-&gt;afterburner-&gt;outfit );</div>
-<div class="line"><a name="l01549"></a><span class="lineno"> 1549</span>&#160;      pilot_setFlag(p,PILOT_AFTERBURNER);</div>
-<div class="line"><a name="l01550"></a><span class="lineno"> 1550</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( p );</div>
-<div class="line"><a name="l01551"></a><span class="lineno"> 1551</span>&#160;      <a class="code" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a>( p ); <span class="comment">/* No afterburning stealth. */</span></div>
-<div class="line"><a name="l01552"></a><span class="lineno"> 1552</span>&#160; </div>
-<div class="line"><a name="l01553"></a><span class="lineno"> 1553</span>&#160;      <span class="comment">/* @todo Make this part of a more dynamic activated outfit sound system. */</span></div>
-<div class="line"><a name="l01554"></a><span class="lineno"> 1554</span>&#160;      <a class="code" href="sound_8c.html#a7dd6733f993a600013598734c4ed0e6c">sound_playPos</a>(p-&gt;afterburner-&gt;outfit-&gt;u.afb.sound_on,</div>
-<div class="line"><a name="l01555"></a><span class="lineno"> 1555</span>&#160;            p-&gt;solid-&gt;pos.x, p-&gt;solid-&gt;pos.y, p-&gt;solid-&gt;vel.x, p-&gt;solid-&gt;vel.y);</div>
-<div class="line"><a name="l01556"></a><span class="lineno"> 1556</span>&#160;   }</div>
-<div class="line"><a name="l01557"></a><span class="lineno"> 1557</span>&#160; </div>
-<div class="line"><a name="l01558"></a><span class="lineno"> 1558</span>&#160;   <span class="keywordflow">if</span> (pilot_isPlayer(p)) {</div>
-<div class="line"><a name="l01559"></a><span class="lineno"> 1559</span>&#160;      afb_mod = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( 1., <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;afterburner-&gt;outfit-&gt;u.afb.mass_limit / <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;mass );</div>
-<div class="line"><a name="l01560"></a><span class="lineno"> 1560</span>&#160;      <a class="code" href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">spfx_shake</a>( afb_mod * <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;afterburner-&gt;outfit-&gt;u.afb.rumble );</div>
-<div class="line"><a name="l01561"></a><span class="lineno"> 1561</span>&#160;   }</div>
-<div class="line"><a name="l01562"></a><span class="lineno"> 1562</span>&#160;}</div>
-<div class="line"><a name="l01563"></a><span class="lineno"> 1563</span>&#160; </div>
-<div class="line"><a name="l01564"></a><span class="lineno"> 1564</span>&#160; </div>
-<div class="line"><a name="l01568"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#a35d8dfa9e87db873e5655fcf35da3244"> 1568</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__weapon_8c.html#a35d8dfa9e87db873e5655fcf35da3244">pilot_afterburnOver</a> (Pilot *p)</div>
-<div class="line"><a name="l01569"></a><span class="lineno"> 1569</span>&#160;{</div>
-<div class="line"><a name="l01570"></a><span class="lineno"> 1570</span>&#160;   <span class="keywordflow">if</span> (p == NULL)</div>
-<div class="line"><a name="l01571"></a><span class="lineno"> 1571</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01572"></a><span class="lineno"> 1572</span>&#160;   <span class="keywordflow">if</span> (p-&gt;afterburner == NULL)</div>
+<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;      <span class="comment">/* Ignore rest. */</span></div>
+<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;      <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;         slot-&gt;level = -1;</div>
+<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;      }</div>
+<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160; </div>
+<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;      <span class="comment">/* Add to its base group. */</span></div>
+<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;      <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, <span class="keywordtype">id</span>, slot, level0 );</div>
+<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160; </div>
+<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;      <span class="comment">/* Also add another copy to another group. */</span></div>
+<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;      <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == 1) { <span class="comment">/* Forward. */</span></div>
+<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 0, slot, level ); <span class="comment">/* Also get added to &#39;All&#39;. */</span></div>
+<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 3, slot, 0 );     <span class="comment">/* Also get added to &#39;Fwd/Tur&#39;. */</span></div>
+<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;      }</div>
+<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == 2) { <span class="comment">/* Turrets. */</span></div>
+<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 0, slot, level ); <span class="comment">/* Also get added to &#39;All&#39;. */</span></div>
+<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 3, slot, 1 );     <span class="comment">/* Also get added to &#39;Fwd/Tur&#39;. */</span></div>
+<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;      }</div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == 4) <span class="comment">/* Seekers */</span></div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a6c4b650d283982bdb6351aaaee0ea633">pilot_weapSetAdd</a>( p, 0, slot, level ); <span class="comment">/* Also get added to &#39;All&#39;. */</span></div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;   }</div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160; </div>
+<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;   <span class="comment">/* Update active weapon set. */</span></div>
+<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a55620c0702782ccaff4d8d67cc652a8f">pilot_weapSetUpdateOutfits</a>( p, &amp;p-&gt;weapon_sets[ p-&gt;active_set ] );</div>
+<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;}</div>
+<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160; </div>
+<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160; </div>
+<div class="line"><a name="l01372"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#aac40e1432dee610b7d971c48d78cca57"> 1372</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__weapon_8c.html#aac40e1432dee610b7d971c48d78cca57">pilot_weaponSetDefault</a>( Pilot *p )</div>
+<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;{</div>
+<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160; </div>
+<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;   <span class="comment">/* If current set isn&#39;t a fire group no need to worry. */</span></div>
+<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;   <span class="keywordflow">if</span> (p-&gt;weapon_sets[ p-&gt;active_set ].type != WEAPSET_TYPE_CHANGE) {</div>
+<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;      <span class="comment">/* Update active weapon set. */</span></div>
+<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;      <a class="code" href="pilot__weapon_8c.html#a55620c0702782ccaff4d8d67cc652a8f">pilot_weapSetUpdateOutfits</a>( p, &amp;p-&gt;weapon_sets[ p-&gt;active_set ] );</div>
+<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;   }</div>
+<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160; </div>
+<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;   <span class="comment">/* Find first fire group. */</span></div>
+<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;PILOT_WEAPON_SETS; i++)</div>
+<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;      <span class="keywordflow">if</span> (p-&gt;weapon_sets[i].type == WEAPSET_TYPE_CHANGE)</div>
+<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160; </div>
+<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;   <span class="comment">/* Set active set to first if all fire groups or first non-fire group. */</span></div>
+<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;   <span class="keywordflow">if</span> (i &gt;= PILOT_WEAPON_SETS)</div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;      p-&gt;active_set = 0;</div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;      p-&gt;active_set = i;</div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160; </div>
+<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;   <span class="comment">/* Update active weapon set. */</span></div>
+<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a55620c0702782ccaff4d8d67cc652a8f">pilot_weapSetUpdateOutfits</a>( p, &amp;p-&gt;weapon_sets[ p-&gt;active_set ] );</div>
+<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;}</div>
+<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160; </div>
+<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160; </div>
+<div class="line"><a name="l01404"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#a224a9e2832e39ee1065c3d2c5fce2e59"> 1404</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__weapon_8c.html#a224a9e2832e39ee1065c3d2c5fce2e59">pilot_weaponSafe</a>( Pilot *p )</div>
+<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;{</div>
+<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;   <span class="keywordtype">int</span> i, j;</div>
+<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;   <span class="keywordtype">int</span> n, l;</div>
+<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;   PilotWeaponSet *ws;</div>
+<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160; </div>
+<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;   <span class="keywordflow">for</span> (j=0; j&lt;PILOT_WEAPON_SETS; j++) {</div>
+<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;      ws = &amp;p-&gt;weapon_sets[j];</div>
+<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;      l = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ws-&gt;slots);</div>
+<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;      n = 0;</div>
+<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;l; i++) {</div>
+<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;         <span class="keywordflow">if</span> (ws-&gt;slots[i].slot-&gt;outfit != NULL)</div>
+<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160; </div>
+<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160;         <span class="comment">/* Move down. */</span></div>
+<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;         memmove( &amp;ws-&gt;slots[i], &amp;ws-&gt;slots[i+1], <span class="keyword">sizeof</span>(PilotWeaponSetOutfit) * (l-i-1) );</div>
+<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;         n++;</div>
+<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;      }</div>
+<div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160;      <span class="comment">/* Remove surplus. */</span></div>
+<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;      <span class="keywordflow">if</span> (n &gt; 0)</div>
+<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;         <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ws-&gt;slots, &amp;ws-&gt;slots[l-n], &amp;ws-&gt;slots[l] );</div>
+<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160; </div>
+<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;      <span class="comment">/* See if we must overwrite levels. */</span></div>
+<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;      <span class="keywordflow">if</span> ((ws-&gt;type == WEAPSET_TYPE_WEAPON) ||</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;            (ws-&gt;type == WEAPSET_TYPE_ACTIVE))</div>
+<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ws-&gt;slots); i++)</div>
+<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;            ws-&gt;slots[i].level = 0;</div>
+<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;   }</div>
+<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160; </div>
+<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;   <span class="comment">/* Update range. */</span></div>
+<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;   <a class="code" href="pilot__weapon_8c.html#a6a81c075abd70c464af15ed909a512e8">pilot_weapSetUpdateRange</a>( p, ws );</div>
+<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;}</div>
+<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160; </div>
+<div class="line"><a name="l01444"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#af9de324289e035181ed762a1d6933c2c"> 1444</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__weapon_8c.html#af9de324289e035181ed762a1d6933c2c">pilot_outfitOff</a>( Pilot *p, PilotOutfitSlot *o )</div>
+<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;{</div>
+<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;   <span class="comment">/* Must not be disabled or cooling down. */</span></div>
+<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;   <span class="keywordflow">if</span> ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))</div>
+<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160; </div>
+<div class="line"><a name="l01450"></a><span class="lineno"> 1450</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a6a9bbb8d9a682eac42e02f314dd5518c">outfit_isAfterburner</a>( o-&gt;outfit )) <span class="comment">/* Afterburners */</span></div>
+<div class="line"><a name="l01451"></a><span class="lineno"> 1451</span>&#160;      <a class="code" href="pilot__weapon_8c.html#a35d8dfa9e87db873e5655fcf35da3244">pilot_afterburnOver</a>( p );</div>
+<div class="line"><a name="l01452"></a><span class="lineno"> 1452</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a>( o-&gt;outfit )) {</div>
+<div class="line"><a name="l01453"></a><span class="lineno"> 1453</span>&#160;      <span class="comment">/* Beams use stimer to represent minimum time until shutdown. */</span></div>
+<div class="line"><a name="l01454"></a><span class="lineno"> 1454</span>&#160;      <span class="keywordflow">if</span> (o-&gt;u.beamid&gt;0) {</div>
+<div class="line"><a name="l01455"></a><span class="lineno"> 1455</span>&#160;         <a class="code" href="weapon_8c.html#a110f6917dea0c25c008387af7a078d32">beam_end</a>( p-&gt;id, o-&gt;u.beamid );</div>
+<div class="line"><a name="l01456"></a><span class="lineno"> 1456</span>&#160;         <a class="code" href="pilot__weapon_8c.html#a0893f5723825f1d85fffb51cbddc661b">pilot_stopBeam</a>(p, o);</div>
+<div class="line"><a name="l01457"></a><span class="lineno"> 1457</span>&#160;      }</div>
+<div class="line"><a name="l01458"></a><span class="lineno"> 1458</span>&#160;   }</div>
+<div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!o-&gt;active)</div>
+<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;      <span class="comment">/* Case of a mod we can&#39;t toggle. */</span></div>
+<div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01462"></a><span class="lineno"> 1462</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(o-&gt;outfit) &amp;&amp; o-&gt;outfit-&gt;u.mod.lua_ontoggle != LUA_NOREF)</div>
+<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160;      <span class="comment">/* TODO toggle Lua outfit. */</span></div>
+<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="pilot__outfit_8c.html#ac1be41ec54fa9f77b58247880493ba6c">pilot_outfitLOntoggle</a>( p, o, 0 );</div>
+<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;      o-&gt;stimer = <a class="code" href="outfit_8c.html#adc1e8d9e31e9db7691c17aa94395bcf4">outfit_cooldown</a>( o-&gt;outfit );</div>
+<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;      o-&gt;state  = PILOT_OUTFIT_COOLDOWN;</div>
+<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;   }</div>
+<div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160; </div>
+<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160;}</div>
+<div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160; </div>
+<div class="line"><a name="l01480"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#ac2df8f166079a6e0026872dd297f8c0e"> 1480</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__weapon_8c.html#ac2df8f166079a6e0026872dd297f8c0e">pilot_outfitOn</a>( Pilot *p, PilotOutfitSlot *o )</div>
+<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;{</div>
+<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a6a9bbb8d9a682eac42e02f314dd5518c">outfit_isAfterburner</a>(o-&gt;outfit))</div>
+<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;      <a class="code" href="pilot__weapon_8c.html#a61c4692ac5e08062910ede357b63c851">pilot_afterburn</a>( p );</div>
+<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(o-&gt;outfit) &amp;&amp; o-&gt;outfit-&gt;u.mod.lua_ontoggle != LUA_NOREF)</div>
+<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;      <span class="comment">/* TODO toggle Lua outfit. */</span></div>
+<div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="pilot__outfit_8c.html#ac1be41ec54fa9f77b58247880493ba6c">pilot_outfitLOntoggle</a>( p, o, 1 );</div>
+<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;      o-&gt;state  = PILOT_OUTFIT_ON;</div>
+<div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160;      o-&gt;stimer = <a class="code" href="outfit_8c.html#ada2f6a54782a53868bc2db9a478523a1">outfit_duration</a>( o-&gt;outfit );</div>
+<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;   }</div>
+<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160; </div>
+<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;}</div>
+<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160; </div>
+<div class="line"><a name="l01501"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832"> 1501</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a>( Pilot *p )</div>
+<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160;{</div>
+<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160;   PilotOutfitSlot *o;</div>
+<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160;   <span class="keywordtype">int</span> nchg;</div>
+<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160; </div>
+<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160;   nchg = 0;</div>
+<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(p-&gt;outfits); i++) {</div>
+<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;      o = p-&gt;outfits[i];</div>
+<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;      <span class="comment">/* Picky about our outfits. */</span></div>
+<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;      <span class="keywordflow">if</span> (o-&gt;outfit == NULL)</div>
+<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160;      <span class="keywordflow">if</span> (o-&gt;state == PILOT_OUTFIT_ON)</div>
+<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160;         nchg += <a class="code" href="pilot__weapon_8c.html#af9de324289e035181ed762a1d6933c2c">pilot_outfitOff</a>( p, o );</div>
+<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;   }</div>
+<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160;   <span class="keywordflow">return</span> (nchg &gt; 0);</div>
+<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160;}</div>
+<div class="line"><a name="l01518"></a><span class="lineno"> 1518</span>&#160; </div>
+<div class="line"><a name="l01522"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#a61c4692ac5e08062910ede357b63c851"> 1522</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__weapon_8c.html#a61c4692ac5e08062910ede357b63c851">pilot_afterburn</a> (Pilot *p)</div>
+<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160;{</div>
+<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;   <span class="keywordtype">double</span> afb_mod;</div>
+<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160; </div>
+<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;   <span class="keywordflow">if</span> (p == NULL)</div>
+<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160; </div>
+<div class="line"><a name="l01529"></a><span class="lineno"> 1529</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag(p, PILOT_HYP_PREP) || pilot_isFlag(p, PILOT_HYPERSPACE) ||</div>
+<div class="line"><a name="l01530"></a><span class="lineno"> 1530</span>&#160;         pilot_isFlag(p, PILOT_LANDING) || pilot_isFlag(p, PILOT_TAKEOFF) ||</div>
+<div class="line"><a name="l01531"></a><span class="lineno"> 1531</span>&#160;         pilot_isDisabled(p) || pilot_isFlag(p, PILOT_COOLDOWN))</div>
+<div class="line"><a name="l01532"></a><span class="lineno"> 1532</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01533"></a><span class="lineno"> 1533</span>&#160; </div>
+<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160;   <span class="comment">/* Not under manual control if is player. */</span></div>
+<div class="line"><a name="l01535"></a><span class="lineno"> 1535</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag( p, PILOT_MANUAL_CONTROL ) &amp;&amp; pilot_isFlag( p, PILOT_PLAYER ))</div>
+<div class="line"><a name="l01536"></a><span class="lineno"> 1536</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01537"></a><span class="lineno"> 1537</span>&#160; </div>
+<div class="line"><a name="l01539"></a><span class="lineno"> 1539</span>&#160;   <span class="keywordflow">if</span> (p-&gt;afterburner == NULL)</div>
+<div class="line"><a name="l01540"></a><span class="lineno"> 1540</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01541"></a><span class="lineno"> 1541</span>&#160; </div>
+<div class="line"><a name="l01542"></a><span class="lineno"> 1542</span>&#160;   <span class="comment">/* The afterburner only works if its efficiency is high enough. */</span></div>
+<div class="line"><a name="l01543"></a><span class="lineno"> 1543</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pilot__heat_8c.html#a0cb23c26381fb66ba9e4291215a2079e">pilot_heatEfficiencyMod</a>( p-&gt;afterburner-&gt;heat_T,</div>
+<div class="line"><a name="l01544"></a><span class="lineno"> 1544</span>&#160;         p-&gt;afterburner-&gt;outfit-&gt;u.afb.heat_base,</div>
+<div class="line"><a name="l01545"></a><span class="lineno"> 1545</span>&#160;         p-&gt;afterburner-&gt;outfit-&gt;u.afb.heat_cap ) &lt; 0.3)</div>
+<div class="line"><a name="l01546"></a><span class="lineno"> 1546</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01547"></a><span class="lineno"> 1547</span>&#160; </div>
+<div class="line"><a name="l01548"></a><span class="lineno"> 1548</span>&#160;   <span class="keywordflow">if</span> (p-&gt;afterburner-&gt;state == PILOT_OUTFIT_OFF) {</div>
+<div class="line"><a name="l01549"></a><span class="lineno"> 1549</span>&#160;      p-&gt;afterburner-&gt;state  = PILOT_OUTFIT_ON;</div>
+<div class="line"><a name="l01550"></a><span class="lineno"> 1550</span>&#160;      p-&gt;afterburner-&gt;stimer = <a class="code" href="outfit_8c.html#ada2f6a54782a53868bc2db9a478523a1">outfit_duration</a>( p-&gt;afterburner-&gt;outfit );</div>
+<div class="line"><a name="l01551"></a><span class="lineno"> 1551</span>&#160;      pilot_setFlag(p,PILOT_AFTERBURNER);</div>
+<div class="line"><a name="l01552"></a><span class="lineno"> 1552</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( p );</div>
+<div class="line"><a name="l01553"></a><span class="lineno"> 1553</span>&#160;      <a class="code" href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a>( p ); <span class="comment">/* No afterburning stealth. */</span></div>
+<div class="line"><a name="l01554"></a><span class="lineno"> 1554</span>&#160; </div>
+<div class="line"><a name="l01555"></a><span class="lineno"> 1555</span>&#160;      <span class="comment">/* @todo Make this part of a more dynamic activated outfit sound system. */</span></div>
+<div class="line"><a name="l01556"></a><span class="lineno"> 1556</span>&#160;      <a class="code" href="sound_8c.html#a7dd6733f993a600013598734c4ed0e6c">sound_playPos</a>(p-&gt;afterburner-&gt;outfit-&gt;u.afb.sound_on,</div>
+<div class="line"><a name="l01557"></a><span class="lineno"> 1557</span>&#160;            p-&gt;solid-&gt;pos.x, p-&gt;solid-&gt;pos.y, p-&gt;solid-&gt;vel.x, p-&gt;solid-&gt;vel.y);</div>
+<div class="line"><a name="l01558"></a><span class="lineno"> 1558</span>&#160;   }</div>
+<div class="line"><a name="l01559"></a><span class="lineno"> 1559</span>&#160; </div>
+<div class="line"><a name="l01560"></a><span class="lineno"> 1560</span>&#160;   <span class="keywordflow">if</span> (pilot_isPlayer(p)) {</div>
+<div class="line"><a name="l01561"></a><span class="lineno"> 1561</span>&#160;      afb_mod = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( 1., <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;afterburner-&gt;outfit-&gt;u.afb.mass_limit / <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;mass );</div>
+<div class="line"><a name="l01562"></a><span class="lineno"> 1562</span>&#160;      <a class="code" href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">spfx_shake</a>( afb_mod * <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;afterburner-&gt;outfit-&gt;u.afb.rumble );</div>
+<div class="line"><a name="l01563"></a><span class="lineno"> 1563</span>&#160;   }</div>
+<div class="line"><a name="l01564"></a><span class="lineno"> 1564</span>&#160;}</div>
+<div class="line"><a name="l01565"></a><span class="lineno"> 1565</span>&#160; </div>
+<div class="line"><a name="l01566"></a><span class="lineno"> 1566</span>&#160; </div>
+<div class="line"><a name="l01570"></a><span class="lineno"><a class="line" href="pilot__weapon_8c.html#a35d8dfa9e87db873e5655fcf35da3244"> 1570</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__weapon_8c.html#a35d8dfa9e87db873e5655fcf35da3244">pilot_afterburnOver</a> (Pilot *p)</div>
+<div class="line"><a name="l01571"></a><span class="lineno"> 1571</span>&#160;{</div>
+<div class="line"><a name="l01572"></a><span class="lineno"> 1572</span>&#160;   <span class="keywordflow">if</span> (p == NULL)</div>
 <div class="line"><a name="l01573"></a><span class="lineno"> 1573</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01574"></a><span class="lineno"> 1574</span>&#160; </div>
-<div class="line"><a name="l01575"></a><span class="lineno"> 1575</span>&#160;   <span class="keywordflow">if</span> (p-&gt;afterburner-&gt;state == PILOT_OUTFIT_ON) {</div>
-<div class="line"><a name="l01576"></a><span class="lineno"> 1576</span>&#160;      p-&gt;afterburner-&gt;state  = PILOT_OUTFIT_OFF;</div>
-<div class="line"><a name="l01577"></a><span class="lineno"> 1577</span>&#160;      pilot_rmFlag(p,PILOT_AFTERBURNER);</div>
-<div class="line"><a name="l01578"></a><span class="lineno"> 1578</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( p );</div>
-<div class="line"><a name="l01579"></a><span class="lineno"> 1579</span>&#160; </div>
-<div class="line"><a name="l01580"></a><span class="lineno"> 1580</span>&#160;      <span class="comment">/* @todo Make this part of a more dynamic activated outfit sound system. */</span></div>
-<div class="line"><a name="l01581"></a><span class="lineno"> 1581</span>&#160;      <a class="code" href="sound_8c.html#a7dd6733f993a600013598734c4ed0e6c">sound_playPos</a>(p-&gt;afterburner-&gt;outfit-&gt;u.afb.sound_off,</div>
-<div class="line"><a name="l01582"></a><span class="lineno"> 1582</span>&#160;            p-&gt;solid-&gt;pos.x, p-&gt;solid-&gt;pos.y, p-&gt;solid-&gt;vel.x, p-&gt;solid-&gt;vel.y);</div>
-<div class="line"><a name="l01583"></a><span class="lineno"> 1583</span>&#160;   }</div>
-<div class="line"><a name="l01584"></a><span class="lineno"> 1584</span>&#160;}</div>
+<div class="line"><a name="l01574"></a><span class="lineno"> 1574</span>&#160;   <span class="keywordflow">if</span> (p-&gt;afterburner == NULL)</div>
+<div class="line"><a name="l01575"></a><span class="lineno"> 1575</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01576"></a><span class="lineno"> 1576</span>&#160; </div>
+<div class="line"><a name="l01577"></a><span class="lineno"> 1577</span>&#160;   <span class="keywordflow">if</span> (p-&gt;afterburner-&gt;state == PILOT_OUTFIT_ON) {</div>
+<div class="line"><a name="l01578"></a><span class="lineno"> 1578</span>&#160;      p-&gt;afterburner-&gt;state  = PILOT_OUTFIT_OFF;</div>
+<div class="line"><a name="l01579"></a><span class="lineno"> 1579</span>&#160;      pilot_rmFlag(p,PILOT_AFTERBURNER);</div>
+<div class="line"><a name="l01580"></a><span class="lineno"> 1580</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( p );</div>
+<div class="line"><a name="l01581"></a><span class="lineno"> 1581</span>&#160; </div>
+<div class="line"><a name="l01582"></a><span class="lineno"> 1582</span>&#160;      <span class="comment">/* @todo Make this part of a more dynamic activated outfit sound system. */</span></div>
+<div class="line"><a name="l01583"></a><span class="lineno"> 1583</span>&#160;      <a class="code" href="sound_8c.html#a7dd6733f993a600013598734c4ed0e6c">sound_playPos</a>(p-&gt;afterburner-&gt;outfit-&gt;u.afb.sound_off,</div>
+<div class="line"><a name="l01584"></a><span class="lineno"> 1584</span>&#160;            p-&gt;solid-&gt;pos.x, p-&gt;solid-&gt;pos.y, p-&gt;solid-&gt;vel.x, p-&gt;solid-&gt;vel.y);</div>
+<div class="line"><a name="l01585"></a><span class="lineno"> 1585</span>&#160;   }</div>
+<div class="line"><a name="l01586"></a><span class="lineno"> 1586</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="apilot_8c_html_a67e88b21d47114b1f5d1d3f0260c2862"><div class="ttname"><a href="pilot_8c.html#a67e88b21d47114b1f5d1d3f0260c2862">pilot_cooldownEnd</a></div><div class="ttdeci">void pilot_cooldownEnd(Pilot *p, const char *reason)</div><div class="ttdoc">Terminates active cooldown.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l01016">pilot.c:1016</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_af51750ac6536e4e124d2520bc0b2bfd8"><div class="ttname"><a href="pilot__weapon_8c.html#af51750ac6536e4e124d2520bc0b2bfd8">pilot_weapSetSpeed</a></div><div class="ttdeci">double pilot_weapSetSpeed(Pilot *p, int id, int level)</div><div class="ttdoc">Gets the speed of the current pilot weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00664">pilot_weapon.c:664</a></div></div>
@@ -1367,7 +1369,7 @@ $(function() {
 <div class="ttc" id="aarray_8h_html_a323accdda5fcec44e36b805afa216efc"><div class="ttname"><a href="array_8h.html#a323accdda5fcec44e36b805afa216efc">array_end</a></div><div class="ttdeci">#define array_end(array)</div><div class="ttdoc">Returns a pointer to the end of the reserved memory space.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00206">array.h:206</a></div></div>
 <div class="ttc" id="aweapon_8c_html_a110f6917dea0c25c008387af7a078d32"><div class="ttname"><a href="weapon_8c.html#a110f6917dea0c25c008387af7a078d32">beam_end</a></div><div class="ttdeci">void beam_end(const unsigned int parent, unsigned int beam)</div><div class="ttdoc">Ends a beam weapon.</div><div class="ttdef"><b>Definition:</b> <a href="weapon_8c_source.html#l01870">weapon.c:1870</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_af093c153057afe9ea123aed443b82d00"><div class="ttname"><a href="pilot__weapon_8c.html#af093c153057afe9ea123aed443b82d00">pilot_weapSetFree</a></div><div class="ttdeci">void pilot_weapSetFree(Pilot *p)</div><div class="ttdoc">Frees a pilot's weapon sets.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00737">pilot_weapon.c:737</a></div></div>
-<div class="ttc" id="apilot__weapon_8c_html_a224a9e2832e39ee1065c3d2c5fce2e59"><div class="ttname"><a href="pilot__weapon_8c.html#a224a9e2832e39ee1065c3d2c5fce2e59">pilot_weaponSafe</a></div><div class="ttdeci">void pilot_weaponSafe(Pilot *p)</div><div class="ttdoc">Sets the weapon set as safe.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01402">pilot_weapon.c:1402</a></div></div>
+<div class="ttc" id="apilot__weapon_8c_html_a224a9e2832e39ee1065c3d2c5fce2e59"><div class="ttname"><a href="pilot__weapon_8c.html#a224a9e2832e39ee1065c3d2c5fce2e59">pilot_weaponSafe</a></div><div class="ttdeci">void pilot_weaponSafe(Pilot *p)</div><div class="ttdoc">Sets the weapon set as safe.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01404">pilot_weapon.c:1404</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_aef2a1755ddc98df6d2940ee516a93c65"><div class="ttname"><a href="pilot__weapon_8c.html#aef2a1755ddc98df6d2940ee516a93c65">pilot_weapSetInrangeCheck</a></div><div class="ttdeci">int pilot_weapSetInrangeCheck(Pilot *p, int id)</div><div class="ttdoc">Checks the current weapon set inrange property.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00346">pilot_weapon.c:346</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_ad4e978c38a69f3acd614be6be9d52540"><div class="ttname"><a href="pilot__weapon_8c.html#ad4e978c38a69f3acd614be6be9d52540">pilot_weapSetAmmo</a></div><div class="ttdeci">double pilot_weapSetAmmo(Pilot *p, int id, int level)</div><div class="ttdoc">Gets the ammo of the current pilot weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00690">pilot_weapon.c:690</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_a891cc3a40e5de1f14332f1d1c605506f"><div class="ttname"><a href="pilot__weapon_8c.html#a891cc3a40e5de1f14332f1d1c605506f">pilot_weapSetAIClear</a></div><div class="ttdeci">void pilot_weapSetAIClear(Pilot *p)</div><div class="ttdoc">Useful function for AI, clears activeness of all weapon sets.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00152">pilot_weapon.c:152</a></div></div>
@@ -1383,7 +1385,7 @@ $(function() {
 <div class="ttc" id="apilot__heat_8c_html_a0cb23c26381fb66ba9e4291215a2079e"><div class="ttname"><a href="pilot__heat_8c.html#a0cb23c26381fb66ba9e4291215a2079e">pilot_heatEfficiencyMod</a></div><div class="ttdeci">double pilot_heatEfficiencyMod(double T, double Tb, double Tc)</div><div class="ttdoc">Returns a 0:1 modifier representing efficiency (1. being normal).</div><div class="ttdef"><b>Definition:</b> <a href="pilot__heat_8c_source.html#l00254">pilot_heat.c:254</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
 <div class="ttc" id="apilot__weapon_8c_html_a61ce232dc8450ae672633dcb12d6fb73"><div class="ttname"><a href="pilot__weapon_8c.html#a61ce232dc8450ae672633dcb12d6fb73">pilot_weaponClear</a></div><div class="ttdeci">void pilot_weaponClear(Pilot *p)</div><div class="ttdoc">Clears the pilots weapon settings.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01255">pilot_weapon.c:1255</a></div></div>
-<div class="ttc" id="apilot__weapon_8c_html_a35d8dfa9e87db873e5655fcf35da3244"><div class="ttname"><a href="pilot__weapon_8c.html#a35d8dfa9e87db873e5655fcf35da3244">pilot_afterburnOver</a></div><div class="ttdeci">void pilot_afterburnOver(Pilot *p)</div><div class="ttdoc">Deactivates the afterburner.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01568">pilot_weapon.c:1568</a></div></div>
+<div class="ttc" id="apilot__weapon_8c_html_a35d8dfa9e87db873e5655fcf35da3244"><div class="ttname"><a href="pilot__weapon_8c.html#a35d8dfa9e87db873e5655fcf35da3244">pilot_afterburnOver</a></div><div class="ttdeci">void pilot_afterburnOver(Pilot *p)</div><div class="ttdoc">Deactivates the afterburner.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01570">pilot_weapon.c:1570</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_aca135dfcd7dd8ec42e1e4a3b45602d6b"><div class="ttname"><a href="pilot__outfit_8c.html#aca135dfcd7dd8ec42e1e4a3b45602d6b">pilot_rmAmmo</a></div><div class="ttdeci">int pilot_rmAmmo(Pilot *pilot, PilotOutfitSlot *s, int quantity)</div><div class="ttdoc">Removes some ammo from the pilot stock.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00754">pilot_outfit.c:754</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_abc4ad1a99d5631ad35b7d2a67b4409e7"><div class="ttname"><a href="pilot__weapon_8c.html#abc4ad1a99d5631ad35b7d2a67b4409e7">pilot_weaponSetShootStop</a></div><div class="ttdeci">unsigned int pilot_weaponSetShootStop(Pilot *p, PilotWeaponSet *ws, int level)</div><div class="ttdoc">Have pilot stop shooting a given weaponset.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00820">pilot_weapon.c:820</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_af6b08eab424e218683e09d8096a214a1"><div class="ttname"><a href="pilot__weapon_8c.html#af6b08eab424e218683e09d8096a214a1">pilot_weapSetRm</a></div><div class="ttdeci">void pilot_weapSetRm(Pilot *p, int id, PilotOutfitSlot *o)</div><div class="ttdoc">Removes a slot from a weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00491">pilot_weapon.c:491</a></div></div>
@@ -1414,14 +1416,14 @@ $(function() {
 <div class="ttc" id="astructPilot___html_a8171817bb64856fba1b6ba5a531ea808"><div class="ttname"><a href="structPilot__.html#a8171817bb64856fba1b6ba5a531ea808">Pilot_::energy</a></div><div class="ttdeci">double energy</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8h_source.html#l00268">pilot.h:268</a></div></div>
 <div class="ttc" id="aarray_8h_html_ac9a99c83677f4324066a52dc8e5cf91f"><div class="ttname"><a href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a></div><div class="ttdeci">#define array_begin(array)</div><div class="ttdoc">Returns a pointer to the beginning of the reserved memory space.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00198">array.h:198</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a6a9bbb8d9a682eac42e02f314dd5518c"><div class="ttname"><a href="outfit_8c.html#a6a9bbb8d9a682eac42e02f314dd5518c">outfit_isAfterburner</a></div><div class="ttdeci">int outfit_isAfterburner(const Outfit *o)</div><div class="ttdoc">Checks if outfit is an afterburner.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00532">outfit.c:532</a></div></div>
-<div class="ttc" id="apilot__weapon_8c_html_af9de324289e035181ed762a1d6933c2c"><div class="ttname"><a href="pilot__weapon_8c.html#af9de324289e035181ed762a1d6933c2c">pilot_outfitOff</a></div><div class="ttdeci">int pilot_outfitOff(Pilot *p, PilotOutfitSlot *o)</div><div class="ttdoc">Disables a given active outfit.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01442">pilot_weapon.c:1442</a></div></div>
+<div class="ttc" id="apilot__weapon_8c_html_af9de324289e035181ed762a1d6933c2c"><div class="ttname"><a href="pilot__weapon_8c.html#af9de324289e035181ed762a1d6933c2c">pilot_outfitOff</a></div><div class="ttdeci">int pilot_outfitOff(Pilot *p, PilotOutfitSlot *o)</div><div class="ttdoc">Disables a given active outfit.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01444">pilot_weapon.c:1444</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="astructPilot___html_a300b61f06f16b6bd7a2b5309b29fbbc1"><div class="ttname"><a href="structPilot__.html#a300b61f06f16b6bd7a2b5309b29fbbc1">Pilot_::id</a></div><div class="ttdeci">unsigned int id</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8h_source.html#l00222">pilot.h:222</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a6c5a5fc00f060b01b7f54cde48bb32a8"><div class="ttname"><a href="pilot__ew_8c.html#a6c5a5fc00f060b01b7f54cde48bb32a8">pilot_destealth</a></div><div class="ttdeci">void pilot_destealth(Pilot *p)</div><div class="ttdoc">Destealths a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00578">pilot_ew.c:578</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_aa9e0ac971226259f27e350f01e78c4dc"><div class="ttname"><a href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a></div><div class="ttdeci">int outfit_isMod(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a ship modification.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00523">outfit.c:523</a></div></div>
-<div class="ttc" id="apilot__weapon_8c_html_aab9be0d524d212b94dd9d9520349b832"><div class="ttname"><a href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a></div><div class="ttdeci">int pilot_outfitOffAll(Pilot *p)</div><div class="ttdoc">Disables all active outfits for a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01499">pilot_weapon.c:1499</a></div></div>
-<div class="ttc" id="apilot__weapon_8c_html_a61c4692ac5e08062910ede357b63c851"><div class="ttname"><a href="pilot__weapon_8c.html#a61c4692ac5e08062910ede357b63c851">pilot_afterburn</a></div><div class="ttdeci">void pilot_afterburn(Pilot *p)</div><div class="ttdoc">Activate the afterburner.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01520">pilot_weapon.c:1520</a></div></div>
-<div class="ttc" id="apilot__weapon_8c_html_ac2df8f166079a6e0026872dd297f8c0e"><div class="ttname"><a href="pilot__weapon_8c.html#ac2df8f166079a6e0026872dd297f8c0e">pilot_outfitOn</a></div><div class="ttdeci">int pilot_outfitOn(Pilot *p, PilotOutfitSlot *o)</div><div class="ttdoc">Enable a given active outfit.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01478">pilot_weapon.c:1478</a></div></div>
+<div class="ttc" id="apilot__weapon_8c_html_aab9be0d524d212b94dd9d9520349b832"><div class="ttname"><a href="pilot__weapon_8c.html#aab9be0d524d212b94dd9d9520349b832">pilot_outfitOffAll</a></div><div class="ttdeci">int pilot_outfitOffAll(Pilot *p)</div><div class="ttdoc">Disables all active outfits for a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01501">pilot_weapon.c:1501</a></div></div>
+<div class="ttc" id="apilot__weapon_8c_html_a61c4692ac5e08062910ede357b63c851"><div class="ttname"><a href="pilot__weapon_8c.html#a61c4692ac5e08062910ede357b63c851">pilot_afterburn</a></div><div class="ttdeci">void pilot_afterburn(Pilot *p)</div><div class="ttdoc">Activate the afterburner.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01522">pilot_weapon.c:1522</a></div></div>
+<div class="ttc" id="apilot__weapon_8c_html_ac2df8f166079a6e0026872dd297f8c0e"><div class="ttname"><a href="pilot__weapon_8c.html#ac2df8f166079a6e0026872dd297f8c0e">pilot_outfitOn</a></div><div class="ttdeci">int pilot_outfitOn(Pilot *p, PilotOutfitSlot *o)</div><div class="ttdoc">Enable a given active outfit.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01480">pilot_weapon.c:1480</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a6839836049ea3657190cc05c9f37a57e"><div class="ttname"><a href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">spfx_shake</a></div><div class="ttdeci">void spfx_shake(double mod)</div><div class="ttdoc">Increases the current rumble level.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00904">spfx.c:904</a></div></div>
 <div class="ttc" id="apilot__weapon_8c_html_ac2277628b6d8ddc81f084c46c582998a"><div class="ttname"><a href="pilot__weapon_8c.html#ac2277628b6d8ddc81f084c46c582998a">pilot_weapSetList</a></div><div class="ttdeci">PilotWeaponSetOutfit * pilot_weapSetList(Pilot *p, int id)</div><div class="ttdoc">Lists the items in a pilot weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l00753">pilot_weapon.c:753</a></div></div>
 <div class="ttc" id="aspace_8c_html_a80fc91b008974b39b78ee551d5abc684"><div class="ttname"><a href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a></div><div class="ttdeci">StarSystem * cur_system</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00102">space.c:102</a></div></div>
@@ -1447,7 +1449,7 @@ $(function() {
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_ab380cb3792d2cb6da39ffdf7fbb45cb0"><div class="ttname"><a href="pilot__outfit_8c.html#ab380cb3792d2cb6da39ffdf7fbb45cb0">pilot_getMount</a></div><div class="ttdeci">int pilot_getMount(const Pilot *p, const PilotOutfitSlot *w, Vector2d *v)</div><div class="ttdoc">Gets the mount position of a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00157">pilot_outfit.c:157</a></div></div>
 <div class="ttc" id="apilot__heat_8c_html_a98db31030dec04d20bd2783618ed5f5f"><div class="ttname"><a href="pilot__heat_8c.html#a98db31030dec04d20bd2783618ed5f5f">pilot_heatAccuracyMod</a></div><div class="ttdeci">double pilot_heatAccuracyMod(double T)</div><div class="ttdoc">Returns a 0:1 modifier representing accuracy (0. being normal).</div><div class="ttdef"><b>Definition:</b> <a href="pilot__heat_8c_source.html#l00305">pilot_heat.c:305</a></div></div>
-<div class="ttc" id="apilot__weapon_8c_html_aac40e1432dee610b7d971c48d78cca57"><div class="ttname"><a href="pilot__weapon_8c.html#aac40e1432dee610b7d971c48d78cca57">pilot_weaponSetDefault</a></div><div class="ttdeci">void pilot_weaponSetDefault(Pilot *p)</div><div class="ttdoc">Gives the pilot a default weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01370">pilot_weapon.c:1370</a></div></div>
+<div class="ttc" id="apilot__weapon_8c_html_aac40e1432dee610b7d971c48d78cca57"><div class="ttname"><a href="pilot__weapon_8c.html#aac40e1432dee610b7d971c48d78cca57">pilot_weaponSetDefault</a></div><div class="ttdeci">void pilot_weaponSetDefault(Pilot *p)</div><div class="ttdoc">Gives the pilot a default weapon set.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__weapon_8c_source.html#l01372">pilot_weapon.c:1372</a></div></div>
 <div class="ttc" id="astructPilot___html_a465fd6e46b955c886f183411d9e95487"><div class="ttname"><a href="structPilot__.html#a465fd6e46b955c886f183411d9e95487">Pilot_::parent</a></div><div class="ttdeci">unsigned int parent</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8h_source.html#l00335">pilot.h:335</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
