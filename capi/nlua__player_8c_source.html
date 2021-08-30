@@ -595,7 +595,7 @@ $(function() {
 <div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160; </div>
 <div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      <a class="code" href="space_8c.html#ab9f199a88ec5ce5532bcd593a7ba52d5">space_init</a>( sysname );</div>
 <div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160; </div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      map_clear();</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      ovr_initAlpha();</div>
 <div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160; </div>
 <div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;      <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos = pnt-&gt;pos;</div>
 <div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;   }</div>
@@ -1062,26 +1062,29 @@ $(function() {
 <div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;   <span class="comment">/* Map gets deformed when jumping this way. */</span></div>
 <div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;   map_clear();</div>
 <div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160; </div>
-<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;   <span class="comment">/* Run hooks - order is important. */</span></div>
-<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;jumpin&quot;</span> );</div>
-<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;enter&quot;</span> );</div>
-<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;   <a class="code" href="event_8c.html#acee910c5f6745dd62a319f045f06aa07">events_trigger</a>( EVENT_TRIGGER_ENTER );</div>
-<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;   <a class="code" href="mission_8c.html#a3bac4543ee633374be825ef5ccf108e3">missions_run</a>( MIS_AVAIL_SPACE, -1, NULL, NULL );</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160; </div>
-<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;   <span class="comment">/* Move to planet. */</span></div>
-<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;   <span class="keywordflow">if</span> (pnt != NULL)</div>
-<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;      <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos = pnt-&gt;pos;</div>
-<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160; </div>
-<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;}</div>
+<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;   <span class="comment">/* Initialize alpha as needed. */</span></div>
+<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;   ovr_initAlpha();</div>
+<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160; </div>
+<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;   <span class="comment">/* Run hooks - order is important. */</span></div>
+<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;jumpin&quot;</span> );</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;enter&quot;</span> );</div>
+<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;   <a class="code" href="event_8c.html#acee910c5f6745dd62a319f045f06aa07">events_trigger</a>( EVENT_TRIGGER_ENTER );</div>
+<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;   <a class="code" href="mission_8c.html#a3bac4543ee633374be825ef5ccf108e3">missions_run</a>( MIS_AVAIL_SPACE, -1, NULL, NULL );</div>
+<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160; </div>
+<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;   <span class="comment">/* Move to planet. */</span></div>
+<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;   <span class="keywordflow">if</span> (pnt != NULL)</div>
+<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;      <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos = pnt-&gt;pos;</div>
 <div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160; </div>
-<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160; </div>
-<div class="line"><a name="l01440"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8"> 1440</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8">playerL_dt_mod</a>( lua_State *L )</div>
-<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;{</div>
-<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160;   lua_pushnumber(L,<a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>);</div>
-<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;}</div>
-<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160; </div>
+<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;}</div>
+<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160; </div>
+<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160; </div>
+<div class="line"><a name="l01443"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8"> 1443</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8">playerL_dt_mod</a>( lua_State *L )</div>
+<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;{</div>
+<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;   lua_pushnumber(L,<a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>);</div>
+<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;}</div>
+<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__player_8c_html_aa09adc3501355640924b36148540a9cb"><div class="ttname"><a href="nlua__player_8c.html#aa09adc3501355640924b36148540a9cb">playerL_getPilot</a></div><div class="ttdeci">static int playerL_getPilot(lua_State *L)</div><div class="ttdoc">Gets the player's associated pilot.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00443">nlua_player.c:443</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_afe729cd107cfc5a13736d1c215588b7d"><div class="ttname"><a href="nlua__player_8c.html#afe729cd107cfc5a13736d1c215588b7d">playerL_shipOutfits</a></div><div class="ttdeci">static int playerL_shipOutfits(lua_State *L)</div><div class="ttdoc">Gets the outfits for one of the player's ships.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00948">nlua_player.c:948</a></div></div>
@@ -1133,7 +1136,7 @@ $(function() {
 <div class="ttc" id="aevent_8c_html_a65caf33c0036b665dec4b6d07b76f448"><div class="ttname"><a href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a></div><div class="ttdeci">int event_dataID(const char *evdata)</div><div class="ttdoc">Gets the event data id from name.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00642">event.c:642</a></div></div>
 <div class="ttc" id="aspfx_8c_html_acc943df2c1e8911d2cfc4a53488913ce"><div class="ttname"><a href="spfx_8c.html#acc943df2c1e8911d2cfc4a53488913ce">spfx_damage</a></div><div class="ttdeci">void spfx_damage(double mod)</div><div class="ttdoc">Increases the current damage level.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00925">spfx.c:925</a></div></div>
 <div class="ttc" id="anlua__vec2_8c_html_a7b6737c7b888b17008e5325e217c52c9"><div class="ttname"><a href="nlua__vec2_8c.html#a7b6737c7b888b17008e5325e217c52c9">lua_pushvector</a></div><div class="ttdeci">Vector2d * lua_pushvector(lua_State *L, Vector2d vec)</div><div class="ttdoc">Pushes a vector on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__vec2_8c_source.html#l00133">nlua_vec2.c:133</a></div></div>
-<div class="ttc" id="anlua__player_8c_html_a94ac5f9e2940556ee811d26b546dafb8"><div class="ttname"><a href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8">playerL_dt_mod</a></div><div class="ttdeci">static int playerL_dt_mod(lua_State *L)</div><div class="ttdoc">Gets the dt_mod of the player, which multiplies all time stuff.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01440">nlua_player.c:1440</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_a94ac5f9e2940556ee811d26b546dafb8"><div class="ttname"><a href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8">playerL_dt_mod</a></div><div class="ttdeci">static int playerL_dt_mod(lua_State *L)</div><div class="ttdoc">Gets the dt_mod of the player, which multiplies all time stuff.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01443">nlua_player.c:1443</a></div></div>
 <div class="ttc" id="asound_8c_html_af485c8bd7c6ceafdb106eebac1adacfc"><div class="ttname"><a href="sound_8c.html#af485c8bd7c6ceafdb106eebac1adacfc">sound_setSpeed</a></div><div class="ttdeci">void sound_setSpeed(double s)</div><div class="ttdoc">Sets the speed to play the sound at.</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00530">sound.c:530</a></div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00050">news.c:50</a></div></div>
 <div class="ttc" id="aarray_8h_html_a6f15b617933d8ed080bd53b043342923"><div class="ttname"><a href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a></div><div class="ttdeci">#define array_create_size(basic_type, capacity)</div><div class="ttdoc">Creates a new dynamic array of ‘basic_type’ with an initial capacity.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00106">array.h:106</a></div></div>
