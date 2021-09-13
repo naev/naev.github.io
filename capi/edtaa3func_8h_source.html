@@ -108,48 +108,32 @@ $(function() {
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#ifndef __EDTAA3FUNC_H__</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#define __EDTAA3FUNC_H__</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">namespace </span>ftgl {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment"> * Compute the local gradient at edge pixels using convolution filters.</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment"> * The gradient is computed only at edge pixels. At other places in the</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"> * image, it is never used, and it&#39;s mostly zero anyway.</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keywordtype">void</span> computegradient(<span class="keywordtype">double</span> *img, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">double</span> *gx, <span class="keywordtype">double</span> *gy);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment"> * A somewhat tricky function to approximate the distance to an edge in a</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment"> * certain pixel, with consideration to either the local gradient (gx,gy)</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment"> * or the direction to the pixel (dx,dy) and the pixel greyscale value a.</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment"> * The latter alternative, using (dx,dy), is the metric used by edtaa2().</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment"> * Using a local estimate of the edge gradient (gx,gy) yields much better</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment"> * accuracy at and near edges, and reduces the error even at distant pixels</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment"> * provided that the gradient direction is accurately estimated.</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keywordtype">double</span> edgedf(<span class="keywordtype">double</span> gx, <span class="keywordtype">double</span> gy, <span class="keywordtype">double</span> a);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">double</span> distaa3(<span class="keywordtype">double</span> *img, <span class="keywordtype">double</span> *gximg, <span class="keywordtype">double</span> *gyimg, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">int</span> xc, <span class="keywordtype">int</span> yc, <span class="keywordtype">int</span> xi, <span class="keywordtype">int</span> yi);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">// Shorthand macro: add ubiquitous parameters dist, gx, gy, img and w and call distaa3()</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#define DISTAA(c,xc,yc,xi,yi) (distaa3(img, gx, gy, w, c, xc, yc, xi, yi))</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keywordtype">void</span> edtaa3(<span class="keywordtype">double</span> *img, <span class="keywordtype">double</span> *gx, <span class="keywordtype">double</span> *gy, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">short</span> *distx, <span class="keywordtype">short</span> *disty, <span class="keywordtype">double</span> *dist);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif // __EDTAA3FUNC_H__</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment"> * Compute the local gradient at edge pixels using convolution filters.</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"> * The gradient is computed only at edge pixels. At other places in the</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"> * image, it is never used, and it&#39;s mostly zero anyway.</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">void</span> computegradient(<span class="keywordtype">double</span> *img, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">double</span> *gx, <span class="keywordtype">double</span> *gy);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment"> * A somewhat tricky function to approximate the distance to an edge in a</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"> * certain pixel, with consideration to either the local gradient (gx,gy)</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment"> * or the direction to the pixel (dx,dy) and the pixel greyscale value a.</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment"> * The latter alternative, using (dx,dy), is the metric used by edtaa2().</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"> * Using a local estimate of the edge gradient (gx,gy) yields much better</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment"> * accuracy at and near edges, and reduces the error even at distant pixels</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment"> * provided that the gradient direction is accurately estimated.</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">double</span> edgedf(<span class="keywordtype">double</span> gx, <span class="keywordtype">double</span> gy, <span class="keywordtype">double</span> a);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">double</span> distaa3(<span class="keywordtype">double</span> *img, <span class="keywordtype">double</span> *gximg, <span class="keywordtype">double</span> *gyimg, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keywordtype">int</span> xc, <span class="keywordtype">int</span> yc, <span class="keywordtype">int</span> xi, <span class="keywordtype">int</span> yi);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">// Shorthand macro: add ubiquitous parameters dist, gx, gy, img and w and call distaa3()</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#define DISTAA(c,xc,yc,xi,yi) (distaa3(img, gx, gy, w, c, xc, yc, xi, yi))</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keywordtype">void</span> edtaa3(<span class="keywordtype">double</span> *img, <span class="keywordtype">double</span> *gx, <span class="keywordtype">double</span> *gy, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">short</span> *distx, <span class="keywordtype">short</span> *disty, <span class="keywordtype">double</span> *dist);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif // __EDTAA3FUNC_H__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="arng_8c_html_a3a6c194a55c239306d07bbf83f5972e9"><div class="ttname"><a href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a></div><div class="ttdeci">static const double c[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00281">rng.c:281</a></div></div>
 <!-- start footer part -->

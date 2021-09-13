@@ -244,7 +244,7 @@ $(function() {
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
 <div class="line"><a name="l00267"></a><span class="lineno"><a class="line" href="opengl_8c.html#abc60ce1204d7cfd4b1bdb8b505d81f70">  267</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="opengl_8c.html#abc60ce1204d7cfd4b1bdb8b505d81f70">gl_createWindow</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags )</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;{</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;   <span class="keywordtype">int</span> ret, fallback;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;   <span class="keywordtype">int</span> i, ret, fallback;</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;   <span class="comment">/* Create the window. */</span></div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.window = SDL_CreateWindow( <a class="code" href="naev_8h.html#a237e4d19d7046d08c4cc00a45808feaf">APPNAME</a>,</div>
@@ -279,10 +279,10 @@ $(function() {
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;   <span class="comment">/* Finish getting attributes. */</span></div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;   <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.current_fbo = 0; <span class="comment">/* No FBO set. */</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;   <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo[0] = GL_INVALID_VALUE;</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;   <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo_tex[0] = GL_INVALID_VALUE;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;   <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo[1] = GL_INVALID_VALUE;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;   <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo_tex[1] = GL_INVALID_VALUE;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;OPENGL_NUM_FBOS; i++) {</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo[i]     = GL_INVALID_VALUE;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo_tex[i] = GL_INVALID_VALUE;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;   }</div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;   SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &amp;<a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.depth );</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   <a class="code" href="opengl_8c.html#a7f1d870f5634ffa9cb11d2fa71361825">gl_activated</a> = 1; <span class="comment">/* Opengl is now activated. */</span></div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160; </div>
@@ -470,7 +470,7 @@ $(function() {
 <div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;   <a class="code" href="opengl_8c.html#a3cf2ec1baeda2858ea69a9c028ca0ff3">gl_defViewport</a>();</div>
 <div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160; </div>
 <div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;   <span class="comment">/* Set up framebuffer. */</span></div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;2; i++) {</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;OPENGL_NUM_FBOS; i++) {</div>
 <div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo[i] != GL_INVALID_VALUE) {</div>
 <div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;         glDeleteFramebuffers( 1, &amp;<a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo[i] );</div>
 <div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;         glDeleteTextures( 1, &amp;<a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo_tex[i] );</div>
@@ -589,7 +589,7 @@ $(function() {
 <div class="line"><a name="l00668"></a><span class="lineno"><a class="line" href="opengl_8c.html#a7092817cee80ca02af2e330d98141071">  668</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="opengl_8c.html#a7092817cee80ca02af2e330d98141071">gl_exit</a> (<span class="keywordtype">void</span>)</div>
 <div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;{</div>
 <div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;2; i++) {</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;OPENGL_NUM_FBOS; i++) {</div>
 <div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo[i] != GL_INVALID_VALUE) {</div>
 <div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;         glDeleteFramebuffers( 1, &amp;<a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo[i] );</div>
 <div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;         glDeleteTextures( 1, &amp;<a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo_tex[i] );</div>
