@@ -487,294 +487,279 @@ $(function() {
 <div class="line"><a name="l00617"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#a7247977b96dd2539ed8b154f4ba7a16b">  617</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#a7247977b96dd2539ed8b154f4ba7a16b">gfxL_printfWrap</a>( lua_State *L )</div>
 <div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;{</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *s;</div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;   <span class="keywordtype">int</span> width, outw, maxw;</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;   <span class="keywordtype">int</span> width, maxw;</div>
 <div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;   glFont *font;</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;   <span class="keywordtype">int</span> p, l, slen;</div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;   glPrintLineIterator *iter;</div>
 <div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;   <span class="keywordtype">int</span> linenum;</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;   <span class="keywordtype">char</span> *tmp;</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160; </div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;   font  = <a class="code" href="nlua__font_8c.html#a460f9590bddbc53d1e535433aebbe11b">luaL_checkfont</a>(L,1);</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;   s     = luaL_checkstring(L,2);</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;   width = luaL_checkinteger(L,3);</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;   <span class="keywordflow">if</span> (width &lt; 0)</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;width has to be a positive value.&quot;</span>));</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160; </div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   <span class="comment">/* Process output into table. */</span></div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   lua_newtable(L);</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   tmp = strdup(s);</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   slen = strlen(s);</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   p = 0;</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   linenum = 1;</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;   maxw = 0;</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;      <span class="keywordtype">int</span> lp = p;</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;      <span class="keywordflow">if</span> ((tmp[p] == <span class="charliteral">&#39; &#39;</span>) || (tmp[p] == <span class="charliteral">&#39;\n&#39;</span>))</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;         p++;</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;      <span class="comment">/* Don&#39;t handle tab for now. */</span></div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;      <span class="keywordflow">if</span> (tmp[p]==<span class="charliteral">&#39;\t&#39;</span>)</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;         tmp[p] = <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;      l = <a class="code" href="font_8c.html#aa71328b847f962c6f7b9ef29cf161575">gl_printWidthForText</a>(font, &amp;tmp[p], width, &amp;outw );</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;      <span class="keywordflow">if</span> (outw &gt; maxw)</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;         maxw = outw;</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160; </div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;      <span class="comment">/* Create entry of form { string, width } in the table. */</span></div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;      lua_newtable(L);                 <span class="comment">/* t, t */</span></div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;      lua_pushlstring(L, &amp;tmp[p], l);  <span class="comment">/* t, t, s */</span></div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;      lua_rawseti(L,-2,1);             <span class="comment">/* t, t */</span></div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;      lua_pushinteger(L, outw);        <span class="comment">/* t, t, n */</span></div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;      lua_rawseti(L,-2,2);             <span class="comment">/* t, t */</span></div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;      lua_rawseti(L,-2,linenum++);     <span class="comment">/* t */</span></div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160; </div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;      p += l;</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;      <span class="keywordflow">if</span> (lp==p)</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   } <span class="keywordflow">while</span> (p &lt; slen);</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160; </div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   <span class="comment">/* Push max width. */</span></div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   lua_pushinteger(L, maxw);</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160; </div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;   free( tmp );</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   <span class="keywordflow">return</span> 2;</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;}</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160; </div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160; </div>
-<div class="line"><a name="l00676"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#af9a4fdd95d7b5cb7d1324455ddf961b4">  676</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#af9a4fdd95d7b5cb7d1324455ddf961b4">gfxL_printRestoreClear</a>( lua_State *L )</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;{</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;   (void) L;</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;   <a class="code" href="font_8c.html#a31d45dd9ccab0e3b594290f9807d1b37">gl_printRestoreClear</a>();</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;}</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160; </div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160; </div>
-<div class="line"><a name="l00688"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#ac3751f3b9397d66bb16d4b9b643b832e">  688</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#ac3751f3b9397d66bb16d4b9b643b832e">gfxL_printRestoreLast</a>( lua_State *L )</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;{</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;   (void) L;</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;   <a class="code" href="font_8c.html#adf2630ef13d612686cff000f1552ef61">gl_printRestoreLast</a>();</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;}</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160; </div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160; </div>
-<div class="line"><a name="l00710"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#a4345b87a9bf80d2d184a7545e3470fcf">  710</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#a4345b87a9bf80d2d184a7545e3470fcf">gfxL_printf</a>( lua_State *L )</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;{</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;   glFont *font;</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;   <span class="keywordtype">double</span> x, y;</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;   glColour *col;</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;   <span class="keywordtype">int</span> max, mid;</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160; </div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160; </div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;   font  = <a class="code" href="nlua__font_8c.html#a460f9590bddbc53d1e535433aebbe11b">luaL_checkfont</a>(L,1);</div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;   str   = luaL_checkstring(L,2);</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   x     = luaL_checknumber(L,3);</div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   y     = luaL_checknumber(L,4);</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   col   = <a class="code" href="nlua__col_8c.html#a74eb0e4bb2e8b7ecc9a8062fc0b17315">luaL_checkcolour</a>(L,5);</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;   max   = luaL_optinteger(L,6,0);</div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;   mid   = lua_toboolean(L,7);</div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160; </div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;   <span class="comment">/* Render. */</span></div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;   <span class="keywordflow">if</span> (mid)</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;      <a class="code" href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a>( font, max, x, y, col, 0., str );</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (max &gt; 0)</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;      <a class="code" href="font_8c.html#ac0d563c73d894096b743f8946f1dd916">gl_printMaxRaw</a>( font, max, x, y, col, 0., str );</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;      <a class="code" href="font_8c.html#a4b39fc941b02b717a4c4fd85c2cbb569">gl_printRaw</a>( font, x, y, col, 0., str );</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;}</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160; </div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160; </div>
-<div class="line"><a name="l00750"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#ac61bff90e5c2bc6e3c9795466ca517c5">  750</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#ac61bff90e5c2bc6e3c9795466ca517c5">gfxL_printH</a>( lua_State *L )</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;{</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;   <span class="keyword">const</span> gl_Matrix4 *H;</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;   glFont *font;</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   <span class="keyword">const</span> glColour *col;</div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;   <span class="keywordtype">double</span> outline;</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160; </div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;   font  = <a class="code" href="nlua__font_8c.html#a460f9590bddbc53d1e535433aebbe11b">luaL_checkfont</a>(L,1);</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;   s     = luaL_checkstring(L,2);</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;   width = luaL_checkinteger(L,3);</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;   <span class="keywordflow">if</span> (width &lt; 0)</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;width has to be a positive value.&quot;</span>));</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160; </div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   <span class="comment">/* Process output into table. */</span></div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   lua_newtable(L);</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   iter = <a class="code" href="font_8c.html#ab57fdb9aacd63b6f6b35daeb791d0da6">gl_printLineIteratorInit</a>(font, s, width);</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   linenum = 1;</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   maxw = 0;</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   <span class="keywordflow">while</span> (<a class="code" href="font_8c.html#a3d5330bd57a1e33dc2e07d5f2a564dcf">gl_printLineIteratorNext</a>(iter)) {</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;      maxw = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>(maxw, iter-&gt;l_width);</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160; </div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;      <span class="comment">/* Create entry of form { string, width } in the table. */</span></div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;      lua_newtable(L);                 <span class="comment">/* t, t */</span></div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;      lua_pushlstring(L, &amp;s[iter-&gt;l_begin], iter-&gt;l_end - iter-&gt;l_begin);  <span class="comment">/* t, t, s */</span></div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;      lua_rawseti(L,-2,1);             <span class="comment">/* t, t */</span></div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;      lua_pushinteger(L,iter-&gt;l_width);<span class="comment">/* t, t, n */</span></div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;      lua_rawseti(L,-2,2);             <span class="comment">/* t, t */</span></div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;      lua_rawseti(L,-2,linenum++);     <span class="comment">/* t */</span></div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   }</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;   <a class="code" href="font_8c.html#a097032dd62b38203428fd6fafce8f082">gl_printLineIteratorFree</a>(iter);</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160; </div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;   <span class="comment">/* Push max width. */</span></div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;   lua_pushinteger(L, maxw);</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160; </div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;   <span class="keywordflow">return</span> 2;</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;}</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160; </div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160; </div>
+<div class="line"><a name="l00661"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#af9a4fdd95d7b5cb7d1324455ddf961b4">  661</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#af9a4fdd95d7b5cb7d1324455ddf961b4">gfxL_printRestoreClear</a>( lua_State *L )</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;{</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   (void) L;</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   <a class="code" href="font_8c.html#a31d45dd9ccab0e3b594290f9807d1b37">gl_printRestoreClear</a>();</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;}</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160; </div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160; </div>
+<div class="line"><a name="l00673"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#ac3751f3b9397d66bb16d4b9b643b832e">  673</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#ac3751f3b9397d66bb16d4b9b643b832e">gfxL_printRestoreLast</a>( lua_State *L )</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;{</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;   (void) L;</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;   <a class="code" href="font_8c.html#adf2630ef13d612686cff000f1552ef61">gl_printRestoreLast</a>();</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;}</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160; </div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160; </div>
+<div class="line"><a name="l00695"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#a4345b87a9bf80d2d184a7545e3470fcf">  695</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#a4345b87a9bf80d2d184a7545e3470fcf">gfxL_printf</a>( lua_State *L )</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;{</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;   glFont *font;</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;   <span class="keywordtype">double</span> x, y;</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;   glColour *col;</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;   <span class="keywordtype">int</span> max, mid;</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160; </div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160; </div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;   font  = <a class="code" href="nlua__font_8c.html#a460f9590bddbc53d1e535433aebbe11b">luaL_checkfont</a>(L,1);</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;   str   = luaL_checkstring(L,2);</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   x     = luaL_checknumber(L,3);</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;   y     = luaL_checknumber(L,4);</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;   col   = <a class="code" href="nlua__col_8c.html#a74eb0e4bb2e8b7ecc9a8062fc0b17315">luaL_checkcolour</a>(L,5);</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   max   = luaL_optinteger(L,6,0);</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;   mid   = lua_toboolean(L,7);</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;   <span class="comment">/* Render. */</span></div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;   <span class="keywordflow">if</span> (mid)</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;      <a class="code" href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a>( font, max, x, y, col, 0., str );</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (max &gt; 0)</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;      <a class="code" href="font_8c.html#ac0d563c73d894096b743f8946f1dd916">gl_printMaxRaw</a>( font, max, x, y, col, 0., str );</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;      <a class="code" href="font_8c.html#a4b39fc941b02b717a4c4fd85c2cbb569">gl_printRaw</a>( font, x, y, col, 0., str );</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;}</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160; </div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160; </div>
+<div class="line"><a name="l00735"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#ac61bff90e5c2bc6e3c9795466ca517c5">  735</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#ac61bff90e5c2bc6e3c9795466ca517c5">gfxL_printH</a>( lua_State *L )</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;{</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;   <span class="keyword">const</span> gl_Matrix4 *H;</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;   glFont *font;</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   <span class="keyword">const</span> glColour *col;</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   <span class="keywordtype">double</span> outline;</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160; </div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160; </div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   H     = <a class="code" href="nlua__transform_8c.html#ad233b99521501dbd6761c9543bc229f8">luaL_checktransform</a>(L,1);</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;   font  = <a class="code" href="nlua__font_8c.html#a460f9590bddbc53d1e535433aebbe11b">luaL_checkfont</a>(L,2);</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;   str   = luaL_checkstring(L,3);</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   col   = luaL_optcolour(L,4,&amp;cWhite);</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;   outline = luaL_optnumber(L,5,0.);</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160; </div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;   <span class="comment">/* Render. */</span></div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;   <a class="code" href="font_8c.html#a8ae26dda33edb6177e4c3f82141081c8">gl_printRawH</a>( font, H, col, outline, str );</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;}</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160; </div>
 <div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160; </div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160; </div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   H     = <a class="code" href="nlua__transform_8c.html#ad233b99521501dbd6761c9543bc229f8">luaL_checktransform</a>(L,1);</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;   font  = <a class="code" href="nlua__font_8c.html#a460f9590bddbc53d1e535433aebbe11b">luaL_checkfont</a>(L,2);</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;   str   = luaL_checkstring(L,3);</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;   col   = luaL_optcolour(L,4,&amp;cWhite);</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;   outline = luaL_optnumber(L,5,0.);</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160; </div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;   <span class="comment">/* Render. */</span></div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;   <a class="code" href="font_8c.html#a8ae26dda33edb6177e4c3f82141081c8">gl_printRawH</a>( font, H, col, outline, str );</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;}</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160; </div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160; </div>
-<div class="line"><a name="l00789"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#afcbb042a7526015fa47d94a5813ca576">  789</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#afcbb042a7526015fa47d94a5813ca576">gfxL_print</a>( lua_State *L )</div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;{</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;   glFont *font;</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;   <span class="keywordtype">double</span> x, y;</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;   glColour *col;</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;   <span class="keywordtype">int</span> max, mid;</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160; </div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160; </div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;   font  = lua_toboolean(L,1) ? &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a> : &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>;</div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;   str   = luaL_checkstring(L,2);</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;   x     = luaL_checknumber(L,3);</div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;   y     = luaL_checknumber(L,4);</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;   col   = <a class="code" href="nlua__col_8c.html#a74eb0e4bb2e8b7ecc9a8062fc0b17315">luaL_checkcolour</a>(L,5);</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;   max   = luaL_optinteger(L,6,0);</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;   mid   = lua_toboolean(L,7);</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160; </div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;   <span class="comment">/* Render. */</span></div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;   <span class="keywordflow">if</span> (mid)</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;      <a class="code" href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a>( font, max, x, y, col, -1., str );</div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (max &gt; 0)</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;      <a class="code" href="font_8c.html#ac0d563c73d894096b743f8946f1dd916">gl_printMaxRaw</a>( font, max, x, y, col, -1., str );</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;      <a class="code" href="font_8c.html#a4b39fc941b02b717a4c4fd85c2cbb569">gl_printRaw</a>( font, x, y, col, -1., str );</div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;}</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160; </div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160; </div>
-<div class="line"><a name="l00834"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#a410cf37ec1383ca50736c77131ea7f26">  834</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#a410cf37ec1383ca50736c77131ea7f26">gfxL_printText</a>( lua_State *L )</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;{</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;   glFont *font;</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;   <span class="keywordtype">int</span> w, h, lh;</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;   <span class="keywordtype">double</span> x, y;</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;   glColour *col;</div>
+<div class="line"><a name="l00774"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#afcbb042a7526015fa47d94a5813ca576">  774</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#afcbb042a7526015fa47d94a5813ca576">gfxL_print</a>( lua_State *L )</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;{</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   glFont *font;</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   <span class="keywordtype">double</span> x, y;</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;   glColour *col;</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;   <span class="keywordtype">int</span> max, mid;</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160; </div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160; </div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;   font  = lua_toboolean(L,1) ? &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a> : &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>;</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;   str   = luaL_checkstring(L,2);</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;   x     = luaL_checknumber(L,3);</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;   y     = luaL_checknumber(L,4);</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;   col   = <a class="code" href="nlua__col_8c.html#a74eb0e4bb2e8b7ecc9a8062fc0b17315">luaL_checkcolour</a>(L,5);</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;   max   = luaL_optinteger(L,6,0);</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;   mid   = lua_toboolean(L,7);</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160; </div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;   <span class="comment">/* Render. */</span></div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;   <span class="keywordflow">if</span> (mid)</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;      <a class="code" href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a>( font, max, x, y, col, -1., str );</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (max &gt; 0)</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;      <a class="code" href="font_8c.html#ac0d563c73d894096b743f8946f1dd916">gl_printMaxRaw</a>( font, max, x, y, col, -1., str );</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;      <a class="code" href="font_8c.html#a4b39fc941b02b717a4c4fd85c2cbb569">gl_printRaw</a>( font, x, y, col, -1., str );</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;}</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160; </div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160; </div>
+<div class="line"><a name="l00819"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#a410cf37ec1383ca50736c77131ea7f26">  819</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#a410cf37ec1383ca50736c77131ea7f26">gfxL_printText</a>( lua_State *L )</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;{</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;   glFont *font;</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;   <span class="keywordtype">int</span> w, h, lh;</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   <span class="keywordtype">double</span> x, y;</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   glColour *col;</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160; </div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160; </div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   font  = lua_toboolean(L,1) ? &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a> : &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>;</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;   str   = luaL_checkstring(L,2);</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   x     = luaL_checknumber(L,3);</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   y     = luaL_checknumber(L,4);</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;   w     = luaL_checkinteger(L,5);</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;   h     = luaL_checkinteger(L,6);</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;   col   = <a class="code" href="nlua__col_8c.html#a74eb0e4bb2e8b7ecc9a8062fc0b17315">luaL_checkcolour</a>(L,7);</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;   lh    = luaL_optinteger(L,8,0);</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160; </div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;   <span class="comment">/* Render. */</span></div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;   <a class="code" href="font_8c.html#a884123cfb3d1579a2907fa999b754e09">gl_printTextRaw</a>( font, w, h, x, y, lh, col, -1., str );</div>
 <div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160; </div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160; </div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   font  = lua_toboolean(L,1) ? &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a> : &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>;</div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;   str   = luaL_checkstring(L,2);</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;   x     = luaL_checknumber(L,3);</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;   y     = luaL_checknumber(L,4);</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;   w     = luaL_checkinteger(L,5);</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;   h     = luaL_checkinteger(L,6);</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;   col   = <a class="code" href="nlua__col_8c.html#a74eb0e4bb2e8b7ecc9a8062fc0b17315">luaL_checkcolour</a>(L,7);</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;   lh    = luaL_optinteger(L,8,0);</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160; </div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;   <span class="comment">/* Render. */</span></div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;   <a class="code" href="font_8c.html#a884123cfb3d1579a2907fa999b754e09">gl_printTextRaw</a>( font, w, h, x, y, lh, col, -1., str );</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160; </div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;}</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;}</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160; </div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160; </div>
+<div class="line"><a name="l00855"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#a92ab2de91d96b1fdd855579a147d9fde">  855</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#a92ab2de91d96b1fdd855579a147d9fde">gfxL_setBlendMode</a>( lua_State *L )</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;{</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *mode, *alphamode;</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;   GLenum func, srcRGB, srcA, dstRGB, dstA;</div>
 <div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160; </div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160; </div>
-<div class="line"><a name="l00870"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#a92ab2de91d96b1fdd855579a147d9fde">  870</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#a92ab2de91d96b1fdd855579a147d9fde">gfxL_setBlendMode</a>( lua_State *L )</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;{</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *mode, *alphamode;</div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;   GLenum func, srcRGB, srcA, dstRGB, dstA;</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160; </div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;   mode     = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;   alphamode= luaL_optstring(L,2,<span class="stringliteral">&quot;alphamultiply&quot;</span>);</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160; </div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;   <span class="comment">/* Translate to OpenGL enums. */</span></div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;   func   = GL_FUNC_ADD;</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;   srcRGB = GL_ONE;</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;   srcA   = GL_ONE;</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;   dstRGB = GL_ZERO;</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;   dstA   = GL_ZERO;</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160; </div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;   <span class="keywordflow">if</span> (!strcmp( alphamode, <span class="stringliteral">&quot;alphamultiply&quot;</span> ))</div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;      srcRGB = srcA = GL_SRC_ALPHA;</div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( alphamode, <span class="stringliteral">&quot;premultiplied&quot;</span> )) {</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;      <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;lighten&quot;</span> ) || !strcmp( mode, <span class="stringliteral">&quot;darken&quot;</span> ) || !strcmp( mode, <span class="stringliteral">&quot;multiply&quot;</span> ))</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;         NLUA_INVALID_PARAMETER(L);</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;   }</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160; </div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;alpha&quot;</span> ))</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;      dstRGB = dstA = GL_ONE_MINUS_SRC_ALPHA;</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;multiply&quot;</span> ))</div>
-<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;      srcRGB = srcA = GL_DST_COLOR;</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;subtract&quot;</span> ))</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;      func = GL_FUNC_REVERSE_SUBTRACT;</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;add&quot;</span> ) ) {</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;      func = GL_FUNC_REVERSE_SUBTRACT;</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;      srcA = GL_ZERO;</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;      dstRGB = dstA = GL_ONE;</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;   }</div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;lighten&quot;</span> ))</div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;      func = GL_MAX;</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;darken&quot;</span> ))</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;      func = GL_MIN;</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;screen&quot;</span> ))</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;      dstRGB = dstA = GL_ONE_MINUS_SRC_COLOR;</div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp( mode, <span class="stringliteral">&quot;replace&quot;</span> ))</div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160; </div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;   glBlendEquation(func);</div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;   glBlendFuncSeparate(srcRGB, dstRGB, srcA, dstA);</div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;   gl_checkErr();</div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160; </div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;}</div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160; </div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160; </div>
-<div class="line"><a name="l00934"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#afe5a77b7c128385976c5300c176a49e5">  934</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#afe5a77b7c128385976c5300c176a49e5">gfxL_setScissor</a>( lua_State *L )</div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;{</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;   GLint x, y;</div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   GLsizei w, h;</div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160; </div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;   <span class="keywordflow">if</span> (lua_gettop(L)&gt;0) {</div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;      x = luaL_optinteger(L,1,0);</div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;      y = luaL_optinteger(L,2,0);</div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;      w = luaL_optinteger(L,3,0);</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;      h = luaL_optinteger(L,4,0);</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;      <a class="code" href="opengl__render_8c.html#aff163c825993f656b74cbeffbf11175d">gl_clipRect</a>( x, y, w, h );</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;   }</div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;      <a class="code" href="opengl__render_8c.html#a70c906f1000dfc534d1ce1cdea4bbfb6">gl_unclipRect</a>();</div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160; </div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;}</div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160; </div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160; </div>
-<div class="line"><a name="l00960"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#a4b474956de5650d6d447a9478eaeb927">  960</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#a4b474956de5650d6d447a9478eaeb927">gfxL_screenshot</a>( lua_State * L )</div>
-<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;{</div>
-<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;   LuaCanvas_t *lc;</div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;   <span class="keywordtype">int</span> mustfree;</div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160; </div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   <span class="comment">/* Set up canvas or try to reuse. */</span></div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;   <span class="keywordflow">if</span> (lua_iscanvas(L,1)) {</div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;      lc = luaL_checkcanvas(L,1);</div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;      mustfree = 0;</div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;   }</div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;      lc = calloc( 1, <span class="keyword">sizeof</span>(LuaCanvas_t) );</div>
-<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;      canvas_new( lc, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rw, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rh );</div>
-<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;      mustfree = 1;</div>
-<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;   }</div>
-<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160; </div>
-<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;   <span class="comment">/* Copy over. */</span></div>
-<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);</div>
-<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, lc-&gt;fbo);</div>
-<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;   <span class="comment">/* We flip it over because that seems to be what love2d API wants. */</span></div>
-<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;   glBlitFramebuffer(0, 0, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rw, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rh, 0, lc-&gt;tex-&gt;h, lc-&gt;tex-&gt;w, 0,  GL_COLOR_BUFFER_BIT, GL_NEAREST);</div>
-<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);</div>
-<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);</div>
-<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160; </div>
-<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;   <span class="comment">/* Return new or old canvas. */</span></div>
-<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160;   lua_pushcanvas(L, *lc);</div>
-<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;   <span class="keywordflow">if</span> (mustfree)</div>
-<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;      free( lc );</div>
-<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;}</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;   mode     = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;   alphamode= luaL_optstring(L,2,<span class="stringliteral">&quot;alphamultiply&quot;</span>);</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160; </div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;   <span class="comment">/* Translate to OpenGL enums. */</span></div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;   func   = GL_FUNC_ADD;</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;   srcRGB = GL_ONE;</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   srcA   = GL_ONE;</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   dstRGB = GL_ZERO;</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;   dstA   = GL_ZERO;</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160; </div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;   <span class="keywordflow">if</span> (!strcmp( alphamode, <span class="stringliteral">&quot;alphamultiply&quot;</span> ))</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;      srcRGB = srcA = GL_SRC_ALPHA;</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( alphamode, <span class="stringliteral">&quot;premultiplied&quot;</span> )) {</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;      <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;lighten&quot;</span> ) || !strcmp( mode, <span class="stringliteral">&quot;darken&quot;</span> ) || !strcmp( mode, <span class="stringliteral">&quot;multiply&quot;</span> ))</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;         NLUA_INVALID_PARAMETER(L);</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;   }</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160; </div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;   <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;alpha&quot;</span> ))</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;      dstRGB = dstA = GL_ONE_MINUS_SRC_ALPHA;</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;multiply&quot;</span> ))</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;      srcRGB = srcA = GL_DST_COLOR;</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;subtract&quot;</span> ))</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;      func = GL_FUNC_REVERSE_SUBTRACT;</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;add&quot;</span> ) ) {</div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;      func = GL_FUNC_REVERSE_SUBTRACT;</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;      srcA = GL_ZERO;</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;      dstRGB = dstA = GL_ONE;</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   }</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;lighten&quot;</span> ))</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;      func = GL_MAX;</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;darken&quot;</span> ))</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;      func = GL_MIN;</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp( mode, <span class="stringliteral">&quot;screen&quot;</span> ))</div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;      dstRGB = dstA = GL_ONE_MINUS_SRC_COLOR;</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (strcmp( mode, <span class="stringliteral">&quot;replace&quot;</span> ))</div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160; </div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;   glBlendEquation(func);</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   glBlendFuncSeparate(srcRGB, dstRGB, srcA, dstA);</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;   gl_checkErr();</div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160; </div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;}</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160; </div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160; </div>
+<div class="line"><a name="l00919"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#afe5a77b7c128385976c5300c176a49e5">  919</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#afe5a77b7c128385976c5300c176a49e5">gfxL_setScissor</a>( lua_State *L )</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;{</div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;   GLint x, y;</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;   GLsizei w, h;</div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160; </div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;   <span class="keywordflow">if</span> (lua_gettop(L)&gt;0) {</div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;      x = luaL_optinteger(L,1,0);</div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;      y = luaL_optinteger(L,2,0);</div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;      w = luaL_optinteger(L,3,0);</div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;      h = luaL_optinteger(L,4,0);</div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;      <a class="code" href="opengl__render_8c.html#aff163c825993f656b74cbeffbf11175d">gl_clipRect</a>( x, y, w, h );</div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;   }</div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;      <a class="code" href="opengl__render_8c.html#a70c906f1000dfc534d1ce1cdea4bbfb6">gl_unclipRect</a>();</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160; </div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;}</div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160; </div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160; </div>
+<div class="line"><a name="l00945"></a><span class="lineno"><a class="line" href="nlua__gfx_8c.html#a4b474956de5650d6d447a9478eaeb927">  945</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__gfx_8c.html#a4b474956de5650d6d447a9478eaeb927">gfxL_screenshot</a>( lua_State * L )</div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;{</div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;   LuaCanvas_t *lc;</div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;   <span class="keywordtype">int</span> mustfree;</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160; </div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;   <span class="comment">/* Set up canvas or try to reuse. */</span></div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;   <span class="keywordflow">if</span> (lua_iscanvas(L,1)) {</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;      lc = luaL_checkcanvas(L,1);</div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;      mustfree = 0;</div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;   }</div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;      lc = calloc( 1, <span class="keyword">sizeof</span>(LuaCanvas_t) );</div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;      canvas_new( lc, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rw, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rh );</div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;      mustfree = 1;</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;   }</div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160; </div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;   <span class="comment">/* Copy over. */</span></div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);</div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, lc-&gt;fbo);</div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;   <span class="comment">/* We flip it over because that seems to be what love2d API wants. */</span></div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   glBlitFramebuffer(0, 0, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rw, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.rh, 0, lc-&gt;tex-&gt;h, lc-&gt;tex-&gt;w, 0,  GL_COLOR_BUFFER_BIT, GL_NEAREST);</div>
+<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160; </div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;   <span class="comment">/* Return new or old canvas. */</span></div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;   lua_pushcanvas(L, *lc);</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;   <span class="keywordflow">if</span> (mustfree)</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;      free( lc );</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="afont_8c_html_a8ae26dda33edb6177e4c3f82141081c8"><div class="ttname"><a href="font_8c.html#a8ae26dda33edb6177e4c3f82141081c8">gl_printRawH</a></div><div class="ttdeci">void gl_printRawH(const glFont *ft_font, const gl_Matrix4 *H, const glColour *c, const double outlineR, const char *text)</div><div class="ttdoc">Prints text on screen using a transformation matrix.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00671">font.c:671</a></div></div>
-<div class="ttc" id="afont_8c_html_a884123cfb3d1579a2907fa999b754e09"><div class="ttname"><a href="font_8c.html#a884123cfb3d1579a2907fa999b754e09">gl_printTextRaw</a></div><div class="ttdeci">int gl_printTextRaw(const glFont *ft_font, const int width, const int height, double bx, double by, int line_height, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Prints a block of text that fits in the dimensions given.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00897">font.c:897</a></div></div>
+<div class="ttc" id="afont_8c_html_a8ae26dda33edb6177e4c3f82141081c8"><div class="ttname"><a href="font_8c.html#a8ae26dda33edb6177e4c3f82141081c8">gl_printRawH</a></div><div class="ttdeci">void gl_printRawH(const glFont *ft_font, const gl_Matrix4 *H, const glColour *c, const double outlineR, const char *text)</div><div class="ttdoc">Prints text on screen using a transformation matrix.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00717">font.c:717</a></div></div>
+<div class="ttc" id="afont_8c_html_a884123cfb3d1579a2907fa999b754e09"><div class="ttname"><a href="font_8c.html#a884123cfb3d1579a2907fa999b754e09">gl_printTextRaw</a></div><div class="ttdeci">int gl_printTextRaw(const glFont *ft_font, const int width, const int height, double bx, double by, int line_height, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Prints a block of text that fits in the dimensions given.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00943">font.c:943</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_ac6baa00bb26587c59bbea16f996917fa"><div class="ttname"><a href="nlua__gfx_8c.html#ac6baa00bb26587c59bbea16f996917fa">nlua_loadGFX</a></div><div class="ttdeci">int nlua_loadGFX(nlua_env env)</div><div class="ttdoc">Loads the graphics library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00094">nlua_gfx.c:94</a></div></div>
-<div class="ttc" id="anlua__gfx_8c_html_a4b474956de5650d6d447a9478eaeb927"><div class="ttname"><a href="nlua__gfx_8c.html#a4b474956de5650d6d447a9478eaeb927">gfxL_screenshot</a></div><div class="ttdeci">static int gfxL_screenshot(lua_State *L)</div><div class="ttdoc">Takes the current rendered game screen and returns it as a canvas.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00960">nlua_gfx.c:960</a></div></div>
+<div class="ttc" id="anlua__gfx_8c_html_a4b474956de5650d6d447a9478eaeb927"><div class="ttname"><a href="nlua__gfx_8c.html#a4b474956de5650d6d447a9478eaeb927">gfxL_screenshot</a></div><div class="ttdeci">static int gfxL_screenshot(lua_State *L)</div><div class="ttdoc">Takes the current rendered game screen and returns it as a canvas.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00945">nlua_gfx.c:945</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a5d286e8d26af8819ad2aa0a7ce11be83"><div class="ttname"><a href="opengl__render_8c.html#a5d286e8d26af8819ad2aa0a7ce11be83">gl_renderCircleH</a></div><div class="ttdeci">void gl_renderCircleH(const gl_Matrix4 *H, const glColour *c, int filled)</div><div class="ttdoc">Draws a circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00770">opengl_render.c:770</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_a2ef654219a99387ed8be569a25d8e058"><div class="ttname"><a href="nlua__gfx_8c.html#a2ef654219a99387ed8be569a25d8e058">gfxL_dim</a></div><div class="ttdeci">static int gfxL_dim(lua_State *L)</div><div class="ttdoc">Lua bindings to interact with rendering and the Naev graphical environment.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00134">nlua_gfx.c:134</a></div></div>
-<div class="ttc" id="anlua__gfx_8c_html_a4345b87a9bf80d2d184a7545e3470fcf"><div class="ttname"><a href="nlua__gfx_8c.html#a4345b87a9bf80d2d184a7545e3470fcf">gfxL_printf</a></div><div class="ttdeci">static int gfxL_printf(lua_State *L)</div><div class="ttdoc">Prints text on the screen using a font.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00710">nlua_gfx.c:710</a></div></div>
+<div class="ttc" id="anlua__gfx_8c_html_a4345b87a9bf80d2d184a7545e3470fcf"><div class="ttname"><a href="nlua__gfx_8c.html#a4345b87a9bf80d2d184a7545e3470fcf">gfxL_printf</a></div><div class="ttdeci">static int gfxL_printf(lua_State *L)</div><div class="ttdoc">Prints text on the screen using a font.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00695">nlua_gfx.c:695</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a0821320d252c6830206fc383d3167ff8"><div class="ttname"><a href="opengl__render_8c.html#a0821320d252c6830206fc383d3167ff8">gl_renderTexture</a></div><div class="ttdeci">void gl_renderTexture(const glTexture *texture, const double x, const double y, const double w, const double h, const double tx, const double ty, const double tw, const double th, const glColour *c, const double angle)</div><div class="ttdoc">Texture blitting backend.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00214">opengl_render.c:214</a></div></div>
 <div class="ttc" id="aopengl__vbo_8c_html_acec4f799c6a06738c21ddfef975d9c36"><div class="ttname"><a href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a></div><div class="ttdeci">void gl_vboActivateAttribOffset(gl_vbo *vbo, GLuint index, GLuint offset, GLint size, GLenum type, GLsizei stride)</div><div class="ttdoc">Activates a VBO's offset.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__vbo_8c_source.html#l00251">opengl_vbo.c:251</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_a6a7df73d9462e062055915ff57efb2ad"><div class="ttname"><a href="nlua__gfx_8c.html#a6a7df73d9462e062055915ff57efb2ad">gfxL_renderTex</a></div><div class="ttdeci">static int gfxL_renderTex(lua_State *L)</div><div class="ttdoc">Renders a texture.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00161">nlua_gfx.c:161</a></div></div>
@@ -782,54 +767,57 @@ $(function() {
 <div class="ttc" id="anlua__gfx_8c_html_a81c6933b9a42dd8398a994c375603efd"><div class="ttname"><a href="nlua__gfx_8c.html#a81c6933b9a42dd8398a994c375603efd">gfxL_printfDim</a></div><div class="ttdeci">static int gfxL_printfDim(lua_State *L)</div><div class="ttdoc">Gets the size of the text to print.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00587">nlua_gfx.c:587</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_ae962265f7bc9030c28f9219a0811a110"><div class="ttname"><a href="opengl__render_8c.html#ae962265f7bc9030c28f9219a0811a110">gl_renderStaticSprite</a></div><div class="ttdeci">void gl_renderStaticSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const glColour *c)</div><div class="ttdoc">Blits a sprite, position is in absolute screen coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00556">opengl_render.c:556</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a70c906f1000dfc534d1ce1cdea4bbfb6"><div class="ttname"><a href="opengl__render_8c.html#a70c906f1000dfc534d1ce1cdea4bbfb6">gl_unclipRect</a></div><div class="ttdeci">void gl_unclipRect(void)</div><div class="ttdoc">Clears the 2d clipping planes.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00828">opengl_render.c:828</a></div></div>
-<div class="ttc" id="afont_8c_html_aa71328b847f962c6f7b9ef29cf161575"><div class="ttname"><a href="font_8c.html#aa71328b847f962c6f7b9ef29cf161575">gl_printWidthForText</a></div><div class="ttdeci">int gl_printWidthForText(const glFont *ft_font, const char *text, const int width, int *outw)</div><div class="ttdoc">Gets the number of characters in text that fit into width, assuming your intent is to word-wrap at sa...</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00561">font.c:561</a></div></div>
-<div class="ttc" id="anlua__gfx_8c_html_ac3751f3b9397d66bb16d4b9b643b832e"><div class="ttname"><a href="nlua__gfx_8c.html#ac3751f3b9397d66bb16d4b9b643b832e">gfxL_printRestoreLast</a></div><div class="ttdeci">static int gfxL_printRestoreLast(lua_State *L)</div><div class="ttdoc">Restores the last saved internal colour state.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00688">nlua_gfx.c:688</a></div></div>
+<div class="ttc" id="anlua__gfx_8c_html_ac3751f3b9397d66bb16d4b9b643b832e"><div class="ttname"><a href="nlua__gfx_8c.html#ac3751f3b9397d66bb16d4b9b643b832e">gfxL_printRestoreLast</a></div><div class="ttdeci">static int gfxL_printRestoreLast(lua_State *L)</div><div class="ttdoc">Restores the last saved internal colour state.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00673">nlua_gfx.c:673</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_a30f59481cb2b6ff4cef3a58e8c25aba5"><div class="ttname"><a href="nlua__gfx_8c.html#a30f59481cb2b6ff4cef3a58e8c25aba5">gfxL_renderRect</a></div><div class="ttdeci">static int gfxL_renderRect(lua_State *L)</div><div class="ttdoc">Renders a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00426">nlua_gfx.c:426</a></div></div>
 <div class="ttc" id="aopengl_8c_html_ae34e0efdcb12b0be6286521bb6740706"><div class="ttname"><a href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a></div><div class="ttdeci">glInfo gl_screen</div><div class="ttdef"><b>Definition:</b> <a href="opengl_8c_source.html#l00055">opengl.c:55</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_aac3b5ac0f1435b10c871d133e7038468"><div class="ttname"><a href="nlua__gfx_8c.html#aac3b5ac0f1435b10c871d133e7038468">gfxL_renderCircle</a></div><div class="ttdeci">static int gfxL_renderCircle(lua_State *L)</div><div class="ttdoc">Renders a circle.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00486">nlua_gfx.c:486</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_a0716f4671c1e414682301f7c7bde0004"><div class="ttname"><a href="nlua__gfx_8c.html#a0716f4671c1e414682301f7c7bde0004">gfxL_renderTexScale</a></div><div class="ttdeci">static int gfxL_renderTexScale(lua_State *L)</div><div class="ttdoc">DEPRECATED: Renders a texture, scaled. Ultimately, love.graphics should handle this.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00218">nlua_gfx.c:218</a></div></div>
+<div class="ttc" id="afont_8c_html_a3d5330bd57a1e33dc2e07d5f2a564dcf"><div class="ttname"><a href="font_8c.html#a3d5330bd57a1e33dc2e07d5f2a564dcf">gl_printLineIteratorNext</a></div><div class="ttdeci">int gl_printLineIteratorNext(glPrintLineIterator *iter)</div><div class="ttdoc">Updates iter with the next line's information.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00544">font.c:544</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_ae68933792505d454c6e9d6b8e40e1db7"><div class="ttname"><a href="nlua__gfx_8c.html#ae68933792505d454c6e9d6b8e40e1db7">gfxL_renderTexRaw</a></div><div class="ttdeci">static int gfxL_renderTexRaw(lua_State *L)</div><div class="ttdoc">Renders a texture using the core render function.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00288">nlua_gfx.c:288</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_a4e04b518ac6800486fc89ced3ffc2273"><div class="ttname"><a href="nlua__gfx_8c.html#a4e04b518ac6800486fc89ced3ffc2273">gfxL_renderTexH</a></div><div class="ttdeci">static int gfxL_renderTexH(lua_State *L)</div><div class="ttdoc">Renders a texture using a transformation matrix.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00347">nlua_gfx.c:347</a></div></div>
 <div class="ttc" id="anlua__font_8c_html_a46cb5df5593db0037a867fdec163dfea"><div class="ttname"><a href="nlua__font_8c.html#a46cb5df5593db0037a867fdec163dfea">nlua_loadFont</a></div><div class="ttdeci">int nlua_loadFont(nlua_env env)</div><div class="ttdoc">Loads the font library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__font_8c_source.html#l00052">nlua_font.c:52</a></div></div>
-<div class="ttc" id="anlua__gfx_8c_html_a410cf37ec1383ca50736c77131ea7f26"><div class="ttname"><a href="nlua__gfx_8c.html#a410cf37ec1383ca50736c77131ea7f26">gfxL_printText</a></div><div class="ttdeci">static int gfxL_printText(lua_State *L)</div><div class="ttdoc">Prints a block of text on the screen.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00834">nlua_gfx.c:834</a></div></div>
+<div class="ttc" id="anlua__gfx_8c_html_a410cf37ec1383ca50736c77131ea7f26"><div class="ttname"><a href="nlua__gfx_8c.html#a410cf37ec1383ca50736c77131ea7f26">gfxL_printText</a></div><div class="ttdeci">static int gfxL_printText(lua_State *L)</div><div class="ttdoc">Prints a block of text on the screen.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00819">nlua_gfx.c:819</a></div></div>
 <div class="ttc" id="afont_8c_html_a41b3c9521462440c62eb76b43f606274"><div class="ttname"><a href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a></div><div class="ttdeci">glFont gl_smallFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00166">font.c:166</a></div></div>
-<div class="ttc" id="afont_8c_html_a4b39fc941b02b717a4c4fd85c2cbb569"><div class="ttname"><a href="font_8c.html#a4b39fc941b02b717a4c4fd85c2cbb569">gl_printRaw</a></div><div class="ttdeci">void gl_printRaw(const glFont *ft_font, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Prints text on screen.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00639">font.c:639</a></div></div>
+<div class="ttc" id="afont_8c_html_a097032dd62b38203428fd6fafce8f082"><div class="ttname"><a href="font_8c.html#a097032dd62b38203428fd6fafce8f082">gl_printLineIteratorFree</a></div><div class="ttdeci">void gl_printLineIteratorFree(glPrintLineIterator *iter)</div><div class="ttdoc">Frees iterators returned by gl_printLineIteratorInit.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00559">font.c:559</a></div></div>
+<div class="ttc" id="afont_8c_html_a4b39fc941b02b717a4c4fd85c2cbb569"><div class="ttname"><a href="font_8c.html#a4b39fc941b02b717a4c4fd85c2cbb569">gl_printRaw</a></div><div class="ttdeci">void gl_printRaw(const glFont *ft_font, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Prints text on screen.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00685">font.c:685</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
 <div class="ttc" id="anlua__shader_8c_html_a9ad15caa8cf179d11b3b795b875e57ad"><div class="ttname"><a href="nlua__shader_8c.html#a9ad15caa8cf179d11b3b795b875e57ad">nlua_loadShader</a></div><div class="ttdeci">int nlua_loadShader(nlua_env env)</div><div class="ttdoc">Loads the shader library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__shader_8c_source.html#l00062">nlua_shader.c:62</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_ace552e2c7ff042d6ddf0b451128706e9"><div class="ttname"><a href="nlua__gfx_8c.html#ace552e2c7ff042d6ddf0b451128706e9">gfxL_renderCircleH</a></div><div class="ttdeci">static int gfxL_renderCircleH(lua_State *L)</div><div class="ttdoc">Renders a circle given a transformation matrix.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00516">nlua_gfx.c:516</a></div></div>
 <div class="ttc" id="anlua__transform_8c_html_ad233b99521501dbd6761c9543bc229f8"><div class="ttname"><a href="nlua__transform_8c.html#ad233b99521501dbd6761c9543bc229f8">luaL_checktransform</a></div><div class="ttdeci">gl_Matrix4 * luaL_checktransform(lua_State *L, int ind)</div><div class="ttdoc">Gets transform at index or raises error if there is no transform at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__transform_8c_source.html#l00086">nlua_transform.c:86</a></div></div>
-<div class="ttc" id="anlua__gfx_8c_html_ac61bff90e5c2bc6e3c9795466ca517c5"><div class="ttname"><a href="nlua__gfx_8c.html#ac61bff90e5c2bc6e3c9795466ca517c5">gfxL_printH</a></div><div class="ttdeci">static int gfxL_printH(lua_State *L)</div><div class="ttdoc">Prints text on the screen using a font with a transformation matirx.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00750">nlua_gfx.c:750</a></div></div>
+<div class="ttc" id="anlua__gfx_8c_html_ac61bff90e5c2bc6e3c9795466ca517c5"><div class="ttname"><a href="nlua__gfx_8c.html#ac61bff90e5c2bc6e3c9795466ca517c5">gfxL_printH</a></div><div class="ttdeci">static int gfxL_printH(lua_State *L)</div><div class="ttdoc">Prints text on the screen using a font with a transformation matirx.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00735">nlua_gfx.c:735</a></div></div>
 <div class="ttc" id="anlua__col_8c_html_a74eb0e4bb2e8b7ecc9a8062fc0b17315"><div class="ttname"><a href="nlua__col_8c.html#a74eb0e4bb2e8b7ecc9a8062fc0b17315">luaL_checkcolour</a></div><div class="ttdeci">glColour * luaL_checkcolour(lua_State *L, int ind)</div><div class="ttdoc">Gets colour at index or raises error if there is no colour at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__col_8c_source.html#l00094">nlua_col.c:94</a></div></div>
 <div class="ttc" id="afont_8c_html_a31d45dd9ccab0e3b594290f9807d1b37"><div class="ttname"><a href="font_8c.html#a31d45dd9ccab0e3b594290f9807d1b37">gl_printRestoreClear</a></div><div class="ttdeci">void gl_printRestoreClear(void)</div><div class="ttdoc">Clears the restoration.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00390">font.c:390</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a79637b81de80d8e3599ba65b99a4fa7a"><div class="ttname"><a href="opengl__render_8c.html#a79637b81de80d8e3599ba65b99a4fa7a">gl_renderScaleSprite</a></div><div class="ttdeci">void gl_renderScaleSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const double bw, const double bh, const glColour *c)</div><div class="ttdoc">Blits a scaled sprite, position is in absolute screen coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00586">opengl_render.c:586</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_af58e06263718891d0c5fea6b822ed1b0"><div class="ttname"><a href="nlua__tex_8c.html#af58e06263718891d0c5fea6b822ed1b0">nlua_loadTex</a></div><div class="ttdeci">int nlua_loadTex(nlua_env env)</div><div class="ttdoc">Loads the texture library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00070">nlua_tex.c:70</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_aff163c825993f656b74cbeffbf11175d"><div class="ttname"><a href="opengl__render_8c.html#aff163c825993f656b74cbeffbf11175d">gl_clipRect</a></div><div class="ttdeci">void gl_clipRect(int x, int y, int w, int h)</div><div class="ttdoc">Sets up 2d clipping planes around a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00813">opengl_render.c:813</a></div></div>
-<div class="ttc" id="afont_8c_html_a762ad865d8d9c5368c95543c7bb57aa2"><div class="ttname"><a href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a></div><div class="ttdeci">int gl_printMidRaw(const glFont *ft_font, int width, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Displays text centered in position and width.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00814">font.c:814</a></div></div>
-<div class="ttc" id="anlua__gfx_8c_html_afcbb042a7526015fa47d94a5813ca576"><div class="ttname"><a href="nlua__gfx_8c.html#afcbb042a7526015fa47d94a5813ca576">gfxL_print</a></div><div class="ttdeci">static int gfxL_print(lua_State *L)</div><div class="ttdoc">Prints text on the screen.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00789">nlua_gfx.c:789</a></div></div>
+<div class="ttc" id="afont_8c_html_a762ad865d8d9c5368c95543c7bb57aa2"><div class="ttname"><a href="font_8c.html#a762ad865d8d9c5368c95543c7bb57aa2">gl_printMidRaw</a></div><div class="ttdeci">int gl_printMidRaw(const glFont *ft_font, int width, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Displays text centered in position and width.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00860">font.c:860</a></div></div>
+<div class="ttc" id="anlua__gfx_8c_html_afcbb042a7526015fa47d94a5813ca576"><div class="ttname"><a href="nlua__gfx_8c.html#afcbb042a7526015fa47d94a5813ca576">gfxL_print</a></div><div class="ttdeci">static int gfxL_print(lua_State *L)</div><div class="ttdoc">Prints text on the screen.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00774">nlua_gfx.c:774</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_a3a798f1516fb72e85d1b732eee9d37f6"><div class="ttname"><a href="nlua__gfx_8c.html#a3a798f1516fb72e85d1b732eee9d37f6">gfxL_methods</a></div><div class="ttdeci">static const luaL_Reg gfxL_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00057">nlua_gfx.c:57</a></div></div>
+<div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00045">naev.h:45</a></div></div>
 <div class="ttc" id="afont_8c_html_adf2630ef13d612686cff000f1552ef61"><div class="ttname"><a href="font_8c.html#adf2630ef13d612686cff000f1552ef61">gl_printRestoreLast</a></div><div class="ttdeci">void gl_printRestoreLast(void)</div><div class="ttdoc">Restores last colour.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00399">font.c:399</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_ad95fff9931ab11c7a6afeb58d121777c"><div class="ttname"><a href="opengl__render_8c.html#ad95fff9931ab11c7a6afeb58d121777c">gl_renderRectEmpty</a></div><div class="ttdeci">void gl_renderRectEmpty(double x, double y, double w, double h, const glColour *c)</div><div class="ttdoc">Renders a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00123">opengl_render.c:123</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="anlua__gfx_8c_html_ae9fd2b56f7246826c7553c528a0714c9"><div class="ttname"><a href="nlua__gfx_8c.html#ae9fd2b56f7246826c7553c528a0714c9">gfxL_printDim</a></div><div class="ttdeci">static int gfxL_printDim(lua_State *L)</div><div class="ttdoc">Gets the size of the text to print.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00559">nlua_gfx.c:559</a></div></div>
-<div class="ttc" id="anlua__gfx_8c_html_af9a4fdd95d7b5cb7d1324455ddf961b4"><div class="ttname"><a href="nlua__gfx_8c.html#af9a4fdd95d7b5cb7d1324455ddf961b4">gfxL_printRestoreClear</a></div><div class="ttdeci">static int gfxL_printRestoreClear(lua_State *L)</div><div class="ttdoc">Clears the saved internal colour state.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00676">nlua_gfx.c:676</a></div></div>
+<div class="ttc" id="anlua__gfx_8c_html_af9a4fdd95d7b5cb7d1324455ddf961b4"><div class="ttname"><a href="nlua__gfx_8c.html#af9a4fdd95d7b5cb7d1324455ddf961b4">gfxL_printRestoreClear</a></div><div class="ttdeci">static int gfxL_printRestoreClear(lua_State *L)</div><div class="ttdoc">Clears the saved internal colour state.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00661">nlua_gfx.c:661</a></div></div>
 <div class="ttc" id="anlua__col_8c_html_a59f196b9f1362420299fada20361d713"><div class="ttname"><a href="nlua__col_8c.html#a59f196b9f1362420299fada20361d713">nlua_loadCol</a></div><div class="ttdeci">int nlua_loadCol(nlua_env env)</div><div class="ttdoc">Loads the colour library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__col_8c_source.html#l00056">nlua_col.c:56</a></div></div>
 <div class="ttc" id="afont_8c_html_a70108689d1f2c28b6e91f763e3918e9b"><div class="ttname"><a href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a></div><div class="ttdeci">glFont gl_defFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00165">font.c:165</a></div></div>
-<div class="ttc" id="afont_8c_html_a54ef6885d2c4aba9620cf9034f1e0587"><div class="ttname"><a href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a></div><div class="ttdeci">int gl_printWidthRaw(const glFont *ft_font, const char *text)</div><div class="ttdoc">Gets the width that it would take to print some text.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01003">font.c:1003</a></div></div>
+<div class="ttc" id="afont_8c_html_a54ef6885d2c4aba9620cf9034f1e0587"><div class="ttname"><a href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a></div><div class="ttdeci">int gl_printWidthRaw(const glFont *ft_font, const char *text)</div><div class="ttdoc">Gets the width that it would take to print some text.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01049">font.c:1049</a></div></div>
 <div class="ttc" id="anlua__transform_8c_html_afad7220fa7921aaa760ed7f6c050379e"><div class="ttname"><a href="nlua__transform_8c.html#afad7220fa7921aaa760ed7f6c050379e">nlua_loadTransform</a></div><div class="ttdeci">int nlua_loadTransform(nlua_env env)</div><div class="ttdoc">Loads the transform library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__transform_8c_source.html#l00056">nlua_transform.c:56</a></div></div>
-<div class="ttc" id="anlua__gfx_8c_html_afe5a77b7c128385976c5300c176a49e5"><div class="ttname"><a href="nlua__gfx_8c.html#afe5a77b7c128385976c5300c176a49e5">gfxL_setScissor</a></div><div class="ttdeci">static int gfxL_setScissor(lua_State *L)</div><div class="ttdoc">Sets the scissor clipping.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00934">nlua_gfx.c:934</a></div></div>
-<div class="ttc" id="afont_8c_html_a0f1a2e63659f8c8e5d3abb1f6766cc97"><div class="ttname"><a href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a></div><div class="ttdeci">int gl_printHeightRaw(const glFont *ft_font, const int width, const char *text)</div><div class="ttdoc">Gets the height of a non-formatted string.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01078">font.c:1078</a></div></div>
+<div class="ttc" id="anlua__gfx_8c_html_afe5a77b7c128385976c5300c176a49e5"><div class="ttname"><a href="nlua__gfx_8c.html#afe5a77b7c128385976c5300c176a49e5">gfxL_setScissor</a></div><div class="ttdeci">static int gfxL_setScissor(lua_State *L)</div><div class="ttdoc">Sets the scissor clipping.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00919">nlua_gfx.c:919</a></div></div>
+<div class="ttc" id="afont_8c_html_a0f1a2e63659f8c8e5d3abb1f6766cc97"><div class="ttname"><a href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a></div><div class="ttdeci">int gl_printHeightRaw(const glFont *ft_font, const int width, const char *text)</div><div class="ttdoc">Gets the height of a non-formatted string.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01124">font.c:1124</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_addccecbc528ded10abb7828f99fe4a36"><div class="ttname"><a href="nlua__gfx_8c.html#addccecbc528ded10abb7828f99fe4a36">gfxL_fontSize</a></div><div class="ttdeci">static int gfxL_fontSize(lua_State *L)</div><div class="ttdoc">Gets the size of the font.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00539">nlua_gfx.c:539</a></div></div>
-<div class="ttc" id="anlua__gfx_8c_html_a92ab2de91d96b1fdd855579a147d9fde"><div class="ttname"><a href="nlua__gfx_8c.html#a92ab2de91d96b1fdd855579a147d9fde">gfxL_setBlendMode</a></div><div class="ttdeci">static int gfxL_setBlendMode(lua_State *L)</div><div class="ttdoc">Sets the OpenGL blending mode. See https://love2d.org/wiki/love.graphics.setBlendMode as of version 0...</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00870">nlua_gfx.c:870</a></div></div>
+<div class="ttc" id="anlua__gfx_8c_html_a92ab2de91d96b1fdd855579a147d9fde"><div class="ttname"><a href="nlua__gfx_8c.html#a92ab2de91d96b1fdd855579a147d9fde">gfxL_setBlendMode</a></div><div class="ttdeci">static int gfxL_setBlendMode(lua_State *L)</div><div class="ttdoc">Sets the OpenGL blending mode. See https://love2d.org/wiki/love.graphics.setBlendMode as of version 0...</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00855">nlua_gfx.c:855</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_a7247977b96dd2539ed8b154f4ba7a16b"><div class="ttname"><a href="nlua__gfx_8c.html#a7247977b96dd2539ed8b154f4ba7a16b">gfxL_printfWrap</a></div><div class="ttdeci">static int gfxL_printfWrap(lua_State *L)</div><div class="ttdoc">Gets the wrap for text.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00617">nlua_gfx.c:617</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_a4a2511286a7f85cc4d71a34b84a63ebd"><div class="ttname"><a href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a></div><div class="ttdeci">glTexture * luaL_checktex(lua_State *L, int ind)</div><div class="ttdoc">Gets texture at index or raises error if there is no texture at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00109">nlua_tex.c:109</a></div></div>
 <div class="ttc" id="anlua__shader_8c_html_ad07b34c30d33ae0489b53b06d46eee67"><div class="ttname"><a href="nlua__shader_8c.html#ad07b34c30d33ae0489b53b06d46eee67">luaL_checkshader</a></div><div class="ttdeci">LuaShader_t * luaL_checkshader(lua_State *L, int ind)</div><div class="ttdoc">Gets shader at index or raises error if there is no shader at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__shader_8c_source.html#l00092">nlua_shader.c:92</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a07c18360de97d72996c913433d2ce868"><div class="ttname"><a href="opengl__render_8c.html#a07c18360de97d72996c913433d2ce868">gl_renderCircle</a></div><div class="ttdeci">void gl_renderCircle(const double cx, const double cy, const double r, const glColour *c, int filled)</div><div class="ttdoc">Draws a circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00748">opengl_render.c:748</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a1e428781a5f08429de391e9b9fe60b30"><div class="ttname"><a href="opengl__render_8c.html#a1e428781a5f08429de391e9b9fe60b30">gl_renderRect</a></div><div class="ttdeci">void gl_renderRect(double x, double y, double w, double h, const glColour *c)</div><div class="ttdoc">Renders a rectangle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00101">opengl_render.c:101</a></div></div>
+<div class="ttc" id="afont_8c_html_ab57fdb9aacd63b6f6b35daeb791d0da6"><div class="ttname"><a href="font_8c.html#ab57fdb9aacd63b6f6b35daeb791d0da6">gl_printLineIteratorInit</a></div><div class="ttdeci">glPrintLineIterator * gl_printLineIteratorInit(const glFont *ft_font, const char *text, int width)</div><div class="ttdoc">Return an iterator object for word-wrapping text.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00527">font.c:527</a></div></div>
 <div class="ttc" id="anlua__font_8c_html_a460f9590bddbc53d1e535433aebbe11b"><div class="ttname"><a href="nlua__font_8c.html#a460f9590bddbc53d1e535433aebbe11b">luaL_checkfont</a></div><div class="ttdeci">glFont * luaL_checkfont(lua_State *L, int ind)</div><div class="ttdoc">Gets font at index or raises error if there is no font at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__font_8c_source.html#l00082">nlua_font.c:82</a></div></div>
 <div class="ttc" id="anlua__col_8c_html_a17656a6c1b1be37486cdab3733a55117"><div class="ttname"><a href="nlua__col_8c.html#a17656a6c1b1be37486cdab3733a55117">lua_iscolour</a></div><div class="ttdeci">int lua_iscolour(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a colour.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__col_8c_source.html#l00124">nlua_col.c:124</a></div></div>
 <div class="ttc" id="anlua__gfx_8c_html_a136ae034ab2c2b30b166ff96ee8bf72e"><div class="ttname"><a href="nlua__gfx_8c.html#a136ae034ab2c2b30b166ff96ee8bf72e">gfxL_renderRectH</a></div><div class="ttdeci">static int gfxL_renderRectH(lua_State *L)</div><div class="ttdoc">Renders a rectangle given a transformation matrix.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__gfx_8c_source.html#l00460">nlua_gfx.c:460</a></div></div>
-<div class="ttc" id="afont_8c_html_ac0d563c73d894096b743f8946f1dd916"><div class="ttname"><a href="font_8c.html#ac0d563c73d894096b743f8946f1dd916">gl_printMaxRaw</a></div><div class="ttdeci">int gl_printMaxRaw(const glFont *ft_font, const int max, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Behaves like gl_printRaw but stops displaying text after a certain distance.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00746">font.c:746</a></div></div>
+<div class="ttc" id="afont_8c_html_ac0d563c73d894096b743f8946f1dd916"><div class="ttname"><a href="font_8c.html#ac0d563c73d894096b743f8946f1dd916">gl_printMaxRaw</a></div><div class="ttdeci">int gl_printMaxRaw(const glFont *ft_font, const int max, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Behaves like gl_printRaw but stops displaying text after a certain distance.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00792">font.c:792</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
