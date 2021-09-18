@@ -750,16 +750,16 @@ $(function() {
 <div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#ab165285133388e9a6369af6d28d4e6c8">systems_stack</a>); i++)</div>
 <div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;         <span class="keywordflow">if</span> (strcmp(<a class="code" href="space_8c.html#ab165285133388e9a6369af6d28d4e6c8">systems_stack</a>[i].name, sysname)==0)</div>
 <div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;            <span class="keywordflow">return</span> &amp;<a class="code" href="space_8c.html#ab165285133388e9a6369af6d28d4e6c8">systems_stack</a>[i];</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;      <span class="keywordflow">goto</span> system_notfound;</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;   }</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160; </div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   <span class="keyword">const</span> StarSystem s = {.name = (<span class="keywordtype">char</span>*)sysname};</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   StarSystem *found = bsearch( &amp;s, <a class="code" href="space_8c.html#ab165285133388e9a6369af6d28d4e6c8">systems_stack</a>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#ab165285133388e9a6369af6d28d4e6c8">systems_stack</a>), <span class="keyword">sizeof</span>(StarSystem), system_cmp );</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;   <span class="keywordflow">if</span> (found != NULL)</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;      <span class="keywordflow">return</span> found;</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160; </div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;system_notfound:</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;      WARN(_(<span class="stringliteral">&quot;System &#39;%s&#39; not found in stack&quot;</span>), sysname);</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;   }</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160; </div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   <span class="keyword">const</span> StarSystem s = {.name = (<span class="keywordtype">char</span>*)sysname};</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;   StarSystem *found = bsearch( &amp;s, <a class="code" href="space_8c.html#ab165285133388e9a6369af6d28d4e6c8">systems_stack</a>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#ab165285133388e9a6369af6d28d4e6c8">systems_stack</a>), <span class="keyword">sizeof</span>(StarSystem), system_cmp );</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;   <span class="keywordflow">if</span> (found != NULL)</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;      <span class="keywordflow">return</span> found;</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160; </div>
 <div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;   WARN(_(<span class="stringliteral">&quot;System &#39;%s&#39; not found in stack&quot;</span>), sysname);</div>
 <div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;}</div>
@@ -821,16 +821,16 @@ $(function() {
 <div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#abb569610af660991d6d917f315fc6db0">planet_stack</a>); i++)</div>
 <div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;         <span class="keywordflow">if</span> (strcmp(<a class="code" href="space_8c.html#abb569610af660991d6d917f315fc6db0">planet_stack</a>[i].name, planetname)==0)</div>
 <div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;            <span class="keywordflow">return</span> &amp;<a class="code" href="space_8c.html#abb569610af660991d6d917f315fc6db0">planet_stack</a>[i];</div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;      <span class="keywordflow">goto</span> planet_notfound;</div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   }</div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160; </div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;   <span class="keyword">const</span> <a class="code" href="structPlanet.html">Planet</a> p = {.name = (<span class="keywordtype">char</span>*)planetname};</div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *found = bsearch( &amp;p, <a class="code" href="space_8c.html#abb569610af660991d6d917f315fc6db0">planet_stack</a>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#abb569610af660991d6d917f315fc6db0">planet_stack</a>), <span class="keyword">sizeof</span>(<a class="code" href="structPlanet.html">Planet</a>), planet_cmp );</div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;   <span class="keywordflow">if</span> (found != NULL)</div>
-<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;      <span class="keywordflow">return</span> found;</div>
-<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160; </div>
-<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;planet_notfound:</div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;      WARN(_(<span class="stringliteral">&quot;Planet &#39;%s&#39; not found in the universe&quot;</span>), planetname);</div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;   }</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160; </div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;   <span class="keyword">const</span> <a class="code" href="structPlanet.html">Planet</a> p = {.name = (<span class="keywordtype">char</span>*)planetname};</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *found = bsearch( &amp;p, <a class="code" href="space_8c.html#abb569610af660991d6d917f315fc6db0">planet_stack</a>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="space_8c.html#abb569610af660991d6d917f315fc6db0">planet_stack</a>), <span class="keyword">sizeof</span>(<a class="code" href="structPlanet.html">Planet</a>), planet_cmp );</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;   <span class="keywordflow">if</span> (found != NULL)</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;      <span class="keywordflow">return</span> found;</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160; </div>
 <div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;   WARN(_(<span class="stringliteral">&quot;Planet &#39;%s&#39; not found in the universe&quot;</span>), planetname);</div>
 <div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;   <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;}</div>
