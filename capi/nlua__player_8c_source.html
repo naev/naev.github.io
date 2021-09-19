@@ -761,7 +761,7 @@ $(function() {
 <div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;   lua_newtable(L);</div>
 <div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(outfits); i++) {</div>
 <div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160;      <a class="code" href="nlua__outfit_8c.html#a7e09f0d045d2e8a11b6799e4bf47fa20">lua_pushoutfit</a>(L, (Outfit*)outfits[i].o );</div>
-<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;      lua_rawseti(L, -3, i+1);</div>
+<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;      lua_rawseti(L, -2, i+1);</div>
 <div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;   }</div>
 <div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160; </div>
 <div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;   <span class="keywordflow">return</span> 1;</div>
@@ -793,295 +793,289 @@ $(function() {
 <div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160; </div>
 <div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;   NLUA_CHECKRW(L);</div>
 <div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160; </div>
-<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;   <span class="comment">/* Defaults. */</span></div>
-<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;   q = 1;</div>
-<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160; </div>
-<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
-<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;   o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L, 1);</div>
-<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;   <span class="keywordflow">if</span> (lua_gettop(L) &gt; 1)</div>
-<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;      q = luaL_checkint(L, 2);</div>
-<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160; </div>
-<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;   <span class="comment">/* Add the outfits. */</span></div>
-<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;   <a class="code" href="player_8c.html#a2879b779c15cddabfa8b93d43351ae1d">player_addOutfit</a>( o, q );</div>
-<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160; </div>
-<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;   <span class="comment">/* Update equipment list. */</span></div>
-<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;   <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
-<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160; </div>
-<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;}</div>
-<div class="line"><a name="l01095"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a537d95ee80fe9ebc0e7a6b21c90b126a"> 1095</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a537d95ee80fe9ebc0e7a6b21c90b126a">playerL_rmOutfit</a>( lua_State *L )</div>
-<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;{</div>
-<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;   <span class="keyword">const</span> Outfit *o, **outfits;</div>
-<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;   <span class="keyword">const</span> PlayerOutfit_t *poutfits;</div>
-<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;   <span class="keywordtype">int</span> i, q;</div>
-<div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160; </div>
-<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;   NLUA_MIN_ARGS(1);</div>
-<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160; </div>
-<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;   <span class="comment">/* Get quantity. */</span></div>
-<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;   q = 1; <span class="comment">/* Default. */</span></div>
-<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;   <span class="keywordflow">if</span> (lua_gettop(L) &gt; 1)</div>
-<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;      q = luaL_checkint(L, 2);</div>
-<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160; </div>
-<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;   <span class="comment">/* Handle special case it&#39;s &quot;all&quot;. */</span></div>
-<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160;   <span class="keywordflow">if</span> (lua_isstring(L, 1)) {</div>
-<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;      str = luaL_checkstring(L, 1);</div>
+<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
+<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;   o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L, 1);</div>
+<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;   q = luaL_optinteger(L, 2, 1);</div>
+<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160; </div>
+<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;   <span class="comment">/* Add the outfits. */</span></div>
+<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;   <a class="code" href="player_8c.html#a2879b779c15cddabfa8b93d43351ae1d">player_addOutfit</a>( o, q );</div>
+<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160; </div>
+<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;   <span class="comment">/* Update equipment list. */</span></div>
+<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;   <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
+<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160; </div>
+<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;}</div>
+<div class="line"><a name="l01091"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a537d95ee80fe9ebc0e7a6b21c90b126a"> 1091</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a537d95ee80fe9ebc0e7a6b21c90b126a">playerL_rmOutfit</a>( lua_State *L )</div>
+<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;{</div>
+<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;   <span class="keyword">const</span> Outfit *o, **outfits;</div>
+<div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160;   <span class="keyword">const</span> PlayerOutfit_t *poutfits;</div>
+<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;   <span class="keywordtype">int</span> i, q;</div>
+<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160; </div>
+<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;   NLUA_MIN_ARGS(1);</div>
+<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160; </div>
+<div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160;   <span class="comment">/* Get quantity. */</span></div>
+<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;   q = luaL_optinteger(L, 2, 1);</div>
+<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160; </div>
+<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;   <span class="comment">/* Handle special case it&#39;s &quot;all&quot;. */</span></div>
+<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;   <span class="keywordflow">if</span> (lua_isstring(L, 1)) {</div>
+<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;      str = luaL_checkstring(L, 1);</div>
+<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160; </div>
+<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;      <span class="keywordflow">if</span> (strcmp(str,<span class="stringliteral">&quot;all&quot;</span>)==0) {</div>
+<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160;         poutfits = <a class="code" href="player_8c.html#a058bd6735b0b4f15037481a86d85dc92">player_getOutfits</a>();</div>
+<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;         outfits = <a class="code" href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a>( <span class="keyword">const</span> Outfit*, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>( poutfits ) );</div>
+<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(poutfits); i++)</div>
+<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;            <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;outfits, poutfits[i].o );</div>
 <div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160; </div>
-<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;      <span class="keywordflow">if</span> (strcmp(str,<span class="stringliteral">&quot;all&quot;</span>)==0) {</div>
-<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;         poutfits = <a class="code" href="player_8c.html#a058bd6735b0b4f15037481a86d85dc92">player_getOutfits</a>();</div>
-<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;         outfits = <a class="code" href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a>( <span class="keyword">const</span> Outfit*, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>( poutfits ) );</div>
-<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(poutfits); i++)</div>
-<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160;            <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;outfits, poutfits[i].o );</div>
-<div class="line"><a name="l01119"></a><span class="lineno"> 1119</span>&#160; </div>
-<div class="line"><a name="l01120"></a><span class="lineno"> 1120</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(outfits); i++) {</div>
-<div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160;            o = outfits[i];</div>
-<div class="line"><a name="l01122"></a><span class="lineno"> 1122</span>&#160;            q = <a class="code" href="player_8c.html#ad0d77b1bddb767ee622ce0d0a98b5068">player_outfitOwned</a>(o);</div>
-<div class="line"><a name="l01123"></a><span class="lineno"> 1123</span>&#160;            <a class="code" href="player_8c.html#a0d19cbccd09a8dca98d329a8f538636d">player_rmOutfit</a>(o, q);</div>
-<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;         }</div>
-<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;         <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(outfits);</div>
+<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;         <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(outfits); i++) {</div>
+<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;            o = outfits[i];</div>
+<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;            q = <a class="code" href="player_8c.html#ad0d77b1bddb767ee622ce0d0a98b5068">player_outfitOwned</a>(o);</div>
+<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160;            <a class="code" href="player_8c.html#a0d19cbccd09a8dca98d329a8f538636d">player_rmOutfit</a>(o, q);</div>
+<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160;         }</div>
+<div class="line"><a name="l01119"></a><span class="lineno"> 1119</span>&#160;         <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l01120"></a><span class="lineno"> 1120</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(outfits);</div>
+<div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160; </div>
+<div class="line"><a name="l01122"></a><span class="lineno"> 1122</span>&#160;         <span class="comment">/* Update equipment list. */</span></div>
+<div class="line"><a name="l01123"></a><span class="lineno"> 1123</span>&#160;         <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
+<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;      }</div>
+<div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160;   }</div>
 <div class="line"><a name="l01127"></a><span class="lineno"> 1127</span>&#160; </div>
-<div class="line"><a name="l01128"></a><span class="lineno"> 1128</span>&#160;         <span class="comment">/* Update equipment list. */</span></div>
-<div class="line"><a name="l01129"></a><span class="lineno"> 1129</span>&#160;         <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
-<div class="line"><a name="l01130"></a><span class="lineno"> 1130</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01131"></a><span class="lineno"> 1131</span>&#160;      }</div>
-<div class="line"><a name="l01132"></a><span class="lineno"> 1132</span>&#160;   }</div>
-<div class="line"><a name="l01133"></a><span class="lineno"> 1133</span>&#160; </div>
-<div class="line"><a name="l01134"></a><span class="lineno"> 1134</span>&#160;   <span class="comment">/* Usual case. */</span></div>
-<div class="line"><a name="l01135"></a><span class="lineno"> 1135</span>&#160;   o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L, 1);</div>
-<div class="line"><a name="l01136"></a><span class="lineno"> 1136</span>&#160;   <a class="code" href="player_8c.html#a0d19cbccd09a8dca98d329a8f538636d">player_rmOutfit</a>( o, q );</div>
+<div class="line"><a name="l01128"></a><span class="lineno"> 1128</span>&#160;   <span class="comment">/* Usual case. */</span></div>
+<div class="line"><a name="l01129"></a><span class="lineno"> 1129</span>&#160;   o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L, 1);</div>
+<div class="line"><a name="l01130"></a><span class="lineno"> 1130</span>&#160;   <a class="code" href="player_8c.html#a0d19cbccd09a8dca98d329a8f538636d">player_rmOutfit</a>( o, q );</div>
+<div class="line"><a name="l01131"></a><span class="lineno"> 1131</span>&#160; </div>
+<div class="line"><a name="l01132"></a><span class="lineno"> 1132</span>&#160;   <span class="comment">/* Update equipment list. */</span></div>
+<div class="line"><a name="l01133"></a><span class="lineno"> 1133</span>&#160;   <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
+<div class="line"><a name="l01134"></a><span class="lineno"> 1134</span>&#160; </div>
+<div class="line"><a name="l01135"></a><span class="lineno"> 1135</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01136"></a><span class="lineno"> 1136</span>&#160;}</div>
 <div class="line"><a name="l01137"></a><span class="lineno"> 1137</span>&#160; </div>
-<div class="line"><a name="l01138"></a><span class="lineno"> 1138</span>&#160;   <span class="comment">/* Update equipment list. */</span></div>
-<div class="line"><a name="l01139"></a><span class="lineno"> 1139</span>&#160;   <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
-<div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160; </div>
-<div class="line"><a name="l01141"></a><span class="lineno"> 1141</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01142"></a><span class="lineno"> 1142</span>&#160;}</div>
-<div class="line"><a name="l01143"></a><span class="lineno"> 1143</span>&#160; </div>
-<div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160; </div>
-<div class="line"><a name="l01158"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#aa29a197c7916a677206b22ddb666995f"> 1158</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#aa29a197c7916a677206b22ddb666995f">playerL_addShip</a>( lua_State *L )</div>
-<div class="line"><a name="l01159"></a><span class="lineno"> 1159</span>&#160;{</div>
-<div class="line"><a name="l01160"></a><span class="lineno"> 1160</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l01161"></a><span class="lineno"> 1161</span>&#160;   Pilot *new_ship;</div>
-<div class="line"><a name="l01162"></a><span class="lineno"> 1162</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
-<div class="line"><a name="l01163"></a><span class="lineno"> 1163</span>&#160;   <span class="keyword">const</span> Ship *s     = <a class="code" href="nlua__ship_8c.html#a3544a3994c8eeeaebd07b13d23271e76">luaL_validship</a>(L, 1);</div>
-<div class="line"><a name="l01164"></a><span class="lineno"> 1164</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name  = luaL_optstring(L, 2, _(s-&gt;name) );</div>
-<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;   <span class="keywordtype">int</span> noname        = lua_toboolean(L, 3);</div>
-<div class="line"><a name="l01166"></a><span class="lineno"> 1166</span>&#160;   <span class="comment">/* Add the ship, look in case it&#39;s cancelled. */</span></div>
-<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;   <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160;      new_ship = <a class="code" href="player_8c.html#ad6800f0cf70aab0371520b5eba6ecec5">player_newShip</a>( s, name, 0, noname );</div>
-<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;   } <span class="keywordflow">while</span> (new_ship == NULL);</div>
-<div class="line"><a name="l01170"></a><span class="lineno"> 1170</span>&#160;   <span class="comment">/* Return the new name. */</span></div>
-<div class="line"><a name="l01171"></a><span class="lineno"> 1171</span>&#160;   lua_pushstring( L, new_ship-&gt;name );</div>
-<div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160;}</div>
-<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160; </div>
-<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160; </div>
-<div class="line"><a name="l01187"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#adbb25894bd370a8a823882a0dd18f9ef"> 1187</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#adbb25894bd370a8a823882a0dd18f9ef">playerL_swapShip</a>( lua_State *L )</div>
-<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;{</div>
-<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;   PLAYER_CHECK();</div>
-<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160; </div>
-<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;   <span class="keywordtype">int</span> ignore_cargo= lua_toboolean(L,2);</div>
-<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *cur = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;name;</div>
-<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160;   <a class="code" href="player_8c.html#a147eb5368883d9cb74209873c106a5b3">player_swapShip</a>( str, !ignore_cargo );</div>
-<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;   <span class="keywordflow">if</span> (lua_toboolean(L,3))</div>
-<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;      <a class="code" href="player_8c.html#a7c559775373a88bb8c7855c33dd45d5a">player_rmShip</a>( cur );</div>
-<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160; </div>
-<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;}</div>
-<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160; </div>
-<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160; </div>
-<div class="line"><a name="l01212"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#ae4df064bf2b9f523744060b2e0ebbf15"> 1212</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#ae4df064bf2b9f523744060b2e0ebbf15">playerL_misnActive</a>( lua_State *L )</div>
-<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160;{</div>
-<div class="line"><a name="l01214"></a><span class="lineno"> 1214</span>&#160;   <a class="code" href="structMissionData.html">MissionData</a> *misn;</div>
-<div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160; </div>
-<div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160;   str  = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l01218"></a><span class="lineno"> 1218</span>&#160;   misn = <a class="code" href="mission_8c.html#a2298bea78ee897bf6f5912f1bb02833c">mission_getFromName</a>( str );</div>
-<div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;   <span class="keywordflow">if</span> (misn == NULL) {</div>
-<div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Mission &#39;%s&#39; not found in stack&quot;</span>), str);</div>
-<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;   }</div>
-<div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160; </div>
-<div class="line"><a name="l01224"></a><span class="lineno"> 1224</span>&#160;   lua_pushboolean( L, <a class="code" href="mission_8c.html#a4094c518738ae2574e43532c9f0c6eb4">mission_alreadyRunning</a>( misn ) );</div>
-<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;}</div>
-<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160; </div>
-<div class="line"><a name="l01238"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#ae8c18791186bca16b9a432f73acfccc3"> 1238</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#ae8c18791186bca16b9a432f73acfccc3">playerL_misnDone</a>( lua_State *L )</div>
-<div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160;{</div>
-<div class="line"><a name="l01240"></a><span class="lineno"> 1240</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="structpL__flag.html#a61f71fd0d95b5e7f84a8609750856a61">id</a>;</div>
-<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160; </div>
-<div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
-<div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;   str = luaL_checkstring(L, 1);</div>
-<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160; </div>
-<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160;   <span class="comment">/* Get mission ID. */</span></div>
-<div class="line"><a name="l01247"></a><span class="lineno"> 1247</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="mission_8c.html#ab6f7e7d4d7d03985b4d6f12a9bd6fc96">mission_getID</a>( str );</div>
-<div class="line"><a name="l01248"></a><span class="lineno"> 1248</span>&#160;   <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == -1) {</div>
-<div class="line"><a name="l01249"></a><span class="lineno"> 1249</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Mission &#39;%s&#39; not found in stack&quot;</span>), str);</div>
-<div class="line"><a name="l01250"></a><span class="lineno"> 1250</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01251"></a><span class="lineno"> 1251</span>&#160;   }</div>
-<div class="line"><a name="l01252"></a><span class="lineno"> 1252</span>&#160; </div>
-<div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;   lua_pushboolean( L, <a class="code" href="player_8c.html#a8ffaec7f4cf10a8d4cab22d5f351864a">player_missionAlreadyDone</a>( <span class="keywordtype">id</span> ) );</div>
-<div class="line"><a name="l01254"></a><span class="lineno"> 1254</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;}</div>
-<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160; </div>
-<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160; </div>
-<div class="line"><a name="l01267"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a07c5b6c3ec4bc9f236340b9aaf925a88"> 1267</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a07c5b6c3ec4bc9f236340b9aaf925a88">playerL_evtActive</a>( lua_State *L )</div>
-<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;{</div>
-<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;   <span class="keywordtype">int</span> evtid;</div>
-<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160; </div>
-<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160;   str  = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;   evtid = <a class="code" href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a>( str );</div>
-<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;   <span class="keywordflow">if</span> (evtid &lt; 0) {</div>
-<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Event &#39;%s&#39; not found in stack&quot;</span>), str);</div>
-<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;   }</div>
-<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160; </div>
-<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;   lua_pushboolean( L, <a class="code" href="event_8c.html#a26a5281fc1b3e53665dd385010da3009">event_alreadyRunning</a>( evtid ) );</div>
-<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;}</div>
-<div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160; </div>
-<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160; </div>
-<div class="line"><a name="l01294"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#adaa47d7b0dab85535e0e3acee287831a"> 1294</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#adaa47d7b0dab85535e0e3acee287831a">playerL_evtDone</a>( lua_State *L )</div>
-<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;{</div>
-<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="structpL__flag.html#a61f71fd0d95b5e7f84a8609750856a61">id</a>;</div>
-<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160; </div>
-<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
-<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;   str = luaL_checkstring(L, 1);</div>
-<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160; </div>
-<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;   <span class="comment">/* Get event ID. */</span></div>
-<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a>( str );</div>
-<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;   <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == -1) {</div>
-<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Event &#39;%s&#39; not found in stack&quot;</span>), str);</div>
-<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;   }</div>
-<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160; </div>
-<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160;   lua_pushboolean( L, <a class="code" href="player_8c.html#a06d6a9cf109bebc0a82c96a157d9b939">player_eventAlreadyDone</a>( <span class="keywordtype">id</span> ) );</div>
-<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160;}</div>
-<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160; </div>
-<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160; </div>
-<div class="line"><a name="l01327"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a9d32fdbdec74c1fef8ad8fbf6936144f"> 1327</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a9d32fdbdec74c1fef8ad8fbf6936144f">playerL_teleport</a>( lua_State *L )</div>
-<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;{</div>
-<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *pnt;</div>
-<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;   StarSystem *sys;</div>
-<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="structpL__flag.html#ac5664579b173ed172f83498138cc8aa1">name</a>, *pntname, *sysname;</div>
-<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160; </div>
-<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;   PLAYER_CHECK();</div>
-<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160; </div>
-<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;   <span class="comment">/* Must not be landed. */</span></div>
-<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>)</div>
-<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can not teleport the player while landed!&quot;</span>));</div>
-<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#ad7045e17638e93a32147e6d477236531">comm_isOpen</a>())</div>
-<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can not teleport the player while the comm is open!&quot;</span>));</div>
-<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="board_8c.html#ada20e44a5083bdd707f9be1fec7fc956">player_isBoarded</a>())</div>
-<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can not teleport the player while they are boarded!&quot;</span>));</div>
-<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160; </div>
-<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;   pnt = NULL;</div>
-<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160; </div>
-<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;   <span class="comment">/* Get a system. */</span></div>
-<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a>(L,1)) {</div>
-<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;      sys   = <a class="code" href="nlua__system_8c.html#ac82764173ba742629506ded30a9668a6">luaL_validsystem</a>(L,1);</div>
-<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;      name  = <a class="code" href="space_8c.html#a94669d7b156a00e769ebef6840fee35f">system_getIndex</a>(sys-&gt;id)-&gt;name;</div>
-<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;   }</div>
-<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;   <span class="comment">/* Get a planet. */</span></div>
-<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="nlua__planet_8c.html#a5ebaf92feb292ab0a3f2322364542762">lua_isplanet</a>(L,1)) {</div>
-<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;      pnt   = <a class="code" href="nlua__planet_8c.html#a2c4322a0726e1047d7dd499bfbdf2d15">luaL_validplanet</a>(L,1);</div>
-<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;      name  = <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pnt-&gt;name );</div>
-<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;      <span class="keywordflow">if</span> (name == NULL) {</div>
-<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;         NLUA_ERROR( L, _(<span class="stringliteral">&quot;Planet &#39;%s&#39; does not belong to a system.&quot;</span>), pnt-&gt;name );</div>
-<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;      }</div>
-<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;   }</div>
-<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;   <span class="comment">/* Get destination from string. */</span></div>
-<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lua_isstring(L,1)) {</div>
-<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;      name = lua_tostring(L,1);</div>
-<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;      sysname = <a class="code" href="space_8c.html#a10b6a5ed83ff4c76816d2bca293cbd80">system_existsCase</a>( name );</div>
-<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;      <span class="keywordflow">if</span> (sysname == NULL) {</div>
-<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;         <span class="comment">/* No system found, assume destination string is the name of a planet. */</span></div>
-<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;         pntname = <a class="code" href="structpL__flag.html#ac5664579b173ed172f83498138cc8aa1">name</a>;</div>
-<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160;         name = <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pntname );</div>
-<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;         pnt  = <a class="code" href="space_8c.html#acc33d70bb34cc03dfc393e73e2c4a1fb">planet_get</a>( pntname );</div>
-<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;         <span class="keywordflow">if</span> (pnt == NULL) {</div>
-<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;            NLUA_ERROR( L, _(<span class="stringliteral">&quot;&#39;%s&#39; is not a valid teleportation target.&quot;</span>), name );</div>
-<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;         }</div>
-<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160; </div>
-<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;         <span class="keywordflow">if</span> (name == NULL) {</div>
-<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;            NLUA_ERROR( L, _(<span class="stringliteral">&quot;Planet &#39;%s&#39; does not belong to a system.&quot;</span>), pntname );</div>
-<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;         }</div>
-<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;      }</div>
-<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;         sys = <a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( sysname );</div>
-<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;   }</div>
-<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
+<div class="line"><a name="l01138"></a><span class="lineno"> 1138</span>&#160; </div>
+<div class="line"><a name="l01152"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#aa29a197c7916a677206b22ddb666995f"> 1152</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#aa29a197c7916a677206b22ddb666995f">playerL_addShip</a>( lua_State *L )</div>
+<div class="line"><a name="l01153"></a><span class="lineno"> 1153</span>&#160;{</div>
+<div class="line"><a name="l01154"></a><span class="lineno"> 1154</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l01155"></a><span class="lineno"> 1155</span>&#160;   Pilot *new_ship;</div>
+<div class="line"><a name="l01156"></a><span class="lineno"> 1156</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
+<div class="line"><a name="l01157"></a><span class="lineno"> 1157</span>&#160;   <span class="keyword">const</span> Ship *s     = <a class="code" href="nlua__ship_8c.html#a3544a3994c8eeeaebd07b13d23271e76">luaL_validship</a>(L, 1);</div>
+<div class="line"><a name="l01158"></a><span class="lineno"> 1158</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name  = luaL_optstring(L, 2, _(s-&gt;name) );</div>
+<div class="line"><a name="l01159"></a><span class="lineno"> 1159</span>&#160;   <span class="keywordtype">int</span> noname        = lua_toboolean(L, 3);</div>
+<div class="line"><a name="l01160"></a><span class="lineno"> 1160</span>&#160;   <span class="comment">/* Add the ship, look in case it&#39;s cancelled. */</span></div>
+<div class="line"><a name="l01161"></a><span class="lineno"> 1161</span>&#160;   <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l01162"></a><span class="lineno"> 1162</span>&#160;      new_ship = <a class="code" href="player_8c.html#ad6800f0cf70aab0371520b5eba6ecec5">player_newShip</a>( s, name, 0, noname );</div>
+<div class="line"><a name="l01163"></a><span class="lineno"> 1163</span>&#160;   } <span class="keywordflow">while</span> (new_ship == NULL);</div>
+<div class="line"><a name="l01164"></a><span class="lineno"> 1164</span>&#160;   <span class="comment">/* Return the new name. */</span></div>
+<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;   lua_pushstring( L, new_ship-&gt;name );</div>
+<div class="line"><a name="l01166"></a><span class="lineno"> 1166</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;}</div>
+<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160; </div>
+<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160; </div>
+<div class="line"><a name="l01181"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#adbb25894bd370a8a823882a0dd18f9ef"> 1181</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#adbb25894bd370a8a823882a0dd18f9ef">playerL_swapShip</a>( lua_State *L )</div>
+<div class="line"><a name="l01182"></a><span class="lineno"> 1182</span>&#160;{</div>
+<div class="line"><a name="l01183"></a><span class="lineno"> 1183</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160;   PLAYER_CHECK();</div>
+<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160; </div>
+<div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;   <span class="keywordtype">int</span> ignore_cargo= lua_toboolean(L,2);</div>
+<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *cur = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;name;</div>
+<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;   <a class="code" href="player_8c.html#a147eb5368883d9cb74209873c106a5b3">player_swapShip</a>( str, !ignore_cargo );</div>
+<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;   <span class="keywordflow">if</span> (lua_toboolean(L,3))</div>
+<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;      <a class="code" href="player_8c.html#a7c559775373a88bb8c7855c33dd45d5a">player_rmShip</a>( cur );</div>
+<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160; </div>
+<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160;}</div>
+<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160; </div>
+<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160; </div>
+<div class="line"><a name="l01206"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#ae4df064bf2b9f523744060b2e0ebbf15"> 1206</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#ae4df064bf2b9f523744060b2e0ebbf15">playerL_misnActive</a>( lua_State *L )</div>
+<div class="line"><a name="l01207"></a><span class="lineno"> 1207</span>&#160;{</div>
+<div class="line"><a name="l01208"></a><span class="lineno"> 1208</span>&#160;   <a class="code" href="structMissionData.html">MissionData</a> *misn;</div>
+<div class="line"><a name="l01209"></a><span class="lineno"> 1209</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l01210"></a><span class="lineno"> 1210</span>&#160; </div>
+<div class="line"><a name="l01211"></a><span class="lineno"> 1211</span>&#160;   str  = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l01212"></a><span class="lineno"> 1212</span>&#160;   misn = <a class="code" href="mission_8c.html#a2298bea78ee897bf6f5912f1bb02833c">mission_getFromName</a>( str );</div>
+<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160;   <span class="keywordflow">if</span> (misn == NULL) {</div>
+<div class="line"><a name="l01214"></a><span class="lineno"> 1214</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Mission &#39;%s&#39; not found in stack&quot;</span>), str);</div>
+<div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160;   }</div>
+<div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160; </div>
+<div class="line"><a name="l01218"></a><span class="lineno"> 1218</span>&#160;   lua_pushboolean( L, <a class="code" href="mission_8c.html#a4094c518738ae2574e43532c9f0c6eb4">mission_alreadyRunning</a>( misn ) );</div>
+<div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;}</div>
+<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160; </div>
+<div class="line"><a name="l01232"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#ae8c18791186bca16b9a432f73acfccc3"> 1232</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#ae8c18791186bca16b9a432f73acfccc3">playerL_misnDone</a>( lua_State *L )</div>
+<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;{</div>
+<div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="structpL__flag.html#a61f71fd0d95b5e7f84a8609750856a61">id</a>;</div>
+<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160; </div>
+<div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
+<div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;   str = luaL_checkstring(L, 1);</div>
+<div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160; </div>
+<div class="line"><a name="l01240"></a><span class="lineno"> 1240</span>&#160;   <span class="comment">/* Get mission ID. */</span></div>
+<div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="mission_8c.html#ab6f7e7d4d7d03985b4d6f12a9bd6fc96">mission_getID</a>( str );</div>
+<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;   <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == -1) {</div>
+<div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Mission &#39;%s&#39; not found in stack&quot;</span>), str);</div>
+<div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160;   }</div>
+<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160; </div>
+<div class="line"><a name="l01247"></a><span class="lineno"> 1247</span>&#160;   lua_pushboolean( L, <a class="code" href="player_8c.html#a8ffaec7f4cf10a8d4cab22d5f351864a">player_missionAlreadyDone</a>( <span class="keywordtype">id</span> ) );</div>
+<div class="line"><a name="l01248"></a><span class="lineno"> 1248</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01249"></a><span class="lineno"> 1249</span>&#160;}</div>
+<div class="line"><a name="l01250"></a><span class="lineno"> 1250</span>&#160; </div>
+<div class="line"><a name="l01251"></a><span class="lineno"> 1251</span>&#160; </div>
+<div class="line"><a name="l01261"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a07c5b6c3ec4bc9f236340b9aaf925a88"> 1261</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a07c5b6c3ec4bc9f236340b9aaf925a88">playerL_evtActive</a>( lua_State *L )</div>
+<div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;{</div>
+<div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160;   <span class="keywordtype">int</span> evtid;</div>
+<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160; </div>
+<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;   str  = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;   evtid = <a class="code" href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a>( str );</div>
+<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;   <span class="keywordflow">if</span> (evtid &lt; 0) {</div>
+<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Event &#39;%s&#39; not found in stack&quot;</span>), str);</div>
+<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;   }</div>
+<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160; </div>
+<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;   lua_pushboolean( L, <a class="code" href="event_8c.html#a26a5281fc1b3e53665dd385010da3009">event_alreadyRunning</a>( evtid ) );</div>
+<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;}</div>
+<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160; </div>
+<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160; </div>
+<div class="line"><a name="l01288"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#adaa47d7b0dab85535e0e3acee287831a"> 1288</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#adaa47d7b0dab85535e0e3acee287831a">playerL_evtDone</a>( lua_State *L )</div>
+<div class="line"><a name="l01289"></a><span class="lineno"> 1289</span>&#160;{</div>
+<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="structpL__flag.html#a61f71fd0d95b5e7f84a8609750856a61">id</a>;</div>
+<div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160; </div>
+<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;   <span class="comment">/* Handle parameters. */</span></div>
+<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;   str = luaL_checkstring(L, 1);</div>
+<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160; </div>
+<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;   <span class="comment">/* Get event ID. */</span></div>
+<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a>( str );</div>
+<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;   <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == -1) {</div>
+<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;      NLUA_ERROR(L, _(<span class="stringliteral">&quot;Event &#39;%s&#39; not found in stack&quot;</span>), str);</div>
+<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;   }</div>
+<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160; </div>
+<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;   lua_pushboolean( L, <a class="code" href="player_8c.html#a06d6a9cf109bebc0a82c96a157d9b939">player_eventAlreadyDone</a>( <span class="keywordtype">id</span> ) );</div>
+<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;}</div>
+<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160; </div>
+<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160; </div>
+<div class="line"><a name="l01321"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a9d32fdbdec74c1fef8ad8fbf6936144f"> 1321</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a9d32fdbdec74c1fef8ad8fbf6936144f">playerL_teleport</a>( lua_State *L )</div>
+<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;{</div>
+<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *pnt;</div>
+<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;   StarSystem *sys;</div>
+<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="structpL__flag.html#ac5664579b173ed172f83498138cc8aa1">name</a>, *pntname, *sysname;</div>
+<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160; </div>
+<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;   PLAYER_CHECK();</div>
+<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160; </div>
+<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;   <span class="comment">/* Must not be landed. */</span></div>
+<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>)</div>
+<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can not teleport the player while landed!&quot;</span>));</div>
+<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="comm_8c.html#ad7045e17638e93a32147e6d477236531">comm_isOpen</a>())</div>
+<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can not teleport the player while the comm is open!&quot;</span>));</div>
+<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="board_8c.html#ada20e44a5083bdd707f9be1fec7fc956">player_isBoarded</a>())</div>
+<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can not teleport the player while they are boarded!&quot;</span>));</div>
+<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160; </div>
+<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;   pnt = NULL;</div>
+<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160; </div>
+<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;   <span class="comment">/* Get a system. */</span></div>
+<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a>(L,1)) {</div>
+<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;      sys   = <a class="code" href="nlua__system_8c.html#ac82764173ba742629506ded30a9668a6">luaL_validsystem</a>(L,1);</div>
+<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;      name  = <a class="code" href="space_8c.html#a94669d7b156a00e769ebef6840fee35f">system_getIndex</a>(sys-&gt;id)-&gt;name;</div>
+<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;   }</div>
+<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;   <span class="comment">/* Get a planet. */</span></div>
+<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="nlua__planet_8c.html#a5ebaf92feb292ab0a3f2322364542762">lua_isplanet</a>(L,1)) {</div>
+<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;      pnt   = <a class="code" href="nlua__planet_8c.html#a2c4322a0726e1047d7dd499bfbdf2d15">luaL_validplanet</a>(L,1);</div>
+<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;      name  = <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pnt-&gt;name );</div>
+<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;      <span class="keywordflow">if</span> (name == NULL) {</div>
+<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;         NLUA_ERROR( L, _(<span class="stringliteral">&quot;Planet &#39;%s&#39; does not belong to a system.&quot;</span>), pnt-&gt;name );</div>
+<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;      }</div>
+<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;   }</div>
+<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;   <span class="comment">/* Get destination from string. */</span></div>
+<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lua_isstring(L,1)) {</div>
+<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;      name = lua_tostring(L,1);</div>
+<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;      sysname = <a class="code" href="space_8c.html#a10b6a5ed83ff4c76816d2bca293cbd80">system_existsCase</a>( name );</div>
+<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;      <span class="keywordflow">if</span> (sysname == NULL) {</div>
+<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;         <span class="comment">/* No system found, assume destination string is the name of a planet. */</span></div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;         pntname = <a class="code" href="structpL__flag.html#ac5664579b173ed172f83498138cc8aa1">name</a>;</div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;         name = <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pntname );</div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;         pnt  = <a class="code" href="space_8c.html#acc33d70bb34cc03dfc393e73e2c4a1fb">planet_get</a>( pntname );</div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;         <span class="keywordflow">if</span> (pnt == NULL) {</div>
+<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;            NLUA_ERROR( L, _(<span class="stringliteral">&quot;&#39;%s&#39; is not a valid teleportation target.&quot;</span>), name );</div>
+<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;         }</div>
+<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160; </div>
+<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;         <span class="keywordflow">if</span> (name == NULL) {</div>
+<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;            NLUA_ERROR( L, _(<span class="stringliteral">&quot;Planet &#39;%s&#39; does not belong to a system.&quot;</span>), pntname );</div>
+<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;         }</div>
+<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;      }</div>
+<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;         sys = <a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( sysname );</div>
+<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;   }</div>
+<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
+<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160; </div>
+<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;   <span class="comment">/* Check if system exists. */</span></div>
+<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( name ) == NULL) {</div>
+<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;      NLUA_ERROR( L, _(<span class="stringliteral">&quot;System &#39;%s&#39; does not exist.&quot;</span>), name );</div>
+<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;   }</div>
 <div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160; </div>
-<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;   <span class="comment">/* Check if system exists. */</span></div>
-<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( name ) == NULL) {</div>
-<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;      NLUA_ERROR( L, _(<span class="stringliteral">&quot;System &#39;%s&#39; does not exist.&quot;</span>), name );</div>
-<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;   }</div>
-<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160; </div>
-<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;   <span class="comment">/* Jump out hook is run first. */</span></div>
-<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;jumpout&quot;</span> );</div>
-<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160; </div>
-<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;   <span class="comment">/* Just in case remove hyperspace flags. */</span></div>
-<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_HYPERSPACE );</div>
-<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_HYP_BEGIN );</div>
-<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_HYP_BRAKE );</div>
-<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_HYP_PREP );</div>
-<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;   <span class="comment">/* Don&#39;t follow anything. */</span></div>
-<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;   <a class="code" href="player_8c.html#ab8eb9753450d26f6aa883c6b0a25a7b5">player_accelOver</a>();</div>
-<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;   <a class="code" href="player__autonav_8c.html#a0fcceeb758e7e4a766b79149c8f892e0">player_autonavEnd</a>();</div>
-<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160; </div>
-<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;   <span class="comment">/* Free graphics. */</span></div>
-<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;   <a class="code" href="space_8c.html#a17c0263dad59fc8fe15c651bea7ae045">space_gfxUnload</a>( <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a> );</div>
-<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160; </div>
-<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;   <span class="comment">/* Reset targets when teleporting.</span></div>
-<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;<span class="comment">    * Both of these functions invoke gui_setNav(), which updates jump and</span></div>
-<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;<span class="comment">    * planet targets simultaneously. Thus, invalid reads may arise and the</span></div>
-<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;<span class="comment">    * target reset must be done prior to calling space_init and destroying</span></div>
-<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;<span class="comment">    * the old system.</span></div>
-<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;   <a class="code" href="player_8c.html#ad0f0cfaac1d5da249aaa27ea2fb6e357">player_targetClearAll</a>();</div>
+<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;   <span class="comment">/* Jump out hook is run first. */</span></div>
+<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;jumpout&quot;</span> );</div>
+<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160; </div>
+<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;   <span class="comment">/* Just in case remove hyperspace flags. */</span></div>
+<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_HYPERSPACE );</div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_HYP_BEGIN );</div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_HYP_BRAKE );</div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_HYP_PREP );</div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;   <span class="comment">/* Don&#39;t follow anything. */</span></div>
+<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;   <a class="code" href="player_8c.html#ab8eb9753450d26f6aa883c6b0a25a7b5">player_accelOver</a>();</div>
+<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;   <a class="code" href="player__autonav_8c.html#a0fcceeb758e7e4a766b79149c8f892e0">player_autonavEnd</a>();</div>
+<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160; </div>
+<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;   <span class="comment">/* Free graphics. */</span></div>
+<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;   <a class="code" href="space_8c.html#a17c0263dad59fc8fe15c651bea7ae045">space_gfxUnload</a>( <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a> );</div>
+<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160; </div>
+<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;   <span class="comment">/* Reset targets when teleporting.</span></div>
+<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;<span class="comment">    * Both of these functions invoke gui_setNav(), which updates jump and</span></div>
+<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;<span class="comment">    * planet targets simultaneously. Thus, invalid reads may arise and the</span></div>
+<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;<span class="comment">    * target reset must be done prior to calling space_init and destroying</span></div>
+<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;<span class="comment">    * the old system.</span></div>
+<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;   <a class="code" href="player_8c.html#ad0f0cfaac1d5da249aaa27ea2fb6e357">player_targetClearAll</a>();</div>
+<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160; </div>
+<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;   <span class="comment">/* Go to the new system. */</span></div>
+<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;   <a class="code" href="space_8c.html#ab9f199a88ec5ce5532bcd593a7ba52d5">space_init</a>( name );</div>
+<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160; </div>
+<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;   <span class="comment">/* Map gets deformed when jumping this way. */</span></div>
+<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;   map_clear();</div>
 <div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160; </div>
-<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;   <span class="comment">/* Go to the new system. */</span></div>
-<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;   <a class="code" href="space_8c.html#ab9f199a88ec5ce5532bcd593a7ba52d5">space_init</a>( name );</div>
+<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;   <span class="comment">/* Initialize alpha as needed. */</span></div>
+<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;   ovr_initAlpha();</div>
 <div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160; </div>
-<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;   <span class="comment">/* Map gets deformed when jumping this way. */</span></div>
-<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160;   map_clear();</div>
-<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160; </div>
-<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;   <span class="comment">/* Initialize alpha as needed. */</span></div>
-<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;   ovr_initAlpha();</div>
+<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;   <span class="comment">/* Run hooks - order is important. */</span></div>
+<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;jumpin&quot;</span> );</div>
+<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;enter&quot;</span> );</div>
+<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;   <a class="code" href="event_8c.html#acee910c5f6745dd62a319f045f06aa07">events_trigger</a>( EVENT_TRIGGER_ENTER );</div>
+<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;   <a class="code" href="mission_8c.html#a3bac4543ee633374be825ef5ccf108e3">missions_run</a>( MIS_AVAIL_SPACE, -1, NULL, NULL );</div>
 <div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160; </div>
-<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;   <span class="comment">/* Run hooks - order is important. */</span></div>
-<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;jumpin&quot;</span> );</div>
-<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;enter&quot;</span> );</div>
-<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;   <a class="code" href="event_8c.html#acee910c5f6745dd62a319f045f06aa07">events_trigger</a>( EVENT_TRIGGER_ENTER );</div>
-<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;   <a class="code" href="mission_8c.html#a3bac4543ee633374be825ef5ccf108e3">missions_run</a>( MIS_AVAIL_SPACE, -1, NULL, NULL );</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160; </div>
-<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;   <span class="comment">/* Move to planet. */</span></div>
-<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;   <span class="keywordflow">if</span> (pnt != NULL)</div>
-<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;      <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos = pnt-&gt;pos;</div>
-<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160; </div>
-<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;}</div>
-<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160; </div>
-<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160; </div>
-<div class="line"><a name="l01440"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8"> 1440</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8">playerL_dt_mod</a>( lua_State *L )</div>
-<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;{</div>
-<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160;   lua_pushnumber(L,<a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>);</div>
-<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;}</div>
-<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160; </div>
+<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;   <span class="comment">/* Move to planet. */</span></div>
+<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;   <span class="keywordflow">if</span> (pnt != NULL)</div>
+<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;      <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;pos = pnt-&gt;pos;</div>
+<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160; </div>
+<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;}</div>
+<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160; </div>
+<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160; </div>
+<div class="line"><a name="l01434"></a><span class="lineno"><a class="line" href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8"> 1434</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8">playerL_dt_mod</a>( lua_State *L )</div>
+<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;{</div>
+<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;   lua_pushnumber(L,<a class="code" href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a>);</div>
+<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;}</div>
+<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__player_8c_html_aa09adc3501355640924b36148540a9cb"><div class="ttname"><a href="nlua__player_8c.html#aa09adc3501355640924b36148540a9cb">playerL_getPilot</a></div><div class="ttdeci">static int playerL_getPilot(lua_State *L)</div><div class="ttdoc">Gets the player's associated pilot.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00443">nlua_player.c:443</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_afe729cd107cfc5a13736d1c215588b7d"><div class="ttname"><a href="nlua__player_8c.html#afe729cd107cfc5a13736d1c215588b7d">playerL_shipOutfits</a></div><div class="ttdeci">static int playerL_shipOutfits(lua_State *L)</div><div class="ttdoc">Gets the outfits for one of the player's ships.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00947">nlua_player.c:947</a></div></div>
@@ -1092,7 +1086,7 @@ $(function() {
 <div class="ttc" id="anlua__player_8c_html_add73fa24f2c4a6e5d9a98de585866e49"><div class="ttname"><a href="nlua__player_8c.html#add73fa24f2c4a6e5d9a98de585866e49">playerL_getPosition</a></div><div class="ttdeci">static int playerL_getPosition(lua_State *L)</div><div class="ttdoc">Gets the player's position.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00430">nlua_player.c:430</a></div></div>
 <div class="ttc" id="aplayer_8c_html_aa0322f53be24a008fb07fd4db15ba54d"><div class="ttname"><a href="player_8c.html#aa0322f53be24a008fb07fd4db15ba54d">player_modCredits</a></div><div class="ttdeci">credits_t player_modCredits(credits_t amount)</div><div class="ttdoc">Modifies the amount of credits the player has.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00909">player.c:909</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_af5e8dad5231451067a650d2376c33bb0"><div class="ttname"><a href="nlua__player_8c.html#af5e8dad5231451067a650d2376c33bb0">playerL_autonavDest</a></div><div class="ttdeci">static int playerL_autonavDest(lua_State *L)</div><div class="ttdoc">Gets the player's long term autonav destination.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00539">nlua_player.c:539</a></div></div>
-<div class="ttc" id="anlua__player_8c_html_ae4df064bf2b9f523744060b2e0ebbf15"><div class="ttname"><a href="nlua__player_8c.html#ae4df064bf2b9f523744060b2e0ebbf15">playerL_misnActive</a></div><div class="ttdeci">static int playerL_misnActive(lua_State *L)</div><div class="ttdoc">Checks to see if the player has a mission active.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01212">nlua_player.c:1212</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_ae4df064bf2b9f523744060b2e0ebbf15"><div class="ttname"><a href="nlua__player_8c.html#ae4df064bf2b9f523744060b2e0ebbf15">playerL_misnActive</a></div><div class="ttdeci">static int playerL_misnActive(lua_State *L)</div><div class="ttdoc">Checks to see if the player has a mission active.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01206">nlua_player.c:1206</a></div></div>
 <div class="ttc" id="apause_8c_html_ac06299328a86594523b6f357dffafa32"><div class="ttname"><a href="pause_8c.html#ac06299328a86594523b6f357dffafa32">dt_mod</a></div><div class="ttdeci">double dt_mod</div><div class="ttdef"><b>Definition:</b> <a href="pause_8c_source.html#l00027">pause.c:27</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ad3b8138c80fbb25bb1f82be3916dacd4"><div class="ttname"><a href="player_8c.html#ad3b8138c80fbb25bb1f82be3916dacd4">player_nolandMsg</a></div><div class="ttdeci">void player_nolandMsg(const char *str)</div><div class="ttdoc">Sets the no land message.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l01679">player.c:1679</a></div></div>
 <div class="ttc" id="astructPlanet_html"><div class="ttname"><a href="structPlanet.html">Planet</a></div><div class="ttdoc">Represents a planet.</div></div>
@@ -1102,7 +1096,7 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_a099196caf5494322e5dd5f72f32aa715"><div class="ttname"><a href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a></div><div class="ttdeci">char * planet_getSystem(const char *planetname)</div><div class="ttdoc">Get the name of a system from a planetname.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00926">space.c:926</a></div></div>
 <div class="ttc" id="aland_8c_html_a83ae8aa54491a1fd25f773b83a87fec0"><div class="ttname"><a href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a></div><div class="ttdeci">int landed</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00075">land.c:75</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a55e1e7a066dfcbb9f3f644d746f3adbc"><div class="ttname"><a href="player_8c.html#a55e1e7a066dfcbb9f3f644d746f3adbc">player_resetSpeed</a></div><div class="ttdeci">void player_resetSpeed(void)</div><div class="ttdoc">Resets the player speed stuff.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l01353">player.c:1353</a></div></div>
-<div class="ttc" id="anlua__player_8c_html_a07c5b6c3ec4bc9f236340b9aaf925a88"><div class="ttname"><a href="nlua__player_8c.html#a07c5b6c3ec4bc9f236340b9aaf925a88">playerL_evtActive</a></div><div class="ttdeci">static int playerL_evtActive(lua_State *L)</div><div class="ttdoc">Checks to see if the player has an event active.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01267">nlua_player.c:1267</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_a07c5b6c3ec4bc9f236340b9aaf925a88"><div class="ttname"><a href="nlua__player_8c.html#a07c5b6c3ec4bc9f236340b9aaf925a88">playerL_evtActive</a></div><div class="ttdeci">static int playerL_evtActive(lua_State *L)</div><div class="ttdoc">Checks to see if the player has an event active.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01261">nlua_player.c:1261</a></div></div>
 <div class="ttc" id="anlua__planet_8c_html_a5ebaf92feb292ab0a3f2322364542762"><div class="ttname"><a href="nlua__planet_8c.html#a5ebaf92feb292ab0a3f2322364542762">lua_isplanet</a></div><div class="ttdeci">int lua_isplanet(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a planet.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__planet_8c_source.html#l00210">nlua_planet.c:210</a></div></div>
 <div class="ttc" id="anlua__system_8c_html_ac82764173ba742629506ded30a9668a6"><div class="ttname"><a href="nlua__system_8c.html#ac82764173ba742629506ded30a9668a6">luaL_validsystem</a></div><div class="ttdeci">StarSystem * luaL_validsystem(lua_State *L, int ind)</div><div class="ttdoc">Gets system (or system name) at index raising an error if type doesn't match.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00161">nlua_system.c:161</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_a70d7b7d30290a94019beee60898ef0ec"><div class="ttname"><a href="nlua__player_8c.html#a70d7b7d30290a94019beee60898ef0ec">playerL_jumps</a></div><div class="ttdeci">static int playerL_jumps(lua_State *L)</div><div class="ttdoc">Gets a player's jump range based on their remaining fuel.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00459">nlua_player.c:459</a></div></div>
@@ -1111,7 +1105,7 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_a94669d7b156a00e769ebef6840fee35f"><div class="ttname"><a href="space_8c.html#a94669d7b156a00e769ebef6840fee35f">system_getIndex</a></div><div class="ttdeci">StarSystem * system_getIndex(int id)</div><div class="ttdoc">Get the system by its index.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00884">space.c:884</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a147eb5368883d9cb74209873c106a5b3"><div class="ttname"><a href="player_8c.html#a147eb5368883d9cb74209873c106a5b3">player_swapShip</a></div><div class="ttdeci">void player_swapShip(const char *shipname, int move_cargo)</div><div class="ttdoc">Swaps player's current ship with their ship named shipname.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00541">player.c:541</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a7c559775373a88bb8c7855c33dd45d5a"><div class="ttname"><a href="player_8c.html#a7c559775373a88bb8c7855c33dd45d5a">player_rmShip</a></div><div class="ttdeci">void player_rmShip(const char *shipname)</div><div class="ttdoc">Removes one of the player's ships.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00646">player.c:646</a></div></div>
-<div class="ttc" id="aplayer__autonav_8c_html_ad122fe5dacab86c71ff1feb679d41f61"><div class="ttname"><a href="player__autonav_8c.html#ad122fe5dacab86c71ff1feb679d41f61">player_autonavAbort</a></div><div class="ttdeci">void player_autonavAbort(const char *reason)</div><div class="ttdoc">Aborts autonav.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00268">player_autonav.c:268</a></div></div>
+<div class="ttc" id="aplayer__autonav_8c_html_ad122fe5dacab86c71ff1feb679d41f61"><div class="ttname"><a href="player__autonav_8c.html#ad122fe5dacab86c71ff1feb679d41f61">player_autonavAbort</a></div><div class="ttdeci">void player_autonavAbort(const char *reason)</div><div class="ttdoc">Aborts autonav.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00267">player_autonav.c:267</a></div></div>
 <div class="ttc" id="apause_8c_html_a15af6ab5827f86850b88d6d334aac30f"><div class="ttname"><a href="pause_8c.html#a15af6ab5827f86850b88d6d334aac30f">pause_setSpeed</a></div><div class="ttdeci">void pause_setSpeed(double mod)</div><div class="ttdoc">Adjusts the game's dt modifier.</div><div class="ttdef"><b>Definition:</b> <a href="pause_8c_source.html#l00071">pause.c:71</a></div></div>
 <div class="ttc" id="aspace_8c_html_af2bde5fff1661ef19e5aab52d206b4c9"><div class="ttname"><a href="space_8c.html#af2bde5fff1661ef19e5aab52d206b4c9">system_index</a></div><div class="ttdeci">int system_index(const StarSystem *sys)</div><div class="ttdoc">Gets the index of a star system.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00896">space.c:896</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_ac640d623f910118f6d76459e5280c0d2"><div class="ttname"><a href="nlua__player_8c.html#ac640d623f910118f6d76459e5280c0d2">playerL_omsgAdd</a></div><div class="ttdeci">static int playerL_omsgAdd(lua_State *L)</div><div class="ttdoc">Adds an overlay message.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00322">nlua_player.c:322</a></div></div>
@@ -1120,29 +1114,29 @@ $(function() {
 <div class="ttc" id="aplayer_8c_html_ad0f0cfaac1d5da249aaa27ea2fb6e357"><div class="ttname"><a href="player_8c.html#ad0f0cfaac1d5da249aaa27ea2fb6e357">player_targetClearAll</a></div><div class="ttdeci">void player_targetClearAll(void)</div><div class="ttdoc">Clears all player targets: hyperspace, planet, asteroid, etc...</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02123">player.c:2123</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_ae2aa423c6767915701e3b1bbf9ddc4cd"><div class="ttname"><a href="nlua__player_8c.html#ae2aa423c6767915701e3b1bbf9ddc4cd">playerL_numOutfit</a></div><div class="ttdeci">static int playerL_numOutfit(lua_State *L)</div><div class="ttdoc">Gets the number of outfits the player owns in their list (excludes equipped on ships).</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01033">nlua_player.c:1033</a></div></div>
 <div class="ttc" id="aarray_8h_html_ac5806e193ac90a33f8a2a93de4f80dee"><div class="ttname"><a href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a></div><div class="ttdeci">#define array_push_back(ptr_array, element)</div><div class="ttdoc">Adds a new element at the end of the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00133">array.h:133</a></div></div>
-<div class="ttc" id="anlua__player_8c_html_a537d95ee80fe9ebc0e7a6b21c90b126a"><div class="ttname"><a href="nlua__player_8c.html#a537d95ee80fe9ebc0e7a6b21c90b126a">playerL_rmOutfit</a></div><div class="ttdeci">static int playerL_rmOutfit(lua_State *L)</div><div class="ttdoc">Removes an outfit from the player's outfit list.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01095">nlua_player.c:1095</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_a537d95ee80fe9ebc0e7a6b21c90b126a"><div class="ttname"><a href="nlua__player_8c.html#a537d95ee80fe9ebc0e7a6b21c90b126a">playerL_rmOutfit</a></div><div class="ttdeci">static int playerL_rmOutfit(lua_State *L)</div><div class="ttdoc">Removes an outfit from the player's outfit list.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01091">nlua_player.c:1091</a></div></div>
 <div class="ttc" id="aspace_8c_html_acc33d70bb34cc03dfc393e73e2c4a1fb"><div class="ttname"><a href="space_8c.html#acc33d70bb34cc03dfc393e73e2c4a1fb">planet_get</a></div><div class="ttdeci">Planet * planet_get(const char *planetname)</div><div class="ttdoc">Gets a planet based on its name.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00952">space.c:952</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_a9b7c3e1098284cb66fdeae42c4654519"><div class="ttname"><a href="nlua__ship_8c.html#a9b7c3e1098284cb66fdeae42c4654519">lua_pushship</a></div><div class="ttdeci">const Ship ** lua_pushship(lua_State *L, const Ship *ship)</div><div class="ttdoc">Pushes a ship on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00170">nlua_ship.c:170</a></div></div>
 <div class="ttc" id="aspace_8c_html_ad4fdc43d36fe9e1ba6bea34dd33c90e6"><div class="ttname"><a href="space_8c.html#ad4fdc43d36fe9e1ba6bea34dd33c90e6">space_queueLand</a></div><div class="ttdeci">void space_queueLand(Planet *pnt)</div><div class="ttdoc">Cues a planet to be landed on. This is not done immediately, but when the engine thinks it is ok to d...</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04596">space.c:4596</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_ae5dbbf72c756e0e731990f6efe9e3fbc"><div class="ttname"><a href="nlua__player_8c.html#ae5dbbf72c756e0e731990f6efe9e3fbc">playerL_autonav</a></div><div class="ttdeci">static int playerL_autonav(lua_State *L)</div><div class="ttdoc">Checks to see if the player has autonav enabled.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00522">nlua_player.c:522</a></div></div>
 <div class="ttc" id="aarray_8h_html"><div class="ttname"><a href="array_8h.html">array.h</a></div><div class="ttdoc">Provides macros to work with dynamic arrays.</div></div>
-<div class="ttc" id="anlua__player_8c_html_a9d32fdbdec74c1fef8ad8fbf6936144f"><div class="ttname"><a href="nlua__player_8c.html#a9d32fdbdec74c1fef8ad8fbf6936144f">playerL_teleport</a></div><div class="ttdeci">static int playerL_teleport(lua_State *L)</div><div class="ttdoc">Teleports the player to a new planet or system (only if not landed).</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01327">nlua_player.c:1327</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_a9d32fdbdec74c1fef8ad8fbf6936144f"><div class="ttname"><a href="nlua__player_8c.html#a9d32fdbdec74c1fef8ad8fbf6936144f">playerL_teleport</a></div><div class="ttdeci">static int playerL_teleport(lua_State *L)</div><div class="ttdoc">Teleports the player to a new planet or system (only if not landed).</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01321">nlua_player.c:1321</a></div></div>
 <div class="ttc" id="aland_8c_html_a50037c54f1199579fdc354aa61f52728"><div class="ttname"><a href="land_8c.html#a50037c54f1199579fdc354aa61f52728">land_setWindow</a></div><div class="ttdeci">int land_setWindow(int window)</div><div class="ttdoc">Sets the land window tab.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01114">land.c:1114</a></div></div>
 <div class="ttc" id="aspace_8c_html_a10b6a5ed83ff4c76816d2bca293cbd80"><div class="ttname"><a href="space_8c.html#a10b6a5ed83ff4c76816d2bca293cbd80">system_existsCase</a></div><div class="ttdeci">const char * system_existsCase(const char *sysname)</div><div class="ttdoc">Checks to see if a system exists case insensitively.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00799">space.c:799</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_a8695862a8db83f53b16c9c84b62f31e1"><div class="ttname"><a href="nlua__player_8c.html#a8695862a8db83f53b16c9c84b62f31e1">playerL_landWindow</a></div><div class="ttdeci">static int playerL_landWindow(lua_State *L)</div><div class="ttdoc">Sets the active land window.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00853">nlua_player.c:853</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_a2623378b0472192853286383df3f8e46"><div class="ttname"><a href="nlua__player_8c.html#a2623378b0472192853286383df3f8e46">playerL_shipname</a></div><div class="ttdeci">static int playerL_shipname(lua_State *L)</div><div class="ttdoc">Gets the player's ship's name (given by the player).</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00194">nlua_player.c:194</a></div></div>
-<div class="ttc" id="aevent_8c_html_a65caf33c0036b665dec4b6d07b76f448"><div class="ttname"><a href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a></div><div class="ttdeci">int event_dataID(const char *evdata)</div><div class="ttdoc">Gets the event data id from name.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00642">event.c:642</a></div></div>
+<div class="ttc" id="aevent_8c_html_a65caf33c0036b665dec4b6d07b76f448"><div class="ttname"><a href="event_8c.html#a65caf33c0036b665dec4b6d07b76f448">event_dataID</a></div><div class="ttdeci">int event_dataID(const char *evdata)</div><div class="ttdoc">Gets the event data id from name.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00637">event.c:637</a></div></div>
 <div class="ttc" id="aspfx_8c_html_acc943df2c1e8911d2cfc4a53488913ce"><div class="ttname"><a href="spfx_8c.html#acc943df2c1e8911d2cfc4a53488913ce">spfx_damage</a></div><div class="ttdeci">void spfx_damage(double mod)</div><div class="ttdoc">Increases the current damage level.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00925">spfx.c:925</a></div></div>
 <div class="ttc" id="anlua__vec2_8c_html_a7b6737c7b888b17008e5325e217c52c9"><div class="ttname"><a href="nlua__vec2_8c.html#a7b6737c7b888b17008e5325e217c52c9">lua_pushvector</a></div><div class="ttdeci">Vector2d * lua_pushvector(lua_State *L, Vector2d vec)</div><div class="ttdoc">Pushes a vector on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__vec2_8c_source.html#l00135">nlua_vec2.c:135</a></div></div>
-<div class="ttc" id="anlua__player_8c_html_a94ac5f9e2940556ee811d26b546dafb8"><div class="ttname"><a href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8">playerL_dt_mod</a></div><div class="ttdeci">static int playerL_dt_mod(lua_State *L)</div><div class="ttdoc">Gets the dt_mod of the player, which multiplies all time stuff.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01440">nlua_player.c:1440</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_a94ac5f9e2940556ee811d26b546dafb8"><div class="ttname"><a href="nlua__player_8c.html#a94ac5f9e2940556ee811d26b546dafb8">playerL_dt_mod</a></div><div class="ttdeci">static int playerL_dt_mod(lua_State *L)</div><div class="ttdoc">Gets the dt_mod of the player, which multiplies all time stuff.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01434">nlua_player.c:1434</a></div></div>
 <div class="ttc" id="asound_8c_html_af485c8bd7c6ceafdb106eebac1adacfc"><div class="ttname"><a href="sound_8c.html#af485c8bd7c6ceafdb106eebac1adacfc">sound_setSpeed</a></div><div class="ttdeci">void sound_setSpeed(double s)</div><div class="ttdoc">Sets the speed to play the sound at.</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00530">sound.c:530</a></div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00050">news.c:50</a></div></div>
 <div class="ttc" id="aarray_8h_html_a6f15b617933d8ed080bd53b043342923"><div class="ttname"><a href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a></div><div class="ttdeci">#define array_create_size(basic_type, capacity)</div><div class="ttdoc">Creates a new dynamic array of ‘basic_type’ with an initial capacity.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00106">array.h:106</a></div></div>
-<div class="ttc" id="astructpL__flag_html_ac5664579b173ed172f83498138cc8aa1"><div class="ttname"><a href="structpL__flag.html#ac5664579b173ed172f83498138cc8aa1">pL_flag::name</a></div><div class="ttdeci">const char * name</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03625">nlua_pilot.c:3625</a></div></div>
+<div class="ttc" id="astructpL__flag_html_ac5664579b173ed172f83498138cc8aa1"><div class="ttname"><a href="structpL__flag.html#ac5664579b173ed172f83498138cc8aa1">pL_flag::name</a></div><div class="ttdeci">const char * name</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03650">nlua_pilot.c:3650</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_ad183a28dc3f1086e1cb675b69bfe1c9c"><div class="ttname"><a href="nlua__player_8c.html#ad183a28dc3f1086e1cb675b69bfe1c9c">playerL_allowSave</a></div><div class="ttdeci">static int playerL_allowSave(lua_State *L)</div><div class="ttdoc">Sets player save ability.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00405">nlua_player.c:405</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_a7ae7b22800522f9ef8fb4da354eba8bf"><div class="ttname"><a href="nlua__player_8c.html#a7ae7b22800522f9ef8fb4da354eba8bf">playerL_methods</a></div><div class="ttdeci">static const luaL_Reg playerL_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00104">nlua_player.c:104</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ad0d77b1bddb767ee622ce0d0a98b5068"><div class="ttname"><a href="player_8c.html#ad0d77b1bddb767ee622ce0d0a98b5068">player_outfitOwned</a></div><div class="ttdeci">int player_outfitOwned(const Outfit *o)</div><div class="ttdoc">Gets how many of the outfit the player owns.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02636">player.c:2636</a></div></div>
-<div class="ttc" id="astructpL__flag_html_a61f71fd0d95b5e7f84a8609750856a61"><div class="ttname"><a href="structpL__flag.html#a61f71fd0d95b5e7f84a8609750856a61">pL_flag::id</a></div><div class="ttdeci">int id</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03626">nlua_pilot.c:3626</a></div></div>
+<div class="ttc" id="astructpL__flag_html_a61f71fd0d95b5e7f84a8609750856a61"><div class="ttname"><a href="structpL__flag.html#a61f71fd0d95b5e7f84a8609750856a61">pL_flag::id</a></div><div class="ttdeci">int id</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l03651">nlua_pilot.c:3651</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_a54db8d77357b1b68ef9384d0503c928b"><div class="ttname"><a href="nlua__player_8c.html#a54db8d77357b1b68ef9384d0503c928b">playerL_takeoff</a></div><div class="ttdeci">static int playerL_takeoff(lua_State *L)</div><div class="ttdoc">Forces the player to take off if they are landed.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00740">nlua_player.c:740</a></div></div>
 <div class="ttc" id="amission_8c_html_a4094c518738ae2574e43532c9f0c6eb4"><div class="ttname"><a href="mission_8c.html#a4094c518738ae2574e43532c9f0c6eb4">mission_alreadyRunning</a></div><div class="ttdeci">int mission_alreadyRunning(const MissionData *misn)</div><div class="ttdoc">Checks to see if mission is already running.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00223">mission.c:223</a></div></div>
 <div class="ttc" id="anlua__planet_8c_html_a2c4322a0726e1047d7dd499bfbdf2d15"><div class="ttname"><a href="nlua__planet_8c.html#a2c4322a0726e1047d7dd499bfbdf2d15">luaL_validplanet</a></div><div class="ttdeci">Planet * luaL_validplanet(lua_State *L, int ind)</div><div class="ttdoc">Gets a planet directly.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__planet_8c_source.html#l00166">nlua_planet.c:166</a></div></div>
@@ -1150,7 +1144,7 @@ $(function() {
 <div class="ttc" id="aboard_8c_html_ada20e44a5083bdd707f9be1fec7fc956"><div class="ttname"><a href="board_8c.html#ada20e44a5083bdd707f9be1fec7fc956">player_isBoarded</a></div><div class="ttdeci">int player_isBoarded(void)</div><div class="ttdoc">Gets if the player is boarded.</div><div class="ttdef"><b>Definition:</b> <a href="board_8c_source.html#l00057">board.c:57</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a7ce602dfa4e35e409bf7f8e82f6ba0e1"><div class="ttname"><a href="player_8c.html#a7ce602dfa4e35e409bf7f8e82f6ba0e1">player_outfitOwnedTotal</a></div><div class="ttdeci">int player_outfitOwnedTotal(const Outfit *o)</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02667">player.c:2667</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ad8b80204f9f10624ccea0182c92a206e"><div class="ttname"><a href="player_8c.html#ad8b80204f9f10624ccea0182c92a206e">player_getShipStack</a></div><div class="ttdeci">const PlayerShip_t * player_getShipStack(void)</div><div class="ttdoc">Gets the array (array.h) of the player's ships.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02547">player.c:2547</a></div></div>
-<div class="ttc" id="anlua__player_8c_html_adaa47d7b0dab85535e0e3acee287831a"><div class="ttname"><a href="nlua__player_8c.html#adaa47d7b0dab85535e0e3acee287831a">playerL_evtDone</a></div><div class="ttdeci">static int playerL_evtDone(lua_State *L)</div><div class="ttdoc">Checks to see if player has done an event.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01294">nlua_player.c:1294</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_adaa47d7b0dab85535e0e3acee287831a"><div class="ttname"><a href="nlua__player_8c.html#adaa47d7b0dab85535e0e3acee287831a">playerL_evtDone</a></div><div class="ttdeci">static int playerL_evtDone(lua_State *L)</div><div class="ttdoc">Checks to see if player has done an event.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01288">nlua_player.c:1288</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_aa464653385849364b9fd49005f3d7af1"><div class="ttname"><a href="nlua__player_8c.html#aa464653385849364b9fd49005f3d7af1">playerL_addOutfit</a></div><div class="ttdeci">static int playerL_addOutfit(lua_State *L)</div><div class="ttdoc">Adds an outfit to the player's outfit list.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01061">nlua_player.c:1061</a></div></div>
 <div class="ttc" id="aspace_8c_html_a1d2babe4b56c6b6a7bb8936202ec5066"><div class="ttname"><a href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a></div><div class="ttdeci">StarSystem * system_get(const char *sysname)</div><div class="ttdoc">Get the system from its name.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00853">space.c:853</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
@@ -1163,7 +1157,7 @@ $(function() {
 <div class="ttc" id="agui_8c_html_ac0fe5b1cc0e3464e6162829a8ea2f8f1"><div class="ttname"><a href="gui_8c.html#ac0fe5b1cc0e3464e6162829a8ea2f8f1">player_messageRaw</a></div><div class="ttdeci">void player_messageRaw(const char *str)</div><div class="ttdoc">Adds a mesg to the queue to be displayed on screen.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l00343">gui.c:343</a></div></div>
 <div class="ttc" id="acomm_8c_html_ad7045e17638e93a32147e6d477236531"><div class="ttname"><a href="comm_8c.html#ad7045e17638e93a32147e6d477236531">comm_isOpen</a></div><div class="ttdeci">int comm_isOpen(void)</div><div class="ttdoc">Checks to see if comm is open.</div><div class="ttdef"><b>Definition:</b> <a href="comm_8c_source.html#l00063">comm.c:63</a></div></div>
 <div class="ttc" id="anlua__outfit_8c_html_a7e09f0d045d2e8a11b6799e4bf47fa20"><div class="ttname"><a href="nlua__outfit_8c.html#a7e09f0d045d2e8a11b6799e4bf47fa20">lua_pushoutfit</a></div><div class="ttdeci">const Outfit ** lua_pushoutfit(lua_State *L, const Outfit *outfit)</div><div class="ttdoc">Pushes a outfit on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00158">nlua_outfit.c:158</a></div></div>
-<div class="ttc" id="anlua__player_8c_html_adbb25894bd370a8a823882a0dd18f9ef"><div class="ttname"><a href="nlua__player_8c.html#adbb25894bd370a8a823882a0dd18f9ef">playerL_swapShip</a></div><div class="ttdeci">static int playerL_swapShip(lua_State *L)</div><div class="ttdoc">Swaps the player's current ship with a ship they own by name.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01187">nlua_player.c:1187</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_adbb25894bd370a8a823882a0dd18f9ef"><div class="ttname"><a href="nlua__player_8c.html#adbb25894bd370a8a823882a0dd18f9ef">playerL_swapShip</a></div><div class="ttdeci">static int playerL_swapShip(lua_State *L)</div><div class="ttdoc">Swaps the player's current ship with a ship they own by name.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01181">nlua_player.c:1181</a></div></div>
 <div class="ttc" id="aspfx_8c_html_a6839836049ea3657190cc05c9f37a57e"><div class="ttname"><a href="spfx_8c.html#a6839836049ea3657190cc05c9f37a57e">spfx_shake</a></div><div class="ttdeci">void spfx_shake(double mod)</div><div class="ttdoc">Increases the current rumble level.</div><div class="ttdef"><b>Definition:</b> <a href="spfx_8c_source.html#l00904">spfx.c:904</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a8ffaec7f4cf10a8d4cab22d5f351864a"><div class="ttname"><a href="player_8c.html#a8ffaec7f4cf10a8d4cab22d5f351864a">player_missionAlreadyDone</a></div><div class="ttdeci">int player_missionAlreadyDone(int id)</div><div class="ttdoc">Checks to see if player has already completed a mission.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02858">player.c:2858</a></div></div>
 <div class="ttc" id="aboard_8c_html_afb90c37cb37b7b08f274b7f6a51709cd"><div class="ttname"><a href="board_8c.html#afb90c37cb37b7b08f274b7f6a51709cd">board_unboard</a></div><div class="ttdeci">void board_unboard(void)</div><div class="ttdoc">Forces unboarding of the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="board_8c_source.html#l00193">board.c:193</a></div></div>
@@ -1183,9 +1177,9 @@ $(function() {
 <div class="ttc" id="aplayer_8c_html_a2879b779c15cddabfa8b93d43351ae1d"><div class="ttname"><a href="player_8c.html#a2879b779c15cddabfa8b93d43351ae1d">player_addOutfit</a></div><div class="ttdeci">int player_addOutfit(const Outfit *o, int quantity)</div><div class="ttdoc">Adds an outfit to the player outfit stack.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02751">player.c:2751</a></div></div>
 <div class="ttc" id="anlua__outfit_8c_html_a658af07f1b4f64c6eca7bf652577d0fb"><div class="ttname"><a href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a></div><div class="ttdeci">const Outfit * luaL_validoutfit(lua_State *L, int ind)</div><div class="ttdoc">Makes sure the outfit is valid or raises a Lua error.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00133">nlua_outfit.c:133</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00172">array.h:172</a></div></div>
-<div class="ttc" id="anlua__player_8c_html_aa29a197c7916a677206b22ddb666995f"><div class="ttname"><a href="nlua__player_8c.html#aa29a197c7916a677206b22ddb666995f">playerL_addShip</a></div><div class="ttdeci">static int playerL_addShip(lua_State *L)</div><div class="ttdoc">Gives the player a new ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01158">nlua_player.c:1158</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_aa29a197c7916a677206b22ddb666995f"><div class="ttname"><a href="nlua__player_8c.html#aa29a197c7916a677206b22ddb666995f">playerL_addShip</a></div><div class="ttdeci">static int playerL_addShip(lua_State *L)</div><div class="ttdoc">Gives the player a new ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01152">nlua_player.c:1152</a></div></div>
 <div class="ttc" id="aplayer_8c_html_aee408bd4c680815d76442e5c8f0795e6"><div class="ttname"><a href="player_8c.html#aee408bd4c680815d76442e5c8f0795e6">player_screenshot</a></div><div class="ttdeci">void player_screenshot(void)</div><div class="ttdoc">Takes a screenshot.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02209">player.c:2209</a></div></div>
-<div class="ttc" id="anlua__pilot_8c_html_af0ba03c950b5f67410e2c2f00018c4fb"><div class="ttname"><a href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a></div><div class="ttdeci">LuaPilot * lua_pushpilot(lua_State *L, LuaPilot pilot)</div><div class="ttdoc">Pushes a pilot on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l00413">nlua_pilot.c:413</a></div></div>
+<div class="ttc" id="anlua__pilot_8c_html_af0ba03c950b5f67410e2c2f00018c4fb"><div class="ttname"><a href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a></div><div class="ttdeci">LuaPilot * lua_pushpilot(lua_State *L, LuaPilot pilot)</div><div class="ttdoc">Pushes a pilot on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__pilot_8c_source.html#l00415">nlua_pilot.c:415</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_a66925851fcf6a24135048381556f995c"><div class="ttname"><a href="nlua__player_8c.html#a66925851fcf6a24135048381556f995c">playerL_autonavAbort</a></div><div class="ttdeci">static int playerL_autonavAbort(lua_State *L)</div><div class="ttdoc">Stops the players autonav if active.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00567">nlua_player.c:567</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_a0a1b29a2fc6d0b93ca1d45302ff6bb68"><div class="ttname"><a href="nlua__player_8c.html#a0a1b29a2fc6d0b93ca1d45302ff6bb68">playerL_unboard</a></div><div class="ttdeci">static int playerL_unboard(lua_State *L)</div><div class="ttdoc">Unboards the player from its boarded target.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00710">nlua_player.c:710</a></div></div>
 <div class="ttc" id="ahook_8c_html_a358987e6df9f49e54e9c31660700737a"><div class="ttname"><a href="hook_8c.html#a358987e6df9f49e54e9c31660700737a">hooks_runParam</a></div><div class="ttdeci">int hooks_runParam(const char *stack, const HookParam *param)</div><div class="ttdoc">Runs all the hooks of stack.</div><div class="ttdef"><b>Definition:</b> <a href="hook_8c_source.html#l00988">hook.c:988</a></div></div>
@@ -1193,7 +1187,7 @@ $(function() {
 <div class="ttc" id="anlua__player_8c_html_ab2608caddc4cfd3db216d4bf98cf7e16"><div class="ttname"><a href="nlua__player_8c.html#ab2608caddc4cfd3db216d4bf98cf7e16">playerL_omsgChange</a></div><div class="ttdeci">static int playerL_omsgChange(lua_State *L)</div><div class="ttdoc">Changes an overlay message.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00358">nlua_player.c:358</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_a11bfd5f0d31203fe5a7d761688a86a42"><div class="ttname"><a href="nlua__player_8c.html#a11bfd5f0d31203fe5a7d761688a86a42">playerL_msg</a></div><div class="ttdeci">static int playerL_msg(lua_State *L)</div><div class="ttdoc">Sends the player an in-game message.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00287">nlua_player.c:287</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_a4cc316d7c553e306073aa3aaa1a166a3"><div class="ttname"><a href="nlua__player_8c.html#a4cc316d7c553e306073aa3aaa1a166a3">playerL_ships</a></div><div class="ttdeci">static int playerL_ships(lua_State *L)</div><div class="ttdoc">Gets the names of the player's ships.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00914">nlua_player.c:914</a></div></div>
-<div class="ttc" id="aevent_8c_html_acee910c5f6745dd62a319f045f06aa07"><div class="ttname"><a href="event_8c.html#acee910c5f6745dd62a319f045f06aa07">events_trigger</a></div><div class="ttdeci">void events_trigger(EventTrigger_t trigger)</div><div class="ttdoc">Runs all the events matching a trigger.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00336">event.c:336</a></div></div>
+<div class="ttc" id="aevent_8c_html_acee910c5f6745dd62a319f045f06aa07"><div class="ttname"><a href="event_8c.html#acee910c5f6745dd62a319f045f06aa07">events_trigger</a></div><div class="ttdeci">void events_trigger(EventTrigger_t trigger)</div><div class="ttdoc">Runs all the events matching a trigger.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00331">event.c:331</a></div></div>
 <div class="ttc" id="amission_8c_html_a3bac4543ee633374be825ef5ccf108e3"><div class="ttname"><a href="mission_8c.html#a3bac4543ee633374be825ef5ccf108e3">missions_run</a></div><div class="ttdeci">void missions_run(int loc, int faction, const char *planet, const char *sysname)</div><div class="ttdoc">Runs missions matching location, all Lua side and one-shot.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00298">mission.c:298</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_aded5a395a78c3b3184a391a7fe2089fb"><div class="ttname"><a href="nlua__player_8c.html#aded5a395a78c3b3184a391a7fe2089fb">playerL_land</a></div><div class="ttdeci">static int playerL_land(lua_State *L)</div><div class="ttdoc">Automagically lands the player on a planet.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00763">nlua_player.c:763</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_a3544a3994c8eeeaebd07b13d23271e76"><div class="ttname"><a href="nlua__ship_8c.html#a3544a3994c8eeeaebd07b13d23271e76">luaL_validship</a></div><div class="ttdeci">const Ship * luaL_validship(lua_State *L, int ind)</div><div class="ttdoc">Makes sure the ship is valid or raises a Lua error.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00145">nlua_ship.c:145</a></div></div>
@@ -1206,8 +1200,8 @@ $(function() {
 <div class="ttc" id="aplayer__autonav_8c_html_a0fcceeb758e7e4a766b79149c8f892e0"><div class="ttname"><a href="player__autonav_8c.html#a0fcceeb758e7e4a766b79149c8f892e0">player_autonavEnd</a></div><div class="ttdeci">void player_autonavEnd(void)</div><div class="ttdoc">Ends the autonav.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00149">player_autonav.c:149</a></div></div>
 <div class="ttc" id="amission_8c_html_ab6f7e7d4d7d03985b4d6f12a9bd6fc96"><div class="ttname"><a href="mission_8c.html#ab6f7e7d4d7d03985b4d6f12a9bd6fc96">mission_getID</a></div><div class="ttdeci">int mission_getID(const char *name)</div><div class="ttdoc">Gets id from mission name.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00105">mission.c:105</a></div></div>
 <div class="ttc" id="anlua__player_8c_html_ab08834d66ccdaed0ea6c59a313e97e04"><div class="ttname"><a href="nlua__player_8c.html#ab08834d66ccdaed0ea6c59a313e97e04">playerL_omsgRm</a></div><div class="ttdeci">static int playerL_omsgRm(lua_State *L)</div><div class="ttdoc">Removes an overlay message.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l00389">nlua_player.c:389</a></div></div>
-<div class="ttc" id="aevent_8c_html_a26a5281fc1b3e53665dd385010da3009"><div class="ttname"><a href="event_8c.html#a26a5281fc1b3e53665dd385010da3009">event_alreadyRunning</a></div><div class="ttdeci">int event_alreadyRunning(int data)</div><div class="ttdoc">Check to see if an event is already running.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00315">event.c:315</a></div></div>
-<div class="ttc" id="anlua__player_8c_html_ae8c18791186bca16b9a432f73acfccc3"><div class="ttname"><a href="nlua__player_8c.html#ae8c18791186bca16b9a432f73acfccc3">playerL_misnDone</a></div><div class="ttdeci">static int playerL_misnDone(lua_State *L)</div><div class="ttdoc">Checks to see if player has done a mission.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01238">nlua_player.c:1238</a></div></div>
+<div class="ttc" id="aevent_8c_html_a26a5281fc1b3e53665dd385010da3009"><div class="ttname"><a href="event_8c.html#a26a5281fc1b3e53665dd385010da3009">event_alreadyRunning</a></div><div class="ttdeci">int event_alreadyRunning(int data)</div><div class="ttdoc">Check to see if an event is already running.</div><div class="ttdef"><b>Definition:</b> <a href="event_8c_source.html#l00310">event.c:310</a></div></div>
+<div class="ttc" id="anlua__player_8c_html_ae8c18791186bca16b9a432f73acfccc3"><div class="ttname"><a href="nlua__player_8c.html#ae8c18791186bca16b9a432f73acfccc3">playerL_misnDone</a></div><div class="ttdeci">static int playerL_misnDone(lua_State *L)</div><div class="ttdoc">Checks to see if player has done a mission.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__player_8c_source.html#l01232">nlua_player.c:1232</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -317,140 +317,136 @@ $(function() {
 <div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160; </div>
 <div class="line"><a name="l00495"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#a64367c87a4d6afb3cbf93f0c592a7550">  495</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#a64367c87a4d6afb3cbf93f0c592a7550">factionL_logo</a>( lua_State *L )</div>
 <div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;{</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;   <span class="keywordtype">int</span> lf;</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;   <span class="keyword">const</span> glTexture *tex;</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;   lf = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;   tex = <a class="code" href="faction_8c.html#a8779a04440f1314611dbef914bdd0c69">faction_logo</a>( lf );</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;   <span class="keywordflow">if</span> (tex == NULL)</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <a class="code" href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a>( L, <a class="code" href="opengl__tex_8c.html#a08da237cf1c0eb03194c7ed22ebf92b4">gl_dupTexture</a>( tex ) );</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;}</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160; </div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160; </div>
-<div class="line"><a name="l00515"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#a31ef35a630b735891bb341559681b76b">  515</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#a31ef35a630b735891bb341559681b76b">factionL_colour</a>( lua_State *L )</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;{</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;   <span class="keywordtype">int</span> lf;</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;   <span class="keyword">const</span> glColour *col;</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;   lf = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;   col = <a class="code" href="faction_8c.html#a314bc7683265aab5e7e85d3bc98c10a7">faction_getColour</a>(lf);</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;   <span class="keywordflow">if</span> (col == NULL)</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   <a class="code" href="nlua__col_8c.html#a8f17ed53d0b64f68881525ffc3a4c0bf">lua_pushcolour</a>( L, *col );</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;}</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160; </div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160; </div>
-<div class="line"><a name="l00537"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#ae07a11078d29a2cec0734e9d6c719b18">  537</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#ae07a11078d29a2cec0734e9d6c719b18">factionL_isknown</a>( lua_State *L )</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;{</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;   <span class="keywordtype">int</span> fac = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L, 1);</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;   lua_pushboolean(L, <a class="code" href="faction_8c.html#a1c26106ea4216e46af4fc2e75ddc71c6">faction_isKnown</a>(fac));</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;}</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160; </div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160; </div>
-<div class="line"><a name="l00553"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#afb1bb20be11794602dc07c0ffb20b335">  553</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#afb1bb20be11794602dc07c0ffb20b335">factionL_setknown</a>( lua_State *L )</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;{</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;   <span class="keywordtype">int</span> fac = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L, 1);</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;   <span class="keywordtype">int</span> b   = lua_toboolean(L, 2);</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;   <a class="code" href="faction_8c.html#ad458e5db7c0b6221a3560c9a15520f83">faction_setKnown</a>( fac, b );</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;}</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160; </div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00574"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#a9c4326600746ae3595fa6017b936276e">  574</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#a9c4326600746ae3595fa6017b936276e">factionL_dynAdd</a>( lua_State *L )</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;{</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;   LuaFaction fac, newfac;</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name, *display, *ai;</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;   <span class="keywordtype">int</span> clear_allies, clear_enemies;</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160; </div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160; </div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   <span class="keywordflow">if</span> (!lua_isnoneornil(L, 1))</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;      fac   = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;      fac   = -1;</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;   name     = luaL_checkstring(L,2);</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;   display  = luaL_optstring(L,3,name);</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160; </div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;   <span class="keywordflow">if</span> (lua_istable(L,4)) {</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;      lua_getfield(L,4,<span class="stringliteral">&quot;ai&quot;</span>);</div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;      ai    = luaL_optstring(L,-1,NULL);</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;   <span class="keywordtype">int</span> lf               = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;   <span class="keyword">const</span> glTexture *tex = <a class="code" href="faction_8c.html#a8779a04440f1314611dbef914bdd0c69">faction_logo</a>( lf );</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;   <span class="keywordflow">if</span> (tex == NULL)</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;   <a class="code" href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a>( L, <a class="code" href="opengl__tex_8c.html#a08da237cf1c0eb03194c7ed22ebf92b4">gl_dupTexture</a>( tex ) );</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;}</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160; </div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160; </div>
+<div class="line"><a name="l00513"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#a31ef35a630b735891bb341559681b76b">  513</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#a31ef35a630b735891bb341559681b76b">factionL_colour</a>( lua_State *L )</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;{</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;   <span class="keywordtype">int</span> lf               = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;   <span class="keyword">const</span> glColour *col  = <a class="code" href="faction_8c.html#a314bc7683265aab5e7e85d3bc98c10a7">faction_getColour</a>(lf);</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;   <span class="keywordflow">if</span> (col == NULL)</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;   <a class="code" href="nlua__col_8c.html#a8f17ed53d0b64f68881525ffc3a4c0bf">lua_pushcolour</a>( L, *col );</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;}</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160; </div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160; </div>
+<div class="line"><a name="l00533"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#ae07a11078d29a2cec0734e9d6c719b18">  533</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#ae07a11078d29a2cec0734e9d6c719b18">factionL_isknown</a>( lua_State *L )</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;{</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;   <span class="keywordtype">int</span> fac = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L, 1);</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;   lua_pushboolean(L, <a class="code" href="faction_8c.html#a1c26106ea4216e46af4fc2e75ddc71c6">faction_isKnown</a>(fac));</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;}</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160; </div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160; </div>
+<div class="line"><a name="l00549"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#afb1bb20be11794602dc07c0ffb20b335">  549</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#afb1bb20be11794602dc07c0ffb20b335">factionL_setknown</a>( lua_State *L )</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;{</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;   <span class="keywordtype">int</span> fac = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L, 1);</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;   <span class="keywordtype">int</span> b   = lua_toboolean(L, 2);</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   <a class="code" href="faction_8c.html#ad458e5db7c0b6221a3560c9a15520f83">faction_setKnown</a>( fac, b );</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;}</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160; </div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160; </div>
+<div class="line"><a name="l00570"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#a9c4326600746ae3595fa6017b936276e">  570</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#a9c4326600746ae3595fa6017b936276e">factionL_dynAdd</a>( lua_State *L )</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;{</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;   LuaFaction fac, newfac;</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name, *display, *ai;</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;   <span class="keywordtype">int</span> clear_allies, clear_enemies;</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160; </div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160; </div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;   <span class="keywordflow">if</span> (!lua_isnoneornil(L, 1))</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;      fac   = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;      fac   = -1;</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   name     = luaL_checkstring(L,2);</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;   display  = luaL_optstring(L,3,name);</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160; </div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;   <span class="keywordflow">if</span> (lua_istable(L,4)) {</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;      lua_getfield(L,4,<span class="stringliteral">&quot;ai&quot;</span>);</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;      ai    = luaL_optstring(L,-1,NULL);</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;      lua_pop(L,1);</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160; </div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;      lua_getfield(L,4,<span class="stringliteral">&quot;clear_allies&quot;</span>);</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;      clear_allies = lua_toboolean(L,-1);</div>
 <div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;      lua_pop(L,1);</div>
 <div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160; </div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;      lua_getfield(L,4,<span class="stringliteral">&quot;clear_allies&quot;</span>);</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;      clear_allies = lua_toboolean(L,-1);</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;      lua_getfield(L,4,<span class="stringliteral">&quot;clear_enemies&quot;</span>);</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;      clear_enemies = lua_toboolean(L,-1);</div>
 <div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;      lua_pop(L,1);</div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160; </div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;      lua_getfield(L,4,<span class="stringliteral">&quot;clear_enemies&quot;</span>);</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;      clear_enemies = lua_toboolean(L,-1);</div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;      lua_pop(L,1);</div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;   }</div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;      ai             = NULL;</div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;      clear_allies   = 0;</div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;      clear_enemies  = 0;</div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;   }</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;   }</div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;      ai             = NULL;</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;      clear_allies   = 0;</div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;      clear_enemies  = 0;</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;   }</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160; </div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;   <span class="comment">/* Check if exists. */</span></div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#a0d8832013b3446ddaf7e4f334c9c9766">faction_exists</a>(name))</div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Faction &#39;%s&#39; already exists!&quot;</span>), name);</div>
 <div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160; </div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;   <span class="comment">/* Check if exists. */</span></div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#a0d8832013b3446ddaf7e4f334c9c9766">faction_exists</a>(name))</div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Faction &#39;%s&#39; already exists!&quot;</span>), name);</div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160; </div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;   <span class="comment">/* Create new faction. */</span></div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;   newfac = <a class="code" href="faction_8c.html#ad22e8d650db5c92de196c04844243398">faction_dynAdd</a>( fac, name, display, ai );</div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160; </div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;   <span class="comment">/* Clear if necessary. */</span></div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;   <span class="keywordflow">if</span> (clear_allies)</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;      <a class="code" href="faction_8c.html#aab064ed3dbf5930ef0c9494e80a14698">faction_clearAlly</a>( newfac );</div>
-<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;   <span class="keywordflow">if</span> (clear_enemies)</div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;      <a class="code" href="faction_8c.html#a60d6fe1b833a40a97575aadbfef58da0">faction_clearEnemy</a>( newfac );</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;   <span class="comment">/* Create new faction. */</span></div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;   newfac = <a class="code" href="faction_8c.html#ad22e8d650db5c92de196c04844243398">faction_dynAdd</a>( fac, name, display, ai );</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160; </div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;   <span class="comment">/* Clear if necessary. */</span></div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;   <span class="keywordflow">if</span> (clear_allies)</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;      <a class="code" href="faction_8c.html#aab064ed3dbf5930ef0c9494e80a14698">faction_clearAlly</a>( newfac );</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;   <span class="keywordflow">if</span> (clear_enemies)</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;      <a class="code" href="faction_8c.html#a60d6fe1b833a40a97575aadbfef58da0">faction_clearEnemy</a>( newfac );</div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160; </div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;   <a class="code" href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a>( L, newfac );</div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;}</div>
 <div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160; </div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;   <a class="code" href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a>( L, newfac );</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;}</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160; </div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160; </div>
-<div class="line"><a name="l00635"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#a28dcdcf96ccb897298ab3107a737326e">  635</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#a28dcdcf96ccb897298ab3107a737326e">factionL_dynAlly</a>( lua_State *L )</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;{</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   LuaFaction fac, ally;</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   <span class="keywordtype">int</span> remove;</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;   fac      = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="faction_8c.html#a87d4adc99f0fdeb9fae5e2ceaf325a38">faction_isDynamic</a>(fac))</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can only add allies to dynamic factions&quot;</span>));</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;   ally     = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,2);</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;   remove   = lua_toboolean(L,3);</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;   <span class="keywordflow">if</span> (remove)</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;      <a class="code" href="faction_8c.html#a1686a7c47a65a6c4d9d4187cdeb6e700">faction_rmAlly</a>(fac, ally);</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;      <a class="code" href="faction_8c.html#ae75a71360f26a1244adb1470030c4c1a">faction_addAlly</a>(fac, ally);</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;}</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160; </div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160; </div>
-<div class="line"><a name="l00661"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#a7387aa4d6f034315df1bf0531ede9b6c">  661</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#a7387aa4d6f034315df1bf0531ede9b6c">factionL_dynEnemy</a>( lua_State *L )</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;{</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   LuaFaction fac, enemy;</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   <span class="keywordtype">int</span> remove;</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   fac      = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="faction_8c.html#a87d4adc99f0fdeb9fae5e2ceaf325a38">faction_isDynamic</a>(fac))</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can only add allies to dynamic factions&quot;</span>));</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;   enemy    = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,2);</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;   remove   = lua_toboolean(L,3);</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;   <span class="keywordflow">if</span> (remove)</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;      <a class="code" href="faction_8c.html#a687c49f23fb672b27455c023229dc5af">faction_rmEnemy</a>(fac, enemy);</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;      <a class="code" href="faction_8c.html#af05c7eaf320f8e63e3016c5cd87ed2ff">faction_addEnemy</a>(fac, enemy);</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;}</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160; </div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160; </div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160; </div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160; </div>
+<div class="line"><a name="l00631"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#a28dcdcf96ccb897298ab3107a737326e">  631</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#a28dcdcf96ccb897298ab3107a737326e">factionL_dynAlly</a>( lua_State *L )</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;{</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   LuaFaction fac, ally;</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   <span class="keywordtype">int</span> remove;</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   fac      = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="faction_8c.html#a87d4adc99f0fdeb9fae5e2ceaf325a38">faction_isDynamic</a>(fac))</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can only add allies to dynamic factions&quot;</span>));</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;   ally     = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,2);</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;   remove   = lua_toboolean(L,3);</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   <span class="keywordflow">if</span> (remove)</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;      <a class="code" href="faction_8c.html#a1686a7c47a65a6c4d9d4187cdeb6e700">faction_rmAlly</a>(fac, ally);</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;      <a class="code" href="faction_8c.html#ae75a71360f26a1244adb1470030c4c1a">faction_addAlly</a>(fac, ally);</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;}</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160; </div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160; </div>
+<div class="line"><a name="l00657"></a><span class="lineno"><a class="line" href="nlua__faction_8c.html#a7387aa4d6f034315df1bf0531ede9b6c">  657</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__faction_8c.html#a7387aa4d6f034315df1bf0531ede9b6c">factionL_dynEnemy</a>( lua_State *L )</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;{</div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;   LuaFaction fac, enemy;</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;   <span class="keywordtype">int</span> remove;</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   fac      = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,1);</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="faction_8c.html#a87d4adc99f0fdeb9fae5e2ceaf325a38">faction_isDynamic</a>(fac))</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;      NLUA_ERROR(L,_(<span class="stringliteral">&quot;Can only add allies to dynamic factions&quot;</span>));</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   enemy    = <a class="code" href="nlua__faction_8c.html#a60de2d2728c0f49a28028bde39239ee5">luaL_validfaction</a>(L,2);</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   remove   = lua_toboolean(L,3);</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;   <span class="keywordflow">if</span> (remove)</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;      <a class="code" href="faction_8c.html#a687c49f23fb672b27455c023229dc5af">faction_rmEnemy</a>(fac, enemy);</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;      <a class="code" href="faction_8c.html#af05c7eaf320f8e63e3016c5cd87ed2ff">faction_addEnemy</a>(fac, enemy);</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;}</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160; </div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160; </div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="anlua__faction_8c_html_a9c4326600746ae3595fa6017b936276e"><div class="ttname"><a href="nlua__faction_8c.html#a9c4326600746ae3595fa6017b936276e">factionL_dynAdd</a></div><div class="ttdeci">static int factionL_dynAdd(lua_State *L)</div><div class="ttdoc">Adds a faction dynamically.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00574">nlua_faction.c:574</a></div></div>
+<div class="ttc" id="anlua__faction_8c_html_a9c4326600746ae3595fa6017b936276e"><div class="ttname"><a href="nlua__faction_8c.html#a9c4326600746ae3595fa6017b936276e">factionL_dynAdd</a></div><div class="ttdeci">static int factionL_dynAdd(lua_State *L)</div><div class="ttdoc">Adds a faction dynamically.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00570">nlua_faction.c:570</a></div></div>
 <div class="ttc" id="afaction_8c_html_ad458e5db7c0b6221a3560c9a15520f83"><div class="ttname"><a href="faction_8c.html#ad458e5db7c0b6221a3560c9a15520f83">faction_setKnown</a></div><div class="ttdeci">int faction_setKnown(int id, int state)</div><div class="ttdoc">Sets the factions known state.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00293">faction.c:293</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_a8f1c1141b0341dd265ced306aaba5f4f"><div class="ttname"><a href="nlua__faction_8c.html#a8f1c1141b0341dd265ced306aaba5f4f">nlua_loadFaction</a></div><div class="ttdeci">int nlua_loadFaction(nlua_env env)</div><div class="ttdoc">Loads the faction library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00086">nlua_faction.c:86</a></div></div>
 <div class="ttc" id="afaction_8c_html_a1c26106ea4216e46af4fc2e75ddc71c6"><div class="ttname"><a href="faction_8c.html#a1c26106ea4216e46af4fc2e75ddc71c6">faction_isKnown</a></div><div class="ttdeci">int faction_isKnown(int id)</div><div class="ttdoc">Is the faction known?</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00276">faction.c:276</a></div></div>
@@ -458,7 +454,7 @@ $(function() {
 <div class="ttc" id="anlua__tex_8c_html_ace5fc596820443c831ddce46d755f7b4"><div class="ttname"><a href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a></div><div class="ttdeci">glTexture ** lua_pushtex(lua_State *L, glTexture *texture)</div><div class="ttdoc">Pushes a texture on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00123">nlua_tex.c:123</a></div></div>
 <div class="ttc" id="afaction_8c_html_a8779a04440f1314611dbef914bdd0c69"><div class="ttname"><a href="faction_8c.html#a8779a04440f1314611dbef914bdd0c69">faction_logo</a></div><div class="ttdeci">const glTexture * faction_logo(int f)</div><div class="ttdoc">Gets the faction's logo (ideally 256x256).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00436">faction.c:436</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_a8b05cb0c70c44d31cccd33634c7c8340"><div class="ttname"><a href="nlua__faction_8c.html#a8b05cb0c70c44d31cccd33634c7c8340">factionL_areallies</a></div><div class="ttdeci">static int factionL_areallies(lua_State *L)</div><div class="ttdoc">Checks to see if f is an ally of a.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00312">nlua_faction.c:312</a></div></div>
-<div class="ttc" id="anlua__faction_8c_html_a7387aa4d6f034315df1bf0531ede9b6c"><div class="ttname"><a href="nlua__faction_8c.html#a7387aa4d6f034315df1bf0531ede9b6c">factionL_dynEnemy</a></div><div class="ttdeci">static int factionL_dynEnemy(lua_State *L)</div><div class="ttdoc">Adds or removes enemies to a faction. Only works with dynamic factions.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00661">nlua_faction.c:661</a></div></div>
+<div class="ttc" id="anlua__faction_8c_html_a7387aa4d6f034315df1bf0531ede9b6c"><div class="ttname"><a href="nlua__faction_8c.html#a7387aa4d6f034315df1bf0531ede9b6c">factionL_dynEnemy</a></div><div class="ttdeci">static int factionL_dynEnemy(lua_State *L)</div><div class="ttdoc">Adds or removes enemies to a faction. Only works with dynamic factions.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00657">nlua_faction.c:657</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_ab936a348e7aec8d80979e11de7a4e877"><div class="ttname"><a href="nlua__faction_8c.html#ab936a348e7aec8d80979e11de7a4e877">faction_methods</a></div><div class="ttdeci">static const luaL_Reg faction_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00052">nlua_faction.c:52</a></div></div>
 <div class="ttc" id="afaction_8c_html_a0d8832013b3446ddaf7e4f334c9c9766"><div class="ttname"><a href="faction_8c.html#a0d8832013b3446ddaf7e4f334c9c9766">faction_exists</a></div><div class="ttdeci">int faction_exists(const char *name)</div><div class="ttdoc">Checks to see if a faction exists by name.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00164">faction.c:164</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_a84ba7aaf148aa0966b871bba7879ddef"><div class="ttname"><a href="nlua__faction_8c.html#a84ba7aaf148aa0966b871bba7879ddef">factionL_playerstanding</a></div><div class="ttdeci">static int factionL_playerstanding(lua_State *L)</div><div class="ttdoc">Gets the player's standing with the faction.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00409">nlua_faction.c:409</a></div></div>
@@ -484,7 +480,7 @@ $(function() {
 <div class="ttc" id="anlua__faction_8c_html_a17b4188fa9e17e7fcfa824e6b00e27de"><div class="ttname"><a href="nlua__faction_8c.html#a17b4188fa9e17e7fcfa824e6b00e27de">factionL_playerstandingdefault</a></div><div class="ttdeci">static int factionL_playerstandingdefault(lua_State *L)</div><div class="ttdoc">Gets the player's default standing with the faction.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00425">nlua_faction.c:425</a></div></div>
 <div class="ttc" id="afaction_8c_html_a314bc7683265aab5e7e85d3bc98c10a7"><div class="ttname"><a href="faction_8c.html#a314bc7683265aab5e7e85d3bc98c10a7">faction_getColour</a></div><div class="ttdeci">const glColour * faction_getColour(int f)</div><div class="ttdoc">Gets the colour of the faction based on it's standing with the player.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01098">faction.c:1098</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_a4ed5436b4d1f923698a309a9aa578a6e"><div class="ttname"><a href="nlua__faction_8c.html#a4ed5436b4d1f923698a309a9aa578a6e">factionL_allies</a></div><div class="ttdeci">static int factionL_allies(lua_State *L)</div><div class="ttdoc">Gets the allies of the faction.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00469">nlua_faction.c:469</a></div></div>
-<div class="ttc" id="anlua__faction_8c_html_a28dcdcf96ccb897298ab3107a737326e"><div class="ttname"><a href="nlua__faction_8c.html#a28dcdcf96ccb897298ab3107a737326e">factionL_dynAlly</a></div><div class="ttdeci">static int factionL_dynAlly(lua_State *L)</div><div class="ttdoc">Adds or removes allies to a faction. Only works with dynamic factions.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00635">nlua_faction.c:635</a></div></div>
+<div class="ttc" id="anlua__faction_8c_html_a28dcdcf96ccb897298ab3107a737326e"><div class="ttname"><a href="nlua__faction_8c.html#a28dcdcf96ccb897298ab3107a737326e">factionL_dynAlly</a></div><div class="ttdeci">static int factionL_dynAlly(lua_State *L)</div><div class="ttdoc">Adds or removes allies to a faction. Only works with dynamic factions.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00631">nlua_faction.c:631</a></div></div>
 <div class="ttc" id="afaction_8c_html_a75dad54f6290c7eeda08799ab26c9f93"><div class="ttname"><a href="faction_8c.html#a75dad54f6290c7eeda08799ab26c9f93">areEnemies</a></div><div class="ttdeci">int areEnemies(int a, int b)</div><div class="ttdoc">Checks whether two factions are enemies.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01230">faction.c:1230</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_aeb8c1c6ee62497a0f53ecef9e221861f"><div class="ttname"><a href="nlua__faction_8c.html#aeb8c1c6ee62497a0f53ecef9e221861f">factionL_modplayer</a></div><div class="ttdeci">static int factionL_modplayer(lua_State *L)</div><div class="ttdoc">Modifies the player's standing with the faction.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00331">nlua_faction.c:331</a></div></div>
 <div class="ttc" id="afaction_8c_html_aab064ed3dbf5930ef0c9494e80a14698"><div class="ttname"><a href="faction_8c.html#aab064ed3dbf5930ef0c9494e80a14698">faction_clearAlly</a></div><div class="ttdeci">void faction_clearAlly(int f)</div><div class="ttdoc">Clears all the ally of a dynamic faction.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00632">faction.c:632</a></div></div>
@@ -492,7 +488,7 @@ $(function() {
 <div class="ttc" id="anlua__faction_8c_html_a272561733ec8dfd98112e08fa74a5e76"><div class="ttname"><a href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a></div><div class="ttdeci">LuaFaction * lua_pushfaction(lua_State *L, LuaFaction faction)</div><div class="ttdoc">Pushes a faction on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00170">nlua_faction.c:170</a></div></div>
 <div class="ttc" id="afaction_8c_html_a8d7d74e353f8f34c1192c2099bc3df68"><div class="ttname"><a href="faction_8c.html#a8d7d74e353f8f34c1192c2099bc3df68">faction_modPlayerRaw</a></div><div class="ttdeci">void faction_modPlayerRaw(int f, double mod)</div><div class="ttdoc">Modifies the player's standing without affecting others.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00906">faction.c:906</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
-<div class="ttc" id="anlua__faction_8c_html_afb1bb20be11794602dc07c0ffb20b335"><div class="ttname"><a href="nlua__faction_8c.html#afb1bb20be11794602dc07c0ffb20b335">factionL_setknown</a></div><div class="ttdeci">static int factionL_setknown(lua_State *L)</div><div class="ttdoc">Sets a faction's known state.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00553">nlua_faction.c:553</a></div></div>
+<div class="ttc" id="anlua__faction_8c_html_afb1bb20be11794602dc07c0ffb20b335"><div class="ttname"><a href="nlua__faction_8c.html#afb1bb20be11794602dc07c0ffb20b335">factionL_setknown</a></div><div class="ttdeci">static int factionL_setknown(lua_State *L)</div><div class="ttdoc">Sets a faction's known state.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00549">nlua_faction.c:549</a></div></div>
 <div class="ttc" id="afaction_8c_html_afea2f8de538c247a62bdd5d2d4c69f2b"><div class="ttname"><a href="faction_8c.html#afea2f8de538c247a62bdd5d2d4c69f2b">areAllies</a></div><div class="ttdeci">int areAllies(int a, int b)</div><div class="ttdoc">Checks whether two factions are allies or not.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01277">faction.c:1277</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_aaad31fd6db95b7713086a9ca67d679b2"><div class="ttname"><a href="nlua__faction_8c.html#aaad31fd6db95b7713086a9ca67d679b2">factionL_enemies</a></div><div class="ttdeci">static int factionL_enemies(lua_State *L)</div><div class="ttdoc">Gets the enemies of the faction.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00442">nlua_faction.c:442</a></div></div>
 <div class="ttc" id="afaction_8c_html_ac7c5ef2816b34fea76372d884f6e997f"><div class="ttname"><a href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a></div><div class="ttdeci">const char * faction_name(int f)</div><div class="ttdoc">Gets a factions &quot;real&quot; (internal) name.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00309">faction.c:309</a></div></div>
@@ -503,15 +499,15 @@ $(function() {
 <div class="ttc" id="afaction_8c_html_aaa6e96bcfe0042ba8d6094cface47758"><div class="ttname"><a href="faction_8c.html#aaa6e96bcfe0042ba8d6094cface47758">faction_shortname</a></div><div class="ttdeci">const char * faction_shortname(int f)</div><div class="ttdoc">Gets a factions short name (human-readable).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00329">faction.c:329</a></div></div>
 <div class="ttc" id="afaction_8c_html_ae75a71360f26a1244adb1470030c4c1a"><div class="ttname"><a href="faction_8c.html#ae75a71360f26a1244adb1470030c4c1a">faction_addAlly</a></div><div class="ttdeci">void faction_addAlly(int f, int o)</div><div class="ttdoc">Adds an ally to the faction's allies list.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00652">faction.c:652</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_a138c7d6c31de4dc2b2262d18902cf708"><div class="ttname"><a href="nlua__faction_8c.html#a138c7d6c31de4dc2b2262d18902cf708">factionL_longname</a></div><div class="ttdeci">static int factionL_longname(lua_State *L)</div><div class="ttdoc">Gets the faction's translated long name.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00277">nlua_faction.c:277</a></div></div>
-<div class="ttc" id="anlua__faction_8c_html_ae07a11078d29a2cec0734e9d6c719b18"><div class="ttname"><a href="nlua__faction_8c.html#ae07a11078d29a2cec0734e9d6c719b18">factionL_isknown</a></div><div class="ttdeci">static int factionL_isknown(lua_State *L)</div><div class="ttdoc">Checks to see if a faction is known by the player.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00537">nlua_faction.c:537</a></div></div>
+<div class="ttc" id="anlua__faction_8c_html_ae07a11078d29a2cec0734e9d6c719b18"><div class="ttname"><a href="nlua__faction_8c.html#ae07a11078d29a2cec0734e9d6c719b18">factionL_isknown</a></div><div class="ttdeci">static int factionL_isknown(lua_State *L)</div><div class="ttdoc">Checks to see if a faction is known by the player.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00533">nlua_faction.c:533</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_ae091282a86e633f3f3f160ef0bf277b4"><div class="ttname"><a href="nlua__faction_8c.html#ae091282a86e633f3f3f160ef0bf277b4">factionL_eq</a></div><div class="ttdeci">static int factionL_eq(lua_State *L)</div><div class="ttdoc">__eq (equality) metamethod for factions.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00214">nlua_faction.c:214</a></div></div>
 <div class="ttc" id="afaction_8c_html_ac8802d8f4256c3b62598270c52e76d26"><div class="ttname"><a href="faction_8c.html#ac8802d8f4256c3b62598270c52e76d26">faction_modPlayerSingle</a></div><div class="ttdeci">void faction_modPlayerSingle(int f, double mod, const char *source)</div><div class="ttdoc">Modifies the player's standing without affecting others.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00885">faction.c:885</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_ab17a5244f22285153c6cd5a2753d008d"><div class="ttname"><a href="nlua__faction_8c.html#ab17a5244f22285153c6cd5a2753d008d">factionL_modplayersingle</a></div><div class="ttdeci">static int factionL_modplayersingle(lua_State *L)</div><div class="ttdoc">Modifies the player's standing with the faction.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00351">nlua_faction.c:351</a></div></div>
 <div class="ttc" id="afaction_8c_html_a151299399a3ae201cf6e3f1406f01b19"><div class="ttname"><a href="faction_8c.html#a151299399a3ae201cf6e3f1406f01b19">faction_longname</a></div><div class="ttdeci">const char * faction_longname(int f)</div><div class="ttdoc">Gets the faction's long name (formal, human-readable).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00353">faction.c:353</a></div></div>
 <div class="ttc" id="afaction_8c_html_a687c49f23fb672b27455c023229dc5af"><div class="ttname"><a href="faction_8c.html#a687c49f23fb672b27455c023229dc5af">faction_rmEnemy</a></div><div class="ttdeci">void faction_rmEnemy(int f, int o)</div><div class="ttdoc">Removes an enemy from the faction's enemies list.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00604">faction.c:604</a></div></div>
-<div class="ttc" id="anlua__faction_8c_html_a31ef35a630b735891bb341559681b76b"><div class="ttname"><a href="nlua__faction_8c.html#a31ef35a630b735891bb341559681b76b">factionL_colour</a></div><div class="ttdeci">static int factionL_colour(lua_State *L)</div><div class="ttdoc">Gets the faction colour.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00515">nlua_faction.c:515</a></div></div>
+<div class="ttc" id="anlua__faction_8c_html_a31ef35a630b735891bb341559681b76b"><div class="ttname"><a href="nlua__faction_8c.html#a31ef35a630b735891bb341559681b76b">factionL_colour</a></div><div class="ttdeci">static int factionL_colour(lua_State *L)</div><div class="ttdoc">Gets the faction colour.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00513">nlua_faction.c:513</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_aa7ae8cf1e1b2384ef7c221c52ff0a387"><div class="ttname"><a href="nlua__faction_8c.html#aa7ae8cf1e1b2384ef7c221c52ff0a387">factionL_name</a></div><div class="ttdeci">static int factionL_name(lua_State *L)</div><div class="ttdoc">Gets the faction's translated short name.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00236">nlua_faction.c:236</a></div></div>
-<div class="ttc" id="aopengl__tex_8c_html_a08da237cf1c0eb03194c7ed22ebf92b4"><div class="ttname"><a href="opengl__tex_8c.html#a08da237cf1c0eb03194c7ed22ebf92b4">gl_dupTexture</a></div><div class="ttdeci">glTexture * gl_dupTexture(const glTexture *texture)</div><div class="ttdoc">Duplicates a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00829">opengl_tex.c:829</a></div></div>
+<div class="ttc" id="aopengl__tex_8c_html_a08da237cf1c0eb03194c7ed22ebf92b4"><div class="ttname"><a href="opengl__tex_8c.html#a08da237cf1c0eb03194c7ed22ebf92b4">gl_dupTexture</a></div><div class="ttdeci">glTexture * gl_dupTexture(const glTexture *texture)</div><div class="ttdoc">Duplicates a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00832">opengl_tex.c:832</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
