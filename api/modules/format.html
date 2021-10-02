@@ -80,12 +80,12 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
-  <li><a href="../modules/format.html">format</a></li>
+  <li><strong>format</strong></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
-  <li><strong>camera</strong></li>
+  <li><a href="../modules/camera.html">camera</a></li>
   <li><a href="../modules/canvas.html">canvas</a></li>
   <li><a href="../modules/colour.html">colour</a></li>
   <li><a href="../modules/commodity.html">commodity</a></li>
@@ -134,36 +134,49 @@
 
 <div id="content">
 
-<h1>Module <code>camera</code></h1>
-<p>Lua bindings to interact with the Camera.</p>
+<h1>Module <code>format</code></h1>
+<p>Provides string formatting and interpolation facilities.</p>
 <p>
-<p> An example would be:
- <pre>
- </pre>
+   The benefits of using it are easy internationalization and consistency with the rest of Naev.
+   The number formatters handle plural forms in the user's language, digit separators, and abbreviations.
+   String interpolation (format.f) allows for named parameters ("Fly to {planet} in the {system} system"),
+   whereas string.format is positional ("Fly to %s in the %s system") and locks translators into the English word order.
 </p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#set">set (target[, soft_over=false[, speed=2500]])</a></td>
-	<td class="summary">Sets the camera.</td>
+	<td class="name" nowrap><a href="#number">number (number)</a></td>
+	<td class="summary">Converts an integer into a human readable string, delimiting every third digit with a comma.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get ()</a></td>
-	<td class="summary">Gets the camera position.</td>
+	<td class="name" nowrap><a href="#credits">credits (credits)</a></td>
+	<td class="summary">Converts a number of credits to a string.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#setZoom">setZoom (zoom[, hard_over=false])</a></td>
-	<td class="summary">Sets the camera zoom.</td>
+	<td class="name" nowrap><a href="#tonnes">tonnes (tonnes)</a></td>
+	<td class="summary">Converts a number of tonnes to a string, using ngettext.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get ()</a></td>
-	<td class="summary">Gets the camera zoom.</td>
+	<td class="name" nowrap><a href="#tonnes_short">tonnes_short (tonnes)</a></td>
+	<td class="summary">Like fmt.tonnes, but for abbreviations.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#shake">shake (amplitude:)</a></td>
-	<td class="summary">Makes the camera shake.</td>
+	<td class="name" nowrap><a href="#jumps">jumps (jumps)</a></td>
+	<td class="summary">Converts a number of jumps to a string, utilizing ngettext.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#times">times (times)</a></td>
+	<td class="summary">Converts a number of times (occurrences) to a string, using ngettext.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#list">list (words)</a></td>
+	<td class="summary">Creates a translatable list of words.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#f">f (str, tab)</a></td>
+	<td class="summary">String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> without debug stuff.</td>
 	</tr>
 </table>
 
@@ -175,57 +188,107 @@
 
     <dl class="function">
     <dt>
-    <a name = "set"></a>
-    <strong>set (target[, soft_over=false[, speed=2500]])</strong>
+    <a name = "number"></a>
+    <strong>number (number)</strong>
     </dt>
     <dd>
-    Sets the camera.
-<p> Make sure to reset camera after using it or we'll run into trouble.
+    Converts an integer into a human readable string, delimiting every third digit with a comma.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">number</span>
+         The number to format. Will be rounded to the nearest integer.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "credits"></a>
+    <strong>credits (credits)</strong>
+    </dt>
+    <dd>
+    Converts a number of credits to a string.
+<p>   Should be used everywhere a number of credits is displayed.
 
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span>, <span class="type">Vec2</span> or <span class="type">nil</span></span>
-         It will follow pilots around. If nil, it follows the player.
-        </li>
-        <li><span class="parameter">soft_over</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Indicates that the camera should fly over rather than instantly teleport.
-         (<em>default</em> false)
-        </li>
-        <li><span class="parameter">speed</span>
-         Speed at which to fly over if soft_over is true.
-         (<em>default</em> 2500)
+        <li><span class="parameter">credits</span>
+         Number of credits.
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        A string taking the form of "X ¤".
+    </ol>
 
 
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">camera.set() <span class="comment">-- Resets the camera to the pilot hard.</span></pre></li>
-        <li><pre class="example">camera.set( a_pilot, <span class="keyword">true</span> ) <span class="comment">-- Flies camera over to a_pilot.</span></pre></li>
-        <li><pre class="example">camera.set( vec2.new() ) <span class="comment">-- Jumps camera to 0,0</span></pre></li>
+        <pre class="example">tk.msg(<span class="string">""</span>, _(<span class="string">"You have been paid %s."</span>):format(fmt.credits(credits)))</pre>
     </ul>
 
 </dd>
     <dt>
-    <a name = "get"></a>
-    <strong>get ()</strong>
+    <a name = "tonnes"></a>
+    <strong>tonnes (tonnes)</strong>
     </dt>
     <dd>
-    Gets the camera position.
+    Converts a number of tonnes to a string, using ngettext.
+<p>   This adds "tonnes" to the output of fmt.number in a translatable way.
+   Should be used everywhere a number of tonnes is displayed.
 
 
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tonnes</span>
+         Number of tonnes.
+        </li>
+    </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Vec2</span></span>
-        Position of the camera.
+        A string taking the form of "X tonne" or "X tonnes".
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">tk.msg(<span class="string">""</span>, _(<span class="string">"You are carrying %s."</span>):format(fmt.tonnes(tonnes)))</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "tonnes_short"></a>
+    <strong>tonnes_short (tonnes)</strong>
+    </dt>
+    <dd>
+    Like fmt.tonnes, but for abbreviations.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tonnes</span>
+         Number of tonnes.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        A short string like "22 t" describing the given mass.
     </ol>
 
 
@@ -233,57 +296,92 @@
 
 </dd>
     <dt>
-    <a name = "setZoom"></a>
-    <strong>setZoom (zoom[, hard_over=false])</strong>
+    <a name = "jumps"></a>
+    <strong>jumps (jumps)</strong>
     </dt>
     <dd>
-    Sets the camera zoom.
-<p> Make sure to reset camera the zoom after using it or we'll run into trouble.
+    Converts a number of jumps to a string, utilizing ngettext.
+<p>   This adds "jumps" to the output of fmt.number in a translatable way.
+   Should be used everywhere a number of jumps is displayed.
 
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">zoom</span>
-            <span class="types"><span class="type">number</span></span>
-         Level of zoom to use (1 would indicate 1 unit = 1 pixel while 2 would be 1 unit = 2 pixels)
-        </li>
-        <li><span class="parameter">hard_over</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Indicates that the camera should change the zoom gradually instead of instantly.
-         (<em>default</em> false)
+        <li><span class="parameter">jumps</span>
+         Number of jumps.
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        A string taking the form of "X jump" or "X jumps".
+    </ol>
 
 
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">camera.setZoom() <span class="comment">-- Resets the camera zoom</span></pre>
+        <pre class="example">tk.msg(<span class="string">""</span>, _(<span class="string">"The system is %s away."</span>):format(fmt.jumps(jumps)))</pre>
     </ul>
 
 </dd>
     <dt>
-    <a name = "get"></a>
-    <strong>get ()</strong>
+    <a name = "times"></a>
+    <strong>times (times)</strong>
     </dt>
     <dd>
-    Gets the camera zoom.
+    Converts a number of times (occurrences) to a string, using ngettext.
+<p>   This adds "times" to the output of fmt.number in a translatable way.
+   Should be used everywhere a number of occurrences is displayed.
 
 
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">times</span>
+         Number of times.
+        </li>
+    </ul>
 
     <h3>Returns:</h3>
     <ol>
-        <li>
-           <span class="types"><span class="type">number</span></span>
-        Zoom level of the camera.</li>
-        <li>
-           <span class="types"><span class="type">number</span></span>
-        Maximum zoom level of the camera (furthest).</li>
-        <li>
-           <span class="types"><span class="type">number</span></span>
-        Minimum zoom level of the camera (closest).</li>
+
+        A string taking the form of "X time" or "X times".
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">tk.msg(<span class="string">""</span>, _(<span class="string">"Brush your teeth % per day."</span>):format(fmt.times(times)))</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "list"></a>
+    <strong>list (words)</strong>
+    </dt>
+    <dd>
+    Creates a translatable list of words.
+<p>   Taken from <a href="https://stackoverflow.com/questions/43081112/localization-of-lists/58033018#58033018">this post</a>.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">words</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         List of words to translate such as {"one","two","three"}.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        String of the list of words such as "one, two, and three"
     </ol>
 
 
@@ -291,18 +389,25 @@
 
 </dd>
     <dt>
-    <a name = "shake"></a>
-    <strong>shake (amplitude:)</strong>
+    <a name = "f"></a>
+    <strong>f (str, tab)</strong>
     </dt>
     <dd>
-    Makes the camera shake.
+    String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> without debug stuff.
+<p>   Prefer this over string.format because it allows translations to change the word order.
+
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">amplitude:</span>
-            <span class="types"><span class="type">float</span></span>
-         amplitude of the shaking
+        <li><span class="parameter">str</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Format string which may include placeholders of the form "{var}" "{var:6.3f}"
+                      (where the expression after the colon is any directive string.format understands).
+        </li>
+        <li><span class="parameter">tab</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Argument table.
         </li>
     </ul>
 
@@ -311,8 +416,7 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">camera.shake() <span class="comment">-- Shakes the camera with amplitude 1.</span></pre></li>
-        <li><pre class="example">camera.shake( .<span class="number">5</span> ) <span class="comment">-- Shakes the camera with amplitude .5</span></pre></li>
+        <pre class="example">fmt.f(_(<span class="string">"Deliver the loot to {pntname} in the {sysname} system"</span>),{pntname=returnpnt:name(), sysname=returnsys:name()})</pre>
     </ul>
 
 </dd>
