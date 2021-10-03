@@ -148,6 +148,8 @@ Macros</h2></td></tr>
 <tr class="separator:acab9cb916fc8225a23b5850b58c11cd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4439010cecdcbc0a710e3a8b0573d266"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>SDESC_COND</b>(l,  temp,  txt,  val,  args...)</td></tr>
 <tr class="separator:a4439010cecdcbc0a710e3a8b0573d266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24d6215937c12de2aa053102b2c076c8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>SDESC_COND_COLOUR</b>(l,  temp,  txt,  val,  args...)</td></tr>
+<tr class="separator:a24d6215937c12de2aa053102b2c076c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59ac42c4b49a9f81ce414aa6acc0bb19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="outfit_8c.html#a59ac42c4b49a9f81ce414aa6acc0bb19">O_CMP</a>(s,  t)&#160;&#160;&#160;if (strcasecmp(<a class="el" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>,(s))==0) return t</td></tr>
 <tr class="separator:a59ac42c4b49a9f81ce414aa6acc0bb19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f189722e129124457c62bb30a47da4b"><td class="memItemLeft" align="right" valign="top"><a id="a0f189722e129124457c62bb30a47da4b"></a>
@@ -162,8 +164,6 @@ Macros</h2></td></tr>
 <tr class="memitem:a0f189722e129124457c62bb30a47da4b"><td class="memItemLeft" align="right" valign="top"><a id="a0f189722e129124457c62bb30a47da4b"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>MELEMENT</b>(o,  s)&#160;&#160;&#160;if (o) WARN(_(&quot;Outfit '%s' missing/invalid '%s' element&quot;), temp-&gt;name, s)</td></tr>
 <tr class="separator:a0f189722e129124457c62bb30a47da4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab403a74c78c8c7d6d23edf52590db8ae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>DESC_ADD</b>(x,  s)</td></tr>
-<tr class="separator:ab403a74c78c8c7d6d23edf52590db8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f189722e129124457c62bb30a47da4b"><td class="memItemLeft" align="right" valign="top"><a id="a0f189722e129124457c62bb30a47da4b"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>MELEMENT</b>(o,  s)&#160;&#160;&#160;if (o) WARN(_(&quot;Outfit '%s' missing/invalid '%s' element&quot;), temp-&gt;name, s)</td></tr>
 <tr class="separator:a0f189722e129124457c62bb30a47da4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -472,40 +472,6 @@ Variables</h2></td></tr>
 
 <p class="definition">Definition in file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ab403a74c78c8c7d6d23edf52590db8ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab403a74c78c8c7d6d23edf52590db8ae">&#9670;&nbsp;</a></span>DESC_ADD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DESC_ADD</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">s&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> ((x) != 0) \</div>
-<div class="line">   do { \</div>
-<div class="line">      i += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;temp-&gt;desc_short[i], <a class="code" href="outfit_8c.html#aba2517aa101b7405fa3410fc348d5f04">OUTFIT_SHORTDESC_MAX</a>-i, <span class="stringliteral">&quot;\n#%c&quot;</span>, ((x)&gt;0)?<span class="charliteral">&#39;g&#39;</span>:<span class="charliteral">&#39;r&#39;</span> ); \</div>
-<div class="line">      i += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;temp-&gt;desc_short[i], <a class="code" href="outfit_8c.html#aba2517aa101b7405fa3410fc348d5f04">OUTFIT_SHORTDESC_MAX</a>-i, s, x ); \</div>
-<div class="line">      i += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;temp-&gt;desc_short[i], <a class="code" href="outfit_8c.html#aba2517aa101b7405fa3410fc348d5f04">OUTFIT_SHORTDESC_MAX</a>-i, <span class="stringliteral">&quot;#0&quot;</span> ); \</div>
-<div class="line">   } <span class="keywordflow">while</span>(0)</div>
-</div><!-- fragment -->
-</div>
-</div>
 <a id="a59ac42c4b49a9f81ce414aa6acc0bb19"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a59ac42c4b49a9f81ce414aa6acc0bb19">&#9670;&nbsp;</a></span>O_CMP</h2>
 
@@ -533,7 +499,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Define to help with outfit_strToOutfitType. </p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01043">1043</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01048">1048</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -629,9 +595,62 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (fabs(val) &gt; 1e-5) \</div>
-<div class="line">   (l) += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;(temp)-&gt;desc_short[l], <a class="code" href="outfit_8c.html#aba2517aa101b7405fa3410fc348d5f04">OUTFIT_SHORTDESC_MAX</a>-(l), (txt), (val), ## args )</div>
+<div class="line">   SDESC_ADD( l, temp, txt, val, ## args )</div>
 </div><!-- fragment -->
 <p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00065">65</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+
+</div>
+</div>
+<a id="a24d6215937c12de2aa053102b2c076c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24d6215937c12de2aa053102b2c076c8">&#9670;&nbsp;</a></span>SDESC_COND_COLOUR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SDESC_COND_COLOUR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">l, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">temp, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">txt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">val, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (fabs(val) &gt; 1e-5) { \</div>
+<div class="line">   SDESC_ADD( l, temp, <span class="stringliteral">&quot;\n#%c&quot;</span>, ((val)&gt;0)?<span class="charliteral">&#39;g&#39;</span>:<span class="charliteral">&#39;r&#39;</span> ); \</div>
+<div class="line">   SDESC_ADD( l, temp, txt, val, ## args ); \</div>
+<div class="line">   SDESC_ADD( l, temp, <span class="stringliteral">&quot;#0&quot;</span> ); \</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00068">68</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -677,7 +696,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00679">679</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00684">684</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -705,7 +724,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00689">689</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00694">694</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -745,7 +764,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>-1 if first argument is inferior, +1 if it's superior, 0 if ties. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00199">199</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00204">204</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -774,7 +793,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit's cooldown. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00872">872</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00877">877</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -802,7 +821,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00722">722</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00727">727</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -830,7 +849,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00656">656</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00661">661</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -858,7 +877,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00667">667</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00672">672</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -887,7 +906,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit's duration. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00851">851</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00856">856</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -915,7 +934,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00700">700</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00705">705</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -955,7 +974,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if outfit fits the slot, 0 otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00968">968</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00973">973</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -995,7 +1014,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if outfit fits the slot, 0 otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01013">1013</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01018">1018</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1023,7 +1042,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01037">1037</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01042">1042</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1052,7 +1071,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit matching name or NULL if not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00111">111</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00116">116</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1081,7 +1100,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Name of the outfit's AI. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00944">944</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00949">949</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1110,7 +1129,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The specific type in human readable form (English). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00886">886</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00891">891</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1139,7 +1158,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The outfit's broad type in human readable form. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00920">920</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00925">925</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1168,7 +1187,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit matching name or NULL if not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00128">128</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00133">133</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1196,7 +1215,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00614">614</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00619">619</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1224,7 +1243,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00711">711</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00716">716</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1253,7 +1272,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is active. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00438">438</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00443">443</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1282,7 +1301,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is an afterburner. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00539">539</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00544">544</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1311,7 +1330,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is ammo. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00495">495</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00500">500</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1340,7 +1359,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a beam type weapon. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00475">475</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00480">480</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1369,7 +1388,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a bolt type weapon. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00465">465</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00470">470</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1398,7 +1417,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a Fighter. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00557">557</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00562">562</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1427,7 +1446,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a jammer. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00548">548</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00553">553</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1456,7 +1475,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a weapon (beam/bolt). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00455">455</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00460">460</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1485,7 +1504,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a GUI. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00593">593</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00598">598</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1514,7 +1533,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a weapon launcher. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00485">485</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00490">490</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1543,7 +1562,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a license. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00584">584</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00589">589</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1572,7 +1591,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a map. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00575">575</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00580">580</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1601,7 +1620,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a map. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00566">566</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00571">571</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1630,7 +1649,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a ship modification. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00530">530</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00535">535</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1659,7 +1678,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a secondary weapon. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00604">604</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00609">609</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1688,7 +1707,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a seeking weapon. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00504">504</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00509">509</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1717,7 +1736,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if o is a turret class weapon. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00519">519</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00524">524</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1753,7 +1772,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02704">2704</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02690">2690</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1776,7 +1795,7 @@ Variables</h2></td></tr>
 <p>Loads all the outfits. </p>
 <dl class="section return"><dt>Returns</dt><dd>0 on success. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02482">2482</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02468">2468</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1813,7 +1832,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02456">2456</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02442">2442</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1867,7 +1886,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01135">1135</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01140">1140</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1890,7 +1909,7 @@ Variables</h2></td></tr>
 <p>Loads all the outfits legality. </p>
 <dl class="section return"><dt>Returns</dt><dd>0 on success. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02597">2597</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02583">2583</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1912,7 +1931,7 @@ Variables</h2></td></tr>
 
 <p>Parses all the maps. </p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02640">2640</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02626">2626</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -1962,7 +1981,7 @@ Variables</h2></td></tr>
 <p>&lt; deal with maps after the universe is loaded</p>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02224">2224</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02210">2210</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2011,7 +2030,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01088">1088</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01093">1093</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2059,7 +2078,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01823">1823</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01818">1818</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2107,7 +2126,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01595">1595</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01600">1600</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2155,7 +2174,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01391">1391</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01396">1396</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2203,7 +2222,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01211">1211</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01216">1216</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2251,7 +2270,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01978">1978</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01964">1964</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2299,7 +2318,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01922">1922</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01911">1911</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2347,7 +2366,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02153">2153</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02139">2139</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2395,7 +2414,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01536">1536</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01541">1541</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2443,7 +2462,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02189">2189</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02175">2175</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2491,7 +2510,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02114">2114</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02100">2100</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2539,7 +2558,7 @@ Variables</h2></td></tr>
 </dl>
 <p>&lt; Define to help check for data errors.</p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02012">2012</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01998">1998</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2586,7 +2605,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01741">1741</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01746">1746</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2614,7 +2633,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00624">624</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00629">629</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2642,7 +2661,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00730">730</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00735">735</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2671,7 +2690,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The human readable name of the slot type. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00279">279</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00284">284</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2700,7 +2719,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The human readable name of the slot size. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00333">333</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00338">338</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2729,7 +2748,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The slot size colour of the outfit slot. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00345">345</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00350">350</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2758,7 +2777,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The slot size font colour of the outfit slot. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00363">363</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00368">368</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2787,7 +2806,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The slot type font colour of the outfit slot. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00381">381</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00386">386</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2816,7 +2835,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit's sound. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00829">829</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00834">834</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2845,7 +2864,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit's hit sound. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00840">840</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00845">845</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2874,7 +2893,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit's speed. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00763">763</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00768">768</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2902,7 +2921,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00634">634</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00639">639</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2930,7 +2949,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00645">645</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00650">650</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2959,7 +2978,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit's animation spin. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00794">794</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00799">799</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -2996,7 +3015,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit type stored in buf. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01052">1052</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l01057">1057</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -3025,7 +3044,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit slot size matching string. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00399">399</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00404">404</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -3054,7 +3073,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit's minimal tracking. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00817">817</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00822">822</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -3083,7 +3102,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Outfit's minimal tracking. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00805">805</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00810">810</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -3104,7 +3123,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the texture associated to the rarity of an outfit/ship. </p>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02763">2763</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l02749">2749</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -3125,7 +3144,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9" title="Gets the name of the slot type of an outfit.">outfit_slotName</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00288">288</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="outfit_8c_source.html#l00293">293</a> of file <a class="el" href="outfit_8c_source.html">outfit.c</a>.</p>
 
 </div>
 </div>
@@ -3156,8 +3175,6 @@ Variables</h2></td></tr>
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="anstring_8c_html_ad02680e374cbaee934840aa7c9123dd4"><div class="ttname"><a href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a></div><div class="ttdeci">int scnprintf(char *text, size_t maxlen, const char *fmt,...)</div><div class="ttdoc">Like snprintf(), but returns the number of characters ACTUALLY &quot;printed&quot; into the buffer....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00180">nstring.c:180</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_aba2517aa101b7405fa3410fc348d5f04"><div class="ttname"><a href="outfit_8c.html#aba2517aa101b7405fa3410fc348d5f04">OUTFIT_SHORTDESC_MAX</a></div><div class="ttdeci">#define OUTFIT_SHORTDESC_MAX</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00051">outfit.c:51</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
