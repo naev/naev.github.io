@@ -2140,331 +2140,334 @@ $(function() {
 <div class="line"><a name="l02506"></a><span class="lineno"> 2506</span>&#160;               WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; missing/invalid &#39;arc&#39; element&quot;</span>), o-&gt;name);</div>
 <div class="line"><a name="l02507"></a><span class="lineno"> 2507</span>&#160;         }</div>
 <div class="line"><a name="l02508"></a><span class="lineno"> 2508</span>&#160; </div>
-<div class="line"><a name="l02509"></a><span class="lineno"> 2509</span>&#160;         <a class="code" href="outfit_8c.html#a14ed932a8a5d0633b17f951e73eb5590">outfit_launcherDesc</a>(o);</div>
-<div class="line"><a name="l02510"></a><span class="lineno"> 2510</span>&#160;      }</div>
-<div class="line"><a name="l02511"></a><span class="lineno"> 2511</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>(&amp;<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i]))</div>
-<div class="line"><a name="l02512"></a><span class="lineno"> 2512</span>&#160;         o-&gt;u.bay.ammo = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( o-&gt;u.bay.ammo_name );</div>
-<div class="line"><a name="l02513"></a><span class="lineno"> 2513</span>&#160; </div>
-<div class="line"><a name="l02514"></a><span class="lineno"> 2514</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(&amp;<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i])) {</div>
-<div class="line"><a name="l02515"></a><span class="lineno"> 2515</span>&#160;         <span class="keywordflow">if</span> (o-&gt;u.mod.lua_file==NULL)</div>
-<div class="line"><a name="l02516"></a><span class="lineno"> 2516</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02517"></a><span class="lineno"> 2517</span>&#160;         nlua_env env;</div>
-<div class="line"><a name="l02518"></a><span class="lineno"> 2518</span>&#160;         <span class="keywordtype">size_t</span> sz;</div>
-<div class="line"><a name="l02519"></a><span class="lineno"> 2519</span>&#160;         <span class="keywordtype">char</span> *dat = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( o-&gt;u.mod.lua_file, &amp;sz );</div>
-<div class="line"><a name="l02520"></a><span class="lineno"> 2520</span>&#160;         <span class="keywordflow">if</span> (dat==NULL) {</div>
-<div class="line"><a name="l02521"></a><span class="lineno"> 2521</span>&#160;            WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; failed to read Lua &#39;%s&#39;!&quot;</span>), o-&gt;name, o-&gt;u.mod.lua_file );</div>
-<div class="line"><a name="l02522"></a><span class="lineno"> 2522</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02523"></a><span class="lineno"> 2523</span>&#160;         }</div>
-<div class="line"><a name="l02524"></a><span class="lineno"> 2524</span>&#160; </div>
-<div class="line"><a name="l02525"></a><span class="lineno"> 2525</span>&#160;         env = nlua_newEnv(1);</div>
-<div class="line"><a name="l02526"></a><span class="lineno"> 2526</span>&#160;         o-&gt;u.mod.lua_env = env;</div>
-<div class="line"><a name="l02527"></a><span class="lineno"> 2527</span>&#160;         <span class="comment">/* TODO limit libraries here. */</span></div>
-<div class="line"><a name="l02528"></a><span class="lineno"> 2528</span>&#160;         <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( env );</div>
-<div class="line"><a name="l02529"></a><span class="lineno"> 2529</span>&#160;         <a class="code" href="nlua__gfx_8c.html#ac6baa00bb26587c59bbea16f996917fa">nlua_loadGFX</a>( env );</div>
-<div class="line"><a name="l02530"></a><span class="lineno"> 2530</span>&#160;         <a class="code" href="nlua__pilotoutfit_8c.html#a0d12ed1bbc268f3d352ea1da780e5fa9">nlua_loadPilotOutfit</a>( env );</div>
-<div class="line"><a name="l02531"></a><span class="lineno"> 2531</span>&#160; </div>
-<div class="line"><a name="l02532"></a><span class="lineno"> 2532</span>&#160;         <span class="comment">/* Run code. */</span></div>
-<div class="line"><a name="l02533"></a><span class="lineno"> 2533</span>&#160;         <span class="keywordflow">if</span> (nlua_dobufenv( env, dat, sz, o-&gt;u.mod.lua_file ) != 0) {</div>
-<div class="line"><a name="l02534"></a><span class="lineno"> 2534</span>&#160;            WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; Lua error:\n%s&quot;</span>), o-&gt;name, lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l02535"></a><span class="lineno"> 2535</span>&#160;            lua_pop(naevL,1);</div>
-<div class="line"><a name="l02536"></a><span class="lineno"> 2536</span>&#160;            nlua_freeEnv( o-&gt;u.mod.lua_env );</div>
-<div class="line"><a name="l02537"></a><span class="lineno"> 2537</span>&#160;            free( dat );</div>
-<div class="line"><a name="l02538"></a><span class="lineno"> 2538</span>&#160;            o-&gt;u.mod.lua_env = LUA_NOREF;</div>
-<div class="line"><a name="l02539"></a><span class="lineno"> 2539</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02540"></a><span class="lineno"> 2540</span>&#160;         }</div>
-<div class="line"><a name="l02541"></a><span class="lineno"> 2541</span>&#160;         free( dat );</div>
-<div class="line"><a name="l02542"></a><span class="lineno"> 2542</span>&#160; </div>
-<div class="line"><a name="l02543"></a><span class="lineno"> 2543</span>&#160;         <span class="comment">/* Check functions as necessary. */</span></div>
-<div class="line"><a name="l02544"></a><span class="lineno"> 2544</span>&#160;         o-&gt;u.mod.lua_onadd      = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onadd&quot;</span>,    LUA_TFUNCTION );</div>
-<div class="line"><a name="l02545"></a><span class="lineno"> 2545</span>&#160;         o-&gt;u.mod.lua_onremove   = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onremove&quot;</span>, LUA_TFUNCTION );</div>
-<div class="line"><a name="l02546"></a><span class="lineno"> 2546</span>&#160;         o-&gt;u.mod.lua_init       = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;init&quot;</span>,     LUA_TFUNCTION );</div>
-<div class="line"><a name="l02547"></a><span class="lineno"> 2547</span>&#160;         o-&gt;u.mod.lua_cleanup    = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;cleanup&quot;</span>,  LUA_TFUNCTION );</div>
-<div class="line"><a name="l02548"></a><span class="lineno"> 2548</span>&#160;         o-&gt;u.mod.lua_update     = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;update&quot;</span>,   LUA_TFUNCTION );</div>
-<div class="line"><a name="l02549"></a><span class="lineno"> 2549</span>&#160;         o-&gt;u.mod.lua_ontoggle   = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;ontoggle&quot;</span>, LUA_TFUNCTION );</div>
-<div class="line"><a name="l02550"></a><span class="lineno"> 2550</span>&#160;         o-&gt;u.mod.lua_onhit      = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onhit&quot;</span>,    LUA_TFUNCTION );</div>
-<div class="line"><a name="l02551"></a><span class="lineno"> 2551</span>&#160;         o-&gt;u.mod.lua_outofenergy= <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;outofenergy&quot;</span>,LUA_TFUNCTION );</div>
-<div class="line"><a name="l02552"></a><span class="lineno"> 2552</span>&#160;         o-&gt;u.mod.lua_onshoot    = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onshoot&quot;</span>,  LUA_TFUNCTION );</div>
-<div class="line"><a name="l02553"></a><span class="lineno"> 2553</span>&#160;         o-&gt;u.mod.lua_onstealth  = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onstealth&quot;</span>,LUA_TFUNCTION );</div>
-<div class="line"><a name="l02554"></a><span class="lineno"> 2554</span>&#160;         o-&gt;u.mod.lua_onscanned  = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onscanned&quot;</span>,LUA_TFUNCTION );</div>
-<div class="line"><a name="l02555"></a><span class="lineno"> 2555</span>&#160;         o-&gt;u.mod.lua_onscan     = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onscan&quot;</span>,   LUA_TFUNCTION );</div>
-<div class="line"><a name="l02556"></a><span class="lineno"> 2556</span>&#160;         o-&gt;u.mod.lua_cooldown   = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;cooldown&quot;</span>, LUA_TFUNCTION );</div>
-<div class="line"><a name="l02557"></a><span class="lineno"> 2557</span>&#160;      }</div>
-<div class="line"><a name="l02558"></a><span class="lineno"> 2558</span>&#160;   }</div>
-<div class="line"><a name="l02559"></a><span class="lineno"> 2559</span>&#160; </div>
-<div class="line"><a name="l02560"></a><span class="lineno"> 2560</span>&#160;<span class="preprocessor">#ifdef DEBUGGING</span></div>
-<div class="line"><a name="l02561"></a><span class="lineno"> 2561</span>&#160;   <span class="keywordtype">char</span> **outfit_names = malloc( noutfits * <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*) );</div>
-<div class="line"><a name="l02562"></a><span class="lineno"> 2562</span>&#160;   <span class="keywordtype">int</span> start;</div>
-<div class="line"><a name="l02563"></a><span class="lineno"> 2563</span>&#160; </div>
-<div class="line"><a name="l02564"></a><span class="lineno"> 2564</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;noutfits; i++)</div>
-<div class="line"><a name="l02565"></a><span class="lineno"> 2565</span>&#160;      outfit_names[i] = <a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i].name;</div>
+<div class="line"><a name="l02509"></a><span class="lineno"> 2509</span>&#160;         <span class="keywordflow">if</span> (o-&gt;u.lau.iflockon &gt;= o-&gt;u.lau.ammo-&gt;u.amm.duration)</div>
+<div class="line"><a name="l02510"></a><span class="lineno"> 2510</span>&#160;            WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; has longer &#39;iflockon&#39; than ammo &#39;duration&#39;&quot;</span>), o-&gt;name);</div>
+<div class="line"><a name="l02511"></a><span class="lineno"> 2511</span>&#160; </div>
+<div class="line"><a name="l02512"></a><span class="lineno"> 2512</span>&#160;         <a class="code" href="outfit_8c.html#a14ed932a8a5d0633b17f951e73eb5590">outfit_launcherDesc</a>(o);</div>
+<div class="line"><a name="l02513"></a><span class="lineno"> 2513</span>&#160;      }</div>
+<div class="line"><a name="l02514"></a><span class="lineno"> 2514</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>(&amp;<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i]))</div>
+<div class="line"><a name="l02515"></a><span class="lineno"> 2515</span>&#160;         o-&gt;u.bay.ammo = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( o-&gt;u.bay.ammo_name );</div>
+<div class="line"><a name="l02516"></a><span class="lineno"> 2516</span>&#160; </div>
+<div class="line"><a name="l02517"></a><span class="lineno"> 2517</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(&amp;<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i])) {</div>
+<div class="line"><a name="l02518"></a><span class="lineno"> 2518</span>&#160;         <span class="keywordflow">if</span> (o-&gt;u.mod.lua_file==NULL)</div>
+<div class="line"><a name="l02519"></a><span class="lineno"> 2519</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02520"></a><span class="lineno"> 2520</span>&#160;         nlua_env env;</div>
+<div class="line"><a name="l02521"></a><span class="lineno"> 2521</span>&#160;         <span class="keywordtype">size_t</span> sz;</div>
+<div class="line"><a name="l02522"></a><span class="lineno"> 2522</span>&#160;         <span class="keywordtype">char</span> *dat = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( o-&gt;u.mod.lua_file, &amp;sz );</div>
+<div class="line"><a name="l02523"></a><span class="lineno"> 2523</span>&#160;         <span class="keywordflow">if</span> (dat==NULL) {</div>
+<div class="line"><a name="l02524"></a><span class="lineno"> 2524</span>&#160;            WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; failed to read Lua &#39;%s&#39;!&quot;</span>), o-&gt;name, o-&gt;u.mod.lua_file );</div>
+<div class="line"><a name="l02525"></a><span class="lineno"> 2525</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02526"></a><span class="lineno"> 2526</span>&#160;         }</div>
+<div class="line"><a name="l02527"></a><span class="lineno"> 2527</span>&#160; </div>
+<div class="line"><a name="l02528"></a><span class="lineno"> 2528</span>&#160;         env = nlua_newEnv(1);</div>
+<div class="line"><a name="l02529"></a><span class="lineno"> 2529</span>&#160;         o-&gt;u.mod.lua_env = env;</div>
+<div class="line"><a name="l02530"></a><span class="lineno"> 2530</span>&#160;         <span class="comment">/* TODO limit libraries here. */</span></div>
+<div class="line"><a name="l02531"></a><span class="lineno"> 2531</span>&#160;         <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( env );</div>
+<div class="line"><a name="l02532"></a><span class="lineno"> 2532</span>&#160;         <a class="code" href="nlua__gfx_8c.html#ac6baa00bb26587c59bbea16f996917fa">nlua_loadGFX</a>( env );</div>
+<div class="line"><a name="l02533"></a><span class="lineno"> 2533</span>&#160;         <a class="code" href="nlua__pilotoutfit_8c.html#a0d12ed1bbc268f3d352ea1da780e5fa9">nlua_loadPilotOutfit</a>( env );</div>
+<div class="line"><a name="l02534"></a><span class="lineno"> 2534</span>&#160; </div>
+<div class="line"><a name="l02535"></a><span class="lineno"> 2535</span>&#160;         <span class="comment">/* Run code. */</span></div>
+<div class="line"><a name="l02536"></a><span class="lineno"> 2536</span>&#160;         <span class="keywordflow">if</span> (nlua_dobufenv( env, dat, sz, o-&gt;u.mod.lua_file ) != 0) {</div>
+<div class="line"><a name="l02537"></a><span class="lineno"> 2537</span>&#160;            WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; Lua error:\n%s&quot;</span>), o-&gt;name, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l02538"></a><span class="lineno"> 2538</span>&#160;            lua_pop(naevL,1);</div>
+<div class="line"><a name="l02539"></a><span class="lineno"> 2539</span>&#160;            nlua_freeEnv( o-&gt;u.mod.lua_env );</div>
+<div class="line"><a name="l02540"></a><span class="lineno"> 2540</span>&#160;            free( dat );</div>
+<div class="line"><a name="l02541"></a><span class="lineno"> 2541</span>&#160;            o-&gt;u.mod.lua_env = LUA_NOREF;</div>
+<div class="line"><a name="l02542"></a><span class="lineno"> 2542</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02543"></a><span class="lineno"> 2543</span>&#160;         }</div>
+<div class="line"><a name="l02544"></a><span class="lineno"> 2544</span>&#160;         free( dat );</div>
+<div class="line"><a name="l02545"></a><span class="lineno"> 2545</span>&#160; </div>
+<div class="line"><a name="l02546"></a><span class="lineno"> 2546</span>&#160;         <span class="comment">/* Check functions as necessary. */</span></div>
+<div class="line"><a name="l02547"></a><span class="lineno"> 2547</span>&#160;         o-&gt;u.mod.lua_onadd      = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onadd&quot;</span>,    LUA_TFUNCTION );</div>
+<div class="line"><a name="l02548"></a><span class="lineno"> 2548</span>&#160;         o-&gt;u.mod.lua_onremove   = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onremove&quot;</span>, LUA_TFUNCTION );</div>
+<div class="line"><a name="l02549"></a><span class="lineno"> 2549</span>&#160;         o-&gt;u.mod.lua_init       = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;init&quot;</span>,     LUA_TFUNCTION );</div>
+<div class="line"><a name="l02550"></a><span class="lineno"> 2550</span>&#160;         o-&gt;u.mod.lua_cleanup    = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;cleanup&quot;</span>,  LUA_TFUNCTION );</div>
+<div class="line"><a name="l02551"></a><span class="lineno"> 2551</span>&#160;         o-&gt;u.mod.lua_update     = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;update&quot;</span>,   LUA_TFUNCTION );</div>
+<div class="line"><a name="l02552"></a><span class="lineno"> 2552</span>&#160;         o-&gt;u.mod.lua_ontoggle   = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;ontoggle&quot;</span>, LUA_TFUNCTION );</div>
+<div class="line"><a name="l02553"></a><span class="lineno"> 2553</span>&#160;         o-&gt;u.mod.lua_onhit      = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onhit&quot;</span>,    LUA_TFUNCTION );</div>
+<div class="line"><a name="l02554"></a><span class="lineno"> 2554</span>&#160;         o-&gt;u.mod.lua_outofenergy= <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;outofenergy&quot;</span>,LUA_TFUNCTION );</div>
+<div class="line"><a name="l02555"></a><span class="lineno"> 2555</span>&#160;         o-&gt;u.mod.lua_onshoot    = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onshoot&quot;</span>,  LUA_TFUNCTION );</div>
+<div class="line"><a name="l02556"></a><span class="lineno"> 2556</span>&#160;         o-&gt;u.mod.lua_onstealth  = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onstealth&quot;</span>,LUA_TFUNCTION );</div>
+<div class="line"><a name="l02557"></a><span class="lineno"> 2557</span>&#160;         o-&gt;u.mod.lua_onscanned  = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onscanned&quot;</span>,LUA_TFUNCTION );</div>
+<div class="line"><a name="l02558"></a><span class="lineno"> 2558</span>&#160;         o-&gt;u.mod.lua_onscan     = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;onscan&quot;</span>,   LUA_TFUNCTION );</div>
+<div class="line"><a name="l02559"></a><span class="lineno"> 2559</span>&#160;         o-&gt;u.mod.lua_cooldown   = <a class="code" href="nlua_8c.html#a5919c19cb212768a08174dfed228e02d">nlua_refenvtype</a>( env, <span class="stringliteral">&quot;cooldown&quot;</span>, LUA_TFUNCTION );</div>
+<div class="line"><a name="l02560"></a><span class="lineno"> 2560</span>&#160;      }</div>
+<div class="line"><a name="l02561"></a><span class="lineno"> 2561</span>&#160;   }</div>
+<div class="line"><a name="l02562"></a><span class="lineno"> 2562</span>&#160; </div>
+<div class="line"><a name="l02563"></a><span class="lineno"> 2563</span>&#160;<span class="preprocessor">#ifdef DEBUGGING</span></div>
+<div class="line"><a name="l02564"></a><span class="lineno"> 2564</span>&#160;   <span class="keywordtype">char</span> **outfit_names = malloc( noutfits * <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*) );</div>
+<div class="line"><a name="l02565"></a><span class="lineno"> 2565</span>&#160;   <span class="keywordtype">int</span> start;</div>
 <div class="line"><a name="l02566"></a><span class="lineno"> 2566</span>&#160; </div>
-<div class="line"><a name="l02567"></a><span class="lineno"> 2567</span>&#160;   qsort( outfit_names, noutfits, <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*), <a class="code" href="nstring_8c.html#a735237389e73d94cc3c9cfbbeba3a21c">strsort</a> );</div>
-<div class="line"><a name="l02568"></a><span class="lineno"> 2568</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;(noutfits - 1); i++) {</div>
-<div class="line"><a name="l02569"></a><span class="lineno"> 2569</span>&#160;      start = i;</div>
-<div class="line"><a name="l02570"></a><span class="lineno"> 2570</span>&#160;      <span class="keywordflow">while</span> (strcmp(outfit_names[i], outfit_names[i+1]) == 0)</div>
-<div class="line"><a name="l02571"></a><span class="lineno"> 2571</span>&#160;         i++;</div>
-<div class="line"><a name="l02572"></a><span class="lineno"> 2572</span>&#160; </div>
-<div class="line"><a name="l02573"></a><span class="lineno"> 2573</span>&#160;      <span class="keywordflow">if</span> (i == start)</div>
-<div class="line"><a name="l02574"></a><span class="lineno"> 2574</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02567"></a><span class="lineno"> 2567</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;noutfits; i++)</div>
+<div class="line"><a name="l02568"></a><span class="lineno"> 2568</span>&#160;      outfit_names[i] = <a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i].name;</div>
+<div class="line"><a name="l02569"></a><span class="lineno"> 2569</span>&#160; </div>
+<div class="line"><a name="l02570"></a><span class="lineno"> 2570</span>&#160;   qsort( outfit_names, noutfits, <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*), <a class="code" href="nstring_8c.html#a735237389e73d94cc3c9cfbbeba3a21c">strsort</a> );</div>
+<div class="line"><a name="l02571"></a><span class="lineno"> 2571</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;(noutfits - 1); i++) {</div>
+<div class="line"><a name="l02572"></a><span class="lineno"> 2572</span>&#160;      start = i;</div>
+<div class="line"><a name="l02573"></a><span class="lineno"> 2573</span>&#160;      <span class="keywordflow">while</span> (strcmp(outfit_names[i], outfit_names[i+1]) == 0)</div>
+<div class="line"><a name="l02574"></a><span class="lineno"> 2574</span>&#160;         i++;</div>
 <div class="line"><a name="l02575"></a><span class="lineno"> 2575</span>&#160; </div>
-<div class="line"><a name="l02576"></a><span class="lineno"> 2576</span>&#160;      WARN( n_( <span class="stringliteral">&quot;Name collision! %d outfit is named &#39;%s&#39;&quot;</span>, <span class="stringliteral">&quot;Name collision! %d outfits are named &#39;%s&#39;&quot;</span>,</div>
-<div class="line"><a name="l02577"></a><span class="lineno"> 2577</span>&#160;                      i + 1 - start ),</div>
-<div class="line"><a name="l02578"></a><span class="lineno"> 2578</span>&#160;            i + 1 - start, outfit_names[ start ] );</div>
-<div class="line"><a name="l02579"></a><span class="lineno"> 2579</span>&#160;   }</div>
-<div class="line"><a name="l02580"></a><span class="lineno"> 2580</span>&#160;   free(outfit_names);</div>
-<div class="line"><a name="l02581"></a><span class="lineno"> 2581</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l02582"></a><span class="lineno"> 2582</span>&#160; </div>
-<div class="line"><a name="l02583"></a><span class="lineno"> 2583</span>&#160;   DEBUG( n_( <span class="stringliteral">&quot;Loaded %d Outfit&quot;</span>, <span class="stringliteral">&quot;Loaded %d Outfits&quot;</span>, noutfits ), noutfits );</div>
-<div class="line"><a name="l02584"></a><span class="lineno"> 2584</span>&#160; </div>
-<div class="line"><a name="l02585"></a><span class="lineno"> 2585</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02586"></a><span class="lineno"> 2586</span>&#160;}</div>
+<div class="line"><a name="l02576"></a><span class="lineno"> 2576</span>&#160;      <span class="keywordflow">if</span> (i == start)</div>
+<div class="line"><a name="l02577"></a><span class="lineno"> 2577</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02578"></a><span class="lineno"> 2578</span>&#160; </div>
+<div class="line"><a name="l02579"></a><span class="lineno"> 2579</span>&#160;      WARN( n_( <span class="stringliteral">&quot;Name collision! %d outfit is named &#39;%s&#39;&quot;</span>, <span class="stringliteral">&quot;Name collision! %d outfits are named &#39;%s&#39;&quot;</span>,</div>
+<div class="line"><a name="l02580"></a><span class="lineno"> 2580</span>&#160;                      i + 1 - start ),</div>
+<div class="line"><a name="l02581"></a><span class="lineno"> 2581</span>&#160;            i + 1 - start, outfit_names[ start ] );</div>
+<div class="line"><a name="l02582"></a><span class="lineno"> 2582</span>&#160;   }</div>
+<div class="line"><a name="l02583"></a><span class="lineno"> 2583</span>&#160;   free(outfit_names);</div>
+<div class="line"><a name="l02584"></a><span class="lineno"> 2584</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l02585"></a><span class="lineno"> 2585</span>&#160; </div>
+<div class="line"><a name="l02586"></a><span class="lineno"> 2586</span>&#160;   DEBUG( n_( <span class="stringliteral">&quot;Loaded %d Outfit&quot;</span>, <span class="stringliteral">&quot;Loaded %d Outfits&quot;</span>, noutfits ), noutfits );</div>
 <div class="line"><a name="l02587"></a><span class="lineno"> 2587</span>&#160; </div>
-<div class="line"><a name="l02593"></a><span class="lineno"> 2593</span>&#160;<span class="keywordtype">int</span> <a class="code" href="outfit_8c.html#afe3712bd341786c1b2a40d9ab2cae1db">outfit_loadPost</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l02594"></a><span class="lineno"><a class="line" href="outfit_8c.html#afe3712bd341786c1b2a40d9ab2cae1db"> 2594</a></span>&#160;{</div>
-<div class="line"><a name="l02595"></a><span class="lineno"> 2595</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>); i++) {</div>
-<div class="line"><a name="l02596"></a><span class="lineno"> 2596</span>&#160;      Outfit *o = &amp;<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i];</div>
-<div class="line"><a name="l02597"></a><span class="lineno"> 2597</span>&#160; </div>
-<div class="line"><a name="l02598"></a><span class="lineno"> 2598</span>&#160;      <span class="comment">/* Add illegality as necessary. */</span></div>
-<div class="line"><a name="l02599"></a><span class="lineno"> 2599</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegaltoS) &gt; 0) {</div>
-<div class="line"><a name="l02600"></a><span class="lineno"> 2600</span>&#160;         o-&gt;illegalto = <a class="code" href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a>( <span class="keywordtype">int</span>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegaltoS) );</div>
-<div class="line"><a name="l02601"></a><span class="lineno"> 2601</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegaltoS); j++) {</div>
-<div class="line"><a name="l02602"></a><span class="lineno"> 2602</span>&#160;            <span class="keywordtype">int</span> f = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>( o-&gt;illegaltoS[j] );</div>
-<div class="line"><a name="l02603"></a><span class="lineno"> 2603</span>&#160;            <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;o-&gt;illegalto, f );</div>
-<div class="line"><a name="l02604"></a><span class="lineno"> 2604</span>&#160;            free( o-&gt;illegaltoS[j] );</div>
-<div class="line"><a name="l02605"></a><span class="lineno"> 2605</span>&#160;         }</div>
-<div class="line"><a name="l02606"></a><span class="lineno"> 2606</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;illegaltoS );</div>
-<div class="line"><a name="l02607"></a><span class="lineno"> 2607</span>&#160;         o-&gt;illegaltoS = NULL;</div>
-<div class="line"><a name="l02608"></a><span class="lineno"> 2608</span>&#160; </div>
-<div class="line"><a name="l02609"></a><span class="lineno"> 2609</span>&#160;         <span class="keywordtype">int</span> l = strlen( o-&gt;desc_short );</div>
-<div class="line"><a name="l02610"></a><span class="lineno"> 2610</span>&#160;         SDESC_ADD( l, o, _(<span class="stringliteral">&quot;\n#rIllegal to:#0&quot;</span>) );</div>
-<div class="line"><a name="l02611"></a><span class="lineno"> 2611</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegalto); j++)</div>
-<div class="line"><a name="l02612"></a><span class="lineno"> 2612</span>&#160;            SDESC_ADD( l, o, _(<span class="stringliteral">&quot;\n#r- %s#0&quot;</span>), _(<a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>(o-&gt;illegalto[j])) );</div>
-<div class="line"><a name="l02613"></a><span class="lineno"> 2613</span>&#160;      }</div>
-<div class="line"><a name="l02614"></a><span class="lineno"> 2614</span>&#160; </div>
-<div class="line"><a name="l02615"></a><span class="lineno"> 2615</span>&#160;      <span class="comment">/* Handle initializing module stuff. */</span></div>
-<div class="line"><a name="l02616"></a><span class="lineno"> 2616</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(o) &amp;&amp; (o-&gt;u.mod.lua_env != LUA_NOREF)) {</div>
-<div class="line"><a name="l02617"></a><span class="lineno"> 2617</span>&#160;         nlua_getenv( o-&gt;u.mod.lua_env, <span class="stringliteral">&quot;onload&quot;</span> );</div>
-<div class="line"><a name="l02618"></a><span class="lineno"> 2618</span>&#160;         <span class="keywordflow">if</span> (lua_isnil(naevL,-1))</div>
-<div class="line"><a name="l02619"></a><span class="lineno"> 2619</span>&#160;            lua_pop(naevL,1);</div>
-<div class="line"><a name="l02620"></a><span class="lineno"> 2620</span>&#160;         <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l02621"></a><span class="lineno"> 2621</span>&#160;            <span class="keywordflow">if</span> (nlua_pcall( o-&gt;u.mod.lua_env, 0, 0 )) {</div>
-<div class="line"><a name="l02622"></a><span class="lineno"> 2622</span>&#160;               WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; lua load error -&gt; &#39;load&#39;:\n%s&quot;</span>), o-&gt;name, lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l02623"></a><span class="lineno"> 2623</span>&#160;               lua_pop(naevL,1);</div>
-<div class="line"><a name="l02624"></a><span class="lineno"> 2624</span>&#160;            }</div>
-<div class="line"><a name="l02625"></a><span class="lineno"> 2625</span>&#160;         }</div>
-<div class="line"><a name="l02626"></a><span class="lineno"> 2626</span>&#160;      }</div>
-<div class="line"><a name="l02627"></a><span class="lineno"> 2627</span>&#160;   }</div>
-<div class="line"><a name="l02628"></a><span class="lineno"> 2628</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02629"></a><span class="lineno"> 2629</span>&#160;}</div>
-<div class="line"><a name="l02630"></a><span class="lineno"> 2630</span>&#160; </div>
-<div class="line"><a name="l02631"></a><span class="lineno"> 2631</span>&#160; </div>
-<div class="line"><a name="l02636"></a><span class="lineno"> 2636</span>&#160;<span class="keywordtype">int</span> <a class="code" href="outfit_8c.html#a98c358d23a0de09bed2a740e557a782b">outfit_mapParse</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l02637"></a><span class="lineno"><a class="line" href="outfit_8c.html#a98c358d23a0de09bed2a740e557a782b"> 2637</a></span>&#160;{</div>
-<div class="line"><a name="l02638"></a><span class="lineno"> 2638</span>&#160;   Outfit *o;</div>
-<div class="line"><a name="l02639"></a><span class="lineno"> 2639</span>&#160;   <span class="keywordtype">size_t</span> i;</div>
-<div class="line"><a name="l02640"></a><span class="lineno"> 2640</span>&#160;   xmlNodePtr node, cur;</div>
-<div class="line"><a name="l02641"></a><span class="lineno"> 2641</span>&#160;   xmlDocPtr doc;</div>
-<div class="line"><a name="l02642"></a><span class="lineno"> 2642</span>&#160;   <span class="keywordtype">char</span> **map_files;</div>
-<div class="line"><a name="l02643"></a><span class="lineno"> 2643</span>&#160;   <span class="keywordtype">char</span> *file, *n;</div>
-<div class="line"><a name="l02644"></a><span class="lineno"> 2644</span>&#160; </div>
-<div class="line"><a name="l02645"></a><span class="lineno"> 2645</span>&#160;   map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );</div>
-<div class="line"><a name="l02646"></a><span class="lineno"> 2646</span>&#160;   <span class="keywordflow">for</span> (i=0; map_files[i]!=NULL; i++) {</div>
-<div class="line"><a name="l02647"></a><span class="lineno"> 2647</span>&#160;      <a class="code" href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a>( &amp;file, <span class="stringliteral">&quot;%s%s&quot;</span>, MAP_DATA_PATH, map_files[i] );</div>
-<div class="line"><a name="l02648"></a><span class="lineno"> 2648</span>&#160; </div>
-<div class="line"><a name="l02649"></a><span class="lineno"> 2649</span>&#160;      doc = <a class="code" href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a>( file );</div>
-<div class="line"><a name="l02650"></a><span class="lineno"> 2650</span>&#160;      <span class="keywordflow">if</span> (doc == NULL) {</div>
-<div class="line"><a name="l02651"></a><span class="lineno"> 2651</span>&#160;         WARN(_(<span class="stringliteral">&quot;%s file is invalid xml!&quot;</span>), file);</div>
-<div class="line"><a name="l02652"></a><span class="lineno"> 2652</span>&#160;         free(file);</div>
-<div class="line"><a name="l02653"></a><span class="lineno"> 2653</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02654"></a><span class="lineno"> 2654</span>&#160;      }</div>
-<div class="line"><a name="l02655"></a><span class="lineno"> 2655</span>&#160; </div>
-<div class="line"><a name="l02656"></a><span class="lineno"> 2656</span>&#160;      node = doc-&gt;xmlChildrenNode; <span class="comment">/* first system node */</span></div>
-<div class="line"><a name="l02657"></a><span class="lineno"> 2657</span>&#160;      <span class="keywordflow">if</span> (node == NULL) {</div>
-<div class="line"><a name="l02658"></a><span class="lineno"> 2658</span>&#160;         WARN( _(<span class="stringliteral">&quot;Malformed &#39;%s&#39; file: does not contain elements&quot;</span>), OUTFIT_DATA_PATH );</div>
-<div class="line"><a name="l02659"></a><span class="lineno"> 2659</span>&#160;         free(file);</div>
-<div class="line"><a name="l02660"></a><span class="lineno"> 2660</span>&#160;         xmlFreeDoc(doc);</div>
-<div class="line"><a name="l02661"></a><span class="lineno"> 2661</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02662"></a><span class="lineno"> 2662</span>&#160;      }</div>
-<div class="line"><a name="l02663"></a><span class="lineno"> 2663</span>&#160; </div>
-<div class="line"><a name="l02664"></a><span class="lineno"> 2664</span>&#160;      xmlr_attr_strd( node, <span class="stringliteral">&quot;name&quot;</span>, n );</div>
-<div class="line"><a name="l02665"></a><span class="lineno"> 2665</span>&#160;      o = (Outfit*) <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( n ); <span class="comment">/* Ugh :/ */</span></div>
-<div class="line"><a name="l02666"></a><span class="lineno"> 2666</span>&#160;      free(n);</div>
-<div class="line"><a name="l02667"></a><span class="lineno"> 2667</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="outfit_8c.html#a6f755506d191873cadf838a267e1a328">outfit_isMap</a>(o)) { <span class="comment">/* If its not a map, we don&#39;t care. */</span></div>
-<div class="line"><a name="l02668"></a><span class="lineno"> 2668</span>&#160;         free(file);</div>
-<div class="line"><a name="l02669"></a><span class="lineno"> 2669</span>&#160;         xmlFreeDoc(doc);</div>
-<div class="line"><a name="l02670"></a><span class="lineno"> 2670</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02671"></a><span class="lineno"> 2671</span>&#160;      }</div>
-<div class="line"><a name="l02672"></a><span class="lineno"> 2672</span>&#160; </div>
-<div class="line"><a name="l02673"></a><span class="lineno"> 2673</span>&#160;      cur = node-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l02674"></a><span class="lineno"> 2674</span>&#160;      <span class="keywordflow">do</span> { <span class="comment">/* load all the data */</span></div>
-<div class="line"><a name="l02675"></a><span class="lineno"> 2675</span>&#160;         <span class="comment">/* Only handle nodes. */</span></div>
-<div class="line"><a name="l02676"></a><span class="lineno"> 2676</span>&#160;         xml_onlyNodes(cur);</div>
-<div class="line"><a name="l02677"></a><span class="lineno"> 2677</span>&#160; </div>
-<div class="line"><a name="l02678"></a><span class="lineno"> 2678</span>&#160;         <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;specific&quot;</span>))</div>
-<div class="line"><a name="l02679"></a><span class="lineno"> 2679</span>&#160;            <a class="code" href="outfit_8c.html#a09ce1c2cf6665be91f46730779af4144">outfit_parseSMap</a>(o, cur);</div>
+<div class="line"><a name="l02588"></a><span class="lineno"> 2588</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02589"></a><span class="lineno"> 2589</span>&#160;}</div>
+<div class="line"><a name="l02590"></a><span class="lineno"> 2590</span>&#160; </div>
+<div class="line"><a name="l02596"></a><span class="lineno"> 2596</span>&#160;<span class="keywordtype">int</span> <a class="code" href="outfit_8c.html#afe3712bd341786c1b2a40d9ab2cae1db">outfit_loadPost</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l02597"></a><span class="lineno"><a class="line" href="outfit_8c.html#afe3712bd341786c1b2a40d9ab2cae1db"> 2597</a></span>&#160;{</div>
+<div class="line"><a name="l02598"></a><span class="lineno"> 2598</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>); i++) {</div>
+<div class="line"><a name="l02599"></a><span class="lineno"> 2599</span>&#160;      Outfit *o = &amp;<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i];</div>
+<div class="line"><a name="l02600"></a><span class="lineno"> 2600</span>&#160; </div>
+<div class="line"><a name="l02601"></a><span class="lineno"> 2601</span>&#160;      <span class="comment">/* Add illegality as necessary. */</span></div>
+<div class="line"><a name="l02602"></a><span class="lineno"> 2602</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegaltoS) &gt; 0) {</div>
+<div class="line"><a name="l02603"></a><span class="lineno"> 2603</span>&#160;         o-&gt;illegalto = <a class="code" href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a>( <span class="keywordtype">int</span>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegaltoS) );</div>
+<div class="line"><a name="l02604"></a><span class="lineno"> 2604</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegaltoS); j++) {</div>
+<div class="line"><a name="l02605"></a><span class="lineno"> 2605</span>&#160;            <span class="keywordtype">int</span> f = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>( o-&gt;illegaltoS[j] );</div>
+<div class="line"><a name="l02606"></a><span class="lineno"> 2606</span>&#160;            <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;o-&gt;illegalto, f );</div>
+<div class="line"><a name="l02607"></a><span class="lineno"> 2607</span>&#160;            free( o-&gt;illegaltoS[j] );</div>
+<div class="line"><a name="l02608"></a><span class="lineno"> 2608</span>&#160;         }</div>
+<div class="line"><a name="l02609"></a><span class="lineno"> 2609</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;illegaltoS );</div>
+<div class="line"><a name="l02610"></a><span class="lineno"> 2610</span>&#160;         o-&gt;illegaltoS = NULL;</div>
+<div class="line"><a name="l02611"></a><span class="lineno"> 2611</span>&#160; </div>
+<div class="line"><a name="l02612"></a><span class="lineno"> 2612</span>&#160;         <span class="keywordtype">int</span> l = strlen( o-&gt;desc_short );</div>
+<div class="line"><a name="l02613"></a><span class="lineno"> 2613</span>&#160;         SDESC_ADD( l, o, _(<span class="stringliteral">&quot;\n#rIllegal to:#0&quot;</span>) );</div>
+<div class="line"><a name="l02614"></a><span class="lineno"> 2614</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegalto); j++)</div>
+<div class="line"><a name="l02615"></a><span class="lineno"> 2615</span>&#160;            SDESC_ADD( l, o, _(<span class="stringliteral">&quot;\n#r- %s#0&quot;</span>), _(<a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>(o-&gt;illegalto[j])) );</div>
+<div class="line"><a name="l02616"></a><span class="lineno"> 2616</span>&#160;      }</div>
+<div class="line"><a name="l02617"></a><span class="lineno"> 2617</span>&#160; </div>
+<div class="line"><a name="l02618"></a><span class="lineno"> 2618</span>&#160;      <span class="comment">/* Handle initializing module stuff. */</span></div>
+<div class="line"><a name="l02619"></a><span class="lineno"> 2619</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(o) &amp;&amp; (o-&gt;u.mod.lua_env != LUA_NOREF)) {</div>
+<div class="line"><a name="l02620"></a><span class="lineno"> 2620</span>&#160;         nlua_getenv( o-&gt;u.mod.lua_env, <span class="stringliteral">&quot;onload&quot;</span> );</div>
+<div class="line"><a name="l02621"></a><span class="lineno"> 2621</span>&#160;         <span class="keywordflow">if</span> (lua_isnil(naevL,-1))</div>
+<div class="line"><a name="l02622"></a><span class="lineno"> 2622</span>&#160;            lua_pop(naevL,1);</div>
+<div class="line"><a name="l02623"></a><span class="lineno"> 2623</span>&#160;         <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l02624"></a><span class="lineno"> 2624</span>&#160;            <span class="keywordflow">if</span> (nlua_pcall( o-&gt;u.mod.lua_env, 0, 0 )) {</div>
+<div class="line"><a name="l02625"></a><span class="lineno"> 2625</span>&#160;               WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; lua load error -&gt; &#39;load&#39;:\n%s&quot;</span>), o-&gt;name, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l02626"></a><span class="lineno"> 2626</span>&#160;               lua_pop(naevL,1);</div>
+<div class="line"><a name="l02627"></a><span class="lineno"> 2627</span>&#160;            }</div>
+<div class="line"><a name="l02628"></a><span class="lineno"> 2628</span>&#160;         }</div>
+<div class="line"><a name="l02629"></a><span class="lineno"> 2629</span>&#160;      }</div>
+<div class="line"><a name="l02630"></a><span class="lineno"> 2630</span>&#160;   }</div>
+<div class="line"><a name="l02631"></a><span class="lineno"> 2631</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02632"></a><span class="lineno"> 2632</span>&#160;}</div>
+<div class="line"><a name="l02633"></a><span class="lineno"> 2633</span>&#160; </div>
+<div class="line"><a name="l02634"></a><span class="lineno"> 2634</span>&#160; </div>
+<div class="line"><a name="l02639"></a><span class="lineno"> 2639</span>&#160;<span class="keywordtype">int</span> <a class="code" href="outfit_8c.html#a98c358d23a0de09bed2a740e557a782b">outfit_mapParse</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l02640"></a><span class="lineno"><a class="line" href="outfit_8c.html#a98c358d23a0de09bed2a740e557a782b"> 2640</a></span>&#160;{</div>
+<div class="line"><a name="l02641"></a><span class="lineno"> 2641</span>&#160;   Outfit *o;</div>
+<div class="line"><a name="l02642"></a><span class="lineno"> 2642</span>&#160;   <span class="keywordtype">size_t</span> i;</div>
+<div class="line"><a name="l02643"></a><span class="lineno"> 2643</span>&#160;   xmlNodePtr node, cur;</div>
+<div class="line"><a name="l02644"></a><span class="lineno"> 2644</span>&#160;   xmlDocPtr doc;</div>
+<div class="line"><a name="l02645"></a><span class="lineno"> 2645</span>&#160;   <span class="keywordtype">char</span> **map_files;</div>
+<div class="line"><a name="l02646"></a><span class="lineno"> 2646</span>&#160;   <span class="keywordtype">char</span> *file, *n;</div>
+<div class="line"><a name="l02647"></a><span class="lineno"> 2647</span>&#160; </div>
+<div class="line"><a name="l02648"></a><span class="lineno"> 2648</span>&#160;   map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );</div>
+<div class="line"><a name="l02649"></a><span class="lineno"> 2649</span>&#160;   <span class="keywordflow">for</span> (i=0; map_files[i]!=NULL; i++) {</div>
+<div class="line"><a name="l02650"></a><span class="lineno"> 2650</span>&#160;      <a class="code" href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a>( &amp;file, <span class="stringliteral">&quot;%s%s&quot;</span>, MAP_DATA_PATH, map_files[i] );</div>
+<div class="line"><a name="l02651"></a><span class="lineno"> 2651</span>&#160; </div>
+<div class="line"><a name="l02652"></a><span class="lineno"> 2652</span>&#160;      doc = <a class="code" href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a>( file );</div>
+<div class="line"><a name="l02653"></a><span class="lineno"> 2653</span>&#160;      <span class="keywordflow">if</span> (doc == NULL) {</div>
+<div class="line"><a name="l02654"></a><span class="lineno"> 2654</span>&#160;         WARN(_(<span class="stringliteral">&quot;%s file is invalid xml!&quot;</span>), file);</div>
+<div class="line"><a name="l02655"></a><span class="lineno"> 2655</span>&#160;         free(file);</div>
+<div class="line"><a name="l02656"></a><span class="lineno"> 2656</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02657"></a><span class="lineno"> 2657</span>&#160;      }</div>
+<div class="line"><a name="l02658"></a><span class="lineno"> 2658</span>&#160; </div>
+<div class="line"><a name="l02659"></a><span class="lineno"> 2659</span>&#160;      node = doc-&gt;xmlChildrenNode; <span class="comment">/* first system node */</span></div>
+<div class="line"><a name="l02660"></a><span class="lineno"> 2660</span>&#160;      <span class="keywordflow">if</span> (node == NULL) {</div>
+<div class="line"><a name="l02661"></a><span class="lineno"> 2661</span>&#160;         WARN( _(<span class="stringliteral">&quot;Malformed &#39;%s&#39; file: does not contain elements&quot;</span>), OUTFIT_DATA_PATH );</div>
+<div class="line"><a name="l02662"></a><span class="lineno"> 2662</span>&#160;         free(file);</div>
+<div class="line"><a name="l02663"></a><span class="lineno"> 2663</span>&#160;         xmlFreeDoc(doc);</div>
+<div class="line"><a name="l02664"></a><span class="lineno"> 2664</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02665"></a><span class="lineno"> 2665</span>&#160;      }</div>
+<div class="line"><a name="l02666"></a><span class="lineno"> 2666</span>&#160; </div>
+<div class="line"><a name="l02667"></a><span class="lineno"> 2667</span>&#160;      xmlr_attr_strd( node, <span class="stringliteral">&quot;name&quot;</span>, n );</div>
+<div class="line"><a name="l02668"></a><span class="lineno"> 2668</span>&#160;      o = (Outfit*) <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( n ); <span class="comment">/* Ugh :/ */</span></div>
+<div class="line"><a name="l02669"></a><span class="lineno"> 2669</span>&#160;      free(n);</div>
+<div class="line"><a name="l02670"></a><span class="lineno"> 2670</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="outfit_8c.html#a6f755506d191873cadf838a267e1a328">outfit_isMap</a>(o)) { <span class="comment">/* If its not a map, we don&#39;t care. */</span></div>
+<div class="line"><a name="l02671"></a><span class="lineno"> 2671</span>&#160;         free(file);</div>
+<div class="line"><a name="l02672"></a><span class="lineno"> 2672</span>&#160;         xmlFreeDoc(doc);</div>
+<div class="line"><a name="l02673"></a><span class="lineno"> 2673</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02674"></a><span class="lineno"> 2674</span>&#160;      }</div>
+<div class="line"><a name="l02675"></a><span class="lineno"> 2675</span>&#160; </div>
+<div class="line"><a name="l02676"></a><span class="lineno"> 2676</span>&#160;      cur = node-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l02677"></a><span class="lineno"> 2677</span>&#160;      <span class="keywordflow">do</span> { <span class="comment">/* load all the data */</span></div>
+<div class="line"><a name="l02678"></a><span class="lineno"> 2678</span>&#160;         <span class="comment">/* Only handle nodes. */</span></div>
+<div class="line"><a name="l02679"></a><span class="lineno"> 2679</span>&#160;         xml_onlyNodes(cur);</div>
 <div class="line"><a name="l02680"></a><span class="lineno"> 2680</span>&#160; </div>
-<div class="line"><a name="l02681"></a><span class="lineno"> 2681</span>&#160;      } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l02682"></a><span class="lineno"> 2682</span>&#160; </div>
-<div class="line"><a name="l02683"></a><span class="lineno"> 2683</span>&#160;      <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l02684"></a><span class="lineno"> 2684</span>&#160;      free(file);</div>
-<div class="line"><a name="l02685"></a><span class="lineno"> 2685</span>&#160;      xmlFreeDoc(doc);</div>
-<div class="line"><a name="l02686"></a><span class="lineno"> 2686</span>&#160;   }</div>
-<div class="line"><a name="l02687"></a><span class="lineno"> 2687</span>&#160; </div>
-<div class="line"><a name="l02688"></a><span class="lineno"> 2688</span>&#160;   <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l02689"></a><span class="lineno"> 2689</span>&#160;   PHYSFS_freeList( map_files );</div>
+<div class="line"><a name="l02681"></a><span class="lineno"> 2681</span>&#160;         <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;specific&quot;</span>))</div>
+<div class="line"><a name="l02682"></a><span class="lineno"> 2682</span>&#160;            <a class="code" href="outfit_8c.html#a09ce1c2cf6665be91f46730779af4144">outfit_parseSMap</a>(o, cur);</div>
+<div class="line"><a name="l02683"></a><span class="lineno"> 2683</span>&#160; </div>
+<div class="line"><a name="l02684"></a><span class="lineno"> 2684</span>&#160;      } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l02685"></a><span class="lineno"> 2685</span>&#160; </div>
+<div class="line"><a name="l02686"></a><span class="lineno"> 2686</span>&#160;      <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l02687"></a><span class="lineno"> 2687</span>&#160;      free(file);</div>
+<div class="line"><a name="l02688"></a><span class="lineno"> 2688</span>&#160;      xmlFreeDoc(doc);</div>
+<div class="line"><a name="l02689"></a><span class="lineno"> 2689</span>&#160;   }</div>
 <div class="line"><a name="l02690"></a><span class="lineno"> 2690</span>&#160; </div>
-<div class="line"><a name="l02691"></a><span class="lineno"> 2691</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02692"></a><span class="lineno"> 2692</span>&#160;}</div>
+<div class="line"><a name="l02691"></a><span class="lineno"> 2691</span>&#160;   <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l02692"></a><span class="lineno"> 2692</span>&#160;   PHYSFS_freeList( map_files );</div>
 <div class="line"><a name="l02693"></a><span class="lineno"> 2693</span>&#160; </div>
-<div class="line"><a name="l02694"></a><span class="lineno"> 2694</span>&#160; </div>
-<div class="line"><a name="l02700"></a><span class="lineno"> 2700</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="outfit_8c.html#a14ed932a8a5d0633b17f951e73eb5590">outfit_launcherDesc</a>( Outfit* o )</div>
-<div class="line"><a name="l02701"></a><span class="lineno"><a class="line" href="outfit_8c.html#a14ed932a8a5d0633b17f951e73eb5590"> 2701</a></span>&#160;{</div>
-<div class="line"><a name="l02702"></a><span class="lineno"> 2702</span>&#160;   <span class="keywordtype">int</span> l;</div>
-<div class="line"><a name="l02703"></a><span class="lineno"> 2703</span>&#160;   <span class="keyword">const</span> Outfit *<a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>; <span class="comment">/* Launcher&#39;s ammo. */</span></div>
-<div class="line"><a name="l02704"></a><span class="lineno"> 2704</span>&#160; </div>
-<div class="line"><a name="l02705"></a><span class="lineno"> 2705</span>&#160;   <span class="keywordflow">if</span> (o-&gt;desc_short != NULL) {</div>
-<div class="line"><a name="l02706"></a><span class="lineno"> 2706</span>&#160;      WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; already has a short description&quot;</span>), o-&gt;name);</div>
-<div class="line"><a name="l02707"></a><span class="lineno"> 2707</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l02708"></a><span class="lineno"> 2708</span>&#160;   }</div>
-<div class="line"><a name="l02709"></a><span class="lineno"> 2709</span>&#160; </div>
-<div class="line"><a name="l02710"></a><span class="lineno"> 2710</span>&#160;   a = o-&gt;u.lau.ammo;</div>
-<div class="line"><a name="l02711"></a><span class="lineno"> 2711</span>&#160; </div>
-<div class="line"><a name="l02712"></a><span class="lineno"> 2712</span>&#160;   o-&gt;desc_short = malloc( <a class="code" href="outfit_8c.html#aba2517aa101b7405fa3410fc348d5f04">OUTFIT_SHORTDESC_MAX</a> );</div>
-<div class="line"><a name="l02713"></a><span class="lineno"> 2713</span>&#160;   l = 0;</div>
-<div class="line"><a name="l02714"></a><span class="lineno"> 2714</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;%s [%s]&quot;</span>), _(<a class="code" href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a>(o)),</div>
-<div class="line"><a name="l02715"></a><span class="lineno"> 2715</span>&#160;         _(<a class="code" href="damagetype_8c.html#a4cf320e5baaaf7a6260a63de5fdd2528">dtype_damageTypeToStr</a>(a-&gt;u.amm.dmg.type)) );</div>
-<div class="line"><a name="l02716"></a><span class="lineno"> 2716</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.0f CPU&quot;</span>), o-&gt;cpu );</div>
-<div class="line"><a name="l02717"></a><span class="lineno"> 2717</span>&#160; </div>
-<div class="line"><a name="l02718"></a><span class="lineno"> 2718</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a35f0196640ba759e2270fd0ccab81976">outfit_isSeeker</a>(o)) {</div>
-<div class="line"><a name="l02719"></a><span class="lineno"> 2719</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.1f Second Lock-on&quot;</span>), o-&gt;u.lau.lockon );</div>
-<div class="line"><a name="l02720"></a><span class="lineno"> 2720</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.1f Second In-Flight Calibration&quot;</span>), o-&gt;u.lau.iflockon );</div>
-<div class="line"><a name="l02721"></a><span class="lineno"> 2721</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Optimal Tracking&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( o-&gt;u.lau.trackmax, 0 ) );</div>
-<div class="line"><a name="l02722"></a><span class="lineno"> 2722</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Minimal Tracking&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( o-&gt;u.lau.trackmin, 0 ) );</div>
-<div class="line"><a name="l02723"></a><span class="lineno"> 2723</span>&#160;   }</div>
-<div class="line"><a name="l02724"></a><span class="lineno"> 2724</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l02725"></a><span class="lineno"> 2725</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\nNo Seeking&quot;</span>) );</div>
-<div class="line"><a name="l02726"></a><span class="lineno"> 2726</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a785a20c65e3dd4117bd913a6838597ba">outfit_isTurret</a>(o) || o-&gt;u.lau.swivel &gt; 0.) {</div>
-<div class="line"><a name="l02727"></a><span class="lineno"> 2727</span>&#160;         SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Optimal Tracking&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( o-&gt;u.lau.trackmax, 0 ) );</div>
-<div class="line"><a name="l02728"></a><span class="lineno"> 2728</span>&#160;         SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Minimal Tracking&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( o-&gt;u.lau.trackmin, 0 ) );</div>
-<div class="line"><a name="l02729"></a><span class="lineno"> 2729</span>&#160;         SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.1f Degree Swivel&quot;</span>), o-&gt;u.lau.swivel*180./M_PI );</div>
-<div class="line"><a name="l02730"></a><span class="lineno"> 2730</span>&#160;      }</div>
-<div class="line"><a name="l02731"></a><span class="lineno"> 2731</span>&#160;   }</div>
-<div class="line"><a name="l02732"></a><span class="lineno"> 2732</span>&#160; </div>
-<div class="line"><a name="l02733"></a><span class="lineno"> 2733</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\nHolds %d %s:&quot;</span>), o-&gt;u.lau.amount, _(o-&gt;u.lau.ammo_name) );</div>
-<div class="line"><a name="l02734"></a><span class="lineno"> 2734</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.0f%% Penetration&quot;</span>), a-&gt;u.amm.dmg.penetration * 100. );</div>
-<div class="line"><a name="l02735"></a><span class="lineno"> 2735</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.2f DPS [%.0f Damage]&quot;</span>),</div>
-<div class="line"><a name="l02736"></a><span class="lineno"> 2736</span>&#160;         1. / o-&gt;u.lau.delay * a-&gt;u.amm.dmg.damage, a-&gt;u.amm.dmg.damage );</div>
-<div class="line"><a name="l02737"></a><span class="lineno"> 2737</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.1f Disable/s [%.0f Disable]&quot;</span>),</div>
-<div class="line"><a name="l02738"></a><span class="lineno"> 2738</span>&#160;         1. / o-&gt;u.lau.delay * a-&gt;u.amm.dmg.disable, a-&gt;u.amm.dmg.disable );</div>
-<div class="line"><a name="l02739"></a><span class="lineno"> 2739</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.1f Shots Per Second&quot;</span>), 1. / o-&gt;u.lau.delay );</div>
-<div class="line"><a name="l02740"></a><span class="lineno"> 2740</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Range [%.1f duration]&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( <a class="code" href="outfit_8c.html#a6bc1f1d6511b8998981166d7cbf1efc3">outfit_range</a>(a), 0 ), a-&gt;u.amm.duration );</div>
-<div class="line"><a name="l02741"></a><span class="lineno"> 2741</span>&#160;   <span class="keywordflow">if</span> (a-&gt;u.amm.thrust &gt; 0.) {</div>
-<div class="line"><a name="l02742"></a><span class="lineno"> 2742</span>&#160;      <span class="keywordflow">if</span> (a-&gt;u.amm.speed &gt; 0.)</div>
-<div class="line"><a name="l02743"></a><span class="lineno"> 2743</span>&#160;         SDESC_ADD( l, o, _(<span class="stringliteral">&quot;\n%.0f Initial Speed (%.0f Thrust)&quot;</span>), a-&gt;u.amm.speed, a-&gt;u.amm.thrust );</div>
-<div class="line"><a name="l02744"></a><span class="lineno"> 2744</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l02745"></a><span class="lineno"> 2745</span>&#160;         SDESC_ADD( l, o, _(<span class="stringliteral">&quot;\n%.0f Thrust&quot;</span>), a-&gt;u.amm.thrust );</div>
-<div class="line"><a name="l02746"></a><span class="lineno"> 2746</span>&#160;   }</div>
-<div class="line"><a name="l02747"></a><span class="lineno"> 2747</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l02748"></a><span class="lineno"> 2748</span>&#160;      SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.0f Speed&quot;</span>), a-&gt;u.amm.speed );</div>
-<div class="line"><a name="l02749"></a><span class="lineno"> 2749</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.0f Maximum Speed&quot;</span>), a-&gt;u.amm.speed_max );</div>
-<div class="line"><a name="l02750"></a><span class="lineno"> 2750</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.1f Seconds to Reload&quot;</span>), o-&gt;u.lau.reload_time );</div>
-<div class="line"><a name="l02751"></a><span class="lineno"> 2751</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.1f EPS [%.0f Energy]&quot;</span>), o-&gt;u.lau.delay * a-&gt;u.amm.energy, a-&gt;u.amm.energy );</div>
-<div class="line"><a name="l02752"></a><span class="lineno"> 2752</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.0f%% Jam Resistance&quot;</span>), a-&gt;u.amm.resist * 100. );</div>
-<div class="line"><a name="l02753"></a><span class="lineno"> 2753</span>&#160;}</div>
-<div class="line"><a name="l02754"></a><span class="lineno"> 2754</span>&#160; </div>
-<div class="line"><a name="l02755"></a><span class="lineno"> 2755</span>&#160; </div>
-<div class="line"><a name="l02759"></a><span class="lineno"> 2759</span>&#160;glTexture* <a class="code" href="outfit_8c.html#a53336e488bab1c14257725cd9de656d5">rarity_texture</a>( <span class="keywordtype">int</span> rarity )</div>
-<div class="line"><a name="l02760"></a><span class="lineno"><a class="line" href="outfit_8c.html#a53336e488bab1c14257725cd9de656d5"> 2760</a></span>&#160;{</div>
-<div class="line"><a name="l02761"></a><span class="lineno"> 2761</span>&#160;   <span class="keywordtype">char</span> s[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
-<div class="line"><a name="l02762"></a><span class="lineno"> 2762</span>&#160;   snprintf( s, <span class="keyword">sizeof</span>(s), OVERLAY_GFX_PATH<span class="stringliteral">&quot;rarity_%d.webp&quot;</span>, rarity );</div>
-<div class="line"><a name="l02763"></a><span class="lineno"> 2763</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( s, OPENGL_TEX_MIPMAPS );</div>
-<div class="line"><a name="l02764"></a><span class="lineno"> 2764</span>&#160;}</div>
-<div class="line"><a name="l02765"></a><span class="lineno"> 2765</span>&#160; </div>
-<div class="line"><a name="l02766"></a><span class="lineno"> 2766</span>&#160; </div>
-<div class="line"><a name="l02770"></a><span class="lineno"> 2770</span>&#160;<span class="keywordtype">int</span> <a class="code" href="outfit_8c.html#a66cfcf7f9e0dda5705a7d4e84c191d3a">outfit_checkIllegal</a>( <span class="keyword">const</span> Outfit* o, <span class="keywordtype">int</span> fct )</div>
-<div class="line"><a name="l02771"></a><span class="lineno"><a class="line" href="outfit_8c.html#a66cfcf7f9e0dda5705a7d4e84c191d3a"> 2771</a></span>&#160;{</div>
-<div class="line"><a name="l02772"></a><span class="lineno"> 2772</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegalto); i++) {</div>
-<div class="line"><a name="l02773"></a><span class="lineno"> 2773</span>&#160;      <span class="keywordflow">if</span> (o-&gt;illegalto[i] == fct)</div>
-<div class="line"><a name="l02774"></a><span class="lineno"> 2774</span>&#160;         <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l02775"></a><span class="lineno"> 2775</span>&#160;   }</div>
-<div class="line"><a name="l02776"></a><span class="lineno"> 2776</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02777"></a><span class="lineno"> 2777</span>&#160;}</div>
-<div class="line"><a name="l02778"></a><span class="lineno"> 2778</span>&#160; </div>
-<div class="line"><a name="l02779"></a><span class="lineno"> 2779</span>&#160; </div>
-<div class="line"><a name="l02783"></a><span class="lineno"> 2783</span>&#160;<span class="keywordtype">void</span> <a class="code" href="outfit_8c.html#ae3efc344a7e324bf63002d07811fbc55">outfit_free</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l02784"></a><span class="lineno"><a class="line" href="outfit_8c.html#ae3efc344a7e324bf63002d07811fbc55"> 2784</a></span>&#160;{</div>
-<div class="line"><a name="l02785"></a><span class="lineno"> 2785</span>&#160;   Outfit *o;</div>
-<div class="line"><a name="l02786"></a><span class="lineno"> 2786</span>&#160; </div>
-<div class="line"><a name="l02787"></a><span class="lineno"> 2787</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>); i++) {</div>
-<div class="line"><a name="l02788"></a><span class="lineno"> 2788</span>&#160;      o = &amp;<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i];</div>
+<div class="line"><a name="l02694"></a><span class="lineno"> 2694</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02695"></a><span class="lineno"> 2695</span>&#160;}</div>
+<div class="line"><a name="l02696"></a><span class="lineno"> 2696</span>&#160; </div>
+<div class="line"><a name="l02697"></a><span class="lineno"> 2697</span>&#160; </div>
+<div class="line"><a name="l02703"></a><span class="lineno"> 2703</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="outfit_8c.html#a14ed932a8a5d0633b17f951e73eb5590">outfit_launcherDesc</a>( Outfit* o )</div>
+<div class="line"><a name="l02704"></a><span class="lineno"><a class="line" href="outfit_8c.html#a14ed932a8a5d0633b17f951e73eb5590"> 2704</a></span>&#160;{</div>
+<div class="line"><a name="l02705"></a><span class="lineno"> 2705</span>&#160;   <span class="keywordtype">int</span> l;</div>
+<div class="line"><a name="l02706"></a><span class="lineno"> 2706</span>&#160;   <span class="keyword">const</span> Outfit *<a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>; <span class="comment">/* Launcher&#39;s ammo. */</span></div>
+<div class="line"><a name="l02707"></a><span class="lineno"> 2707</span>&#160; </div>
+<div class="line"><a name="l02708"></a><span class="lineno"> 2708</span>&#160;   <span class="keywordflow">if</span> (o-&gt;desc_short != NULL) {</div>
+<div class="line"><a name="l02709"></a><span class="lineno"> 2709</span>&#160;      WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; already has a short description&quot;</span>), o-&gt;name);</div>
+<div class="line"><a name="l02710"></a><span class="lineno"> 2710</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l02711"></a><span class="lineno"> 2711</span>&#160;   }</div>
+<div class="line"><a name="l02712"></a><span class="lineno"> 2712</span>&#160; </div>
+<div class="line"><a name="l02713"></a><span class="lineno"> 2713</span>&#160;   a = o-&gt;u.lau.ammo;</div>
+<div class="line"><a name="l02714"></a><span class="lineno"> 2714</span>&#160; </div>
+<div class="line"><a name="l02715"></a><span class="lineno"> 2715</span>&#160;   o-&gt;desc_short = malloc( <a class="code" href="outfit_8c.html#aba2517aa101b7405fa3410fc348d5f04">OUTFIT_SHORTDESC_MAX</a> );</div>
+<div class="line"><a name="l02716"></a><span class="lineno"> 2716</span>&#160;   l = 0;</div>
+<div class="line"><a name="l02717"></a><span class="lineno"> 2717</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;%s [%s]&quot;</span>), _(<a class="code" href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a>(o)),</div>
+<div class="line"><a name="l02718"></a><span class="lineno"> 2718</span>&#160;         _(<a class="code" href="damagetype_8c.html#a4cf320e5baaaf7a6260a63de5fdd2528">dtype_damageTypeToStr</a>(a-&gt;u.amm.dmg.type)) );</div>
+<div class="line"><a name="l02719"></a><span class="lineno"> 2719</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.0f CPU&quot;</span>), o-&gt;cpu );</div>
+<div class="line"><a name="l02720"></a><span class="lineno"> 2720</span>&#160; </div>
+<div class="line"><a name="l02721"></a><span class="lineno"> 2721</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a35f0196640ba759e2270fd0ccab81976">outfit_isSeeker</a>(o)) {</div>
+<div class="line"><a name="l02722"></a><span class="lineno"> 2722</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.1f Second Lock-on&quot;</span>), o-&gt;u.lau.lockon );</div>
+<div class="line"><a name="l02723"></a><span class="lineno"> 2723</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.1f Second In-Flight Calibration&quot;</span>), o-&gt;u.lau.iflockon );</div>
+<div class="line"><a name="l02724"></a><span class="lineno"> 2724</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Optimal Tracking&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( o-&gt;u.lau.trackmax, 0 ) );</div>
+<div class="line"><a name="l02725"></a><span class="lineno"> 2725</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Minimal Tracking&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( o-&gt;u.lau.trackmin, 0 ) );</div>
+<div class="line"><a name="l02726"></a><span class="lineno"> 2726</span>&#160;   }</div>
+<div class="line"><a name="l02727"></a><span class="lineno"> 2727</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l02728"></a><span class="lineno"> 2728</span>&#160;      SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\nNo Seeking&quot;</span>) );</div>
+<div class="line"><a name="l02729"></a><span class="lineno"> 2729</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a785a20c65e3dd4117bd913a6838597ba">outfit_isTurret</a>(o) || o-&gt;u.lau.swivel &gt; 0.) {</div>
+<div class="line"><a name="l02730"></a><span class="lineno"> 2730</span>&#160;         SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Optimal Tracking&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( o-&gt;u.lau.trackmax, 0 ) );</div>
+<div class="line"><a name="l02731"></a><span class="lineno"> 2731</span>&#160;         SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Minimal Tracking&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( o-&gt;u.lau.trackmin, 0 ) );</div>
+<div class="line"><a name="l02732"></a><span class="lineno"> 2732</span>&#160;         SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.1f Degree Swivel&quot;</span>), o-&gt;u.lau.swivel*180./M_PI );</div>
+<div class="line"><a name="l02733"></a><span class="lineno"> 2733</span>&#160;      }</div>
+<div class="line"><a name="l02734"></a><span class="lineno"> 2734</span>&#160;   }</div>
+<div class="line"><a name="l02735"></a><span class="lineno"> 2735</span>&#160; </div>
+<div class="line"><a name="l02736"></a><span class="lineno"> 2736</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\nHolds %d %s:&quot;</span>), o-&gt;u.lau.amount, _(o-&gt;u.lau.ammo_name) );</div>
+<div class="line"><a name="l02737"></a><span class="lineno"> 2737</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.0f%% Penetration&quot;</span>), a-&gt;u.amm.dmg.penetration * 100. );</div>
+<div class="line"><a name="l02738"></a><span class="lineno"> 2738</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.2f DPS [%.0f Damage]&quot;</span>),</div>
+<div class="line"><a name="l02739"></a><span class="lineno"> 2739</span>&#160;         1. / o-&gt;u.lau.delay * a-&gt;u.amm.dmg.damage, a-&gt;u.amm.dmg.damage );</div>
+<div class="line"><a name="l02740"></a><span class="lineno"> 2740</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.1f Disable/s [%.0f Disable]&quot;</span>),</div>
+<div class="line"><a name="l02741"></a><span class="lineno"> 2741</span>&#160;         1. / o-&gt;u.lau.delay * a-&gt;u.amm.dmg.disable, a-&gt;u.amm.dmg.disable );</div>
+<div class="line"><a name="l02742"></a><span class="lineno"> 2742</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.1f Shots Per Second&quot;</span>), 1. / o-&gt;u.lau.delay );</div>
+<div class="line"><a name="l02743"></a><span class="lineno"> 2743</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%s Range [%.1f duration]&quot;</span>), <a class="code" href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a>( <a class="code" href="outfit_8c.html#a6bc1f1d6511b8998981166d7cbf1efc3">outfit_range</a>(a), 0 ), a-&gt;u.amm.duration );</div>
+<div class="line"><a name="l02744"></a><span class="lineno"> 2744</span>&#160;   <span class="keywordflow">if</span> (a-&gt;u.amm.thrust &gt; 0.) {</div>
+<div class="line"><a name="l02745"></a><span class="lineno"> 2745</span>&#160;      <span class="keywordflow">if</span> (a-&gt;u.amm.speed &gt; 0.)</div>
+<div class="line"><a name="l02746"></a><span class="lineno"> 2746</span>&#160;         SDESC_ADD( l, o, _(<span class="stringliteral">&quot;\n%.0f Initial Speed (%.0f Thrust)&quot;</span>), a-&gt;u.amm.speed, a-&gt;u.amm.thrust );</div>
+<div class="line"><a name="l02747"></a><span class="lineno"> 2747</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l02748"></a><span class="lineno"> 2748</span>&#160;         SDESC_ADD( l, o, _(<span class="stringliteral">&quot;\n%.0f Thrust&quot;</span>), a-&gt;u.amm.thrust );</div>
+<div class="line"><a name="l02749"></a><span class="lineno"> 2749</span>&#160;   }</div>
+<div class="line"><a name="l02750"></a><span class="lineno"> 2750</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l02751"></a><span class="lineno"> 2751</span>&#160;      SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.0f Speed&quot;</span>), a-&gt;u.amm.speed );</div>
+<div class="line"><a name="l02752"></a><span class="lineno"> 2752</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.0f Maximum Speed&quot;</span>), a-&gt;u.amm.speed_max );</div>
+<div class="line"><a name="l02753"></a><span class="lineno"> 2753</span>&#160;   SDESC_ADD(  l, o, _(<span class="stringliteral">&quot;\n%.1f Seconds to Reload&quot;</span>), o-&gt;u.lau.reload_time );</div>
+<div class="line"><a name="l02754"></a><span class="lineno"> 2754</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.1f EPS [%.0f Energy]&quot;</span>), o-&gt;u.lau.delay * a-&gt;u.amm.energy, a-&gt;u.amm.energy );</div>
+<div class="line"><a name="l02755"></a><span class="lineno"> 2755</span>&#160;   SDESC_COND( l, o, _(<span class="stringliteral">&quot;\n%.0f%% Jam Resistance&quot;</span>), a-&gt;u.amm.resist * 100. );</div>
+<div class="line"><a name="l02756"></a><span class="lineno"> 2756</span>&#160;}</div>
+<div class="line"><a name="l02757"></a><span class="lineno"> 2757</span>&#160; </div>
+<div class="line"><a name="l02758"></a><span class="lineno"> 2758</span>&#160; </div>
+<div class="line"><a name="l02762"></a><span class="lineno"> 2762</span>&#160;glTexture* <a class="code" href="outfit_8c.html#a53336e488bab1c14257725cd9de656d5">rarity_texture</a>( <span class="keywordtype">int</span> rarity )</div>
+<div class="line"><a name="l02763"></a><span class="lineno"><a class="line" href="outfit_8c.html#a53336e488bab1c14257725cd9de656d5"> 2763</a></span>&#160;{</div>
+<div class="line"><a name="l02764"></a><span class="lineno"> 2764</span>&#160;   <span class="keywordtype">char</span> s[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a name="l02765"></a><span class="lineno"> 2765</span>&#160;   snprintf( s, <span class="keyword">sizeof</span>(s), OVERLAY_GFX_PATH<span class="stringliteral">&quot;rarity_%d.webp&quot;</span>, rarity );</div>
+<div class="line"><a name="l02766"></a><span class="lineno"> 2766</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( s, OPENGL_TEX_MIPMAPS );</div>
+<div class="line"><a name="l02767"></a><span class="lineno"> 2767</span>&#160;}</div>
+<div class="line"><a name="l02768"></a><span class="lineno"> 2768</span>&#160; </div>
+<div class="line"><a name="l02769"></a><span class="lineno"> 2769</span>&#160; </div>
+<div class="line"><a name="l02773"></a><span class="lineno"> 2773</span>&#160;<span class="keywordtype">int</span> <a class="code" href="outfit_8c.html#a66cfcf7f9e0dda5705a7d4e84c191d3a">outfit_checkIllegal</a>( <span class="keyword">const</span> Outfit* o, <span class="keywordtype">int</span> fct )</div>
+<div class="line"><a name="l02774"></a><span class="lineno"><a class="line" href="outfit_8c.html#a66cfcf7f9e0dda5705a7d4e84c191d3a"> 2774</a></span>&#160;{</div>
+<div class="line"><a name="l02775"></a><span class="lineno"> 2775</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegalto); i++) {</div>
+<div class="line"><a name="l02776"></a><span class="lineno"> 2776</span>&#160;      <span class="keywordflow">if</span> (o-&gt;illegalto[i] == fct)</div>
+<div class="line"><a name="l02777"></a><span class="lineno"> 2777</span>&#160;         <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l02778"></a><span class="lineno"> 2778</span>&#160;   }</div>
+<div class="line"><a name="l02779"></a><span class="lineno"> 2779</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02780"></a><span class="lineno"> 2780</span>&#160;}</div>
+<div class="line"><a name="l02781"></a><span class="lineno"> 2781</span>&#160; </div>
+<div class="line"><a name="l02782"></a><span class="lineno"> 2782</span>&#160; </div>
+<div class="line"><a name="l02786"></a><span class="lineno"> 2786</span>&#160;<span class="keywordtype">void</span> <a class="code" href="outfit_8c.html#ae3efc344a7e324bf63002d07811fbc55">outfit_free</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l02787"></a><span class="lineno"><a class="line" href="outfit_8c.html#ae3efc344a7e324bf63002d07811fbc55"> 2787</a></span>&#160;{</div>
+<div class="line"><a name="l02788"></a><span class="lineno"> 2788</span>&#160;   Outfit *o;</div>
 <div class="line"><a name="l02789"></a><span class="lineno"> 2789</span>&#160; </div>
-<div class="line"><a name="l02790"></a><span class="lineno"> 2790</span>&#160;      <span class="comment">/* Free graphics */</span></div>
-<div class="line"><a name="l02791"></a><span class="lineno"> 2791</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( (glTexture*) <a class="code" href="outfit_8c.html#a897ccefceeb5bb902934093fe7189b0b">outfit_gfx</a>(o)); <span class="comment">/*&lt; This is horrible and I should be ashamed. */</span></div>
+<div class="line"><a name="l02790"></a><span class="lineno"> 2790</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>); i++) {</div>
+<div class="line"><a name="l02791"></a><span class="lineno"> 2791</span>&#160;      o = &amp;<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>[i];</div>
 <div class="line"><a name="l02792"></a><span class="lineno"> 2792</span>&#160; </div>
-<div class="line"><a name="l02793"></a><span class="lineno"> 2793</span>&#160;      <span class="comment">/* Free slot. */</span></div>
-<div class="line"><a name="l02794"></a><span class="lineno"> 2794</span>&#160;      <a class="code" href="outfit_8c.html#af05d86f6400adcf85f24fcae707b31e6">outfit_freeSlot</a>( &amp;o-&gt;slot );</div>
+<div class="line"><a name="l02793"></a><span class="lineno"> 2793</span>&#160;      <span class="comment">/* Free graphics */</span></div>
+<div class="line"><a name="l02794"></a><span class="lineno"> 2794</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( (glTexture*) <a class="code" href="outfit_8c.html#a897ccefceeb5bb902934093fe7189b0b">outfit_gfx</a>(o)); <span class="comment">/*&lt; This is horrible and I should be ashamed. */</span></div>
 <div class="line"><a name="l02795"></a><span class="lineno"> 2795</span>&#160; </div>
-<div class="line"><a name="l02796"></a><span class="lineno"> 2796</span>&#160;      <span class="comment">/* Free stats. */</span></div>
-<div class="line"><a name="l02797"></a><span class="lineno"> 2797</span>&#160;      <a class="code" href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">ss_free</a>( o-&gt;stats );</div>
+<div class="line"><a name="l02796"></a><span class="lineno"> 2796</span>&#160;      <span class="comment">/* Free slot. */</span></div>
+<div class="line"><a name="l02797"></a><span class="lineno"> 2797</span>&#160;      <a class="code" href="outfit_8c.html#af05d86f6400adcf85f24fcae707b31e6">outfit_freeSlot</a>( &amp;o-&gt;slot );</div>
 <div class="line"><a name="l02798"></a><span class="lineno"> 2798</span>&#160; </div>
-<div class="line"><a name="l02799"></a><span class="lineno"> 2799</span>&#160;      <span class="comment">/* Free illegality. */</span></div>
-<div class="line"><a name="l02800"></a><span class="lineno"> 2800</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;illegalto );</div>
+<div class="line"><a name="l02799"></a><span class="lineno"> 2799</span>&#160;      <span class="comment">/* Free stats. */</span></div>
+<div class="line"><a name="l02800"></a><span class="lineno"> 2800</span>&#160;      <a class="code" href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">ss_free</a>( o-&gt;stats );</div>
 <div class="line"><a name="l02801"></a><span class="lineno"> 2801</span>&#160; </div>
-<div class="line"><a name="l02802"></a><span class="lineno"> 2802</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#ab24f9c5d257de22db07258fbc39e98db">outfit_isAmmo</a>(o)) {</div>
-<div class="line"><a name="l02803"></a><span class="lineno"> 2803</span>&#160;         <span class="comment">/* Free collision polygons. */</span></div>
-<div class="line"><a name="l02804"></a><span class="lineno"> 2804</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;u.amm.polygon); j++) {</div>
-<div class="line"><a name="l02805"></a><span class="lineno"> 2805</span>&#160;            free(o-&gt;u.amm.polygon[j].x);</div>
-<div class="line"><a name="l02806"></a><span class="lineno"> 2806</span>&#160;            free(o-&gt;u.amm.polygon[j].y);</div>
-<div class="line"><a name="l02807"></a><span class="lineno"> 2807</span>&#160;         }</div>
-<div class="line"><a name="l02808"></a><span class="lineno"> 2808</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(o-&gt;u.amm.polygon);</div>
-<div class="line"><a name="l02809"></a><span class="lineno"> 2809</span>&#160;      }</div>
-<div class="line"><a name="l02810"></a><span class="lineno"> 2810</span>&#160;      <span class="comment">/* Type specific. */</span></div>
-<div class="line"><a name="l02811"></a><span class="lineno"> 2811</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#adeb116d088c9caaa78688b0fee8f7aa4">outfit_isBolt</a>(o)) {</div>
-<div class="line"><a name="l02812"></a><span class="lineno"> 2812</span>&#160;         <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(o-&gt;u.blt.gfx_end);</div>
-<div class="line"><a name="l02813"></a><span class="lineno"> 2813</span>&#160;         <span class="comment">/* Free collision polygons. */</span></div>
-<div class="line"><a name="l02814"></a><span class="lineno"> 2814</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;u.blt.polygon); j++) {</div>
-<div class="line"><a name="l02815"></a><span class="lineno"> 2815</span>&#160;            free(o-&gt;u.blt.polygon[j].x);</div>
-<div class="line"><a name="l02816"></a><span class="lineno"> 2816</span>&#160;            free(o-&gt;u.blt.polygon[j].y);</div>
-<div class="line"><a name="l02817"></a><span class="lineno"> 2817</span>&#160;         }</div>
-<div class="line"><a name="l02818"></a><span class="lineno"> 2818</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(o-&gt;u.blt.polygon);</div>
-<div class="line"><a name="l02819"></a><span class="lineno"> 2819</span>&#160;      }</div>
-<div class="line"><a name="l02820"></a><span class="lineno"> 2820</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o))</div>
-<div class="line"><a name="l02821"></a><span class="lineno"> 2821</span>&#160;         free(o-&gt;u.lau.ammo_name);</div>
-<div class="line"><a name="l02822"></a><span class="lineno"> 2822</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>(o))</div>
-<div class="line"><a name="l02823"></a><span class="lineno"> 2823</span>&#160;         free(o-&gt;u.bay.ammo_name);</div>
-<div class="line"><a name="l02824"></a><span class="lineno"> 2824</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a6aaa3f890e9119ef61089e2aaa8dd167">outfit_isFighter</a>(o))</div>
-<div class="line"><a name="l02825"></a><span class="lineno"> 2825</span>&#160;         free(o-&gt;u.fig.ship);</div>
-<div class="line"><a name="l02826"></a><span class="lineno"> 2826</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#ab1636bc9802eee252f7dc69af78cdc5f">outfit_isGUI</a>(o))</div>
-<div class="line"><a name="l02827"></a><span class="lineno"> 2827</span>&#160;         free(o-&gt;u.gui.gui);</div>
-<div class="line"><a name="l02828"></a><span class="lineno"> 2828</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a6f755506d191873cadf838a267e1a328">outfit_isMap</a>(o)) {</div>
-<div class="line"><a name="l02829"></a><span class="lineno"> 2829</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;u.map-&gt;systems );</div>
-<div class="line"><a name="l02830"></a><span class="lineno"> 2830</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;u.map-&gt;assets );</div>
-<div class="line"><a name="l02831"></a><span class="lineno"> 2831</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;u.map-&gt;jumps );</div>
-<div class="line"><a name="l02832"></a><span class="lineno"> 2832</span>&#160;         free( o-&gt;u.map );</div>
-<div class="line"><a name="l02833"></a><span class="lineno"> 2833</span>&#160;      }</div>
-<div class="line"><a name="l02834"></a><span class="lineno"> 2834</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(o)) {</div>
-<div class="line"><a name="l02835"></a><span class="lineno"> 2835</span>&#160;         <span class="keywordflow">if</span> (o-&gt;u.mod.lua_env != LUA_NOREF)</div>
-<div class="line"><a name="l02836"></a><span class="lineno"> 2836</span>&#160;            nlua_freeEnv( o-&gt;u.mod.lua_env );</div>
-<div class="line"><a name="l02837"></a><span class="lineno"> 2837</span>&#160;         o-&gt;u.mod.lua_env = LUA_NOREF;</div>
-<div class="line"><a name="l02838"></a><span class="lineno"> 2838</span>&#160;         free(o-&gt;u.mod.lua_file);</div>
-<div class="line"><a name="l02839"></a><span class="lineno"> 2839</span>&#160;      }</div>
-<div class="line"><a name="l02840"></a><span class="lineno"> 2840</span>&#160; </div>
-<div class="line"><a name="l02841"></a><span class="lineno"> 2841</span>&#160;      <span class="comment">/* strings */</span></div>
-<div class="line"><a name="l02842"></a><span class="lineno"> 2842</span>&#160;      free(o-&gt;typename);</div>
-<div class="line"><a name="l02843"></a><span class="lineno"> 2843</span>&#160;      free(o-&gt;description);</div>
-<div class="line"><a name="l02844"></a><span class="lineno"> 2844</span>&#160;      free(o-&gt;limit);</div>
-<div class="line"><a name="l02845"></a><span class="lineno"> 2845</span>&#160;      free(o-&gt;desc_short);</div>
-<div class="line"><a name="l02846"></a><span class="lineno"> 2846</span>&#160;      free(o-&gt;license);</div>
-<div class="line"><a name="l02847"></a><span class="lineno"> 2847</span>&#160;      free(o-&gt;name);</div>
-<div class="line"><a name="l02848"></a><span class="lineno"> 2848</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(o-&gt;gfx_store);</div>
-<div class="line"><a name="l02849"></a><span class="lineno"> 2849</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;gfx_overlays); j++)</div>
-<div class="line"><a name="l02850"></a><span class="lineno"> 2850</span>&#160;         <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(o-&gt;gfx_overlays[j]);</div>
-<div class="line"><a name="l02851"></a><span class="lineno"> 2851</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(o-&gt;gfx_overlays);</div>
-<div class="line"><a name="l02852"></a><span class="lineno"> 2852</span>&#160;   }</div>
-<div class="line"><a name="l02853"></a><span class="lineno"> 2853</span>&#160; </div>
-<div class="line"><a name="l02854"></a><span class="lineno"> 2854</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>);</div>
-<div class="line"><a name="l02855"></a><span class="lineno"> 2855</span>&#160;}</div>
+<div class="line"><a name="l02802"></a><span class="lineno"> 2802</span>&#160;      <span class="comment">/* Free illegality. */</span></div>
+<div class="line"><a name="l02803"></a><span class="lineno"> 2803</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;illegalto );</div>
+<div class="line"><a name="l02804"></a><span class="lineno"> 2804</span>&#160; </div>
+<div class="line"><a name="l02805"></a><span class="lineno"> 2805</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#ab24f9c5d257de22db07258fbc39e98db">outfit_isAmmo</a>(o)) {</div>
+<div class="line"><a name="l02806"></a><span class="lineno"> 2806</span>&#160;         <span class="comment">/* Free collision polygons. */</span></div>
+<div class="line"><a name="l02807"></a><span class="lineno"> 2807</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;u.amm.polygon); j++) {</div>
+<div class="line"><a name="l02808"></a><span class="lineno"> 2808</span>&#160;            free(o-&gt;u.amm.polygon[j].x);</div>
+<div class="line"><a name="l02809"></a><span class="lineno"> 2809</span>&#160;            free(o-&gt;u.amm.polygon[j].y);</div>
+<div class="line"><a name="l02810"></a><span class="lineno"> 2810</span>&#160;         }</div>
+<div class="line"><a name="l02811"></a><span class="lineno"> 2811</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(o-&gt;u.amm.polygon);</div>
+<div class="line"><a name="l02812"></a><span class="lineno"> 2812</span>&#160;      }</div>
+<div class="line"><a name="l02813"></a><span class="lineno"> 2813</span>&#160;      <span class="comment">/* Type specific. */</span></div>
+<div class="line"><a name="l02814"></a><span class="lineno"> 2814</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#adeb116d088c9caaa78688b0fee8f7aa4">outfit_isBolt</a>(o)) {</div>
+<div class="line"><a name="l02815"></a><span class="lineno"> 2815</span>&#160;         <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(o-&gt;u.blt.gfx_end);</div>
+<div class="line"><a name="l02816"></a><span class="lineno"> 2816</span>&#160;         <span class="comment">/* Free collision polygons. */</span></div>
+<div class="line"><a name="l02817"></a><span class="lineno"> 2817</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;u.blt.polygon); j++) {</div>
+<div class="line"><a name="l02818"></a><span class="lineno"> 2818</span>&#160;            free(o-&gt;u.blt.polygon[j].x);</div>
+<div class="line"><a name="l02819"></a><span class="lineno"> 2819</span>&#160;            free(o-&gt;u.blt.polygon[j].y);</div>
+<div class="line"><a name="l02820"></a><span class="lineno"> 2820</span>&#160;         }</div>
+<div class="line"><a name="l02821"></a><span class="lineno"> 2821</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(o-&gt;u.blt.polygon);</div>
+<div class="line"><a name="l02822"></a><span class="lineno"> 2822</span>&#160;      }</div>
+<div class="line"><a name="l02823"></a><span class="lineno"> 2823</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o))</div>
+<div class="line"><a name="l02824"></a><span class="lineno"> 2824</span>&#160;         free(o-&gt;u.lau.ammo_name);</div>
+<div class="line"><a name="l02825"></a><span class="lineno"> 2825</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>(o))</div>
+<div class="line"><a name="l02826"></a><span class="lineno"> 2826</span>&#160;         free(o-&gt;u.bay.ammo_name);</div>
+<div class="line"><a name="l02827"></a><span class="lineno"> 2827</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a6aaa3f890e9119ef61089e2aaa8dd167">outfit_isFighter</a>(o))</div>
+<div class="line"><a name="l02828"></a><span class="lineno"> 2828</span>&#160;         free(o-&gt;u.fig.ship);</div>
+<div class="line"><a name="l02829"></a><span class="lineno"> 2829</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#ab1636bc9802eee252f7dc69af78cdc5f">outfit_isGUI</a>(o))</div>
+<div class="line"><a name="l02830"></a><span class="lineno"> 2830</span>&#160;         free(o-&gt;u.gui.gui);</div>
+<div class="line"><a name="l02831"></a><span class="lineno"> 2831</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a6f755506d191873cadf838a267e1a328">outfit_isMap</a>(o)) {</div>
+<div class="line"><a name="l02832"></a><span class="lineno"> 2832</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;u.map-&gt;systems );</div>
+<div class="line"><a name="l02833"></a><span class="lineno"> 2833</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;u.map-&gt;assets );</div>
+<div class="line"><a name="l02834"></a><span class="lineno"> 2834</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( o-&gt;u.map-&gt;jumps );</div>
+<div class="line"><a name="l02835"></a><span class="lineno"> 2835</span>&#160;         free( o-&gt;u.map );</div>
+<div class="line"><a name="l02836"></a><span class="lineno"> 2836</span>&#160;      }</div>
+<div class="line"><a name="l02837"></a><span class="lineno"> 2837</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(o)) {</div>
+<div class="line"><a name="l02838"></a><span class="lineno"> 2838</span>&#160;         <span class="keywordflow">if</span> (o-&gt;u.mod.lua_env != LUA_NOREF)</div>
+<div class="line"><a name="l02839"></a><span class="lineno"> 2839</span>&#160;            nlua_freeEnv( o-&gt;u.mod.lua_env );</div>
+<div class="line"><a name="l02840"></a><span class="lineno"> 2840</span>&#160;         o-&gt;u.mod.lua_env = LUA_NOREF;</div>
+<div class="line"><a name="l02841"></a><span class="lineno"> 2841</span>&#160;         free(o-&gt;u.mod.lua_file);</div>
+<div class="line"><a name="l02842"></a><span class="lineno"> 2842</span>&#160;      }</div>
+<div class="line"><a name="l02843"></a><span class="lineno"> 2843</span>&#160; </div>
+<div class="line"><a name="l02844"></a><span class="lineno"> 2844</span>&#160;      <span class="comment">/* strings */</span></div>
+<div class="line"><a name="l02845"></a><span class="lineno"> 2845</span>&#160;      free(o-&gt;typename);</div>
+<div class="line"><a name="l02846"></a><span class="lineno"> 2846</span>&#160;      free(o-&gt;description);</div>
+<div class="line"><a name="l02847"></a><span class="lineno"> 2847</span>&#160;      free(o-&gt;limit);</div>
+<div class="line"><a name="l02848"></a><span class="lineno"> 2848</span>&#160;      free(o-&gt;desc_short);</div>
+<div class="line"><a name="l02849"></a><span class="lineno"> 2849</span>&#160;      free(o-&gt;license);</div>
+<div class="line"><a name="l02850"></a><span class="lineno"> 2850</span>&#160;      free(o-&gt;name);</div>
+<div class="line"><a name="l02851"></a><span class="lineno"> 2851</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(o-&gt;gfx_store);</div>
+<div class="line"><a name="l02852"></a><span class="lineno"> 2852</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;gfx_overlays); j++)</div>
+<div class="line"><a name="l02853"></a><span class="lineno"> 2853</span>&#160;         <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(o-&gt;gfx_overlays[j]);</div>
+<div class="line"><a name="l02854"></a><span class="lineno"> 2854</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(o-&gt;gfx_overlays);</div>
+<div class="line"><a name="l02855"></a><span class="lineno"> 2855</span>&#160;   }</div>
 <div class="line"><a name="l02856"></a><span class="lineno"> 2856</span>&#160; </div>
+<div class="line"><a name="l02857"></a><span class="lineno"> 2857</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(<a class="code" href="outfit_8c.html#a1933b0732a09df4dd268d2bca8260acd">outfit_stack</a>);</div>
+<div class="line"><a name="l02858"></a><span class="lineno"> 2858</span>&#160;}</div>
+<div class="line"><a name="l02859"></a><span class="lineno"> 2859</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aoutfit_8c_html_a475acc0f5b78f535ed5514fbd50c8de3"><div class="ttname"><a href="outfit_8c.html#a475acc0f5b78f535ed5514fbd50c8de3">outfit_parseSFighterBay</a></div><div class="ttdeci">static void outfit_parseSFighterBay(Outfit *temp, const xmlNodePtr parent)</div><div class="ttdoc">Parses the fighter bay tidbits of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l01922">outfit.c:1922</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ab5f2aa3e3d3ad4c14cb90d4b7834c8fc"><div class="ttname"><a href="outfit_8c.html#ab5f2aa3e3d3ad4c14cb90d4b7834c8fc">outfit_sound</a></div><div class="ttdeci">int outfit_sound(const Outfit *o)</div><div class="ttdoc">Gets the outfit's sound.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00829">outfit.c:829</a></div></div>
@@ -2475,7 +2478,7 @@ $(function() {
 <div class="ttc" id="astructPlanet_html"><div class="ttname"><a href="structPlanet.html">Planet</a></div><div class="ttdoc">Represents a planet.</div></div>
 <div class="ttc" id="apilot__heat_8c_html_abefc60c74f921721ea18e73b125cba71"><div class="ttname"><a href="pilot__heat_8c.html#abefc60c74f921721ea18e73b125cba71">pilot_heatCalcOutfitC</a></div><div class="ttdeci">double pilot_heatCalcOutfitC(const Outfit *o)</div><div class="ttdoc">Calculates the thermal mass of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__heat_8c_source.html#l00068">pilot_heat.c:68</a></div></div>
 <div class="ttc" id="anstring_8c_html_ad02680e374cbaee934840aa7c9123dd4"><div class="ttname"><a href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a></div><div class="ttdeci">int scnprintf(char *text, size_t maxlen, const char *fmt,...)</div><div class="ttdoc">Like snprintf(), but returns the number of characters ACTUALLY &quot;printed&quot; into the buffer....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00180">nstring.c:180</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a53336e488bab1c14257725cd9de656d5"><div class="ttname"><a href="outfit_8c.html#a53336e488bab1c14257725cd9de656d5">rarity_texture</a></div><div class="ttdeci">glTexture * rarity_texture(int rarity)</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02760">outfit.c:2760</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a53336e488bab1c14257725cd9de656d5"><div class="ttname"><a href="outfit_8c.html#a53336e488bab1c14257725cd9de656d5">rarity_texture</a></div><div class="ttdeci">glTexture * rarity_texture(int rarity)</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02763">outfit.c:2763</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a897ccefceeb5bb902934093fe7189b0b"><div class="ttname"><a href="outfit_8c.html#a897ccefceeb5bb902934093fe7189b0b">outfit_gfx</a></div><div class="ttdeci">const glTexture * outfit_gfx(const Outfit *o)</div><div class="ttdoc">Gets the outfit's graphic effect.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00614">outfit.c:614</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a3700a6b7967f4d95b68c8ef3de8aa70d"><div class="ttname"><a href="outfit_8c.html#a3700a6b7967f4d95b68c8ef3de8aa70d">outfit_strToOutfitType</a></div><div class="ttdeci">static OutfitType outfit_strToOutfitType(char *buf)</div><div class="ttdoc">Gets the outfit type from a human readable string.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l01052">outfit.c:1052</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a394aa871d3e54b2f07ecb8db47cc4c39"><div class="ttname"><a href="outfit_8c.html#a394aa871d3e54b2f07ecb8db47cc4c39">outfit_parseSLicense</a></div><div class="ttdeci">static void outfit_parseSLicense(Outfit *temp, const xmlNodePtr parent)</div><div class="ttdoc">Parses the license tidbits of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02189">outfit.c:2189</a></div></div>
@@ -2514,7 +2517,7 @@ $(function() {
 <div class="ttc" id="aoutfit_8c_html_a2ad92dc394cac9783d9cd18c4fa80ca6"><div class="ttname"><a href="outfit_8c.html#a2ad92dc394cac9783d9cd18c4fa80ca6">outfit_getAmmoAI</a></div><div class="ttdeci">const char * outfit_getAmmoAI(const Outfit *o)</div><div class="ttdoc">Gets a human-readable string describing an ammo outfit's AI.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00944">outfit.c:944</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a4ecafd5a897de1c003afdcbccf51f046"><div class="ttname"><a href="outfit_8c.html#a4ecafd5a897de1c003afdcbccf51f046">outfit_getAll</a></div><div class="ttdeci">const Outfit * outfit_getAll(void)</div><div class="ttdoc">Gets the array (array.h) of all outfits.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00141">outfit.c:141</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ae7c1e2ed8f7e1980ddab05925e2983fe"><div class="ttname"><a href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a></div><div class="ttdeci">void gl_freeTexture(glTexture *texture)</div><div class="ttdoc">Frees a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00777">opengl_tex.c:777</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a66cfcf7f9e0dda5705a7d4e84c191d3a"><div class="ttname"><a href="outfit_8c.html#a66cfcf7f9e0dda5705a7d4e84c191d3a">outfit_checkIllegal</a></div><div class="ttdeci">int outfit_checkIllegal(const Outfit *o, int fct)</div><div class="ttdoc">Checks illegality of an outfit to a faction.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02771">outfit.c:2771</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a66cfcf7f9e0dda5705a7d4e84c191d3a"><div class="ttname"><a href="outfit_8c.html#a66cfcf7f9e0dda5705a7d4e84c191d3a">outfit_checkIllegal</a></div><div class="ttdeci">int outfit_checkIllegal(const Outfit *o, int fct)</div><div class="ttdoc">Checks illegality of an outfit to a faction.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02774">outfit.c:2774</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_adc1e8d9e31e9db7691c17aa94395bcf4"><div class="ttname"><a href="outfit_8c.html#adc1e8d9e31e9db7691c17aa94395bcf4">outfit_cooldown</a></div><div class="ttdeci">double outfit_cooldown(const Outfit *o)</div><div class="ttdoc">Gets the outfit's cooldown.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00872">outfit.c:872</a></div></div>
 <div class="ttc" id="aslots_8c_html_abddd205f78c406e2e148e3055a8847fa"><div class="ttname"><a href="slots_8c.html#abddd205f78c406e2e148e3055a8847fa">sp_required</a></div><div class="ttdeci">int sp_required(unsigned int spid)</div><div class="ttdoc">Gets whether or not a slot property is required.</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00194">slots.c:194</a></div></div>
 <div class="ttc" id="anstring_8c_html_a1af9acc6b6efdca3576cb8223d95f401"><div class="ttname"><a href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a></div><div class="ttdeci">int asprintf(char **strp, const char *fmt,...)</div><div class="ttdoc">Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00162">nstring.c:162</a></div></div>
@@ -2529,10 +2532,10 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_afa19f07074112bf95499a6a307653cb9"><div class="ttname"><a href="space_8c.html#afa19f07074112bf95499a6a307653cb9">jump_get</a></div><div class="ttdeci">JumpPoint * jump_get(const char *jumpname, const StarSystem *sys)</div><div class="ttdoc">Gets a jump point based on its target and system.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01127">space.c:1127</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a56ce8c772da003a17f244095ce873e16"><div class="ttname"><a href="outfit_8c.html#a56ce8c772da003a17f244095ce873e16">outfit_plg</a></div><div class="ttdeci">const CollPoly * outfit_plg(const Outfit *o)</div><div class="ttdoc">Gets the outfit's collision polygon.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00624">outfit.c:624</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a66f7fe78516b0547eba21d2dec83bb20"><div class="ttname"><a href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a></div><div class="ttdeci">int outfit_isFighterBay(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a fighter bay.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00548">outfit.c:548</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a98c358d23a0de09bed2a740e557a782b"><div class="ttname"><a href="outfit_8c.html#a98c358d23a0de09bed2a740e557a782b">outfit_mapParse</a></div><div class="ttdeci">int outfit_mapParse(void)</div><div class="ttdoc">Parses all the maps.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02637">outfit.c:2637</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a98c358d23a0de09bed2a740e557a782b"><div class="ttname"><a href="outfit_8c.html#a98c358d23a0de09bed2a740e557a782b">outfit_mapParse</a></div><div class="ttdeci">int outfit_mapParse(void)</div><div class="ttdoc">Parses all the maps.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02640">outfit.c:2640</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_aba2517aa101b7405fa3410fc348d5f04"><div class="ttname"><a href="outfit_8c.html#aba2517aa101b7405fa3410fc348d5f04">OUTFIT_SHORTDESC_MAX</a></div><div class="ttdeci">#define OUTFIT_SHORTDESC_MAX</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00051">outfit.c:51</a></div></div>
 <div class="ttc" id="anstring_8c_html_a43bfafdef4d0c5c51d23471d5ba43df4"><div class="ttname"><a href="nstring_8c.html#a43bfafdef4d0c5c51d23471d5ba43df4">num2strU</a></div><div class="ttdeci">const char * num2strU(double n, int decimals)</div><div class="ttdoc">Unsafe version of num2str that uses an internal buffer. Every call overwrites the return value.</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00233">nstring.c:233</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a14ed932a8a5d0633b17f951e73eb5590"><div class="ttname"><a href="outfit_8c.html#a14ed932a8a5d0633b17f951e73eb5590">outfit_launcherDesc</a></div><div class="ttdeci">static void outfit_launcherDesc(Outfit *o)</div><div class="ttdoc">Generates short descs for launchers, including ammo info.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02701">outfit.c:2701</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a14ed932a8a5d0633b17f951e73eb5590"><div class="ttname"><a href="outfit_8c.html#a14ed932a8a5d0633b17f951e73eb5590">outfit_launcherDesc</a></div><div class="ttdeci">static void outfit_launcherDesc(Outfit *o)</div><div class="ttdoc">Generates short descs for launchers, including ammo info.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02704">outfit.c:2704</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a2302f8e04f72c0209ed65f54cd1503bb"><div class="ttname"><a href="outfit_8c.html#a2302f8e04f72c0209ed65f54cd1503bb">outfit_parseSAfterburner</a></div><div class="ttdeci">static void outfit_parseSAfterburner(Outfit *temp, const xmlNodePtr parent)</div><div class="ttdoc">Parses the afterburner tidbits of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l01823">outfit.c:1823</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ac2b34441bcf35f19a6e9f8112e4ce9b9"><div class="ttname"><a href="outfit_8c.html#ac2b34441bcf35f19a6e9f8112e4ce9b9">slotSize</a></div><div class="ttdeci">const char * slotSize(const OutfitSlotSize o)</div><div class="ttdoc">Gets the slot size as a string.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00310">outfit.c:310</a></div></div>
 <div class="ttc" id="anxml_8c_html_afda706d36380ca8e737f6fd404bda489"><div class="ttname"><a href="nxml_8c.html#afda706d36380ca8e737f6fd404bda489">xml_parseTexture</a></div><div class="ttdeci">glTexture * xml_parseTexture(xmlNodePtr node, const char *path, int defsx, int defsy, const unsigned int flags)</div><div class="ttdoc">Parses a texture handling the sx and sy elements.</div><div class="ttdef"><b>Definition:</b> <a href="nxml_8c_source.html#l00033">nxml.c:33</a></div></div>
@@ -2597,13 +2600,13 @@ $(function() {
 <div class="ttc" id="aslots_8c_html_a242f549412293fd22055357b3d5b54af"><div class="ttname"><a href="slots_8c.html#a242f549412293fd22055357b3d5b54af">sp_get</a></div><div class="ttdeci">unsigned int sp_get(const char *name)</div><div class="ttdoc">Gets the id of a slot property.</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00142">slots.c:142</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a1d4168a464dd7486602dbe009f38a08c"><div class="ttname"><a href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a></div><div class="ttdeci">int outfit_isBeam(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a beam type weapon.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00475">outfit.c:475</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ad791ba3026695a8a2dbad90514149ce5"><div class="ttname"><a href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a></div><div class="ttdeci">const char * outfit_getType(const Outfit *o)</div><div class="ttdoc">Gets the outfit's specific type.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00886">outfit.c:886</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_ae3efc344a7e324bf63002d07811fbc55"><div class="ttname"><a href="outfit_8c.html#ae3efc344a7e324bf63002d07811fbc55">outfit_free</a></div><div class="ttdeci">void outfit_free(void)</div><div class="ttdoc">Frees the outfit stack.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02784">outfit.c:2784</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_ae3efc344a7e324bf63002d07811fbc55"><div class="ttname"><a href="outfit_8c.html#ae3efc344a7e324bf63002d07811fbc55">outfit_free</a></div><div class="ttdeci">void outfit_free(void)</div><div class="ttdoc">Frees the outfit stack.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02787">outfit.c:2787</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ab24f9c5d257de22db07258fbc39e98db"><div class="ttname"><a href="outfit_8c.html#ab24f9c5d257de22db07258fbc39e98db">outfit_isAmmo</a></div><div class="ttdeci">int outfit_isAmmo(const Outfit *o)</div><div class="ttdoc">Checks if outfit is ammo for a launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00495">outfit.c:495</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a54271109c4a539b3a61faaeef71ed547"><div class="ttname"><a href="outfit_8c.html#a54271109c4a539b3a61faaeef71ed547">outfit_parseSAmmo</a></div><div class="ttdeci">static void outfit_parseSAmmo(Outfit *temp, const xmlNodePtr parent)</div><div class="ttdoc">Parses the specific area for a weapon and loads it into Outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l01595">outfit.c:1595</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a32d9c1fc9818a3f3700992f7b41541ce"><div class="ttname"><a href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a></div><div class="ttdeci">int outfit_isLauncher(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a weapon launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00485">outfit.c:485</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ac11623fb12c9ea15b80ec32d90c6898d"><div class="ttname"><a href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a></div><div class="ttdeci">glTexture * gl_newImage(const char *path, const unsigned int flags)</div><div class="ttdoc">Loads an image as a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00582">opengl_tex.c:582</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a377e0d0fc2fedd75c3e7857fc20c16a3"><div class="ttname"><a href="outfit_8c.html#a377e0d0fc2fedd75c3e7857fc20c16a3">outfit_toSlotSize</a></div><div class="ttdeci">OutfitSlotSize outfit_toSlotSize(const char *s)</div><div class="ttdoc">Gets the outfit slot size from a human readable string.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00399">outfit.c:399</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_afe3712bd341786c1b2a40d9ab2cae1db"><div class="ttname"><a href="outfit_8c.html#afe3712bd341786c1b2a40d9ab2cae1db">outfit_loadPost</a></div><div class="ttdeci">int outfit_loadPost(void)</div><div class="ttdoc">Loads all the outfits legality.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02594">outfit.c:2594</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_afe3712bd341786c1b2a40d9ab2cae1db"><div class="ttname"><a href="outfit_8c.html#afe3712bd341786c1b2a40d9ab2cae1db">outfit_loadPost</a></div><div class="ttdeci">int outfit_loadPost(void)</div><div class="ttdoc">Loads all the outfits legality.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l02597">outfit.c:2597</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ab74da2f96888f02c56583775b20686df"><div class="ttname"><a href="outfit_8c.html#ab74da2f96888f02c56583775b20686df">outfit_spfxArmour</a></div><div class="ttdeci">int outfit_spfxArmour(const Outfit *o)</div><div class="ttdoc">Gets the outfit's sound effect.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00634">outfit.c:634</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
