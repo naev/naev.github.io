@@ -111,7 +111,7 @@
   <li><a href="../modules/planet.html">planet</a></li>
   <li><a href="../modules/player.html">player</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
-  <li><strong>safelanes</strong></li>
+  <li><a href="../modules/safelanes.html">safelanes</a></li>
   <li><a href="../modules/shader.html">shader</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
   <li><a href="../modules/shiplog.html">shiplog</a></li>
@@ -126,7 +126,7 @@
   <li><a href="../modules/portrait.html">portrait</a></li>
   <li><a href="../modules/pp_shaders.html">pp_shaders</a></li>
   <li><a href="../modules/prng.html">prng</a></li>
-  <li><a href="../modules/proximity.html">proximity</a></li>
+  <li><strong>proximity</strong></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
   <li><a href="../modules/vn.html">vn</a></li>
 </ul>
@@ -135,23 +135,21 @@
 
 <div id="content">
 
-<h1>Module <code>safelanes</code></h1>
-<p>Lua accessor functions to safe lane information.</p>
-<p>
-<p> A "safe lane" is an intra-system route patrolled by a faction.
-<p> This module is in development; its interface should not be considered final.
-</p>
+<h1>Module <code>proximity</code></h1>
+<p>Provides a composable proximity callback: you can use "proximity" as a hook, with the function to call if the player's in range
+   as an argument.</p>
+<p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#get">get ([f[, standing[, s=system.cur()]]])</a></td>
-	<td class="summary">Return a table of matching lanes (format described below).</td>
+	<td class="name" nowrap><a href="#proximity">proximity (trigger)</a></td>
+	<td class="summary">Poll for player proximity to a point in space.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#intersect">intersect (center, radius, p1, p2)</a></td>
-	<td class="summary">Computes the intersection of a line segment and a circle.</td>
+	<td class="name" nowrap><a href="#proximityScan">proximityScan (trigger)</a></td>
+	<td class="summary">This variant assumes a proximity hook between two ships, and trigger when the anchor ship scans the focus ship (fuzzy detection doesn't trigger).</td>
 	</tr>
 </table>
 
@@ -163,91 +161,59 @@
 
     <dl class="function">
     <dt>
-    <a name = "get"></a>
-    <strong>get ([f[, standing[, s=system.cur()]]])</strong>
+    <a name = "proximity"></a>
+    <strong>proximity (trigger)</strong>
     </dt>
     <dd>
-    Return a table of matching lanes (format described below).
+    Poll for player proximity to a point in space.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">f</span>
-            <span class="types"><span class="type">Faction</span></span>
-         If present, only return this faction's lanes.
-         (<em>optional</em>)
-        </li>
-        <li><span class="parameter">standing</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         What type of lanes to get. Either nil for specific faction only, "friendly", "neutral", "hostile", "non-friendly", or "non-hostile".
-         (<em>optional</em>)
-        </li>
-        <li><span class="parameter">s</span>
-            <span class="types"><span class="type">System</span></span>
-         The system whose lanes we want.
-         (<em>default</em> system.cur())
+        <li><span class="parameter">trigger</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Contains: "location" (destination point) or "anchor" (destination pilot), "radius" (maximum distance),
+                         "focus" (source pilot, defaulting to the player), and "funcname" (what to call if within the radius).
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         The list of matching safe lanes, each of which is a table where:
-                lane[1] and lane[2] are the endpoints (type vec2),
-                and lane.faction is the owner's Faction.
-    </ol>
 
 
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">safelanes.get() <span class="comment">-- Everyone's in current system</span></pre></li>
-        <li><pre class="example">safelanes.get( <span class="string">"Empire"</span> ) <span class="comment">-- Empire's lanes in current system</span></pre></li>
-        <li><pre class="example">safelanes.get( faction.get(<span class="string">"Empire"</span>), system.get(<span class="string">"Gamma Polaris"</span>) ) <span class="comment">-- Empire's lanes through Gamma Polaris.</span></pre></li>
+        <li><pre class="example">hook.timer(<span class="number">0.5</span>, <span class="string">"proximity"</span>, {location = vec2.new(<span class="number">0</span>, <span class="number">0</span>), radius = <span class="number">500</span>, funcname = <span class="string">"function"</span>})</pre></li>
+        <li><pre class="example">hook.timer(<span class="number">0.5</span>, <span class="string">"proximity"</span>, {anchor = mypilot, radius = <span class="number">500</span>, funcname = <span class="string">"function"</span>})</pre></li>
+        <li><pre class="example">hook.timer(<span class="number">0.5</span>, <span class="string">"proximity"</span>, {anchor = mypilot, radius = <span class="number">500</span>, funcname = <span class="string">"function"</span>, focus = theirpilot})</pre></li>
     </ul>
 
 </dd>
     <dt>
-    <a name = "intersect"></a>
-    <strong>intersect (center, radius, p1, p2)</strong>
+    <a name = "proximityScan"></a>
+    <strong>proximityScan (trigger)</strong>
     </dt>
     <dd>
-    Computes the intersection of a line segment and a circle.
+    This variant assumes a proximity hook between two ships, and trigger when the anchor ship scans the focus ship (fuzzy detection doesn't trigger).
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">center</span>
-            <span class="types"><span class="type">Vector</span></span>
-         Center of the circle.
-        </li>
-        <li><span class="parameter">radius</span>
-            <span class="types"><span class="type">number</span></span>
-         Radius of the circle.
-        </li>
-        <li><span class="parameter">p1</span>
-            <span class="types"><span class="type">Vector</span></span>
-         First point of the line segment.
-        </li>
-        <li><span class="parameter">p2</span>
-            <span class="types"><span class="type">Vector</span></span>
-         Second point of the line segment.
+        <li><span class="parameter">trigger</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Contains: "anchor" (destination pilot, defaulting to the player), "focus" (the pilot that's polled for),
+                         "funcname" (what to call if "anchor" detects "focus").
+			 --
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-        <li>
-           <span class="types"><span class="type">Vector</span> or <span class="type">nil</span></span>
-        First point of collision or nil if no collision.</li>
-        <li>
-           <span class="types"><span class="type">Vector</span> or <span class="type">nil</span></span>
-        Second point of collision or nil if single-point collision.</li>
-    </ol>
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">hook.timer(<span class="number">0.5</span>, <span class="string">"proximityScan"</span>, {focus = theirpilot, funcname = <span class="string">"function"</span>}) <span class="comment">-- Triggers when theirpilot is detected by the player</span></pre></li>
+        <li><pre class="example">hook.timer(<span class="number">0.5</span>, <span class="string">"proximityScan"</span>, {anchor = theirpilot, focus = mypilot, funcname = <span class="string">"function"</span>}) <span class="comment">-- Triggers when mypilot is detected by theirpilot</span></pre></li>
+    </ul>
 
 </dd>
 </dl>
