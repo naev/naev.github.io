@@ -1074,7 +1074,7 @@ $(function() {
 <div class="line"><a name="l01339"></a><span class="lineno"><a class="line" href="faction_8c.html#a415332bc452baf3be2e575853e0ee50e"> 1339</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="faction_8c.html#a415332bc452baf3be2e575853e0ee50e">faction_parse</a>( <a class="code" href="structFaction.html">Faction</a>* temp, xmlNodePtr parent )</div>
 <div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;{</div>
 <div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;   xmlNodePtr node;</div>
-<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>;</div>
+<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;   <span class="keywordtype">int</span> saw_player;</div>
 <div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>], *ctmp;</div>
 <div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160; </div>
 <div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;   <span class="comment">/* Clear memory. */</span></div>
@@ -1083,7 +1083,7 @@ $(function() {
 <div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;   temp-&gt;env         = LUA_NOREF;</div>
 <div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;   temp-&gt;sched_env   = LUA_NOREF;</div>
 <div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160; </div>
-<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a> = 0;</div>
+<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;   saw_player = 0;</div>
 <div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;   node   = parent-&gt;xmlChildrenNode;</div>
 <div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;   <span class="keywordflow">do</span> {</div>
 <div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;      <span class="comment">/* Only care about nodes. */</span></div>
@@ -1092,7 +1092,7 @@ $(function() {
 <div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;      <span class="comment">/* Can be 0 or negative, so we have to take that into account. */</span></div>
 <div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;player&quot;</span>)) {</div>
 <div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;         temp-&gt;player_def = xml_getFloat(node);</div>
-<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;         <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a> = 1;</div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;         saw_player = 1;</div>
 <div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;      }</div>
 <div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160; </div>
@@ -1160,7 +1160,7 @@ $(function() {
 <div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160; </div>
 <div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;   <span class="keywordflow">if</span> (temp-&gt;name == NULL)</div>
 <div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;      WARN(_(<span class="stringliteral">&quot;Unable to read data from &#39;%s&#39;&quot;</span>), FACTION_DATA_PATH);</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>==0)</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;   <span class="keywordflow">if</span> (!saw_player)</div>
 <div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;      WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; missing &#39;player&#39; tag.&quot;</span>), temp-&gt;name);</div>
 <div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;   <span class="keywordflow">if</span> (faction_isKnown_(temp) &amp;&amp; !faction_isFlag(temp, <a class="code" href="faction_8c.html#a2a66a85cd08771161c2825e4118382ea">FACTION_INVISIBLE</a>) &amp;&amp; temp-&gt;description==NULL)</div>
 <div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;      WARN(_(<span class="stringliteral">&quot;Faction &#39;%s&#39; is known but missing &#39;description&#39; tag.&quot;</span>), temp-&gt;name);</div>
