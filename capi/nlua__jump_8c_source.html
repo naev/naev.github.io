@@ -232,139 +232,128 @@ $(function() {
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
 <div class="line"><a name="l00291"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#a91a65732116087ed949a3eea6fcb2881">  291</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#a91a65732116087ed949a3eea6fcb2881">jumpL_radius</a>( lua_State *L )</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;{</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   JumpPoint *jp;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   lua_pushnumber(L,jp-&gt;radius);</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;}</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   JumpPoint *jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   lua_pushnumber(L,jp-&gt;radius);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#afd4fea02caa8c1a0eafd65c12a59598f">  308</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#afd4fea02caa8c1a0eafd65c12a59598f">jumpL_position</a>( lua_State *L )</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;{</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;   JumpPoint *jp;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;   <a class="code" href="nlua__vec2_8c.html#a7b6737c7b888b17008e5325e217c52c9">lua_pushvector</a>(L, jp-&gt;pos);</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;}</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00325"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#a8ccf5bca270af41f36a1c3f716fc2169">  325</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#a8ccf5bca270af41f36a1c3f716fc2169">jumpL_angle</a>( lua_State *L )</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;{</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   JumpPoint *jp;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   lua_pushnumber(L, jp-&gt;angle * 180. / M_PI);</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;}</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
-<div class="line"><a name="l00343"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#ad6482c61c577ef9f89ea5ebe287fbb9c">  343</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#ad6482c61c577ef9f89ea5ebe287fbb9c">jumpL_hidden</a>( lua_State *L )</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;{</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   JumpPoint *jp;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;   jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   lua_pushboolean(L, jp_isFlag(jp, JP_HIDDEN) );</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;}</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
-<div class="line"><a name="l00360"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#a51c868a873b8c169831b37e98e1b62d8">  360</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#a51c868a873b8c169831b37e98e1b62d8">jumpL_exitonly</a>( lua_State *L )</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;{</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;   JumpPoint *jp;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   lua_pushboolean(L, jp_isFlag(jp, JP_EXITONLY) );</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;}</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160; </div>
-<div class="line"><a name="l00377"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#a5628ad95a13447b141c6254a78ead71a">  377</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#a5628ad95a13447b141c6254a78ead71a">jumpL_system</a>( lua_State *L )</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;{</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;   JumpPoint *jp;</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;   jp = <a class="code" href="nlua__jump_8c.html#a7afb3a0aea0c264a773c27069a44e210">luaL_validjumpSystem</a>( L, 1, NULL );</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;   <a class="code" href="nlua__system_8c.html#afa47fb1b9c3d4eaa1b8f5f18268855b4">lua_pushsystem</a>( L, jp-&gt;from-&gt;id );</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;}</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160; </div>
-<div class="line"><a name="l00394"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#aa9296feefaed5cf7e1d81fe97ff2b63a">  394</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#aa9296feefaed5cf7e1d81fe97ff2b63a">jumpL_dest</a>( lua_State *L )</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;{</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;   JumpPoint *jp;</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;   jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;   <a class="code" href="nlua__system_8c.html#afa47fb1b9c3d4eaa1b8f5f18268855b4">lua_pushsystem</a>(L,jp-&gt;targetid);</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;}</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160; </div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
-<div class="line"><a name="l00413"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#aa8ced716f2992fc0842d189402afc4fc">  413</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#aa8ced716f2992fc0842d189402afc4fc">jumpL_isKnown</a>( lua_State *L )</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;{</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;   JumpPoint *jp;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160; </div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;   jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;   lua_pushboolean(L, jp_isKnown(jp));</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;}</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160; </div>
-<div class="line"><a name="l00430"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#a525ac9cf5e7db40a87ef26d223896424">  430</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#a525ac9cf5e7db40a87ef26d223896424">jumpL_setKnown</a>( lua_State *L )</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;{</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a>, offset, changed;</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;   JumpPoint *jp;</div>
+<div class="line"><a name="l00307"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#afd4fea02caa8c1a0eafd65c12a59598f">  307</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#afd4fea02caa8c1a0eafd65c12a59598f">jumpL_position</a>( lua_State *L )</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;{</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;   JumpPoint *jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;   <a class="code" href="nlua__vec2_8c.html#a7b6737c7b888b17008e5325e217c52c9">lua_pushvector</a>(L, jp-&gt;pos);</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;}</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00323"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#a8ccf5bca270af41f36a1c3f716fc2169">  323</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#a8ccf5bca270af41f36a1c3f716fc2169">jumpL_angle</a>( lua_State *L )</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;{</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;   JumpPoint *jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   lua_pushnumber(L, jp-&gt;angle * 180. / M_PI);</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;}</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
+<div class="line"><a name="l00339"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#ad6482c61c577ef9f89ea5ebe287fbb9c">  339</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#ad6482c61c577ef9f89ea5ebe287fbb9c">jumpL_hidden</a>( lua_State *L )</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;{</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;   JumpPoint *jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   lua_pushboolean(L, jp_isFlag(jp, JP_HIDDEN) );</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;}</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00355"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#a51c868a873b8c169831b37e98e1b62d8">  355</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#a51c868a873b8c169831b37e98e1b62d8">jumpL_exitonly</a>( lua_State *L )</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;{</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;   JumpPoint *jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;   lua_pushboolean(L, jp_isFlag(jp, JP_EXITONLY) );</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;}</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160; </div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
+<div class="line"><a name="l00371"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#a5628ad95a13447b141c6254a78ead71a">  371</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#a5628ad95a13447b141c6254a78ead71a">jumpL_system</a>( lua_State *L )</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;{</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;   JumpPoint *jp = <a class="code" href="nlua__jump_8c.html#a7afb3a0aea0c264a773c27069a44e210">luaL_validjumpSystem</a>( L, 1, NULL );</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;   <a class="code" href="nlua__system_8c.html#afa47fb1b9c3d4eaa1b8f5f18268855b4">lua_pushsystem</a>( L, jp-&gt;from-&gt;id );</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;}</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160; </div>
+<div class="line"><a name="l00387"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#aa9296feefaed5cf7e1d81fe97ff2b63a">  387</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#aa9296feefaed5cf7e1d81fe97ff2b63a">jumpL_dest</a>( lua_State *L )</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;{</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;   JumpPoint *jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   <a class="code" href="nlua__system_8c.html#afa47fb1b9c3d4eaa1b8f5f18268855b4">lua_pushsystem</a>(L,jp-&gt;targetid);</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;}</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160; </div>
+<div class="line"><a name="l00404"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#aa8ced716f2992fc0842d189402afc4fc">  404</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#aa8ced716f2992fc0842d189402afc4fc">jumpL_isKnown</a>( lua_State *L )</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;{</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;   JumpPoint *jp = <a class="code" href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a>(L,1);</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;   lua_pushboolean(L, jp_isKnown(jp));</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;}</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
+<div class="line"><a name="l00419"></a><span class="lineno"><a class="line" href="nlua__jump_8c.html#a525ac9cf5e7db40a87ef26d223896424">  419</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__jump_8c.html#a525ac9cf5e7db40a87ef26d223896424">jumpL_setKnown</a>( lua_State *L )</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;{</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a>, offset, changed;</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;   JumpPoint *jp;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160; </div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160; </div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;   offset = 0;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;   jp     = <a class="code" href="nlua__jump_8c.html#a7afb3a0aea0c264a773c27069a44e210">luaL_validjumpSystem</a>( L, 1, &amp;offset );</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160; </div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;   <span class="comment">/* True if boolean isn&#39;t supplied. */</span></div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;   <span class="keywordflow">if</span> (lua_gettop(L) &gt; offset)</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;      b  = lua_toboolean(L, 1 + offset);</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;      b = 1;</div>
 <div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160; </div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;   changed = (b != (int)jp_isKnown(jp));</div>
 <div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160; </div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;   offset = 0;</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;   jp     = <a class="code" href="nlua__jump_8c.html#a7afb3a0aea0c264a773c27069a44e210">luaL_validjumpSystem</a>( L, 1, &amp;offset );</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;   <span class="comment">/* True if boolean isn&#39;t supplied. */</span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;   <span class="keywordflow">if</span> (lua_gettop(L) &gt; offset)</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;      b  = lua_toboolean(L, 1 + offset);</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;      b = 1;</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;   <span class="keywordflow">if</span> (b)</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;      jp_setFlag( jp, JP_KNOWN );</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;      jp_rmFlag( jp, JP_KNOWN );</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160; </div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;   <span class="comment">/* Update outfits image array. */</span></div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;   <span class="keywordflow">if</span> (changed)</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;      <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160; </div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;   changed = (b != (int)jp_isKnown(jp));</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160; </div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;   <span class="keywordflow">if</span> (b)</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;      jp_setFlag( jp, JP_KNOWN );</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;      jp_rmFlag( jp, JP_KNOWN );</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160; </div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;   <span class="comment">/* Update outfits image array. */</span></div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;   <span class="keywordflow">if</span> (changed)</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;      <a class="code" href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a>();</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160; </div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;}</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__jump_8c_html_a99ac63a5986791c72321d9a37640493e"><div class="ttname"><a href="nlua__jump_8c.html#a99ac63a5986791c72321d9a37640493e">luaL_checkjump</a></div><div class="ttdeci">LuaJump * luaL_checkjump(lua_State *L, int ind)</div><div class="ttdoc">Gets jump at index raising an error if isn't a jump.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00102">nlua_jump.c:102</a></div></div>
-<div class="ttc" id="anlua__jump_8c_html_afd4fea02caa8c1a0eafd65c12a59598f"><div class="ttname"><a href="nlua__jump_8c.html#afd4fea02caa8c1a0eafd65c12a59598f">jumpL_position</a></div><div class="ttdeci">static int jumpL_position(lua_State *L)</div><div class="ttdoc">Gets the position of the jump in the system.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00308">nlua_jump.c:308</a></div></div>
-<div class="ttc" id="anlua__system_8c_html_afa47fb1b9c3d4eaa1b8f5f18268855b4"><div class="ttname"><a href="nlua__system_8c.html#afa47fb1b9c3d4eaa1b8f5f18268855b4">lua_pushsystem</a></div><div class="ttdeci">LuaSystem * lua_pushsystem(lua_State *L, LuaSystem sys)</div><div class="ttdoc">Pushes a system on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00190">nlua_system.c:190</a></div></div>
-<div class="ttc" id="anlua__jump_8c_html_a5628ad95a13447b141c6254a78ead71a"><div class="ttname"><a href="nlua__jump_8c.html#a5628ad95a13447b141c6254a78ead71a">jumpL_system</a></div><div class="ttdeci">static int jumpL_system(lua_State *L)</div><div class="ttdoc">Gets the system that a jump point exists in.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00377">nlua_jump.c:377</a></div></div>
+<div class="ttc" id="anlua__jump_8c_html_afd4fea02caa8c1a0eafd65c12a59598f"><div class="ttname"><a href="nlua__jump_8c.html#afd4fea02caa8c1a0eafd65c12a59598f">jumpL_position</a></div><div class="ttdeci">static int jumpL_position(lua_State *L)</div><div class="ttdoc">Gets the position of the jump in the system.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00307">nlua_jump.c:307</a></div></div>
+<div class="ttc" id="anlua__system_8c_html_afa47fb1b9c3d4eaa1b8f5f18268855b4"><div class="ttname"><a href="nlua__system_8c.html#afa47fb1b9c3d4eaa1b8f5f18268855b4">lua_pushsystem</a></div><div class="ttdeci">LuaSystem * lua_pushsystem(lua_State *L, LuaSystem sys)</div><div class="ttdoc">Pushes a system on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00185">nlua_system.c:185</a></div></div>
+<div class="ttc" id="anlua__jump_8c_html_a5628ad95a13447b141c6254a78ead71a"><div class="ttname"><a href="nlua__jump_8c.html#a5628ad95a13447b141c6254a78ead71a">jumpL_system</a></div><div class="ttdeci">static int jumpL_system(lua_State *L)</div><div class="ttdoc">Gets the system that a jump point exists in.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00371">nlua_jump.c:371</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_ac5c220704194b9f34b107b6443ead385"><div class="ttname"><a href="nlua__jump_8c.html#ac5c220704194b9f34b107b6443ead385">jump_methods</a></div><div class="ttdeci">static const luaL_Reg jump_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00040">nlua_jump.c:40</a></div></div>
 <div class="ttc" id="aland__outfits_8c_html_a85405fd856b901f1d1586bda75146110"><div class="ttname"><a href="land__outfits_8c.html#a85405fd856b901f1d1586bda75146110">outfits_updateEquipmentOutfits</a></div><div class="ttdeci">void outfits_updateEquipmentOutfits(void)</div><div class="ttdoc">Updates the outfitter and equipment outfit image arrays.</div><div class="ttdef"><b>Definition:</b> <a href="land__outfits_8c_source.html#l00457">land_outfits.c:457</a></div></div>
-<div class="ttc" id="anlua__system_8c_html_aff6c85f01c3a5bab7773e3af9de95bfa"><div class="ttname"><a href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a></div><div class="ttdeci">int lua_issystem(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a system.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00206">nlua_system.c:206</a></div></div>
-<div class="ttc" id="anlua__jump_8c_html_aa8ced716f2992fc0842d189402afc4fc"><div class="ttname"><a href="nlua__jump_8c.html#aa8ced716f2992fc0842d189402afc4fc">jumpL_isKnown</a></div><div class="ttdeci">static int jumpL_isKnown(lua_State *L)</div><div class="ttdoc">Checks to see if a jump is known by the player.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00413">nlua_jump.c:413</a></div></div>
-<div class="ttc" id="anlua__system_8c_html_ac82764173ba742629506ded30a9668a6"><div class="ttname"><a href="nlua__system_8c.html#ac82764173ba742629506ded30a9668a6">luaL_validsystem</a></div><div class="ttdeci">StarSystem * luaL_validsystem(lua_State *L, int ind)</div><div class="ttdoc">Gets system (or system name) at index raising an error if type doesn't match.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00161">nlua_system.c:161</a></div></div>
+<div class="ttc" id="anlua__system_8c_html_aff6c85f01c3a5bab7773e3af9de95bfa"><div class="ttname"><a href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a></div><div class="ttdeci">int lua_issystem(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a system.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00201">nlua_system.c:201</a></div></div>
+<div class="ttc" id="anlua__jump_8c_html_aa8ced716f2992fc0842d189402afc4fc"><div class="ttname"><a href="nlua__jump_8c.html#aa8ced716f2992fc0842d189402afc4fc">jumpL_isKnown</a></div><div class="ttdeci">static int jumpL_isKnown(lua_State *L)</div><div class="ttdoc">Checks to see if a jump is known by the player.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00404">nlua_jump.c:404</a></div></div>
+<div class="ttc" id="anlua__system_8c_html_ac82764173ba742629506ded30a9668a6"><div class="ttname"><a href="nlua__system_8c.html#ac82764173ba742629506ded30a9668a6">luaL_validsystem</a></div><div class="ttdeci">StarSystem * luaL_validsystem(lua_State *L, int ind)</div><div class="ttdoc">Gets system (or system name) at index raising an error if type doesn't match.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00156">nlua_system.c:156</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_aee3c28af12dc32b9f0dcf0e50cb24e89"><div class="ttname"><a href="nlua__jump_8c.html#aee3c28af12dc32b9f0dcf0e50cb24e89">lua_isjump</a></div><div class="ttdeci">int lua_isjump(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a jump.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00204">nlua_jump.c:204</a></div></div>
-<div class="ttc" id="aspace_8c_html_a94669d7b156a00e769ebef6840fee35f"><div class="ttname"><a href="space_8c.html#a94669d7b156a00e769ebef6840fee35f">system_getIndex</a></div><div class="ttdeci">StarSystem * system_getIndex(int id)</div><div class="ttdoc">Get the system by its index.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00884">space.c:884</a></div></div>
-<div class="ttc" id="anlua__system_8c_html_ab5cfd75f7e72e8fc7f08fdc02ede028d"><div class="ttname"><a href="nlua__system_8c.html#ab5cfd75f7e72e8fc7f08fdc02ede028d">lua_tosystem</a></div><div class="ttdeci">LuaSystem lua_tosystem(lua_State *L, int ind)</div><div class="ttdoc">Lua system module.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00135">nlua_system.c:135</a></div></div>
+<div class="ttc" id="aspace_8c_html_a94669d7b156a00e769ebef6840fee35f"><div class="ttname"><a href="space_8c.html#a94669d7b156a00e769ebef6840fee35f">system_getIndex</a></div><div class="ttdeci">StarSystem * system_getIndex(int id)</div><div class="ttdoc">Get the system by its index.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00851">space.c:851</a></div></div>
+<div class="ttc" id="anlua__system_8c_html_ab5cfd75f7e72e8fc7f08fdc02ede028d"><div class="ttname"><a href="nlua__system_8c.html#ab5cfd75f7e72e8fc7f08fdc02ede028d">lua_tosystem</a></div><div class="ttdeci">LuaSystem lua_tosystem(lua_State *L, int ind)</div><div class="ttdoc">Lua system module.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00130">nlua_system.c:130</a></div></div>
 <div class="ttc" id="arng_8c_html_a3ae63274d1e5a52f21db2df3bc5eee03"><div class="ttname"><a href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a></div><div class="ttdeci">static const double a[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00264">rng.c:264</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_ac7efb64bad502166745ab4496c0996a7"><div class="ttname"><a href="nlua__jump_8c.html#ac7efb64bad502166745ab4496c0996a7">lua_tojump</a></div><div class="ttdeci">LuaJump * lua_tojump(lua_State *L, int ind)</div><div class="ttdoc">This module allows you to handle the jumps from Lua.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00091">nlua_jump.c:91</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_aef176076c42117561c0dd7a08cc24990"><div class="ttname"><a href="nlua__jump_8c.html#aef176076c42117561c0dd7a08cc24990">luaL_validjump</a></div><div class="ttdeci">JumpPoint * luaL_validjump(lua_State *L, int ind)</div><div class="ttdoc">Gets a jump directly.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00175">nlua_jump.c:175</a></div></div>
 <div class="ttc" id="anlua__vec2_8c_html_a7b6737c7b888b17008e5325e217c52c9"><div class="ttname"><a href="nlua__vec2_8c.html#a7b6737c7b888b17008e5325e217c52c9">lua_pushvector</a></div><div class="ttdeci">Vector2d * lua_pushvector(lua_State *L, Vector2d vec)</div><div class="ttdoc">Pushes a vector on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__vec2_8c_source.html#l00135">nlua_vec2.c:135</a></div></div>
-<div class="ttc" id="anlua__jump_8c_html_ad6482c61c577ef9f89ea5ebe287fbb9c"><div class="ttname"><a href="nlua__jump_8c.html#ad6482c61c577ef9f89ea5ebe287fbb9c">jumpL_hidden</a></div><div class="ttdeci">static int jumpL_hidden(lua_State *L)</div><div class="ttdoc">Checks whether a jump is hidden.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00343">nlua_jump.c:343</a></div></div>
+<div class="ttc" id="anlua__jump_8c_html_ad6482c61c577ef9f89ea5ebe287fbb9c"><div class="ttname"><a href="nlua__jump_8c.html#ad6482c61c577ef9f89ea5ebe287fbb9c">jumpL_hidden</a></div><div class="ttdeci">static int jumpL_hidden(lua_State *L)</div><div class="ttdoc">Checks whether a jump is hidden.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00339">nlua_jump.c:339</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_a91a65732116087ed949a3eea6fcb2881"><div class="ttname"><a href="nlua__jump_8c.html#a91a65732116087ed949a3eea6fcb2881">jumpL_radius</a></div><div class="ttdeci">static int jumpL_radius(lua_State *L)</div><div class="ttdoc">Gets the jump's radius.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00291">nlua_jump.c:291</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_ae6a140323ff35916136e9d93c7d6f1cd"><div class="ttname"><a href="nlua__jump_8c.html#ae6a140323ff35916136e9d93c7d6f1cd">nlua_loadJump</a></div><div class="ttdeci">int nlua_loadJump(nlua_env env)</div><div class="ttdoc">Loads the jump library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00062">nlua_jump.c:62</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_a7afb3a0aea0c264a773c27069a44e210"><div class="ttname"><a href="nlua__jump_8c.html#a7afb3a0aea0c264a773c27069a44e210">luaL_validjumpSystem</a></div><div class="ttdeci">static RETURNS_NONNULL JumpPoint * luaL_validjumpSystem(lua_State *L, int ind, int *offset)</div><div class="ttdoc">Back-end for luaL_validjump.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00121">nlua_jump.c:121</a></div></div>
-<div class="ttc" id="aspace_8c_html_a1d2babe4b56c6b6a7bb8936202ec5066"><div class="ttname"><a href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a></div><div class="ttdeci">StarSystem * system_get(const char *sysname)</div><div class="ttdoc">Get the system from its name.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00853">space.c:853</a></div></div>
+<div class="ttc" id="aspace_8c_html_a1d2babe4b56c6b6a7bb8936202ec5066"><div class="ttname"><a href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a></div><div class="ttdeci">StarSystem * system_get(const char *sysname)</div><div class="ttdoc">Get the system from its name.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00821">space.c:821</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
 <div class="ttc" id="anlua__jump_8c_html_ad2f2175434f8df56447d6434d41868b6"><div class="ttname"><a href="nlua__jump_8c.html#ad2f2175434f8df56447d6434d41868b6">jumpL_get</a></div><div class="ttdeci">static int jumpL_get(lua_State *L)</div><div class="ttdoc">Gets a jump.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00235">nlua_jump.c:235</a></div></div>
-<div class="ttc" id="aspace_8c_html_a984af8f18e3b0e854f9f82c0ea2c7ab5"><div class="ttname"><a href="space_8c.html#a984af8f18e3b0e854f9f82c0ea2c7ab5">jump_getTarget</a></div><div class="ttdeci">JumpPoint * jump_getTarget(const StarSystem *target, const StarSystem *sys)</div><div class="ttdoc">Less safe version of jump_get that works with pointers.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01155">space.c:1155</a></div></div>
-<div class="ttc" id="anlua__jump_8c_html_a8ccf5bca270af41f36a1c3f716fc2169"><div class="ttname"><a href="nlua__jump_8c.html#a8ccf5bca270af41f36a1c3f716fc2169">jumpL_angle</a></div><div class="ttdeci">static int jumpL_angle(lua_State *L)</div><div class="ttdoc">Gets the angle of a jump in degrees.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00325">nlua_jump.c:325</a></div></div>
-<div class="ttc" id="anlua__jump_8c_html_a525ac9cf5e7db40a87ef26d223896424"><div class="ttname"><a href="nlua__jump_8c.html#a525ac9cf5e7db40a87ef26d223896424">jumpL_setKnown</a></div><div class="ttdeci">static int jumpL_setKnown(lua_State *L)</div><div class="ttdoc">Sets a jump's known state.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00430">nlua_jump.c:430</a></div></div>
+<div class="ttc" id="aspace_8c_html_a984af8f18e3b0e854f9f82c0ea2c7ab5"><div class="ttname"><a href="space_8c.html#a984af8f18e3b0e854f9f82c0ea2c7ab5">jump_getTarget</a></div><div class="ttdeci">JumpPoint * jump_getTarget(const StarSystem *target, const StarSystem *sys)</div><div class="ttdoc">Less safe version of jump_get that works with pointers.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01104">space.c:1104</a></div></div>
+<div class="ttc" id="anlua__jump_8c_html_a8ccf5bca270af41f36a1c3f716fc2169"><div class="ttname"><a href="nlua__jump_8c.html#a8ccf5bca270af41f36a1c3f716fc2169">jumpL_angle</a></div><div class="ttdeci">static int jumpL_angle(lua_State *L)</div><div class="ttdoc">Gets the angle of a jump in degrees.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00323">nlua_jump.c:323</a></div></div>
+<div class="ttc" id="anlua__jump_8c_html_a525ac9cf5e7db40a87ef26d223896424"><div class="ttname"><a href="nlua__jump_8c.html#a525ac9cf5e7db40a87ef26d223896424">jumpL_setKnown</a></div><div class="ttdeci">static int jumpL_setKnown(lua_State *L)</div><div class="ttdoc">Sets a jump's known state.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00419">nlua_jump.c:419</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_a46a1798c4a3cc21d668f670362188297"><div class="ttname"><a href="nlua__jump_8c.html#a46a1798c4a3cc21d668f670362188297">lua_pushjump</a></div><div class="ttdeci">LuaJump * lua_pushjump(lua_State *L, LuaJump jump)</div><div class="ttdoc">Pushes a jump on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00188">nlua_jump.c:188</a></div></div>
-<div class="ttc" id="anlua__jump_8c_html_a51c868a873b8c169831b37e98e1b62d8"><div class="ttname"><a href="nlua__jump_8c.html#a51c868a873b8c169831b37e98e1b62d8">jumpL_exitonly</a></div><div class="ttdeci">static int jumpL_exitonly(lua_State *L)</div><div class="ttdoc">Checks whether a jump is exit-only.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00360">nlua_jump.c:360</a></div></div>
+<div class="ttc" id="anlua__jump_8c_html_a51c868a873b8c169831b37e98e1b62d8"><div class="ttname"><a href="nlua__jump_8c.html#a51c868a873b8c169831b37e98e1b62d8">jumpL_exitonly</a></div><div class="ttdeci">static int jumpL_exitonly(lua_State *L)</div><div class="ttdoc">Checks whether a jump is exit-only.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00355">nlua_jump.c:355</a></div></div>
 <div class="ttc" id="anlua__jump_8c_html_abbf9b37fdd6c467f2767b53798b9367b"><div class="ttname"><a href="nlua__jump_8c.html#abbf9b37fdd6c467f2767b53798b9367b">jumpL_eq</a></div><div class="ttdeci">static int jumpL_eq(lua_State *L)</div><div class="ttdoc">You can use the '==' operator within Lua to compare jumps with this.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00273">nlua_jump.c:273</a></div></div>
 <div class="ttc" id="arng_8c_html_a6dbc3ea54b9ab71917fe57fa11372346"><div class="ttname"><a href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a></div><div class="ttdeci">static const double b[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00273">rng.c:273</a></div></div>
-<div class="ttc" id="anlua__jump_8c_html_aa9296feefaed5cf7e1d81fe97ff2b63a"><div class="ttname"><a href="nlua__jump_8c.html#aa9296feefaed5cf7e1d81fe97ff2b63a">jumpL_dest</a></div><div class="ttdeci">static int jumpL_dest(lua_State *L)</div><div class="ttdoc">Gets the system that a jump point exits into.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00394">nlua_jump.c:394</a></div></div>
+<div class="ttc" id="anlua__jump_8c_html_aa9296feefaed5cf7e1d81fe97ff2b63a"><div class="ttname"><a href="nlua__jump_8c.html#aa9296feefaed5cf7e1d81fe97ff2b63a">jumpL_dest</a></div><div class="ttdeci">static int jumpL_dest(lua_State *L)</div><div class="ttdoc">Gets the system that a jump point exits into.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__jump_8c_source.html#l00387">nlua_jump.c:387</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
