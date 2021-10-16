@@ -51,45 +51,38 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * See Licensing and Copyright notice in naev.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef NTIME_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#  define NTIME_H</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define NT_CYCLE_PERIODS   (5000)      </span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define NT_PERIOD_SECONDS   (10000)     </span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">typedef int64_t ntime_t;         </span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor"></span><span class="comment">/* Create. */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;ntime_t <a class="code" href="ntime_8c.html#a0c1f06bbf4516b2b6f908e8a4f9aa86b">ntime_create</a>( <span class="keywordtype">int</span> scu, <span class="keywordtype">int</span> stp, <span class="keywordtype">int</span> stu );</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">/* update */</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a8b6fa70207cd4065c87d781a95f56545">ntime_update</a>( <span class="keywordtype">double</span> dt );</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">/* get */</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;ntime_t <a class="code" href="ntime_8c.html#a261e90cc23cfdea5de3a2568508528b9">ntime_get</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a8242454cd7e50bec296862be5842561d">ntime_getR</a>( <span class="keywordtype">int</span> *cycles, <span class="keywordtype">int</span> *periods, <span class="keywordtype">int</span> *seconds, <span class="keywordtype">double</span> *rem );</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">int</span> <a class="code" href="ntime_8c.html#aaad1352def5a46fd4e59fad36e9789c4">ntime_getCycles</a>( ntime_t t );</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">int</span> <a class="code" href="ntime_8c.html#abeca3970182daf353ccd549f5d82bcc7">ntime_getPeriods</a>( ntime_t t );</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">int</span> <a class="code" href="ntime_8c.html#a4b3cbb4aabd6fd9743eaa83b3615a927">ntime_getSeconds</a>( ntime_t t );</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">double</span> <a class="code" href="ntime_8c.html#afc4f4f26427f334cd8dfe9273b6cd1f8">ntime_convertSeconds</a>( ntime_t t );</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">double</span> <a class="code" href="ntime_8c.html#acdbbb55889c849cdb6f4e59454ac3fc0">ntime_getRemainder</a>( ntime_t t );</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="ntime_8c.html#a47af974bcccb2f11248afcc2c3800672">ntime_pretty</a>( ntime_t t, <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> );</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a8b4f29712b6ddfa0dfea45e455b6b289">ntime_prettyBuf</a>( <span class="keywordtype">char</span> *str, <span class="keywordtype">int</span> max, ntime_t t, <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> );</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define NT_CYCLE_PERIODS   (5000)      </span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define NT_PERIOD_SECONDS   (10000)     </span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">typedef int64_t ntime_t;         </span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor"></span><span class="comment">/* Create. */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;ntime_t <a class="code" href="ntime_8c.html#a0c1f06bbf4516b2b6f908e8a4f9aa86b">ntime_create</a>( <span class="keywordtype">int</span> scu, <span class="keywordtype">int</span> stp, <span class="keywordtype">int</span> stu );</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/* update */</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a8b6fa70207cd4065c87d781a95f56545">ntime_update</a>( <span class="keywordtype">double</span> dt );</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">/* get */</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;ntime_t <a class="code" href="ntime_8c.html#a261e90cc23cfdea5de3a2568508528b9">ntime_get</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a8242454cd7e50bec296862be5842561d">ntime_getR</a>( <span class="keywordtype">int</span> *cycles, <span class="keywordtype">int</span> *periods, <span class="keywordtype">int</span> *seconds, <span class="keywordtype">double</span> *rem );</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">int</span> <a class="code" href="ntime_8c.html#aaad1352def5a46fd4e59fad36e9789c4">ntime_getCycles</a>( ntime_t t );</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">int</span> <a class="code" href="ntime_8c.html#abeca3970182daf353ccd549f5d82bcc7">ntime_getPeriods</a>( ntime_t t );</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">int</span> <a class="code" href="ntime_8c.html#a4b3cbb4aabd6fd9743eaa83b3615a927">ntime_getSeconds</a>( ntime_t t );</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">double</span> <a class="code" href="ntime_8c.html#afc4f4f26427f334cd8dfe9273b6cd1f8">ntime_convertSeconds</a>( ntime_t t );</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">double</span> <a class="code" href="ntime_8c.html#acdbbb55889c849cdb6f4e59454ac3fc0">ntime_getRemainder</a>( ntime_t t );</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="ntime_8c.html#a47af974bcccb2f11248afcc2c3800672">ntime_pretty</a>( ntime_t t, <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> );</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a8b4f29712b6ddfa0dfea45e455b6b289">ntime_prettyBuf</a>( <span class="keywordtype">char</span> *str, <span class="keywordtype">int</span> max, ntime_t t, <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a> );</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">/* set */</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a05bc728691f23c6e9d3087f42359eb0b">ntime_set</a>( ntime_t t );</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#abb0866ed53e10da7b5a270301a4a2850">ntime_setR</a>( <span class="keywordtype">int</span> cycles, <span class="keywordtype">int</span> periods, <span class="keywordtype">int</span> seconds, <span class="keywordtype">double</span> rem );</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a6c36a00020524fdd13d3c46cb110a942">ntime_inc</a>( ntime_t t );</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#aff55ea87d2d63948e42013edf28b4fe2">ntime_incLagged</a>( ntime_t t );</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/* set */</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a05bc728691f23c6e9d3087f42359eb0b">ntime_set</a>( ntime_t t );</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#abb0866ed53e10da7b5a270301a4a2850">ntime_setR</a>( <span class="keywordtype">int</span> cycles, <span class="keywordtype">int</span> periods, <span class="keywordtype">int</span> seconds, <span class="keywordtype">double</span> rem );</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a6c36a00020524fdd13d3c46cb110a942">ntime_inc</a>( ntime_t t );</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#aff55ea87d2d63948e42013edf28b4fe2">ntime_incLagged</a>( ntime_t t );</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">/* misc */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a6674f43022354761bf9e2145b941a156">ntime_refresh</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a9aa5b67f36ca2f57d56dbe5b9774e0af">ntime_allowUpdate</a>( <span class="keywordtype">int</span> enable );</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* NTIME_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/* misc */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a6674f43022354761bf9e2145b941a156">ntime_refresh</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ntime_8c.html#a9aa5b67f36ca2f57d56dbe5b9774e0af">ntime_allowUpdate</a>( <span class="keywordtype">int</span> enable );</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="antime_8c_html_aff55ea87d2d63948e42013edf28b4fe2"><div class="ttname"><a href="ntime_8c.html#aff55ea87d2d63948e42013edf28b4fe2">ntime_incLagged</a></div><div class="ttdeci">void ntime_incLagged(ntime_t t)</div><div class="ttdoc">Sets the time relatively.</div><div class="ttdef"><b>Definition:</b> <a href="ntime_8c_source.html#l00286">ntime.c:286</a></div></div>
 <div class="ttc" id="antime_8c_html_a8b4f29712b6ddfa0dfea45e455b6b289"><div class="ttname"><a href="ntime_8c.html#a8b4f29712b6ddfa0dfea45e455b6b289">ntime_prettyBuf</a></div><div class="ttdeci">void ntime_prettyBuf(char *str, int max, ntime_t t, int d)</div><div class="ttdoc">Gets the time in a pretty human readable format filling a preset buffer.</div><div class="ttdef"><b>Definition:</b> <a href="ntime_8c_source.html#l00205">ntime.c:205</a></div></div>

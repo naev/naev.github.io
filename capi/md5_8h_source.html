@@ -98,45 +98,39 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">   Purschke &lt;purschke@bnl.gov&gt;.</span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">  1999-05-03 lpd Original version.</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#ifndef MD5_H</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#  define MD5_H</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment"> * This package supports both compile-time and run-time determination of CPU</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"> * byte order.  If ARCH_IS_BIG_ENDIAN is defined as 0, the code will be</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment"> * compiled to run only on little-endian CPUs; if ARCH_IS_BIG_ENDIAN is</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"> * defined as non-zero, the code will be compiled to run only on big-endian</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"> * CPUs; if ARCH_IS_BIG_ENDIAN is not defined, the code will be compiled to</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"> * run on either big- or little-endian CPUs, but will run slightly less</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment"> * efficiently on either one than if ARCH_IS_BIG_ENDIAN is defined.</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">typedef</span> uint8_t md5_byte_t; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">typedef</span> uint32_t md5_word_t; </div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structmd5__state__s.html">   75</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmd5__state__s.html">md5_state_s</a> {</div>
-<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="structmd5__state__s.html#ad0b84a513af432acf997597f59b475a3">   76</a></span>&#160;    md5_word_t count[2];   </div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="structmd5__state__s.html#ac7aead0e98fbd09a0f84b9087284064c">   77</a></span>&#160;    md5_word_t <a class="code" href="structmd5__state__s.html#ac7aead0e98fbd09a0f84b9087284064c">abcd</a>[4];    </div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structmd5__state__s.html#a71ce7456c47cdb9ba243608dbe6ec7f4">   78</a></span>&#160;    md5_byte_t <a class="code" href="structmd5__state__s.html#a71ce7456c47cdb9ba243608dbe6ec7f4">buf</a>[64];    </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;} md5_state_t;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment"> * This package supports both compile-time and run-time determination of CPU</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment"> * byte order.  If ARCH_IS_BIG_ENDIAN is defined as 0, the code will be</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment"> * compiled to run only on little-endian CPUs; if ARCH_IS_BIG_ENDIAN is</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"> * defined as non-zero, the code will be compiled to run only on big-endian</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment"> * CPUs; if ARCH_IS_BIG_ENDIAN is not defined, the code will be compiled to</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"> * run on either big- or little-endian CPUs, but will run slightly less</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"> * efficiently on either one than if ARCH_IS_BIG_ENDIAN is defined.</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">typedef</span> uint8_t md5_byte_t; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">typedef</span> uint32_t md5_word_t; </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="structmd5__state__s.html">   73</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmd5__state__s.html">md5_state_s</a> {</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="structmd5__state__s.html#ad0b84a513af432acf997597f59b475a3">   74</a></span>&#160;    md5_word_t count[2];   </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structmd5__state__s.html#ac7aead0e98fbd09a0f84b9087284064c">   75</a></span>&#160;    md5_word_t <a class="code" href="structmd5__state__s.html#ac7aead0e98fbd09a0f84b9087284064c">abcd</a>[4];    </div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="structmd5__state__s.html#a71ce7456c47cdb9ba243608dbe6ec7f4">   76</a></span>&#160;    md5_byte_t <a class="code" href="structmd5__state__s.html#a71ce7456c47cdb9ba243608dbe6ec7f4">buf</a>[64];    </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;} md5_state_t;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">/* Initialize the algorithm. */</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> md5_init(md5_state_t *pms);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">/* Initialize the algorithm. */</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordtype">void</span> md5_init(md5_state_t *pms);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">/* Append a string to the message. */</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordtype">void</span> md5_append(md5_state_t *pms, <span class="keyword">const</span> md5_byte_t *data, <span class="keywordtype">int</span> nbytes);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">/* Append a string to the message. */</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keywordtype">void</span> md5_append(md5_state_t *pms, <span class="keyword">const</span> md5_byte_t *data, <span class="keywordtype">int</span> nbytes);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">/* Finish the message and return the digest. */</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">void</span> md5_finish(md5_state_t *pms, md5_byte_t digest[16]);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MD5_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">/* Finish the message and return the digest. */</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keywordtype">void</span> md5_finish(md5_state_t *pms, md5_byte_t digest[16]);</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructmd5__state__s_html"><div class="ttname"><a href="structmd5__state__s.html">md5_state_s</a></div><div class="ttdoc">Define the state of the MD5 Algorithm.</div><div class="ttdef"><b>Definition:</b> <a href="md5_8h_source.html#l00075">md5.h:75</a></div></div>
-<div class="ttc" id="astructmd5__state__s_html_a71ce7456c47cdb9ba243608dbe6ec7f4"><div class="ttname"><a href="structmd5__state__s.html#a71ce7456c47cdb9ba243608dbe6ec7f4">md5_state_s::buf</a></div><div class="ttdeci">md5_byte_t buf[64]</div><div class="ttdef"><b>Definition:</b> <a href="md5_8h_source.html#l00078">md5.h:78</a></div></div>
-<div class="ttc" id="astructmd5__state__s_html_ac7aead0e98fbd09a0f84b9087284064c"><div class="ttname"><a href="structmd5__state__s.html#ac7aead0e98fbd09a0f84b9087284064c">md5_state_s::abcd</a></div><div class="ttdeci">md5_word_t abcd[4]</div><div class="ttdef"><b>Definition:</b> <a href="md5_8h_source.html#l00077">md5.h:77</a></div></div>
+<div class="ttc" id="astructmd5__state__s_html"><div class="ttname"><a href="structmd5__state__s.html">md5_state_s</a></div><div class="ttdoc">Define the state of the MD5 Algorithm.</div><div class="ttdef"><b>Definition:</b> <a href="md5_8h_source.html#l00073">md5.h:73</a></div></div>
+<div class="ttc" id="astructmd5__state__s_html_a71ce7456c47cdb9ba243608dbe6ec7f4"><div class="ttname"><a href="structmd5__state__s.html#a71ce7456c47cdb9ba243608dbe6ec7f4">md5_state_s::buf</a></div><div class="ttdeci">md5_byte_t buf[64]</div><div class="ttdef"><b>Definition:</b> <a href="md5_8h_source.html#l00076">md5.h:76</a></div></div>
+<div class="ttc" id="astructmd5__state__s_html_ac7aead0e98fbd09a0f84b9087284064c"><div class="ttname"><a href="structmd5__state__s.html#ac7aead0e98fbd09a0f84b9087284064c">md5_state_s::abcd</a></div><div class="ttdeci">md5_word_t abcd[4]</div><div class="ttdef"><b>Definition:</b> <a href="md5_8h_source.html#l00075">md5.h:75</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

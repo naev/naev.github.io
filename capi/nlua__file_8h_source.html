@@ -51,47 +51,36 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * See Licensing and Copyright notice in naev.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef NLUA_FILE_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#  define NLUA_FILE_H</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;SDL.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;nlua.h&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define FILE_METATABLE      &quot;file&quot; </span></div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structLuaFile__s.html">   23</a></span>&#160;<span class="preprocessor">typedef struct LuaFile_s {</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structLuaFile__s.html#a2f82795c61bb441092dfd16663edb312">   24</a></span>&#160;   <span class="keywordtype">char</span> path[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>]; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;   <span class="keywordtype">char</span> mode;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;   <span class="keywordtype">size_t</span> size;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structLuaFile__s.html#a60a68a30f1783dc65065fcf7e00091a2">   27</a></span>&#160;   SDL_RWops *<a class="code" href="structLuaFile__s.html#a60a68a30f1783dc65065fcf7e00091a2">rw</a>; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;} LuaFile_t;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> * Library loading</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__file_8c.html#ac60050c9ab49cbffee1a345f77025fcc">nlua_loadFile</a>( nlua_env env );</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">/* Basic operations. */</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;LuaFile_t* <a class="code" href="nlua__file_8c.html#a374ae4cf6b3bd43d2c3419b6969e8ca4">lua_tofile</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;LuaFile_t* <a class="code" href="nlua__file_8c.html#a38bb6caa4a1b38fcc8cccdfd8863b597">luaL_checkfile</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;LuaFile_t* <a class="code" href="nlua__file_8c.html#a96b330f003d995dd5ec8cefb6b3907cc">lua_pushfile</a>( lua_State *L, LuaFile_t file );</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__file_8c.html#a6df49d40dfdda50824fe6f77e6abf186">lua_isfile</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* NLUA_FILE_H */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;SDL.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;nlua.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define FILE_METATABLE      &quot;file&quot; </span></div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structLuaFile__s.html">   17</a></span>&#160;<span class="preprocessor">typedef struct LuaFile_s {</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="structLuaFile__s.html#a2f82795c61bb441092dfd16663edb312">   18</a></span>&#160;   <span class="keywordtype">char</span> path[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>]; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;   <span class="keywordtype">char</span> mode;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;   <span class="keywordtype">size_t</span> size;</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="structLuaFile__s.html#a60a68a30f1783dc65065fcf7e00091a2">   21</a></span>&#160;   SDL_RWops *<a class="code" href="structLuaFile__s.html#a60a68a30f1783dc65065fcf7e00091a2">rw</a>; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;} LuaFile_t;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> * Library loading</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__file_8c.html#ac60050c9ab49cbffee1a345f77025fcc">nlua_loadFile</a>( nlua_env env );</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">/* Basic operations. */</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;LuaFile_t* <a class="code" href="nlua__file_8c.html#a374ae4cf6b3bd43d2c3419b6969e8ca4">lua_tofile</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;LuaFile_t* <a class="code" href="nlua__file_8c.html#a38bb6caa4a1b38fcc8cccdfd8863b597">luaL_checkfile</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;LuaFile_t* <a class="code" href="nlua__file_8c.html#a96b330f003d995dd5ec8cefb6b3907cc">lua_pushfile</a>( lua_State *L, LuaFile_t file );</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__file_8c.html#a6df49d40dfdda50824fe6f77e6abf186">lua_isfile</a>( lua_State *L, <span class="keywordtype">int</span> ind );</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__file_8c_html_a96b330f003d995dd5ec8cefb6b3907cc"><div class="ttname"><a href="nlua__file_8c.html#a96b330f003d995dd5ec8cefb6b3907cc">lua_pushfile</a></div><div class="ttdeci">LuaFile_t * lua_pushfile(lua_State *L, LuaFile_t file)</div><div class="ttdoc">Pushes a file on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00113">nlua_file.c:113</a></div></div>
-<div class="ttc" id="astructLuaFile__s_html_a60a68a30f1783dc65065fcf7e00091a2"><div class="ttname"><a href="structLuaFile__s.html#a60a68a30f1783dc65065fcf7e00091a2">LuaFile_s::rw</a></div><div class="ttdeci">SDL_RWops * rw</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8h_source.html#l00027">nlua_file.h:27</a></div></div>
+<div class="ttc" id="astructLuaFile__s_html_a60a68a30f1783dc65065fcf7e00091a2"><div class="ttname"><a href="structLuaFile__s.html#a60a68a30f1783dc65065fcf7e00091a2">LuaFile_s::rw</a></div><div class="ttdeci">SDL_RWops * rw</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8h_source.html#l00021">nlua_file.h:21</a></div></div>
 <div class="ttc" id="anlua__file_8c_html_ac60050c9ab49cbffee1a345f77025fcc"><div class="ttname"><a href="nlua__file_8c.html#ac60050c9ab49cbffee1a345f77025fcc">nlua_loadFile</a></div><div class="ttdeci">int nlua_loadFile(nlua_env env)</div><div class="ttdoc">Loads the file library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00067">nlua_file.c:67</a></div></div>
 <div class="ttc" id="anlua__file_8c_html_a38bb6caa4a1b38fcc8cccdfd8863b597"><div class="ttname"><a href="nlua__file_8c.html#a38bb6caa4a1b38fcc8cccdfd8863b597">luaL_checkfile</a></div><div class="ttdeci">LuaFile_t * luaL_checkfile(lua_State *L, int ind)</div><div class="ttdoc">Gets file at index or raises error if there is no file at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00099">nlua_file.c:99</a></div></div>
 <div class="ttc" id="anlua__file_8c_html_a374ae4cf6b3bd43d2c3419b6969e8ca4"><div class="ttname"><a href="nlua__file_8c.html#a374ae4cf6b3bd43d2c3419b6969e8ca4">lua_tofile</a></div><div class="ttdeci">LuaFile_t * lua_tofile(lua_State *L, int ind)</div><div class="ttdoc">Lua bindings to interact with files.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00088">nlua_file.c:88</a></div></div>
-<div class="ttc" id="anaev_8h_html_ae688d728e1acdfe5988c7db45d6f0166"><div class="ttname"><a href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a></div><div class="ttdeci">#define PATH_MAX</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00051">naev.h:51</a></div></div>
+<div class="ttc" id="anaev_8h_html_ae688d728e1acdfe5988c7db45d6f0166"><div class="ttname"><a href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a></div><div class="ttdeci">#define PATH_MAX</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00050">naev.h:50</a></div></div>
 <div class="ttc" id="anlua__file_8c_html_a6df49d40dfdda50824fe6f77e6abf186"><div class="ttname"><a href="nlua__file_8c.html#a6df49d40dfdda50824fe6f77e6abf186">lua_isfile</a></div><div class="ttdeci">int lua_isfile(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00129">nlua_file.c:129</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

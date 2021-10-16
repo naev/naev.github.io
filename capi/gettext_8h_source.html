@@ -51,38 +51,35 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * See Licensing and Copyright notice in naev.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#ifndef GETTEXT_H</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#define GETTEXT_H</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;attributes.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gettext_8c.html#a39ed8f89b0818ffdcc1ec040db4ec379">gettext_init</a>();</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#a330c8850cc484c673ea6dba56bcd99d0">gettext_getLanguage</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gettext_8c.html#a470286eae30c21c6a71a4e157e8a38f1">gettext_setLanguage</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* lang );</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid, <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid_plural, uint64_t n );</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;FORMAT_ARG( 2 ) const <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#aaf5c1e406dc782c04b95ca79c2fd46f9">gettext_pgettext</a>( const <span class="keywordtype">char</span>* lookup, const <span class="keywordtype">char</span>* msgid );</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define gettext_noop( String ) String</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;FORMAT_ARG(1) static inline const <span class="keywordtype">char</span>* _( const <span class="keywordtype">char</span>* msgid )</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a>( msgid, NULL, 1 );</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define N_( msgid )                   gettext_noop( msgid )</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;FORMAT_ARG(1) static inline const <span class="keywordtype">char</span>* n_( const <span class="keywordtype">char</span>* msgid, const <span class="keywordtype">char</span>* msgid_plural, uint64_t n )</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a>( msgid, msgid_plural, n );</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#define GETTEXT_CONTEXT_GLUE &quot;\004&quot;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#define p_( msgctxt, msgid )          gettext_pgettext( msgctxt GETTEXT_CONTEXT_GLUE msgid, msgid )</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* GETTEXT_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;attributes.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gettext_8c.html#a39ed8f89b0818ffdcc1ec040db4ec379">gettext_init</a>();</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#a330c8850cc484c673ea6dba56bcd99d0">gettext_getLanguage</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gettext_8c.html#a470286eae30c21c6a71a4e157e8a38f1">gettext_setLanguage</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* lang );</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid, <span class="keyword">const</span> <span class="keywordtype">char</span>* msgid_plural, uint64_t n );</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;FORMAT_ARG( 2 ) const <span class="keywordtype">char</span>* <a class="code" href="gettext_8c.html#aaf5c1e406dc782c04b95ca79c2fd46f9">gettext_pgettext</a>( const <span class="keywordtype">char</span>* lookup, const <span class="keywordtype">char</span>* msgid );</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define gettext_noop( String ) String</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;FORMAT_ARG(1) static inline const <span class="keywordtype">char</span>* _( const <span class="keywordtype">char</span>* msgid )</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a>( msgid, NULL, 1 );</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#define N_( msgid )                   gettext_noop( msgid )</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;FORMAT_ARG(1) static inline const <span class="keywordtype">char</span>* n_( const <span class="keywordtype">char</span>* msgid, const <span class="keywordtype">char</span>* msgid_plural, uint64_t n )</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a>( msgid, msgid_plural, n );</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#define GETTEXT_CONTEXT_GLUE &quot;\004&quot;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#define p_( msgctxt, msgid )          gettext_pgettext( msgctxt GETTEXT_CONTEXT_GLUE msgid, msgid )</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="agettext_8c_html_a39ed8f89b0818ffdcc1ec040db4ec379"><div class="ttname"><a href="gettext_8c.html#a39ed8f89b0818ffdcc1ec040db4ec379">gettext_init</a></div><div class="ttdeci">void gettext_init()</div><div class="ttdoc">Initialize the translation system. There's no presumption that PhysicsFS is available,...</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00047">gettext.c:47</a></div></div>
 <div class="ttc" id="agettext_8c_html_adc36b65346be9f9d1cd1daf084bd4e16"><div class="ttname"><a href="gettext_8c.html#adc36b65346be9f9d1cd1daf084bd4e16">gettext_ngettext</a></div><div class="ttdeci">const char * gettext_ngettext(const char *msgid, const char *msgid_plural, uint64_t n)</div><div class="ttdoc">Return a translated version of the input, using the current language catalogs.</div><div class="ttdef"><b>Definition:</b> <a href="gettext_8c_source.html#l00155">gettext.c:155</a></div></div>

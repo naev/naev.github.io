@@ -51,44 +51,31 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * See Licensing and Copyright notice in naev.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef PLAYER_AUTONAV_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#  define PLAYER_AUTONAV_H</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#ifndef PLAYER_H</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#error &quot;Do not include player_autonav.h directly.&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PLAYER_H */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">/* Autonav states. */</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">enum</span> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;   AUTONAV_JUMP_APPROACH,  </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;   AUTONAV_JUMP_BRAKE,     </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;   AUTONAV_POS_APPROACH,   </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;   AUTONAV_PNT_APPROACH,   </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;   AUTONAV_PNT_LAND_APPROACH,</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;   AUTONAV_PNT_LAND_BRAKE, </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;   AUTONAV_PLT_FOLLOW,     </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;};</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#ae9b43aeb3a0ce26be83d1ed2c86d2989">player_thinkAutonav</a>( Pilot *pplayer, <span class="keywordtype">double</span> dt );</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#afac37559002a1b2eb32100b237af29cd">player_updateAutonav</a>( <span class="keywordtype">double</span> dt );</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a4c6416241af5c338ee9c265e45e29acd">player_autonavStart</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a0fcceeb758e7e4a766b79149c8f892e0">player_autonavEnd</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#ad3375b79c241469e6fdfad4630b176a4">player_autonavAbortJump</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *reason );</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#ad122fe5dacab86c71ff1feb679d41f61">player_autonavAbort</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *reason );</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">int</span> <a class="code" href="player__autonav_8c.html#a536cd4efa7bc153fc2bfa27a260bfafc">player_autonavShouldResetSpeed</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a1852bc5ef44141ab5c1c90d10c9cff61">player_autonavStartWindow</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *str);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a279217f8aae8dc5bc9e5ab066a9d2998">player_autonavPos</a>( <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y );</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a1e100bb319b25b533e82af1ffa4c612a">player_autonavPnt</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keywordtype">int</span> tryland );</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a69b73ce745942ca39b97f335af823480">player_autonavPil</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> p );</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PLAYER_AUTONAV_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">/* Autonav states. */</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">enum</span> {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;   AUTONAV_JUMP_APPROACH,  </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;   AUTONAV_JUMP_BRAKE,     </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;   AUTONAV_POS_APPROACH,   </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;   AUTONAV_PNT_APPROACH,   </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;   AUTONAV_PNT_LAND_APPROACH,</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;   AUTONAV_PNT_LAND_BRAKE, </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;   AUTONAV_PLT_FOLLOW,     </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;};</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#ae9b43aeb3a0ce26be83d1ed2c86d2989">player_thinkAutonav</a>( Pilot *pplayer, <span class="keywordtype">double</span> dt );</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#afac37559002a1b2eb32100b237af29cd">player_updateAutonav</a>( <span class="keywordtype">double</span> dt );</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a4c6416241af5c338ee9c265e45e29acd">player_autonavStart</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a0fcceeb758e7e4a766b79149c8f892e0">player_autonavEnd</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#ad3375b79c241469e6fdfad4630b176a4">player_autonavAbortJump</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *reason );</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#ad122fe5dacab86c71ff1feb679d41f61">player_autonavAbort</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *reason );</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">int</span> <a class="code" href="player__autonav_8c.html#a536cd4efa7bc153fc2bfa27a260bfafc">player_autonavShouldResetSpeed</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a1852bc5ef44141ab5c1c90d10c9cff61">player_autonavStartWindow</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *str);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a279217f8aae8dc5bc9e5ab066a9d2998">player_autonavPos</a>( <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y );</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a1e100bb319b25b533e82af1ffa4c612a">player_autonavPnt</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keywordtype">int</span> tryland );</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#a69b73ce745942ca39b97f335af823480">player_autonavPil</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> p );</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aplayer__autonav_8c_html_a536cd4efa7bc153fc2bfa27a260bfafc"><div class="ttname"><a href="player__autonav_8c.html#a536cd4efa7bc153fc2bfa27a260bfafc">player_autonavShouldResetSpeed</a></div><div class="ttdeci">int player_autonavShouldResetSpeed(void)</div><div class="ttdoc">Checks whether the speed should be reset due to damage or missile locks.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00576">player_autonav.c:576</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_a279217f8aae8dc5bc9e5ab066a9d2998"><div class="ttname"><a href="player__autonav_8c.html#a279217f8aae8dc5bc9e5ab066a9d2998">player_autonavPos</a></div><div class="ttdeci">void player_autonavPos(double x, double y)</div><div class="ttdoc">Starts autonav with a local position destination.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00174">player_autonav.c:174</a></div></div>

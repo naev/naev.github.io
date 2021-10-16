@@ -51,39 +51,30 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * See Licensing and Copyright notice in naev.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef RNG_H</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#  define RNG_H</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define RNG(L,H)  (((L)&gt;(H)) ? RNG_BASE((H),(L)) : RNG_BASE((L),(H))) </span><span class="comment">/* L &lt;= RNG &lt;= H */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define RNG_BASE(L,H) ((int)L + (int)((double)(H-L+1) * randfp())) </span><span class="comment">/* L &lt;= RNG &lt;= H */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define RNGF()    (randfp()) </span><span class="comment">/* 0. &lt;= RNGF &lt;= 1. */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#define RNG_1SIGMA()       NormalInverse(0.158655255 + RNGF()*(1.-0.158655255*2.))</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#define RNG_2SIGMA()       NormalInverse(0.022750132 + RNGF()*(1.-0.022750132*2.))</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define RNG_3SIGMA()       NormalInverse(0.0013498985 + RNGF()*(1.-0.0013498985*2.))</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">/* Init */</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span> <a class="code" href="rng_8c.html#ad5a3df3d0092f55f6ea54ccaa7daf3dc">rng_init</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">/* Random functions */</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#adf7b894b8c2d21031d86aa2ad4c45fcd">randint</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a8114a80026ae482f13d3182c26d28e24">randfp</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">/* Probability functions */</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a50f1bcd457adab1550775242a2d7f271">Normal</a>( <span class="keywordtype">double</span> x );</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a9ecd631aa86e6ea0537bfe8cf99f6390">NormalInverse</a>( <span class="keywordtype">double</span> p );</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RNG_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define RNG(L,H)  (((L)&gt;(H)) ? RNG_BASE((H),(L)) : RNG_BASE((L),(H))) </span><span class="comment">/* L &lt;= RNG &lt;= H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define RNG_BASE(L,H) ((int)L + (int)((double)(H-L+1) * randfp())) </span><span class="comment">/* L &lt;= RNG &lt;= H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define RNGF()    (randfp()) </span><span class="comment">/* 0. &lt;= RNGF &lt;= 1. */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define RNG_1SIGMA()       NormalInverse(0.158655255 + RNGF()*(1.-0.158655255*2.))</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define RNG_2SIGMA()       NormalInverse(0.022750132 + RNGF()*(1.-0.022750132*2.))</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#define RNG_3SIGMA()       NormalInverse(0.0013498985 + RNGF()*(1.-0.0013498985*2.))</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">/* Init */</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">void</span> <a class="code" href="rng_8c.html#ad5a3df3d0092f55f6ea54ccaa7daf3dc">rng_init</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">/* Random functions */</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="rng_8c.html#adf7b894b8c2d21031d86aa2ad4c45fcd">randint</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a8114a80026ae482f13d3182c26d28e24">randfp</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">/* Probability functions */</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a50f1bcd457adab1550775242a2d7f271">Normal</a>( <span class="keywordtype">double</span> x );</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a9ecd631aa86e6ea0537bfe8cf99f6390">NormalInverse</a>( <span class="keywordtype">double</span> p );</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="arng_8c_html_a8114a80026ae482f13d3182c26d28e24"><div class="ttname"><a href="rng_8c.html#a8114a80026ae482f13d3182c26d28e24">randfp</a></div><div class="ttdeci">double randfp(void)</div><div class="ttdoc">Gets a random float between 0 and 1 (inclusive).</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00195">rng.c:195</a></div></div>
 <div class="ttc" id="arng_8c_html_a50f1bcd457adab1550775242a2d7f271"><div class="ttname"><a href="rng_8c.html#a50f1bcd457adab1550775242a2d7f271">Normal</a></div><div class="ttdeci">double Normal(double x)</div><div class="ttdoc">Calculates the Normal distribution.</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00219">rng.c:219</a></div></div>

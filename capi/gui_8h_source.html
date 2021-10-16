@@ -51,127 +51,113 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * See Licensing and Copyright notice in naev.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef GUI_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#  define GUI_H</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;opengl.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;pilot.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;space.h&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;opengl.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;pilot.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;space.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> * enums</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> RadarShape_ {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;   RADAR_RECT,  </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;   RADAR_CIRCLE </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;} RadarShape; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> * Loading/cleaning up.</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a09cfc358ede4aa953859cdfed59e7427">gui_init</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7">gui_free</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d">gui_load</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* name );</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a93e20344acde194abc25abc152f52ec9">gui_reload</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> * Triggers.</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#afbbbe37f0718dbf991f7b9483cf0ba62">gui_setCargo</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ac8bddbc9cc6870cf9326dc297f3c2192">gui_setNav</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a17f8bf8b1cf0ff3a3a8044ac3054111f">gui_setTarget</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a891ca49ebbc48ce80a20a99531c5cb51">gui_setShip</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a358ec7a4e16f5b5b1560aea36c97a98a">gui_setSystem</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a6f6b7bce38d827914a7fcd61021daa21">gui_updateFaction</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#aebd14e5b5fb8757fceb21dc101ad0871">gui_setGeneric</a>( Pilot* pilot );</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> * enums</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> RadarShape_ {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;   RADAR_RECT,  </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;   RADAR_CIRCLE </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;} RadarShape; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> * Loading/cleaning up.</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a09cfc358ede4aa953859cdfed59e7427">gui_init</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a8a6a2b0c0cf6e525b0df9babd2fc23d7">gui_free</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d">gui_load</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* name );</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ab11096c5aabe4fc4c4d8a365611d5dd1">gui_cleanup</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a93e20344acde194abc25abc152f52ec9">gui_reload</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> * Triggers.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#afbbbe37f0718dbf991f7b9483cf0ba62">gui_setCargo</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ac8bddbc9cc6870cf9326dc297f3c2192">gui_setNav</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a17f8bf8b1cf0ff3a3a8044ac3054111f">gui_setTarget</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a891ca49ebbc48ce80a20a99531c5cb51">gui_setShip</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a358ec7a4e16f5b5b1560aea36c97a98a">gui_setSystem</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a6f6b7bce38d827914a7fcd61021daa21">gui_updateFaction</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#aebd14e5b5fb8757fceb21dc101ad0871">gui_setGeneric</a>( Pilot* pilot );</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> * Rendering.</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#aca0c7dab4b89199c2b843f78d74f8539">gui_renderReticles</a>( <span class="keywordtype">double</span> dt );</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#acb5e61245c2b2cb84bad9eacc7cf4767">gui_render</a>( <span class="keywordtype">double</span> dt );</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a99b0f20fd29016e7a1da492ac4234747">gui_forceBlink</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment"> * render</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment"> * Messages.</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#aca0c7dab4b89199c2b843f78d74f8539">gui_renderReticles</a>( <span class="keywordtype">double</span> dt );</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#acb5e61245c2b2cb84bad9eacc7cf4767">gui_render</a>( <span class="keywordtype">double</span> dt );</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a99b0f20fd29016e7a1da492ac4234747">gui_forceBlink</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment"> * Messages.</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a9150bc4f0df3f65a7b83697f367de51a">gui_messageInit</a>( <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y );</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a098779cfed0ceb126db5808b692374a6">gui_clearMessages</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#aa3d9b569fc6965e5b49e02028d026eca">gui_cooldownEnd</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a62b491e3e2ca240a8478b4875427c7a8">gui_messageScrollUp</a>( <span class="keywordtype">int</span> lines );</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a267b85177b1c751c1faa122089705597">gui_messageScrollDown</a>( <span class="keywordtype">int</span> lines );</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"> * Map overlay</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">int</span> map_overlay_width (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">int</span> map_overlay_height (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keywordtype">int</span> map_overlay_center_x (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keywordtype">int</span> map_overlay_center_y (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keywordtype">double</span> map_overlay_scale_x (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">double</span> map_overlay_scale_y (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a595bce75d3aff61c2fd0dbf80d1d8818">gui_setMapOverlayBounds</a>( <span class="keywordtype">int</span> top, <span class="keywordtype">int</span> right, <span class="keywordtype">int</span> bottom, <span class="keywordtype">int</span> left );</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a35702aa7dc05e8e41d6234cc3464ce82">gui_getMapOverlayBoundTop</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#aca84c97f42de3bb063090fc5d441642c">gui_getMapOverlayBoundRight</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a9de4925df9be2e92caba1a12c93c0340">gui_getMapOverlayBoundBottom</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#afb44a001dc42426cc39992233a16c156">gui_getMapOverlayBoundLeft</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a9150bc4f0df3f65a7b83697f367de51a">gui_messageInit</a>( <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y );</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a098779cfed0ceb126db5808b692374a6">gui_clearMessages</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#aa3d9b569fc6965e5b49e02028d026eca">gui_cooldownEnd</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a62b491e3e2ca240a8478b4875427c7a8">gui_messageScrollUp</a>( <span class="keywordtype">int</span> lines );</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a267b85177b1c751c1faa122089705597">gui_messageScrollDown</a>( <span class="keywordtype">int</span> lines );</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment"> * Map overlay</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">int</span> map_overlay_width (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">int</span> map_overlay_height (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">int</span> map_overlay_center_x (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">int</span> map_overlay_center_y (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">double</span> map_overlay_scale_x (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">double</span> map_overlay_scale_y (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a595bce75d3aff61c2fd0dbf80d1d8818">gui_setMapOverlayBounds</a>( <span class="keywordtype">int</span> top, <span class="keywordtype">int</span> right, <span class="keywordtype">int</span> bottom, <span class="keywordtype">int</span> left );</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a35702aa7dc05e8e41d6234cc3464ce82">gui_getMapOverlayBoundTop</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#aca84c97f42de3bb063090fc5d441642c">gui_getMapOverlayBoundRight</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a9de4925df9be2e92caba1a12c93c0340">gui_getMapOverlayBoundBottom</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#afb44a001dc42426cc39992233a16c156">gui_getMapOverlayBoundLeft</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"> * Radar.</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a0f8051b98f3541a54e3799a35b440c5a">gui_radarInit</a>( <span class="keywordtype">int</span> circle, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h );</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a3f39577a45f8036c5d48d0f49f50cea2">gui_radarRender</a>( <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y );</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a933b711287607d5e29c6a5e61a9a6927">gui_radarGetRes</a>( <span class="keywordtype">double</span>* res );</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a08644b87cc80b86623c3370cafa19165">gui_radarClickEvent</a>( SDL_Event* event );</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment"> * Radar.</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment"> * Render radar.</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a0f8051b98f3541a54e3799a35b440c5a">gui_radarInit</a>( <span class="keywordtype">int</span> circle, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h );</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a3f39577a45f8036c5d48d0f49f50cea2">gui_radarRender</a>( <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y );</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a933b711287607d5e29c6a5e61a9a6927">gui_radarGetRes</a>( <span class="keywordtype">double</span>* res );</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a08644b87cc80b86623c3370cafa19165">gui_radarClickEvent</a>( SDL_Event* event );</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a1d865fab0f04805bb3dd560937ff7270">gui_renderPlanet</a>( <span class="keywordtype">int</span> ind, RadarShape shape, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">double</span> res, <span class="keywordtype">double</span> alpha, <span class="keywordtype">int</span> overlay );</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#aae1577600490fe97b86db3ce98d72903">gui_renderJumpPoint</a>( <span class="keywordtype">int</span> ind, RadarShape shape, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">double</span> res, <span class="keywordtype">double</span> alpha, <span class="keywordtype">int</span> overlay );</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ab1e01c282e6354627b43c6430912d4dd">gui_renderPilot</a>( <span class="keyword">const</span> Pilot* p, RadarShape shape, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">double</span> res, <span class="keywordtype">int</span> overlay );</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a51a9093a58c4ae4c55bbf6a16860f135">gui_renderAsteroid</a>( <span class="keyword">const</span> Asteroid* a, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">double</span> res, <span class="keywordtype">int</span> overlay );</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a1fb885b94dca1e589d2a6243b510ba7f">gui_renderPlayer</a>( <span class="keywordtype">double</span> res, <span class="keywordtype">int</span> overlay );</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment"> * Render radar.</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment"> * Targeting.</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a1d865fab0f04805bb3dd560937ff7270">gui_renderPlanet</a>( <span class="keywordtype">int</span> ind, RadarShape shape, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">double</span> res, <span class="keywordtype">double</span> alpha, <span class="keywordtype">int</span> overlay );</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#aae1577600490fe97b86db3ce98d72903">gui_renderJumpPoint</a>( <span class="keywordtype">int</span> ind, RadarShape shape, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">double</span> res, <span class="keywordtype">double</span> alpha, <span class="keywordtype">int</span> overlay );</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ab1e01c282e6354627b43c6430912d4dd">gui_renderPilot</a>( <span class="keyword">const</span> Pilot* p, RadarShape shape, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">double</span> res, <span class="keywordtype">int</span> overlay );</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a51a9093a58c4ae4c55bbf6a16860f135">gui_renderAsteroid</a>( <span class="keyword">const</span> Asteroid* a, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h, <span class="keywordtype">double</span> res, <span class="keywordtype">int</span> overlay );</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a1fb885b94dca1e589d2a6243b510ba7f">gui_renderPlayer</a>( <span class="keywordtype">double</span> res, <span class="keywordtype">int</span> overlay );</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment"> * Targeting.</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a19238703e0fd1015e29d9caa533c68ad">gui_targetPlanetGFX</a>( glTexture *gfx );</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a85c549239cd0d7885d00147f6d38177a">gui_targetPilotGFX</a>( glTexture *gfx );</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment"> * Mouse.</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a220c3548710a7e71bc249339e0a4ca0d">gui_handleEvent</a>( SDL_Event *evt );</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c">gui_mouseClickEnable</a>( <span class="keywordtype">int</span> enabel );</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2">gui_mouseMoveEnable</a>( <span class="keywordtype">int</span> enabel );</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment"> * misc</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ade7f030697ff07efa6b476027787e5cd">gui_setViewport</a>( <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h );</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a91ad94799b8b82685bb01c2fa64929eb">gui_clearViewport</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a31fefb27b7cb5304087fcf91763bf1fa">gui_setDefaults</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#af24cf7bb7f81b3c769d98b71092755d9">gui_setRadarResolution</a>( <span class="keywordtype">double</span> res );</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a407ae1ef3da43bc1cd37e88eef427a8b">gui_setRadarRel</a>( <span class="keywordtype">int</span> mod );</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1">gui_getOffset</a>( <span class="keywordtype">double</span> *x, <span class="keywordtype">double</span> *y );</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;glTexture* <a class="code" href="gui_8c.html#abcb51253243292fdbb1d642da4f094c6">gui_hailIcon</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="gui_8c.html#ae05bab0fbea0f8f32cf930237934ac1f">gui_pick</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a9a6585cc17e64a1d0e8799192bc2c9c7">gui_onScreenPilot</a>( <span class="keywordtype">double</span> *rx, <span class="keywordtype">double</span> *ry, <span class="keyword">const</span> Pilot *pilot );</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a446a39df50c265616b19a96acdfa4918">gui_onScreenAsset</a>( <span class="keywordtype">double</span> *rx, <span class="keywordtype">double</span> *ry, <span class="keyword">const</span> JumpPoint *jp, <span class="keyword">const</span> <a class="code" href="structPlanet.html">Planet</a> *pnt );</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* GUI_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a19238703e0fd1015e29d9caa533c68ad">gui_targetPlanetGFX</a>( glTexture *gfx );</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a85c549239cd0d7885d00147f6d38177a">gui_targetPilotGFX</a>( glTexture *gfx );</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment"> * Mouse.</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a220c3548710a7e71bc249339e0a4ca0d">gui_handleEvent</a>( SDL_Event *evt );</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a6873bfd5c51ca41d90cf381dd7e1835c">gui_mouseClickEnable</a>( <span class="keywordtype">int</span> enabel );</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a5d924132d13a890112cb4316b99c32e2">gui_mouseMoveEnable</a>( <span class="keywordtype">int</span> enabel );</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment"> * Misc.</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#ade7f030697ff07efa6b476027787e5cd">gui_setViewport</a>( <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h );</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a91ad94799b8b82685bb01c2fa64929eb">gui_clearViewport</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a31fefb27b7cb5304087fcf91763bf1fa">gui_setDefaults</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#af24cf7bb7f81b3c769d98b71092755d9">gui_setRadarResolution</a>( <span class="keywordtype">double</span> res );</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a407ae1ef3da43bc1cd37e88eef427a8b">gui_setRadarRel</a>( <span class="keywordtype">int</span> mod );</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gui_8c.html#a7870a2bde3241982310bfdb418868cc1">gui_getOffset</a>( <span class="keywordtype">double</span> *x, <span class="keywordtype">double</span> *y );</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;glTexture* <a class="code" href="gui_8c.html#abcb51253243292fdbb1d642da4f094c6">gui_hailIcon</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="gui_8c.html#ae05bab0fbea0f8f32cf930237934ac1f">gui_pick</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a9a6585cc17e64a1d0e8799192bc2c9c7">gui_onScreenPilot</a>( <span class="keywordtype">double</span> *rx, <span class="keywordtype">double</span> *ry, <span class="keyword">const</span> Pilot *pilot );</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordtype">int</span> <a class="code" href="gui_8c.html#a446a39df50c265616b19a96acdfa4918">gui_onScreenAsset</a>( <span class="keywordtype">double</span> *rx, <span class="keywordtype">double</span> *ry, <span class="keyword">const</span> JumpPoint *jp, <span class="keyword">const</span> <a class="code" href="structPlanet.html">Planet</a> *pnt );</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="agui_8c_html_a73f6bd57ebcac87e954420ccd8c21a8d"><div class="ttname"><a href="gui_8c.html#a73f6bd57ebcac87e954420ccd8c21a8d">gui_load</a></div><div class="ttdeci">int gui_load(const char *name)</div><div class="ttdoc">Attempts to load the actual GUI.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01908">gui.c:1908</a></div></div>
 <div class="ttc" id="agui_8c_html_a99b0f20fd29016e7a1da492ac4234747"><div class="ttname"><a href="gui_8c.html#a99b0f20fd29016e7a1da492ac4234747">gui_forceBlink</a></div><div class="ttdeci">void gui_forceBlink(void)</div><div class="ttdoc">Force sets the planet and pilot radar blink.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01370">gui.c:1370</a></div></div>

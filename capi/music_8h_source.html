@@ -51,62 +51,50 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * See Licensing and Copyright notice in naev.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef MUSIC_H</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#  define MUSIC_H</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;lua.h&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define MUSIC_FADEOUT_DELAY   1000 </span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define MUSIC_FADEIN_DELAY    2000 </span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">extern int music_disabled;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"> * updating</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#ab51308dafb4c17f0b6f6a8375c720e43">music_update</a>( <span class="keywordtype">double</span> dt );</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> * init/exit</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#ade10ca0d9bd9283fb1497b99ef4be911">music_init</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#aa4971b09ca7b0db3728d12e48b13df6a">music_exit</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> * music control</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a3feb08f88b2797274725f940e6739707">music_volume</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> vol );</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">double</span> <a class="code" href="music_8c.html#a47a38fa8c18f2a82824bb06920f18105">music_getVolume</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">double</span> <a class="code" href="music_8c.html#a3ca14bd7ed1607dd98a2dad389305b96">music_getVolumeLog</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a9524d40c8ffa831d78b2950687bc0d5b">music_load</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* name );</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#af36686a80bd5403eb0be4ea256357499">music_play</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#a810ec565d2d1c2fb283318e6bf651645">music_stop</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#a020d7d221c5b2e1cc65709161023cdcd">music_pause</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#ac11be499a611c2ebc18015ae9038dd14">music_resume</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#ae639a18b1e5d5cb3e122a287e68fa871">music_setPos</a>( <span class="keywordtype">double</span> sec );</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a9fb5d39e421e42e15a184018b8f8f321">music_isPlaying</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="music_8c.html#af2a5bc5465f98d651f88395b0e12e318">music_playingName</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">double</span> <a class="code" href="music_8c.html#a3fb920fb97d12ae2907494164ee43b2d">music_playingTime</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment"> * Lua control</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a163bda74bded5c2fddb897e90398f49e">music_luaFile</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *filename );</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#ae00425fb8089b6b385686469b9c416de">music_luaString</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *str );</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a5a1125faf5771e25b85823fcc492c054">music_choose</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* situation );</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a198424aa8ac10a48d091c9e2853928a9">music_chooseDelay</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* situation, <span class="keywordtype">double</span> delay );</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#a90d2fac3668d42acab081568314cef9b">music_rechoose</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#af9f89e912cc54cac9e13e392601d2e96">music_tempDisable</a>( <span class="keywordtype">int</span> disable );</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#aa5222ab78f1501bec640ae88839666b4">music_repeat</a>( <span class="keywordtype">int</span> repeat );</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MUSIC_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;lua.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define MUSIC_FADEOUT_DELAY   1000 </span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define MUSIC_FADEIN_DELAY    2000 </span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">extern int music_disabled;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> * updating</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#ab51308dafb4c17f0b6f6a8375c720e43">music_update</a>( <span class="keywordtype">double</span> dt );</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> * init/exit</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#ade10ca0d9bd9283fb1497b99ef4be911">music_init</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#aa4971b09ca7b0db3728d12e48b13df6a">music_exit</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> * music control</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a3feb08f88b2797274725f940e6739707">music_volume</a>( <span class="keyword">const</span> <span class="keywordtype">double</span> vol );</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">double</span> <a class="code" href="music_8c.html#a47a38fa8c18f2a82824bb06920f18105">music_getVolume</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">double</span> <a class="code" href="music_8c.html#a3ca14bd7ed1607dd98a2dad389305b96">music_getVolumeLog</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a9524d40c8ffa831d78b2950687bc0d5b">music_load</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* name );</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#af36686a80bd5403eb0be4ea256357499">music_play</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#a810ec565d2d1c2fb283318e6bf651645">music_stop</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#a020d7d221c5b2e1cc65709161023cdcd">music_pause</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#ac11be499a611c2ebc18015ae9038dd14">music_resume</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#ae639a18b1e5d5cb3e122a287e68fa871">music_setPos</a>( <span class="keywordtype">double</span> sec );</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a9fb5d39e421e42e15a184018b8f8f321">music_isPlaying</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="music_8c.html#af2a5bc5465f98d651f88395b0e12e318">music_playingName</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">double</span> <a class="code" href="music_8c.html#a3fb920fb97d12ae2907494164ee43b2d">music_playingTime</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> * Lua control</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a163bda74bded5c2fddb897e90398f49e">music_luaFile</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *filename );</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#ae00425fb8089b6b385686469b9c416de">music_luaString</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *str );</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a5a1125faf5771e25b85823fcc492c054">music_choose</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* situation );</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">int</span> <a class="code" href="music_8c.html#a198424aa8ac10a48d091c9e2853928a9">music_chooseDelay</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* situation, <span class="keywordtype">double</span> delay );</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#a90d2fac3668d42acab081568314cef9b">music_rechoose</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#af9f89e912cc54cac9e13e392601d2e96">music_tempDisable</a>( <span class="keywordtype">int</span> disable );</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">void</span> <a class="code" href="music_8c.html#aa5222ab78f1501bec640ae88839666b4">music_repeat</a>( <span class="keywordtype">int</span> repeat );</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="amusic_8c_html_af9f89e912cc54cac9e13e392601d2e96"><div class="ttname"><a href="music_8c.html#af9f89e912cc54cac9e13e392601d2e96">music_tempDisable</a></div><div class="ttdeci">void music_tempDisable(int disable)</div><div class="ttdoc">Temporarily disables the music.</div><div class="ttdef"><b>Definition:</b> <a href="music_8c_source.html#l00630">music.c:630</a></div></div>
 <div class="ttc" id="amusic_8c_html_aa5222ab78f1501bec640ae88839666b4"><div class="ttname"><a href="music_8c.html#aa5222ab78f1501bec640ae88839666b4">music_repeat</a></div><div class="ttdeci">void music_repeat(int repeat)</div><div class="ttdoc">Temporarily makse the music repeat.</div><div class="ttdef"><b>Definition:</b> <a href="music_8c_source.html#l00639">music.c:639</a></div></div>
