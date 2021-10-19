@@ -1525,31 +1525,32 @@ $(function() {
 <div class="line"><a name="l01850"></a><span class="lineno"> 1850</span>&#160;   <span class="keywordtype">size_t</span> n = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>);</div>
 <div class="line"><a name="l01851"></a><span class="lineno"> 1851</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="faction_8c.html#a31208c971556c5bd293b9db77eb13472">faction_mgrid</a> &lt;= n) {</div>
 <div class="line"><a name="l01852"></a><span class="lineno"> 1852</span>&#160;      free( <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a> );</div>
-<div class="line"><a name="l01853"></a><span class="lineno"> 1853</span>&#160;      <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a> = calloc( n * n, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) );</div>
+<div class="line"><a name="l01853"></a><span class="lineno"> 1853</span>&#160;      <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a> = malloc( n * n * <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) );</div>
 <div class="line"><a name="l01854"></a><span class="lineno"> 1854</span>&#160;      <a class="code" href="faction_8c.html#a31208c971556c5bd293b9db77eb13472">faction_mgrid</a> = n;</div>
 <div class="line"><a name="l01855"></a><span class="lineno"> 1855</span>&#160;   }</div>
-<div class="line"><a name="l01856"></a><span class="lineno"> 1856</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;n; i++) {</div>
-<div class="line"><a name="l01857"></a><span class="lineno"> 1857</span>&#160;      <a class="code" href="structFaction.html">Faction</a> *fa = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i];</div>
-<div class="line"><a name="l01858"></a><span class="lineno"> 1858</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k=0; k&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(fa-&gt;allies); k++) {</div>
-<div class="line"><a name="l01859"></a><span class="lineno"> 1859</span>&#160;         <span class="keywordtype">int</span> j = fa-&gt;allies[k];</div>
-<div class="line"><a name="l01860"></a><span class="lineno"> 1860</span>&#160;<span class="preprocessor">#if DEBUGGING</span></div>
-<div class="line"><a name="l01861"></a><span class="lineno"> 1861</span>&#160;         <span class="keywordflow">if</span> ((<a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[i*n+j] &lt; 0) || (<a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[j*n+i]) &lt; 0)</div>
-<div class="line"><a name="l01862"></a><span class="lineno"> 1862</span>&#160;            WARN(<span class="stringliteral">&quot;Incoherent faction grid!&quot;</span>);</div>
-<div class="line"><a name="l01863"></a><span class="lineno"> 1863</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l01864"></a><span class="lineno"> 1864</span>&#160;         <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[i*n+j] = 1;</div>
-<div class="line"><a name="l01865"></a><span class="lineno"> 1865</span>&#160;         <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[j*n+i] = 1;</div>
-<div class="line"><a name="l01866"></a><span class="lineno"> 1866</span>&#160;      }</div>
-<div class="line"><a name="l01867"></a><span class="lineno"> 1867</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k=0; k&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(fa-&gt;enemies); k++) {</div>
-<div class="line"><a name="l01868"></a><span class="lineno"> 1868</span>&#160;         <span class="keywordtype">int</span> j = fa-&gt;enemies[k];</div>
-<div class="line"><a name="l01869"></a><span class="lineno"> 1869</span>&#160;<span class="preprocessor">#if DEBUGGING</span></div>
-<div class="line"><a name="l01870"></a><span class="lineno"> 1870</span>&#160;         <span class="keywordflow">if</span> ((<a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[i*n+j] &gt; 0) || (<a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[j*n+i] &gt; 0))</div>
-<div class="line"><a name="l01871"></a><span class="lineno"> 1871</span>&#160;            WARN(<span class="stringliteral">&quot;Incoherent faction grid!&quot;</span>);</div>
-<div class="line"><a name="l01872"></a><span class="lineno"> 1872</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l01873"></a><span class="lineno"> 1873</span>&#160;         <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[i*n+j] = -1;</div>
-<div class="line"><a name="l01874"></a><span class="lineno"> 1874</span>&#160;         <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[j*n+i] = -1;</div>
-<div class="line"><a name="l01875"></a><span class="lineno"> 1875</span>&#160;      }</div>
-<div class="line"><a name="l01876"></a><span class="lineno"> 1876</span>&#160;   }</div>
-<div class="line"><a name="l01877"></a><span class="lineno"> 1877</span>&#160;}</div>
+<div class="line"><a name="l01856"></a><span class="lineno"> 1856</span>&#160;   memset( <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>, 0, n*n*<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) );</div>
+<div class="line"><a name="l01857"></a><span class="lineno"> 1857</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;n; i++) {</div>
+<div class="line"><a name="l01858"></a><span class="lineno"> 1858</span>&#160;      <a class="code" href="structFaction.html">Faction</a> *fa = &amp;<a class="code" href="faction_8c.html#a3618d6cdf70c52f72b15c81070693f61">faction_stack</a>[i];</div>
+<div class="line"><a name="l01859"></a><span class="lineno"> 1859</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k=0; k&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(fa-&gt;allies); k++) {</div>
+<div class="line"><a name="l01860"></a><span class="lineno"> 1860</span>&#160;         <span class="keywordtype">int</span> j = fa-&gt;allies[k];</div>
+<div class="line"><a name="l01861"></a><span class="lineno"> 1861</span>&#160;<span class="preprocessor">#if DEBUGGING</span></div>
+<div class="line"><a name="l01862"></a><span class="lineno"> 1862</span>&#160;         <span class="keywordflow">if</span> ((<a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[i*n+j] &lt; 0) || (<a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[j*n+i]) &lt; 0)</div>
+<div class="line"><a name="l01863"></a><span class="lineno"> 1863</span>&#160;            WARN(<span class="stringliteral">&quot;Incoherent faction grid!&quot;</span>);</div>
+<div class="line"><a name="l01864"></a><span class="lineno"> 1864</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01865"></a><span class="lineno"> 1865</span>&#160;         <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[i*n+j] = 1;</div>
+<div class="line"><a name="l01866"></a><span class="lineno"> 1866</span>&#160;         <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[j*n+i] = 1;</div>
+<div class="line"><a name="l01867"></a><span class="lineno"> 1867</span>&#160;      }</div>
+<div class="line"><a name="l01868"></a><span class="lineno"> 1868</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k=0; k&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(fa-&gt;enemies); k++) {</div>
+<div class="line"><a name="l01869"></a><span class="lineno"> 1869</span>&#160;         <span class="keywordtype">int</span> j = fa-&gt;enemies[k];</div>
+<div class="line"><a name="l01870"></a><span class="lineno"> 1870</span>&#160;<span class="preprocessor">#if DEBUGGING</span></div>
+<div class="line"><a name="l01871"></a><span class="lineno"> 1871</span>&#160;         <span class="keywordflow">if</span> ((<a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[i*n+j] &gt; 0) || (<a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[j*n+i] &gt; 0))</div>
+<div class="line"><a name="l01872"></a><span class="lineno"> 1872</span>&#160;            WARN(<span class="stringliteral">&quot;Incoherent faction grid!&quot;</span>);</div>
+<div class="line"><a name="l01873"></a><span class="lineno"> 1873</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DEBUGGING */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01874"></a><span class="lineno"> 1874</span>&#160;         <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[i*n+j] = -1;</div>
+<div class="line"><a name="l01875"></a><span class="lineno"> 1875</span>&#160;         <a class="code" href="faction_8c.html#abda8f366ffdd720863dc8d96f842b856">faction_grid</a>[j*n+i] = -1;</div>
+<div class="line"><a name="l01876"></a><span class="lineno"> 1876</span>&#160;      }</div>
+<div class="line"><a name="l01877"></a><span class="lineno"> 1877</span>&#160;   }</div>
+<div class="line"><a name="l01878"></a><span class="lineno"> 1878</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="afaction_8c_html_af00729891e5638808cac53920f8449fa"><div class="ttname"><a href="faction_8c.html#af00729891e5638808cac53920f8449fa">faction_clearKnown</a></div><div class="ttdeci">void faction_clearKnown()</div><div class="ttdoc">Clears the known factions.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00228">faction.c:228</a></div></div>
 <div class="ttc" id="astructFaction___html_ab785b3c63a90cedcfc2ee24264de96aa"><div class="ttname"><a href="structFaction__.html#ab785b3c63a90cedcfc2ee24264de96aa">Faction_::name</a></div><div class="ttdeci">char * name</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00055">faction.c:55</a></div></div>
