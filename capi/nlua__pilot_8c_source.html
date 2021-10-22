@@ -2864,7 +2864,7 @@ $(function() {
 <div class="line"><a name="l04098"></a><span class="lineno"> 4098</span>&#160; </div>
 <div class="line"><a name="l04112"></a><span class="lineno"><a class="line" href="nlua__pilot_8c.html#a9921f67156ca9b23ee5a95eb2aec7197"> 4112</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__pilot_8c.html#a9921f67156ca9b23ee5a95eb2aec7197">pilotL_attack</a>( lua_State *L )</div>
 <div class="line"><a name="l04113"></a><span class="lineno"> 4113</span>&#160;{</div>
-<div class="line"><a name="l04114"></a><span class="lineno"> 4114</span>&#160;   Pilot *p, *pt;</div>
+<div class="line"><a name="l04114"></a><span class="lineno"> 4114</span>&#160;   Pilot *p;</div>
 <div class="line"><a name="l04115"></a><span class="lineno"> 4115</span>&#160;   <a class="code" href="structTask.html">Task</a> *t;</div>
 <div class="line"><a name="l04116"></a><span class="lineno"> 4116</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pid;</div>
 <div class="line"><a name="l04117"></a><span class="lineno"> 4117</span>&#160; </div>
@@ -2872,8 +2872,8 @@ $(function() {
 <div class="line"><a name="l04119"></a><span class="lineno"> 4119</span>&#160; </div>
 <div class="line"><a name="l04120"></a><span class="lineno"> 4120</span>&#160;   <span class="comment">/* Get parameters. */</span></div>
 <div class="line"><a name="l04121"></a><span class="lineno"> 4121</span>&#160;   p  = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,1);</div>
-<div class="line"><a name="l04122"></a><span class="lineno"> 4122</span>&#160;   <span class="keywordflow">if</span> (lua_isnoneornil(L,2)) {</div>
-<div class="line"><a name="l04123"></a><span class="lineno"> 4123</span>&#160;      pt  = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,2);</div>
+<div class="line"><a name="l04122"></a><span class="lineno"> 4122</span>&#160;   <span class="keywordflow">if</span> (!lua_isnoneornil(L,2)) {</div>
+<div class="line"><a name="l04123"></a><span class="lineno"> 4123</span>&#160;      Pilot *pt = <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,2);</div>
 <div class="line"><a name="l04124"></a><span class="lineno"> 4124</span>&#160;      pid = pt-&gt;id;</div>
 <div class="line"><a name="l04125"></a><span class="lineno"> 4125</span>&#160;   }</div>
 <div class="line"><a name="l04126"></a><span class="lineno"> 4126</span>&#160;   <span class="keywordflow">else</span> {</div>
@@ -2883,7 +2883,7 @@ $(function() {
 <div class="line"><a name="l04130"></a><span class="lineno"> 4130</span>&#160;   }</div>
 <div class="line"><a name="l04131"></a><span class="lineno"> 4131</span>&#160; </div>
 <div class="line"><a name="l04132"></a><span class="lineno"> 4132</span>&#160;   <span class="comment">/* Set the task. */</span></div>
-<div class="line"><a name="l04133"></a><span class="lineno"> 4133</span>&#160;   t        = <a class="code" href="nlua__pilot_8c.html#a763c99f3659ea4e491e469663c158623">pilotL_newtask</a>( L, p, <span class="stringliteral">&quot;attack&quot;</span> );</div>
+<div class="line"><a name="l04133"></a><span class="lineno"> 4133</span>&#160;   t        = <a class="code" href="nlua__pilot_8c.html#a763c99f3659ea4e491e469663c158623">pilotL_newtask</a>( L, p, <span class="stringliteral">&quot;attack_forced&quot;</span> );</div>
 <div class="line"><a name="l04134"></a><span class="lineno"> 4134</span>&#160;   <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(L, pid);</div>
 <div class="line"><a name="l04135"></a><span class="lineno"> 4135</span>&#160;   t-&gt;dat = luaL_ref(L, LUA_REGISTRYINDEX);</div>
 <div class="line"><a name="l04136"></a><span class="lineno"> 4136</span>&#160; </div>
