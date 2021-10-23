@@ -1797,7 +1797,7 @@ $(function() {
 <div class="line"><a name="l01897"></a><span class="lineno"> 1897</span>&#160;   (void) wid_unused;</div>
 <div class="line"><a name="l01898"></a><span class="lineno"> 1898</span>&#160;   (void) unused;</div>
 <div class="line"><a name="l01899"></a><span class="lineno"> 1899</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid;</div>
-<div class="line"><a name="l01900"></a><span class="lineno"> 1900</span>&#160;   <span class="keywordtype">int</span> pos, i, j, y, h, bw, *factions;</div>
+<div class="line"><a name="l01900"></a><span class="lineno"> 1900</span>&#160;   <span class="keywordtype">int</span> pos, j, y, h, bw, *factions;</div>
 <div class="line"><a name="l01901"></a><span class="lineno"> 1901</span>&#160;   <span class="keywordtype">char</span> **str;</div>
 <div class="line"><a name="l01902"></a><span class="lineno"> 1902</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *s;</div>
 <div class="line"><a name="l01903"></a><span class="lineno"> 1903</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *p;</div>
@@ -1813,188 +1813,192 @@ $(function() {
 <div class="line"><a name="l01913"></a><span class="lineno"> 1913</span>&#160;   str = malloc( <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*) * (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(factions) + 1) );</div>
 <div class="line"><a name="l01914"></a><span class="lineno"> 1914</span>&#160;   str[0] = strdup(_(<span class="stringliteral">&quot;None&quot;</span>));</div>
 <div class="line"><a name="l01915"></a><span class="lineno"> 1915</span>&#160;   j      = 1;</div>
-<div class="line"><a name="l01916"></a><span class="lineno"> 1916</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(factions); i++)</div>
+<div class="line"><a name="l01916"></a><span class="lineno"> 1916</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(factions); i++)</div>
 <div class="line"><a name="l01917"></a><span class="lineno"> 1917</span>&#160;      str[j++] = strdup( <a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>( factions[i] ) ); <span class="comment">/* Not translating so we can use faction_get */</span></div>
 <div class="line"><a name="l01918"></a><span class="lineno"> 1918</span>&#160;   qsort( &amp;str[1], j-1, <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*), <a class="code" href="nstring_8c.html#a735237389e73d94cc3c9cfbbeba3a21c">strsort</a> );</div>
 <div class="line"><a name="l01919"></a><span class="lineno"> 1919</span>&#160; </div>
 <div class="line"><a name="l01920"></a><span class="lineno"> 1920</span>&#160;   <span class="comment">/* Get current faction. */</span></div>
-<div class="line"><a name="l01921"></a><span class="lineno"> 1921</span>&#160;   pos    = 0;</div>
-<div class="line"><a name="l01922"></a><span class="lineno"> 1922</span>&#160;   s      = <a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>(p-&gt;presence.faction);</div>
-<div class="line"><a name="l01923"></a><span class="lineno"> 1923</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;j; i++)</div>
-<div class="line"><a name="l01924"></a><span class="lineno"> 1924</span>&#160;      <span class="keywordflow">if</span> (strcmp(s,str[i])==0)</div>
-<div class="line"><a name="l01925"></a><span class="lineno"> 1925</span>&#160;         pos = i;</div>
-<div class="line"><a name="l01926"></a><span class="lineno"> 1926</span>&#160; </div>
-<div class="line"><a name="l01927"></a><span class="lineno"> 1927</span>&#160;   bw = (<a class="code" href="dev__sysedit_8c.html#a504112e1cfd12a94fccbf555632794ca">SYSEDIT_EDIT_WIDTH</a> - 40 - 15 * 3) / 4.;</div>
-<div class="line"><a name="l01928"></a><span class="lineno"> 1928</span>&#160;   y = 20 + <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + 15;</div>
-<div class="line"><a name="l01929"></a><span class="lineno"> 1929</span>&#160;   h = <a class="code" href="dev__sysedit_8c.html#aaa24c1fb5492f6b0378ef17e9fa852c9">SYSEDIT_EDIT_HEIGHT</a> - y - 30;</div>
-<div class="line"><a name="l01930"></a><span class="lineno"> 1930</span>&#160;   window_addList( wid, 20, -40, <a class="code" href="dev__sysedit_8c.html#a504112e1cfd12a94fccbf555632794ca">SYSEDIT_EDIT_WIDTH</a>-40, h,</div>
-<div class="line"><a name="l01931"></a><span class="lineno"> 1931</span>&#160;         <span class="stringliteral">&quot;lstFactions&quot;</span>, str, j, pos, NULL, <a class="code" href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07">sysedit_btnFactionSet</a> );</div>
-<div class="line"><a name="l01932"></a><span class="lineno"> 1932</span>&#160; </div>
-<div class="line"><a name="l01933"></a><span class="lineno"> 1933</span>&#160;   <span class="comment">/* Close button. */</span></div>
-<div class="line"><a name="l01934"></a><span class="lineno"> 1934</span>&#160;   window_addButton( wid, -20, 20, bw, <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l01935"></a><span class="lineno"> 1935</span>&#160;         <span class="stringliteral">&quot;btnClose&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), <a class="code" href="toolkit_8c.html#aea65cb3e502ff5604fd607836b4e74f8">window_close</a> );</div>
+<div class="line"><a name="l01921"></a><span class="lineno"> 1921</span>&#160;   <span class="keywordflow">if</span> (p-&gt;presence.faction &gt;= 0) {</div>
+<div class="line"><a name="l01922"></a><span class="lineno"> 1922</span>&#160;      pos    = 0;</div>
+<div class="line"><a name="l01923"></a><span class="lineno"> 1923</span>&#160;      s      = <a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>(p-&gt;presence.faction);</div>
+<div class="line"><a name="l01924"></a><span class="lineno"> 1924</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;j; i++)</div>
+<div class="line"><a name="l01925"></a><span class="lineno"> 1925</span>&#160;         <span class="keywordflow">if</span> (strcmp(s,str[i])==0)</div>
+<div class="line"><a name="l01926"></a><span class="lineno"> 1926</span>&#160;            pos = i;</div>
+<div class="line"><a name="l01927"></a><span class="lineno"> 1927</span>&#160;   }</div>
+<div class="line"><a name="l01928"></a><span class="lineno"> 1928</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01929"></a><span class="lineno"> 1929</span>&#160;      pos = -1;</div>
+<div class="line"><a name="l01930"></a><span class="lineno"> 1930</span>&#160; </div>
+<div class="line"><a name="l01931"></a><span class="lineno"> 1931</span>&#160;   bw = (<a class="code" href="dev__sysedit_8c.html#a504112e1cfd12a94fccbf555632794ca">SYSEDIT_EDIT_WIDTH</a> - 40 - 15 * 3) / 4.;</div>
+<div class="line"><a name="l01932"></a><span class="lineno"> 1932</span>&#160;   y = 20 + <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a> + 15;</div>
+<div class="line"><a name="l01933"></a><span class="lineno"> 1933</span>&#160;   h = <a class="code" href="dev__sysedit_8c.html#aaa24c1fb5492f6b0378ef17e9fa852c9">SYSEDIT_EDIT_HEIGHT</a> - y - 30;</div>
+<div class="line"><a name="l01934"></a><span class="lineno"> 1934</span>&#160;   window_addList( wid, 20, -40, <a class="code" href="dev__sysedit_8c.html#a504112e1cfd12a94fccbf555632794ca">SYSEDIT_EDIT_WIDTH</a>-40, h,</div>
+<div class="line"><a name="l01935"></a><span class="lineno"> 1935</span>&#160;         <span class="stringliteral">&quot;lstFactions&quot;</span>, str, j, pos, NULL, <a class="code" href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07">sysedit_btnFactionSet</a> );</div>
 <div class="line"><a name="l01936"></a><span class="lineno"> 1936</span>&#160; </div>
-<div class="line"><a name="l01937"></a><span class="lineno"> 1937</span>&#160;   <span class="comment">/* Add button. */</span></div>
-<div class="line"><a name="l01938"></a><span class="lineno"> 1938</span>&#160;   window_addButton( wid, -20-(bw+15), 20, bw, <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l01939"></a><span class="lineno"> 1939</span>&#160;         <span class="stringliteral">&quot;btnAdd&quot;</span>, _(<span class="stringliteral">&quot;Set&quot;</span>), <a class="code" href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07">sysedit_btnFactionSet</a> );</div>
+<div class="line"><a name="l01937"></a><span class="lineno"> 1937</span>&#160;   <span class="comment">/* Close button. */</span></div>
+<div class="line"><a name="l01938"></a><span class="lineno"> 1938</span>&#160;   window_addButton( wid, -20, 20, bw, <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l01939"></a><span class="lineno"> 1939</span>&#160;         <span class="stringliteral">&quot;btnClose&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), <a class="code" href="toolkit_8c.html#aea65cb3e502ff5604fd607836b4e74f8">window_close</a> );</div>
 <div class="line"><a name="l01940"></a><span class="lineno"> 1940</span>&#160; </div>
-<div class="line"><a name="l01941"></a><span class="lineno"> 1941</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( factions );</div>
-<div class="line"><a name="l01942"></a><span class="lineno"> 1942</span>&#160;}</div>
-<div class="line"><a name="l01943"></a><span class="lineno"> 1943</span>&#160; </div>
+<div class="line"><a name="l01941"></a><span class="lineno"> 1941</span>&#160;   <span class="comment">/* Add button. */</span></div>
+<div class="line"><a name="l01942"></a><span class="lineno"> 1942</span>&#160;   window_addButton( wid, -20-(bw+15), 20, bw, <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l01943"></a><span class="lineno"> 1943</span>&#160;         <span class="stringliteral">&quot;btnAdd&quot;</span>, _(<span class="stringliteral">&quot;Set&quot;</span>), <a class="code" href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07">sysedit_btnFactionSet</a> );</div>
 <div class="line"><a name="l01944"></a><span class="lineno"> 1944</span>&#160; </div>
-<div class="line"><a name="l01948"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07"> 1948</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07">sysedit_btnFactionSet</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *unused )</div>
-<div class="line"><a name="l01949"></a><span class="lineno"> 1949</span>&#160;{</div>
-<div class="line"><a name="l01950"></a><span class="lineno"> 1950</span>&#160;   (void) unused;</div>
-<div class="line"><a name="l01951"></a><span class="lineno"> 1951</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *selected;</div>
-<div class="line"><a name="l01952"></a><span class="lineno"> 1952</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *p;</div>
-<div class="line"><a name="l01953"></a><span class="lineno"> 1953</span>&#160; </div>
-<div class="line"><a name="l01954"></a><span class="lineno"> 1954</span>&#160;   selected = toolkit_getList( wid, <span class="stringliteral">&quot;lstFactions&quot;</span> );</div>
-<div class="line"><a name="l01955"></a><span class="lineno"> 1955</span>&#160;   <span class="keywordflow">if</span> (selected == NULL)</div>
-<div class="line"><a name="l01956"></a><span class="lineno"> 1956</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01957"></a><span class="lineno"> 1957</span>&#160;   p = <a class="code" href="dev__sysedit_8c.html#a84674e9d4b3d72e7c2a2c90d048a203a">sysedit_sys</a>-&gt;planets[ <a class="code" href="dev__sysedit_8c.html#aff7b7438e7cf9b7572a1be670bfe1ade">sysedit_select</a>[0].u.planet ];</div>
-<div class="line"><a name="l01958"></a><span class="lineno"> 1958</span>&#160; </div>
-<div class="line"><a name="l01959"></a><span class="lineno"> 1959</span>&#160;   <span class="comment">/* &quot;None&quot; case. */</span></div>
-<div class="line"><a name="l01960"></a><span class="lineno"> 1960</span>&#160;   <span class="keywordflow">if</span> (toolkit_getListPos( wid, <span class="stringliteral">&quot;lstFactions&quot;</span>)==0) {</div>
-<div class="line"><a name="l01961"></a><span class="lineno"> 1961</span>&#160;      p-&gt;presence.faction = -1;</div>
-<div class="line"><a name="l01962"></a><span class="lineno"> 1962</span>&#160;   }</div>
-<div class="line"><a name="l01963"></a><span class="lineno"> 1963</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l01964"></a><span class="lineno"> 1964</span>&#160;      <span class="comment">/* Set the faction. */</span></div>
-<div class="line"><a name="l01965"></a><span class="lineno"> 1965</span>&#160;      p-&gt;presence.faction = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>( selected );</div>
+<div class="line"><a name="l01945"></a><span class="lineno"> 1945</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( factions );</div>
+<div class="line"><a name="l01946"></a><span class="lineno"> 1946</span>&#160;}</div>
+<div class="line"><a name="l01947"></a><span class="lineno"> 1947</span>&#160; </div>
+<div class="line"><a name="l01948"></a><span class="lineno"> 1948</span>&#160; </div>
+<div class="line"><a name="l01952"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07"> 1952</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07">sysedit_btnFactionSet</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *unused )</div>
+<div class="line"><a name="l01953"></a><span class="lineno"> 1953</span>&#160;{</div>
+<div class="line"><a name="l01954"></a><span class="lineno"> 1954</span>&#160;   (void) unused;</div>
+<div class="line"><a name="l01955"></a><span class="lineno"> 1955</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *selected;</div>
+<div class="line"><a name="l01956"></a><span class="lineno"> 1956</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *p;</div>
+<div class="line"><a name="l01957"></a><span class="lineno"> 1957</span>&#160; </div>
+<div class="line"><a name="l01958"></a><span class="lineno"> 1958</span>&#160;   selected = toolkit_getList( wid, <span class="stringliteral">&quot;lstFactions&quot;</span> );</div>
+<div class="line"><a name="l01959"></a><span class="lineno"> 1959</span>&#160;   <span class="keywordflow">if</span> (selected == NULL)</div>
+<div class="line"><a name="l01960"></a><span class="lineno"> 1960</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01961"></a><span class="lineno"> 1961</span>&#160;   p = <a class="code" href="dev__sysedit_8c.html#a84674e9d4b3d72e7c2a2c90d048a203a">sysedit_sys</a>-&gt;planets[ <a class="code" href="dev__sysedit_8c.html#aff7b7438e7cf9b7572a1be670bfe1ade">sysedit_select</a>[0].u.planet ];</div>
+<div class="line"><a name="l01962"></a><span class="lineno"> 1962</span>&#160; </div>
+<div class="line"><a name="l01963"></a><span class="lineno"> 1963</span>&#160;   <span class="comment">/* &quot;None&quot; case. */</span></div>
+<div class="line"><a name="l01964"></a><span class="lineno"> 1964</span>&#160;   <span class="keywordflow">if</span> (toolkit_getListPos( wid, <span class="stringliteral">&quot;lstFactions&quot;</span>)==0) {</div>
+<div class="line"><a name="l01965"></a><span class="lineno"> 1965</span>&#160;      p-&gt;presence.faction = -1;</div>
 <div class="line"><a name="l01966"></a><span class="lineno"> 1966</span>&#160;   }</div>
-<div class="line"><a name="l01967"></a><span class="lineno"> 1967</span>&#160; </div>
-<div class="line"><a name="l01968"></a><span class="lineno"> 1968</span>&#160;   <span class="comment">/* Update the editor window. */</span></div>
-<div class="line"><a name="l01969"></a><span class="lineno"> 1969</span>&#160;   window_modifyText( <a class="code" href="dev__sysedit_8c.html#a643f385c4ba68e68e9f597f61953f78c">sysedit_widEdit</a>, <span class="stringliteral">&quot;txtFaction&quot;</span>, p-&gt;presence.faction &gt; 0 ? <a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>( p-&gt;presence.faction ) : _(<span class="stringliteral">&quot;None&quot;</span>) );</div>
-<div class="line"><a name="l01970"></a><span class="lineno"> 1970</span>&#160; </div>
-<div class="line"><a name="l01971"></a><span class="lineno"> 1971</span>&#160;   <a class="code" href="toolkit_8c.html#aea65cb3e502ff5604fd607836b4e74f8">window_close</a>( wid, unused );</div>
-<div class="line"><a name="l01972"></a><span class="lineno"> 1972</span>&#160;}</div>
-<div class="line"><a name="l01973"></a><span class="lineno"> 1973</span>&#160; </div>
+<div class="line"><a name="l01967"></a><span class="lineno"> 1967</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l01968"></a><span class="lineno"> 1968</span>&#160;      <span class="comment">/* Set the faction. */</span></div>
+<div class="line"><a name="l01969"></a><span class="lineno"> 1969</span>&#160;      p-&gt;presence.faction = <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>( selected );</div>
+<div class="line"><a name="l01970"></a><span class="lineno"> 1970</span>&#160;   }</div>
+<div class="line"><a name="l01971"></a><span class="lineno"> 1971</span>&#160; </div>
+<div class="line"><a name="l01972"></a><span class="lineno"> 1972</span>&#160;   <span class="comment">/* Update the editor window. */</span></div>
+<div class="line"><a name="l01973"></a><span class="lineno"> 1973</span>&#160;   window_modifyText( <a class="code" href="dev__sysedit_8c.html#a643f385c4ba68e68e9f597f61953f78c">sysedit_widEdit</a>, <span class="stringliteral">&quot;txtFaction&quot;</span>, p-&gt;presence.faction &gt; 0 ? <a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>( p-&gt;presence.faction ) : _(<span class="stringliteral">&quot;None&quot;</span>) );</div>
 <div class="line"><a name="l01974"></a><span class="lineno"> 1974</span>&#160; </div>
-<div class="line"><a name="l01978"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#a8cc9551f1418a4ea3fe8866dc081496d"> 1978</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#a8cc9551f1418a4ea3fe8866dc081496d">sysedit_btnEdit</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid_unused, <span class="keyword">const</span> <span class="keywordtype">char</span> *unused )</div>
-<div class="line"><a name="l01979"></a><span class="lineno"> 1979</span>&#160;{</div>
-<div class="line"><a name="l01980"></a><span class="lineno"> 1980</span>&#160;   (void) wid_unused;</div>
-<div class="line"><a name="l01981"></a><span class="lineno"> 1981</span>&#160;   (void) unused;</div>
-<div class="line"><a name="l01982"></a><span class="lineno"> 1982</span>&#160;   Select_t *sel;</div>
-<div class="line"><a name="l01983"></a><span class="lineno"> 1983</span>&#160; </div>
-<div class="line"><a name="l01984"></a><span class="lineno"> 1984</span>&#160;   sel = &amp;<a class="code" href="dev__sysedit_8c.html#aff7b7438e7cf9b7572a1be670bfe1ade">sysedit_select</a>[0];</div>
-<div class="line"><a name="l01985"></a><span class="lineno"> 1985</span>&#160; </div>
-<div class="line"><a name="l01986"></a><span class="lineno"> 1986</span>&#160;   <span class="keywordflow">if</span> (sel-&gt;type==<a class="code" href="dev__sysedit_8c.html#aa8e959f9a3865e51af6e363f281d8829">SELECT_PLANET</a>)</div>
-<div class="line"><a name="l01987"></a><span class="lineno"> 1987</span>&#160;      <a class="code" href="dev__sysedit_8c.html#ad4a1d8345dd499bfb2c484d02299e139">sysedit_editPnt</a>();</div>
-<div class="line"><a name="l01988"></a><span class="lineno"> 1988</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (sel-&gt;type==<a class="code" href="dev__sysedit_8c.html#a6450aaa1a2140485789789f2beedf909">SELECT_JUMPPOINT</a>)</div>
-<div class="line"><a name="l01989"></a><span class="lineno"> 1989</span>&#160;      <a class="code" href="dev__sysedit_8c.html#afabed228c2642166ff990a4b5ca56ccb">sysedit_editJump</a>();</div>
-<div class="line"><a name="l01990"></a><span class="lineno"> 1990</span>&#160;}</div>
-<div class="line"><a name="l01991"></a><span class="lineno"> 1991</span>&#160; </div>
-<div class="line"><a name="l01992"></a><span class="lineno"> 1992</span>&#160; </div>
-<div class="line"><a name="l01996"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#a471f6a97cd55469cd4ef500ebbe9141d"> 1996</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#a471f6a97cd55469cd4ef500ebbe9141d">sysedit_planetGFX</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid_unused, <span class="keyword">const</span> <span class="keywordtype">char</span> *wgt )</div>
-<div class="line"><a name="l01997"></a><span class="lineno"> 1997</span>&#160;{</div>
-<div class="line"><a name="l01998"></a><span class="lineno"> 1998</span>&#160;   (void) wid_unused;</div>
-<div class="line"><a name="l01999"></a><span class="lineno"> 1999</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid;</div>
-<div class="line"><a name="l02000"></a><span class="lineno"> 2000</span>&#160;   <span class="keywordtype">size_t</span> nfiles, i, j;</div>
-<div class="line"><a name="l02001"></a><span class="lineno"> 2001</span>&#160;   <span class="keywordtype">char</span> *path, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[STRMAX_SHORT];</div>
-<div class="line"><a name="l02002"></a><span class="lineno"> 2002</span>&#160;   <span class="keywordtype">char</span> **files;</div>
-<div class="line"><a name="l02003"></a><span class="lineno"> 2003</span>&#160;   glTexture *t;</div>
-<div class="line"><a name="l02004"></a><span class="lineno"> 2004</span>&#160;   ImageArrayCell *cells;</div>
-<div class="line"><a name="l02005"></a><span class="lineno"> 2005</span>&#160;   <span class="keywordtype">int</span> w, h, <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a>;</div>
-<div class="line"><a name="l02006"></a><span class="lineno"> 2006</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *p;</div>
-<div class="line"><a name="l02007"></a><span class="lineno"> 2007</span>&#160;   glColour <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
-<div class="line"><a name="l02008"></a><span class="lineno"> 2008</span>&#160;   PHYSFS_Stat path_stat;</div>
-<div class="line"><a name="l02009"></a><span class="lineno"> 2009</span>&#160; </div>
-<div class="line"><a name="l02010"></a><span class="lineno"> 2010</span>&#160;   <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> = (strcmp(wgt,<span class="stringliteral">&quot;btnLandGFX&quot;</span>) == 0);</div>
-<div class="line"><a name="l02011"></a><span class="lineno"> 2011</span>&#160; </div>
-<div class="line"><a name="l02012"></a><span class="lineno"> 2012</span>&#160;   p = <a class="code" href="dev__sysedit_8c.html#a84674e9d4b3d72e7c2a2c90d048a203a">sysedit_sys</a>-&gt;planets[ <a class="code" href="dev__sysedit_8c.html#aff7b7438e7cf9b7572a1be670bfe1ade">sysedit_select</a>[0].u.planet ];</div>
-<div class="line"><a name="l02013"></a><span class="lineno"> 2013</span>&#160;   <span class="comment">/* Create the window. */</span></div>
-<div class="line"><a name="l02014"></a><span class="lineno"> 2014</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), _(<span class="stringliteral">&quot;%s - Planet Properties&quot;</span>), p-&gt;name );</div>
-<div class="line"><a name="l02015"></a><span class="lineno"> 2015</span>&#160;   wid = <a class="code" href="toolkit_8c.html#a098bfecb537787de38f9865becc29ced">window_create</a>( <span class="stringliteral">&quot;wdwPlanetGFX&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, -1, -1, -1, -1 );</div>
-<div class="line"><a name="l02016"></a><span class="lineno"> 2016</span>&#160;   <a class="code" href="toolkit_8c.html#a2da856138b3dca397a69c3b4d440d769">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
-<div class="line"><a name="l02017"></a><span class="lineno"> 2017</span>&#160; </div>
-<div class="line"><a name="l02018"></a><span class="lineno"> 2018</span>&#160;   <a class="code" href="toolkit_8c.html#a34264e14520085c3acd51732f8e93f41">window_setCancel</a>( wid, <a class="code" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a> );</div>
-<div class="line"><a name="l02019"></a><span class="lineno"> 2019</span>&#160;   <a class="code" href="toolkit_8c.html#a28397240dbb1ff16d18448ab1f7fdd8b">window_setAccept</a>( wid, <a class="code" href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8">sysedit_btnGFXApply</a> );</div>
-<div class="line"><a name="l02020"></a><span class="lineno"> 2020</span>&#160; </div>
-<div class="line"><a name="l02021"></a><span class="lineno"> 2021</span>&#160;   <span class="comment">/* Close button. */</span></div>
-<div class="line"><a name="l02022"></a><span class="lineno"> 2022</span>&#160;   window_addButton( wid, -20, 20, <a class="code" href="dev__sysedit_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l02023"></a><span class="lineno"> 2023</span>&#160;         <span class="stringliteral">&quot;btnClose&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), <a class="code" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a> );</div>
+<div class="line"><a name="l01975"></a><span class="lineno"> 1975</span>&#160;   <a class="code" href="toolkit_8c.html#aea65cb3e502ff5604fd607836b4e74f8">window_close</a>( wid, unused );</div>
+<div class="line"><a name="l01976"></a><span class="lineno"> 1976</span>&#160;}</div>
+<div class="line"><a name="l01977"></a><span class="lineno"> 1977</span>&#160; </div>
+<div class="line"><a name="l01978"></a><span class="lineno"> 1978</span>&#160; </div>
+<div class="line"><a name="l01982"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#a8cc9551f1418a4ea3fe8866dc081496d"> 1982</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#a8cc9551f1418a4ea3fe8866dc081496d">sysedit_btnEdit</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid_unused, <span class="keyword">const</span> <span class="keywordtype">char</span> *unused )</div>
+<div class="line"><a name="l01983"></a><span class="lineno"> 1983</span>&#160;{</div>
+<div class="line"><a name="l01984"></a><span class="lineno"> 1984</span>&#160;   (void) wid_unused;</div>
+<div class="line"><a name="l01985"></a><span class="lineno"> 1985</span>&#160;   (void) unused;</div>
+<div class="line"><a name="l01986"></a><span class="lineno"> 1986</span>&#160;   Select_t *sel;</div>
+<div class="line"><a name="l01987"></a><span class="lineno"> 1987</span>&#160; </div>
+<div class="line"><a name="l01988"></a><span class="lineno"> 1988</span>&#160;   sel = &amp;<a class="code" href="dev__sysedit_8c.html#aff7b7438e7cf9b7572a1be670bfe1ade">sysedit_select</a>[0];</div>
+<div class="line"><a name="l01989"></a><span class="lineno"> 1989</span>&#160; </div>
+<div class="line"><a name="l01990"></a><span class="lineno"> 1990</span>&#160;   <span class="keywordflow">if</span> (sel-&gt;type==<a class="code" href="dev__sysedit_8c.html#aa8e959f9a3865e51af6e363f281d8829">SELECT_PLANET</a>)</div>
+<div class="line"><a name="l01991"></a><span class="lineno"> 1991</span>&#160;      <a class="code" href="dev__sysedit_8c.html#ad4a1d8345dd499bfb2c484d02299e139">sysedit_editPnt</a>();</div>
+<div class="line"><a name="l01992"></a><span class="lineno"> 1992</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (sel-&gt;type==<a class="code" href="dev__sysedit_8c.html#a6450aaa1a2140485789789f2beedf909">SELECT_JUMPPOINT</a>)</div>
+<div class="line"><a name="l01993"></a><span class="lineno"> 1993</span>&#160;      <a class="code" href="dev__sysedit_8c.html#afabed228c2642166ff990a4b5ca56ccb">sysedit_editJump</a>();</div>
+<div class="line"><a name="l01994"></a><span class="lineno"> 1994</span>&#160;}</div>
+<div class="line"><a name="l01995"></a><span class="lineno"> 1995</span>&#160; </div>
+<div class="line"><a name="l01996"></a><span class="lineno"> 1996</span>&#160; </div>
+<div class="line"><a name="l02000"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#a471f6a97cd55469cd4ef500ebbe9141d"> 2000</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#a471f6a97cd55469cd4ef500ebbe9141d">sysedit_planetGFX</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid_unused, <span class="keyword">const</span> <span class="keywordtype">char</span> *wgt )</div>
+<div class="line"><a name="l02001"></a><span class="lineno"> 2001</span>&#160;{</div>
+<div class="line"><a name="l02002"></a><span class="lineno"> 2002</span>&#160;   (void) wid_unused;</div>
+<div class="line"><a name="l02003"></a><span class="lineno"> 2003</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid;</div>
+<div class="line"><a name="l02004"></a><span class="lineno"> 2004</span>&#160;   <span class="keywordtype">size_t</span> nfiles, i, j;</div>
+<div class="line"><a name="l02005"></a><span class="lineno"> 2005</span>&#160;   <span class="keywordtype">char</span> *path, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[STRMAX_SHORT];</div>
+<div class="line"><a name="l02006"></a><span class="lineno"> 2006</span>&#160;   <span class="keywordtype">char</span> **files;</div>
+<div class="line"><a name="l02007"></a><span class="lineno"> 2007</span>&#160;   glTexture *t;</div>
+<div class="line"><a name="l02008"></a><span class="lineno"> 2008</span>&#160;   ImageArrayCell *cells;</div>
+<div class="line"><a name="l02009"></a><span class="lineno"> 2009</span>&#160;   <span class="keywordtype">int</span> w, h, <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a>;</div>
+<div class="line"><a name="l02010"></a><span class="lineno"> 2010</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *p;</div>
+<div class="line"><a name="l02011"></a><span class="lineno"> 2011</span>&#160;   glColour <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>;</div>
+<div class="line"><a name="l02012"></a><span class="lineno"> 2012</span>&#160;   PHYSFS_Stat path_stat;</div>
+<div class="line"><a name="l02013"></a><span class="lineno"> 2013</span>&#160; </div>
+<div class="line"><a name="l02014"></a><span class="lineno"> 2014</span>&#160;   <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> = (strcmp(wgt,<span class="stringliteral">&quot;btnLandGFX&quot;</span>) == 0);</div>
+<div class="line"><a name="l02015"></a><span class="lineno"> 2015</span>&#160; </div>
+<div class="line"><a name="l02016"></a><span class="lineno"> 2016</span>&#160;   p = <a class="code" href="dev__sysedit_8c.html#a84674e9d4b3d72e7c2a2c90d048a203a">sysedit_sys</a>-&gt;planets[ <a class="code" href="dev__sysedit_8c.html#aff7b7438e7cf9b7572a1be670bfe1ade">sysedit_select</a>[0].u.planet ];</div>
+<div class="line"><a name="l02017"></a><span class="lineno"> 2017</span>&#160;   <span class="comment">/* Create the window. */</span></div>
+<div class="line"><a name="l02018"></a><span class="lineno"> 2018</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), _(<span class="stringliteral">&quot;%s - Planet Properties&quot;</span>), p-&gt;name );</div>
+<div class="line"><a name="l02019"></a><span class="lineno"> 2019</span>&#160;   wid = <a class="code" href="toolkit_8c.html#a098bfecb537787de38f9865becc29ced">window_create</a>( <span class="stringliteral">&quot;wdwPlanetGFX&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, -1, -1, -1, -1 );</div>
+<div class="line"><a name="l02020"></a><span class="lineno"> 2020</span>&#160;   <a class="code" href="toolkit_8c.html#a2da856138b3dca397a69c3b4d440d769">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
+<div class="line"><a name="l02021"></a><span class="lineno"> 2021</span>&#160; </div>
+<div class="line"><a name="l02022"></a><span class="lineno"> 2022</span>&#160;   <a class="code" href="toolkit_8c.html#a34264e14520085c3acd51732f8e93f41">window_setCancel</a>( wid, <a class="code" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a> );</div>
+<div class="line"><a name="l02023"></a><span class="lineno"> 2023</span>&#160;   <a class="code" href="toolkit_8c.html#a28397240dbb1ff16d18448ab1f7fdd8b">window_setAccept</a>( wid, <a class="code" href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8">sysedit_btnGFXApply</a> );</div>
 <div class="line"><a name="l02024"></a><span class="lineno"> 2024</span>&#160; </div>
-<div class="line"><a name="l02025"></a><span class="lineno"> 2025</span>&#160;   <span class="comment">/* Apply button. */</span></div>
-<div class="line"><a name="l02026"></a><span class="lineno"> 2026</span>&#160;   window_addButton( wid, -20, 20+(20+<a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>), <a class="code" href="dev__sysedit_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l02027"></a><span class="lineno"> 2027</span>&#160;         <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> ? <span class="stringliteral">&quot;btnApplyLand&quot;</span> : <span class="stringliteral">&quot;btnApplySpace&quot;</span>, _(<span class="stringliteral">&quot;Apply&quot;</span>), <a class="code" href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8">sysedit_btnGFXApply</a> );</div>
+<div class="line"><a name="l02025"></a><span class="lineno"> 2025</span>&#160;   <span class="comment">/* Close button. */</span></div>
+<div class="line"><a name="l02026"></a><span class="lineno"> 2026</span>&#160;   window_addButton( wid, -20, 20, <a class="code" href="dev__sysedit_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l02027"></a><span class="lineno"> 2027</span>&#160;         <span class="stringliteral">&quot;btnClose&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), <a class="code" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a> );</div>
 <div class="line"><a name="l02028"></a><span class="lineno"> 2028</span>&#160; </div>
-<div class="line"><a name="l02029"></a><span class="lineno"> 2029</span>&#160;   <span class="comment">/* Find images first. */</span></div>
-<div class="line"><a name="l02030"></a><span class="lineno"> 2030</span>&#160;   path           = <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;</div>
-<div class="line"><a name="l02031"></a><span class="lineno"> 2031</span>&#160;   files          = PHYSFS_enumerateFiles( path );</div>
-<div class="line"><a name="l02032"></a><span class="lineno"> 2032</span>&#160;   <span class="keywordflow">for</span> (nfiles=0; files[nfiles]; nfiles++) {}</div>
-<div class="line"><a name="l02033"></a><span class="lineno"> 2033</span>&#160;   cells          = calloc( nfiles, <span class="keyword">sizeof</span>(ImageArrayCell) );</div>
-<div class="line"><a name="l02034"></a><span class="lineno"> 2034</span>&#160; </div>
-<div class="line"><a name="l02035"></a><span class="lineno"> 2035</span>&#160;   j              = 0;</div>
-<div class="line"><a name="l02036"></a><span class="lineno"> 2036</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nfiles; i++) {</div>
-<div class="line"><a name="l02037"></a><span class="lineno"> 2037</span>&#160;      snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <span class="stringliteral">&quot;%s/%s&quot;</span>, path, files[i] );</div>
-<div class="line"><a name="l02038"></a><span class="lineno"> 2038</span>&#160;      <span class="comment">/* Ignore directories. */</span></div>
-<div class="line"><a name="l02039"></a><span class="lineno"> 2039</span>&#160;      <span class="keywordflow">if</span> (!PHYSFS_stat( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, &amp;path_stat )) {</div>
-<div class="line"><a name="l02040"></a><span class="lineno"> 2040</span>&#160;         WARN(_(<span class="stringliteral">&quot;Unable to check file type for &#39;%s&#39;!&quot;</span>), <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
-<div class="line"><a name="l02041"></a><span class="lineno"> 2041</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02042"></a><span class="lineno"> 2042</span>&#160;      }</div>
-<div class="line"><a name="l02043"></a><span class="lineno"> 2043</span>&#160;      <span class="keywordflow">if</span> (path_stat.filetype != PHYSFS_FILETYPE_REGULAR)</div>
-<div class="line"><a name="l02044"></a><span class="lineno"> 2044</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02045"></a><span class="lineno"> 2045</span>&#160; </div>
-<div class="line"><a name="l02046"></a><span class="lineno"> 2046</span>&#160;      t              = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, OPENGL_TEX_MIPMAPS );</div>
-<div class="line"><a name="l02047"></a><span class="lineno"> 2047</span>&#160;      <span class="keywordflow">if</span> (t == NULL)</div>
+<div class="line"><a name="l02029"></a><span class="lineno"> 2029</span>&#160;   <span class="comment">/* Apply button. */</span></div>
+<div class="line"><a name="l02030"></a><span class="lineno"> 2030</span>&#160;   window_addButton( wid, -20, 20+(20+<a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>), <a class="code" href="dev__sysedit_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="dev__sysedit_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l02031"></a><span class="lineno"> 2031</span>&#160;         <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> ? <span class="stringliteral">&quot;btnApplyLand&quot;</span> : <span class="stringliteral">&quot;btnApplySpace&quot;</span>, _(<span class="stringliteral">&quot;Apply&quot;</span>), <a class="code" href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8">sysedit_btnGFXApply</a> );</div>
+<div class="line"><a name="l02032"></a><span class="lineno"> 2032</span>&#160; </div>
+<div class="line"><a name="l02033"></a><span class="lineno"> 2033</span>&#160;   <span class="comment">/* Find images first. */</span></div>
+<div class="line"><a name="l02034"></a><span class="lineno"> 2034</span>&#160;   path           = <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;</div>
+<div class="line"><a name="l02035"></a><span class="lineno"> 2035</span>&#160;   files          = PHYSFS_enumerateFiles( path );</div>
+<div class="line"><a name="l02036"></a><span class="lineno"> 2036</span>&#160;   <span class="keywordflow">for</span> (nfiles=0; files[nfiles]; nfiles++) {}</div>
+<div class="line"><a name="l02037"></a><span class="lineno"> 2037</span>&#160;   cells          = calloc( nfiles, <span class="keyword">sizeof</span>(ImageArrayCell) );</div>
+<div class="line"><a name="l02038"></a><span class="lineno"> 2038</span>&#160; </div>
+<div class="line"><a name="l02039"></a><span class="lineno"> 2039</span>&#160;   j              = 0;</div>
+<div class="line"><a name="l02040"></a><span class="lineno"> 2040</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;nfiles; i++) {</div>
+<div class="line"><a name="l02041"></a><span class="lineno"> 2041</span>&#160;      snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <span class="stringliteral">&quot;%s/%s&quot;</span>, path, files[i] );</div>
+<div class="line"><a name="l02042"></a><span class="lineno"> 2042</span>&#160;      <span class="comment">/* Ignore directories. */</span></div>
+<div class="line"><a name="l02043"></a><span class="lineno"> 2043</span>&#160;      <span class="keywordflow">if</span> (!PHYSFS_stat( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, &amp;path_stat )) {</div>
+<div class="line"><a name="l02044"></a><span class="lineno"> 2044</span>&#160;         WARN(_(<span class="stringliteral">&quot;Unable to check file type for &#39;%s&#39;!&quot;</span>), <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
+<div class="line"><a name="l02045"></a><span class="lineno"> 2045</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02046"></a><span class="lineno"> 2046</span>&#160;      }</div>
+<div class="line"><a name="l02047"></a><span class="lineno"> 2047</span>&#160;      <span class="keywordflow">if</span> (path_stat.filetype != PHYSFS_FILETYPE_REGULAR)</div>
 <div class="line"><a name="l02048"></a><span class="lineno"> 2048</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l02049"></a><span class="lineno"> 2049</span>&#160;      cells[j].image   = t;</div>
-<div class="line"><a name="l02050"></a><span class="lineno"> 2050</span>&#160;      cells[j].caption = strdup( files[i] );</div>
-<div class="line"><a name="l02051"></a><span class="lineno"> 2051</span>&#160;      <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = strcmp(files[i], <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> ? p-&gt;gfx_exteriorPath : p-&gt;gfx_spacePath)==0 ? cOrange : cBlack;</div>
-<div class="line"><a name="l02052"></a><span class="lineno"> 2052</span>&#160;      memcpy( &amp;cells[j].bg, &amp;<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keyword">sizeof</span>(glColour) );</div>
-<div class="line"><a name="l02053"></a><span class="lineno"> 2053</span>&#160;      j++;</div>
-<div class="line"><a name="l02054"></a><span class="lineno"> 2054</span>&#160;   }</div>
-<div class="line"><a name="l02055"></a><span class="lineno"> 2055</span>&#160;   PHYSFS_freeList( files );</div>
-<div class="line"><a name="l02056"></a><span class="lineno"> 2056</span>&#160; </div>
-<div class="line"><a name="l02057"></a><span class="lineno"> 2057</span>&#160;   <span class="comment">/* Add image array. */</span></div>
-<div class="line"><a name="l02058"></a><span class="lineno"> 2058</span>&#160;   window_addImageArray( wid, 20, 20, w-60-<a class="code" href="dev__sysedit_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, h-60, <span class="stringliteral">&quot;iarGFX&quot;</span>, 128, 128, cells, j, NULL, NULL, NULL );</div>
-<div class="line"><a name="l02059"></a><span class="lineno"> 2059</span>&#160;   toolkit_setImageArray( wid, <span class="stringliteral">&quot;iarGFX&quot;</span>, path );</div>
-<div class="line"><a name="l02060"></a><span class="lineno"> 2060</span>&#160;}</div>
-<div class="line"><a name="l02061"></a><span class="lineno"> 2061</span>&#160; </div>
-<div class="line"><a name="l02062"></a><span class="lineno"> 2062</span>&#160; </div>
-<div class="line"><a name="l02066"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96"> 2066</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *wgt )</div>
-<div class="line"><a name="l02067"></a><span class="lineno"> 2067</span>&#160;{</div>
-<div class="line"><a name="l02068"></a><span class="lineno"> 2068</span>&#160;   <a class="code" href="toolkit_8c.html#aea65cb3e502ff5604fd607836b4e74f8">window_close</a>( wid, wgt );</div>
-<div class="line"><a name="l02069"></a><span class="lineno"> 2069</span>&#160;}</div>
-<div class="line"><a name="l02070"></a><span class="lineno"> 2070</span>&#160; </div>
-<div class="line"><a name="l02071"></a><span class="lineno"> 2071</span>&#160; </div>
-<div class="line"><a name="l02075"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8"> 2075</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8">sysedit_btnGFXApply</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *wgt )</div>
-<div class="line"><a name="l02076"></a><span class="lineno"> 2076</span>&#160;{</div>
-<div class="line"><a name="l02077"></a><span class="lineno"> 2077</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *p;</div>
-<div class="line"><a name="l02078"></a><span class="lineno"> 2078</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
-<div class="line"><a name="l02079"></a><span class="lineno"> 2079</span>&#160;   <span class="keywordtype">char</span> *path, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
-<div class="line"><a name="l02080"></a><span class="lineno"> 2080</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a>;</div>
-<div class="line"><a name="l02081"></a><span class="lineno"> 2081</span>&#160; </div>
-<div class="line"><a name="l02082"></a><span class="lineno"> 2082</span>&#160;   <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> = (strcmp(wgt,<span class="stringliteral">&quot;btnApplyLand&quot;</span>) == 0);</div>
-<div class="line"><a name="l02083"></a><span class="lineno"> 2083</span>&#160;   p = <a class="code" href="dev__sysedit_8c.html#a84674e9d4b3d72e7c2a2c90d048a203a">sysedit_sys</a>-&gt;planets[ <a class="code" href="dev__sysedit_8c.html#aff7b7438e7cf9b7572a1be670bfe1ade">sysedit_select</a>[0].u.planet ];</div>
-<div class="line"><a name="l02084"></a><span class="lineno"> 2084</span>&#160; </div>
-<div class="line"><a name="l02085"></a><span class="lineno"> 2085</span>&#160;   <span class="comment">/* Get output. */</span></div>
-<div class="line"><a name="l02086"></a><span class="lineno"> 2086</span>&#160;   str = toolkit_getImageArray( wid, <span class="stringliteral">&quot;iarGFX&quot;</span> );</div>
-<div class="line"><a name="l02087"></a><span class="lineno"> 2087</span>&#160;   <span class="keywordflow">if</span> (str == NULL)</div>
-<div class="line"><a name="l02088"></a><span class="lineno"> 2088</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l02089"></a><span class="lineno"> 2089</span>&#160; </div>
-<div class="line"><a name="l02090"></a><span class="lineno"> 2090</span>&#160;   <span class="comment">/* New path. */</span></div>
-<div class="line"><a name="l02091"></a><span class="lineno"> 2091</span>&#160;   path = <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;</div>
-<div class="line"><a name="l02092"></a><span class="lineno"> 2092</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <span class="stringliteral">&quot;%s/%s&quot;</span>, path, str );</div>
+<div class="line"><a name="l02049"></a><span class="lineno"> 2049</span>&#160; </div>
+<div class="line"><a name="l02050"></a><span class="lineno"> 2050</span>&#160;      t              = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, OPENGL_TEX_MIPMAPS );</div>
+<div class="line"><a name="l02051"></a><span class="lineno"> 2051</span>&#160;      <span class="keywordflow">if</span> (t == NULL)</div>
+<div class="line"><a name="l02052"></a><span class="lineno"> 2052</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l02053"></a><span class="lineno"> 2053</span>&#160;      cells[j].image   = t;</div>
+<div class="line"><a name="l02054"></a><span class="lineno"> 2054</span>&#160;      cells[j].caption = strdup( files[i] );</div>
+<div class="line"><a name="l02055"></a><span class="lineno"> 2055</span>&#160;      <a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a> = strcmp(files[i], <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> ? p-&gt;gfx_exteriorPath : p-&gt;gfx_spacePath)==0 ? cOrange : cBlack;</div>
+<div class="line"><a name="l02056"></a><span class="lineno"> 2056</span>&#160;      memcpy( &amp;cells[j].bg, &amp;<a class="code" href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a>, <span class="keyword">sizeof</span>(glColour) );</div>
+<div class="line"><a name="l02057"></a><span class="lineno"> 2057</span>&#160;      j++;</div>
+<div class="line"><a name="l02058"></a><span class="lineno"> 2058</span>&#160;   }</div>
+<div class="line"><a name="l02059"></a><span class="lineno"> 2059</span>&#160;   PHYSFS_freeList( files );</div>
+<div class="line"><a name="l02060"></a><span class="lineno"> 2060</span>&#160; </div>
+<div class="line"><a name="l02061"></a><span class="lineno"> 2061</span>&#160;   <span class="comment">/* Add image array. */</span></div>
+<div class="line"><a name="l02062"></a><span class="lineno"> 2062</span>&#160;   window_addImageArray( wid, 20, 20, w-60-<a class="code" href="dev__sysedit_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, h-60, <span class="stringliteral">&quot;iarGFX&quot;</span>, 128, 128, cells, j, NULL, NULL, NULL );</div>
+<div class="line"><a name="l02063"></a><span class="lineno"> 2063</span>&#160;   toolkit_setImageArray( wid, <span class="stringliteral">&quot;iarGFX&quot;</span>, path );</div>
+<div class="line"><a name="l02064"></a><span class="lineno"> 2064</span>&#160;}</div>
+<div class="line"><a name="l02065"></a><span class="lineno"> 2065</span>&#160; </div>
+<div class="line"><a name="l02066"></a><span class="lineno"> 2066</span>&#160; </div>
+<div class="line"><a name="l02070"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96"> 2070</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *wgt )</div>
+<div class="line"><a name="l02071"></a><span class="lineno"> 2071</span>&#160;{</div>
+<div class="line"><a name="l02072"></a><span class="lineno"> 2072</span>&#160;   <a class="code" href="toolkit_8c.html#aea65cb3e502ff5604fd607836b4e74f8">window_close</a>( wid, wgt );</div>
+<div class="line"><a name="l02073"></a><span class="lineno"> 2073</span>&#160;}</div>
+<div class="line"><a name="l02074"></a><span class="lineno"> 2074</span>&#160; </div>
+<div class="line"><a name="l02075"></a><span class="lineno"> 2075</span>&#160; </div>
+<div class="line"><a name="l02079"></a><span class="lineno"><a class="line" href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8"> 2079</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8">sysedit_btnGFXApply</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *wgt )</div>
+<div class="line"><a name="l02080"></a><span class="lineno"> 2080</span>&#160;{</div>
+<div class="line"><a name="l02081"></a><span class="lineno"> 2081</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *p;</div>
+<div class="line"><a name="l02082"></a><span class="lineno"> 2082</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str;</div>
+<div class="line"><a name="l02083"></a><span class="lineno"> 2083</span>&#160;   <span class="keywordtype">char</span> *path, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a name="l02084"></a><span class="lineno"> 2084</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a>;</div>
+<div class="line"><a name="l02085"></a><span class="lineno"> 2085</span>&#160; </div>
+<div class="line"><a name="l02086"></a><span class="lineno"> 2086</span>&#160;   <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> = (strcmp(wgt,<span class="stringliteral">&quot;btnApplyLand&quot;</span>) == 0);</div>
+<div class="line"><a name="l02087"></a><span class="lineno"> 2087</span>&#160;   p = <a class="code" href="dev__sysedit_8c.html#a84674e9d4b3d72e7c2a2c90d048a203a">sysedit_sys</a>-&gt;planets[ <a class="code" href="dev__sysedit_8c.html#aff7b7438e7cf9b7572a1be670bfe1ade">sysedit_select</a>[0].u.planet ];</div>
+<div class="line"><a name="l02088"></a><span class="lineno"> 2088</span>&#160; </div>
+<div class="line"><a name="l02089"></a><span class="lineno"> 2089</span>&#160;   <span class="comment">/* Get output. */</span></div>
+<div class="line"><a name="l02090"></a><span class="lineno"> 2090</span>&#160;   str = toolkit_getImageArray( wid, <span class="stringliteral">&quot;iarGFX&quot;</span> );</div>
+<div class="line"><a name="l02091"></a><span class="lineno"> 2091</span>&#160;   <span class="keywordflow">if</span> (str == NULL)</div>
+<div class="line"><a name="l02092"></a><span class="lineno"> 2092</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l02093"></a><span class="lineno"> 2093</span>&#160; </div>
-<div class="line"><a name="l02094"></a><span class="lineno"> 2094</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a>) {</div>
-<div class="line"><a name="l02095"></a><span class="lineno"> 2095</span>&#160;      free( p-&gt;gfx_exteriorPath );</div>
-<div class="line"><a name="l02096"></a><span class="lineno"> 2096</span>&#160;      free( p-&gt;gfx_exterior );</div>
-<div class="line"><a name="l02097"></a><span class="lineno"> 2097</span>&#160;      snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), PLANET_GFX_EXTERIOR_PATH<span class="stringliteral">&quot;%s&quot;</span>, str );</div>
-<div class="line"><a name="l02098"></a><span class="lineno"> 2098</span>&#160;      p-&gt;gfx_exteriorPath = strdup( str );</div>
-<div class="line"><a name="l02099"></a><span class="lineno"> 2099</span>&#160;      p-&gt;gfx_exterior = strdup( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l02100"></a><span class="lineno"> 2100</span>&#160;   }</div>
-<div class="line"><a name="l02101"></a><span class="lineno"> 2101</span>&#160;   <span class="keywordflow">else</span> { <span class="comment">/* Free old texture, load new. */</span></div>
-<div class="line"><a name="l02102"></a><span class="lineno"> 2102</span>&#160;      free( p-&gt;gfx_spacePath );</div>
-<div class="line"><a name="l02103"></a><span class="lineno"> 2103</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( p-&gt;gfx_space );</div>
-<div class="line"><a name="l02104"></a><span class="lineno"> 2104</span>&#160;      p-&gt;gfx_spacePath = strdup( str );</div>
-<div class="line"><a name="l02105"></a><span class="lineno"> 2105</span>&#160;      p-&gt;gfx_space = NULL;</div>
-<div class="line"><a name="l02106"></a><span class="lineno"> 2106</span>&#160;      <a class="code" href="space_8c.html#af5466ee3ef740a6e9598cb57399cf826">planet_gfxLoad</a>( p );</div>
-<div class="line"><a name="l02107"></a><span class="lineno"> 2107</span>&#160;   }</div>
-<div class="line"><a name="l02108"></a><span class="lineno"> 2108</span>&#160; </div>
-<div class="line"><a name="l02109"></a><span class="lineno"> 2109</span>&#160;   <span class="comment">/* For now we close. */</span></div>
-<div class="line"><a name="l02110"></a><span class="lineno"> 2110</span>&#160;   <a class="code" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a>( wid, wgt );</div>
-<div class="line"><a name="l02111"></a><span class="lineno"> 2111</span>&#160;}</div>
+<div class="line"><a name="l02094"></a><span class="lineno"> 2094</span>&#160;   <span class="comment">/* New path. */</span></div>
+<div class="line"><a name="l02095"></a><span class="lineno"> 2095</span>&#160;   path = <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a> ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;</div>
+<div class="line"><a name="l02096"></a><span class="lineno"> 2096</span>&#160;   snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <span class="stringliteral">&quot;%s/%s&quot;</span>, path, str );</div>
+<div class="line"><a name="l02097"></a><span class="lineno"> 2097</span>&#160; </div>
+<div class="line"><a name="l02098"></a><span class="lineno"> 2098</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a>) {</div>
+<div class="line"><a name="l02099"></a><span class="lineno"> 2099</span>&#160;      free( p-&gt;gfx_exteriorPath );</div>
+<div class="line"><a name="l02100"></a><span class="lineno"> 2100</span>&#160;      free( p-&gt;gfx_exterior );</div>
+<div class="line"><a name="l02101"></a><span class="lineno"> 2101</span>&#160;      snprintf( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), PLANET_GFX_EXTERIOR_PATH<span class="stringliteral">&quot;%s&quot;</span>, str );</div>
+<div class="line"><a name="l02102"></a><span class="lineno"> 2102</span>&#160;      p-&gt;gfx_exteriorPath = strdup( str );</div>
+<div class="line"><a name="l02103"></a><span class="lineno"> 2103</span>&#160;      p-&gt;gfx_exterior = strdup( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l02104"></a><span class="lineno"> 2104</span>&#160;   }</div>
+<div class="line"><a name="l02105"></a><span class="lineno"> 2105</span>&#160;   <span class="keywordflow">else</span> { <span class="comment">/* Free old texture, load new. */</span></div>
+<div class="line"><a name="l02106"></a><span class="lineno"> 2106</span>&#160;      free( p-&gt;gfx_spacePath );</div>
+<div class="line"><a name="l02107"></a><span class="lineno"> 2107</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( p-&gt;gfx_space );</div>
+<div class="line"><a name="l02108"></a><span class="lineno"> 2108</span>&#160;      p-&gt;gfx_spacePath = strdup( str );</div>
+<div class="line"><a name="l02109"></a><span class="lineno"> 2109</span>&#160;      p-&gt;gfx_space = NULL;</div>
+<div class="line"><a name="l02110"></a><span class="lineno"> 2110</span>&#160;      <a class="code" href="space_8c.html#af5466ee3ef740a6e9598cb57399cf826">planet_gfxLoad</a>( p );</div>
+<div class="line"><a name="l02111"></a><span class="lineno"> 2111</span>&#160;   }</div>
 <div class="line"><a name="l02112"></a><span class="lineno"> 2112</span>&#160; </div>
+<div class="line"><a name="l02113"></a><span class="lineno"> 2113</span>&#160;   <span class="comment">/* For now we close. */</span></div>
+<div class="line"><a name="l02114"></a><span class="lineno"> 2114</span>&#160;   <a class="code" href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a>( wid, wgt );</div>
+<div class="line"><a name="l02115"></a><span class="lineno"> 2115</span>&#160;}</div>
+<div class="line"><a name="l02116"></a><span class="lineno"> 2116</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aspace_8c_html_a7f192fd83fbe030031b6eccd1fb1667e"><div class="ttname"><a href="space_8c.html#a7f192fd83fbe030031b6eccd1fb1667e">asteroid_gfx</a></div><div class="ttdeci">glTexture ** asteroid_gfx</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00107">space.c:107</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_af9d6b3dcd36b712d12abb4862a95103c"><div class="ttname"><a href="dev__sysedit_8c.html#af9d6b3dcd36b712d12abb4862a95103c">SYSEDIT_ZOOM_MAX</a></div><div class="ttdeci">#define SYSEDIT_ZOOM_MAX</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l00051">dev_sysedit.c:51</a></div></div>
@@ -2021,7 +2025,7 @@ $(function() {
 <div class="ttc" id="adev__sysedit_8c_html_a1371b186224bd82f4b50c35146d86fde"><div class="ttname"><a href="dev__sysedit_8c.html#a1371b186224bd82f4b50c35146d86fde">SELECT_NONE</a></div><div class="ttdeci">#define SELECT_NONE</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l00058">dev_sysedit.c:58</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_a57bc2812d34b71fc1d44fc8cd99795d4"><div class="ttname"><a href="dev__sysedit_8c.html#a57bc2812d34b71fc1d44fc8cd99795d4">sysedit_ypos</a></div><div class="ttdeci">static double sysedit_ypos</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l00088">dev_sysedit.c:88</a></div></div>
 <div class="ttc" id="aspace_8c_html_af5466ee3ef740a6e9598cb57399cf826"><div class="ttname"><a href="space_8c.html#af5466ee3ef740a6e9598cb57399cf826">planet_gfxLoad</a></div><div class="ttdeci">void planet_gfxLoad(Planet *planet)</div><div class="ttdoc">Loads a planet's graphics (and radius).</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01992">space.c:1992</a></div></div>
-<div class="ttc" id="adev__sysedit_8c_html_a71f7801ad21e28207e5d11eeade55d96"><div class="ttname"><a href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a></div><div class="ttdeci">static void sysedit_btnGFXClose(unsigned int wid, const char *wgt)</div><div class="ttdoc">Closes the planet graphic editor.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l02066">dev_sysedit.c:2066</a></div></div>
+<div class="ttc" id="adev__sysedit_8c_html_a71f7801ad21e28207e5d11eeade55d96"><div class="ttname"><a href="dev__sysedit_8c.html#a71f7801ad21e28207e5d11eeade55d96">sysedit_btnGFXClose</a></div><div class="ttdeci">static void sysedit_btnGFXClose(unsigned int wid, const char *wgt)</div><div class="ttdoc">Closes the planet graphic editor.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l02070">dev_sysedit.c:2070</a></div></div>
 <div class="ttc" id="atech_8c_html_afcc45138fa614b351d318452fc99baaf"><div class="ttname"><a href="tech_8c.html#afcc45138fa614b351d318452fc99baaf">tech_getAllItemNames</a></div><div class="ttdeci">char ** tech_getAllItemNames(int *n)</div><div class="ttdoc">Gets the names of all techs.</div><div class="ttdef"><b>Definition:</b> <a href="tech_8c_source.html#l00705">tech.c:705</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_acf30c293e6ce424c0ed46c96c1cd6ec5"><div class="ttname"><a href="dev__sysedit_8c.html#acf30c293e6ce424c0ed46c96c1cd6ec5">sysedit_btnRmService</a></div><div class="ttdeci">static void sysedit_btnRmService(unsigned int wid, const char *unused)</div><div class="ttdoc">Removes a service from a planet.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01709">dev_sysedit.c:1709</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_abefb657b9ae58b9d5445417b19914e05"><div class="ttname"><a href="dev__sysedit_8c.html#abefb657b9ae58b9d5445417b19914e05">sysedit_genServicesList</a></div><div class="ttdeci">static void sysedit_genServicesList(unsigned int wid)</div><div class="ttdoc">Generates the planet services list.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01617">dev_sysedit.c:1617</a></div></div>
@@ -2068,7 +2072,7 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_a4191c0e44c808537579d4fd49c719866"><div class="ttname"><a href="space_8c.html#a4191c0e44c808537579d4fd49c719866">planet_getService</a></div><div class="ttdeci">int planet_getService(const char *name)</div><div class="ttdoc">Converts name to planet service flag.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00182">space.c:182</a></div></div>
 <div class="ttc" id="aeconomy_8c_html_a8b301da4d0140dd080f94aab1a48c7e6"><div class="ttname"><a href="economy_8c.html#a8b301da4d0140dd080f94aab1a48c7e6">economy_execQueued</a></div><div class="ttdeci">int economy_execQueued(void)</div><div class="ttdoc">Calls economy_refresh if an economy update is queued.</div><div class="ttdef"><b>Definition:</b> <a href="economy_8c_source.html#l00455">economy.c:455</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_a2da856138b3dca397a69c3b4d440d769"><div class="ttname"><a href="toolkit_8c.html#a2da856138b3dca397a69c3b4d440d769">window_dimWindow</a></div><div class="ttdeci">void window_dimWindow(unsigned int wid, int *w, int *h)</div><div class="ttdoc">Gets the dimensions of a window.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00340">toolkit.c:340</a></div></div>
-<div class="ttc" id="adev__sysedit_8c_html_aa7f67c7939b41a6c0f3f87fe21b08f07"><div class="ttname"><a href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07">sysedit_btnFactionSet</a></div><div class="ttdeci">static void sysedit_btnFactionSet(unsigned int wid, const char *unused)</div><div class="ttdoc">Actually modifies the faction.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01948">dev_sysedit.c:1948</a></div></div>
+<div class="ttc" id="adev__sysedit_8c_html_aa7f67c7939b41a6c0f3f87fe21b08f07"><div class="ttname"><a href="dev__sysedit_8c.html#aa7f67c7939b41a6c0f3f87fe21b08f07">sysedit_btnFactionSet</a></div><div class="ttdeci">static void sysedit_btnFactionSet(unsigned int wid, const char *unused)</div><div class="ttdoc">Actually modifies the faction.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01952">dev_sysedit.c:1952</a></div></div>
 <div class="ttc" id="afont_8c_html_a78aea6a63643c7b50d178fbf20bcc265"><div class="ttname"><a href="font_8c.html#a78aea6a63643c7b50d178fbf20bcc265">gl_print</a></div><div class="ttdeci">void gl_print(const glFont *ft_font, const double x, const double y, const glColour *c, const char *fmt,...)</div><div class="ttdoc">Prints text on screen like printf.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00684">font.c:684</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_a766767c807f05727a62bdb3f35a56b4a"><div class="ttname"><a href="dev__sysedit_8c.html#a766767c807f05727a62bdb3f35a56b4a">sysedit_checkButtons</a></div><div class="ttdeci">static void sysedit_checkButtons(void)</div><div class="ttdoc">Checks to see which buttons should be active and the likes.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01169">dev_sysedit.c:1169</a></div></div>
 <div class="ttc" id="aopengl__render_8c_html_a79637b81de80d8e3599ba65b99a4fa7a"><div class="ttname"><a href="opengl__render_8c.html#a79637b81de80d8e3599ba65b99a4fa7a">gl_renderScaleSprite</a></div><div class="ttdeci">void gl_renderScaleSprite(const glTexture *sprite, const double bx, const double by, const int sx, const int sy, const double bw, const double bh, const glColour *c)</div><div class="ttdoc">Blits a scaled sprite, position is in absolute screen coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00586">opengl_render.c:586</a></div></div>
@@ -2114,7 +2118,7 @@ $(function() {
 <div class="ttc" id="adev__sysedit_8c_html_a29d127711a256a08c49b665f3c1896ad"><div class="ttname"><a href="dev__sysedit_8c.html#a29d127711a256a08c49b665f3c1896ad">sysedit_editPntClose</a></div><div class="ttdeci">static void sysedit_editPntClose(unsigned int wid, const char *unused)</div><div class="ttdoc">Closes the planet editor, saving the changes made.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l00302">dev_sysedit.c:302</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_a6a3d90d8dcb52482f3d85f3126471a50"><div class="ttname"><a href="dev__sysedit_8c.html#a6a3d90d8dcb52482f3d85f3126471a50">sysedit_btnAddService</a></div><div class="ttdeci">static void sysedit_btnAddService(unsigned int wid, const char *unused)</div><div class="ttdoc">Adds a service to a planet.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01687">dev_sysedit.c:1687</a></div></div>
 <div class="ttc" id="afont_8c_html_a54ef6885d2c4aba9620cf9034f1e0587"><div class="ttname"><a href="font_8c.html#a54ef6885d2c4aba9620cf9034f1e0587">gl_printWidthRaw</a></div><div class="ttdeci">int gl_printWidthRaw(const glFont *ft_font, const char *text)</div><div class="ttdoc">Gets the width that it would take to print some text.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00954">font.c:954</a></div></div>
-<div class="ttc" id="adev__sysedit_8c_html_a471f6a97cd55469cd4ef500ebbe9141d"><div class="ttname"><a href="dev__sysedit_8c.html#a471f6a97cd55469cd4ef500ebbe9141d">sysedit_planetGFX</a></div><div class="ttdeci">static void sysedit_planetGFX(unsigned int wid_unused, const char *wgt)</div><div class="ttdoc">Opens the planet landing or space graphic editor.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01996">dev_sysedit.c:1996</a></div></div>
+<div class="ttc" id="adev__sysedit_8c_html_a471f6a97cd55469cd4ef500ebbe9141d"><div class="ttname"><a href="dev__sysedit_8c.html#a471f6a97cd55469cd4ef500ebbe9141d">sysedit_planetGFX</a></div><div class="ttdeci">static void sysedit_planetGFX(unsigned int wid_unused, const char *wgt)</div><div class="ttdoc">Opens the planet landing or space graphic editor.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l02000">dev_sysedit.c:2000</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_a166cfd1183e862bfc8c3c90b6f3d0d26"><div class="ttname"><a href="dev__sysedit_8c.html#a166cfd1183e862bfc8c3c90b6f3d0d26">sysedit_renderAsteroidExclusion</a></div><div class="ttdeci">static void sysedit_renderAsteroidExclusion(double bx, double by, AsteroidExclusion *aexcl, int selected)</div><div class="ttdoc">Draws an asteroid exclusion zone on the map.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l00741">dev_sysedit.c:741</a></div></div>
 <div class="ttc" id="aarray_8h_html_a04e810cfeccd1cd523f9b28e68aca564"><div class="ttname"><a href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a></div><div class="ttdeci">#define array_free(ptr_array)</div><div class="ttdoc">Frees memory allocated and sets array to NULL.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00158">array.h:158</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_a6450aaa1a2140485789789f2beedf909"><div class="ttname"><a href="dev__sysedit_8c.html#a6450aaa1a2140485789789f2beedf909">SELECT_JUMPPOINT</a></div><div class="ttdeci">#define SELECT_JUMPPOINT</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l00060">dev_sysedit.c:60</a></div></div>
@@ -2124,7 +2128,7 @@ $(function() {
 <div class="ttc" id="aopengl__render_8c_html_a07c18360de97d72996c913433d2ce868"><div class="ttname"><a href="opengl__render_8c.html#a07c18360de97d72996c913433d2ce868">gl_renderCircle</a></div><div class="ttdeci">void gl_renderCircle(const double cx, const double cy, const double r, const glColour *c, int filled)</div><div class="ttdoc">Draws a circle.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__render_8c_source.html#l00748">opengl_render.c:748</a></div></div>
 <div class="ttc" id="arng_8c_html_a3a6c194a55c239306d07bbf83f5972e9"><div class="ttname"><a href="rng_8c.html#a3a6c194a55c239306d07bbf83f5972e9">c</a></div><div class="ttdeci">static const double c[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00264">rng.c:264</a></div></div>
 <div class="ttc" id="asafelanes_8c_html_af8ac9a56c1f66bfa79fd56fcbf035e95"><div class="ttname"><a href="safelanes_8c.html#af8ac9a56c1f66bfa79fd56fcbf035e95">safelanes_get</a></div><div class="ttdeci">SafeLane * safelanes_get(int faction, int standing, const StarSystem *system)</div><div class="ttdoc">Gets a set of safelanes for a faction and system.</div><div class="ttdef"><b>Definition:</b> <a href="safelanes_8c_source.html#l00184">safelanes.c:184</a></div></div>
-<div class="ttc" id="adev__sysedit_8c_html_a8cc9551f1418a4ea3fe8866dc081496d"><div class="ttname"><a href="dev__sysedit_8c.html#a8cc9551f1418a4ea3fe8866dc081496d">sysedit_btnEdit</a></div><div class="ttdeci">static void sysedit_btnEdit(unsigned int wid_unused, const char *unused)</div><div class="ttdoc">Opens the system property editor.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01978">dev_sysedit.c:1978</a></div></div>
+<div class="ttc" id="adev__sysedit_8c_html_a8cc9551f1418a4ea3fe8866dc081496d"><div class="ttname"><a href="dev__sysedit_8c.html#a8cc9551f1418a4ea3fe8866dc081496d">sysedit_btnEdit</a></div><div class="ttdeci">static void sysedit_btnEdit(unsigned int wid_unused, const char *unused)</div><div class="ttdoc">Opens the system property editor.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01982">dev_sysedit.c:1982</a></div></div>
 <div class="ttc" id="aspace_8c_html_a15a645bcba4b6951bd2b6f50a86fe33a"><div class="ttname"><a href="space_8c.html#a15a645bcba4b6951bd2b6f50a86fe33a">planet_getServiceName</a></div><div class="ttdeci">const char * planet_getServiceName(int service)</div><div class="ttdoc">Gets the (English) name for a service code.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00163">space.c:163</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00168">array.h:168</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_a2474483cc99937881b7974832cade6cb"><div class="ttname"><a href="dev__sysedit_8c.html#a2474483cc99937881b7974832cade6cb">jp_type_check_exit_update</a></div><div class="ttdeci">static void jp_type_check_exit_update(unsigned int wid, const char *str)</div><div class="ttdoc">Updates the jump point checkboxes.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01418">dev_sysedit.c:1418</a></div></div>
@@ -2137,7 +2141,7 @@ $(function() {
 <div class="ttc" id="adev__sysedit_8c_html_a729749456024409266a41cea4838c986"><div class="ttname"><a href="dev__sysedit_8c.html#a729749456024409266a41cea4838c986">sysedit_deselect</a></div><div class="ttdeci">static void sysedit_deselect(void)</div><div class="ttdoc">Deselects everything.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01153">dev_sysedit.c:1153</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_ab5e9cc46ab71d5ca4cfdcd585eed20b5"><div class="ttname"><a href="dev__sysedit_8c.html#ab5e9cc46ab71d5ca4cfdcd585eed20b5">sysedit_btnScale</a></div><div class="ttdeci">static void sysedit_btnScale(unsigned int wid_unused, const char *unused)</div><div class="ttdoc">Interface for scaling a system from the system view.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l00505">dev_sysedit.c:505</a></div></div>
 <div class="ttc" id="anaev_8h_html_a996f7be338ccb40d1a2a5abc1ad61759"><div class="ttname"><a href="naev_8h.html#a996f7be338ccb40d1a2a5abc1ad61759">ABS</a></div><div class="ttdeci">#define ABS(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00036">naev.h:36</a></div></div>
-<div class="ttc" id="adev__sysedit_8c_html_a0f2802722c90f3e45f1ead73ba1a00f8"><div class="ttname"><a href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8">sysedit_btnGFXApply</a></div><div class="ttdeci">static void sysedit_btnGFXApply(unsigned int wid, const char *wgt)</div><div class="ttdoc">Apply new graphics.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l02075">dev_sysedit.c:2075</a></div></div>
+<div class="ttc" id="adev__sysedit_8c_html_a0f2802722c90f3e45f1ead73ba1a00f8"><div class="ttname"><a href="dev__sysedit_8c.html#a0f2802722c90f3e45f1ead73ba1a00f8">sysedit_btnGFXApply</a></div><div class="ttdeci">static void sysedit_btnGFXApply(unsigned int wid, const char *wgt)</div><div class="ttdoc">Apply new graphics.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l02079">dev_sysedit.c:2079</a></div></div>
 <div class="ttc" id="aspace_8c_html_abc168326eccb19f04c4b88ded6ca8dc9"><div class="ttname"><a href="space_8c.html#abc168326eccb19f04c4b88ded6ca8dc9">space_getRndPlanet</a></div><div class="ttdeci">const char * space_getRndPlanet(int landable, unsigned int services, int(*filter)(Planet *p))</div><div class="ttdoc">Gets the name of a random planet.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00508">space.c:508</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_a80f99742dc8c0e32d8f517a0a39abbe7"><div class="ttname"><a href="dev__sysedit_8c.html#a80f99742dc8c0e32d8f517a0a39abbe7">sysedit_selectRm</a></div><div class="ttdeci">static void sysedit_selectRm(Select_t *sel)</div><div class="ttdoc">Removes a system from the selection.</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l01235">dev_sysedit.c:1235</a></div></div>
 <div class="ttc" id="adev__sysedit_8c_html_ac2dcb996aaa21ae408635a918fa8f44f"><div class="ttname"><a href="dev__sysedit_8c.html#ac2dcb996aaa21ae408635a918fa8f44f">sysedit_my</a></div><div class="ttdeci">static double sysedit_my</div><div class="ttdef"><b>Definition:</b> <a href="dev__sysedit_8c_source.html#l00095">dev_sysedit.c:95</a></div></div>
