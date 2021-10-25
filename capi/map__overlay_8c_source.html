@@ -779,145 +779,147 @@ $(function() {
 <div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;            <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;         map_overlayToScreenPos( &amp;x, &amp;y, pstk[i]-&gt;solid-&gt;pos.x, pstk[i]-&gt;solid-&gt;pos.y );</div>
 <div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;         r = detect * pstk[i]-&gt;stats.ew_detect; <span class="comment">/* Already divided by res */</span></div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;         glUseProgram( shaders.stealthaura.program );</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;         <a class="code" href="opengl__render_8c.html#a0aa98ac24727b994d59512572ad61c1c">gl_renderShader</a>( x, y, r, r, 0., &amp;shaders.stealthaura, &amp;col, 1 );</div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;      }</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160; </div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;      glBlendEquation( GL_FUNC_ADD );</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;      glBindFramebuffer(GL_FRAMEBUFFER, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.current_fbo);</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;      glClearColor( 0., 0., 0., 1. );</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160; </div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;      glUseProgram(shaders.stealthoverlay.program);</div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;      glBindTexture( GL_TEXTURE_2D, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo_tex[2] );</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160; </div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;      glEnableVertexAttribArray( shaders.stealthoverlay.vertex );</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;      <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_squareVBO, shaders.stealthoverlay.vertex,</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;            0, 2, GL_FLOAT, 0 );</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160; </div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;      <span class="comment">/* Set shader uniforms. */</span></div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;      gl_uniformColor(shaders.stealthoverlay.color, &amp;cWhite);</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;      gl_Matrix4_Uniform(shaders.stealthoverlay.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;      gl_Matrix4_Uniform(shaders.stealthoverlay.tex_mat, gl_Matrix4_Identity());</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160; </div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;      <span class="comment">/* Draw. */</span></div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160; </div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;      <span class="comment">/* Clear state. */</span></div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;      glDisableVertexAttribArray( shaders.texture.vertex );</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;   }</div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160; </div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   <span class="comment">/* Render the targeted pilot */</span></div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;   <span class="keywordflow">if</span> (t!=0)</div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;      <a class="code" href="gui_8c.html#ab1e01c282e6354627b43c6430912d4dd">gui_renderPilot</a>( pstk[t], RADAR_RECT, w, h, res, 1 );</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160; </div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;   <span class="comment">/* Render the player. */</span></div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   <a class="code" href="gui_8c.html#a1fb885b94dca1e589d2a6243b510ba7f">gui_renderPlayer</a>( res, 1 );</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160; </div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;   <span class="comment">/* Render markers. */</span></div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;   ovr_mrkRenderAll( res );</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;}</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160; </div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> ovr_mrkRenderAll( <span class="keywordtype">double</span> res )</div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;{</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   (void) res;</div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;      <span class="keywordtype">double</span> x, y;</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;      ovr_marker_t *mrk = &amp;ovr_markers[i];</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160; </div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;      map_overlayToScreenPos( &amp;x, &amp;y, mrk-&gt;u.pt.x, mrk-&gt;u.pt.y );</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;      glUseProgram( shaders.hilight.program );</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;      glUniform1f( shaders.hilight.dt, ovr_dt );</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;      <a class="code" href="opengl__render_8c.html#a0aa98ac24727b994d59512572ad61c1c">gl_renderShader</a>( x, y, 9., 9., 0., &amp;shaders.hilight, &amp;cRadar_hilight, 1 );</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160; </div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;      <span class="keywordflow">if</span> (mrk-&gt;text != NULL)</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;         <a class="code" href="font_8c.html#ae6f6d6e4d219dc6f9f3cae77f0925905">gl_printMarkerRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, x+10., y-<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>.h/2., &amp;cRadar_hilight, mrk-&gt;text );</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;   }</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;}</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160; </div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;<span class="keywordtype">void</span> ovr_mrkFree (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;{</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;   <span class="comment">/* Clear markers. */</span></div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;   ovr_mrkClear();</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160; </div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   <span class="comment">/* Free array. */</span></div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( ovr_markers );</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;   ovr_markers = NULL;</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;}</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160; </div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;<span class="keywordtype">void</span> ovr_mrkClear (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;{</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++)</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;      ovr_mrkCleanup( &amp;ovr_markers[i] );</div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;   <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ovr_markers, <a class="code" href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a>(ovr_markers), <a class="code" href="array_8h.html#a323accdda5fcec44e36b805afa216efc">array_end</a>(ovr_markers) );</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;}</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160; </div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> ovr_mrkCleanup( ovr_marker_t *mrk )</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;{</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   free( mrk-&gt;text );</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;   mrk-&gt;text = NULL;</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;}</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160; </div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;<span class="keyword">static</span> ovr_marker_t *ovr_mrkNew (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;{</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   ovr_marker_t *mrk;</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160; </div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;   <span class="keywordflow">if</span> (ovr_markers == NULL)</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;      ovr_markers = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>(  ovr_marker_t );</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160; </div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;   mrk = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;ovr_markers );</div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;   memset( mrk, 0, <span class="keyword">sizeof</span>( ovr_marker_t ) );</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;   mrk-&gt;id = ++mrk_idgen;</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   mrk-&gt;refcount = 1;</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   <span class="keywordflow">return</span> mrk;</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;}</div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160; </div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ovr_mrkAddPoint( <span class="keyword">const</span> <span class="keywordtype">char</span> *text, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y )</div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;{</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;   ovr_marker_t *mrk;</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160; </div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;   <span class="comment">/* Check existing ones first. */</span></div>
-<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
-<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;      mrk = &amp;ovr_markers[i];</div>
-<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;      <span class="keywordflow">if</span> (((text==NULL) &amp;&amp; (mrk-&gt;text!=NULL)) ||</div>
-<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;            ((text!=NULL) &amp;&amp; ((mrk-&gt;text==NULL) || strcmp(text,mrk-&gt;text)!=0)))</div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160; </div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;      <span class="keywordflow">if</span> (hypotf( x-mrk-&gt;u.pt.x, y-mrk-&gt;u.pt.y ) &gt; 1e-3)</div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160; </div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;      <span class="comment">/* Found same marker already! */</span></div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;      mrk-&gt;refcount++;</div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;      <span class="keywordflow">return</span> mrk-&gt;id;</div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;   }</div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160; </div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;   <span class="comment">/* Create new one. */</span></div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;   mrk = ovr_mrkNew();</div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;   mrk-&gt;type = 0;</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;   <span class="keywordflow">if</span> (text != NULL)</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;      mrk-&gt;text = strdup( text );</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;   mrk-&gt;u.pt.x = x;</div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;   mrk-&gt;u.pt.y = y;</div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160; </div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;   <span class="keywordflow">return</span> mrk-&gt;id;</div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;}</div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160; </div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;<span class="keywordtype">void</span> ovr_mrkRm( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
-<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;{</div>
-<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
-<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;      ovr_marker_t *m = &amp;ovr_markers[i];</div>
-<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;      <span class="keywordflow">if</span> (<span class="keywordtype">id</span> != m-&gt;id)</div>
-<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160; </div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;      m-&gt;refcount--;</div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;      <span class="keywordflow">if</span> (m-&gt;refcount &gt; 0)</div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;         <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160; </div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;      ovr_mrkCleanup( m );</div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;      <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ovr_markers, &amp;m[0], &amp;m[1] );</div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;   }</div>
-<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;}</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;         <span class="keywordflow">if</span> (r &gt; 0.) {</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;            glUseProgram( shaders.stealthaura.program );</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;            <a class="code" href="opengl__render_8c.html#a0aa98ac24727b994d59512572ad61c1c">gl_renderShader</a>( x, y, r, r, 0., &amp;shaders.stealthaura, &amp;col, 1 );</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;         }</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;      }</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160; </div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;      glBlendEquation( GL_FUNC_ADD );</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;      glBindFramebuffer(GL_FRAMEBUFFER, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.current_fbo);</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;      glClearColor( 0., 0., 0., 1. );</div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160; </div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;      glUseProgram(shaders.stealthoverlay.program);</div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;      glBindTexture( GL_TEXTURE_2D, <a class="code" href="opengl_8c.html#ae34e0efdcb12b0be6286521bb6740706">gl_screen</a>.fbo_tex[2] );</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160; </div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;      glEnableVertexAttribArray( shaders.stealthoverlay.vertex );</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;      <a class="code" href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a>( gl_squareVBO, shaders.stealthoverlay.vertex,</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;            0, 2, GL_FLOAT, 0 );</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160; </div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;      <span class="comment">/* Set shader uniforms. */</span></div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;      gl_uniformColor(shaders.stealthoverlay.color, &amp;cWhite);</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;      gl_Matrix4_Uniform(shaders.stealthoverlay.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;      gl_Matrix4_Uniform(shaders.stealthoverlay.tex_mat, gl_Matrix4_Identity());</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160; </div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;      <span class="comment">/* Draw. */</span></div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160; </div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;      <span class="comment">/* Clear state. */</span></div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;      glDisableVertexAttribArray( shaders.texture.vertex );</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   }</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160; </div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;   <span class="comment">/* Render the targeted pilot */</span></div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   <span class="keywordflow">if</span> (t!=0)</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;      <a class="code" href="gui_8c.html#ab1e01c282e6354627b43c6430912d4dd">gui_renderPilot</a>( pstk[t], RADAR_RECT, w, h, res, 1 );</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160; </div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   <span class="comment">/* Render the player. */</span></div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;   <a class="code" href="gui_8c.html#a1fb885b94dca1e589d2a6243b510ba7f">gui_renderPlayer</a>( res, 1 );</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160; </div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;   <span class="comment">/* Render markers. */</span></div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;   ovr_mrkRenderAll( res );</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;}</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160; </div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> ovr_mrkRenderAll( <span class="keywordtype">double</span> res )</div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;{</div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;   (void) res;</div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;      <span class="keywordtype">double</span> x, y;</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;      ovr_marker_t *mrk = &amp;ovr_markers[i];</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160; </div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;      map_overlayToScreenPos( &amp;x, &amp;y, mrk-&gt;u.pt.x, mrk-&gt;u.pt.y );</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;      glUseProgram( shaders.hilight.program );</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;      glUniform1f( shaders.hilight.dt, ovr_dt );</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;      <a class="code" href="opengl__render_8c.html#a0aa98ac24727b994d59512572ad61c1c">gl_renderShader</a>( x, y, 9., 9., 0., &amp;shaders.hilight, &amp;cRadar_hilight, 1 );</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160; </div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;      <span class="keywordflow">if</span> (mrk-&gt;text != NULL)</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;         <a class="code" href="font_8c.html#ae6f6d6e4d219dc6f9f3cae77f0925905">gl_printMarkerRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, x+10., y-<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>.h/2., &amp;cRadar_hilight, mrk-&gt;text );</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;   }</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;}</div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160; </div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;<span class="keywordtype">void</span> ovr_mrkFree (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;{</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   <span class="comment">/* Clear markers. */</span></div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   ovr_mrkClear();</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160; </div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;   <span class="comment">/* Free array. */</span></div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( ovr_markers );</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;   ovr_markers = NULL;</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;}</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160; </div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;<span class="keywordtype">void</span> ovr_mrkClear (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;{</div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++)</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;      ovr_mrkCleanup( &amp;ovr_markers[i] );</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;   <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ovr_markers, <a class="code" href="array_8h.html#ac9a99c83677f4324066a52dc8e5cf91f">array_begin</a>(ovr_markers), <a class="code" href="array_8h.html#a323accdda5fcec44e36b805afa216efc">array_end</a>(ovr_markers) );</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;}</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160; </div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> ovr_mrkCleanup( ovr_marker_t *mrk )</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;{</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;   free( mrk-&gt;text );</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;   mrk-&gt;text = NULL;</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;}</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160; </div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;<span class="keyword">static</span> ovr_marker_t *ovr_mrkNew (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;{</div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;   ovr_marker_t *mrk;</div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160; </div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;   <span class="keywordflow">if</span> (ovr_markers == NULL)</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;      ovr_markers = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>(  ovr_marker_t );</div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160; </div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;   mrk = &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>( &amp;ovr_markers );</div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   memset( mrk, 0, <span class="keyword">sizeof</span>( ovr_marker_t ) );</div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   mrk-&gt;id = ++mrk_idgen;</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;   mrk-&gt;refcount = 1;</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;   <span class="keywordflow">return</span> mrk;</div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;}</div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160; </div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ovr_mrkAddPoint( <span class="keyword">const</span> <span class="keywordtype">char</span> *text, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y )</div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;{</div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;   ovr_marker_t *mrk;</div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160; </div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;   <span class="comment">/* Check existing ones first. */</span></div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;      mrk = &amp;ovr_markers[i];</div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;      <span class="keywordflow">if</span> (((text==NULL) &amp;&amp; (mrk-&gt;text!=NULL)) ||</div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;            ((text!=NULL) &amp;&amp; ((mrk-&gt;text==NULL) || strcmp(text,mrk-&gt;text)!=0)))</div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160; </div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;      <span class="keywordflow">if</span> (hypotf( x-mrk-&gt;u.pt.x, y-mrk-&gt;u.pt.y ) &gt; 1e-3)</div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160; </div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;      <span class="comment">/* Found same marker already! */</span></div>
+<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;      mrk-&gt;refcount++;</div>
+<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;      <span class="keywordflow">return</span> mrk-&gt;id;</div>
+<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;   }</div>
+<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160; </div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;   <span class="comment">/* Create new one. */</span></div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;   mrk = ovr_mrkNew();</div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;   mrk-&gt;type = 0;</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;   <span class="keywordflow">if</span> (text != NULL)</div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;      mrk-&gt;text = strdup( text );</div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;   mrk-&gt;u.pt.x = x;</div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;   mrk-&gt;u.pt.y = y;</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160; </div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;   <span class="keywordflow">return</span> mrk-&gt;id;</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;}</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160; </div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;<span class="keywordtype">void</span> ovr_mrkRm( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;{</div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(ovr_markers); i++) {</div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;      ovr_marker_t *m = &amp;ovr_markers[i];</div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;      <span class="keywordflow">if</span> (<span class="keywordtype">id</span> != m-&gt;id)</div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160; </div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;      m-&gt;refcount--;</div>
+<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;      <span class="keywordflow">if</span> (m-&gt;refcount &gt; 0)</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;         <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160; </div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;      ovr_mrkCleanup( m );</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;      <a class="code" href="array_8h.html#a7c3fb96e542d880f6f5f42594154e0f0">array_erase</a>( &amp;ovr_markers, &amp;m[0], &amp;m[1] );</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;   }</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="apilot__ew_8c_html_accc57907c09c3b5f45249b121a776886"><div class="ttname"><a href="pilot__ew_8c.html#accc57907c09c3b5f45249b121a776886">pilot_sensorRange</a></div><div class="ttdeci">double pilot_sensorRange(void)</div><div class="ttdoc">Returns the default sensor range for the current system.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00213">pilot_ew.c:213</a></div></div>
 <div class="ttc" id="aopengl__vbo_8c_html_acec4f799c6a06738c21ddfef975d9c36"><div class="ttname"><a href="opengl__vbo_8c.html#acec4f799c6a06738c21ddfef975d9c36">gl_vboActivateAttribOffset</a></div><div class="ttdeci">void gl_vboActivateAttribOffset(gl_vbo *vbo, GLuint index, GLuint offset, GLint size, GLenum type, GLsizei stride)</div><div class="ttdoc">Activates a VBO's offset.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__vbo_8c_source.html#l00232">opengl_vbo.c:232</a></div></div>
