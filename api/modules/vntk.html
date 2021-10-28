@@ -81,7 +81,7 @@
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
-  <li><strong>lmusic</strong></li>
+  <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
@@ -128,32 +128,28 @@
   <li><a href="../modules/prng.html">prng</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
-  <li><a href="../modules/vntk.html">vntk</a></li>
+  <li><strong>vntk</strong></li>
 </ul>
 
 </div>
 
 <div id="content">
 
-<h1>Module <code>lmusic</code></h1>
-<p>Small music handling library.</p>
-<p>
-<p>Based on Love2D and Naev API</p>
+<h1>Module <code>vntk</code></h1>
+<p>Small wrapper around vn to do toolkit type stuff.</p>
+<p> Is similar to the builtin tk module but with much more functionality.
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#play">play (filename, params)</a></td>
-	<td class="summary">Plays a music with fade-in and fade-out.</td>
+	<td class="name" nowrap><a href="#msg">msg ([title], text, params)</a></td>
+	<td class="summary">Creates a series of message boxes to be displayed.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#stop">stop (m)</a></td>
-	<td class="summary">Stops a playing music (or all of them)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#clear">clear ()</a></td>
-	<td class="summary">Forcibly stops playing music and restarts Naev's game music.</td>
+	<td class="name" nowrap><a href="#yesno">yesno ([title], text, params)</a></td>
+	<td class="summary">Creates a series of message boxes with a yes or no prompt to be displayed.</td>
 	</tr>
 </table>
 
@@ -165,66 +161,66 @@
 
     <dl class="function">
     <dt>
-    <a name = "play"></a>
-    <strong>play (filename, params)</strong>
+    <a name = "msg"></a>
+    <strong>msg ([title], text, params)</strong>
     </dt>
     <dd>
-    Plays a music with fade-in and fade-out.
+    Creates a series of message boxes to be displayed.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">filename</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">file</span></span>
-         Name or file object to open.
+        <li><span class="parameter">title</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Title of the message boxes.
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">text</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         String or table of strings for the text of each consecutive text box.
         </li>
         <li><span class="parameter">params</span>
-            <span class="types"><span class="type">tab</span></span>
-         Parameter table.
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of parameters
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "yesno"></a>
+    <strong>yesno ([title], text, params)</strong>
+    </dt>
+    <dd>
+    Creates a series of message boxes with a yes or no prompt to be displayed.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">title</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Title of the message boxes.
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">text</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         String or table of strings for the text of each consecutive text box.
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of parameters
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">tab</span></span>
-        New music object.
+           <span class="types"><span class="type">boolean</span></span>
+        true if yes was pressed or false otherwise.
     </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "stop"></a>
-    <strong>stop (m)</strong>
-    </dt>
-    <dd>
-    Stops a playing music (or all of them)
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">m</span>
-            <span class="types"><span class="type">tab</span> or <span class="type">nil</span></span>
-         Music to stop, or nil to stop all playing music.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "clear"></a>
-    <strong>clear ()</strong>
-    </dt>
-    <dd>
-    Forcibly stops playing music and restarts Naev's game music.
-
-
-
 
 
 
