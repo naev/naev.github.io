@@ -58,22 +58,23 @@ $(function() {
 <code>#include &quot;nlua_file.h&quot;</code><br />
 <code>#include &quot;log.h&quot;</code><br />
 <code>#include &quot;nluadef.h&quot;</code><br />
+<code>#include &quot;physfs.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for nlua_file.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="nlua__file_8c__incl.png" border="0" usemap="#_2home_2runner_2work_2naev_8github_8io_2naev_8github_8io_2staging_2src_2nlua__file_8c" alt=""/></div>
 <map name="_2home_2runner_2work_2naev_8github_8io_2naev_8github_8io_2staging_2src_2nlua__file_8c" id="_2home_2runner_2work_2naev_8github_8io_2naev_8github_8io_2staging_2src_2nlua__file_8c">
-<area shape="rect" title="Handles files." alt="" coords="162,5,403,61"/>
-<area shape="rect" href="physfsrwops_8h_source.html" title=" " alt="" coords="57,109,173,136"/>
-<area shape="rect" href="nlua__file_8h_source.html" title=" " alt="" coords="197,109,286,136"/>
-<area shape="rect" href="log_8h_source.html" title=" " alt="" coords="297,184,351,211"/>
-<area shape="rect" href="nluadef_8h_source.html" title=" " alt="" coords="361,109,444,136"/>
+<area shape="rect" title="Handles files." alt="" coords="143,5,385,61"/>
+<area shape="rect" href="physfsrwops_8h_source.html" title=" " alt="" coords="79,109,195,136"/>
 <area shape="rect" title=" " alt="" coords="5,184,83,211"/>
-<area shape="rect" title=" " alt="" coords="107,184,165,211"/>
-<area shape="rect" href="nlua_8h_source.html" title=" " alt="" coords="210,184,273,211"/>
-<area shape="rect" href="nstring_8h_source.html" title=" " alt="" coords="285,259,363,285"/>
-<area shape="rect" href="attributes_8h_source.html" title=" " alt="" coords="354,333,451,360"/>
-<area shape="rect" href="ncompat_8h_source.html" title=" " alt="" coords="239,333,329,360"/>
+<area shape="rect" href="nlua__file_8h_source.html" title=" " alt="" coords="219,109,309,136"/>
+<area shape="rect" href="log_8h_source.html" title=" " alt="" coords="319,184,374,211"/>
+<area shape="rect" href="nluadef_8h_source.html" title=" " alt="" coords="384,109,467,136"/>
+<area shape="rect" title=" " alt="" coords="108,184,167,211"/>
+<area shape="rect" href="nlua_8h_source.html" title=" " alt="" coords="233,184,295,211"/>
+<area shape="rect" href="nstring_8h_source.html" title=" " alt="" coords="307,259,386,285"/>
+<area shape="rect" href="attributes_8h_source.html" title=" " alt="" coords="377,333,474,360"/>
+<area shape="rect" href="ncompat_8h_source.html" title=" " alt="" coords="261,333,352,360"/>
 </map>
 </div>
 </div>
@@ -123,6 +124,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ab090e36ec61a9cd268b85bec18c8bd54"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__file_8c.html#ab090e36ec61a9cd268b85bec18c8bd54">fileL_mkdir</a> (lua_State *L)</td></tr>
 <tr class="memdesc:ab090e36ec61a9cd268b85bec18c8bd54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a directory.  <a href="nlua__file_8c.html#ab090e36ec61a9cd268b85bec18c8bd54">More...</a><br /></td></tr>
 <tr class="separator:ab090e36ec61a9cd268b85bec18c8bd54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48fed02318588a0885a03a4d31b5625c"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__file_8c.html#a48fed02318588a0885a03a4d31b5625c">fileL_enumerate</a> (lua_State *L)</td></tr>
+<tr class="memdesc:a48fed02318588a0885a03a4d31b5625c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of files and subdirectories of a directory.  <a href="nlua__file_8c.html#a48fed02318588a0885a03a4d31b5625c">More...</a><br /></td></tr>
+<tr class="separator:a48fed02318588a0885a03a4d31b5625c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac60050c9ab49cbffee1a345f77025fcc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nlua__file_8c.html#ac60050c9ab49cbffee1a345f77025fcc">nlua_loadFile</a> (nlua_env env)</td></tr>
 <tr class="memdesc:ac60050c9ab49cbffee1a345f77025fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the file library.  <a href="nlua__file_8c.html#ac60050c9ab49cbffee1a345f77025fcc">More...</a><br /></td></tr>
 <tr class="separator:ac60050c9ab49cbffee1a345f77025fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,7 +188,46 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> close </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00227">227</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00230">230</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+
+</div>
+</div>
+<a id="a48fed02318588a0885a03a4d31b5625c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48fed02318588a0885a03a4d31b5625c">&#9670;&nbsp;</a></span>fileL_enumerate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int fileL_enumerate </td>
+          <td>(</td>
+          <td class="paramtype">lua_State *&#160;</td>
+          <td class="paramname"><em>L</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a list of files and subdirectories of a directory. </p>
+<p><em>Lua function parameter:</em> string dir Name of the directory to check. <em>Lua return parameter:</em> table Table containing all the names (strings) of the subdirectories and files in the directory. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">L</td><td>Lua State </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of variables on the Lua State stack.<br  />
+ </dd></dl>
+<p><em>Lua function:</em> enumerate </p>
+
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00435">435</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -223,7 +266,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> __eq </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00162">162</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00165">165</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -262,7 +305,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> filetype </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00391">391</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00394">394</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -301,7 +344,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> __gc </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00144">144</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00147">147</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -340,7 +383,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> isOpen </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00377">377</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00380">380</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -379,7 +422,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> mkdir </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00417">417</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00420">420</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -418,7 +461,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> getMode </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00349">349</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00352">352</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -457,7 +500,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> getFilename </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00335">335</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00338">338</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -496,7 +539,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> new </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00178">178</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00181">181</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -535,7 +578,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> open </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00198">198</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00201">201</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -574,7 +617,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> read </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00248">248</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00251">251</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -613,7 +656,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> seek </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00311">311</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00314">314</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -652,7 +695,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> getSize </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00363">363</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00366">366</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -691,7 +734,7 @@ Variables</h2></td></tr>
  </dd></dl>
 <p><em>Lua function:</em> write </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00278">278</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00281">281</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -731,7 +774,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if ind is a file. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00122">122</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00125">125</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -771,7 +814,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Newly pushed file. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00106">106</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00109">109</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -814,7 +857,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>File found at the index in the state. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00081">81</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00084">84</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -854,7 +897,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>File found at the index in the state. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00092">92</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00095">95</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -883,7 +926,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00061">61</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00064">64</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
@@ -922,29 +965,31 @@ Variables</h2></td></tr>
 <div class="line">   { <span class="stringliteral">&quot;isOpen&quot;</span>, <a class="code" href="nlua__file_8c.html#aa9fde1e67445f39f964fce98265ca008">fileL_isopen</a> },</div>
 <div class="line">   { <span class="stringliteral">&quot;filetype&quot;</span>, <a class="code" href="nlua__file_8c.html#ad7320901b6734755cf0f2daa6e9632d6">fileL_filetype</a> },</div>
 <div class="line">   { <span class="stringliteral">&quot;mkdir&quot;</span>, <a class="code" href="nlua__file_8c.html#ab090e36ec61a9cd268b85bec18c8bd54">fileL_mkdir</a> },</div>
+<div class="line">   { <span class="stringliteral">&quot;enumerate&quot;</span>, <a class="code" href="nlua__file_8c.html#a48fed02318588a0885a03a4d31b5625c">fileL_enumerate</a> },</div>
 <div class="line">   {0,0}</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>File metatable methods. </p>
 
-<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00037">37</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nlua__file_8c_source.html#l00039">39</a> of file <a class="el" href="nlua__file_8c_source.html">nlua_file.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="anlua__file_8c_html_a6b6e2b1423dda3f0610106cec114da90"><div class="ttname"><a href="nlua__file_8c.html#a6b6e2b1423dda3f0610106cec114da90">fileL_new</a></div><div class="ttdeci">static int fileL_new(lua_State *L)</div><div class="ttdoc">Opens a new file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00178">nlua_file.c:178</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_ab090e36ec61a9cd268b85bec18c8bd54"><div class="ttname"><a href="nlua__file_8c.html#ab090e36ec61a9cd268b85bec18c8bd54">fileL_mkdir</a></div><div class="ttdeci">static int fileL_mkdir(lua_State *L)</div><div class="ttdoc">Makes a directory.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00417">nlua_file.c:417</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_ab40cadd54cc3706d99990953cdda1eb8"><div class="ttname"><a href="nlua__file_8c.html#ab40cadd54cc3706d99990953cdda1eb8">fileL_open</a></div><div class="ttdeci">static int fileL_open(lua_State *L)</div><div class="ttdoc">Opens a File object.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00198">nlua_file.c:198</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_a118b21843c548745afb0596eeb58a266"><div class="ttname"><a href="nlua__file_8c.html#a118b21843c548745afb0596eeb58a266">fileL_close</a></div><div class="ttdeci">static int fileL_close(lua_State *L)</div><div class="ttdoc">Closes a file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00227">nlua_file.c:227</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_a2ea0e562ca45850d3848a8ba27ee1f9b"><div class="ttname"><a href="nlua__file_8c.html#a2ea0e562ca45850d3848a8ba27ee1f9b">fileL_write</a></div><div class="ttdeci">static int fileL_write(lua_State *L)</div><div class="ttdoc">Reads from an open file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00278">nlua_file.c:278</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_abe21666d4308681a5c7e7bbeafbe31cb"><div class="ttname"><a href="nlua__file_8c.html#abe21666d4308681a5c7e7bbeafbe31cb">fileL_name</a></div><div class="ttdeci">static int fileL_name(lua_State *L)</div><div class="ttdoc">Gets the name of a file object.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00335">nlua_file.c:335</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_ad7320901b6734755cf0f2daa6e9632d6"><div class="ttname"><a href="nlua__file_8c.html#ad7320901b6734755cf0f2daa6e9632d6">fileL_filetype</a></div><div class="ttdeci">static int fileL_filetype(lua_State *L)</div><div class="ttdoc">Checks to see the filetype of a path.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00391">nlua_file.c:391</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_a3b50fe2091e6d225a58fbb0b4bd95c34"><div class="ttname"><a href="nlua__file_8c.html#a3b50fe2091e6d225a58fbb0b4bd95c34">fileL_size</a></div><div class="ttdeci">static int fileL_size(lua_State *L)</div><div class="ttdoc">Gets the size of a file (must be open).</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00363">nlua_file.c:363</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_aaefbfaf057f7947c5886f44994d19e26"><div class="ttname"><a href="nlua__file_8c.html#aaefbfaf057f7947c5886f44994d19e26">fileL_gc</a></div><div class="ttdeci">static int fileL_gc(lua_State *L)</div><div class="ttdoc">Frees a file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00144">nlua_file.c:144</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_aa9fde1e67445f39f964fce98265ca008"><div class="ttname"><a href="nlua__file_8c.html#aa9fde1e67445f39f964fce98265ca008">fileL_isopen</a></div><div class="ttdeci">static int fileL_isopen(lua_State *L)</div><div class="ttdoc">Checks to see if a file is open.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00377">nlua_file.c:377</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_a956f2244ff3ebc5fd942db2bd373884d"><div class="ttname"><a href="nlua__file_8c.html#a956f2244ff3ebc5fd942db2bd373884d">fileL_eq</a></div><div class="ttdeci">static int fileL_eq(lua_State *L)</div><div class="ttdoc">Compares two files to see if they are the same.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00162">nlua_file.c:162</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_ab45661b3c743d54ae583913f40bb55b8"><div class="ttname"><a href="nlua__file_8c.html#ab45661b3c743d54ae583913f40bb55b8">fileL_read</a></div><div class="ttdeci">static int fileL_read(lua_State *L)</div><div class="ttdoc">Reads from an open file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00248">nlua_file.c:248</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_a2d82708430f4c5aa5d2bbb264b93ca11"><div class="ttname"><a href="nlua__file_8c.html#a2d82708430f4c5aa5d2bbb264b93ca11">fileL_seek</a></div><div class="ttdeci">static int fileL_seek(lua_State *L)</div><div class="ttdoc">Seeks in an open file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00311">nlua_file.c:311</a></div></div>
-<div class="ttc" id="anlua__file_8c_html_ace0e36c4a99c563902279a46349fc016"><div class="ttname"><a href="nlua__file_8c.html#ace0e36c4a99c563902279a46349fc016">fileL_mode</a></div><div class="ttdeci">static int fileL_mode(lua_State *L)</div><div class="ttdoc">Gets the mode a file is currently in.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00349">nlua_file.c:349</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_a6b6e2b1423dda3f0610106cec114da90"><div class="ttname"><a href="nlua__file_8c.html#a6b6e2b1423dda3f0610106cec114da90">fileL_new</a></div><div class="ttdeci">static int fileL_new(lua_State *L)</div><div class="ttdoc">Opens a new file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00181">nlua_file.c:181</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_ab090e36ec61a9cd268b85bec18c8bd54"><div class="ttname"><a href="nlua__file_8c.html#ab090e36ec61a9cd268b85bec18c8bd54">fileL_mkdir</a></div><div class="ttdeci">static int fileL_mkdir(lua_State *L)</div><div class="ttdoc">Makes a directory.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00420">nlua_file.c:420</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_ab40cadd54cc3706d99990953cdda1eb8"><div class="ttname"><a href="nlua__file_8c.html#ab40cadd54cc3706d99990953cdda1eb8">fileL_open</a></div><div class="ttdeci">static int fileL_open(lua_State *L)</div><div class="ttdoc">Opens a File object.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00201">nlua_file.c:201</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_a118b21843c548745afb0596eeb58a266"><div class="ttname"><a href="nlua__file_8c.html#a118b21843c548745afb0596eeb58a266">fileL_close</a></div><div class="ttdeci">static int fileL_close(lua_State *L)</div><div class="ttdoc">Closes a file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00230">nlua_file.c:230</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_a2ea0e562ca45850d3848a8ba27ee1f9b"><div class="ttname"><a href="nlua__file_8c.html#a2ea0e562ca45850d3848a8ba27ee1f9b">fileL_write</a></div><div class="ttdeci">static int fileL_write(lua_State *L)</div><div class="ttdoc">Reads from an open file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00281">nlua_file.c:281</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_abe21666d4308681a5c7e7bbeafbe31cb"><div class="ttname"><a href="nlua__file_8c.html#abe21666d4308681a5c7e7bbeafbe31cb">fileL_name</a></div><div class="ttdeci">static int fileL_name(lua_State *L)</div><div class="ttdoc">Gets the name of a file object.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00338">nlua_file.c:338</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_ad7320901b6734755cf0f2daa6e9632d6"><div class="ttname"><a href="nlua__file_8c.html#ad7320901b6734755cf0f2daa6e9632d6">fileL_filetype</a></div><div class="ttdeci">static int fileL_filetype(lua_State *L)</div><div class="ttdoc">Checks to see the filetype of a path.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00394">nlua_file.c:394</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_a3b50fe2091e6d225a58fbb0b4bd95c34"><div class="ttname"><a href="nlua__file_8c.html#a3b50fe2091e6d225a58fbb0b4bd95c34">fileL_size</a></div><div class="ttdeci">static int fileL_size(lua_State *L)</div><div class="ttdoc">Gets the size of a file (must be open).</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00366">nlua_file.c:366</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_aaefbfaf057f7947c5886f44994d19e26"><div class="ttname"><a href="nlua__file_8c.html#aaefbfaf057f7947c5886f44994d19e26">fileL_gc</a></div><div class="ttdeci">static int fileL_gc(lua_State *L)</div><div class="ttdoc">Frees a file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00147">nlua_file.c:147</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_aa9fde1e67445f39f964fce98265ca008"><div class="ttname"><a href="nlua__file_8c.html#aa9fde1e67445f39f964fce98265ca008">fileL_isopen</a></div><div class="ttdeci">static int fileL_isopen(lua_State *L)</div><div class="ttdoc">Checks to see if a file is open.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00380">nlua_file.c:380</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_a956f2244ff3ebc5fd942db2bd373884d"><div class="ttname"><a href="nlua__file_8c.html#a956f2244ff3ebc5fd942db2bd373884d">fileL_eq</a></div><div class="ttdeci">static int fileL_eq(lua_State *L)</div><div class="ttdoc">Compares two files to see if they are the same.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00165">nlua_file.c:165</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_ab45661b3c743d54ae583913f40bb55b8"><div class="ttname"><a href="nlua__file_8c.html#ab45661b3c743d54ae583913f40bb55b8">fileL_read</a></div><div class="ttdeci">static int fileL_read(lua_State *L)</div><div class="ttdoc">Reads from an open file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00251">nlua_file.c:251</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_a48fed02318588a0885a03a4d31b5625c"><div class="ttname"><a href="nlua__file_8c.html#a48fed02318588a0885a03a4d31b5625c">fileL_enumerate</a></div><div class="ttdeci">static int fileL_enumerate(lua_State *L)</div><div class="ttdoc">Returns a list of files and subdirectories of a directory.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00435">nlua_file.c:435</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_a2d82708430f4c5aa5d2bbb264b93ca11"><div class="ttname"><a href="nlua__file_8c.html#a2d82708430f4c5aa5d2bbb264b93ca11">fileL_seek</a></div><div class="ttdeci">static int fileL_seek(lua_State *L)</div><div class="ttdoc">Seeks in an open file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00314">nlua_file.c:314</a></div></div>
+<div class="ttc" id="anlua__file_8c_html_ace0e36c4a99c563902279a46349fc016"><div class="ttname"><a href="nlua__file_8c.html#ace0e36c4a99c563902279a46349fc016">fileL_mode</a></div><div class="ttdeci">static int fileL_mode(lua_State *L)</div><div class="ttdoc">Gets the mode a file is currently in.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00352">nlua_file.c:352</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
