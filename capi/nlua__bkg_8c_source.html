@@ -51,79 +51,72 @@ $(function() {
 <a href="nlua__bkg_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * See Licensing and Copyright notice in naev.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;lauxlib.h&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="naev_8h.html">naev.h</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;nlua_bkg.h&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;background.h&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;log.h&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;nlua_col.h&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;nlua_tex.h&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;nluadef.h&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">/* Background methods. */</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">bkgL_clear</a>( lua_State *L );</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">bkgL_image</a>( lua_State *L );</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="nlua__bkg_8c.html#a360c2eaf5e0f03bf2728be6a0f65ee3b">   29</a></span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg <a class="code" href="nlua__bkg_8c.html#a360c2eaf5e0f03bf2728be6a0f65ee3b">bkgL_methods</a>[] = {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;   { <span class="stringliteral">&quot;clear&quot;</span>, <a class="code" href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">bkgL_clear</a> },</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;   { <span class="stringliteral">&quot;image&quot;</span>, <a class="code" href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">bkgL_image</a> },</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;   {0,0}</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}; </div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="nlua__bkg_8c.html#ab21ef3e1cf234bc67ca4b59b20b1b7bc">   44</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#ab21ef3e1cf234bc67ca4b59b20b1b7bc">nlua_loadBackground</a>( nlua_env env )</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;   nlua_register(env, <span class="stringliteral">&quot;bkg&quot;</span>, <a class="code" href="nlua__bkg_8c.html#a360c2eaf5e0f03bf2728be6a0f65ee3b">bkgL_methods</a>, 0);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">   68</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">bkgL_clear</a>( lua_State *L )</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;   <a class="code" href="background_8c.html#a1fe30ef02f5af60b80f42dda3805a2c5">background_clear</a>();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">   96</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">bkgL_image</a>( lua_State *L )</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;{</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   glTexture *tex;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   <span class="keywordtype">double</span> x,y, move, scale, angle;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;   <span class="keyword">const</span> glColour *col;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;   <span class="keywordtype">int</span> foreground;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   tex   = <a class="code" href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a>(L,1);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   x     = luaL_checknumber(L,2);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   y     = luaL_checknumber(L,3);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   move  = luaL_checknumber(L,4);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;   scale = luaL_checknumber(L,5);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   angle = luaL_optnumber(L,6,0.) * M_PI / 180.;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   col   = luaL_optcolour(L,7,&amp;cWhite);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   foreground = lua_toboolean(L,8);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   <span class="comment">/* Create image. */</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="background_8c.html#a1407a160c9bfe97d37fee99f232a4faa">background_addImage</a>( tex, x, y, move, scale, angle, col, foreground );</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;   lua_pushnumber(L,<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;lauxlib.h&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="naev_8h.html">naev.h</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;nlua_bkg.h&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;background.h&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;log.h&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;nlua_col.h&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;nlua_tex.h&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;nluadef.h&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">/* Background methods. */</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">bkgL_clear</a>( lua_State *L );</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">bkgL_image</a>( lua_State *L );</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="nlua__bkg_8c.html#a360c2eaf5e0f03bf2728be6a0f65ee3b">   26</a></span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg <a class="code" href="nlua__bkg_8c.html#a360c2eaf5e0f03bf2728be6a0f65ee3b">bkgL_methods</a>[] = {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;   { <span class="stringliteral">&quot;clear&quot;</span>, <a class="code" href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">bkgL_clear</a> },</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;   { <span class="stringliteral">&quot;image&quot;</span>, <a class="code" href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">bkgL_image</a> },</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;   {0,0}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}; </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="nlua__bkg_8c.html#ab21ef3e1cf234bc67ca4b59b20b1b7bc">   38</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#ab21ef3e1cf234bc67ca4b59b20b1b7bc">nlua_loadBackground</a>( nlua_env env )</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;   nlua_register(env, <span class="stringliteral">&quot;bkg&quot;</span>, <a class="code" href="nlua__bkg_8c.html#a360c2eaf5e0f03bf2728be6a0f65ee3b">bkgL_methods</a>, 0);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">   58</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">bkgL_clear</a>( lua_State *L )</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   <a class="code" href="background_8c.html#a1fe30ef02f5af60b80f42dda3805a2c5">background_clear</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">   85</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">bkgL_image</a>( lua_State *L )</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;{</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;   glTexture *tex;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;   <span class="keywordtype">double</span> x,y, move, scale, angle;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;   <span class="keyword">const</span> glColour *col;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> id;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;   <span class="keywordtype">int</span> foreground;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   <span class="comment">/* Parse parameters. */</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   tex   = <a class="code" href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a>(L,1);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;   x     = luaL_checknumber(L,2);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   y     = luaL_checknumber(L,3);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   move  = luaL_checknumber(L,4);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;   scale = luaL_checknumber(L,5);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;   angle = luaL_optnumber(L,6,0.) * M_PI / 180.;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;   col   = luaL_optcolour(L,7,&amp;cWhite);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   foreground = lua_toboolean(L,8);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;   <span class="comment">/* Create image. */</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="background_8c.html#a1407a160c9bfe97d37fee99f232a4faa">background_addImage</a>( tex, x, y, move, scale, angle, col, foreground );</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   lua_pushnumber(L,<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="anlua__bkg_8c_html_a22b7e6599e74851b81b9116a15740970"><div class="ttname"><a href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">bkgL_image</a></div><div class="ttdeci">static int bkgL_image(lua_State *L)</div><div class="ttdoc">Adds a background image.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__bkg_8c_source.html#l00096">nlua_bkg.c:96</a></div></div>
-<div class="ttc" id="anlua__bkg_8c_html_a91648681919986cc4ac011db58274fe7"><div class="ttname"><a href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">bkgL_clear</a></div><div class="ttdeci">static int bkgL_clear(lua_State *L)</div><div class="ttdoc">Lua bindings to interact with the background.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__bkg_8c_source.html#l00068">nlua_bkg.c:68</a></div></div>
+<div class="ttc" id="anlua__bkg_8c_html_a22b7e6599e74851b81b9116a15740970"><div class="ttname"><a href="nlua__bkg_8c.html#a22b7e6599e74851b81b9116a15740970">bkgL_image</a></div><div class="ttdeci">static int bkgL_image(lua_State *L)</div><div class="ttdoc">Adds a background image.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__bkg_8c_source.html#l00085">nlua_bkg.c:85</a></div></div>
+<div class="ttc" id="anlua__bkg_8c_html_a91648681919986cc4ac011db58274fe7"><div class="ttname"><a href="nlua__bkg_8c.html#a91648681919986cc4ac011db58274fe7">bkgL_clear</a></div><div class="ttdeci">static int bkgL_clear(lua_State *L)</div><div class="ttdoc">Lua bindings to interact with the background.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__bkg_8c_source.html#l00058">nlua_bkg.c:58</a></div></div>
 <div class="ttc" id="abackground_8c_html_a1407a160c9bfe97d37fee99f232a4faa"><div class="ttname"><a href="background_8c.html#a1407a160c9bfe97d37fee99f232a4faa">background_addImage</a></div><div class="ttdeci">unsigned int background_addImage(glTexture *image, double x, double y, double move, double scale, double angle, const glColour *col, int foreground)</div><div class="ttdoc">Adds a new background image.</div><div class="ttdef"><b>Definition:</b> <a href="background_8c_source.html#l00291">background.c:291</a></div></div>
 <div class="ttc" id="abackground_8c_html_a1fe30ef02f5af60b80f42dda3805a2c5"><div class="ttname"><a href="background_8c.html#a1fe30ef02f5af60b80f42dda3805a2c5">background_clear</a></div><div class="ttdeci">void background_clear(void)</div><div class="ttdoc">Cleans up the background stuff.</div><div class="ttdef"><b>Definition:</b> <a href="background_8c_source.html#l00471">background.c:471</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
-<div class="ttc" id="anlua__bkg_8c_html_ab21ef3e1cf234bc67ca4b59b20b1b7bc"><div class="ttname"><a href="nlua__bkg_8c.html#ab21ef3e1cf234bc67ca4b59b20b1b7bc">nlua_loadBackground</a></div><div class="ttdeci">int nlua_loadBackground(nlua_env env)</div><div class="ttdoc">Loads the graphics library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__bkg_8c_source.html#l00044">nlua_bkg.c:44</a></div></div>
+<div class="ttc" id="anlua__bkg_8c_html_ab21ef3e1cf234bc67ca4b59b20b1b7bc"><div class="ttname"><a href="nlua__bkg_8c.html#ab21ef3e1cf234bc67ca4b59b20b1b7bc">nlua_loadBackground</a></div><div class="ttdeci">int nlua_loadBackground(nlua_env env)</div><div class="ttdoc">Loads the graphics library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__bkg_8c_source.html#l00038">nlua_bkg.c:38</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_a4a2511286a7f85cc4d71a34b84a63ebd"><div class="ttname"><a href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a></div><div class="ttdeci">glTexture * luaL_checktex(lua_State *L, int ind)</div><div class="ttdoc">Gets texture at index or raises error if there is no texture at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00109">nlua_tex.c:109</a></div></div>
-<div class="ttc" id="anlua__bkg_8c_html_a360c2eaf5e0f03bf2728be6a0f65ee3b"><div class="ttname"><a href="nlua__bkg_8c.html#a360c2eaf5e0f03bf2728be6a0f65ee3b">bkgL_methods</a></div><div class="ttdeci">static const luaL_Reg bkgL_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__bkg_8c_source.html#l00029">nlua_bkg.c:29</a></div></div>
+<div class="ttc" id="anlua__bkg_8c_html_a360c2eaf5e0f03bf2728be6a0f65ee3b"><div class="ttname"><a href="nlua__bkg_8c.html#a360c2eaf5e0f03bf2728be6a0f65ee3b">bkgL_methods</a></div><div class="ttdeci">static const luaL_Reg bkgL_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__bkg_8c_source.html#l00026">nlua_bkg.c:26</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
