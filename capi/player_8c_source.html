@@ -2889,172 +2889,172 @@ $(function() {
 <div class="line"><a name="l03308"></a><span class="lineno"> 3308</span>&#160;      xmlr_strd(node, <span class="stringliteral">&quot;gui&quot;</span>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.gui);</div>
 <div class="line"><a name="l03309"></a><span class="lineno"> 3309</span>&#160;      xmlr_int(node, <span class="stringliteral">&quot;guiOverride&quot;</span>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.guiOverride);</div>
 <div class="line"><a name="l03310"></a><span class="lineno"> 3310</span>&#160;      xmlr_int(node, <span class="stringliteral">&quot;mapOverlay&quot;</span>, map_overlay_enabled);</div>
-<div class="line"><a name="l03311"></a><span class="lineno"> 3311</span>&#160;      ovr_setOpen(map_overlay_enabled);</div>
-<div class="line"><a name="l03312"></a><span class="lineno"> 3312</span>&#160;      xmlr_float(node, <span class="stringliteral">&quot;radar_res&quot;</span>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.radar_res);</div>
-<div class="line"><a name="l03313"></a><span class="lineno"> 3313</span>&#160;      xmlr_int(node, <span class="stringliteral">&quot;eq_outfitMode&quot;</span>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.eq_outfitMode);</div>
-<div class="line"><a name="l03314"></a><span class="lineno"> 3314</span>&#160;      xmlr_int(node, <span class="stringliteral">&quot;map_minimal&quot;</span>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.map_minimal);</div>
-<div class="line"><a name="l03315"></a><span class="lineno"> 3315</span>&#160; </div>
-<div class="line"><a name="l03316"></a><span class="lineno"> 3316</span>&#160;      <span class="comment">/* Time. */</span></div>
-<div class="line"><a name="l03317"></a><span class="lineno"> 3317</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;time&quot;</span>)) {</div>
-<div class="line"><a name="l03318"></a><span class="lineno"> 3318</span>&#160;         <span class="keywordtype">double</span> rem = -1.;</div>
-<div class="line"><a name="l03319"></a><span class="lineno"> 3319</span>&#160;         <span class="keywordtype">int</span> cycles=-1, periods=-1, seconds=-1;</div>
-<div class="line"><a name="l03320"></a><span class="lineno"> 3320</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l03321"></a><span class="lineno"> 3321</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l03322"></a><span class="lineno"> 3322</span>&#160;            xmlr_int(cur, <span class="stringliteral">&quot;SCU&quot;</span>, cycles);</div>
-<div class="line"><a name="l03323"></a><span class="lineno"> 3323</span>&#160;            xmlr_int(cur, <span class="stringliteral">&quot;STP&quot;</span>, periods);</div>
-<div class="line"><a name="l03324"></a><span class="lineno"> 3324</span>&#160;            xmlr_int(cur, <span class="stringliteral">&quot;STU&quot;</span>, seconds);</div>
-<div class="line"><a name="l03325"></a><span class="lineno"> 3325</span>&#160;            xmlr_float(cur, <span class="stringliteral">&quot;Remainder&quot;</span>, rem);</div>
-<div class="line"><a name="l03326"></a><span class="lineno"> 3326</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l03327"></a><span class="lineno"> 3327</span>&#160;         <span class="keywordflow">if</span> ((cycles &lt; 0) || (periods &lt; 0) || (seconds &lt; 0) || (rem&lt;0.))</div>
-<div class="line"><a name="l03328"></a><span class="lineno"> 3328</span>&#160;            WARN(_(<span class="stringliteral">&quot;Malformed time in save game!&quot;</span>));</div>
-<div class="line"><a name="l03329"></a><span class="lineno"> 3329</span>&#160;         <a class="code" href="ntime_8c.html#abb0866ed53e10da7b5a270301a4a2850">ntime_setR</a>( cycles, periods, seconds, rem );</div>
-<div class="line"><a name="l03330"></a><span class="lineno"> 3330</span>&#160;         <span class="keywordflow">if</span> ((cycles &gt;= 0) || (periods &gt;= 0) || (seconds &gt;= 0))</div>
-<div class="line"><a name="l03331"></a><span class="lineno"> 3331</span>&#160;            time_set = 1;</div>
-<div class="line"><a name="l03332"></a><span class="lineno"> 3332</span>&#160;      }</div>
-<div class="line"><a name="l03333"></a><span class="lineno"> 3333</span>&#160; </div>
-<div class="line"><a name="l03334"></a><span class="lineno"> 3334</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;ship&quot;</span>))</div>
-<div class="line"><a name="l03335"></a><span class="lineno"> 3335</span>&#160;         <a class="code" href="player_8c.html#a4686bba8c937cb487053206e9e456f2d">player_parseShip</a>(node, 1);</div>
-<div class="line"><a name="l03336"></a><span class="lineno"> 3336</span>&#160; </div>
-<div class="line"><a name="l03337"></a><span class="lineno"> 3337</span>&#160;      <span class="comment">/* Parse ships. */</span></div>
-<div class="line"><a name="l03338"></a><span class="lineno"> 3338</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;ships&quot;</span>)) {</div>
-<div class="line"><a name="l03339"></a><span class="lineno"> 3339</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l03340"></a><span class="lineno"> 3340</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l03341"></a><span class="lineno"> 3341</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;ship&quot;</span>))</div>
-<div class="line"><a name="l03342"></a><span class="lineno"> 3342</span>&#160;               <a class="code" href="player_8c.html#a4686bba8c937cb487053206e9e456f2d">player_parseShip</a>(cur, 0);</div>
-<div class="line"><a name="l03343"></a><span class="lineno"> 3343</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l03344"></a><span class="lineno"> 3344</span>&#160;      }</div>
-<div class="line"><a name="l03345"></a><span class="lineno"> 3345</span>&#160; </div>
-<div class="line"><a name="l03346"></a><span class="lineno"> 3346</span>&#160;      <span class="comment">/* Parse GUIs. */</span></div>
-<div class="line"><a name="l03347"></a><span class="lineno"> 3347</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;guis&quot;</span>)) {</div>
-<div class="line"><a name="l03348"></a><span class="lineno"> 3348</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l03349"></a><span class="lineno"> 3349</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l03350"></a><span class="lineno"> 3350</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;gui&quot;</span>))</div>
-<div class="line"><a name="l03351"></a><span class="lineno"> 3351</span>&#160;               <a class="code" href="player__gui_8c.html#a962aafd58b7234366ae79bbab8a2b87f">player_guiAdd</a>( xml_get(cur) );</div>
-<div class="line"><a name="l03352"></a><span class="lineno"> 3352</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l03353"></a><span class="lineno"> 3353</span>&#160;      }</div>
-<div class="line"><a name="l03354"></a><span class="lineno"> 3354</span>&#160; </div>
-<div class="line"><a name="l03355"></a><span class="lineno"> 3355</span>&#160;      <span class="comment">/* Parse outfits. */</span></div>
-<div class="line"><a name="l03356"></a><span class="lineno"> 3356</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;outfits&quot;</span>)) {</div>
-<div class="line"><a name="l03357"></a><span class="lineno"> 3357</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l03358"></a><span class="lineno"> 3358</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l03359"></a><span class="lineno"> 3359</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;outfit&quot;</span>)) {</div>
-<div class="line"><a name="l03360"></a><span class="lineno"> 3360</span>&#160;               <span class="keywordtype">int</span> q;</div>
-<div class="line"><a name="l03361"></a><span class="lineno"> 3361</span>&#160;               <span class="keyword">const</span> Outfit *o = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( xml_get(cur) );</div>
-<div class="line"><a name="l03362"></a><span class="lineno"> 3362</span>&#160;               <span class="keywordflow">if</span> (o == NULL) {</div>
-<div class="line"><a name="l03363"></a><span class="lineno"> 3363</span>&#160;                  WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; was saved but does not exist!&quot;</span>), xml_get(cur));</div>
-<div class="line"><a name="l03364"></a><span class="lineno"> 3364</span>&#160;                  <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l03365"></a><span class="lineno"> 3365</span>&#160;               }</div>
-<div class="line"><a name="l03366"></a><span class="lineno"> 3366</span>&#160; </div>
-<div class="line"><a name="l03367"></a><span class="lineno"> 3367</span>&#160;               xmlr_attr_float( cur, <span class="stringliteral">&quot;quantity&quot;</span>, q );</div>
-<div class="line"><a name="l03368"></a><span class="lineno"> 3368</span>&#160;               <span class="keywordflow">if</span> (q == 0) {</div>
-<div class="line"><a name="l03369"></a><span class="lineno"> 3369</span>&#160;                  WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; was saved without quantity!&quot;</span>), o-&gt;name);</div>
-<div class="line"><a name="l03370"></a><span class="lineno"> 3370</span>&#160;                  <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l03371"></a><span class="lineno"> 3371</span>&#160;               }</div>
-<div class="line"><a name="l03372"></a><span class="lineno"> 3372</span>&#160; </div>
-<div class="line"><a name="l03373"></a><span class="lineno"> 3373</span>&#160;               <a class="code" href="player_8c.html#a2879b779c15cddabfa8b93d43351ae1d">player_addOutfit</a>( o, q );</div>
-<div class="line"><a name="l03374"></a><span class="lineno"> 3374</span>&#160;            }</div>
-<div class="line"><a name="l03375"></a><span class="lineno"> 3375</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l03376"></a><span class="lineno"> 3376</span>&#160;      }</div>
-<div class="line"><a name="l03377"></a><span class="lineno"> 3377</span>&#160; </div>
-<div class="line"><a name="l03378"></a><span class="lineno"> 3378</span>&#160;      <span class="comment">/* Parse licenses. */</span></div>
-<div class="line"><a name="l03379"></a><span class="lineno"> 3379</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;licenses&quot;</span>))</div>
-<div class="line"><a name="l03380"></a><span class="lineno"> 3380</span>&#160;         <a class="code" href="player_8c.html#a706489f5e335ecd638c897ca5f4bed62">player_parseLicenses</a>(node);</div>
-<div class="line"><a name="l03381"></a><span class="lineno"> 3381</span>&#160; </div>
-<div class="line"><a name="l03382"></a><span class="lineno"> 3382</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l03383"></a><span class="lineno"> 3383</span>&#160; </div>
-<div class="line"><a name="l03384"></a><span class="lineno"> 3384</span>&#160;   <span class="comment">/* Handle cases where ship is missing. */</span></div>
-<div class="line"><a name="l03385"></a><span class="lineno"> 3385</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p == NULL) {</div>
-<div class="line"><a name="l03386"></a><span class="lineno"> 3386</span>&#160;      pilot_clearFlagsRaw( <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a> );</div>
-<div class="line"><a name="l03387"></a><span class="lineno"> 3387</span>&#160;      pilot_setFlagRaw( <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a>, PILOT_PLAYER );</div>
-<div class="line"><a name="l03388"></a><span class="lineno"> 3388</span>&#160;      pilot_setFlagRaw( <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a>, PILOT_NO_OUTFITS );</div>
-<div class="line"><a name="l03389"></a><span class="lineno"> 3389</span>&#160;      WARN(_(<span class="stringliteral">&quot;Player ship does not exist!&quot;</span>));</div>
-<div class="line"><a name="l03390"></a><span class="lineno"> 3390</span>&#160; </div>
-<div class="line"><a name="l03391"></a><span class="lineno"> 3391</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="player_8c.html#a2b5046792ac7de00953e8922b9505d0a">player_stack</a>) == 0) {</div>
-<div class="line"><a name="l03392"></a><span class="lineno"> 3392</span>&#160;         WARN(_(<span class="stringliteral">&quot;Player has no other ships, giving starting ship.&quot;</span>));</div>
-<div class="line"><a name="l03393"></a><span class="lineno"> 3393</span>&#160;         <a class="code" href="pilot_8c.html#a285a8a2ccc4cae44b2021510146937d9">pilot_create</a>( <a class="code" href="ship_8c.html#a118a1d01080c85b078d8824e9bd3234e">ship_get</a>(<a class="code" href="start_8c.html#ae10796e567b19a33ff863707f085479a">start_ship</a>()), <span class="stringliteral">&quot;MIA&quot;</span>,</div>
-<div class="line"><a name="l03394"></a><span class="lineno"> 3394</span>&#160;               <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(<span class="stringliteral">&quot;Player&quot;</span>), <span class="stringliteral">&quot;player&quot;</span>, 0., NULL, NULL, <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a>, 0, 0 );</div>
-<div class="line"><a name="l03395"></a><span class="lineno"> 3395</span>&#160;      }</div>
-<div class="line"><a name="l03396"></a><span class="lineno"> 3396</span>&#160;      <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l03397"></a><span class="lineno"> 3397</span>&#160; </div>
-<div class="line"><a name="l03398"></a><span class="lineno"> 3398</span>&#160;         <span class="comment">/* Just give player.p a random ship in the stack. */</span></div>
-<div class="line"><a name="l03399"></a><span class="lineno"> 3399</span>&#160;         old_ship = <a class="code" href="player_8c.html#a2b5046792ac7de00953e8922b9505d0a">player_stack</a>[<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="player_8c.html#a2b5046792ac7de00953e8922b9505d0a">player_stack</a>)-1].p;</div>
-<div class="line"><a name="l03400"></a><span class="lineno"> 3400</span>&#160;         <a class="code" href="pilot_8c.html#a285a8a2ccc4cae44b2021510146937d9">pilot_create</a>( old_ship-&gt;ship, old_ship-&gt;name,</div>
-<div class="line"><a name="l03401"></a><span class="lineno"> 3401</span>&#160;               <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(<span class="stringliteral">&quot;Player&quot;</span>), <span class="stringliteral">&quot;player&quot;</span>, 0., NULL, NULL, <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a>, 0, 0 );</div>
-<div class="line"><a name="l03402"></a><span class="lineno"> 3402</span>&#160;         <a class="code" href="player_8c.html#a7c559775373a88bb8c7855c33dd45d5a">player_rmShip</a>( old_ship-&gt;name );</div>
-<div class="line"><a name="l03403"></a><span class="lineno"> 3403</span>&#160;         WARN(_(<span class="stringliteral">&quot;Giving player ship &#39;%s&#39;.&quot;</span>), <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;name );</div>
-<div class="line"><a name="l03404"></a><span class="lineno"> 3404</span>&#160;      }</div>
-<div class="line"><a name="l03405"></a><span class="lineno"> 3405</span>&#160;   }</div>
-<div class="line"><a name="l03406"></a><span class="lineno"> 3406</span>&#160; </div>
-<div class="line"><a name="l03407"></a><span class="lineno"> 3407</span>&#160;   <span class="comment">/* Check. */</span></div>
-<div class="line"><a name="l03408"></a><span class="lineno"> 3408</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p == NULL) {</div>
-<div class="line"><a name="l03409"></a><span class="lineno"> 3409</span>&#160;      ERR(_(<span class="stringliteral">&quot;Something went horribly wrong, player does not exist after load...&quot;</span>));</div>
-<div class="line"><a name="l03410"></a><span class="lineno"> 3410</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l03411"></a><span class="lineno"> 3411</span>&#160;   }</div>
-<div class="line"><a name="l03412"></a><span class="lineno"> 3412</span>&#160; </div>
-<div class="line"><a name="l03413"></a><span class="lineno"> 3413</span>&#160;   <span class="comment">/* Reset player speed */</span></div>
-<div class="line"><a name="l03414"></a><span class="lineno"> 3414</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.speed = 1.;</div>
-<div class="line"><a name="l03415"></a><span class="lineno"> 3415</span>&#160; </div>
-<div class="line"><a name="l03416"></a><span class="lineno"> 3416</span>&#160;   <span class="comment">/* set global thingies */</span></div>
-<div class="line"><a name="l03417"></a><span class="lineno"> 3417</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits = <a class="code" href="player_8c.html#a8aef5ae0f583922e8cdbaa17d0511d39">player_creds</a>;</div>
-<div class="line"><a name="l03418"></a><span class="lineno"> 3418</span>&#160;   <span class="keywordflow">if</span> (!time_set) {</div>
-<div class="line"><a name="l03419"></a><span class="lineno"> 3419</span>&#160;      WARN(_(<span class="stringliteral">&quot;Save has no time information, setting to start information.&quot;</span>));</div>
-<div class="line"><a name="l03420"></a><span class="lineno"> 3420</span>&#160;      <a class="code" href="ntime_8c.html#a05bc728691f23c6e9d3087f42359eb0b">ntime_set</a>( <a class="code" href="start_8c.html#a9f221f2b7bc45d6999b0e03faf501ab8">start_date</a>() );</div>
-<div class="line"><a name="l03421"></a><span class="lineno"> 3421</span>&#160;   }</div>
-<div class="line"><a name="l03422"></a><span class="lineno"> 3422</span>&#160; </div>
-<div class="line"><a name="l03423"></a><span class="lineno"> 3423</span>&#160;   <span class="comment">/* set player in system */</span></div>
-<div class="line"><a name="l03424"></a><span class="lineno"> 3424</span>&#160;   pnt = <a class="code" href="space_8c.html#acc33d70bb34cc03dfc393e73e2c4a1fb">planet_get</a>( planet );</div>
-<div class="line"><a name="l03425"></a><span class="lineno"> 3425</span>&#160;   <span class="comment">/* Get random planet if it&#39;s NULL. */</span></div>
-<div class="line"><a name="l03426"></a><span class="lineno"> 3426</span>&#160;   <span class="keywordflow">if</span> ((pnt == NULL) || (<a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>(planet) == NULL) ||</div>
-<div class="line"><a name="l03427"></a><span class="lineno"> 3427</span>&#160;         !planet_hasService(pnt, PLANET_SERVICE_LAND)) {</div>
-<div class="line"><a name="l03428"></a><span class="lineno"> 3428</span>&#160;      WARN(_(<span class="stringliteral">&quot;Player starts out in non-existent or invalid planet &#39;%s&#39;,&quot;</span></div>
-<div class="line"><a name="l03429"></a><span class="lineno"> 3429</span>&#160;            <span class="stringliteral">&quot;trying to find a suitable one instead.&quot;</span>),</div>
-<div class="line"><a name="l03430"></a><span class="lineno"> 3430</span>&#160;            planet );</div>
-<div class="line"><a name="l03431"></a><span class="lineno"> 3431</span>&#160; </div>
-<div class="line"><a name="l03432"></a><span class="lineno"> 3432</span>&#160;      <span class="comment">/* Find a landable, inhabited planet that&#39;s in a system, offers refueling</span></div>
-<div class="line"><a name="l03433"></a><span class="lineno"> 3433</span>&#160;<span class="comment">       * and meets the following additional criteria:</span></div>
-<div class="line"><a name="l03434"></a><span class="lineno"> 3434</span>&#160;<span class="comment">       *</span></div>
-<div class="line"><a name="l03435"></a><span class="lineno"> 3435</span>&#160;<span class="comment">       *    0: Shipyard, outfitter, non-hostile</span></div>
-<div class="line"><a name="l03436"></a><span class="lineno"> 3436</span>&#160;<span class="comment">       *    1: Outfitter, non-hostile</span></div>
-<div class="line"><a name="l03437"></a><span class="lineno"> 3437</span>&#160;<span class="comment">       *    2: None</span></div>
-<div class="line"><a name="l03438"></a><span class="lineno"> 3438</span>&#160;<span class="comment">       *</span></div>
-<div class="line"><a name="l03439"></a><span class="lineno"> 3439</span>&#160;<span class="comment">       * If no planet meeting the current criteria can be found, the next</span></div>
-<div class="line"><a name="l03440"></a><span class="lineno"> 3440</span>&#160;<span class="comment">       * set of criteria is tried until none remain.</span></div>
-<div class="line"><a name="l03441"></a><span class="lineno"> 3441</span>&#160;<span class="comment">       */</span></div>
-<div class="line"><a name="l03442"></a><span class="lineno"> 3442</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">char</span> *found = NULL;</div>
-<div class="line"><a name="l03443"></a><span class="lineno"> 3443</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;3; i++) {</div>
-<div class="line"><a name="l03444"></a><span class="lineno"> 3444</span>&#160;         services = PLANET_SERVICE_LAND | PLANET_SERVICE_INHABITED |</div>
-<div class="line"><a name="l03445"></a><span class="lineno"> 3445</span>&#160;               PLANET_SERVICE_REFUEL;</div>
-<div class="line"><a name="l03446"></a><span class="lineno"> 3446</span>&#160; </div>
-<div class="line"><a name="l03447"></a><span class="lineno"> 3447</span>&#160;         <span class="keywordflow">if</span> (i == 0)</div>
-<div class="line"><a name="l03448"></a><span class="lineno"> 3448</span>&#160;            services |= PLANET_SERVICE_SHIPYARD;</div>
-<div class="line"><a name="l03449"></a><span class="lineno"> 3449</span>&#160; </div>
-<div class="line"><a name="l03450"></a><span class="lineno"> 3450</span>&#160;         <span class="keywordflow">if</span> (i != 2)</div>
-<div class="line"><a name="l03451"></a><span class="lineno"> 3451</span>&#160;            services |= PLANET_SERVICE_OUTFITS;</div>
-<div class="line"><a name="l03452"></a><span class="lineno"> 3452</span>&#160; </div>
-<div class="line"><a name="l03453"></a><span class="lineno"> 3453</span>&#160;         found = <a class="code" href="space_8c.html#abc168326eccb19f04c4b88ded6ca8dc9">space_getRndPlanet</a>( 1, services,</div>
-<div class="line"><a name="l03454"></a><span class="lineno"> 3454</span>&#160;               (i != 2) ? <a class="code" href="player_8c.html#ac20e77b3e0d15d7cfb9b3351f783f0d8">player_filterSuitablePlanet</a> : NULL );</div>
-<div class="line"><a name="l03455"></a><span class="lineno"> 3455</span>&#160;         <span class="keywordflow">if</span> (found != NULL)</div>
-<div class="line"><a name="l03456"></a><span class="lineno"> 3456</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l03457"></a><span class="lineno"> 3457</span>&#160; </div>
-<div class="line"><a name="l03458"></a><span class="lineno"> 3458</span>&#160;         WARN(_(<span class="stringliteral">&quot;Could not find a planet satisfying criteria %d.&quot;</span>), i);</div>
-<div class="line"><a name="l03459"></a><span class="lineno"> 3459</span>&#160;      }</div>
-<div class="line"><a name="l03460"></a><span class="lineno"> 3460</span>&#160; </div>
-<div class="line"><a name="l03461"></a><span class="lineno"> 3461</span>&#160;      <span class="keywordflow">if</span> (found == NULL) {</div>
-<div class="line"><a name="l03462"></a><span class="lineno"> 3462</span>&#160;         WARN(_(<span class="stringliteral">&quot;Could not find a suitable planet. Choosing a random planet.&quot;</span>));</div>
-<div class="line"><a name="l03463"></a><span class="lineno"> 3463</span>&#160;         found = <a class="code" href="space_8c.html#abc168326eccb19f04c4b88ded6ca8dc9">space_getRndPlanet</a>(0, 0, NULL); <span class="comment">/* This should never, ever fail. */</span></div>
-<div class="line"><a name="l03464"></a><span class="lineno"> 3464</span>&#160;      }</div>
-<div class="line"><a name="l03465"></a><span class="lineno"> 3465</span>&#160;      pnt = <a class="code" href="space_8c.html#acc33d70bb34cc03dfc393e73e2c4a1fb">planet_get</a>( found );</div>
-<div class="line"><a name="l03466"></a><span class="lineno"> 3466</span>&#160;   }</div>
-<div class="line"><a name="l03467"></a><span class="lineno"> 3467</span>&#160;   sys = <a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pnt-&gt;name ) );</div>
-<div class="line"><a name="l03468"></a><span class="lineno"> 3468</span>&#160;   <a class="code" href="space_8c.html#aecd4a44beb778fc67ff7652c325c5bab">space_gfxLoad</a>( sys );</div>
-<div class="line"><a name="l03469"></a><span class="lineno"> 3469</span>&#160;   a = RNGF() * 2.*M_PI;</div>
-<div class="line"><a name="l03470"></a><span class="lineno"> 3470</span>&#160;   r = RNGF() * pnt-&gt;radius * 0.8;</div>
-<div class="line"><a name="l03471"></a><span class="lineno"> 3471</span>&#160;   <a class="code" href="player_8c.html#a448beeae7efa85a54ce1899143662334">player_warp</a>( pnt-&gt;pos.x + r*cos(a), pnt-&gt;pos.y + r*sin(a) );</div>
-<div class="line"><a name="l03472"></a><span class="lineno"> 3472</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;dir = RNG(0,359) * M_PI/180.;</div>
-<div class="line"><a name="l03473"></a><span class="lineno"> 3473</span>&#160; </div>
-<div class="line"><a name="l03474"></a><span class="lineno"> 3474</span>&#160;   <span class="comment">/* initialize the system */</span></div>
-<div class="line"><a name="l03475"></a><span class="lineno"> 3475</span>&#160;   <a class="code" href="space_8c.html#ab9f199a88ec5ce5532bcd593a7ba52d5">space_init</a>( sys-&gt;name );</div>
-<div class="line"><a name="l03476"></a><span class="lineno"> 3476</span>&#160;   map_clear(); <span class="comment">/* sets the map up */</span></div>
+<div class="line"><a name="l03311"></a><span class="lineno"> 3311</span>&#160;      xmlr_float(node, <span class="stringliteral">&quot;radar_res&quot;</span>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.radar_res);</div>
+<div class="line"><a name="l03312"></a><span class="lineno"> 3312</span>&#160;      xmlr_int(node, <span class="stringliteral">&quot;eq_outfitMode&quot;</span>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.eq_outfitMode);</div>
+<div class="line"><a name="l03313"></a><span class="lineno"> 3313</span>&#160;      xmlr_int(node, <span class="stringliteral">&quot;map_minimal&quot;</span>, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.map_minimal);</div>
+<div class="line"><a name="l03314"></a><span class="lineno"> 3314</span>&#160; </div>
+<div class="line"><a name="l03315"></a><span class="lineno"> 3315</span>&#160;      <span class="comment">/* Time. */</span></div>
+<div class="line"><a name="l03316"></a><span class="lineno"> 3316</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;time&quot;</span>)) {</div>
+<div class="line"><a name="l03317"></a><span class="lineno"> 3317</span>&#160;         <span class="keywordtype">double</span> rem = -1.;</div>
+<div class="line"><a name="l03318"></a><span class="lineno"> 3318</span>&#160;         <span class="keywordtype">int</span> cycles=-1, periods=-1, seconds=-1;</div>
+<div class="line"><a name="l03319"></a><span class="lineno"> 3319</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l03320"></a><span class="lineno"> 3320</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l03321"></a><span class="lineno"> 3321</span>&#160;            xmlr_int(cur, <span class="stringliteral">&quot;SCU&quot;</span>, cycles);</div>
+<div class="line"><a name="l03322"></a><span class="lineno"> 3322</span>&#160;            xmlr_int(cur, <span class="stringliteral">&quot;STP&quot;</span>, periods);</div>
+<div class="line"><a name="l03323"></a><span class="lineno"> 3323</span>&#160;            xmlr_int(cur, <span class="stringliteral">&quot;STU&quot;</span>, seconds);</div>
+<div class="line"><a name="l03324"></a><span class="lineno"> 3324</span>&#160;            xmlr_float(cur, <span class="stringliteral">&quot;Remainder&quot;</span>, rem);</div>
+<div class="line"><a name="l03325"></a><span class="lineno"> 3325</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l03326"></a><span class="lineno"> 3326</span>&#160;         <span class="keywordflow">if</span> ((cycles &lt; 0) || (periods &lt; 0) || (seconds &lt; 0) || (rem&lt;0.))</div>
+<div class="line"><a name="l03327"></a><span class="lineno"> 3327</span>&#160;            WARN(_(<span class="stringliteral">&quot;Malformed time in save game!&quot;</span>));</div>
+<div class="line"><a name="l03328"></a><span class="lineno"> 3328</span>&#160;         <a class="code" href="ntime_8c.html#abb0866ed53e10da7b5a270301a4a2850">ntime_setR</a>( cycles, periods, seconds, rem );</div>
+<div class="line"><a name="l03329"></a><span class="lineno"> 3329</span>&#160;         <span class="keywordflow">if</span> ((cycles &gt;= 0) || (periods &gt;= 0) || (seconds &gt;= 0))</div>
+<div class="line"><a name="l03330"></a><span class="lineno"> 3330</span>&#160;            time_set = 1;</div>
+<div class="line"><a name="l03331"></a><span class="lineno"> 3331</span>&#160;      }</div>
+<div class="line"><a name="l03332"></a><span class="lineno"> 3332</span>&#160; </div>
+<div class="line"><a name="l03333"></a><span class="lineno"> 3333</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;ship&quot;</span>))</div>
+<div class="line"><a name="l03334"></a><span class="lineno"> 3334</span>&#160;         <a class="code" href="player_8c.html#a4686bba8c937cb487053206e9e456f2d">player_parseShip</a>(node, 1);</div>
+<div class="line"><a name="l03335"></a><span class="lineno"> 3335</span>&#160; </div>
+<div class="line"><a name="l03336"></a><span class="lineno"> 3336</span>&#160;      <span class="comment">/* Parse ships. */</span></div>
+<div class="line"><a name="l03337"></a><span class="lineno"> 3337</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;ships&quot;</span>)) {</div>
+<div class="line"><a name="l03338"></a><span class="lineno"> 3338</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l03339"></a><span class="lineno"> 3339</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l03340"></a><span class="lineno"> 3340</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;ship&quot;</span>))</div>
+<div class="line"><a name="l03341"></a><span class="lineno"> 3341</span>&#160;               <a class="code" href="player_8c.html#a4686bba8c937cb487053206e9e456f2d">player_parseShip</a>(cur, 0);</div>
+<div class="line"><a name="l03342"></a><span class="lineno"> 3342</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l03343"></a><span class="lineno"> 3343</span>&#160;      }</div>
+<div class="line"><a name="l03344"></a><span class="lineno"> 3344</span>&#160; </div>
+<div class="line"><a name="l03345"></a><span class="lineno"> 3345</span>&#160;      <span class="comment">/* Parse GUIs. */</span></div>
+<div class="line"><a name="l03346"></a><span class="lineno"> 3346</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;guis&quot;</span>)) {</div>
+<div class="line"><a name="l03347"></a><span class="lineno"> 3347</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l03348"></a><span class="lineno"> 3348</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l03349"></a><span class="lineno"> 3349</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;gui&quot;</span>))</div>
+<div class="line"><a name="l03350"></a><span class="lineno"> 3350</span>&#160;               <a class="code" href="player__gui_8c.html#a962aafd58b7234366ae79bbab8a2b87f">player_guiAdd</a>( xml_get(cur) );</div>
+<div class="line"><a name="l03351"></a><span class="lineno"> 3351</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l03352"></a><span class="lineno"> 3352</span>&#160;      }</div>
+<div class="line"><a name="l03353"></a><span class="lineno"> 3353</span>&#160; </div>
+<div class="line"><a name="l03354"></a><span class="lineno"> 3354</span>&#160;      <span class="comment">/* Parse outfits. */</span></div>
+<div class="line"><a name="l03355"></a><span class="lineno"> 3355</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;outfits&quot;</span>)) {</div>
+<div class="line"><a name="l03356"></a><span class="lineno"> 3356</span>&#160;         cur = node-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l03357"></a><span class="lineno"> 3357</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l03358"></a><span class="lineno"> 3358</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;outfit&quot;</span>)) {</div>
+<div class="line"><a name="l03359"></a><span class="lineno"> 3359</span>&#160;               <span class="keywordtype">int</span> q;</div>
+<div class="line"><a name="l03360"></a><span class="lineno"> 3360</span>&#160;               <span class="keyword">const</span> Outfit *o = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( xml_get(cur) );</div>
+<div class="line"><a name="l03361"></a><span class="lineno"> 3361</span>&#160;               <span class="keywordflow">if</span> (o == NULL) {</div>
+<div class="line"><a name="l03362"></a><span class="lineno"> 3362</span>&#160;                  WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; was saved but does not exist!&quot;</span>), xml_get(cur));</div>
+<div class="line"><a name="l03363"></a><span class="lineno"> 3363</span>&#160;                  <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03364"></a><span class="lineno"> 3364</span>&#160;               }</div>
+<div class="line"><a name="l03365"></a><span class="lineno"> 3365</span>&#160; </div>
+<div class="line"><a name="l03366"></a><span class="lineno"> 3366</span>&#160;               xmlr_attr_float( cur, <span class="stringliteral">&quot;quantity&quot;</span>, q );</div>
+<div class="line"><a name="l03367"></a><span class="lineno"> 3367</span>&#160;               <span class="keywordflow">if</span> (q == 0) {</div>
+<div class="line"><a name="l03368"></a><span class="lineno"> 3368</span>&#160;                  WARN(_(<span class="stringliteral">&quot;Outfit &#39;%s&#39; was saved without quantity!&quot;</span>), o-&gt;name);</div>
+<div class="line"><a name="l03369"></a><span class="lineno"> 3369</span>&#160;                  <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l03370"></a><span class="lineno"> 3370</span>&#160;               }</div>
+<div class="line"><a name="l03371"></a><span class="lineno"> 3371</span>&#160; </div>
+<div class="line"><a name="l03372"></a><span class="lineno"> 3372</span>&#160;               <a class="code" href="player_8c.html#a2879b779c15cddabfa8b93d43351ae1d">player_addOutfit</a>( o, q );</div>
+<div class="line"><a name="l03373"></a><span class="lineno"> 3373</span>&#160;            }</div>
+<div class="line"><a name="l03374"></a><span class="lineno"> 3374</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l03375"></a><span class="lineno"> 3375</span>&#160;      }</div>
+<div class="line"><a name="l03376"></a><span class="lineno"> 3376</span>&#160; </div>
+<div class="line"><a name="l03377"></a><span class="lineno"> 3377</span>&#160;      <span class="comment">/* Parse licenses. */</span></div>
+<div class="line"><a name="l03378"></a><span class="lineno"> 3378</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;licenses&quot;</span>))</div>
+<div class="line"><a name="l03379"></a><span class="lineno"> 3379</span>&#160;         <a class="code" href="player_8c.html#a706489f5e335ecd638c897ca5f4bed62">player_parseLicenses</a>(node);</div>
+<div class="line"><a name="l03380"></a><span class="lineno"> 3380</span>&#160; </div>
+<div class="line"><a name="l03381"></a><span class="lineno"> 3381</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l03382"></a><span class="lineno"> 3382</span>&#160; </div>
+<div class="line"><a name="l03383"></a><span class="lineno"> 3383</span>&#160;   <span class="comment">/* Handle cases where ship is missing. */</span></div>
+<div class="line"><a name="l03384"></a><span class="lineno"> 3384</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p == NULL) {</div>
+<div class="line"><a name="l03385"></a><span class="lineno"> 3385</span>&#160;      pilot_clearFlagsRaw( <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a> );</div>
+<div class="line"><a name="l03386"></a><span class="lineno"> 3386</span>&#160;      pilot_setFlagRaw( <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a>, PILOT_PLAYER );</div>
+<div class="line"><a name="l03387"></a><span class="lineno"> 3387</span>&#160;      pilot_setFlagRaw( <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a>, PILOT_NO_OUTFITS );</div>
+<div class="line"><a name="l03388"></a><span class="lineno"> 3388</span>&#160;      WARN(_(<span class="stringliteral">&quot;Player ship does not exist!&quot;</span>));</div>
+<div class="line"><a name="l03389"></a><span class="lineno"> 3389</span>&#160; </div>
+<div class="line"><a name="l03390"></a><span class="lineno"> 3390</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="player_8c.html#a2b5046792ac7de00953e8922b9505d0a">player_stack</a>) == 0) {</div>
+<div class="line"><a name="l03391"></a><span class="lineno"> 3391</span>&#160;         WARN(_(<span class="stringliteral">&quot;Player has no other ships, giving starting ship.&quot;</span>));</div>
+<div class="line"><a name="l03392"></a><span class="lineno"> 3392</span>&#160;         <a class="code" href="pilot_8c.html#a285a8a2ccc4cae44b2021510146937d9">pilot_create</a>( <a class="code" href="ship_8c.html#a118a1d01080c85b078d8824e9bd3234e">ship_get</a>(<a class="code" href="start_8c.html#ae10796e567b19a33ff863707f085479a">start_ship</a>()), <span class="stringliteral">&quot;MIA&quot;</span>,</div>
+<div class="line"><a name="l03393"></a><span class="lineno"> 3393</span>&#160;               <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(<span class="stringliteral">&quot;Player&quot;</span>), <span class="stringliteral">&quot;player&quot;</span>, 0., NULL, NULL, <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a>, 0, 0 );</div>
+<div class="line"><a name="l03394"></a><span class="lineno"> 3394</span>&#160;      }</div>
+<div class="line"><a name="l03395"></a><span class="lineno"> 3395</span>&#160;      <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l03396"></a><span class="lineno"> 3396</span>&#160; </div>
+<div class="line"><a name="l03397"></a><span class="lineno"> 3397</span>&#160;         <span class="comment">/* Just give player.p a random ship in the stack. */</span></div>
+<div class="line"><a name="l03398"></a><span class="lineno"> 3398</span>&#160;         old_ship = <a class="code" href="player_8c.html#a2b5046792ac7de00953e8922b9505d0a">player_stack</a>[<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="player_8c.html#a2b5046792ac7de00953e8922b9505d0a">player_stack</a>)-1].p;</div>
+<div class="line"><a name="l03399"></a><span class="lineno"> 3399</span>&#160;         <a class="code" href="pilot_8c.html#a285a8a2ccc4cae44b2021510146937d9">pilot_create</a>( old_ship-&gt;ship, old_ship-&gt;name,</div>
+<div class="line"><a name="l03400"></a><span class="lineno"> 3400</span>&#160;               <a class="code" href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a>(<span class="stringliteral">&quot;Player&quot;</span>), <span class="stringliteral">&quot;player&quot;</span>, 0., NULL, NULL, <a class="code" href="structPilot__.html#ab7a55e314f9a78b7461bf5e992f9c009">flags</a>, 0, 0 );</div>
+<div class="line"><a name="l03401"></a><span class="lineno"> 3401</span>&#160;         <a class="code" href="player_8c.html#a7c559775373a88bb8c7855c33dd45d5a">player_rmShip</a>( old_ship-&gt;name );</div>
+<div class="line"><a name="l03402"></a><span class="lineno"> 3402</span>&#160;         WARN(_(<span class="stringliteral">&quot;Giving player ship &#39;%s&#39;.&quot;</span>), <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;name );</div>
+<div class="line"><a name="l03403"></a><span class="lineno"> 3403</span>&#160;      }</div>
+<div class="line"><a name="l03404"></a><span class="lineno"> 3404</span>&#160;   }</div>
+<div class="line"><a name="l03405"></a><span class="lineno"> 3405</span>&#160; </div>
+<div class="line"><a name="l03406"></a><span class="lineno"> 3406</span>&#160;   <span class="comment">/* Check. */</span></div>
+<div class="line"><a name="l03407"></a><span class="lineno"> 3407</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p == NULL) {</div>
+<div class="line"><a name="l03408"></a><span class="lineno"> 3408</span>&#160;      ERR(_(<span class="stringliteral">&quot;Something went horribly wrong, player does not exist after load...&quot;</span>));</div>
+<div class="line"><a name="l03409"></a><span class="lineno"> 3409</span>&#160;      <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l03410"></a><span class="lineno"> 3410</span>&#160;   }</div>
+<div class="line"><a name="l03411"></a><span class="lineno"> 3411</span>&#160; </div>
+<div class="line"><a name="l03412"></a><span class="lineno"> 3412</span>&#160;   <span class="comment">/* Reset player speed */</span></div>
+<div class="line"><a name="l03413"></a><span class="lineno"> 3413</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.speed = 1.;</div>
+<div class="line"><a name="l03414"></a><span class="lineno"> 3414</span>&#160; </div>
+<div class="line"><a name="l03415"></a><span class="lineno"> 3415</span>&#160;   <span class="comment">/* set global thingies */</span></div>
+<div class="line"><a name="l03416"></a><span class="lineno"> 3416</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits = <a class="code" href="player_8c.html#a8aef5ae0f583922e8cdbaa17d0511d39">player_creds</a>;</div>
+<div class="line"><a name="l03417"></a><span class="lineno"> 3417</span>&#160;   <span class="keywordflow">if</span> (!time_set) {</div>
+<div class="line"><a name="l03418"></a><span class="lineno"> 3418</span>&#160;      WARN(_(<span class="stringliteral">&quot;Save has no time information, setting to start information.&quot;</span>));</div>
+<div class="line"><a name="l03419"></a><span class="lineno"> 3419</span>&#160;      <a class="code" href="ntime_8c.html#a05bc728691f23c6e9d3087f42359eb0b">ntime_set</a>( <a class="code" href="start_8c.html#a9f221f2b7bc45d6999b0e03faf501ab8">start_date</a>() );</div>
+<div class="line"><a name="l03420"></a><span class="lineno"> 3420</span>&#160;   }</div>
+<div class="line"><a name="l03421"></a><span class="lineno"> 3421</span>&#160; </div>
+<div class="line"><a name="l03422"></a><span class="lineno"> 3422</span>&#160;   <span class="comment">/* set player in system */</span></div>
+<div class="line"><a name="l03423"></a><span class="lineno"> 3423</span>&#160;   pnt = <a class="code" href="space_8c.html#acc33d70bb34cc03dfc393e73e2c4a1fb">planet_get</a>( planet );</div>
+<div class="line"><a name="l03424"></a><span class="lineno"> 3424</span>&#160;   <span class="comment">/* Get random planet if it&#39;s NULL. */</span></div>
+<div class="line"><a name="l03425"></a><span class="lineno"> 3425</span>&#160;   <span class="keywordflow">if</span> ((pnt == NULL) || (<a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>(planet) == NULL) ||</div>
+<div class="line"><a name="l03426"></a><span class="lineno"> 3426</span>&#160;         !planet_hasService(pnt, PLANET_SERVICE_LAND)) {</div>
+<div class="line"><a name="l03427"></a><span class="lineno"> 3427</span>&#160;      WARN(_(<span class="stringliteral">&quot;Player starts out in non-existent or invalid planet &#39;%s&#39;,&quot;</span></div>
+<div class="line"><a name="l03428"></a><span class="lineno"> 3428</span>&#160;            <span class="stringliteral">&quot;trying to find a suitable one instead.&quot;</span>),</div>
+<div class="line"><a name="l03429"></a><span class="lineno"> 3429</span>&#160;            planet );</div>
+<div class="line"><a name="l03430"></a><span class="lineno"> 3430</span>&#160; </div>
+<div class="line"><a name="l03431"></a><span class="lineno"> 3431</span>&#160;      <span class="comment">/* Find a landable, inhabited planet that&#39;s in a system, offers refueling</span></div>
+<div class="line"><a name="l03432"></a><span class="lineno"> 3432</span>&#160;<span class="comment">       * and meets the following additional criteria:</span></div>
+<div class="line"><a name="l03433"></a><span class="lineno"> 3433</span>&#160;<span class="comment">       *</span></div>
+<div class="line"><a name="l03434"></a><span class="lineno"> 3434</span>&#160;<span class="comment">       *    0: Shipyard, outfitter, non-hostile</span></div>
+<div class="line"><a name="l03435"></a><span class="lineno"> 3435</span>&#160;<span class="comment">       *    1: Outfitter, non-hostile</span></div>
+<div class="line"><a name="l03436"></a><span class="lineno"> 3436</span>&#160;<span class="comment">       *    2: None</span></div>
+<div class="line"><a name="l03437"></a><span class="lineno"> 3437</span>&#160;<span class="comment">       *</span></div>
+<div class="line"><a name="l03438"></a><span class="lineno"> 3438</span>&#160;<span class="comment">       * If no planet meeting the current criteria can be found, the next</span></div>
+<div class="line"><a name="l03439"></a><span class="lineno"> 3439</span>&#160;<span class="comment">       * set of criteria is tried until none remain.</span></div>
+<div class="line"><a name="l03440"></a><span class="lineno"> 3440</span>&#160;<span class="comment">       */</span></div>
+<div class="line"><a name="l03441"></a><span class="lineno"> 3441</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">char</span> *found = NULL;</div>
+<div class="line"><a name="l03442"></a><span class="lineno"> 3442</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;3; i++) {</div>
+<div class="line"><a name="l03443"></a><span class="lineno"> 3443</span>&#160;         services = PLANET_SERVICE_LAND | PLANET_SERVICE_INHABITED |</div>
+<div class="line"><a name="l03444"></a><span class="lineno"> 3444</span>&#160;               PLANET_SERVICE_REFUEL;</div>
+<div class="line"><a name="l03445"></a><span class="lineno"> 3445</span>&#160; </div>
+<div class="line"><a name="l03446"></a><span class="lineno"> 3446</span>&#160;         <span class="keywordflow">if</span> (i == 0)</div>
+<div class="line"><a name="l03447"></a><span class="lineno"> 3447</span>&#160;            services |= PLANET_SERVICE_SHIPYARD;</div>
+<div class="line"><a name="l03448"></a><span class="lineno"> 3448</span>&#160; </div>
+<div class="line"><a name="l03449"></a><span class="lineno"> 3449</span>&#160;         <span class="keywordflow">if</span> (i != 2)</div>
+<div class="line"><a name="l03450"></a><span class="lineno"> 3450</span>&#160;            services |= PLANET_SERVICE_OUTFITS;</div>
+<div class="line"><a name="l03451"></a><span class="lineno"> 3451</span>&#160; </div>
+<div class="line"><a name="l03452"></a><span class="lineno"> 3452</span>&#160;         found = <a class="code" href="space_8c.html#abc168326eccb19f04c4b88ded6ca8dc9">space_getRndPlanet</a>( 1, services,</div>
+<div class="line"><a name="l03453"></a><span class="lineno"> 3453</span>&#160;               (i != 2) ? <a class="code" href="player_8c.html#ac20e77b3e0d15d7cfb9b3351f783f0d8">player_filterSuitablePlanet</a> : NULL );</div>
+<div class="line"><a name="l03454"></a><span class="lineno"> 3454</span>&#160;         <span class="keywordflow">if</span> (found != NULL)</div>
+<div class="line"><a name="l03455"></a><span class="lineno"> 3455</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l03456"></a><span class="lineno"> 3456</span>&#160; </div>
+<div class="line"><a name="l03457"></a><span class="lineno"> 3457</span>&#160;         WARN(_(<span class="stringliteral">&quot;Could not find a planet satisfying criteria %d.&quot;</span>), i);</div>
+<div class="line"><a name="l03458"></a><span class="lineno"> 3458</span>&#160;      }</div>
+<div class="line"><a name="l03459"></a><span class="lineno"> 3459</span>&#160; </div>
+<div class="line"><a name="l03460"></a><span class="lineno"> 3460</span>&#160;      <span class="keywordflow">if</span> (found == NULL) {</div>
+<div class="line"><a name="l03461"></a><span class="lineno"> 3461</span>&#160;         WARN(_(<span class="stringliteral">&quot;Could not find a suitable planet. Choosing a random planet.&quot;</span>));</div>
+<div class="line"><a name="l03462"></a><span class="lineno"> 3462</span>&#160;         found = <a class="code" href="space_8c.html#abc168326eccb19f04c4b88ded6ca8dc9">space_getRndPlanet</a>(0, 0, NULL); <span class="comment">/* This should never, ever fail. */</span></div>
+<div class="line"><a name="l03463"></a><span class="lineno"> 3463</span>&#160;      }</div>
+<div class="line"><a name="l03464"></a><span class="lineno"> 3464</span>&#160;      pnt = <a class="code" href="space_8c.html#acc33d70bb34cc03dfc393e73e2c4a1fb">planet_get</a>( found );</div>
+<div class="line"><a name="l03465"></a><span class="lineno"> 3465</span>&#160;   }</div>
+<div class="line"><a name="l03466"></a><span class="lineno"> 3466</span>&#160;   sys = <a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pnt-&gt;name ) );</div>
+<div class="line"><a name="l03467"></a><span class="lineno"> 3467</span>&#160;   <a class="code" href="space_8c.html#aecd4a44beb778fc67ff7652c325c5bab">space_gfxLoad</a>( sys );</div>
+<div class="line"><a name="l03468"></a><span class="lineno"> 3468</span>&#160;   a = RNGF() * 2.*M_PI;</div>
+<div class="line"><a name="l03469"></a><span class="lineno"> 3469</span>&#160;   r = RNGF() * pnt-&gt;radius * 0.8;</div>
+<div class="line"><a name="l03470"></a><span class="lineno"> 3470</span>&#160;   <a class="code" href="player_8c.html#a448beeae7efa85a54ce1899143662334">player_warp</a>( pnt-&gt;pos.x + r*cos(a), pnt-&gt;pos.y + r*sin(a) );</div>
+<div class="line"><a name="l03471"></a><span class="lineno"> 3471</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;dir = RNG(0,359) * M_PI/180.;</div>
+<div class="line"><a name="l03472"></a><span class="lineno"> 3472</span>&#160; </div>
+<div class="line"><a name="l03473"></a><span class="lineno"> 3473</span>&#160;   <span class="comment">/* initialize the system */</span></div>
+<div class="line"><a name="l03474"></a><span class="lineno"> 3474</span>&#160;   <a class="code" href="space_8c.html#ab9f199a88ec5ce5532bcd593a7ba52d5">space_init</a>( sys-&gt;name );</div>
+<div class="line"><a name="l03475"></a><span class="lineno"> 3475</span>&#160;   map_clear(); <span class="comment">/* sets the map up */</span></div>
+<div class="line"><a name="l03476"></a><span class="lineno"> 3476</span>&#160;   ovr_setOpen(map_overlay_enabled);</div>
 <div class="line"><a name="l03477"></a><span class="lineno"> 3477</span>&#160; </div>
 <div class="line"><a name="l03478"></a><span class="lineno"> 3478</span>&#160;   <span class="comment">/* initialize the sound */</span></div>
 <div class="line"><a name="l03479"></a><span class="lineno"> 3479</span>&#160;   <a class="code" href="player_8c.html#ae75dace3eef70e7bbf4f95b3660100e9">player_initSound</a>();</div>
