@@ -147,403 +147,401 @@ $(function() {
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;}</div>
 <div class="line"><a name="l00155"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a7e09f0d045d2e8a11b6799e4bf47fa20">  155</a></span>&#160;<span class="keyword">const</span> Outfit** <a class="code" href="nlua__outfit_8c.html#a7e09f0d045d2e8a11b6799e4bf47fa20">lua_pushoutfit</a>( lua_State *L, <span class="keyword">const</span> Outfit *outfit )</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;{</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   <span class="keyword">const</span> Outfit **o;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;   o = (<span class="keyword">const</span> Outfit**) lua_newuserdata(L, <span class="keyword">sizeof</span>(Outfit*));</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   *o = outfit;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;   luaL_getmetatable(L, OUTFIT_METATABLE);</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   lua_setmetatable(L, -2);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;   <span class="keywordflow">return</span> o;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
-<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#af5c0034ebc214a08db293445b69471ad">  171</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#af5c0034ebc214a08db293445b69471ad">lua_isoutfit</a>( lua_State *L, <span class="keywordtype">int</span> ind )</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;{</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;   <span class="keywordflow">if</span> (lua_getmetatable(L,ind)==0)</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;   lua_getfield(L, LUA_REGISTRYINDEX, OUTFIT_METATABLE);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;   ret = 0;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;   <span class="keywordflow">if</span> (lua_rawequal(L, -1, -2))  <span class="comment">/* does it have the correct mt? */</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      ret = 1;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;   lua_pop(L, 2);  <span class="comment">/* remove both metatables */</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
-<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">  197</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">outfitL_eq</a>( lua_State *L )</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;{</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;   <span class="keyword">const</span> Outfit *<a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>, *<a class="code" href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a>;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;   a = <a class="code" href="nlua__outfit_8c.html#a3ab90aa751361c2aa59ac9214f11937e">luaL_checkoutfit</a>(L,1);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;   b = <a class="code" href="nlua__outfit_8c.html#a3ab90aa751361c2aa59ac9214f11937e">luaL_checkoutfit</a>(L,2);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;   <span class="keywordflow">if</span> (a == b)</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;      lua_pushboolean(L,1);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;      lua_pushboolean(L,0);</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;}</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">  219</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">outfitL_get</a>( lua_State *L )</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;{</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;   <a class="code" href="nlua__outfit_8c.html#a7e09f0d045d2e8a11b6799e4bf47fa20">lua_pushoutfit</a>(L, o);</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;}</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
-<div class="line"><a name="l00232"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">  232</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">outfitL_getAll</a>( lua_State *L )</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;{</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;   <span class="keyword">const</span> Outfit *outfits = <a class="code" href="outfit_8c.html#a4ecafd5a897de1c003afdcbccf51f046">outfit_getAll</a>();</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;   lua_newtable(L); <span class="comment">/* t */</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(outfits); i++) {</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;      <a class="code" href="nlua__outfit_8c.html#a7e09f0d045d2e8a11b6799e4bf47fa20">lua_pushoutfit</a>( L, (Outfit*) &amp;outfits[i] );</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;      lua_rawseti( L, -2, i+1 );</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;   }</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
-<div class="line"><a name="l00256"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">  256</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">outfitL_name</a>( lua_State *L )</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;{</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;   lua_pushstring(L, _(o-&gt;name));</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;}</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
-<div class="line"><a name="l00276"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a701119280a4609a5edb10e69eec29aa6">  276</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a701119280a4609a5edb10e69eec29aa6">outfitL_nameRaw</a>( lua_State *L )</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;{</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   lua_pushstring(L, o-&gt;name);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00292"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a4092bfea31b8277dd8286cff4da710fa">  292</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a4092bfea31b8277dd8286cff4da710fa">outfitL_type</a>( lua_State *L )</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;{</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;   lua_pushstring(L, <a class="code" href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a>(o));</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;}</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00310"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a21a97de8cf3be650c1f4185725b9656b">  310</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a21a97de8cf3be650c1f4185725b9656b">outfitL_typeBroad</a>( lua_State *L )</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;{</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;   lua_pushstring(L, <a class="code" href="outfit_8c.html#ac6a6200239b90e790bf95fc733b0297d">outfit_getTypeBroad</a>(o));</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;}</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00326"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a112c2467be101da69182fdda786144b9">  326</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a112c2467be101da69182fdda786144b9">outfitL_cpu</a>( lua_State *L )</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;{</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;   lua_pushnumber(L, <a class="code" href="outfit_8c.html#a22bf0b884e07fdce3c55b27a6f9b43a7">outfit_cpu</a>(o));</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;}</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a01b02976d92d2f791fbc57551dd64b44">  342</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a01b02976d92d2f791fbc57551dd64b44">outfitL_mass</a>( lua_State *L )</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;{</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;   lua_pushnumber(L, o-&gt;mass);</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;}</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
-<div class="line"><a name="l00362"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a1b9ab32868975dfdf2c777bc9211f9c6">  362</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a1b9ab32868975dfdf2c777bc9211f9c6">outfitL_slot</a>( lua_State *L )</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;{</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   lua_pushstring(L, <a class="code" href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9">outfit_slotName</a>(o));</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;   lua_pushstring(L, <a class="code" href="outfit_8c.html#a430bc49f57078876971bcb63ad350408">outfit_slotSize</a>(o));</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   lua_pushstring(L, <a class="code" href="slots_8c.html#ab7089eecda79d049a82cf7491e685207">sp_display</a>( o-&gt;slot.spid ));</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   lua_pushboolean(L, <a class="code" href="slots_8c.html#abddd205f78c406e2e148e3055a8847fa">sp_required</a>( o-&gt;slot.spid ));</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;   lua_pushboolean(L, <a class="code" href="slots_8c.html#aeb56942a01feefe32ccadca9c9aec58b">sp_exclusive</a>( o-&gt;slot.spid ));</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;   <span class="keywordflow">return</span> 5;</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;}</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160; </div>
-<div class="line"><a name="l00380"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a0199ebad69f5fd9a67b98d0e28405719">  380</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a0199ebad69f5fd9a67b98d0e28405719">outfitL_limit</a>( lua_State *L )</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;{</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;   <span class="keywordflow">if</span> (o-&gt;limit) {</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;      lua_pushstring(L,o-&gt;limit);</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;   }</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;}</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160; </div>
-<div class="line"><a name="l00399"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a589d66c9bee72973de87ccca469ce3f9">  399</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a589d66c9bee72973de87ccca469ce3f9">outfitL_icon</a>( lua_State *L )</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;{</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;   <a class="code" href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a>( L, <a class="code" href="opengl__tex_8c.html#a08da237cf1c0eb03194c7ed22ebf92b4">gl_dupTexture</a>( o-&gt;gfx_store ) );</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;}</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160; </div>
-<div class="line"><a name="l00415"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a96d203c634f2504b948fffac6f62e6b1">  415</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a96d203c634f2504b948fffac6f62e6b1">outfitL_price</a>( lua_State *L )</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;{</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;   lua_pushnumber(L, o-&gt;price);</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;}</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160; </div>
-<div class="line"><a name="l00431"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a7daede25dd40a48a186eed841cd44381">  431</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a7daede25dd40a48a186eed841cd44381">outfitL_description</a>( lua_State *L )</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;{</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;   lua_pushstring(L, o-&gt;description);</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;}</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160; </div>
-<div class="line"><a name="l00447"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#af759c64122002de410e50cbf65e57b25">  447</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#af759c64122002de410e50cbf65e57b25">outfitL_unique</a>( lua_State *L )</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;{</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;   lua_pushboolean(L, outfit_isProp(o, OUTFIT_PROP_UNIQUE));</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;}</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160; </div>
-<div class="line"><a name="l00463"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">  463</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">outfitL_getShipStat</a>( lua_State *L )</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;{</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;   ShipStats ss;</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;   <a class="code" href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a>( &amp;ss );</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;   <a class="code" href="shipstats_8c.html#a1d422ebc08d9740e56c54e2c3e9b4af1">ss_statsModFromList</a>( &amp;ss, o-&gt;stats );</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str   = luaL_optstring(L,2,NULL);</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;   <span class="keywordtype">int</span> <span class="keyword">internal</span>      = lua_toboolean(L,3);</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;   <a class="code" href="shipstats_8c.html#a33781de4a7e7c4cb1fa0031cb4d73212">ss_statsGetLua</a>( L, &amp;ss, str, <span class="keyword">internal</span> );</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;}</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160; </div>
-<div class="line"><a name="l00489"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">  489</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">outfitL_weapStats</a>( lua_State *L )</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;{</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;   <span class="keywordtype">double</span> eps, dps, disable, shots;</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;   <span class="keywordtype">double</span> mod_energy, mod_damage, mod_shots;</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;   <span class="keywordtype">double</span> sdmg, admg;</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;   <span class="keyword">const</span> Damage *dmg;</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;   <span class="keyword">const</span> Outfit *o   = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>( L, 1 );</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;   Pilot *p    = (<a class="code" href="nlua__pilot_8c.html#ac5cd0fd179521bc75ccd719ecff2089a">lua_ispilot</a>(L,2)) ? <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,2) : NULL;</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160; </div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;   <span class="comment">/* Just return 0 for non-wapons. */</span></div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;   <span class="keywordflow">if</span> (o-&gt;slot.type != OUTFIT_SLOT_WEAPON)</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160; </div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;   <span class="comment">/* Special case beam weapons .*/</span></div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a>(o)) {</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;      <span class="keywordflow">if</span> (p) {</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;         <span class="comment">/* Special case due to continuous fire. */</span></div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;         <span class="keywordflow">if</span> (o-&gt;type == OUTFIT_TYPE_BEAM) {</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;            mod_energy = p-&gt;stats.fwd_energy;</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;            mod_damage = p-&gt;stats.fwd_damage;</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;            mod_shots  = 1. / p-&gt;stats.fwd_firerate;</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;         }</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;         <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;            mod_energy = p-&gt;stats.tur_energy;</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;            mod_damage = p-&gt;stats.tur_damage;</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;            mod_shots  = 1. / p-&gt;stats.tur_firerate;</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;         }</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;      }</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;      <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;         mod_energy = 1.;</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;         mod_damage = 1.;</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;         mod_shots = 1.;</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;      }</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;      shots = <a class="code" href="outfit_8c.html#ada2f6a54782a53868bc2db9a478523a1">outfit_duration</a>(o);</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;      mod_shots = shots / (shots + mod_shots * <a class="code" href="outfit_8c.html#afd3c474cb6d7c99a3f0fb2499550956c">outfit_delay</a>(o));</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>(o);</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;      <span class="comment">/* Modulate the damage by average of damage types. */</span></div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="damagetype_8c.html#a386da52cb12ad9c5300442f1c43a797c">dtype_raw</a>( dmg-&gt;type, &amp;sdmg, &amp;admg, NULL ) != 0)</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;         NLUA_ERROR(L, _(<span class="stringliteral">&quot;Outfit has invalid damage type.&quot;</span>));</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;      mod_damage *= 0.5*(sdmg+admg);</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;      <span class="comment">/* Calculate good damage estimates. */</span></div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;      dps = mod_shots * mod_damage * dmg-&gt;damage;</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;      disable = mod_shots * mod_damage * dmg-&gt;disable;</div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;      eps = mod_shots * mod_energy * <a class="code" href="outfit_8c.html#aedae79b24dddf435ae86e0930235aaa0">outfit_energy</a>(o);</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;      lua_pushnumber( L, dps );</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;      lua_pushnumber( L, disable );</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;      lua_pushnumber( L, eps );</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;      lua_pushnumber( L, <a class="code" href="outfit_8c.html#a6bc1f1d6511b8998981166d7cbf1efc3">outfit_range</a>(o) );</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;      <span class="keywordflow">return</span> 4;</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;   }</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160; </div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;   <span class="keywordflow">if</span> (p) {</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;      <span class="keywordflow">switch</span> (o-&gt;type) {</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_BOLT:</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;            mod_energy = p-&gt;stats.fwd_energy;</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;            mod_damage = p-&gt;stats.fwd_damage;</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;            mod_shots  = 1. / p-&gt;stats.fwd_firerate;</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_BOLT:</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;            mod_energy = p-&gt;stats.tur_energy;</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;            mod_damage = p-&gt;stats.tur_damage;</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;            mod_shots  = 1. / p-&gt;stats.tur_firerate;</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_LAUNCHER:</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_LAUNCHER:</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;            mod_energy = 1.;</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;            mod_damage = p-&gt;stats.launch_damage;</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;            mod_shots  = 1. / p-&gt;stats.launch_rate;</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_BEAM:</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_BEAM:</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;         <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;      }</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;   }</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;   <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;      mod_energy = 1.;</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;      mod_damage = 1.;</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;      mod_shots = 1.;</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;   }</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160; </div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   shots = 1. / (mod_shots * <a class="code" href="outfit_8c.html#afd3c474cb6d7c99a3f0fb2499550956c">outfit_delay</a>(o));</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;   <span class="comment">/* Special case: Ammo-based weapons. */</span></div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o))</div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>(o-&gt;u.lau.ammo);</div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>(o);</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;   <span class="keywordflow">if</span> (dmg==NULL)</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;   <span class="comment">/* Modulate the damage by average of damage types. */</span></div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;   <a class="code" href="damagetype_8c.html#a386da52cb12ad9c5300442f1c43a797c">dtype_raw</a>( dmg-&gt;type, &amp;sdmg, &amp;admg, NULL );</div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;   mod_damage *= 0.5*(sdmg+admg);</div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;   <span class="comment">/* Calculate good damage estimates. */</span></div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   dps = shots * mod_damage * dmg-&gt;damage;</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;   disable = shots * mod_damage * dmg-&gt;disable;</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;   eps = shots * mod_energy * <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="outfit_8c.html#aedae79b24dddf435ae86e0930235aaa0">outfit_energy</a>(o), 0. );</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160; </div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;   lua_pushnumber( L, dps );</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;   lua_pushnumber( L, disable );</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;   lua_pushnumber( L, eps );</div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;   lua_pushnumber( L, <a class="code" href="outfit_8c.html#a6bc1f1d6511b8998981166d7cbf1efc3">outfit_range</a>(o) );</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;   lua_pushnumber( L, <a class="code" href="outfit_8c.html#a19347e1951c9ac1d7d83c64d89cdf8f7">outfit_trackmin</a>(o) );</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;   lua_pushnumber( L, <a class="code" href="outfit_8c.html#a9acd721a0c5ed02b246a527447f05dfd">outfit_trackmax</a>(o) );</div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o)) {</div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;      lua_pushnumber( L, o-&gt;u.lau.lockon );</div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;      lua_pushnumber( L, o-&gt;u.lau.iflockon );</div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;      lua_pushboolean( L, o-&gt;u.lau.ammo-&gt;u.amm.ai!=AMMO_AI_UNGUIDED );</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;      <span class="keywordflow">return</span> 9;</div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;   }</div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;   <span class="keywordflow">return</span> 6;</div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;}</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160; </div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;<span class="preprocessor">#define SETFIELD( name, value )  \</span></div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;<span class="preprocessor">   lua_pushnumber( L, value ); \</span></div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;<span class="preprocessor">   lua_setfield( L, -2, name )</span></div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;<span class="preprocessor">#define SETFIELDI( name, value )  \</span></div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;<span class="preprocessor">   lua_pushinteger( L, value ); \</span></div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;<span class="preprocessor">   lua_setfield( L, -2, name )</span></div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;<span class="preprocessor">#define SETFIELDB( name, value )  \</span></div>
-<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;<span class="preprocessor">   lua_pushboolean( L, value ); \</span></div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;<span class="preprocessor">   lua_setfield( L, -2, name )</span></div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160; </div>
-<div class="line"><a name="l00616"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">  616</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">outfitL_specificStats</a>( lua_State *L )</div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;{</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>( L, 1 );</div>
-<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;   lua_newtable(L);</div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;   <span class="keywordflow">switch</span> (o-&gt;type) {</div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_AFTERBURNER:</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;         SETFIELD( <span class="stringliteral">&quot;thrust&quot;</span>,     o-&gt;u.afb.thrust );</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;         SETFIELD( <span class="stringliteral">&quot;speed&quot;</span>,      o-&gt;u.afb.speed );</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;         SETFIELD( <span class="stringliteral">&quot;energy&quot;</span>,     o-&gt;u.afb.energy );</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;         SETFIELD( <span class="stringliteral">&quot;mass_limit&quot;</span>, o-&gt;u.afb.mass_limit );</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heatup&quot;</span>,     o-&gt;u.afb.heatup );</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat&quot;</span>,       o-&gt;u.afb.heat );</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat_cap&quot;</span>,   o-&gt;u.afb.heat_cap );</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat_base&quot;</span>,  o-&gt;u.afb.heat_cap );</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160; </div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_FIGHTER_BAY:</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;         <a class="code" href="nlua__ship_8c.html#a9b7c3e1098284cb66fdeae42c4654519">lua_pushship</a>( L, <a class="code" href="ship_8c.html#a118a1d01080c85b078d8824e9bd3234e">ship_get</a>( o-&gt;u.bay.ammo-&gt;u.fig.ship ) );</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;         lua_setfield( L, -2, <span class="stringliteral">&quot;ship&quot;</span> );</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;         SETFIELD( <span class="stringliteral">&quot;delay&quot;</span>,      o-&gt;u.bay.delay );</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;         SETFIELDI(<span class="stringliteral">&quot;amount&quot;</span>,     o-&gt;u.bay.amount );</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;         SETFIELD( <span class="stringliteral">&quot;reload_time&quot;</span>,o-&gt;u.bay.reload_time );</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160; </div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_BOLT:</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;isturret&quot;</span>,   1 );</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;         FALLTHROUGH;</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_BOLT:</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;         SETFIELD( <span class="stringliteral">&quot;delay&quot;</span>,      o-&gt;u.blt.delay );</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;         SETFIELD( <span class="stringliteral">&quot;speed&quot;</span>,      o-&gt;u.blt.speed );</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;         SETFIELD( <span class="stringliteral">&quot;range&quot;</span>,      o-&gt;u.blt.range );</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;         SETFIELD( <span class="stringliteral">&quot;falloff&quot;</span>,    o-&gt;u.blt.falloff );</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;         SETFIELD( <span class="stringliteral">&quot;energy&quot;</span>,     o-&gt;u.blt.energy );</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heatup&quot;</span>,     o-&gt;u.blt.heatup );</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat&quot;</span>,       o-&gt;u.blt.heat );</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;         SETFIELD( <span class="stringliteral">&quot;trackmin&quot;</span>,   o-&gt;u.blt.trackmin );</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;         SETFIELD( <span class="stringliteral">&quot;trackmax&quot;</span>,   o-&gt;u.blt.trackmax );</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;         SETFIELD( <span class="stringliteral">&quot;swivel&quot;</span>,     o-&gt;u.blt.swivel );</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;         <span class="comment">/* Damage stuff. */</span></div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;         SETFIELD( <span class="stringliteral">&quot;penetration&quot;</span>,o-&gt;u.blt.dmg.penetration );</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;         SETFIELD( <span class="stringliteral">&quot;damage&quot;</span>,     o-&gt;u.blt.dmg.damage );</div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;         SETFIELD( <span class="stringliteral">&quot;disable&quot;</span>,    o-&gt;u.blt.dmg.disable );</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160; </div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_BEAM:</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;isturret&quot;</span>,   1 );</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;         FALLTHROUGH;</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_BEAM:</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;         SETFIELD( <span class="stringliteral">&quot;delay&quot;</span>,      o-&gt;u.bem.delay );</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;         SETFIELD( <span class="stringliteral">&quot;warmup&quot;</span>,     o-&gt;u.bem.warmup );</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;         SETFIELD( <span class="stringliteral">&quot;duration&quot;</span>,   o-&gt;u.bem.duration );</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;         SETFIELD( <span class="stringliteral">&quot;min_duration&quot;</span>,o-&gt;u.bem.min_duration );</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;         SETFIELD( <span class="stringliteral">&quot;range&quot;</span>,      o-&gt;u.bem.range );</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;         SETFIELD( <span class="stringliteral">&quot;turn&quot;</span>,       o-&gt;u.bem.turn );</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;         SETFIELD( <span class="stringliteral">&quot;energy&quot;</span>,     o-&gt;u.bem.energy );</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heatup&quot;</span>,     o-&gt;u.bem.heatup );</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat&quot;</span>,       o-&gt;u.bem.heat );</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;         <span class="comment">/* Damage stuff. */</span></div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;         SETFIELD( <span class="stringliteral">&quot;penetration&quot;</span>,o-&gt;u.bem.dmg.penetration );</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;         SETFIELD( <span class="stringliteral">&quot;damage&quot;</span>,     o-&gt;u.bem.dmg.damage );</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;         SETFIELD( <span class="stringliteral">&quot;disable&quot;</span>,    o-&gt;u.bem.dmg.disable );</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160; </div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_LAUNCHER:</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;isturret&quot;</span>,   1 );</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;         FALLTHROUGH;</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_LAUNCHER:</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;         SETFIELD( <span class="stringliteral">&quot;delay&quot;</span>,      o-&gt;u.lau.delay );</div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;         SETFIELDI(<span class="stringliteral">&quot;amount&quot;</span>,     o-&gt;u.lau.amount );</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;         SETFIELD( <span class="stringliteral">&quot;reload_time&quot;</span>,o-&gt;u.lau.reload_time );</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;         SETFIELD( <span class="stringliteral">&quot;lockon&quot;</span>,     o-&gt;u.lau.lockon );</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;         SETFIELD( <span class="stringliteral">&quot;iflockon&quot;</span>,   o-&gt;u.lau.iflockon );</div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;         SETFIELD( <span class="stringliteral">&quot;trackmin&quot;</span>,   o-&gt;u.lau.trackmin );</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;         SETFIELD( <span class="stringliteral">&quot;trackmax&quot;</span>,   o-&gt;u.lau.trackmax );</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;         SETFIELD( <span class="stringliteral">&quot;arc&quot;</span>,        o-&gt;u.lau.arc );</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;         SETFIELD( <span class="stringliteral">&quot;swivel&quot;</span>,     o-&gt;u.lau.swivel );</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;         <span class="comment">/* Ammo stuff. */</span></div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;         SETFIELD( <span class="stringliteral">&quot;speed&quot;</span>,      o-&gt;u.lau.ammo-&gt;u.amm.speed );</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;         SETFIELD( <span class="stringliteral">&quot;speed_max&quot;</span>,  o-&gt;u.lau.ammo-&gt;u.amm.speed_max );</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;         SETFIELD( <span class="stringliteral">&quot;turn&quot;</span>,       o-&gt;u.lau.ammo-&gt;u.amm.turn );</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;         SETFIELD( <span class="stringliteral">&quot;thrust&quot;</span>,     o-&gt;u.lau.ammo-&gt;u.amm.thrust );</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;         SETFIELD( <span class="stringliteral">&quot;energy&quot;</span>,     o-&gt;u.lau.ammo-&gt;u.amm.energy );</div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;seek&quot;</span>,       o-&gt;u.lau.ammo-&gt;u.amm.ai!=AMMO_AI_UNGUIDED );</div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;smart&quot;</span>,      o-&gt;u.lau.ammo-&gt;u.amm.ai==AMMO_AI_SMART );</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;         <span class="comment">/* Damage stuff. */</span></div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;         SETFIELD( <span class="stringliteral">&quot;penetration&quot;</span>,o-&gt;u.lau.ammo-&gt;u.amm.dmg.penetration );</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;         SETFIELD( <span class="stringliteral">&quot;damage&quot;</span>,     o-&gt;u.lau.ammo-&gt;u.amm.dmg.damage );</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;         SETFIELD( <span class="stringliteral">&quot;disable&quot;</span>,    o-&gt;u.lau.ammo-&gt;u.amm.dmg.disable );</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;      <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   }</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;}</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;<span class="preprocessor">#undef SETFIELD</span></div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;<span class="preprocessor">#undef SETFIELDI</span></div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;<span class="preprocessor">#undef SETFIELDB</span></div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160; </div>
-<div class="line"><a name="l00722"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a08bba542dbfa4159c44d62b35c02e25f">  722</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a08bba542dbfa4159c44d62b35c02e25f">outfitL_illegality</a>( lua_State *L )</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;{</div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   lua_newtable(L);</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegalto); i++) {</div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;      <a class="code" href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a>( L, o-&gt;illegalto[i] );</div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;      lua_rawseti( L, -2, i+1 );</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;   }</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;}</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   <span class="keyword">const</span> Outfit **o = (<span class="keyword">const</span> Outfit**) lua_newuserdata(L, <span class="keyword">sizeof</span>(Outfit*));</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;   *o = outfit;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   luaL_getmetatable(L, OUTFIT_METATABLE);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;   lua_setmetatable(L, -2);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   <span class="keywordflow">return</span> o;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
+<div class="line"><a name="l00170"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#af5c0034ebc214a08db293445b69471ad">  170</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#af5c0034ebc214a08db293445b69471ad">lua_isoutfit</a>( lua_State *L, <span class="keywordtype">int</span> ind )</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;{</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;   <span class="keywordflow">if</span> (lua_getmetatable(L,ind)==0)</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;   lua_getfield(L, LUA_REGISTRYINDEX, OUTFIT_METATABLE);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;   ret = 0;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;   <span class="keywordflow">if</span> (lua_rawequal(L, -1, -2))  <span class="comment">/* does it have the correct mt? */</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      ret = 1;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;   lua_pop(L, 2);  <span class="comment">/* remove both metatables */</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;}</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">  196</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">outfitL_eq</a>( lua_State *L )</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;{</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;   <span class="keyword">const</span> Outfit *<a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>, *<a class="code" href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a>;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;   a = <a class="code" href="nlua__outfit_8c.html#a3ab90aa751361c2aa59ac9214f11937e">luaL_checkoutfit</a>(L,1);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;   b = <a class="code" href="nlua__outfit_8c.html#a3ab90aa751361c2aa59ac9214f11937e">luaL_checkoutfit</a>(L,2);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;   <span class="keywordflow">if</span> (a == b)</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      lua_pushboolean(L,1);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;      lua_pushboolean(L,0);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;}</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
+<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">  217</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">outfitL_get</a>( lua_State *L )</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;{</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;   <a class="code" href="nlua__outfit_8c.html#a7e09f0d045d2e8a11b6799e4bf47fa20">lua_pushoutfit</a>(L, o);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;}</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">  230</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">outfitL_getAll</a>( lua_State *L )</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;{</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;   <span class="keyword">const</span> Outfit *outfits = <a class="code" href="outfit_8c.html#a4ecafd5a897de1c003afdcbccf51f046">outfit_getAll</a>();</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;   lua_newtable(L); <span class="comment">/* t */</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(outfits); i++) {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      <a class="code" href="nlua__outfit_8c.html#a7e09f0d045d2e8a11b6799e4bf47fa20">lua_pushoutfit</a>( L, (Outfit*) &amp;outfits[i] );</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      lua_rawseti( L, -2, i+1 );</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;   }</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;}</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
+<div class="line"><a name="l00254"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">  254</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">outfitL_name</a>( lua_State *L )</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;{</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;   lua_pushstring(L, _(o-&gt;name));</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;}</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
+<div class="line"><a name="l00274"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a701119280a4609a5edb10e69eec29aa6">  274</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a701119280a4609a5edb10e69eec29aa6">outfitL_nameRaw</a>( lua_State *L )</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;{</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;   lua_pushstring(L, o-&gt;name);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a4092bfea31b8277dd8286cff4da710fa">  290</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a4092bfea31b8277dd8286cff4da710fa">outfitL_type</a>( lua_State *L )</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;{</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;   lua_pushstring(L, <a class="code" href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a>(o));</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;}</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
+<div class="line"><a name="l00308"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a21a97de8cf3be650c1f4185725b9656b">  308</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a21a97de8cf3be650c1f4185725b9656b">outfitL_typeBroad</a>( lua_State *L )</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;{</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;   lua_pushstring(L, <a class="code" href="outfit_8c.html#ac6a6200239b90e790bf95fc733b0297d">outfit_getTypeBroad</a>(o));</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;}</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00324"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a112c2467be101da69182fdda786144b9">  324</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a112c2467be101da69182fdda786144b9">outfitL_cpu</a>( lua_State *L )</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;{</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;   lua_pushnumber(L, <a class="code" href="outfit_8c.html#a22bf0b884e07fdce3c55b27a6f9b43a7">outfit_cpu</a>(o));</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;}</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
+<div class="line"><a name="l00340"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a01b02976d92d2f791fbc57551dd64b44">  340</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a01b02976d92d2f791fbc57551dd64b44">outfitL_mass</a>( lua_State *L )</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;{</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;   lua_pushnumber(L, o-&gt;mass);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;}</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00360"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a1b9ab32868975dfdf2c777bc9211f9c6">  360</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a1b9ab32868975dfdf2c777bc9211f9c6">outfitL_slot</a>( lua_State *L )</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;{</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   lua_pushstring(L, <a class="code" href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9">outfit_slotName</a>(o));</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   lua_pushstring(L, <a class="code" href="outfit_8c.html#a430bc49f57078876971bcb63ad350408">outfit_slotSize</a>(o));</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;   lua_pushstring(L, <a class="code" href="slots_8c.html#ab7089eecda79d049a82cf7491e685207">sp_display</a>( o-&gt;slot.spid ));</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;   lua_pushboolean(L, <a class="code" href="slots_8c.html#abddd205f78c406e2e148e3055a8847fa">sp_required</a>( o-&gt;slot.spid ));</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;   lua_pushboolean(L, <a class="code" href="slots_8c.html#aeb56942a01feefe32ccadca9c9aec58b">sp_exclusive</a>( o-&gt;slot.spid ));</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;   <span class="keywordflow">return</span> 5;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;}</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
+<div class="line"><a name="l00378"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a0199ebad69f5fd9a67b98d0e28405719">  378</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a0199ebad69f5fd9a67b98d0e28405719">outfitL_limit</a>( lua_State *L )</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;{</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;   <span class="keywordflow">if</span> (o-&gt;limit) {</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;      lua_pushstring(L,o-&gt;limit);</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   }</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;}</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160; </div>
+<div class="line"><a name="l00397"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a589d66c9bee72973de87ccca469ce3f9">  397</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a589d66c9bee72973de87ccca469ce3f9">outfitL_icon</a>( lua_State *L )</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;{</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;   <a class="code" href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a>( L, <a class="code" href="opengl__tex_8c.html#a08da237cf1c0eb03194c7ed22ebf92b4">gl_dupTexture</a>( o-&gt;gfx_store ) );</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;}</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
+<div class="line"><a name="l00413"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a96d203c634f2504b948fffac6f62e6b1">  413</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a96d203c634f2504b948fffac6f62e6b1">outfitL_price</a>( lua_State *L )</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;{</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;   lua_pushnumber(L, o-&gt;price);</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;}</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160; </div>
+<div class="line"><a name="l00429"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a7daede25dd40a48a186eed841cd44381">  429</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a7daede25dd40a48a186eed841cd44381">outfitL_description</a>( lua_State *L )</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;{</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;   lua_pushstring(L, o-&gt;description);</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;}</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160; </div>
+<div class="line"><a name="l00445"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#af759c64122002de410e50cbf65e57b25">  445</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#af759c64122002de410e50cbf65e57b25">outfitL_unique</a>( lua_State *L )</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;{</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;   lua_pushboolean(L, outfit_isProp(o, OUTFIT_PROP_UNIQUE));</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;}</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160; </div>
+<div class="line"><a name="l00461"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">  461</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">outfitL_getShipStat</a>( lua_State *L )</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;{</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;   ShipStats ss;</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;   <a class="code" href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a>( &amp;ss );</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;   <a class="code" href="shipstats_8c.html#a1d422ebc08d9740e56c54e2c3e9b4af1">ss_statsModFromList</a>( &amp;ss, o-&gt;stats );</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *str   = luaL_optstring(L,2,NULL);</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;   <span class="keywordtype">int</span> <span class="keyword">internal</span>      = lua_toboolean(L,3);</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;   <a class="code" href="shipstats_8c.html#a33781de4a7e7c4cb1fa0031cb4d73212">ss_statsGetLua</a>( L, &amp;ss, str, <span class="keyword">internal</span> );</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;}</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160; </div>
+<div class="line"><a name="l00487"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">  487</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">outfitL_weapStats</a>( lua_State *L )</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;{</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;   <span class="keywordtype">double</span> eps, dps, disable, shots;</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;   <span class="keywordtype">double</span> mod_energy, mod_damage, mod_shots;</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;   <span class="keywordtype">double</span> sdmg, admg;</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;   <span class="keyword">const</span> Damage *dmg;</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;   <span class="keyword">const</span> Outfit *o   = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>( L, 1 );</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;   Pilot *p    = (<a class="code" href="nlua__pilot_8c.html#ac5cd0fd179521bc75ccd719ecff2089a">lua_ispilot</a>(L,2)) ? <a class="code" href="nlua__pilot_8c.html#a45a8b0ae9f1aae3a2384445ba56d3cb7">luaL_validpilot</a>(L,2) : NULL;</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160; </div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;   <span class="comment">/* Just return 0 for non-wapons. */</span></div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;   <span class="keywordflow">if</span> (o-&gt;slot.type != OUTFIT_SLOT_WEAPON)</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160; </div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;   <span class="comment">/* Special case beam weapons .*/</span></div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a>(o)) {</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;      <span class="keywordflow">if</span> (p) {</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;         <span class="comment">/* Special case due to continuous fire. */</span></div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;         <span class="keywordflow">if</span> (o-&gt;type == OUTFIT_TYPE_BEAM) {</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;            mod_energy = p-&gt;stats.fwd_energy;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;            mod_damage = p-&gt;stats.fwd_damage;</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;            mod_shots  = 1. / p-&gt;stats.fwd_firerate;</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;         }</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;         <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;            mod_energy = p-&gt;stats.tur_energy;</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;            mod_damage = p-&gt;stats.tur_damage;</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;            mod_shots  = 1. / p-&gt;stats.tur_firerate;</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;         }</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;      }</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;      <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;         mod_energy = 1.;</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;         mod_damage = 1.;</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;         mod_shots = 1.;</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;      }</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;      shots = <a class="code" href="outfit_8c.html#ada2f6a54782a53868bc2db9a478523a1">outfit_duration</a>(o);</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;      mod_shots = shots / (shots + mod_shots * <a class="code" href="outfit_8c.html#afd3c474cb6d7c99a3f0fb2499550956c">outfit_delay</a>(o));</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>(o);</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;      <span class="comment">/* Modulate the damage by average of damage types. */</span></div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="damagetype_8c.html#a386da52cb12ad9c5300442f1c43a797c">dtype_raw</a>( dmg-&gt;type, &amp;sdmg, &amp;admg, NULL ) != 0)</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;         NLUA_ERROR(L, _(<span class="stringliteral">&quot;Outfit has invalid damage type.&quot;</span>));</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;      mod_damage *= 0.5*(sdmg+admg);</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;      <span class="comment">/* Calculate good damage estimates. */</span></div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;      dps = mod_shots * mod_damage * dmg-&gt;damage;</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;      disable = mod_shots * mod_damage * dmg-&gt;disable;</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;      eps = mod_shots * mod_energy * <a class="code" href="outfit_8c.html#aedae79b24dddf435ae86e0930235aaa0">outfit_energy</a>(o);</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;      lua_pushnumber( L, dps );</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;      lua_pushnumber( L, disable );</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;      lua_pushnumber( L, eps );</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;      lua_pushnumber( L, <a class="code" href="outfit_8c.html#a6bc1f1d6511b8998981166d7cbf1efc3">outfit_range</a>(o) );</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;      <span class="keywordflow">return</span> 4;</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;   }</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160; </div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;   <span class="keywordflow">if</span> (p) {</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;      <span class="keywordflow">switch</span> (o-&gt;type) {</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_BOLT:</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;            mod_energy = p-&gt;stats.fwd_energy;</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;            mod_damage = p-&gt;stats.fwd_damage;</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;            mod_shots  = 1. / p-&gt;stats.fwd_firerate;</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_BOLT:</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;            mod_energy = p-&gt;stats.tur_energy;</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;            mod_damage = p-&gt;stats.tur_damage;</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;            mod_shots  = 1. / p-&gt;stats.tur_firerate;</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_LAUNCHER:</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_LAUNCHER:</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;            mod_energy = 1.;</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;            mod_damage = p-&gt;stats.launch_damage;</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;            mod_shots  = 1. / p-&gt;stats.launch_rate;</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_BEAM:</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;         <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_BEAM:</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;         <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;      }</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;   }</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;   <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;      mod_energy = 1.;</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;      mod_damage = 1.;</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;      mod_shots = 1.;</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;   }</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160; </div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;   shots = 1. / (mod_shots * <a class="code" href="outfit_8c.html#afd3c474cb6d7c99a3f0fb2499550956c">outfit_delay</a>(o));</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;   <span class="comment">/* Special case: Ammo-based weapons. */</span></div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o))</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>(o-&gt;u.lau.ammo);</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;      dmg = <a class="code" href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a>(o);</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;   <span class="keywordflow">if</span> (dmg==NULL)</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;   <span class="comment">/* Modulate the damage by average of damage types. */</span></div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;   <a class="code" href="damagetype_8c.html#a386da52cb12ad9c5300442f1c43a797c">dtype_raw</a>( dmg-&gt;type, &amp;sdmg, &amp;admg, NULL );</div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;   mod_damage *= 0.5*(sdmg+admg);</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;   <span class="comment">/* Calculate good damage estimates. */</span></div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;   dps = shots * mod_damage * dmg-&gt;damage;</div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;   disable = shots * mod_damage * dmg-&gt;disable;</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;   eps = shots * mod_energy * <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="outfit_8c.html#aedae79b24dddf435ae86e0930235aaa0">outfit_energy</a>(o), 0. );</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160; </div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;   lua_pushnumber( L, dps );</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;   lua_pushnumber( L, disable );</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;   lua_pushnumber( L, eps );</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;   lua_pushnumber( L, <a class="code" href="outfit_8c.html#a6bc1f1d6511b8998981166d7cbf1efc3">outfit_range</a>(o) );</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;   lua_pushnumber( L, <a class="code" href="outfit_8c.html#a19347e1951c9ac1d7d83c64d89cdf8f7">outfit_trackmin</a>(o) );</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;   lua_pushnumber( L, <a class="code" href="outfit_8c.html#a9acd721a0c5ed02b246a527447f05dfd">outfit_trackmax</a>(o) );</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(o)) {</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;      lua_pushnumber( L, o-&gt;u.lau.lockon );</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;      lua_pushnumber( L, o-&gt;u.lau.iflockon );</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;      lua_pushboolean( L, o-&gt;u.lau.ammo-&gt;u.amm.ai!=AMMO_AI_UNGUIDED );</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;      <span class="keywordflow">return</span> 9;</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;   }</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;   <span class="keywordflow">return</span> 6;</div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;}</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160; </div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;<span class="preprocessor">#define SETFIELD( name, value )  \</span></div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;<span class="preprocessor">   lua_pushnumber( L, value ); \</span></div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;<span class="preprocessor">   lua_setfield( L, -2, name )</span></div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;<span class="preprocessor">#define SETFIELDI( name, value )  \</span></div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;<span class="preprocessor">   lua_pushinteger( L, value ); \</span></div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;<span class="preprocessor">   lua_setfield( L, -2, name )</span></div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;<span class="preprocessor">#define SETFIELDB( name, value )  \</span></div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;<span class="preprocessor">   lua_pushboolean( L, value ); \</span></div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;<span class="preprocessor">   lua_setfield( L, -2, name )</span></div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160; </div>
+<div class="line"><a name="l00614"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">  614</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">outfitL_specificStats</a>( lua_State *L )</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;{</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>( L, 1 );</div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;   lua_newtable(L);</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;   <span class="keywordflow">switch</span> (o-&gt;type) {</div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_AFTERBURNER:</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;         SETFIELD( <span class="stringliteral">&quot;thrust&quot;</span>,     o-&gt;u.afb.thrust );</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;         SETFIELD( <span class="stringliteral">&quot;speed&quot;</span>,      o-&gt;u.afb.speed );</div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;         SETFIELD( <span class="stringliteral">&quot;energy&quot;</span>,     o-&gt;u.afb.energy );</div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;         SETFIELD( <span class="stringliteral">&quot;mass_limit&quot;</span>, o-&gt;u.afb.mass_limit );</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heatup&quot;</span>,     o-&gt;u.afb.heatup );</div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat&quot;</span>,       o-&gt;u.afb.heat );</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat_cap&quot;</span>,   o-&gt;u.afb.heat_cap );</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat_base&quot;</span>,  o-&gt;u.afb.heat_cap );</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160; </div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_FIGHTER_BAY:</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;         <a class="code" href="nlua__ship_8c.html#a9b7c3e1098284cb66fdeae42c4654519">lua_pushship</a>( L, <a class="code" href="ship_8c.html#a118a1d01080c85b078d8824e9bd3234e">ship_get</a>( o-&gt;u.bay.ammo-&gt;u.fig.ship ) );</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;         lua_setfield( L, -2, <span class="stringliteral">&quot;ship&quot;</span> );</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;         SETFIELD( <span class="stringliteral">&quot;delay&quot;</span>,      o-&gt;u.bay.delay );</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;         SETFIELDI(<span class="stringliteral">&quot;amount&quot;</span>,     o-&gt;u.bay.amount );</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;         SETFIELD( <span class="stringliteral">&quot;reload_time&quot;</span>,o-&gt;u.bay.reload_time );</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160; </div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_BOLT:</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;isturret&quot;</span>,   1 );</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;         FALLTHROUGH;</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_BOLT:</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;         SETFIELD( <span class="stringliteral">&quot;delay&quot;</span>,      o-&gt;u.blt.delay );</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;         SETFIELD( <span class="stringliteral">&quot;speed&quot;</span>,      o-&gt;u.blt.speed );</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;         SETFIELD( <span class="stringliteral">&quot;range&quot;</span>,      o-&gt;u.blt.range );</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;         SETFIELD( <span class="stringliteral">&quot;falloff&quot;</span>,    o-&gt;u.blt.falloff );</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;         SETFIELD( <span class="stringliteral">&quot;energy&quot;</span>,     o-&gt;u.blt.energy );</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heatup&quot;</span>,     o-&gt;u.blt.heatup );</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat&quot;</span>,       o-&gt;u.blt.heat );</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;         SETFIELD( <span class="stringliteral">&quot;trackmin&quot;</span>,   o-&gt;u.blt.trackmin );</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;         SETFIELD( <span class="stringliteral">&quot;trackmax&quot;</span>,   o-&gt;u.blt.trackmax );</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;         SETFIELD( <span class="stringliteral">&quot;swivel&quot;</span>,     o-&gt;u.blt.swivel );</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;         <span class="comment">/* Damage stuff. */</span></div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;         SETFIELD( <span class="stringliteral">&quot;penetration&quot;</span>,o-&gt;u.blt.dmg.penetration );</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;         SETFIELD( <span class="stringliteral">&quot;damage&quot;</span>,     o-&gt;u.blt.dmg.damage );</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;         SETFIELD( <span class="stringliteral">&quot;disable&quot;</span>,    o-&gt;u.blt.dmg.disable );</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160; </div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_BEAM:</div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;isturret&quot;</span>,   1 );</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;         FALLTHROUGH;</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_BEAM:</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;         SETFIELD( <span class="stringliteral">&quot;delay&quot;</span>,      o-&gt;u.bem.delay );</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;         SETFIELD( <span class="stringliteral">&quot;warmup&quot;</span>,     o-&gt;u.bem.warmup );</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;         SETFIELD( <span class="stringliteral">&quot;duration&quot;</span>,   o-&gt;u.bem.duration );</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;         SETFIELD( <span class="stringliteral">&quot;min_duration&quot;</span>,o-&gt;u.bem.min_duration );</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;         SETFIELD( <span class="stringliteral">&quot;range&quot;</span>,      o-&gt;u.bem.range );</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;         SETFIELD( <span class="stringliteral">&quot;turn&quot;</span>,       o-&gt;u.bem.turn );</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;         SETFIELD( <span class="stringliteral">&quot;energy&quot;</span>,     o-&gt;u.bem.energy );</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heatup&quot;</span>,     o-&gt;u.bem.heatup );</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;         SETFIELD( <span class="stringliteral">&quot;heat&quot;</span>,       o-&gt;u.bem.heat );</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;         <span class="comment">/* Damage stuff. */</span></div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;         SETFIELD( <span class="stringliteral">&quot;penetration&quot;</span>,o-&gt;u.bem.dmg.penetration );</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;         SETFIELD( <span class="stringliteral">&quot;damage&quot;</span>,     o-&gt;u.bem.dmg.damage );</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;         SETFIELD( <span class="stringliteral">&quot;disable&quot;</span>,    o-&gt;u.bem.dmg.disable );</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160; </div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_TURRET_LAUNCHER:</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;isturret&quot;</span>,   1 );</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;         FALLTHROUGH;</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;      <span class="keywordflow">case</span> OUTFIT_TYPE_LAUNCHER:</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;         SETFIELD( <span class="stringliteral">&quot;delay&quot;</span>,      o-&gt;u.lau.delay );</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;         SETFIELDI(<span class="stringliteral">&quot;amount&quot;</span>,     o-&gt;u.lau.amount );</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;         SETFIELD( <span class="stringliteral">&quot;reload_time&quot;</span>,o-&gt;u.lau.reload_time );</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;         SETFIELD( <span class="stringliteral">&quot;lockon&quot;</span>,     o-&gt;u.lau.lockon );</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;         SETFIELD( <span class="stringliteral">&quot;iflockon&quot;</span>,   o-&gt;u.lau.iflockon );</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;         SETFIELD( <span class="stringliteral">&quot;trackmin&quot;</span>,   o-&gt;u.lau.trackmin );</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;         SETFIELD( <span class="stringliteral">&quot;trackmax&quot;</span>,   o-&gt;u.lau.trackmax );</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;         SETFIELD( <span class="stringliteral">&quot;arc&quot;</span>,        o-&gt;u.lau.arc );</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;         SETFIELD( <span class="stringliteral">&quot;swivel&quot;</span>,     o-&gt;u.lau.swivel );</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;         <span class="comment">/* Ammo stuff. */</span></div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;         SETFIELD( <span class="stringliteral">&quot;speed&quot;</span>,      o-&gt;u.lau.ammo-&gt;u.amm.speed );</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;         SETFIELD( <span class="stringliteral">&quot;speed_max&quot;</span>,  o-&gt;u.lau.ammo-&gt;u.amm.speed_max );</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;         SETFIELD( <span class="stringliteral">&quot;turn&quot;</span>,       o-&gt;u.lau.ammo-&gt;u.amm.turn );</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;         SETFIELD( <span class="stringliteral">&quot;thrust&quot;</span>,     o-&gt;u.lau.ammo-&gt;u.amm.thrust );</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;         SETFIELD( <span class="stringliteral">&quot;energy&quot;</span>,     o-&gt;u.lau.ammo-&gt;u.amm.energy );</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;seek&quot;</span>,       o-&gt;u.lau.ammo-&gt;u.amm.ai!=AMMO_AI_UNGUIDED );</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;         SETFIELDB(<span class="stringliteral">&quot;smart&quot;</span>,      o-&gt;u.lau.ammo-&gt;u.amm.ai==AMMO_AI_SMART );</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;         <span class="comment">/* Damage stuff. */</span></div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;         SETFIELD( <span class="stringliteral">&quot;penetration&quot;</span>,o-&gt;u.lau.ammo-&gt;u.amm.dmg.penetration );</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;         SETFIELD( <span class="stringliteral">&quot;damage&quot;</span>,     o-&gt;u.lau.ammo-&gt;u.amm.dmg.damage );</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;         SETFIELD( <span class="stringliteral">&quot;disable&quot;</span>,    o-&gt;u.lau.ammo-&gt;u.amm.dmg.disable );</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160; </div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;      <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;   }</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;}</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;<span class="preprocessor">#undef SETFIELD</span></div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;<span class="preprocessor">#undef SETFIELDI</span></div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;<span class="preprocessor">#undef SETFIELDB</span></div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
+<div class="line"><a name="l00720"></a><span class="lineno"><a class="line" href="nlua__outfit_8c.html#a08bba542dbfa4159c44d62b35c02e25f">  720</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__outfit_8c.html#a08bba542dbfa4159c44d62b35c02e25f">outfitL_illegality</a>( lua_State *L )</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;{</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;   <span class="keyword">const</span> Outfit *o = <a class="code" href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a>(L,1);</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   lua_newtable(L);</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(o-&gt;illegalto); i++) {</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;      <a class="code" href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a>( L, o-&gt;illegalto[i] );</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;      lua_rawseti( L, -2, i+1 );</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;   }</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anlua__outfit_8c_html_a1dc242e42b2ca866396e7b169f787f73"><div class="ttname"><a href="nlua__outfit_8c.html#a1dc242e42b2ca866396e7b169f787f73">nlua_loadOutfit</a></div><div class="ttdeci">int nlua_loadOutfit(nlua_env env)</div><div class="ttdoc">Loads the outfit library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00078">nlua_outfit.c:78</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a93389959c0a86fc08e9758d9cdf4b3a1"><div class="ttname"><a href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">outfitL_weapStats</a></div><div class="ttdeci">static int outfitL_weapStats(lua_State *L)</div><div class="ttdoc">Computes statistics for weapons.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00489">nlua_outfit.c:489</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a08bba542dbfa4159c44d62b35c02e25f"><div class="ttname"><a href="nlua__outfit_8c.html#a08bba542dbfa4159c44d62b35c02e25f">outfitL_illegality</a></div><div class="ttdeci">static int outfitL_illegality(lua_State *L)</div><div class="ttdoc">Gets the factions to which the outfit is illegal to.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00722">nlua_outfit.c:722</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a93389959c0a86fc08e9758d9cdf4b3a1"><div class="ttname"><a href="nlua__outfit_8c.html#a93389959c0a86fc08e9758d9cdf4b3a1">outfitL_weapStats</a></div><div class="ttdeci">static int outfitL_weapStats(lua_State *L)</div><div class="ttdoc">Computes statistics for weapons.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00487">nlua_outfit.c:487</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a08bba542dbfa4159c44d62b35c02e25f"><div class="ttname"><a href="nlua__outfit_8c.html#a08bba542dbfa4159c44d62b35c02e25f">outfitL_illegality</a></div><div class="ttdeci">static int outfitL_illegality(lua_State *L)</div><div class="ttdoc">Gets the factions to which the outfit is illegal to.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00720">nlua_outfit.c:720</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_abfa2c2992f08c6a5e4459241abc3f0db"><div class="ttname"><a href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a></div><div class="ttdeci">int ss_statsInit(ShipStats *stats)</div><div class="ttdoc">Initializes a stat structure.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00290">shipstats.c:290</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a589d66c9bee72973de87ccca469ce3f9"><div class="ttname"><a href="nlua__outfit_8c.html#a589d66c9bee72973de87ccca469ce3f9">outfitL_icon</a></div><div class="ttdeci">static int outfitL_icon(lua_State *L)</div><div class="ttdoc">Gets the store icon for an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00399">nlua_outfit.c:399</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a589d66c9bee72973de87ccca469ce3f9"><div class="ttname"><a href="nlua__outfit_8c.html#a589d66c9bee72973de87ccca469ce3f9">outfitL_icon</a></div><div class="ttdeci">static int outfitL_icon(lua_State *L)</div><div class="ttdoc">Gets the store icon for an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00397">nlua_outfit.c:397</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_ace5fc596820443c831ddce46d755f7b4"><div class="ttname"><a href="nlua__tex_8c.html#ace5fc596820443c831ddce46d755f7b4">lua_pushtex</a></div><div class="ttdeci">glTexture ** lua_pushtex(lua_State *L, glTexture *texture)</div><div class="ttdoc">Pushes a texture on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00123">nlua_tex.c:123</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a4092bfea31b8277dd8286cff4da710fa"><div class="ttname"><a href="nlua__outfit_8c.html#a4092bfea31b8277dd8286cff4da710fa">outfitL_type</a></div><div class="ttdeci">static int outfitL_type(lua_State *L)</div><div class="ttdoc">Gets the type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00292">nlua_outfit.c:292</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a96d203c634f2504b948fffac6f62e6b1"><div class="ttname"><a href="nlua__outfit_8c.html#a96d203c634f2504b948fffac6f62e6b1">outfitL_price</a></div><div class="ttdeci">static int outfitL_price(lua_State *L)</div><div class="ttdoc">Gets the price of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00415">nlua_outfit.c:415</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a4092bfea31b8277dd8286cff4da710fa"><div class="ttname"><a href="nlua__outfit_8c.html#a4092bfea31b8277dd8286cff4da710fa">outfitL_type</a></div><div class="ttdeci">static int outfitL_type(lua_State *L)</div><div class="ttdoc">Gets the type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00290">nlua_outfit.c:290</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a96d203c634f2504b948fffac6f62e6b1"><div class="ttname"><a href="nlua__outfit_8c.html#a96d203c634f2504b948fffac6f62e6b1">outfitL_price</a></div><div class="ttdeci">static int outfitL_price(lua_State *L)</div><div class="ttdoc">Gets the price of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00413">nlua_outfit.c:413</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a244eeea0557e43efcfa5482b7ddacf9f"><div class="ttname"><a href="outfit_8c.html#a244eeea0557e43efcfa5482b7ddacf9f">outfit_damage</a></div><div class="ttdeci">const Damage * outfit_damage(const Outfit *o)</div><div class="ttdoc">Gets the outfit's damage.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00629">outfit.c:629</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ac6a6200239b90e790bf95fc733b0297d"><div class="ttname"><a href="outfit_8c.html#ac6a6200239b90e790bf95fc733b0297d">outfit_getTypeBroad</a></div><div class="ttdeci">const char * outfit_getTypeBroad(const Outfit *o)</div><div class="ttdoc">Gets the outfit's broad type.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00887">outfit.c:887</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a37b9117017c667ad55a57d326e6f45a9"><div class="ttname"><a href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9">outfit_slotName</a></div><div class="ttdeci">const char * outfit_slotName(const Outfit *o)</div><div class="ttdoc">Gets the name of the slot type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00263">outfit.c:263</a></div></div>
@@ -560,43 +558,43 @@ $(function() {
 <div class="ttc" id="aoutfit_8c_html_a4ecafd5a897de1c003afdcbccf51f046"><div class="ttname"><a href="outfit_8c.html#a4ecafd5a897de1c003afdcbccf51f046">outfit_getAll</a></div><div class="ttdeci">const Outfit * outfit_getAll(void)</div><div class="ttdoc">Gets the array (array.h) of all outfits.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00131">outfit.c:131</a></div></div>
 <div class="ttc" id="aslots_8c_html_abddd205f78c406e2e148e3055a8847fa"><div class="ttname"><a href="slots_8c.html#abddd205f78c406e2e148e3055a8847fa">sp_required</a></div><div class="ttdeci">int sp_required(unsigned int spid)</div><div class="ttdoc">Gets whether or not a slot property is required.</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00178">slots.c:178</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a6bc1f1d6511b8998981166d7cbf1efc3"><div class="ttname"><a href="outfit_8c.html#a6bc1f1d6511b8998981166d7cbf1efc3">outfit_range</a></div><div class="ttdeci">double outfit_range(const Outfit *o)</div><div class="ttdoc">Gets the outfit's range.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00703">outfit.c:703</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a701119280a4609a5edb10e69eec29aa6"><div class="ttname"><a href="nlua__outfit_8c.html#a701119280a4609a5edb10e69eec29aa6">outfitL_nameRaw</a></div><div class="ttdeci">static int outfitL_nameRaw(lua_State *L)</div><div class="ttdoc">Gets the raw (untranslated) name of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00276">nlua_outfit.c:276</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_af759c64122002de410e50cbf65e57b25"><div class="ttname"><a href="nlua__outfit_8c.html#af759c64122002de410e50cbf65e57b25">outfitL_unique</a></div><div class="ttdeci">static int outfitL_unique(lua_State *L)</div><div class="ttdoc">Gets whether or not an outfit is unique.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00447">nlua_outfit.c:447</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a701119280a4609a5edb10e69eec29aa6"><div class="ttname"><a href="nlua__outfit_8c.html#a701119280a4609a5edb10e69eec29aa6">outfitL_nameRaw</a></div><div class="ttdeci">static int outfitL_nameRaw(lua_State *L)</div><div class="ttdoc">Gets the raw (untranslated) name of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00274">nlua_outfit.c:274</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_af759c64122002de410e50cbf65e57b25"><div class="ttname"><a href="nlua__outfit_8c.html#af759c64122002de410e50cbf65e57b25">outfitL_unique</a></div><div class="ttdeci">static int outfitL_unique(lua_State *L)</div><div class="ttdoc">Gets whether or not an outfit is unique.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00445">nlua_outfit.c:445</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ada2f6a54782a53868bc2db9a478523a1"><div class="ttname"><a href="outfit_8c.html#ada2f6a54782a53868bc2db9a478523a1">outfit_duration</a></div><div class="ttdeci">double outfit_duration(const Outfit *o)</div><div class="ttdoc">Gets the outfit's duration.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00821">outfit.c:821</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_aedae79b24dddf435ae86e0930235aaa0"><div class="ttname"><a href="outfit_8c.html#aedae79b24dddf435ae86e0930235aaa0">outfit_energy</a></div><div class="ttdeci">double outfit_energy(const Outfit *o)</div><div class="ttdoc">Gets the outfit's energy usage.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00673">outfit.c:673</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a7daede25dd40a48a186eed841cd44381"><div class="ttname"><a href="nlua__outfit_8c.html#a7daede25dd40a48a186eed841cd44381">outfitL_description</a></div><div class="ttdeci">static int outfitL_description(lua_State *L)</div><div class="ttdoc">Gets the description of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00431">nlua_outfit.c:431</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_af5c0034ebc214a08db293445b69471ad"><div class="ttname"><a href="nlua__outfit_8c.html#af5c0034ebc214a08db293445b69471ad">lua_isoutfit</a></div><div class="ttdeci">int lua_isoutfit(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00171">nlua_outfit.c:171</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a7daede25dd40a48a186eed841cd44381"><div class="ttname"><a href="nlua__outfit_8c.html#a7daede25dd40a48a186eed841cd44381">outfitL_description</a></div><div class="ttdeci">static int outfitL_description(lua_State *L)</div><div class="ttdoc">Gets the description of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00429">nlua_outfit.c:429</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_af5c0034ebc214a08db293445b69471ad"><div class="ttname"><a href="nlua__outfit_8c.html#af5c0034ebc214a08db293445b69471ad">lua_isoutfit</a></div><div class="ttdeci">int lua_isoutfit(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00170">nlua_outfit.c:170</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00039">naev.h:39</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_a272561733ec8dfd98112e08fa74a5e76"><div class="ttname"><a href="nlua__faction_8c.html#a272561733ec8dfd98112e08fa74a5e76">lua_pushfaction</a></div><div class="ttdeci">LuaFaction * lua_pushfaction(lua_State *L, LuaFaction faction)</div><div class="ttdoc">Pushes a faction on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00170">nlua_faction.c:170</a></div></div>
 <div class="ttc" id="aship_8c_html_a118a1d01080c85b078d8824e9bd3234e"><div class="ttname"><a href="ship_8c.html#a118a1d01080c85b078d8824e9bd3234e">ship_get</a></div><div class="ttdeci">const Ship * ship_get(const char *name)</div><div class="ttdoc">Gets a ship based on its name.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00072">ship.c:72</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a21a97de8cf3be650c1f4185725b9656b"><div class="ttname"><a href="nlua__outfit_8c.html#a21a97de8cf3be650c1f4185725b9656b">outfitL_typeBroad</a></div><div class="ttdeci">static int outfitL_typeBroad(lua_State *L)</div><div class="ttdoc">Gets the broad type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00310">nlua_outfit.c:310</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a225b36736ce94784d658f0beff2c4bab"><div class="ttname"><a href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">outfitL_specificStats</a></div><div class="ttdeci">static int outfitL_specificStats(lua_State *L)</div><div class="ttdoc">Returns raw data specific to each outfit type.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00616">nlua_outfit.c:616</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a21a97de8cf3be650c1f4185725b9656b"><div class="ttname"><a href="nlua__outfit_8c.html#a21a97de8cf3be650c1f4185725b9656b">outfitL_typeBroad</a></div><div class="ttdeci">static int outfitL_typeBroad(lua_State *L)</div><div class="ttdoc">Gets the broad type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00308">nlua_outfit.c:308</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a225b36736ce94784d658f0beff2c4bab"><div class="ttname"><a href="nlua__outfit_8c.html#a225b36736ce94784d658f0beff2c4bab">outfitL_specificStats</a></div><div class="ttdeci">static int outfitL_specificStats(lua_State *L)</div><div class="ttdoc">Returns raw data specific to each outfit type.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00614">nlua_outfit.c:614</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a0199ebad69f5fd9a67b98d0e28405719"><div class="ttname"><a href="nlua__outfit_8c.html#a0199ebad69f5fd9a67b98d0e28405719">outfitL_limit</a></div><div class="ttdeci">static int outfitL_limit(lua_State *L)</div><div class="ttdoc">Gets the limit string of the outfit. Only one outfit can be equipped at the same time for each limit ...</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00380">nlua_outfit.c:380</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a0199ebad69f5fd9a67b98d0e28405719"><div class="ttname"><a href="nlua__outfit_8c.html#a0199ebad69f5fd9a67b98d0e28405719">outfitL_limit</a></div><div class="ttdeci">static int outfitL_limit(lua_State *L)</div><div class="ttdoc">Gets the limit string of the outfit. Only one outfit can be equipped at the same time for each limit ...</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00378">nlua_outfit.c:378</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a22bf0b884e07fdce3c55b27a6f9b43a7"><div class="ttname"><a href="outfit_8c.html#a22bf0b884e07fdce3c55b27a6f9b43a7">outfit_cpu</a></div><div class="ttdeci">double outfit_cpu(const Outfit *o)</div><div class="ttdoc">Gets the outfit's cpu usage.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00695">outfit.c:695</a></div></div>
 <div class="ttc" id="anlua__outfit_8c_html_a7e09f0d045d2e8a11b6799e4bf47fa20"><div class="ttname"><a href="nlua__outfit_8c.html#a7e09f0d045d2e8a11b6799e4bf47fa20">lua_pushoutfit</a></div><div class="ttdeci">const Outfit ** lua_pushoutfit(lua_State *L, const Outfit *outfit)</div><div class="ttdoc">Pushes a outfit on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00155">nlua_outfit.c:155</a></div></div>
 <div class="ttc" id="adamagetype_8c_html_a386da52cb12ad9c5300442f1c43a797c"><div class="ttname"><a href="damagetype_8c.html#a386da52cb12ad9c5300442f1c43a797c">dtype_raw</a></div><div class="ttdeci">int dtype_raw(int type, double *shield, double *armour, double *knockback)</div><div class="ttdoc">Gets the raw modulation stats of a damage type.</div><div class="ttdef"><b>Definition:</b> <a href="damagetype_8c_source.html#l00234">damagetype.c:234</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a6ed844a576a577fb8b536f9e8edccf63"><div class="ttname"><a href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">outfitL_getAll</a></div><div class="ttdeci">static int outfitL_getAll(lua_State *L)</div><div class="ttdoc">Gets all the outfits.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00232">nlua_outfit.c:232</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a6ed844a576a577fb8b536f9e8edccf63"><div class="ttname"><a href="nlua__outfit_8c.html#a6ed844a576a577fb8b536f9e8edccf63">outfitL_getAll</a></div><div class="ttdeci">static int outfitL_getAll(lua_State *L)</div><div class="ttdoc">Gets all the outfits.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00230">nlua_outfit.c:230</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a9acd721a0c5ed02b246a527447f05dfd"><div class="ttname"><a href="outfit_8c.html#a9acd721a0c5ed02b246a527447f05dfd">outfit_trackmax</a></div><div class="ttdeci">double outfit_trackmax(const Outfit *o)</div><div class="ttdoc">Gets the outfit's minimal tracking.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00787">outfit.c:787</a></div></div>
 <div class="ttc" id="aslots_8c_html_ab7089eecda79d049a82cf7491e685207"><div class="ttname"><a href="slots_8c.html#ab7089eecda79d049a82cf7491e685207">sp_display</a></div><div class="ttdeci">const char * sp_display(unsigned int spid)</div><div class="ttdoc">Gets the display name of a slot property (in English).</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00158">slots.c:158</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a430bc49f57078876971bcb63ad350408"><div class="ttname"><a href="outfit_8c.html#a430bc49f57078876971bcb63ad350408">outfit_slotSize</a></div><div class="ttdeci">const char * outfit_slotSize(const Outfit *o)</div><div class="ttdoc">Gets the name of the slot size of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00314">outfit.c:314</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a1b9ab32868975dfdf2c777bc9211f9c6"><div class="ttname"><a href="nlua__outfit_8c.html#a1b9ab32868975dfdf2c777bc9211f9c6">outfitL_slot</a></div><div class="ttdeci">static int outfitL_slot(lua_State *L)</div><div class="ttdoc">Gets the slot name, size and property of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00362">nlua_outfit.c:362</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a5cd2fc085b3cf68409f3dcbd45be9a41"><div class="ttname"><a href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">outfitL_getShipStat</a></div><div class="ttdeci">static int outfitL_getShipStat(lua_State *L)</div><div class="ttdoc">Gets a shipstat from an Outfit by name, or a table containing all the ship stats if not specified.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00463">nlua_outfit.c:463</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a1b9ab32868975dfdf2c777bc9211f9c6"><div class="ttname"><a href="nlua__outfit_8c.html#a1b9ab32868975dfdf2c777bc9211f9c6">outfitL_slot</a></div><div class="ttdeci">static int outfitL_slot(lua_State *L)</div><div class="ttdoc">Gets the slot name, size and property of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00360">nlua_outfit.c:360</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a5cd2fc085b3cf68409f3dcbd45be9a41"><div class="ttname"><a href="nlua__outfit_8c.html#a5cd2fc085b3cf68409f3dcbd45be9a41">outfitL_getShipStat</a></div><div class="ttdeci">static int outfitL_getShipStat(lua_State *L)</div><div class="ttdoc">Gets a shipstat from an Outfit by name, or a table containing all the ship stats if not specified.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00461">nlua_outfit.c:461</a></div></div>
 <div class="ttc" id="aslots_8c_html_aeb56942a01feefe32ccadca9c9aec58b"><div class="ttname"><a href="slots_8c.html#aeb56942a01feefe32ccadca9c9aec58b">sp_exclusive</a></div><div class="ttdeci">int sp_exclusive(unsigned int spid)</div><div class="ttdoc">Gets whether or not a slot property is exclusive.</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00188">slots.c:188</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a7a9deef587c0980f051e91f6bf0d2aa5"><div class="ttname"><a href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">outfitL_get</a></div><div class="ttdeci">static int outfitL_get(lua_State *L)</div><div class="ttdoc">Gets a outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00219">nlua_outfit.c:219</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a7a9deef587c0980f051e91f6bf0d2aa5"><div class="ttname"><a href="nlua__outfit_8c.html#a7a9deef587c0980f051e91f6bf0d2aa5">outfitL_get</a></div><div class="ttdeci">static int outfitL_get(lua_State *L)</div><div class="ttdoc">Gets a outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00217">nlua_outfit.c:217</a></div></div>
 <div class="ttc" id="anlua__outfit_8c_html_a3ab90aa751361c2aa59ac9214f11937e"><div class="ttname"><a href="nlua__outfit_8c.html#a3ab90aa751361c2aa59ac9214f11937e">luaL_checkoutfit</a></div><div class="ttdeci">const Outfit * luaL_checkoutfit(lua_State *L, int ind)</div><div class="ttdoc">Gets outfit at index or raises error if there is no outfit at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00116">nlua_outfit.c:116</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a0a785d79d010792279fc92b2842c8675"><div class="ttname"><a href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a></div><div class="ttdeci">const Outfit * outfit_get(const char *name)</div><div class="ttdoc">Gets an outfit by name.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00108">outfit.c:108</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a112c2467be101da69182fdda786144b9"><div class="ttname"><a href="nlua__outfit_8c.html#a112c2467be101da69182fdda786144b9">outfitL_cpu</a></div><div class="ttdeci">static int outfitL_cpu(lua_State *L)</div><div class="ttdoc">Gets the cpu usage of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00326">nlua_outfit.c:326</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a112c2467be101da69182fdda786144b9"><div class="ttname"><a href="nlua__outfit_8c.html#a112c2467be101da69182fdda786144b9">outfitL_cpu</a></div><div class="ttdeci">static int outfitL_cpu(lua_State *L)</div><div class="ttdoc">Gets the cpu usage of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00324">nlua_outfit.c:324</a></div></div>
 <div class="ttc" id="anlua__outfit_8c_html_a658af07f1b4f64c6eca7bf652577d0fb"><div class="ttname"><a href="nlua__outfit_8c.html#a658af07f1b4f64c6eca7bf652577d0fb">luaL_validoutfit</a></div><div class="ttdeci">const Outfit * luaL_validoutfit(lua_State *L, int ind)</div><div class="ttdoc">Makes sure the outfit is valid or raises a Lua error.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00130">nlua_outfit.c:130</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00168">array.h:168</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a01b02976d92d2f791fbc57551dd64b44"><div class="ttname"><a href="nlua__outfit_8c.html#a01b02976d92d2f791fbc57551dd64b44">outfitL_mass</a></div><div class="ttdeci">static int outfitL_mass(lua_State *L)</div><div class="ttdoc">Gets the mass of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00342">nlua_outfit.c:342</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a01b02976d92d2f791fbc57551dd64b44"><div class="ttname"><a href="nlua__outfit_8c.html#a01b02976d92d2f791fbc57551dd64b44">outfitL_mass</a></div><div class="ttdeci">static int outfitL_mass(lua_State *L)</div><div class="ttdoc">Gets the mass of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00340">nlua_outfit.c:340</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a1d4168a464dd7486602dbe009f38a08c"><div class="ttname"><a href="outfit_8c.html#a1d4168a464dd7486602dbe009f38a08c">outfit_isBeam</a></div><div class="ttdeci">int outfit_isBeam(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a beam type weapon.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00450">outfit.c:450</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ad791ba3026695a8a2dbad90514149ce5"><div class="ttname"><a href="outfit_8c.html#ad791ba3026695a8a2dbad90514149ce5">outfit_getType</a></div><div class="ttdeci">const char * outfit_getType(const Outfit *o)</div><div class="ttdoc">Gets the outfit's specific type.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00854">outfit.c:854</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a32d9c1fc9818a3f3700992f7b41541ce"><div class="ttname"><a href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a></div><div class="ttdeci">int outfit_isLauncher(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a weapon launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00460">outfit.c:460</a></div></div>
 <div class="ttc" id="anlua__outfit_8c_html_ac1642de140780df7ff3ba9eebf7179c8"><div class="ttname"><a href="nlua__outfit_8c.html#ac1642de140780df7ff3ba9eebf7179c8">outfitL_methods</a></div><div class="ttdeci">static const luaL_Reg outfitL_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00048">nlua_outfit.c:48</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_a8b89af3181dc31a21579bf50d6e37d96"><div class="ttname"><a href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">outfitL_name</a></div><div class="ttdeci">static int outfitL_name(lua_State *L)</div><div class="ttdoc">Gets the translated name of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00256">nlua_outfit.c:256</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_a8b89af3181dc31a21579bf50d6e37d96"><div class="ttname"><a href="nlua__outfit_8c.html#a8b89af3181dc31a21579bf50d6e37d96">outfitL_name</a></div><div class="ttdeci">static int outfitL_name(lua_State *L)</div><div class="ttdoc">Gets the translated name of the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00254">nlua_outfit.c:254</a></div></div>
 <div class="ttc" id="arng_8c_html_a6dbc3ea54b9ab71917fe57fa11372346"><div class="ttname"><a href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a></div><div class="ttdeci">static const double b[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00256">rng.c:256</a></div></div>
-<div class="ttc" id="anlua__outfit_8c_html_ad3a545fdd5f5d6b18bc1b83cc50ecbd6"><div class="ttname"><a href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">outfitL_eq</a></div><div class="ttdeci">static int outfitL_eq(lua_State *L)</div><div class="ttdoc">Checks to see if two outfits are the same.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00197">nlua_outfit.c:197</a></div></div>
+<div class="ttc" id="anlua__outfit_8c_html_ad3a545fdd5f5d6b18bc1b83cc50ecbd6"><div class="ttname"><a href="nlua__outfit_8c.html#ad3a545fdd5f5d6b18bc1b83cc50ecbd6">outfitL_eq</a></div><div class="ttdeci">static int outfitL_eq(lua_State *L)</div><div class="ttdoc">Checks to see if two outfits are the same.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__outfit_8c_source.html#l00196">nlua_outfit.c:196</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a08da237cf1c0eb03194c7ed22ebf92b4"><div class="ttname"><a href="opengl__tex_8c.html#a08da237cf1c0eb03194c7ed22ebf92b4">gl_dupTexture</a></div><div class="ttdeci">glTexture * gl_dupTexture(const glTexture *texture)</div><div class="ttdoc">Duplicates a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00800">opengl_tex.c:800</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
