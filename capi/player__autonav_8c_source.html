@@ -580,146 +580,151 @@ $(function() {
 <div class="line"><a name="l00611"></a><span class="lineno"><a class="line" href="player__autonav_8c.html#a536cd4efa7bc153fc2bfa27a260bfafc">  611</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="player__autonav_8c.html#a536cd4efa7bc153fc2bfa27a260bfafc">player_autonavShouldResetSpeed</a> (<span class="keywordtype">void</span>)</div>
 <div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;{</div>
 <div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;   <span class="keywordtype">double</span> shield, armour;</div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;   Pilot *<span class="keyword">const</span>*pstk;</div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;   <span class="keywordtype">int</span> hostiles, will_reset;</div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;   <span class="keywordtype">double</span> hdist2, d2;</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;   <span class="keywordtype">double</span> reset_dist, reset_shield;</div>
-<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160; </div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;   <span class="keywordflow">if</span> (!player_isFlag(PLAYER_AUTONAV))</div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160; </div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;   reset_dist     = conf.autonav_reset_dist;</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;   reset_shield   = conf.autonav_reset_shield;</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;   hdist2         = INFINITY;</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;   hostiles       = 0;</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;   will_reset     = 0;</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160; </div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;   shield = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;shield / <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;shield_max;</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;   armour = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;armour / <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;armour_max;</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160; </div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   pstk = <a class="code" href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a>();</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pstk); i++) {</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;      <span class="keywordflow">if</span> ((pstk[i]-&gt;<span class="keywordtype">id</span> != PLAYER_ID ) &amp;&amp; <a class="code" href="pilot_8c.html#a2361ee0775d8dc7200e46c3aac937c22">pilot_isHostile</a>( pstk[i] )</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;            &amp;&amp; <a class="code" href="pilot__ew_8c.html#a1f95f4ae0f4739bbb254f9662f39fac4">pilot_inRangePilot</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, pstk[i], &amp;d2 )==1</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;            &amp;&amp; !pilot_isDisabled( pstk[i] )) {</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;         hostiles = 1;</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;         <span class="keywordflow">if</span> (d2 &lt; hdist2)</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;            hdist2 = d2;</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;         <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;      }</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;   }</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160; </div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;   <span class="keywordflow">if</span> (hostiles) {</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;      <span class="keywordflow">if</span> ((reset_dist &gt; 0) &amp;&amp; (hdist2 &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(reset_dist))) {</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;         will_reset = 1;</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;         <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer, 0. );</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;      }</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((shield &lt; <a class="code" href="player__autonav_8c.html#a6488ea0c72b792cd1d3c103a00b78c6e">last_shield</a> &amp;&amp; shield &lt; reset_shield) || armour &lt; <a class="code" href="player__autonav_8c.html#a585c9318668eee89e7458ee37c95f840">last_armour</a>) {</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;         will_reset = 1;</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;         <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer, 2. );</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;      }</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;   }</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160; </div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;   <a class="code" href="player__autonav_8c.html#a6488ea0c72b792cd1d3c103a00b78c6e">last_shield</a> = shield;</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;   <a class="code" href="player__autonav_8c.html#a585c9318668eee89e7458ee37c95f840">last_armour</a> = armour;</div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160; </div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;   <span class="keywordflow">if</span> (will_reset || (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer &gt; 0)) {</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;      <a class="code" href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a>();</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   }</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;}</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160; </div>
-<div class="line"><a name="l00671"></a><span class="lineno"><a class="line" href="player__autonav_8c.html#ae9b43aeb3a0ce26be83d1ed2c86d2989">  671</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#ae9b43aeb3a0ce26be83d1ed2c86d2989">player_thinkAutonav</a>( Pilot *pplayer, <span class="keywordtype">double</span> dt )</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;{</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer &gt; 0.)</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;      <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer -= dt;</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160; </div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;   <a class="code" href="player__autonav_8c.html#a536cd4efa7bc153fc2bfa27a260bfafc">player_autonavShouldResetSpeed</a>();</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav == AUTONAV_JUMP_APPROACH) ||</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;         (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav == AUTONAV_JUMP_BRAKE)) {</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;      <span class="comment">/* If we&#39;re already at the target. */</span></div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace == -1)</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;         <a class="code" href="player__autonav_8c.html#ad122fe5dacab86c71ff1feb679d41f61">player_autonavAbort</a>(_(<span class="stringliteral">&quot;Target changed to current system&quot;</span>));</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160; </div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;      <span class="comment">/* Need fuel. */</span></div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pplayer-&gt;fuel &lt; pplayer-&gt;fuel_consumption)</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;         <a class="code" href="player__autonav_8c.html#ad122fe5dacab86c71ff1feb679d41f61">player_autonavAbort</a>(_(<span class="stringliteral">&quot;Not enough fuel for autonav to continue&quot;</span>));</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160; </div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;         <a class="code" href="player__autonav_8c.html#a32c514f6c3c89d55b547f54ad1183a22">player_autonav</a>();</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;   }</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160; </div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;   <span class="comment">/* Keep on moving. */</span></div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;      <a class="code" href="player__autonav_8c.html#a32c514f6c3c89d55b547f54ad1183a22">player_autonav</a>();</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;}</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;   Pilot *<span class="keyword">const</span>*pstk;</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;   <span class="keywordtype">int</span> hostiles, will_reset;</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;   <span class="keywordtype">double</span> hdist2, d2;</div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;   <span class="keywordtype">double</span> reset_dist, reset_shield;</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160; </div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;   <span class="keywordflow">if</span> (!player_isFlag(PLAYER_AUTONAV))</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160; </div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;   <span class="comment">/* Stop on lockons. */</span></div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;lockons&gt;0) {</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;      <a class="code" href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a>();</div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;   }</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160; </div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;   reset_dist     = conf.autonav_reset_dist;</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;   reset_shield   = conf.autonav_reset_shield;</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;   hdist2         = INFINITY;</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;   hostiles       = 0;</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;   will_reset     = 0;</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160; </div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   shield = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;shield / <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;shield_max;</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   armour = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;armour / <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;armour_max;</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160; </div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   pstk = <a class="code" href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a>();</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pstk); i++) {</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;      <span class="keywordflow">if</span> ((pstk[i]-&gt;<span class="keywordtype">id</span> != PLAYER_ID ) &amp;&amp; <a class="code" href="pilot_8c.html#a2361ee0775d8dc7200e46c3aac937c22">pilot_isHostile</a>( pstk[i] )</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;            &amp;&amp; <a class="code" href="pilot__ew_8c.html#a1f95f4ae0f4739bbb254f9662f39fac4">pilot_inRangePilot</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, pstk[i], &amp;d2 )==1</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;            &amp;&amp; !pilot_isDisabled( pstk[i] )) {</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;         hostiles = 1;</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;         <span class="keywordflow">if</span> (d2 &lt; hdist2)</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;            hdist2 = d2;</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;         <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;      }</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   }</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160; </div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   <span class="keywordflow">if</span> (hostiles) {</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;      <span class="keywordflow">if</span> ((reset_dist &gt; 0) &amp;&amp; (hdist2 &lt; <a class="code" href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a>(reset_dist))) {</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;         will_reset = 1;</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;         <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer, 0. );</div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;      }</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((shield &lt; <a class="code" href="player__autonav_8c.html#a6488ea0c72b792cd1d3c103a00b78c6e">last_shield</a> &amp;&amp; shield &lt; reset_shield) || armour &lt; <a class="code" href="player__autonav_8c.html#a585c9318668eee89e7458ee37c95f840">last_armour</a>) {</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;         will_reset = 1;</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;         <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer, 2. );</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;      }</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;   }</div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160; </div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;   <a class="code" href="player__autonav_8c.html#a6488ea0c72b792cd1d3c103a00b78c6e">last_shield</a> = shield;</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   <a class="code" href="player__autonav_8c.html#a585c9318668eee89e7458ee37c95f840">last_armour</a> = armour;</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160; </div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   <span class="keywordflow">if</span> (will_reset || (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer &gt; 0)) {</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;      <a class="code" href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a>();</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   }</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;}</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160; </div>
+<div class="line"><a name="l00676"></a><span class="lineno"><a class="line" href="player__autonav_8c.html#ae9b43aeb3a0ce26be83d1ed2c86d2989">  676</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#ae9b43aeb3a0ce26be83d1ed2c86d2989">player_thinkAutonav</a>( Pilot *pplayer, <span class="keywordtype">double</span> dt )</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;{</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer &gt; 0.)</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;      <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav_timer -= dt;</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160; </div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;   <a class="code" href="player__autonav_8c.html#a536cd4efa7bc153fc2bfa27a260bfafc">player_autonavShouldResetSpeed</a>();</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav == AUTONAV_JUMP_APPROACH) ||</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;         (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.autonav == AUTONAV_JUMP_BRAKE)) {</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;      <span class="comment">/* If we&#39;re already at the target. */</span></div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace == -1)</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;         <a class="code" href="player__autonav_8c.html#ad122fe5dacab86c71ff1feb679d41f61">player_autonavAbort</a>(_(<span class="stringliteral">&quot;Target changed to current system&quot;</span>));</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160; </div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;      <span class="comment">/* Need fuel. */</span></div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pplayer-&gt;fuel &lt; pplayer-&gt;fuel_consumption)</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;         <a class="code" href="player__autonav_8c.html#ad122fe5dacab86c71ff1feb679d41f61">player_autonavAbort</a>(_(<span class="stringliteral">&quot;Not enough fuel for autonav to continue&quot;</span>));</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160; </div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;         <a class="code" href="player__autonav_8c.html#a32c514f6c3c89d55b547f54ad1183a22">player_autonav</a>();</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;   }</div>
 <div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160; </div>
-<div class="line"><a name="l00701"></a><span class="lineno"><a class="line" href="player__autonav_8c.html#afac37559002a1b2eb32100b237af29cd">  701</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#afac37559002a1b2eb32100b237af29cd">player_updateAutonav</a>( <span class="keywordtype">double</span> dt )</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;{</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> dis_dead = 5.0;</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> dis_mod  = 0.5;</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> dis_max  = 4.0;</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> dis_ramp = 6.0;</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160; </div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pause_8c.html#a868659a2f991de87c2b0dcbe6cea6175">paused</a> || (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p==NULL) || pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_DEAD))</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160; </div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   <span class="comment">/* We handle disabling here. */</span></div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_DISABLED)) {</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;      <span class="comment">/* It is somewhat like:</span></div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;<span class="comment">       *        /------------\        4x</span></div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;<span class="comment">       *       /              \</span></div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;<span class="comment">       * -----/                \----- 1x</span></div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;<span class="comment">       *</span></div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="comment">       * &lt;---&gt;&lt;-&gt;&lt;----------&gt;&lt;-&gt;&lt;---&gt;</span></div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="comment">       *   5   6     X        6   5    Real time</span></div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;<span class="comment">       *   5   15    X        15  5    Game time</span></div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="comment">       *</span></div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;<span class="comment">       * For triangles we have to add the rectangle and triangle areas.</span></div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;<span class="comment">       */</span></div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;      <span class="comment">/* 5 second deadtime. */</span></div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;dtimer_accum &lt; dis_dead)</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;         <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>;</div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;      <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;         <span class="comment">/* Ramp down. */</span></div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;dtimer - <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;dtimer_accum &lt; dis_dead + (dis_max-<a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>)*dis_ramp/2 + <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>*dis_ramp)</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;            <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>, <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> - dis_mod*dt );</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;         <span class="comment">/* Normal. */</span></div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;            <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( dis_max, <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> + dis_mod*dt );</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;      }</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;      <a class="code" href="pause_8c.html#a15af6ab5827f86850b88d6d334aac30f">pause_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> );</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;      <a class="code" href="sound_8c.html#af485c8bd7c6ceafdb106eebac1adacfc">sound_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> / <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>() );</div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;   }</div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160; </div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   <span class="comment">/* Must be autonaving. */</span></div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   <span class="keywordflow">if</span> (!player_isFlag(PLAYER_AUTONAV))</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   <span class="comment">/* Keep on moving. */</span></div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;      <a class="code" href="player__autonav_8c.html#a32c514f6c3c89d55b547f54ad1183a22">player_autonav</a>();</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;}</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160; </div>
+<div class="line"><a name="l00706"></a><span class="lineno"><a class="line" href="player__autonav_8c.html#afac37559002a1b2eb32100b237af29cd">  706</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="player__autonav_8c.html#afac37559002a1b2eb32100b237af29cd">player_updateAutonav</a>( <span class="keywordtype">double</span> dt )</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;{</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> dis_dead = 5.0;</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> dis_mod  = 0.5;</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> dis_max  = 4.0;</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">double</span> dis_ramp = 6.0;</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="pause_8c.html#a868659a2f991de87c2b0dcbe6cea6175">paused</a> || (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p==NULL) || pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_DEAD))</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160; </div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;   <span class="comment">/* We handle disabling here. */</span></div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;   <span class="keywordflow">if</span> (pilot_isFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_DISABLED)) {</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;      <span class="comment">/* It is somewhat like:</span></div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="comment">       *        /------------\        4x</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;<span class="comment">       *       /              \</span></div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="comment">       * -----/                \----- 1x</span></div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;<span class="comment">       *</span></div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;<span class="comment">       * &lt;---&gt;&lt;-&gt;&lt;----------&gt;&lt;-&gt;&lt;---&gt;</span></div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;<span class="comment">       *   5   6     X        6   5    Real time</span></div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;<span class="comment">       *   5   15    X        15  5    Game time</span></div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;<span class="comment">       *</span></div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;<span class="comment">       * For triangles we have to add the rectangle and triangle areas.</span></div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;<span class="comment">       */</span></div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;      <span class="comment">/* 5 second deadtime. */</span></div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;dtimer_accum &lt; dis_dead)</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;         <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>;</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;      <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;         <span class="comment">/* Ramp down. */</span></div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;dtimer - <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;dtimer_accum &lt; dis_dead + (dis_max-<a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>)*dis_ramp/2 + <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>*dis_ramp)</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;            <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>, <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> - dis_mod*dt );</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;         <span class="comment">/* Normal. */</span></div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;            <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>( dis_max, <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> + dis_mod*dt );</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;      }</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;      <a class="code" href="pause_8c.html#a15af6ab5827f86850b88d6d334aac30f">pause_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> );</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;      <a class="code" href="sound_8c.html#af485c8bd7c6ceafdb106eebac1adacfc">sound_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> / <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>() );</div>
 <div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160; </div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   <span class="comment">/* Ramping down. */</span></div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player__autonav_8c.html#a27e94d2fde4f4e06331c62005156472c">tc_rampdown</a>) {</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> != <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>) {</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;         <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>, <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a>-<a class="code" href="player__autonav_8c.html#aed236a722d3f7c19b25aceae3b0fcb37">tc_down</a>*dt );</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;         <a class="code" href="pause_8c.html#a15af6ab5827f86850b88d6d334aac30f">pause_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> );</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;         <a class="code" href="sound_8c.html#af485c8bd7c6ceafdb106eebac1adacfc">sound_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> / <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>() );</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;      }</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;   }</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160; </div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;   <span class="comment">/* We&#39;ll update the time compression here. */</span></div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.tc_max)</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;   }</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160; </div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   <span class="comment">/* Must be autonaving. */</span></div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   <span class="keywordflow">if</span> (!player_isFlag(PLAYER_AUTONAV))</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160; </div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   <span class="comment">/* Ramping down. */</span></div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player__autonav_8c.html#a27e94d2fde4f4e06331c62005156472c">tc_rampdown</a>) {</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> != <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>) {</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;         <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( <a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>, <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a>-<a class="code" href="player__autonav_8c.html#aed236a722d3f7c19b25aceae3b0fcb37">tc_down</a>*dt );</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;         <a class="code" href="pause_8c.html#a15af6ab5827f86850b88d6d334aac30f">pause_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> );</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;         <a class="code" href="sound_8c.html#af485c8bd7c6ceafdb106eebac1adacfc">sound_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> / <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>() );</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;      }</div>
 <div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;      <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> += 0.2 * dt * (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.tc_max-<a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>);</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;   <span class="comment">/* Avoid going over. */</span></div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> &gt; <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.tc_max)</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;      <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.tc_max;</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;   <a class="code" href="pause_8c.html#a15af6ab5827f86850b88d6d334aac30f">pause_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> );</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;   <a class="code" href="sound_8c.html#af485c8bd7c6ceafdb106eebac1adacfc">sound_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> / <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>() );</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;}</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;   }</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160; </div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;   <span class="comment">/* We&#39;ll update the time compression here. */</span></div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> == <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.tc_max)</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;      <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> += 0.2 * dt * (<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.tc_max-<a class="code" href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a>);</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;   <span class="comment">/* Avoid going over. */</span></div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> &gt; <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.tc_max)</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;      <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.tc_max;</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;   <a class="code" href="pause_8c.html#a15af6ab5827f86850b88d6d334aac30f">pause_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> );</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;   <a class="code" href="sound_8c.html#af485c8bd7c6ceafdb106eebac1adacfc">sound_setSpeed</a>( <a class="code" href="player__autonav_8c.html#aa1d7d8b380f019d414b0313decc7259d">tc_mod</a> / <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>() );</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aplayer__autonav_8c_html_addc5d9b0615e5555786004cb5fcfd3b8"><div class="ttname"><a href="player__autonav_8c.html#addc5d9b0615e5555786004cb5fcfd3b8">tc_base</a></div><div class="ttdeci">static double tc_base</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00032">player_autonav.c:32</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_a536cd4efa7bc153fc2bfa27a260bfafc"><div class="ttname"><a href="player__autonav_8c.html#a536cd4efa7bc153fc2bfa27a260bfafc">player_autonavShouldResetSpeed</a></div><div class="ttdeci">int player_autonavShouldResetSpeed(void)</div><div class="ttdoc">Checks whether the speed should be reset due to damage or missile locks.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00611">player_autonav.c:611</a></div></div>
@@ -755,7 +760,7 @@ $(function() {
 <div class="ttc" id="asound_8c_html_af485c8bd7c6ceafdb106eebac1adacfc"><div class="ttname"><a href="sound_8c.html#af485c8bd7c6ceafdb106eebac1adacfc">sound_setSpeed</a></div><div class="ttdeci">void sound_setSpeed(double s)</div><div class="ttdoc">Sets the speed to play the sound at.</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00530">sound.c:530</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_a27e94d2fde4f4e06331c62005156472c"><div class="ttname"><a href="player__autonav_8c.html#a27e94d2fde4f4e06331c62005156472c">tc_rampdown</a></div><div class="ttdeci">static int tc_rampdown</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00034">player_autonav.c:34</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_acc4805f94941f1d691346c626edf094b"><div class="ttname"><a href="player__autonav_8c.html#acc4805f94941f1d691346c626edf094b">player_autonavBrake</a></div><div class="ttdeci">static int player_autonavBrake(void)</div><div class="ttdoc">Handles the autonav braking.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00584">player_autonav.c:584</a></div></div>
-<div class="ttc" id="aplayer__autonav_8c_html_afac37559002a1b2eb32100b237af29cd"><div class="ttname"><a href="player__autonav_8c.html#afac37559002a1b2eb32100b237af29cd">player_updateAutonav</a></div><div class="ttdeci">void player_updateAutonav(double dt)</div><div class="ttdoc">Updates the player's autonav.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00701">player_autonav.c:701</a></div></div>
+<div class="ttc" id="aplayer__autonav_8c_html_afac37559002a1b2eb32100b237af29cd"><div class="ttname"><a href="player__autonav_8c.html#afac37559002a1b2eb32100b237af29cd">player_updateAutonav</a></div><div class="ttdeci">void player_updateAutonav(double dt)</div><div class="ttdoc">Updates the player's autonav.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00706">player_autonav.c:706</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_aedd0365a70dbd5405dc58bdb1aa0654c"><div class="ttname"><a href="player__autonav_8c.html#aedd0365a70dbd5405dc58bdb1aa0654c">player_autonavRampdown</a></div><div class="ttdeci">static void player_autonavRampdown(double d)</div><div class="ttdoc">Handles common time accel ramp-down for autonav to positions and planets.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00242">player_autonav.c:242</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00039">naev.h:39</a></div></div>
 <div class="ttc" id="apilot_8c_html_a56143a90fcb5ffadb3c837f52f85b2aa"><div class="ttname"><a href="pilot_8c.html#a56143a90fcb5ffadb3c837f52f85b2aa">pilot_getAll</a></div><div class="ttdeci">Pilot *const  * pilot_getAll(void)</div><div class="ttdoc">Gets the pilot stack.</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8c_source.html#l00080">pilot.c:80</a></div></div>
@@ -763,7 +768,7 @@ $(function() {
 <div class="ttc" id="anaev_8h_html_a9a1a80dcaf876a3295a7653159a0e90a"><div class="ttname"><a href="naev_8h.html#a9a1a80dcaf876a3295a7653159a0e90a">pow2</a></div><div class="ttdeci">#define pow2(x)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00046">naev.h:46</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_a9f859c4018e2af066714c160fa471775"><div class="ttname"><a href="player__autonav_8c.html#a9f859c4018e2af066714c160fa471775">player_acc</a></div><div class="ttdeci">double player_acc</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00116">player.c:116</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
-<div class="ttc" id="aplayer__autonav_8c_html_ae9b43aeb3a0ce26be83d1ed2c86d2989"><div class="ttname"><a href="player__autonav_8c.html#ae9b43aeb3a0ce26be83d1ed2c86d2989">player_thinkAutonav</a></div><div class="ttdeci">void player_thinkAutonav(Pilot *pplayer, double dt)</div><div class="ttdoc">Handles autonav thinking.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00671">player_autonav.c:671</a></div></div>
+<div class="ttc" id="aplayer__autonav_8c_html_ae9b43aeb3a0ce26be83d1ed2c86d2989"><div class="ttname"><a href="player__autonav_8c.html#ae9b43aeb3a0ce26be83d1ed2c86d2989">player_thinkAutonav</a></div><div class="ttdeci">void player_thinkAutonav(Pilot *pplayer, double dt)</div><div class="ttdoc">Handles autonav thinking.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00676">player_autonav.c:676</a></div></div>
 <div class="ttc" id="apilot__ew_8c_html_a1f95f4ae0f4739bbb254f9662f39fac4"><div class="ttname"><a href="pilot__ew_8c.html#a1f95f4ae0f4739bbb254f9662f39fac4">pilot_inRangePilot</a></div><div class="ttdeci">int pilot_inRangePilot(const Pilot *p, const Pilot *target, double *dist2)</div><div class="ttdoc">Check to see if a pilot is in sensor range of another.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__ew_8c_source.html#l00243">pilot_ew.c:243</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_a32c514f6c3c89d55b547f54ad1183a22"><div class="ttname"><a href="player__autonav_8c.html#a32c514f6c3c89d55b547f54ad1183a22">player_autonav</a></div><div class="ttdeci">static void player_autonav(void)</div><div class="ttdoc">Handles the autonavigation process for the player.</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00315">player_autonav.c:315</a></div></div>
 <div class="ttc" id="aplayer__autonav_8c_html_a6488ea0c72b792cd1d3c103a00b78c6e"><div class="ttname"><a href="player__autonav_8c.html#a6488ea0c72b792cd1d3c103a00b78c6e">last_shield</a></div><div class="ttdeci">static double last_shield</div><div class="ttdef"><b>Definition:</b> <a href="player__autonav_8c_source.html#l00035">player_autonav.c:35</a></div></div>
