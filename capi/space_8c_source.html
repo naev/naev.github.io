@@ -3889,137 +3889,134 @@ $(function() {
 <div class="line"><a name="l04454"></a><span class="lineno"> 4454</span>&#160; </div>
 <div class="line"><a name="l04462"></a><span class="lineno"><a class="line" href="space_8c.html#aeb71da91ee337338f1d0d849cc7dd280"> 4462</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="space_8c.html#aeb71da91ee337338f1d0d849cc7dd280">asteroid_explode</a> ( Asteroid *a, AsteroidAnchor *field, <span class="keywordtype">int</span> give_reward )</div>
 <div class="line"><a name="l04463"></a><span class="lineno"> 4463</span>&#160;{</div>
-<div class="line"><a name="l04464"></a><span class="lineno"> 4464</span>&#160;   <span class="keywordtype">int</span> i, j, nb;</div>
-<div class="line"><a name="l04465"></a><span class="lineno"> 4465</span>&#160;   Damage dmg;</div>
-<div class="line"><a name="l04466"></a><span class="lineno"> 4466</span>&#160;   AsteroidType *at;</div>
-<div class="line"><a name="l04467"></a><span class="lineno"> 4467</span>&#160;   <a class="code" href="structCommodity.html">Commodity</a> *com;</div>
-<div class="line"><a name="l04468"></a><span class="lineno"> 4468</span>&#160;   Vector2d pos, vel;</div>
-<div class="line"><a name="l04469"></a><span class="lineno"> 4469</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[16];</div>
-<div class="line"><a name="l04470"></a><span class="lineno"> 4470</span>&#160; </div>
-<div class="line"><a name="l04471"></a><span class="lineno"> 4471</span>&#160;   <span class="comment">/* Manage the explosion */</span></div>
-<div class="line"><a name="l04472"></a><span class="lineno"> 4472</span>&#160;   dmg.type          = <a class="code" href="damagetype_8c.html#a54a49bd5b538409f4e9cfce666ab25b0">dtype_get</a>(<span class="stringliteral">&quot;explosion_splash&quot;</span>);</div>
-<div class="line"><a name="l04473"></a><span class="lineno"> 4473</span>&#160;   dmg.damage        = 100.;</div>
-<div class="line"><a name="l04474"></a><span class="lineno"> 4474</span>&#160;   dmg.penetration   = 1.; <span class="comment">/* Full penetration. */</span></div>
-<div class="line"><a name="l04475"></a><span class="lineno"> 4475</span>&#160;   dmg.disable       = 0.;</div>
-<div class="line"><a name="l04476"></a><span class="lineno"> 4476</span>&#160;   <a class="code" href="explosion_8c.html#a45c6aeb4a0cfa5bafaa5581ff4bfb78b">expl_explode</a>( a-&gt;pos.x, a-&gt;pos.y, a-&gt;vel.x, a-&gt;vel.y,</div>
-<div class="line"><a name="l04477"></a><span class="lineno"> 4477</span>&#160;                 50., &amp;dmg, NULL, EXPL_MODE_SHIP );</div>
+<div class="line"><a name="l04464"></a><span class="lineno"> 4464</span>&#160;   Damage dmg;</div>
+<div class="line"><a name="l04465"></a><span class="lineno"> 4465</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[16];</div>
+<div class="line"><a name="l04466"></a><span class="lineno"> 4466</span>&#160; </div>
+<div class="line"><a name="l04467"></a><span class="lineno"> 4467</span>&#160;   <span class="comment">/* Manage the explosion */</span></div>
+<div class="line"><a name="l04468"></a><span class="lineno"> 4468</span>&#160;   dmg.type          = <a class="code" href="damagetype_8c.html#a54a49bd5b538409f4e9cfce666ab25b0">dtype_get</a>(<span class="stringliteral">&quot;explosion_splash&quot;</span>);</div>
+<div class="line"><a name="l04469"></a><span class="lineno"> 4469</span>&#160;   dmg.damage        = 100.;</div>
+<div class="line"><a name="l04470"></a><span class="lineno"> 4470</span>&#160;   dmg.penetration   = 1.; <span class="comment">/* Full penetration. */</span></div>
+<div class="line"><a name="l04471"></a><span class="lineno"> 4471</span>&#160;   dmg.disable       = 0.;</div>
+<div class="line"><a name="l04472"></a><span class="lineno"> 4472</span>&#160;   <a class="code" href="explosion_8c.html#a45c6aeb4a0cfa5bafaa5581ff4bfb78b">expl_explode</a>( a-&gt;pos.x, a-&gt;pos.y, a-&gt;vel.x, a-&gt;vel.y,</div>
+<div class="line"><a name="l04473"></a><span class="lineno"> 4473</span>&#160;                 50., &amp;dmg, NULL, EXPL_MODE_SHIP );</div>
+<div class="line"><a name="l04474"></a><span class="lineno"> 4474</span>&#160; </div>
+<div class="line"><a name="l04475"></a><span class="lineno"> 4475</span>&#160;   <span class="comment">/* Play random explosion sound. */</span></div>
+<div class="line"><a name="l04476"></a><span class="lineno"> 4476</span>&#160;   snprintf(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <span class="stringliteral">&quot;explosion%d&quot;</span>, RNG(0,2));</div>
+<div class="line"><a name="l04477"></a><span class="lineno"> 4477</span>&#160;   <a class="code" href="sound_8c.html#a7dd6733f993a600013598734c4ed0e6c">sound_playPos</a>( <a class="code" href="sound_8c.html#aa93287b69db58dff3e0b534676123f9d">sound_get</a>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), a-&gt;pos.x, a-&gt;pos.y, a-&gt;vel.x, a-&gt;vel.y );</div>
 <div class="line"><a name="l04478"></a><span class="lineno"> 4478</span>&#160; </div>
-<div class="line"><a name="l04479"></a><span class="lineno"> 4479</span>&#160;   <span class="comment">/* Play random explosion sound. */</span></div>
-<div class="line"><a name="l04480"></a><span class="lineno"> 4480</span>&#160;   snprintf(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), <span class="stringliteral">&quot;explosion%d&quot;</span>, RNG(0,2));</div>
-<div class="line"><a name="l04481"></a><span class="lineno"> 4481</span>&#160;   <a class="code" href="sound_8c.html#a7dd6733f993a600013598734c4ed0e6c">sound_playPos</a>( <a class="code" href="sound_8c.html#aa93287b69db58dff3e0b534676123f9d">sound_get</a>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>), a-&gt;pos.x, a-&gt;pos.y, a-&gt;vel.x, a-&gt;vel.y );</div>
+<div class="line"><a name="l04479"></a><span class="lineno"> 4479</span>&#160;   <span class="keywordflow">if</span> (give_reward) {</div>
+<div class="line"><a name="l04480"></a><span class="lineno"> 4480</span>&#160;      <span class="comment">/* Release commodity. */</span></div>
+<div class="line"><a name="l04481"></a><span class="lineno"> 4481</span>&#160;      AsteroidType *at = &amp;<a class="code" href="space_8c.html#a73a688c0769a31f31181da1374ed038e">asteroid_types</a>[a-&gt;type];</div>
 <div class="line"><a name="l04482"></a><span class="lineno"> 4482</span>&#160; </div>
-<div class="line"><a name="l04483"></a><span class="lineno"> 4483</span>&#160;   <span class="keywordflow">if</span> (give_reward) {</div>
-<div class="line"><a name="l04484"></a><span class="lineno"> 4484</span>&#160;      <span class="comment">/* Release commodity. */</span></div>
-<div class="line"><a name="l04485"></a><span class="lineno"> 4485</span>&#160;      at = &amp;<a class="code" href="space_8c.html#a73a688c0769a31f31181da1374ed038e">asteroid_types</a>[a-&gt;type];</div>
-<div class="line"><a name="l04486"></a><span class="lineno"> 4486</span>&#160; </div>
-<div class="line"><a name="l04487"></a><span class="lineno"> 4487</span>&#160;      <span class="keywordflow">for</span> (i=0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(at-&gt;material); i++) {</div>
-<div class="line"><a name="l04488"></a><span class="lineno"> 4488</span>&#160;         nb = RNG(0,at-&gt;quantity[i]);</div>
-<div class="line"><a name="l04489"></a><span class="lineno"> 4489</span>&#160;         com = at-&gt;material[i];</div>
-<div class="line"><a name="l04490"></a><span class="lineno"> 4490</span>&#160;         <span class="keywordflow">for</span> (j=0; j &lt; nb; j++) {</div>
-<div class="line"><a name="l04491"></a><span class="lineno"> 4491</span>&#160;            pos = a-&gt;pos;</div>
-<div class="line"><a name="l04492"></a><span class="lineno"> 4492</span>&#160;            vel = a-&gt;vel;</div>
-<div class="line"><a name="l04493"></a><span class="lineno"> 4493</span>&#160;            pos.x += (RNGF()*30.-15.);</div>
-<div class="line"><a name="l04494"></a><span class="lineno"> 4494</span>&#160;            pos.y += (RNGF()*30.-15.);</div>
-<div class="line"><a name="l04495"></a><span class="lineno"> 4495</span>&#160;            vel.x += (RNGF()*20.-10.);</div>
-<div class="line"><a name="l04496"></a><span class="lineno"> 4496</span>&#160;            vel.y += (RNGF()*20.-10.);</div>
-<div class="line"><a name="l04497"></a><span class="lineno"> 4497</span>&#160;            gatherable_init( com, pos, vel, -1., RNG(1,5) );</div>
-<div class="line"><a name="l04498"></a><span class="lineno"> 4498</span>&#160;         }</div>
-<div class="line"><a name="l04499"></a><span class="lineno"> 4499</span>&#160;      }</div>
-<div class="line"><a name="l04500"></a><span class="lineno"> 4500</span>&#160;   }</div>
+<div class="line"><a name="l04483"></a><span class="lineno"> 4483</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(at-&gt;material); i++) {</div>
+<div class="line"><a name="l04484"></a><span class="lineno"> 4484</span>&#160;         <span class="keywordtype">int</span> nb = RNG(0,at-&gt;quantity[i]);</div>
+<div class="line"><a name="l04485"></a><span class="lineno"> 4485</span>&#160;         <a class="code" href="structCommodity.html">Commodity</a> *com = at-&gt;material[i];</div>
+<div class="line"><a name="l04486"></a><span class="lineno"> 4486</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j &lt; nb; j++) {</div>
+<div class="line"><a name="l04487"></a><span class="lineno"> 4487</span>&#160;            Vector2d pos, vel;</div>
+<div class="line"><a name="l04488"></a><span class="lineno"> 4488</span>&#160;            pos = a-&gt;pos;</div>
+<div class="line"><a name="l04489"></a><span class="lineno"> 4489</span>&#160;            vel = a-&gt;vel;</div>
+<div class="line"><a name="l04490"></a><span class="lineno"> 4490</span>&#160;            pos.x += (RNGF()*30.-15.);</div>
+<div class="line"><a name="l04491"></a><span class="lineno"> 4491</span>&#160;            pos.y += (RNGF()*30.-15.);</div>
+<div class="line"><a name="l04492"></a><span class="lineno"> 4492</span>&#160;            vel.x += (RNGF()*20.-10.);</div>
+<div class="line"><a name="l04493"></a><span class="lineno"> 4493</span>&#160;            vel.y += (RNGF()*20.-10.);</div>
+<div class="line"><a name="l04494"></a><span class="lineno"> 4494</span>&#160;            gatherable_init( com, pos, vel, -1., RNG(1,5) );</div>
+<div class="line"><a name="l04495"></a><span class="lineno"> 4495</span>&#160;         }</div>
+<div class="line"><a name="l04496"></a><span class="lineno"> 4496</span>&#160;      }</div>
+<div class="line"><a name="l04497"></a><span class="lineno"> 4497</span>&#160;   }</div>
+<div class="line"><a name="l04498"></a><span class="lineno"> 4498</span>&#160; </div>
+<div class="line"><a name="l04499"></a><span class="lineno"> 4499</span>&#160;   <span class="comment">/* Remove the asteroid target to any pilot. */</span></div>
+<div class="line"><a name="l04500"></a><span class="lineno"> 4500</span>&#160;   <a class="code" href="pilot_8c.html#ac9e3f60b01ba2a65e7bb01e818cc0e23">pilot_untargetAsteroid</a>( a-&gt;parent, a-&gt;id );</div>
 <div class="line"><a name="l04501"></a><span class="lineno"> 4501</span>&#160; </div>
-<div class="line"><a name="l04502"></a><span class="lineno"> 4502</span>&#160;   <span class="comment">/* Remove the asteroid target to any pilot. */</span></div>
-<div class="line"><a name="l04503"></a><span class="lineno"> 4503</span>&#160;   <a class="code" href="pilot_8c.html#ac9e3f60b01ba2a65e7bb01e818cc0e23">pilot_untargetAsteroid</a>( a-&gt;parent, a-&gt;id );</div>
-<div class="line"><a name="l04504"></a><span class="lineno"> 4504</span>&#160; </div>
-<div class="line"><a name="l04505"></a><span class="lineno"> 4505</span>&#160;   <span class="comment">/* Make it respawn elsewhere */</span></div>
-<div class="line"><a name="l04506"></a><span class="lineno"> 4506</span>&#160;   <a class="code" href="space_8c.html#a4df0023b35301fbf3151c190f65d55d7">asteroid_init</a>( a, field );</div>
-<div class="line"><a name="l04507"></a><span class="lineno"> 4507</span>&#160;}</div>
-<div class="line"><a name="l04508"></a><span class="lineno"> 4508</span>&#160; </div>
-<div class="line"><a name="l04509"></a><span class="lineno"> 4509</span>&#160; </div>
-<div class="line"><a name="l04516"></a><span class="lineno"><a class="line" href="space_8c.html#a4de4001f382d8bf52519b67c79d7329d"> 4516</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="space_8c.html#a4de4001f382d8bf52519b67c79d7329d">system_hasPlanet</a>( <span class="keyword">const</span> StarSystem *sys )</div>
-<div class="line"><a name="l04517"></a><span class="lineno"> 4517</span>&#160;{</div>
-<div class="line"><a name="l04518"></a><span class="lineno"> 4518</span>&#160;   <span class="comment">/* Check for NULL and display a warning. */</span></div>
-<div class="line"><a name="l04519"></a><span class="lineno"> 4519</span>&#160;   <span class="keywordflow">if</span> (sys == NULL) {</div>
-<div class="line"><a name="l04520"></a><span class="lineno"> 4520</span>&#160;      WARN(<span class="stringliteral">&quot;sys == NULL&quot;</span>);</div>
-<div class="line"><a name="l04521"></a><span class="lineno"> 4521</span>&#160;      <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l04522"></a><span class="lineno"> 4522</span>&#160;   }</div>
-<div class="line"><a name="l04523"></a><span class="lineno"> 4523</span>&#160; </div>
-<div class="line"><a name="l04524"></a><span class="lineno"> 4524</span>&#160;   <span class="comment">/* Go through all the assets and look for a real one. */</span></div>
-<div class="line"><a name="l04525"></a><span class="lineno"> 4525</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(sys-&gt;planets); i++)</div>
-<div class="line"><a name="l04526"></a><span class="lineno"> 4526</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l04502"></a><span class="lineno"> 4502</span>&#160;   <span class="comment">/* Make it respawn elsewhere */</span></div>
+<div class="line"><a name="l04503"></a><span class="lineno"> 4503</span>&#160;   <a class="code" href="space_8c.html#a4df0023b35301fbf3151c190f65d55d7">asteroid_init</a>( a, field );</div>
+<div class="line"><a name="l04504"></a><span class="lineno"> 4504</span>&#160;}</div>
+<div class="line"><a name="l04505"></a><span class="lineno"> 4505</span>&#160; </div>
+<div class="line"><a name="l04506"></a><span class="lineno"> 4506</span>&#160; </div>
+<div class="line"><a name="l04513"></a><span class="lineno"><a class="line" href="space_8c.html#a4de4001f382d8bf52519b67c79d7329d"> 4513</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="space_8c.html#a4de4001f382d8bf52519b67c79d7329d">system_hasPlanet</a>( <span class="keyword">const</span> StarSystem *sys )</div>
+<div class="line"><a name="l04514"></a><span class="lineno"> 4514</span>&#160;{</div>
+<div class="line"><a name="l04515"></a><span class="lineno"> 4515</span>&#160;   <span class="comment">/* Check for NULL and display a warning. */</span></div>
+<div class="line"><a name="l04516"></a><span class="lineno"> 4516</span>&#160;   <span class="keywordflow">if</span> (sys == NULL) {</div>
+<div class="line"><a name="l04517"></a><span class="lineno"> 4517</span>&#160;      WARN(<span class="stringliteral">&quot;sys == NULL&quot;</span>);</div>
+<div class="line"><a name="l04518"></a><span class="lineno"> 4518</span>&#160;      <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l04519"></a><span class="lineno"> 4519</span>&#160;   }</div>
+<div class="line"><a name="l04520"></a><span class="lineno"> 4520</span>&#160; </div>
+<div class="line"><a name="l04521"></a><span class="lineno"> 4521</span>&#160;   <span class="comment">/* Go through all the assets and look for a real one. */</span></div>
+<div class="line"><a name="l04522"></a><span class="lineno"> 4522</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(sys-&gt;planets); i++)</div>
+<div class="line"><a name="l04523"></a><span class="lineno"> 4523</span>&#160;      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l04524"></a><span class="lineno"> 4524</span>&#160; </div>
+<div class="line"><a name="l04525"></a><span class="lineno"> 4525</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l04526"></a><span class="lineno"> 4526</span>&#160;}</div>
 <div class="line"><a name="l04527"></a><span class="lineno"> 4527</span>&#160; </div>
-<div class="line"><a name="l04528"></a><span class="lineno"> 4528</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l04529"></a><span class="lineno"> 4529</span>&#160;}</div>
-<div class="line"><a name="l04530"></a><span class="lineno"> 4530</span>&#160; </div>
-<div class="line"><a name="l04531"></a><span class="lineno"> 4531</span>&#160; </div>
-<div class="line"><a name="l04535"></a><span class="lineno"><a class="line" href="space_8c.html#a127e109a41e25355589fc91d466c09bf"> 4535</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="space_8c.html#a127e109a41e25355589fc91d466c09bf">system_rmCurrentPresence</a>( StarSystem *sys, <span class="keywordtype">int</span> faction, <span class="keywordtype">double</span> amount )</div>
-<div class="line"><a name="l04536"></a><span class="lineno"> 4536</span>&#160;{</div>
-<div class="line"><a name="l04537"></a><span class="lineno"> 4537</span>&#160;   <span class="keywordtype">int</span> id;</div>
-<div class="line"><a name="l04538"></a><span class="lineno"> 4538</span>&#160;   nlua_env env;</div>
-<div class="line"><a name="l04539"></a><span class="lineno"> 4539</span>&#160;   SystemPresence *presence;</div>
-<div class="line"><a name="l04540"></a><span class="lineno"> 4540</span>&#160; </div>
-<div class="line"><a name="l04541"></a><span class="lineno"> 4541</span>&#160;   <span class="comment">/* Remove the presence. */</span></div>
-<div class="line"><a name="l04542"></a><span class="lineno"> 4542</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="space_8c.html#a905d5900ff6ff602c61f001e252a7e2f">getPresenceIndex</a>( <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>, faction );</div>
-<div class="line"><a name="l04543"></a><span class="lineno"> 4543</span>&#160;   sys-&gt;presence[id].curUsed -= amount;</div>
-<div class="line"><a name="l04544"></a><span class="lineno"> 4544</span>&#160; </div>
-<div class="line"><a name="l04545"></a><span class="lineno"> 4545</span>&#160;   <span class="comment">/* Safety. */</span></div>
-<div class="line"><a name="l04546"></a><span class="lineno"> 4546</span>&#160;   presence = &amp;sys-&gt;presence[id];</div>
-<div class="line"><a name="l04547"></a><span class="lineno"> 4547</span>&#160;   presence-&gt;curUsed = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0, sys-&gt;presence[<span class="keywordtype">id</span>].curUsed );</div>
+<div class="line"><a name="l04528"></a><span class="lineno"> 4528</span>&#160; </div>
+<div class="line"><a name="l04532"></a><span class="lineno"><a class="line" href="space_8c.html#a127e109a41e25355589fc91d466c09bf"> 4532</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="space_8c.html#a127e109a41e25355589fc91d466c09bf">system_rmCurrentPresence</a>( StarSystem *sys, <span class="keywordtype">int</span> faction, <span class="keywordtype">double</span> amount )</div>
+<div class="line"><a name="l04533"></a><span class="lineno"> 4533</span>&#160;{</div>
+<div class="line"><a name="l04534"></a><span class="lineno"> 4534</span>&#160;   <span class="keywordtype">int</span> id;</div>
+<div class="line"><a name="l04535"></a><span class="lineno"> 4535</span>&#160;   nlua_env env;</div>
+<div class="line"><a name="l04536"></a><span class="lineno"> 4536</span>&#160;   SystemPresence *presence;</div>
+<div class="line"><a name="l04537"></a><span class="lineno"> 4537</span>&#160; </div>
+<div class="line"><a name="l04538"></a><span class="lineno"> 4538</span>&#160;   <span class="comment">/* Remove the presence. */</span></div>
+<div class="line"><a name="l04539"></a><span class="lineno"> 4539</span>&#160;   <span class="keywordtype">id</span> = <a class="code" href="space_8c.html#a905d5900ff6ff602c61f001e252a7e2f">getPresenceIndex</a>( <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>, faction );</div>
+<div class="line"><a name="l04540"></a><span class="lineno"> 4540</span>&#160;   sys-&gt;presence[id].curUsed -= amount;</div>
+<div class="line"><a name="l04541"></a><span class="lineno"> 4541</span>&#160; </div>
+<div class="line"><a name="l04542"></a><span class="lineno"> 4542</span>&#160;   <span class="comment">/* Safety. */</span></div>
+<div class="line"><a name="l04543"></a><span class="lineno"> 4543</span>&#160;   presence = &amp;sys-&gt;presence[id];</div>
+<div class="line"><a name="l04544"></a><span class="lineno"> 4544</span>&#160;   presence-&gt;curUsed = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 0, sys-&gt;presence[<span class="keywordtype">id</span>].curUsed );</div>
+<div class="line"><a name="l04545"></a><span class="lineno"> 4545</span>&#160; </div>
+<div class="line"><a name="l04546"></a><span class="lineno"> 4546</span>&#160;   <span class="comment">/* Run lower hook. */</span></div>
+<div class="line"><a name="l04547"></a><span class="lineno"> 4547</span>&#160;   env = <a class="code" href="faction_8c.html#ae8dd3a1fdd3e970e7811ffdeb814b4b0">faction_getScheduler</a>( faction );</div>
 <div class="line"><a name="l04548"></a><span class="lineno"> 4548</span>&#160; </div>
-<div class="line"><a name="l04549"></a><span class="lineno"> 4549</span>&#160;   <span class="comment">/* Run lower hook. */</span></div>
-<div class="line"><a name="l04550"></a><span class="lineno"> 4550</span>&#160;   env = <a class="code" href="faction_8c.html#ae8dd3a1fdd3e970e7811ffdeb814b4b0">faction_getScheduler</a>( faction );</div>
-<div class="line"><a name="l04551"></a><span class="lineno"> 4551</span>&#160; </div>
-<div class="line"><a name="l04552"></a><span class="lineno"> 4552</span>&#160;   <span class="comment">/* Run decrease function if applicable. */</span></div>
-<div class="line"><a name="l04553"></a><span class="lineno"> 4553</span>&#160;   nlua_getenv( env, <span class="stringliteral">&quot;decrease&quot;</span> ); <span class="comment">/* f */</span></div>
-<div class="line"><a name="l04554"></a><span class="lineno"> 4554</span>&#160;   <span class="keywordflow">if</span> (lua_isnil(naevL,-1)) {</div>
-<div class="line"><a name="l04555"></a><span class="lineno"> 4555</span>&#160;      lua_pop(naevL,1);</div>
-<div class="line"><a name="l04556"></a><span class="lineno"> 4556</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l04557"></a><span class="lineno"> 4557</span>&#160;   }</div>
-<div class="line"><a name="l04558"></a><span class="lineno"> 4558</span>&#160;   lua_pushnumber( naevL, presence-&gt;curUsed ); <span class="comment">/* f, cur */</span></div>
-<div class="line"><a name="l04559"></a><span class="lineno"> 4559</span>&#160;   lua_pushnumber( naevL, presence-&gt;value );   <span class="comment">/* f, cur, max */</span></div>
-<div class="line"><a name="l04560"></a><span class="lineno"> 4560</span>&#160;   lua_pushnumber( naevL, presence-&gt;timer );   <span class="comment">/* f, cur, max, timer */</span></div>
-<div class="line"><a name="l04561"></a><span class="lineno"> 4561</span>&#160; </div>
-<div class="line"><a name="l04562"></a><span class="lineno"> 4562</span>&#160;   <span class="comment">/* Actually run the function. */</span></div>
-<div class="line"><a name="l04563"></a><span class="lineno"> 4563</span>&#160;   <span class="keywordflow">if</span> (nlua_pcall(env, 3, 1)) { <span class="comment">/* error has occurred */</span></div>
-<div class="line"><a name="l04564"></a><span class="lineno"> 4564</span>&#160;      WARN(_(<span class="stringliteral">&quot;Lua decrease script for faction &#39;%s&#39; : %s&quot;</span>),</div>
-<div class="line"><a name="l04565"></a><span class="lineno"> 4565</span>&#160;            <a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>( faction ), lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l04566"></a><span class="lineno"> 4566</span>&#160;      lua_pop(naevL,1);</div>
-<div class="line"><a name="l04567"></a><span class="lineno"> 4567</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l04568"></a><span class="lineno"> 4568</span>&#160;   }</div>
-<div class="line"><a name="l04569"></a><span class="lineno"> 4569</span>&#160; </div>
-<div class="line"><a name="l04570"></a><span class="lineno"> 4570</span>&#160;   <span class="comment">/* Output is handled the same way. */</span></div>
-<div class="line"><a name="l04571"></a><span class="lineno"> 4571</span>&#160;   <span class="keywordflow">if</span> (!lua_isnumber(naevL,-1)) {</div>
-<div class="line"><a name="l04572"></a><span class="lineno"> 4572</span>&#160;      WARN(_(<span class="stringliteral">&quot;Lua spawn script for faction &#39;%s&#39; failed to return timer value.&quot;</span>),</div>
-<div class="line"><a name="l04573"></a><span class="lineno"> 4573</span>&#160;            <a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>( presence-&gt;faction ) );</div>
-<div class="line"><a name="l04574"></a><span class="lineno"> 4574</span>&#160;      lua_pop(naevL,1);</div>
-<div class="line"><a name="l04575"></a><span class="lineno"> 4575</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l04576"></a><span class="lineno"> 4576</span>&#160;   }</div>
-<div class="line"><a name="l04577"></a><span class="lineno"> 4577</span>&#160;   presence-&gt;timer = lua_tonumber(naevL,-1);</div>
-<div class="line"><a name="l04578"></a><span class="lineno"> 4578</span>&#160;   lua_pop(naevL,1);</div>
-<div class="line"><a name="l04579"></a><span class="lineno"> 4579</span>&#160;}</div>
-<div class="line"><a name="l04580"></a><span class="lineno"> 4580</span>&#160; </div>
-<div class="line"><a name="l04581"></a><span class="lineno"> 4581</span>&#160; </div>
-<div class="line"><a name="l04588"></a><span class="lineno"><a class="line" href="space_8c.html#ad4fdc43d36fe9e1ba6bea34dd33c90e6"> 4588</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="space_8c.html#ad4fdc43d36fe9e1ba6bea34dd33c90e6">space_queueLand</a>( <a class="code" href="structPlanet.html">Planet</a> *pnt )</div>
-<div class="line"><a name="l04589"></a><span class="lineno"> 4589</span>&#160;{</div>
-<div class="line"><a name="l04590"></a><span class="lineno"> 4590</span>&#160;   space_landQueuePlanet = pnt;</div>
-<div class="line"><a name="l04591"></a><span class="lineno"> 4591</span>&#160;}</div>
-<div class="line"><a name="l04592"></a><span class="lineno"> 4592</span>&#160; </div>
-<div class="line"><a name="l04593"></a><span class="lineno"> 4593</span>&#160; </div>
-<div class="line"><a name="l04600"></a><span class="lineno"><a class="line" href="space_8c.html#a52331d6d69efdbeeedc8cf9be1aba350"> 4600</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="space_8c.html#a52331d6d69efdbeeedc8cf9be1aba350">space_populationStr</a>( uint64_t population )</div>
-<div class="line"><a name="l04601"></a><span class="lineno"> 4601</span>&#160;{</div>
-<div class="line"><a name="l04602"></a><span class="lineno"> 4602</span>&#160;   <span class="keyword">static</span> <span class="keywordtype">char</span> pop[STRMAX_SHORT];</div>
-<div class="line"><a name="l04603"></a><span class="lineno"> 4603</span>&#160;   <span class="keywordtype">double</span> p = (double)population;</div>
-<div class="line"><a name="l04604"></a><span class="lineno"> 4604</span>&#160; </div>
-<div class="line"><a name="l04605"></a><span class="lineno"> 4605</span>&#160;   <span class="keywordflow">if</span> (p &gt; 10e9)</div>
-<div class="line"><a name="l04606"></a><span class="lineno"> 4606</span>&#160;      snprintf( pop, <span class="keyword">sizeof</span>(pop), _(<span class="stringliteral">&quot;%.0f billion&quot;</span>), p / 1e9 );</div>
-<div class="line"><a name="l04607"></a><span class="lineno"> 4607</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (p &gt; 10e6)</div>
-<div class="line"><a name="l04608"></a><span class="lineno"> 4608</span>&#160;      snprintf( pop, <span class="keyword">sizeof</span>(pop), _(<span class="stringliteral">&quot;%.0f million&quot;</span>), p / 1e6 );</div>
-<div class="line"><a name="l04609"></a><span class="lineno"> 4609</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (p &gt; 10e3)</div>
-<div class="line"><a name="l04610"></a><span class="lineno"> 4610</span>&#160;      snprintf( pop, <span class="keyword">sizeof</span>(pop), _(<span class="stringliteral">&quot;%.0f thousand&quot;</span>), p / 1e3 );</div>
-<div class="line"><a name="l04611"></a><span class="lineno"> 4611</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l04612"></a><span class="lineno"> 4612</span>&#160;      snprintf( pop, <span class="keyword">sizeof</span>(pop), <span class="stringliteral">&quot;%.0f&quot;</span>, p );</div>
-<div class="line"><a name="l04613"></a><span class="lineno"> 4613</span>&#160; </div>
-<div class="line"><a name="l04614"></a><span class="lineno"> 4614</span>&#160;   <span class="keywordflow">return</span> pop;</div>
-<div class="line"><a name="l04615"></a><span class="lineno"> 4615</span>&#160;}</div>
+<div class="line"><a name="l04549"></a><span class="lineno"> 4549</span>&#160;   <span class="comment">/* Run decrease function if applicable. */</span></div>
+<div class="line"><a name="l04550"></a><span class="lineno"> 4550</span>&#160;   nlua_getenv( env, <span class="stringliteral">&quot;decrease&quot;</span> ); <span class="comment">/* f */</span></div>
+<div class="line"><a name="l04551"></a><span class="lineno"> 4551</span>&#160;   <span class="keywordflow">if</span> (lua_isnil(naevL,-1)) {</div>
+<div class="line"><a name="l04552"></a><span class="lineno"> 4552</span>&#160;      lua_pop(naevL,1);</div>
+<div class="line"><a name="l04553"></a><span class="lineno"> 4553</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l04554"></a><span class="lineno"> 4554</span>&#160;   }</div>
+<div class="line"><a name="l04555"></a><span class="lineno"> 4555</span>&#160;   lua_pushnumber( naevL, presence-&gt;curUsed ); <span class="comment">/* f, cur */</span></div>
+<div class="line"><a name="l04556"></a><span class="lineno"> 4556</span>&#160;   lua_pushnumber( naevL, presence-&gt;value );   <span class="comment">/* f, cur, max */</span></div>
+<div class="line"><a name="l04557"></a><span class="lineno"> 4557</span>&#160;   lua_pushnumber( naevL, presence-&gt;timer );   <span class="comment">/* f, cur, max, timer */</span></div>
+<div class="line"><a name="l04558"></a><span class="lineno"> 4558</span>&#160; </div>
+<div class="line"><a name="l04559"></a><span class="lineno"> 4559</span>&#160;   <span class="comment">/* Actually run the function. */</span></div>
+<div class="line"><a name="l04560"></a><span class="lineno"> 4560</span>&#160;   <span class="keywordflow">if</span> (nlua_pcall(env, 3, 1)) { <span class="comment">/* error has occurred */</span></div>
+<div class="line"><a name="l04561"></a><span class="lineno"> 4561</span>&#160;      WARN(_(<span class="stringliteral">&quot;Lua decrease script for faction &#39;%s&#39; : %s&quot;</span>),</div>
+<div class="line"><a name="l04562"></a><span class="lineno"> 4562</span>&#160;            <a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>( faction ), lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l04563"></a><span class="lineno"> 4563</span>&#160;      lua_pop(naevL,1);</div>
+<div class="line"><a name="l04564"></a><span class="lineno"> 4564</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l04565"></a><span class="lineno"> 4565</span>&#160;   }</div>
+<div class="line"><a name="l04566"></a><span class="lineno"> 4566</span>&#160; </div>
+<div class="line"><a name="l04567"></a><span class="lineno"> 4567</span>&#160;   <span class="comment">/* Output is handled the same way. */</span></div>
+<div class="line"><a name="l04568"></a><span class="lineno"> 4568</span>&#160;   <span class="keywordflow">if</span> (!lua_isnumber(naevL,-1)) {</div>
+<div class="line"><a name="l04569"></a><span class="lineno"> 4569</span>&#160;      WARN(_(<span class="stringliteral">&quot;Lua spawn script for faction &#39;%s&#39; failed to return timer value.&quot;</span>),</div>
+<div class="line"><a name="l04570"></a><span class="lineno"> 4570</span>&#160;            <a class="code" href="faction_8c.html#ac7c5ef2816b34fea76372d884f6e997f">faction_name</a>( presence-&gt;faction ) );</div>
+<div class="line"><a name="l04571"></a><span class="lineno"> 4571</span>&#160;      lua_pop(naevL,1);</div>
+<div class="line"><a name="l04572"></a><span class="lineno"> 4572</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l04573"></a><span class="lineno"> 4573</span>&#160;   }</div>
+<div class="line"><a name="l04574"></a><span class="lineno"> 4574</span>&#160;   presence-&gt;timer = lua_tonumber(naevL,-1);</div>
+<div class="line"><a name="l04575"></a><span class="lineno"> 4575</span>&#160;   lua_pop(naevL,1);</div>
+<div class="line"><a name="l04576"></a><span class="lineno"> 4576</span>&#160;}</div>
+<div class="line"><a name="l04577"></a><span class="lineno"> 4577</span>&#160; </div>
+<div class="line"><a name="l04578"></a><span class="lineno"> 4578</span>&#160; </div>
+<div class="line"><a name="l04585"></a><span class="lineno"><a class="line" href="space_8c.html#ad4fdc43d36fe9e1ba6bea34dd33c90e6"> 4585</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="space_8c.html#ad4fdc43d36fe9e1ba6bea34dd33c90e6">space_queueLand</a>( <a class="code" href="structPlanet.html">Planet</a> *pnt )</div>
+<div class="line"><a name="l04586"></a><span class="lineno"> 4586</span>&#160;{</div>
+<div class="line"><a name="l04587"></a><span class="lineno"> 4587</span>&#160;   space_landQueuePlanet = pnt;</div>
+<div class="line"><a name="l04588"></a><span class="lineno"> 4588</span>&#160;}</div>
+<div class="line"><a name="l04589"></a><span class="lineno"> 4589</span>&#160; </div>
+<div class="line"><a name="l04590"></a><span class="lineno"> 4590</span>&#160; </div>
+<div class="line"><a name="l04597"></a><span class="lineno"><a class="line" href="space_8c.html#a52331d6d69efdbeeedc8cf9be1aba350"> 4597</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="space_8c.html#a52331d6d69efdbeeedc8cf9be1aba350">space_populationStr</a>( uint64_t population )</div>
+<div class="line"><a name="l04598"></a><span class="lineno"> 4598</span>&#160;{</div>
+<div class="line"><a name="l04599"></a><span class="lineno"> 4599</span>&#160;   <span class="keyword">static</span> <span class="keywordtype">char</span> pop[STRMAX_SHORT];</div>
+<div class="line"><a name="l04600"></a><span class="lineno"> 4600</span>&#160;   <span class="keywordtype">double</span> p = (double)population;</div>
+<div class="line"><a name="l04601"></a><span class="lineno"> 4601</span>&#160; </div>
+<div class="line"><a name="l04602"></a><span class="lineno"> 4602</span>&#160;   <span class="keywordflow">if</span> (p &gt; 10e9)</div>
+<div class="line"><a name="l04603"></a><span class="lineno"> 4603</span>&#160;      snprintf( pop, <span class="keyword">sizeof</span>(pop), _(<span class="stringliteral">&quot;%.0f billion&quot;</span>), p / 1e9 );</div>
+<div class="line"><a name="l04604"></a><span class="lineno"> 4604</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (p &gt; 10e6)</div>
+<div class="line"><a name="l04605"></a><span class="lineno"> 4605</span>&#160;      snprintf( pop, <span class="keyword">sizeof</span>(pop), _(<span class="stringliteral">&quot;%.0f million&quot;</span>), p / 1e6 );</div>
+<div class="line"><a name="l04606"></a><span class="lineno"> 4606</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (p &gt; 10e3)</div>
+<div class="line"><a name="l04607"></a><span class="lineno"> 4607</span>&#160;      snprintf( pop, <span class="keyword">sizeof</span>(pop), _(<span class="stringliteral">&quot;%.0f thousand&quot;</span>), p / 1e3 );</div>
+<div class="line"><a name="l04608"></a><span class="lineno"> 4608</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l04609"></a><span class="lineno"> 4609</span>&#160;      snprintf( pop, <span class="keyword">sizeof</span>(pop), <span class="stringliteral">&quot;%.0f&quot;</span>, p );</div>
+<div class="line"><a name="l04610"></a><span class="lineno"> 4610</span>&#160; </div>
+<div class="line"><a name="l04611"></a><span class="lineno"> 4611</span>&#160;   <span class="keywordflow">return</span> pop;</div>
+<div class="line"><a name="l04612"></a><span class="lineno"> 4612</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aspace_8c_html_ad155ac62ff875e48b3a8001ff5d0dc51"><div class="ttname"><a href="space_8c.html#ad155ac62ff875e48b3a8001ff5d0dc51">planets_load</a></div><div class="ttdeci">static int planets_load(void)</div><div class="ttdoc">Loads all the planets in the game.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01729">space.c:1729</a></div></div>
 <div class="ttc" id="aspace_8c_html_a7f192fd83fbe030031b6eccd1fb1667e"><div class="ttname"><a href="space_8c.html#a7f192fd83fbe030031b6eccd1fb1667e">asteroid_gfx</a></div><div class="ttdeci">glTexture ** asteroid_gfx</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00107">space.c:107</a></div></div>
@@ -4078,7 +4075,7 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_a14689d83adf4f02ef301b257fcf4b97f"><div class="ttname"><a href="space_8c.html#a14689d83adf4f02ef301b257fcf4b97f">system_parse</a></div><div class="ttdeci">static StarSystem * system_parse(StarSystem *system, const xmlNodePtr parent)</div><div class="ttdoc">Creates a system from an XML node.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l02655">space.c:2655</a></div></div>
 <div class="ttc" id="aspace_8c_html_a18ea9389a1851733faec4c7e4592409a"><div class="ttname"><a href="space_8c.html#a18ea9389a1851733faec4c7e4592409a">space_canHyperspace</a></div><div class="ttdeci">int space_canHyperspace(const Pilot *p)</div><div class="ttdoc">Checks to make sure if pilot is far enough away to hyperspace.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00342">space.c:342</a></div></div>
 <div class="ttc" id="aspace_8c_html_a4d28d9dbe8cc1ff83f16bcf8d107589e"><div class="ttname"><a href="space_8c.html#a4d28d9dbe8cc1ff83f16bcf8d107589e">planet_getColourChar</a></div><div class="ttdeci">char planet_getColourChar(const Planet *p)</div><div class="ttdoc">Gets the planet colour char.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01875">space.c:1875</a></div></div>
-<div class="ttc" id="aspace_8c_html_a127e109a41e25355589fc91d466c09bf"><div class="ttname"><a href="space_8c.html#a127e109a41e25355589fc91d466c09bf">system_rmCurrentPresence</a></div><div class="ttdeci">void system_rmCurrentPresence(StarSystem *sys, int faction, double amount)</div><div class="ttdoc">Removes active presence.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04535">space.c:4535</a></div></div>
+<div class="ttc" id="aspace_8c_html_a127e109a41e25355589fc91d466c09bf"><div class="ttname"><a href="space_8c.html#a127e109a41e25355589fc91d466c09bf">system_rmCurrentPresence</a></div><div class="ttdeci">void system_rmCurrentPresence(StarSystem *sys, int faction, double amount)</div><div class="ttdoc">Removes active presence.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04532">space.c:4532</a></div></div>
 <div class="ttc" id="afaction_8c_html_ae8dd3a1fdd3e970e7811ffdeb814b4b0"><div class="ttname"><a href="faction_8c.html#ae8dd3a1fdd3e970e7811ffdeb814b4b0">faction_getScheduler</a></div><div class="ttdeci">nlua_env faction_getScheduler(int f)</div><div class="ttdoc">Gets the state associated to the faction scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00699">faction.c:699</a></div></div>
 <div class="ttc" id="anlua_8c_html_a45e6b8d12cc6f943d058023f8ec74a2d"><div class="ttname"><a href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a></div><div class="ttdeci">int nlua_loadStandard(nlua_env env)</div><div class="ttdoc">Loads the standard Naev Lua API.</div><div class="ttdef"><b>Definition:</b> <a href="nlua_8c_source.html#l00563">nlua.c:563</a></div></div>
 <div class="ttc" id="anebula_8c_html_a132093342454648376b3cff3cf57071a"><div class="ttname"><a href="nebula_8c.html#a132093342454648376b3cff3cf57071a">nebu_update</a></div><div class="ttdeci">void nebu_update(double dt)</div><div class="ttdoc">Updates visibility and stuff.</div><div class="ttdef"><b>Definition:</b> <a href="nebula_8c_source.html#l00247">nebula.c:247</a></div></div>
@@ -4093,13 +4090,13 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_a07379dfa5604e20ba65669f80dc7f35f"><div class="ttname"><a href="space_8c.html#a07379dfa5604e20ba65669f80dc7f35f">system_rmPlanet</a></div><div class="ttdeci">int system_rmPlanet(StarSystem *sys, const char *planetname)</div><div class="ttdoc">Removes a planet from a star system.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l02343">space.c:2343</a></div></div>
 <div class="ttc" id="afont_8c_html_a4b39fc941b02b717a4c4fd85c2cbb569"><div class="ttname"><a href="font_8c.html#a4b39fc941b02b717a4c4fd85c2cbb569">gl_printRaw</a></div><div class="ttdeci">void gl_printRaw(const glFont *ft_font, double x, double y, const glColour *c, double outlineR, const char *text)</div><div class="ttdoc">Prints text on screen.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00610">font.c:610</a></div></div>
 <div class="ttc" id="arng_8c_html_a3ae63274d1e5a52f21db2df3bc5eee03"><div class="ttname"><a href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a></div><div class="ttdeci">static const double a[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00247">rng.c:247</a></div></div>
-<div class="ttc" id="aspace_8c_html_ad4fdc43d36fe9e1ba6bea34dd33c90e6"><div class="ttname"><a href="space_8c.html#ad4fdc43d36fe9e1ba6bea34dd33c90e6">space_queueLand</a></div><div class="ttdeci">void space_queueLand(Planet *pnt)</div><div class="ttdoc">Cues a planet to be landed on. This is not done immediately, but when the engine thinks it is ok to d...</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04588">space.c:4588</a></div></div>
+<div class="ttc" id="aspace_8c_html_ad4fdc43d36fe9e1ba6bea34dd33c90e6"><div class="ttname"><a href="space_8c.html#ad4fdc43d36fe9e1ba6bea34dd33c90e6">space_queueLand</a></div><div class="ttdeci">void space_queueLand(Planet *pnt)</div><div class="ttdoc">Cues a planet to be landed on. This is not done immediately, but when the engine thinks it is ok to d...</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04585">space.c:4585</a></div></div>
 <div class="ttc" id="adamagetype_8c_html_a54a49bd5b538409f4e9cfce666ab25b0"><div class="ttname"><a href="damagetype_8c.html#a54a49bd5b538409f4e9cfce666ab25b0">dtype_get</a></div><div class="ttdeci">int dtype_get(const char *name)</div><div class="ttdoc">Gets the id of a dtype based on name.</div><div class="ttdef"><b>Definition:</b> <a href="damagetype_8c_source.html#l00130">damagetype.c:130</a></div></div>
 <div class="ttc" id="asound_8c_html_a4db1913a533b8e0e0176e90cfffc04d8"><div class="ttname"><a href="sound_8c.html#a4db1913a533b8e0e0176e90cfffc04d8">sound_disabled</a></div><div class="ttdeci">int sound_disabled</div><div class="ttdef"><b>Definition:</b> <a href="sound_8c_source.html#l00043">sound.c:43</a></div></div>
 <div class="ttc" id="aspace_8c_html_a01879e598182bcfd2972a198499732d2"><div class="ttname"><a href="space_8c.html#a01879e598182bcfd2972a198499732d2">space_reconstructPresences</a></div><div class="ttdeci">void space_reconstructPresences(void)</div><div class="ttdoc">Reset the presence of all systems.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04372">space.c:4372</a></div></div>
 <div class="ttc" id="afaction_8c_html_a9838fd1b4e7b8cc007f0da6f765238e2"><div class="ttname"><a href="faction_8c.html#a9838fd1b4e7b8cc007f0da6f765238e2">faction_usesHiddenJumps</a></div><div class="ttdeci">int faction_usesHiddenJumps(int f)</div><div class="ttdoc">Checks to see if a faction uses hidden jumps.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l01776">faction.c:1776</a></div></div>
 <div class="ttc" id="aspace_8c_html_a92ed069fc911188f045900adc3790bb7"><div class="ttname"><a href="space_8c.html#a92ed069fc911188f045900adc3790bb7">space_addMarker</a></div><div class="ttdeci">int space_addMarker(int objid, MissionMarkerType type)</div><div class="ttdoc">Adds a marker to a system.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l03905">space.c:3905</a></div></div>
-<div class="ttc" id="aspace_8c_html_a4de4001f382d8bf52519b67c79d7329d"><div class="ttname"><a href="space_8c.html#a4de4001f382d8bf52519b67c79d7329d">system_hasPlanet</a></div><div class="ttdeci">int system_hasPlanet(const StarSystem *sys)</div><div class="ttdoc">See if the system has a planet or station.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04516">space.c:4516</a></div></div>
+<div class="ttc" id="aspace_8c_html_a4de4001f382d8bf52519b67c79d7329d"><div class="ttname"><a href="space_8c.html#a4de4001f382d8bf52519b67c79d7329d">system_hasPlanet</a></div><div class="ttdeci">int system_hasPlanet(const StarSystem *sys)</div><div class="ttdoc">See if the system has a planet or station.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04513">space.c:4513</a></div></div>
 <div class="ttc" id="aspace_8c_html_a4981e013574c5486c117938272c1fee6"><div class="ttname"><a href="space_8c.html#a4981e013574c5486c117938272c1fee6">system_rmJump</a></div><div class="ttdeci">int system_rmJump(StarSystem *sys, const char *jumpname)</div><div class="ttdoc">Removes a jump point from a star system.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l02502">space.c:2502</a></div></div>
 <div class="ttc" id="afaction_8c_html_af0778435be30c1d9b2b3745830c3ef9c"><div class="ttname"><a href="faction_8c.html#af0778435be30c1d9b2b3745830c3ef9c">faction_get</a></div><div class="ttdeci">int faction_get(const char *name)</div><div class="ttdoc">Gets a faction ID by name.</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00177">faction.c:177</a></div></div>
 <div class="ttc" id="aspace_8c_html_a0874094fb09a0d9f42aec4e43f1bc40e"><div class="ttname"><a href="space_8c.html#a0874094fb09a0d9f42aec4e43f1bc40e">planet_parse</a></div><div class="ttdeci">static int planet_parse(Planet *planet, const xmlNodePtr parent, Commodity **stdList)</div><div class="ttdoc">Parses a planet from an xml node.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l02075">space.c:2075</a></div></div>
@@ -4141,7 +4138,7 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_a4191c0e44c808537579d4fd49c719866"><div class="ttname"><a href="space_8c.html#a4191c0e44c808537579d4fd49c719866">planet_getService</a></div><div class="ttdeci">int planet_getService(const char *name)</div><div class="ttdoc">Converts name to planet service flag.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00182">space.c:182</a></div></div>
 <div class="ttc" id="aspace_8c_html_afa19f07074112bf95499a6a307653cb9"><div class="ttname"><a href="space_8c.html#afa19f07074112bf95499a6a307653cb9">jump_get</a></div><div class="ttdeci">JumpPoint * jump_get(const char *jumpname, const StarSystem *sys)</div><div class="ttdoc">Gets a jump point based on its target and system.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01080">space.c:1080</a></div></div>
 <div class="ttc" id="aspace_8c_html_a07678129e49fc675df63803d1fd9f8a4"><div class="ttname"><a href="space_8c.html#a07678129e49fc675df63803d1fd9f8a4">system_new</a></div><div class="ttdeci">StarSystem * system_new(void)</div><div class="ttdoc">Creates a new star system.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l02555">space.c:2555</a></div></div>
-<div class="ttc" id="aspace_8c_html_a52331d6d69efdbeeedc8cf9be1aba350"><div class="ttname"><a href="space_8c.html#a52331d6d69efdbeeedc8cf9be1aba350">space_populationStr</a></div><div class="ttdeci">const char * space_populationStr(uint64_t population)</div><div class="ttdoc">Gets the population in an approximated string. Note this function changes the string value each call,...</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04600">space.c:4600</a></div></div>
+<div class="ttc" id="aspace_8c_html_a52331d6d69efdbeeedc8cf9be1aba350"><div class="ttname"><a href="space_8c.html#a52331d6d69efdbeeedc8cf9be1aba350">space_populationStr</a></div><div class="ttdeci">const char * space_populationStr(uint64_t population)</div><div class="ttdoc">Gets the population in an approximated string. Note this function changes the string value each call,...</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l04597">space.c:4597</a></div></div>
 <div class="ttc" id="anxml_8c_html_afda706d36380ca8e737f6fd404bda489"><div class="ttname"><a href="nxml_8c.html#afda706d36380ca8e737f6fd404bda489">xml_parseTexture</a></div><div class="ttdeci">glTexture * xml_parseTexture(xmlNodePtr node, const char *path, int defsx, int defsy, const unsigned int flags)</div><div class="ttdoc">Parses a texture handling the sx and sy elements.</div><div class="ttdef"><b>Definition:</b> <a href="nxml_8c_source.html#l00029">nxml.c:29</a></div></div>
 <div class="ttc" id="aspace_8c_html_ab165285133388e9a6369af6d28d4e6c8"><div class="ttname"><a href="space_8c.html#ab165285133388e9a6369af6d28d4e6c8">systems_stack</a></div><div class="ttdeci">StarSystem * systems_stack</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00083">space.c:83</a></div></div>
 <div class="ttc" id="aspace_8c_html_a29f0b84027507ef1412b1ff06d3816e6"><div class="ttname"><a href="space_8c.html#a29f0b84027507ef1412b1ff06d3816e6">planetname_stack</a></div><div class="ttdeci">static char ** planetname_stack</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00077">space.c:77</a></div></div>
