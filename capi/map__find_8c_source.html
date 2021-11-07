@@ -614,383 +614,369 @@ $(function() {
 <div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;   (void) h;</div>
 <div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   (void) y;</div>
 <div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;   <span class="keywordtype">int</span> iw;</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160; </div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;   iw = x;</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[STRMAX];</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;   <span class="keywordtype">size_t</span> l = 0;</div>
 <div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160; </div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;   window_addRect( wid, -1 + iw, -50, 128, 129, <span class="stringliteral">&quot;rctImage&quot;</span>, &amp;cBlack, 0 );</div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;   window_addImage( wid, iw, -50-128, 0, 0, <span class="stringliteral">&quot;imgOutfit&quot;</span>, NULL, 1 );</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160; </div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;   window_addText( wid, iw + 128 + 20, -50,</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;         280, 160, 0, <span class="stringliteral">&quot;txtOutfitName&quot;</span>, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL, NULL );</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;   window_addText( wid, iw + 128 + 20, -50 - <a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h - 20,</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;   iw = x;</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160; </div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;   window_addRect( wid, -1 + iw, -50, 128, 129, <span class="stringliteral">&quot;rctImage&quot;</span>, &amp;cBlack, 0 );</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;   window_addImage( wid, iw, -50-128, 0, 0, <span class="stringliteral">&quot;imgOutfit&quot;</span>, NULL, 1 );</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160; </div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;   window_addText( wid, iw + 128 + 20, -50,</div>
 <div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;         280, 160, 0, <span class="stringliteral">&quot;txtDescShort&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, NULL );</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   window_addText( wid, iw+20, -50-128-10,</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;         90, 160, 0, <span class="stringliteral">&quot;txtSDesc&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL,</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;         _(<span class="stringliteral">&quot;#nOwned:#0\n&quot;</span></div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;         <span class="stringliteral">&quot;\n&quot;</span></div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;         <span class="stringliteral">&quot;#nSlot:#0\n&quot;</span></div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;         <span class="stringliteral">&quot;#nSize:#0\n&quot;</span></div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;         <span class="stringliteral">&quot;#nMass:#0\n&quot;</span></div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;         <span class="stringliteral">&quot;\n&quot;</span></div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;         <span class="stringliteral">&quot;#nPrice:#0\n&quot;</span></div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;         <span class="stringliteral">&quot;#nMoney:#0\n&quot;</span></div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;         <span class="stringliteral">&quot;#nLicense:#0\n&quot;</span>) );</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;   window_addText( wid, iw+20, -50-128-10,</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;         w - (20 + iw + 20 + 90), 160, 0, <span class="stringliteral">&quot;txtDDesc&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, NULL );</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;   window_addText( wid, iw+20, -50-128-10-160,</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;         w-(iw+80), 180, 0, <span class="stringliteral">&quot;txtDescription&quot;</span>,</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;         &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, NULL );</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;}</div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> map_showOutfitDetail(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span>* wgtname, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h)</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;{</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;   (void) x;</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;   (void) y;</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;   (void) h;</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;   <span class="keyword">const</span> Outfit *outfit;</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;   <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;   <span class="keywordtype">double</span> th;</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   <span class="keywordtype">int</span> iw;</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;   <span class="keywordtype">double</span> mass;</div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160; </div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;   <span class="comment">/* 452 px is the sum of the 128 px outfit image width, its 4 px border,</span></div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;<span class="comment">    * a 20 px gap, 280 px for the outfit&#39;s name and a final 20 px gap. */</span></div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;   iw = w - 452;</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160; </div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;   outfit = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( map_foundOutfitNames[toolkit_getListPos(wid, wgtname)] );</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtOutfitName&quot;</span>, _(outfit-&gt;name) );</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;   window_modifyImage( wid, <span class="stringliteral">&quot;imgOutfit&quot;</span>, outfit-&gt;gfx_store, 128, 128 );</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160; </div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;   mass = outfit-&gt;mass;</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(outfit) || <a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>(outfit)) &amp;&amp;</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;         (<a class="code" href="outfit_8c.html#a572e4344617b1ae579d2aab64ad59802">outfit_ammo</a>(outfit) != NULL)) {</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;      mass += <a class="code" href="outfit_8c.html#a8ac6f494b5f0972d7d6e87efbc73f3af">outfit_amount</a>(outfit) * <a class="code" href="outfit_8c.html#a572e4344617b1ae579d2aab64ad59802">outfit_ammo</a>(outfit)-&gt;mass;</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   }</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDescription&quot;</span>, _(outfit-&gt;description) );</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;   credits2str( buf2, outfit-&gt;price, 2 );</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;   credits2str( buf3, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, 2 );</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;   <a class="code" href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>,</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;         _(<span class="stringliteral">&quot;%d\n&quot;</span></div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;         <span class="stringliteral">&quot;\n&quot;</span></div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;         <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;         <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;         <span class="stringliteral">&quot;%.0f tonnes\n&quot;</span></div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;         <span class="stringliteral">&quot;\n&quot;</span></div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;         <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;         <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;         <span class="stringliteral">&quot;%s\n&quot;</span>),</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;         <a class="code" href="player_8c.html#ad0d77b1bddb767ee622ce0d0a98b5068">player_outfitOwned</a>(outfit),</div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;         _(<a class="code" href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9">outfit_slotName</a>(outfit)),</div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;         _(<a class="code" href="outfit_8c.html#a430bc49f57078876971bcb63ad350408">outfit_slotSize</a>(outfit)),</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;         mass,</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;         buf2,</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;         buf3,</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;         (outfit-&gt;license != NULL) ? _(outfit-&gt;license) : _(<span class="stringliteral">&quot;None&quot;</span>) );</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDDesc&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtOutfitName&quot;</span>, _(outfit-&gt;name) );</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDescShort&quot;</span>, outfit-&gt;desc_short );</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;   th = <a class="code" href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, 280, outfit-&gt;desc_short );</div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;   <a class="code" href="toolkit_8c.html#ad1fbfecf32e5f3edcb4f125fb4e78cd1">window_resizeWidget</a>( wid, <span class="stringliteral">&quot;txtDescShort&quot;</span>, 280, th );</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;   <a class="code" href="toolkit_8c.html#a7d5f53000a8b50ae8370d142ce782744">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtDescShort&quot;</span>, iw + 128 + 20, -50 - <a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h - 20);</div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;   th = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 128, <a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h + 20 + th );</div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   <a class="code" href="toolkit_8c.html#a7d5f53000a8b50ae8370d142ce782744">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtSDesc&quot;</span>, iw+20, -50-th-20 );</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   <a class="code" href="toolkit_8c.html#a7d5f53000a8b50ae8370d142ce782744">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtDDesc&quot;</span>, iw+20+90, -50-th-20 );</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;   th += <a class="code" href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, 280, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;   <a class="code" href="toolkit_8c.html#a7d5f53000a8b50ae8370d142ce782744">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtDescription&quot;</span>, iw+20, -50-th-20 <span class="comment">/* no more: buf ends with \n. */</span> );</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   free( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;}</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160; </div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> map_findSearchOutfits( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;{</div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   <span class="keywordtype">int</span> i, j;</div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;   <span class="keywordtype">int</span> len, n;</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;   map_find_t *found;</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *pnt;</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;   StarSystem *<a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>;</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *oname, *sysname;</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   <span class="keywordtype">char</span> **list;</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;   <span class="keyword">const</span> Outfit *o;</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;   Outfit **olist;</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160; </div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;   assert( <span class="stringliteral">&quot;Outfit search is not reentrant!&quot;</span> &amp;&amp; map_foundOutfitNames == NULL );</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160; </div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;   <span class="comment">/* Match planet first. */</span></div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;   o     = NULL;</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;   oname = <a class="code" href="outfit_8c.html#ac9b94cc5bb245f145d223d1edc3e9ac9">outfit_existsCase</a>( name );</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;   map_foundOutfitNames = map_outfitsMatch( name );</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;   len = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>( map_foundOutfitNames );</div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;   <span class="keywordflow">if</span> ((oname != NULL) &amp;&amp; (len == 1))</div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;      o = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( oname );</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;   <span class="comment">/* Do fuzzy match. */</span></div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (len &gt; 0) {</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;      <span class="comment">/* Ask which one player wants. */</span></div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;      list  = malloc( len*<span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*) );</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;len; i++)</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;         list[i] = strdup( _(map_foundOutfitNames[i]) );</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;      i = <a class="code" href="dialogue_8c.html#a8e2244f71608f05e515c4ee387aa793e">dialogue_listPanel</a>( _(<span class="stringliteral">&quot;Search Results&quot;</span>), list, len, 452, 650,</div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;            map_addOutfitDetailFields, map_showOutfitDetail,</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;            _(<span class="stringliteral">&quot;Search results for outfits matching &#39;%s&#39;:&quot;</span>), name );</div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;      <span class="keywordflow">if</span> (i &lt; 0) {</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( map_foundOutfitNames );</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;         map_foundOutfitNames = NULL;</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      }</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;      o = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( map_foundOutfitNames[i] );</div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;   }</div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( map_foundOutfitNames );</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;   map_foundOutfitNames = NULL;</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;   <span class="keywordflow">if</span> (o == NULL)</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160; </div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;   <span class="comment">/* Construct found table. */</span></div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;   found = NULL;</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;   n = 0;</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;   len = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(map_known_techs);</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;len; i++) {</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;      <span class="comment">/* Try to find the outfit in the planet. */</span></div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;      olist = <a class="code" href="tech_8c.html#a8af96ecf06b3813af4ccfd151b93f676">tech_getOutfit</a>( map_known_techs[i] );</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;      <span class="keywordflow">for</span> (j=<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(olist)-1; j&gt;=0; j--)</div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;         <span class="keywordflow">if</span> (olist[j] == o)</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( olist );</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;      olist = NULL;</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;      <span class="keywordflow">if</span> (j &lt; 0)</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;      pnt = map_known_planets[i];</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160; </div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;      <span class="comment">/* System must be known. */</span></div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;      sysname = <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pnt-&gt;name );</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;      <span class="keywordflow">if</span> (sysname == NULL)</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;      <a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a> = <a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( sysname );</div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;      <span class="keywordflow">if</span> (!sys_isKnown(<a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>))</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160; </div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;      <span class="keywordflow">if</span> (found == NULL) <span class="comment">/* Allocate results array on first match. */</span></div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;         found = malloc( <span class="keyword">sizeof</span>(map_find_t) * len );</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s\n&quot;</span>, _(<span class="stringliteral">&quot;#nOwned:#0&quot;</span>) );</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s\n&quot;</span>, _(<span class="stringliteral">&quot;#nMass:#0&quot;</span>) );</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s\n&quot;</span>, _(<span class="stringliteral">&quot;#nPrice:#0&quot;</span>) );</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s\n&quot;</span>, _(<span class="stringliteral">&quot;#nMoney:#0&quot;</span>) );</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s\n&quot;</span>, _(<span class="stringliteral">&quot;#nLicense:#0&quot;</span>) );</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   window_addText( wid, iw+20, -50-128-10,</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;         90, 160, 0, <span class="stringliteral">&quot;txtSDesc&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   window_addText( wid, iw+20, -50-128-10,</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;         w - (20 + iw + 20 + 90), 160, 0, <span class="stringliteral">&quot;txtDDesc&quot;</span>, &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, NULL );</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;   window_addText( wid, iw+20, -50-128-10-160,</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;         w-(iw+80), 180, 0, <span class="stringliteral">&quot;txtDescription&quot;</span>,</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;         &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, NULL, NULL );</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;}</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> map_showOutfitDetail(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span>* wgtname, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h)</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;{</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;   (void) x;</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;   (void) y;</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;   (void) h;</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[STRMAX], buf_price[ECON_CRED_STRLEN], buf_money[ECON_CRED_STRLEN], buf_mass[ECON_MASS_STRLEN];</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;   <span class="keyword">const</span> Outfit *outfit = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( map_foundOutfitNames[toolkit_getListPos(wid, wgtname)] );</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;   <span class="keywordtype">size_t</span> l = 0;</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;   <span class="keywordtype">double</span> th;</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;   <span class="keywordtype">int</span> iw;</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;   <span class="keywordtype">double</span> mass = outfit-&gt;mass;</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160; </div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;   <span class="comment">/* 452 px is the sum of the 128 px outfit image width, its 4 px border,</span></div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;<span class="comment">    * a 20 px gap, 280 px for the outfit&#39;s name and a final 20 px gap. */</span></div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;   iw = w - 452;</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160; </div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;   window_modifyImage( wid, <span class="stringliteral">&quot;imgOutfit&quot;</span>, outfit-&gt;gfx_store, 128, 128 );</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;   l = <a class="code" href="outfit_8c.html#a53de20fb6735ea757d39b289b4ac34d4">outfit_getNameWithClass</a>( outfit, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>) );</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s&quot;</span>, outfit-&gt;desc_short );</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDescShort&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;   th = <a class="code" href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, 280, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;   <span class="keywordflow">if</span> ((<a class="code" href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a>(outfit) || <a class="code" href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a>(outfit)) &amp;&amp;</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;         (<a class="code" href="outfit_8c.html#a572e4344617b1ae579d2aab64ad59802">outfit_ammo</a>(outfit) != NULL)) {</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;      mass += <a class="code" href="outfit_8c.html#a8ac6f494b5f0972d7d6e87efbc73f3af">outfit_amount</a>(outfit) * <a class="code" href="outfit_8c.html#a572e4344617b1ae579d2aab64ad59802">outfit_ammo</a>(outfit)-&gt;mass;</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;   }</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160; </div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDescription&quot;</span>, _(outfit-&gt;description) );</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;   credits2str( buf_price, outfit-&gt;price, 2 );</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;   credits2str( buf_money, <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;credits, 2 );</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;   tonnes2str( buf_mass, (<span class="keywordtype">int</span>)round( mass ) );</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160; </div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;   l = 0;</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%d\n&quot;</span>, <a class="code" href="player_8c.html#ad0d77b1bddb767ee622ce0d0a98b5068">player_outfitOwned</a>(outfit) );</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s\n&quot;</span>, buf_mass );</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s\n&quot;</span>, buf_price );</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s\n&quot;</span>, buf_money );</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;   l += <a class="code" href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a>( &amp;<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[l], <span class="keyword">sizeof</span>(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>)-l, <span class="stringliteral">&quot;%s\n&quot;</span> , (outfit-&gt;license != NULL) ? _(outfit-&gt;license) : _(<span class="stringliteral">&quot;None&quot;</span>) );</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160; </div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;   window_modifyText( wid, <span class="stringliteral">&quot;txtDDesc&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;   <a class="code" href="toolkit_8c.html#ad1fbfecf32e5f3edcb4f125fb4e78cd1">window_resizeWidget</a>( wid, <span class="stringliteral">&quot;txtDescShort&quot;</span>, 280, th );</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;   <a class="code" href="toolkit_8c.html#a7d5f53000a8b50ae8370d142ce782744">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtDescShort&quot;</span>, iw + 128 + 20, -50 );</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;   th = <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( 128 + <a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>.h, th );</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;   <a class="code" href="toolkit_8c.html#a7d5f53000a8b50ae8370d142ce782744">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtSDesc&quot;</span>, iw+20, -50-th );</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;   <a class="code" href="toolkit_8c.html#a7d5f53000a8b50ae8370d142ce782744">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtDDesc&quot;</span>, iw+20+90, -50-th );</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;   th += <a class="code" href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a>( &amp;<a class="code" href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a>, 280, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;   <a class="code" href="toolkit_8c.html#a7d5f53000a8b50ae8370d142ce782744">window_moveWidget</a>( wid, <span class="stringliteral">&quot;txtDescription&quot;</span>, iw+20, -50-th );</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;}</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160; </div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> map_findSearchOutfits( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;{</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;   <span class="keywordtype">int</span> i, j;</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;   <span class="keywordtype">int</span> len, n;</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;   map_find_t *found;</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *pnt;</div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   StarSystem *<a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>;</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *oname, *sysname;</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;   <span class="keywordtype">char</span> **list;</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;   <span class="keyword">const</span> Outfit *o;</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;   Outfit **olist;</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160; </div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;   assert( <span class="stringliteral">&quot;Outfit search is not reentrant!&quot;</span> &amp;&amp; map_foundOutfitNames == NULL );</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160; </div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;   <span class="comment">/* Match planet first. */</span></div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;   o     = NULL;</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;   oname = <a class="code" href="outfit_8c.html#ac9b94cc5bb245f145d223d1edc3e9ac9">outfit_existsCase</a>( name );</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;   map_foundOutfitNames = map_outfitsMatch( name );</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;   len = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>( map_foundOutfitNames );</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;   <span class="keywordflow">if</span> ((oname != NULL) &amp;&amp; (len == 1))</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;      o = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( oname );</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;   <span class="comment">/* Do fuzzy match. */</span></div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (len &gt; 0) {</div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;      <span class="comment">/* Ask which one player wants. */</span></div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;      list  = malloc( len*<span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*) );</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;len; i++)</div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;         list[i] = strdup( _(map_foundOutfitNames[i]) );</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;      i = <a class="code" href="dialogue_8c.html#a8e2244f71608f05e515c4ee387aa793e">dialogue_listPanel</a>( _(<span class="stringliteral">&quot;Search Results&quot;</span>), list, len, 452, 650,</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;            map_addOutfitDetailFields, map_showOutfitDetail,</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;            _(<span class="stringliteral">&quot;Search results for outfits matching &#39;%s&#39;:&quot;</span>), name );</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;      <span class="keywordflow">if</span> (i &lt; 0) {</div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( map_foundOutfitNames );</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;         map_foundOutfitNames = NULL;</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;      }</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;      o = <a class="code" href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a>( map_foundOutfitNames[i] );</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;   }</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( map_foundOutfitNames );</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;   map_foundOutfitNames = NULL;</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;   <span class="keywordflow">if</span> (o == NULL)</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160; </div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;   <span class="comment">/* Construct found table. */</span></div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;   found = NULL;</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;   n = 0;</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;   len = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(map_known_techs);</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;len; i++) {</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;      <span class="comment">/* Try to find the outfit in the planet. */</span></div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      olist = <a class="code" href="tech_8c.html#a8af96ecf06b3813af4ccfd151b93f676">tech_getOutfit</a>( map_known_techs[i] );</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;      <span class="keywordflow">for</span> (j=<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(olist)-1; j&gt;=0; j--)</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;         <span class="keywordflow">if</span> (olist[j] == o)</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>( olist );</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;      olist = NULL;</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;      <span class="keywordflow">if</span> (j &lt; 0)</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;      pnt = map_known_planets[i];</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160; </div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;      <span class="comment">/* System must be known. */</span></div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;      sysname = <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pnt-&gt;name );</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;      <span class="keywordflow">if</span> (sysname == NULL)</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;      <a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a> = <a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( sysname );</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;      <span class="keywordflow">if</span> (!sys_isKnown(<a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>))</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160; </div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;      <span class="keywordflow">if</span> (found == NULL) <span class="comment">/* Allocate results array on first match. */</span></div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;         found = malloc( <span class="keyword">sizeof</span>(map_find_t) * len );</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160; </div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;      map_findAccumulateResult( found, n, <a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>, pnt );</div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;      n++;</div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;   }</div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160; </div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;   <span class="comment">/* No visible match. */</span></div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;   <span class="keywordflow">if</span> (n==0)</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160; </div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;   <span class="comment">/* Display results. */</span></div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;   map_findDisplayResult( <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, found, n );</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;}</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160; </div>
 <div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160; </div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;      map_findAccumulateResult( found, n, <a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>, pnt );</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;      n++;</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;   }</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160; </div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;   <span class="comment">/* No visible match. */</span></div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   <span class="keywordflow">if</span> (n==0)</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;<span class="keyword">static</span> <span class="keywordtype">char</span> **map_fuzzyShips( Ship **s, <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;{</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;   <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;   <span class="keywordtype">char</span> **names;</div>
 <div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160; </div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   <span class="comment">/* Display results. */</span></div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;   map_findDisplayResult( <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, found, n );</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;}</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160; </div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160; </div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;<span class="keyword">static</span> <span class="keywordtype">char</span> **map_fuzzyShips( Ship **s, <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;{</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;   <span class="keywordtype">char</span> **names;</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160; </div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;   names = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">char</span>* );</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160; </div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;   <span class="comment">/* Do fuzzy search. */</span></div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s); i++)</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="nstring_8c.html#ae9229017a4501f8d6a637b4498cfed2e">strcasestr</a>( _(s[i]-&gt;name), name ) != NULL)</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;         <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;names, s[i]-&gt;name );</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160; </div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;   <span class="keywordflow">return</span> names;</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;}</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;<span class="keyword">static</span> <span class="keywordtype">char</span> **map_shipsMatch( <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;{</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;   Ship **s;</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;   <span class="keywordtype">char</span> **names;</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160; </div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;   <span class="comment">/* Get ships and names. */</span></div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;   s     = <a class="code" href="tech_8c.html#a6785aba0af4809b2ea7745fb79e98598">tech_getShipArray</a>( map_known_techs, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>( map_known_techs ) );</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;   names = map_fuzzyShips( s, name );</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s);</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160; </div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;   <span class="keywordflow">return</span> names;</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;}</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160; </div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> map_findSearchShips( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;{</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;   <span class="keywordtype">int</span> i, j;</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;   <span class="keywordtype">char</span> **names;</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;   <span class="keywordtype">int</span> len, n;</div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;   map_find_t *found;</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *pnt;</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;   StarSystem *<a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>;</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *sname, *sysname;</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;   <span class="keywordtype">char</span> **list;</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;   <span class="keyword">const</span> Ship *s;</div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;   Ship **slist;</div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160; </div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;   <span class="comment">/* Match planet first. */</span></div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;   s     = NULL;</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;   sname = <a class="code" href="ship_8c.html#a4d7c71e652c2422ae4a8c9dbdabcfcaf">ship_existsCase</a>( name );</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;   names = map_shipsMatch( name );</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;   len = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>( names );</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;   <span class="keywordflow">if</span> ((sname != NULL) &amp;&amp; (len == 1))</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;      s = <a class="code" href="ship_8c.html#a118a1d01080c85b078d8824e9bd3234e">ship_get</a>( sname );</div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   <span class="comment">/* Handle fuzzy matching. */</span></div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (len &gt; 0) {</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;      <span class="comment">/* Ask which one player wants. */</span></div>
-<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;      list  = malloc( len*<span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*) );</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;len; i++)</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;         list[i] = strdup( _(names[i]) );</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;      i = <a class="code" href="dialogue_8c.html#a9a8d8b0bf7c6e6513e15540eebe4fd1a">dialogue_list</a>( _(<span class="stringliteral">&quot;Search Results&quot;</span>), list, len,</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;            _(<span class="stringliteral">&quot;Search results for ships matching &#39;%s&#39;:&quot;</span>), name );</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;      <span class="keywordflow">if</span> (i &lt; 0) {</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(names);</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;      }</div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;      s = <a class="code" href="ship_8c.html#a118a1d01080c85b078d8824e9bd3234e">ship_get</a>( names[i] );</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;   }</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(names);</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   names = NULL;</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;   <span class="keywordflow">if</span> (s == NULL)</div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160; </div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;   <span class="comment">/* Construct found table. */</span></div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;   found = NULL;</div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;   n = 0;</div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;   len = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(map_known_techs);</div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;len; i++) {</div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;      <span class="comment">/* Try to find the ship in the planet. */</span></div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;      slist = <a class="code" href="tech_8c.html#ab83e03ecb4dc00e1230936daec891d72">tech_getShip</a>( map_known_techs[i] );</div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;      <span class="keywordflow">for</span> (j=<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(slist)-1; j&gt;=0; j--)</div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;         <span class="keywordflow">if</span> (slist[j] == s)</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(slist);</div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;      slist = NULL;</div>
-<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;      <span class="keywordflow">if</span> (j &lt; 0)</div>
-<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;      pnt = map_known_planets[i];</div>
-<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160; </div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;      <span class="comment">/* System must be known. */</span></div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;      sysname = <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pnt-&gt;name );</div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;      <span class="keywordflow">if</span> (sysname == NULL)</div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;      <a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a> = <a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( sysname );</div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;      <span class="keywordflow">if</span> (!sys_isKnown(<a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>))</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160; </div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;      <span class="keywordflow">if</span> (found == NULL) <span class="comment">/* Allocate results array on first match. */</span></div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;         found = malloc( <span class="keyword">sizeof</span>(map_find_t) * len );</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;   names = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">char</span>* );</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160; </div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;   <span class="comment">/* Do fuzzy search. */</span></div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s); i++)</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="nstring_8c.html#ae9229017a4501f8d6a637b4498cfed2e">strcasestr</a>( _(s[i]-&gt;name), name ) != NULL)</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;         <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;names, s[i]-&gt;name );</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160; </div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;   <span class="keywordflow">return</span> names;</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;}</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;<span class="keyword">static</span> <span class="keywordtype">char</span> **map_shipsMatch( <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;{</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;   Ship **s;</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;   <span class="keywordtype">char</span> **names;</div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160; </div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;   <span class="comment">/* Get ships and names. */</span></div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;   s     = <a class="code" href="tech_8c.html#a6785aba0af4809b2ea7745fb79e98598">tech_getShipArray</a>( map_known_techs, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>( map_known_techs ) );</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;   names = map_fuzzyShips( s, name );</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s);</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160; </div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;   <span class="keywordflow">return</span> names;</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;}</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160; </div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> map_findSearchShips( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> *name )</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;{</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;   <span class="keywordtype">int</span> i, j;</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;   <span class="keywordtype">char</span> **names;</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;   <span class="keywordtype">int</span> len, n;</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;   map_find_t *found;</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;   <a class="code" href="structPlanet.html">Planet</a> *pnt;</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;   StarSystem *<a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>;</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *sname, *sysname;</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;   <span class="keywordtype">char</span> **list;</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;   <span class="keyword">const</span> Ship *s;</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;   Ship **slist;</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160; </div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;   <span class="comment">/* Match planet first. */</span></div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;   s     = NULL;</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;   sname = <a class="code" href="ship_8c.html#a4d7c71e652c2422ae4a8c9dbdabcfcaf">ship_existsCase</a>( name );</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;   names = map_shipsMatch( name );</div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;   len = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>( names );</div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;   <span class="keywordflow">if</span> ((sname != NULL) &amp;&amp; (len == 1))</div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;      s = <a class="code" href="ship_8c.html#a118a1d01080c85b078d8824e9bd3234e">ship_get</a>( sname );</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;   <span class="comment">/* Handle fuzzy matching. */</span></div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (len &gt; 0) {</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;      <span class="comment">/* Ask which one player wants. */</span></div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;      list  = malloc( len*<span class="keyword">sizeof</span>(<span class="keywordtype">char</span>*) );</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;len; i++)</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;         list[i] = strdup( _(names[i]) );</div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;      i = <a class="code" href="dialogue_8c.html#a9a8d8b0bf7c6e6513e15540eebe4fd1a">dialogue_list</a>( _(<span class="stringliteral">&quot;Search Results&quot;</span>), list, len,</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;            _(<span class="stringliteral">&quot;Search results for ships matching &#39;%s&#39;:&quot;</span>), name );</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;      <span class="keywordflow">if</span> (i &lt; 0) {</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;         <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(names);</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;      }</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;      s = <a class="code" href="ship_8c.html#a118a1d01080c85b078d8824e9bd3234e">ship_get</a>( names[i] );</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;   }</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(names);</div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;   names = NULL;</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;   <span class="keywordflow">if</span> (s == NULL)</div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160; </div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;   <span class="comment">/* Construct found table. */</span></div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;   found = NULL;</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;   n = 0;</div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;   len = <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(map_known_techs);</div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;   <span class="keywordflow">for</span> (i=0; i&lt;len; i++) {</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;      <span class="comment">/* Try to find the ship in the planet. */</span></div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;      slist = <a class="code" href="tech_8c.html#ab83e03ecb4dc00e1230936daec891d72">tech_getShip</a>( map_known_techs[i] );</div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;      <span class="keywordflow">for</span> (j=<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(slist)-1; j&gt;=0; j--)</div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;         <span class="keywordflow">if</span> (slist[j] == s)</div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(slist);</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;      slist = NULL;</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;      <span class="keywordflow">if</span> (j &lt; 0)</div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;      pnt = map_known_planets[i];</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160; </div>
+<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;      <span class="comment">/* System must be known. */</span></div>
+<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;      sysname = <a class="code" href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a>( pnt-&gt;name );</div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;      <span class="keywordflow">if</span> (sysname == NULL)</div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;      <a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a> = <a class="code" href="space_8c.html#a1d2babe4b56c6b6a7bb8936202ec5066">system_get</a>( sysname );</div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;      <span class="keywordflow">if</span> (!sys_isKnown(<a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>))</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160; </div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;      <span class="keywordflow">if</span> (found == NULL) <span class="comment">/* Allocate results array on first match. */</span></div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;         found = malloc( <span class="keyword">sizeof</span>(map_find_t) * len );</div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160; </div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;      map_findAccumulateResult( found, n, <a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>, pnt );</div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;      n++;</div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;   }</div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160; </div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;   <span class="comment">/* No visible match. */</span></div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;   <span class="keywordflow">if</span> (n==0)</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160; </div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;   <span class="comment">/* Display results. */</span></div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;   map_findDisplayResult( <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, found, n );</div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;}</div>
+<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160; </div>
 <div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160; </div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;      map_findAccumulateResult( found, n, <a class="code" href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">sys</a>, pnt );</div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;      n++;</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;   }</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160; </div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;   <span class="comment">/* No visible match. */</span></div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;   <span class="keywordflow">if</span> (n==0)</div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> map_findSearch( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;{</div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name, *searchname;</div>
 <div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160; </div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;   <span class="comment">/* Display results. */</span></div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;   map_findDisplayResult( <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, found, n );</div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;}</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;   <span class="comment">/* Get the name. */</span></div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;   name = window_getInput( wid, <span class="stringliteral">&quot;inpSearch&quot;</span> );</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;   <span class="keywordflow">if</span> ( name[0] == <span class="charliteral">&#39;\0&#39;</span> )</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160; </div>
-<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160; </div>
-<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> map_findSearch( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;{</div>
-<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name, *searchname;</div>
-<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160; </div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;   <span class="comment">/* Get the name. */</span></div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;   name = window_getInput( wid, <span class="stringliteral">&quot;inpSearch&quot;</span> );</div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   <span class="keywordflow">if</span> ( name[0] == <span class="charliteral">&#39;\0&#39;</span> )</div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160; </div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;   <span class="comment">/* Prevent reentrancy, e.g. the toolkit spontaneously deciding a future mouseup event was the</span></div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;<span class="comment">    * user releasing the clicked &quot;Find&quot; button and should reactivate it, never mind that they were</span></div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;<span class="comment">    * actually clicking on the dialogue_listPanel we opened to present the results.</span></div>
-<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;<span class="comment">    * FIXME: That behavior doesn&#39;t seem right, but I&#39;m not sure if it&#39;s an actual bug or not. */</span></div>
-<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;   window_disableButton( wid, <span class="stringliteral">&quot;btnSearch&quot;</span> );</div>
-<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160; </div>
-<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;   <span class="comment">/* Clean up if necessary. */</span></div>
-<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;   free( map_found_cur );</div>
-<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;   map_found_cur = NULL;</div>
-<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160; </div>
-<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;   <span class="comment">/* Handle different search cases. */</span></div>
-<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;   <span class="keywordflow">if</span> (map_find_systems) {</div>
-<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;      ret = map_findSearchSystems( wid, name );</div>
-<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;      searchname = _(<span class="stringliteral">&quot;System&quot;</span>);</div>
-<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;   }</div>
-<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (map_find_planets) {</div>
-<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;      ret = map_findSearchPlanets( wid, name );</div>
-<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160;      searchname = _(<span class="stringliteral">&quot;Planet&quot;</span>);</div>
-<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;   }</div>
-<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (map_find_outfits) {</div>
-<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;      ret = map_findSearchOutfits( wid, name );</div>
-<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;      searchname = _(<span class="stringliteral">&quot;Outfit&quot;</span>);</div>
-<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;   }</div>
-<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (map_find_ships) {</div>
-<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;      ret = map_findSearchShips( wid, name );</div>
-<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;      searchname = _(<span class="stringliteral">&quot;Ship&quot;</span>);</div>
-<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;   }</div>
-<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;      ret = 1;</div>
-<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160; </div>
-<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;   <span class="keywordflow">if</span> (ret &lt; 0)</div>
-<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;      <a class="code" href="dialogue_8c.html#a3f539d942fa23eb9561ebc45e964ee07">dialogue_alert</a>( _(<span class="stringliteral">&quot;%s matching &#39;%s&#39; not found!&quot;</span>), searchname, name );</div>
-<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160; </div>
-<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;   <span class="comment">/* Safe at last. */</span></div>
-<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;   window_enableButton( wid, <span class="stringliteral">&quot;btnSearch&quot;</span> );</div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;   <span class="comment">/* Prevent reentrancy, e.g. the toolkit spontaneously deciding a future mouseup event was the</span></div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;<span class="comment">    * user releasing the clicked &quot;Find&quot; button and should reactivate it, never mind that they were</span></div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;<span class="comment">    * actually clicking on the dialogue_listPanel we opened to present the results.</span></div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;<span class="comment">    * FIXME: That behavior doesn&#39;t seem right, but I&#39;m not sure if it&#39;s an actual bug or not. */</span></div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;   window_disableButton( wid, <span class="stringliteral">&quot;btnSearch&quot;</span> );</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160; </div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;   <span class="comment">/* Clean up if necessary. */</span></div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;   free( map_found_cur );</div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;   map_found_cur = NULL;</div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160; </div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;   <span class="comment">/* Handle different search cases. */</span></div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   <span class="keywordflow">if</span> (map_find_systems) {</div>
+<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;      ret = map_findSearchSystems( wid, name );</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;      searchname = _(<span class="stringliteral">&quot;System&quot;</span>);</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;   }</div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (map_find_planets) {</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;      ret = map_findSearchPlanets( wid, name );</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;      searchname = _(<span class="stringliteral">&quot;Planet&quot;</span>);</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;   }</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (map_find_outfits) {</div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;      ret = map_findSearchOutfits( wid, name );</div>
+<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;      searchname = _(<span class="stringliteral">&quot;Outfit&quot;</span>);</div>
+<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;   }</div>
+<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (map_find_ships) {</div>
+<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;      ret = map_findSearchShips( wid, name );</div>
+<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;      searchname = _(<span class="stringliteral">&quot;Ship&quot;</span>);</div>
+<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;   }</div>
+<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;      ret = 1;</div>
+<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160; </div>
+<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;   <span class="keywordflow">if</span> (ret &lt; 0)</div>
+<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160;      <a class="code" href="dialogue_8c.html#a3f539d942fa23eb9561ebc45e964ee07">dialogue_alert</a>( _(<span class="stringliteral">&quot;%s matching &#39;%s&#39; not found!&quot;</span>), searchname, name );</div>
+<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160; </div>
+<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;   <span class="comment">/* Safe at last. */</span></div>
+<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;   window_enableButton( wid, <span class="stringliteral">&quot;btnSearch&quot;</span> );</div>
+<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160; </div>
+<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;   <span class="keywordflow">if</span> (ret &gt; 0)</div>
+<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;      map_findClose( wid, str );</div>
+<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;}</div>
+<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160; </div>
+<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160; </div>
+<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;<span class="keywordtype">void</span> map_inputFind( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, <span class="keyword">const</span> <span class="keywordtype">char</span>* str )</div>
+<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;{</div>
+<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;   (void) str;</div>
+<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid;</div>
+<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;   <span class="keywordtype">int</span> x, y, w, h;</div>
 <div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160; </div>
-<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;   <span class="keywordflow">if</span> (ret &gt; 0)</div>
-<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;      map_findClose( wid, str );</div>
-<div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160;}</div>
-<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160; </div>
-<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160; </div>
-<div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;<span class="keywordtype">void</span> map_inputFind( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a>, <span class="keyword">const</span> <span class="keywordtype">char</span>* str )</div>
-<div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;{</div>
-<div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160;   (void) str;</div>
-<div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid;</div>
-<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;   <span class="keywordtype">int</span> x, y, w, h;</div>
-<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160; </div>
-<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;   <span class="comment">/* initialize known. */</span></div>
-<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;   map_knownInit();</div>
-<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160; </div>
-<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;   <span class="comment">/* Create the window. */</span></div>
-<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;   w = 400;</div>
-<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;   h = 220;</div>
-<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;   wid = <a class="code" href="toolkit_8c.html#a098bfecb537787de38f9865becc29ced">window_create</a>( <span class="stringliteral">&quot;wdwFind&quot;</span>, _(<span class="stringliteral">&quot;Find...&quot;</span>), -1, -1, w, h );</div>
-<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;   <a class="code" href="toolkit_8c.html#a28397240dbb1ff16d18448ab1f7fdd8b">window_setAccept</a>( wid, map_findSearch );</div>
-<div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;   <a class="code" href="toolkit_8c.html#a34264e14520085c3acd51732f8e93f41">window_setCancel</a>( wid, map_findClose );</div>
-<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;   <a class="code" href="toolkit_8c.html#ace279905f722cb8cb99c3f1470356d54">window_setParent</a>( wid, <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a> );</div>
-<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160; </div>
-<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;   <span class="comment">/* Text. */</span></div>
-<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;   y = -40;</div>
-<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;   window_addText( wid, 20, y, w - 50, <a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h+4, 0,</div>
-<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;         <span class="stringliteral">&quot;txtDescription&quot;</span>, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL,</div>
-<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;         _(<span class="stringliteral">&quot;Enter keyword to search for:&quot;</span>) );</div>
-<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;   y -= 30;</div>
-<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160; </div>
-<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;   <span class="comment">/* Create input. */</span></div>
-<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;   window_addInput( wid, 30, y, w - 60, 20,</div>
-<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;         <span class="stringliteral">&quot;inpSearch&quot;</span>, 32, 1, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a> );</div>
-<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;   y -= 40;</div>
-<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160; </div>
-<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;   <span class="comment">/* Create buttons. */</span></div>
-<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;   window_addButton( wid, -30, 20+<a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>+20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;         <span class="stringliteral">&quot;btnSearch&quot;</span>, _(<span class="stringliteral">&quot;Find&quot;</span>), map_findSearch );</div>
-<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;   window_addButton( wid, -30, 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
-<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;         <span class="stringliteral">&quot;btnClose&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), map_findClose );</div>
-<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160; </div>
-<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160;   <span class="comment">/* Create check boxes. */</span></div>
-<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;   x = 40;</div>
-<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;   window_addCheckbox( wid, x, y, 160, 20,</div>
-<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;         <span class="stringliteral">&quot;chkSystem&quot;</span>, _(<span class="stringliteral">&quot;Systems&quot;</span>), map_find_check_update, map_find_systems );</div>
-<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;   y -= 20;</div>
-<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;   window_addCheckbox( wid, x, y, 160, 20,</div>
-<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;         <span class="stringliteral">&quot;chkPlanet&quot;</span>, _(<span class="stringliteral">&quot;Planets&quot;</span>), map_find_check_update, map_find_planets );</div>
-<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;   y -= 20;</div>
-<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;   window_addCheckbox( wid, x, y, 160, 20,</div>
-<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;         <span class="stringliteral">&quot;chkOutfit&quot;</span>, _(<span class="stringliteral">&quot;Outfits&quot;</span>), map_find_check_update, map_find_outfits );</div>
-<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;   y -= 20;</div>
-<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;   window_addCheckbox( wid, x, y, 160, 20,</div>
-<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;         <span class="stringliteral">&quot;chkShip&quot;</span>, _(<span class="stringliteral">&quot;Ships&quot;</span>), map_find_check_update, map_find_ships );</div>
-<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;}</div>
-<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160; </div>
+<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;   <span class="comment">/* initialize known. */</span></div>
+<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;   map_knownInit();</div>
+<div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160; </div>
+<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160;   <span class="comment">/* Create the window. */</span></div>
+<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160;   w = 400;</div>
+<div class="line"><a name="l01009"></a><span class="lineno"> 1009</span>&#160;   h = 220;</div>
+<div class="line"><a name="l01010"></a><span class="lineno"> 1010</span>&#160;   wid = <a class="code" href="toolkit_8c.html#a098bfecb537787de38f9865becc29ced">window_create</a>( <span class="stringliteral">&quot;wdwFind&quot;</span>, _(<span class="stringliteral">&quot;Find...&quot;</span>), -1, -1, w, h );</div>
+<div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160;   <a class="code" href="toolkit_8c.html#a28397240dbb1ff16d18448ab1f7fdd8b">window_setAccept</a>( wid, map_findSearch );</div>
+<div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;   <a class="code" href="toolkit_8c.html#a34264e14520085c3acd51732f8e93f41">window_setCancel</a>( wid, map_findClose );</div>
+<div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;   <a class="code" href="toolkit_8c.html#ace279905f722cb8cb99c3f1470356d54">window_setParent</a>( wid, <a class="code" href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">parent</a> );</div>
+<div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160; </div>
+<div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160;   <span class="comment">/* Text. */</span></div>
+<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;   y = -40;</div>
+<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;   window_addText( wid, 20, y, w - 50, <a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h+4, 0,</div>
+<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;         <span class="stringliteral">&quot;txtDescription&quot;</span>, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL,</div>
+<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;         _(<span class="stringliteral">&quot;Enter keyword to search for:&quot;</span>) );</div>
+<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;   y -= 30;</div>
+<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160; </div>
+<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;   <span class="comment">/* Create input. */</span></div>
+<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;   window_addInput( wid, 30, y, w - 60, 20,</div>
+<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;         <span class="stringliteral">&quot;inpSearch&quot;</span>, 32, 1, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a> );</div>
+<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;   y -= 40;</div>
+<div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160; </div>
+<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;   <span class="comment">/* Create buttons. */</span></div>
+<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;   window_addButton( wid, -30, 20+<a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>+20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;         <span class="stringliteral">&quot;btnSearch&quot;</span>, _(<span class="stringliteral">&quot;Find&quot;</span>), map_findSearch );</div>
+<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;   window_addButton( wid, -30, 20, <a class="code" href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a>, <a class="code" href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a>,</div>
+<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;         <span class="stringliteral">&quot;btnClose&quot;</span>, _(<span class="stringliteral">&quot;Close&quot;</span>), map_findClose );</div>
+<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160; </div>
+<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;   <span class="comment">/* Create check boxes. */</span></div>
+<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;   x = 40;</div>
+<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;   window_addCheckbox( wid, x, y, 160, 20,</div>
+<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;         <span class="stringliteral">&quot;chkSystem&quot;</span>, _(<span class="stringliteral">&quot;Systems&quot;</span>), map_find_check_update, map_find_systems );</div>
+<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;   y -= 20;</div>
+<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;   window_addCheckbox( wid, x, y, 160, 20,</div>
+<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;         <span class="stringliteral">&quot;chkPlanet&quot;</span>, _(<span class="stringliteral">&quot;Planets&quot;</span>), map_find_check_update, map_find_planets );</div>
+<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;   y -= 20;</div>
+<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;   window_addCheckbox( wid, x, y, 160, 20,</div>
+<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;         <span class="stringliteral">&quot;chkOutfit&quot;</span>, _(<span class="stringliteral">&quot;Outfits&quot;</span>), map_find_check_update, map_find_outfits );</div>
+<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;   y -= 20;</div>
+<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;   window_addCheckbox( wid, x, y, 160, 20,</div>
+<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;         <span class="stringliteral">&quot;chkShip&quot;</span>, _(<span class="stringliteral">&quot;Ships&quot;</span>), map_find_check_update, map_find_ships );</div>
+<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;}</div>
+<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aspace_8c_html_ab448e1fed4297117415d8a6b92c10c66"><div class="ttname"><a href="space_8c.html#ab448e1fed4297117415d8a6b92c10c66">system_searchFuzzyCase</a></div><div class="ttdeci">char ** system_searchFuzzyCase(const char *sysname, int *n)</div><div class="ttdoc">Does a fuzzy case matching. Searches translated names but returns internal names.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00777">space.c:777</a></div></div>
 <div class="ttc" id="astructPlanet_html"><div class="ttname"><a href="structPlanet.html">Planet</a></div><div class="ttdoc">Represents a planet.</div></div>
@@ -998,10 +984,10 @@ $(function() {
 <div class="ttc" id="astructSysNode___html_a6635969f6fd4eb2701492f71957154d8"><div class="ttname"><a href="structSysNode__.html#a6635969f6fd4eb2701492f71957154d8">SysNode_::sys</a></div><div class="ttdeci">StarSystem * sys</div><div class="ttdef"><b>Definition:</b> <a href="map_8c_source.html#l02230">map.c:2230</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_a28397240dbb1ff16d18448ab1f7fdd8b"><div class="ttname"><a href="toolkit_8c.html#a28397240dbb1ff16d18448ab1f7fdd8b">window_setAccept</a></div><div class="ttdeci">void window_setAccept(unsigned int wid, void(*accept)(unsigned int, const char *))</div><div class="ttdoc">Sets the default accept function of the window.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00743">toolkit.c:743</a></div></div>
 <div class="ttc" id="aspace_8c_html_a099196caf5494322e5dd5f72f32aa715"><div class="ttname"><a href="space_8c.html#a099196caf5494322e5dd5f72f32aa715">planet_getSystem</a></div><div class="ttdeci">char * planet_getSystem(const char *planetname)</div><div class="ttdoc">Get the name of a system from a planetname.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00887">space.c:887</a></div></div>
+<div class="ttc" id="anstring_8c_html_ad02680e374cbaee934840aa7c9123dd4"><div class="ttname"><a href="nstring_8c.html#ad02680e374cbaee934840aa7c9123dd4">scnprintf</a></div><div class="ttdeci">int scnprintf(char *text, size_t maxlen, const char *fmt,...)</div><div class="ttdoc">Like snprintf(), but returns the number of characters ACTUALLY &quot;printed&quot; into the buffer....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00170">nstring.c:170</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_aea65cb3e502ff5604fd607836b4e74f8"><div class="ttname"><a href="toolkit_8c.html#aea65cb3e502ff5604fd607836b4e74f8">window_close</a></div><div class="ttdeci">void window_close(unsigned int wid, const char *str)</div><div class="ttdoc">Helper function to automatically close the window calling it.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00895">toolkit.c:895</a></div></div>
 <div class="ttc" id="aspace_8c_html_a48746581304a9533e6921785c11e62c2"><div class="ttname"><a href="space_8c.html#a48746581304a9533e6921785c11e62c2">planet_searchFuzzyCase</a></div><div class="ttdeci">char ** planet_searchFuzzyCase(const char *planetname, int *n)</div><div class="ttdoc">Does a fuzzy case matching. Searches translated names but returns internal names.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01014">space.c:1014</a></div></div>
 <div class="ttc" id="astructSysNode___html_ae0cff5f447ad06c3643c4d9da923afd5"><div class="ttname"><a href="structSysNode__.html#ae0cff5f447ad06c3643c4d9da923afd5">SysNode_::parent</a></div><div class="ttdeci">struct SysNode_ * parent</div><div class="ttdef"><b>Definition:</b> <a href="map_8c_source.html#l02229">map.c:2229</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a37b9117017c667ad55a57d326e6f45a9"><div class="ttname"><a href="outfit_8c.html#a37b9117017c667ad55a57d326e6f45a9">outfit_slotName</a></div><div class="ttdeci">const char * outfit_slotName(const Outfit *o)</div><div class="ttdoc">Gets the name of the slot type of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00263">outfit.c:263</a></div></div>
 <div class="ttc" id="adialogue_8c_html_a8e2244f71608f05e515c4ee387aa793e"><div class="ttname"><a href="dialogue_8c.html#a8e2244f71608f05e515c4ee387aa793e">dialogue_listPanel</a></div><div class="ttdeci">int dialogue_listPanel(const char *title, char **items, int nitems, int extrawidth, int minheight, void(*add_widgets)(unsigned int wid, int x, int y, int w, int h), void(*select_call)(unsigned int wid, const char *wgtname, int x, int y, int w, int h), const char *fmt,...)</div><div class="ttdoc">Creates a list dialogue with OK and Cancel buttons, with a fixed message, as well as a small extra ar...</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00615">dialogue.c:615</a></div></div>
 <div class="ttc" id="aspace_8c_html_a4d28d9dbe8cc1ff83f16bcf8d107589e"><div class="ttname"><a href="space_8c.html#a4d28d9dbe8cc1ff83f16bcf8d107589e">planet_getColourChar</a></div><div class="ttdeci">char planet_getColourChar(const Planet *p)</div><div class="ttdoc">Gets the planet colour char.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01875">space.c:1875</a></div></div>
 <div class="ttc" id="afont_8c_html_a41b3c9521462440c62eb76b43f606274"><div class="ttname"><a href="font_8c.html#a41b3c9521462440c62eb76b43f606274">gl_smallFont</a></div><div class="ttdeci">glFont gl_smallFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00155">font.c:155</a></div></div>
@@ -1013,14 +999,13 @@ $(function() {
 <div class="ttc" id="aspace_8c_html_a10b6a5ed83ff4c76816d2bca293cbd80"><div class="ttname"><a href="space_8c.html#a10b6a5ed83ff4c76816d2bca293cbd80">system_existsCase</a></div><div class="ttdeci">const char * system_existsCase(const char *sysname)</div><div class="ttdoc">Checks to see if a system exists case insensitively.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00766">space.c:766</a></div></div>
 <div class="ttc" id="arng_8c_html_a5e71a6e0c14542f60c8007edc2eaf286"><div class="ttname"><a href="rng_8c.html#a5e71a6e0c14542f60c8007edc2eaf286">d</a></div><div class="ttdeci">static const double d[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00273">rng.c:273</a></div></div>
 <div class="ttc" id="atech_8c_html_ab83e03ecb4dc00e1230936daec891d72"><div class="ttname"><a href="tech_8c.html#ab83e03ecb4dc00e1230936daec891d72">tech_getShip</a></div><div class="ttdeci">Ship ** tech_getShip(const tech_group_t *tech)</div><div class="ttdoc">Gets all of the ships associated to a tech group.</div><div class="ttdef"><b>Definition:</b> <a href="tech_8c_source.html#l00775">tech.c:775</a></div></div>
-<div class="ttc" id="anstring_8c_html_a1af9acc6b6efdca3576cb8223d95f401"><div class="ttname"><a href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a></div><div class="ttdeci">int asprintf(char **strp, const char *fmt,...)</div><div class="ttdoc">Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00153">nstring.c:153</a></div></div>
 <div class="ttc" id="aarray_8h_html_ad1bf30a2043b321afd76277cec9f46c8"><div class="ttname"><a href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a></div><div class="ttdeci">#define array_create(basic_type)</div><div class="ttdoc">Creates a new dynamic array of ‘basic_type’.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00093">array.h:93</a></div></div>
 <div class="ttc" id="aspace_8c_html_a3a7b55608b2c78d843f69b74074fe568"><div class="ttname"><a href="space_8c.html#a3a7b55608b2c78d843f69b74074fe568">planet_getSymbol</a></div><div class="ttdeci">const char * planet_getSymbol(const Planet *p)</div><div class="ttdoc">Gets the planet symbol.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01894">space.c:1894</a></div></div>
 <div class="ttc" id="anews_8c_html_add3504cb24d0f18e58cfe91db1b667dd"><div class="ttname"><a href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a></div><div class="ttdeci">static char buf[NEWS_MAX_LENGTH]</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00050">news.c:50</a></div></div>
 <div class="ttc" id="atech_8c_html_a6785aba0af4809b2ea7745fb79e98598"><div class="ttname"><a href="tech_8c.html#a6785aba0af4809b2ea7745fb79e98598">tech_getShipArray</a></div><div class="ttdeci">Ship ** tech_getShipArray(tech_group_t **tech, int num)</div><div class="ttdoc">Gets the ships from an array of techs.</div><div class="ttdef"><b>Definition:</b> <a href="tech_8c_source.html#l00801">tech.c:801</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a66f7fe78516b0547eba21d2dec83bb20"><div class="ttname"><a href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a></div><div class="ttdeci">int outfit_isFighterBay(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a fighter bay.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00523">outfit.c:523</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a66f7fe78516b0547eba21d2dec83bb20"><div class="ttname"><a href="outfit_8c.html#a66f7fe78516b0547eba21d2dec83bb20">outfit_isFighterBay</a></div><div class="ttdeci">int outfit_isFighterBay(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a fighter bay.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00543">outfit.c:543</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_ad1fbfecf32e5f3edcb4f125fb4e78cd1"><div class="ttname"><a href="toolkit_8c.html#ad1fbfecf32e5f3edcb4f125fb4e78cd1">window_resizeWidget</a></div><div class="ttdeci">void window_resizeWidget(unsigned int wid, const char *name, int w, int h)</div><div class="ttdoc">Resizes a widget.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00460">toolkit.c:460</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a8ac6f494b5f0972d7d6e87efbc73f3af"><div class="ttname"><a href="outfit_8c.html#a8ac6f494b5f0972d7d6e87efbc73f3af">outfit_amount</a></div><div class="ttdeci">int outfit_amount(const Outfit *o)</div><div class="ttdoc">Gets the amount an outfit can hold.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00662">outfit.c:662</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a8ac6f494b5f0972d7d6e87efbc73f3af"><div class="ttname"><a href="outfit_8c.html#a8ac6f494b5f0972d7d6e87efbc73f3af">outfit_amount</a></div><div class="ttdeci">int outfit_amount(const Outfit *o)</div><div class="ttdoc">Gets the amount an outfit can hold.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00682">outfit.c:682</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ad0d77b1bddb767ee622ce0d0a98b5068"><div class="ttname"><a href="player_8c.html#ad0d77b1bddb767ee622ce0d0a98b5068">player_outfitOwned</a></div><div class="ttdeci">int player_outfitOwned(const Outfit *o)</div><div class="ttdoc">Gets how many of the outfit the player owns.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02565">player.c:2565</a></div></div>
 <div class="ttc" id="adialogue_8c_html_a3f539d942fa23eb9561ebc45e964ee07"><div class="ttname"><a href="dialogue_8c.html#a3f539d942fa23eb9561ebc45e964ee07">dialogue_alert</a></div><div class="ttdeci">void dialogue_alert(const char *fmt,...)</div><div class="ttdoc">Displays an alert popup with only an ok button and a message.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00130">dialogue.c:130</a></div></div>
 <div class="ttc" id="aspace_8c_html_a162b62a50bd2531e18be082ede90bd64"><div class="ttname"><a href="space_8c.html#a162b62a50bd2531e18be082ede90bd64">system_getAll</a></div><div class="ttdeci">StarSystem * system_getAll(void)</div><div class="ttdoc">Gets an array (array.h) of all star systems.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00755">space.c:755</a></div></div>
@@ -1033,20 +1018,20 @@ $(function() {
 <div class="ttc" id="atech_8c_html_a8af96ecf06b3813af4ccfd151b93f676"><div class="ttname"><a href="tech_8c.html#a8af96ecf06b3813af4ccfd151b93f676">tech_getOutfit</a></div><div class="ttdeci">Outfit ** tech_getOutfit(const tech_group_t *tech)</div><div class="ttdoc">Gets all of the outfits associated to a tech group.</div><div class="ttdef"><b>Definition:</b> <a href="tech_8c_source.html#l00727">tech.c:727</a></div></div>
 <div class="ttc" id="afont_8c_html_a70108689d1f2c28b6e91f763e3918e9b"><div class="ttname"><a href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a></div><div class="ttdeci">glFont gl_defFont</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l00154">font.c:154</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_ac9b94cc5bb245f145d223d1edc3e9ac9"><div class="ttname"><a href="outfit_8c.html#ac9b94cc5bb245f145d223d1edc3e9ac9">outfit_existsCase</a></div><div class="ttdeci">const char * outfit_existsCase(const char *name)</div><div class="ttdoc">Checks to see if an outfit exists matching name (case insensitive).</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00139">outfit.c:139</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a430bc49f57078876971bcb63ad350408"><div class="ttname"><a href="outfit_8c.html#a430bc49f57078876971bcb63ad350408">outfit_slotSize</a></div><div class="ttdeci">const char * outfit_slotSize(const Outfit *o)</div><div class="ttdoc">Gets the name of the slot size of an outfit.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00314">outfit.c:314</a></div></div>
 <div class="ttc" id="aboard_8c_html_ae98035e5bee7146fab48f941818a2bc7"><div class="ttname"><a href="board_8c.html#ae98035e5bee7146fab48f941818a2bc7">BUTTON_WIDTH</a></div><div class="ttdeci">#define BUTTON_WIDTH</div><div class="ttdef"><b>Definition:</b> <a href="board_8c_source.html#l00032">board.c:32</a></div></div>
 <div class="ttc" id="afont_8c_html_a0f1a2e63659f8c8e5d3abb1f6766cc97"><div class="ttname"><a href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a></div><div class="ttdeci">int gl_printHeightRaw(const glFont *ft_font, const int width, const char *text)</div><div class="ttdoc">Gets the height of a non-formatted string.</div><div class="ttdef"><b>Definition:</b> <a href="font_8c_source.html#l01028">font.c:1028</a></div></div>
 <div class="ttc" id="aspace_8c_html_a80fc91b008974b39b78ee551d5abc684"><div class="ttname"><a href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a></div><div class="ttdeci">StarSystem * cur_system</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l00100">space.c:100</a></div></div>
 <div class="ttc" id="aarray_8h_html_a04e810cfeccd1cd523f9b28e68aca564"><div class="ttname"><a href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a></div><div class="ttdeci">#define array_free(ptr_array)</div><div class="ttdoc">Frees memory allocated and sets array to NULL.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00158">array.h:158</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a0a785d79d010792279fc92b2842c8675"><div class="ttname"><a href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a></div><div class="ttdeci">const Outfit * outfit_get(const char *name)</div><div class="ttdoc">Gets an outfit by name.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00108">outfit.c:108</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a53de20fb6735ea757d39b289b4ac34d4"><div class="ttname"><a href="outfit_8c.html#a53de20fb6735ea757d39b289b4ac34d4">outfit_getNameWithClass</a></div><div class="ttdeci">size_t outfit_getNameWithClass(const Outfit *outfit, char *buf, size_t size)</div><div class="ttdoc">Gets a brief name/class description suitable for the title section of an outfitter screen.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00378">outfit.c:378</a></div></div>
 <div class="ttc" id="aspace_8c_html_a3f3405e4fa16ca6845d44f58c8330c5c"><div class="ttname"><a href="space_8c.html#a3f3405e4fa16ca6845d44f58c8330c5c">planet_existsCase</a></div><div class="ttdeci">const char * planet_existsCase(const char *planetname)</div><div class="ttdoc">Check to see if a planet exists (case insensitive).</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01003">space.c:1003</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a572e4344617b1ae579d2aab64ad59802"><div class="ttname"><a href="outfit_8c.html#a572e4344617b1ae579d2aab64ad59802">outfit_ammo</a></div><div class="ttdeci">const Outfit * outfit_ammo(const Outfit *o)</div><div class="ttdoc">Gets the outfit's ammo.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00652">outfit.c:652</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a572e4344617b1ae579d2aab64ad59802"><div class="ttname"><a href="outfit_8c.html#a572e4344617b1ae579d2aab64ad59802">outfit_ammo</a></div><div class="ttdeci">const Outfit * outfit_ammo(const Outfit *o)</div><div class="ttdoc">Gets the outfit's ammo.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00672">outfit.c:672</a></div></div>
 <div class="ttc" id="aplayer_8c_html_ac8701471143b28a786b0028420edfeb6"><div class="ttname"><a href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a></div><div class="ttdeci">Player_t player</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00067">player.c:67</a></div></div>
 <div class="ttc" id="aarray_8h_html_a7c62b40a0c0e00e204db23aee2186d70"><div class="ttname"><a href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a></div><div class="ttdeci">static ALWAYS_INLINE int array_size(const void *array)</div><div class="ttdoc">Returns number of elements in the array.</div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00168">array.h:168</a></div></div>
 <div class="ttc" id="atoolkit_8c_html_a7d5f53000a8b50ae8370d142ce782744"><div class="ttname"><a href="toolkit_8c.html#a7d5f53000a8b50ae8370d142ce782744">window_moveWidget</a></div><div class="ttdeci">void window_moveWidget(unsigned int wid, const char *name, int x, int y)</div><div class="ttdoc">Moves a widget.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l00432">toolkit.c:432</a></div></div>
 <div class="ttc" id="aship_8c_html_a4d7c71e652c2422ae4a8c9dbdabcfcaf"><div class="ttname"><a href="ship_8c.html#a4d7c71e652c2422ae4a8c9dbdabcfcaf">ship_existsCase</a></div><div class="ttdeci">const char * ship_existsCase(const char *name)</div><div class="ttdoc">Checks to see if an ship exists matching name (case insensitive).</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00095">ship.c:95</a></div></div>
 <div class="ttc" id="aboard_8c_html_a94be6e055d514b19c7cb5f56f492f016"><div class="ttname"><a href="board_8c.html#a94be6e055d514b19c7cb5f56f492f016">BUTTON_HEIGHT</a></div><div class="ttdeci">#define BUTTON_HEIGHT</div><div class="ttdef"><b>Definition:</b> <a href="board_8c_source.html#l00033">board.c:33</a></div></div>
-<div class="ttc" id="aoutfit_8c_html_a32d9c1fc9818a3f3700992f7b41541ce"><div class="ttname"><a href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a></div><div class="ttdeci">int outfit_isLauncher(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a weapon launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00460">outfit.c:460</a></div></div>
+<div class="ttc" id="aoutfit_8c_html_a32d9c1fc9818a3f3700992f7b41541ce"><div class="ttname"><a href="outfit_8c.html#a32d9c1fc9818a3f3700992f7b41541ce">outfit_isLauncher</a></div><div class="ttdeci">int outfit_isLauncher(const Outfit *o)</div><div class="ttdoc">Checks if outfit is a weapon launcher.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00480">outfit.c:480</a></div></div>
 <div class="ttc" id="adialogue_8c_html_a9a8d8b0bf7c6e6513e15540eebe4fd1a"><div class="ttname"><a href="dialogue_8c.html#a9a8d8b0bf7c6e6513e15540eebe4fd1a">dialogue_list</a></div><div class="ttdeci">int dialogue_list(const char *title, char **items, int nitems, const char *fmt,...)</div><div class="ttdoc">Creates a list dialogue with OK and Cancel button with a fixed message.</div><div class="ttdef"><b>Definition:</b> <a href="dialogue_8c_source.html#l00570">dialogue.c:570</a></div></div>
 <div class="ttc" id="atech_8c_html_a77d8843d6dce2f06da25b0fd2d2b96ba"><div class="ttname"><a href="tech_8c.html#a77d8843d6dce2f06da25b0fd2d2b96ba">tech_getOutfitArray</a></div><div class="ttdeci">Outfit ** tech_getOutfitArray(tech_group_t **tech, int num)</div><div class="ttdoc">Gets the outfits from an array of techs.</div><div class="ttdef"><b>Definition:</b> <a href="tech_8c_source.html#l00752">tech.c:752</a></div></div>
 <div class="ttc" id="aspace_8c_html_a7212f3ce1511a8ebc1bb545de4fe3c17"><div class="ttname"><a href="space_8c.html#a7212f3ce1511a8ebc1bb545de4fe3c17">planet_updateLand</a></div><div class="ttdeci">void planet_updateLand(Planet *p)</div><div class="ttdoc">Updates the land possibilities of a planet.</div><div class="ttdef"><b>Definition:</b> <a href="space_8c_source.html#l01937">space.c:1937</a></div></div>
