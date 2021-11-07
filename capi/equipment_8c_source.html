@@ -1135,7 +1135,7 @@ $(function() {
 <div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;{</div>
 <div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;   <span class="keywordtype">int</span> nship, noutfit;</div>
 <div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;   <span class="keywordtype">double</span> offship, offoutfit;</div>
-<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;   <span class="keywordtype">char</span> selship[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;   <span class="keywordtype">char</span> *selship;</div>
 <div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *s;</div>
 <div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;   <span class="keywordtype">char</span> *focused;</div>
 <div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160; </div>
@@ -1160,33 +1160,33 @@ $(function() {
 <div class="line"><a name="l01251"></a><span class="lineno"> 1251</span>&#160;      nship   = toolkit_getImageArrayPos(    wid, EQUIPMENT_SHIPS );</div>
 <div class="line"><a name="l01252"></a><span class="lineno"> 1252</span>&#160;      offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );</div>
 <div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;      s       = toolkit_getImageArray(       wid, EQUIPMENT_SHIPS );</div>
-<div class="line"><a name="l01254"></a><span class="lineno"> 1254</span>&#160;      strncpy( selship, s, <span class="keyword">sizeof</span>(selship)-1 );</div>
-<div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;      selship[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>-1] = <span class="charliteral">&#39;\0&#39;</span>; <span class="comment">/* Just in case. */</span></div>
-<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, EQUIPMENT_SHIPS );</div>
-<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160;   }</div>
-<div class="line"><a name="l01258"></a><span class="lineno"> 1258</span>&#160; </div>
-<div class="line"><a name="l01259"></a><span class="lineno"> 1259</span>&#160;   <span class="comment">/* Regenerate lists. */</span></div>
-<div class="line"><a name="l01260"></a><span class="lineno"> 1260</span>&#160;   <a class="code" href="equipment_8c.html#a82c0ee2d34485c1f8740e1f835d78277">equipment_genLists</a>( wid );</div>
-<div class="line"><a name="l01261"></a><span class="lineno"> 1261</span>&#160; </div>
-<div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;   <span class="comment">/* Restore positions. */</span></div>
-<div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160;   <span class="keywordflow">if</span> (outfits) {</div>
-<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;      toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, noutfit );</div>
-<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160;      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offoutfit );</div>
-<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;      <a class="code" href="equipment_8c.html#a859bf459494e24022722c5762c785977">equipment_updateOutfits</a>( wid, NULL );</div>
-<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;   }</div>
-<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;   <span class="keywordflow">if</span> (ships) {</div>
-<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;      toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, nship );</div>
-<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160;      toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );</div>
-<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;      <span class="comment">/* Try to maintain same ship selected. */</span></div>
-<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160;      s = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );</div>
-<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;      <span class="keywordflow">if</span> ((s != NULL) &amp;&amp; (strcmp(s,selship)!=0)) {</div>
-<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;         <span class="keywordtype">int</span> ret = toolkit_setImageArray( wid, EQUIPMENT_SHIPS, selship );</div>
-<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;         <span class="keywordflow">if</span> (ret != 0) <span class="comment">/* Failed to maintain. */</span></div>
-<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;            toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );</div>
-<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160; </div>
-<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;         <span class="comment">/* Update ships. */</span></div>
-<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;         <a class="code" href="equipment_8c.html#aa3a721eaa72b223a8cb95d7601bfa8f3">equipment_updateShips</a>( wid, NULL );</div>
-<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;      }</div>
+<div class="line"><a name="l01254"></a><span class="lineno"> 1254</span>&#160;      selship = strdup( s );</div>
+<div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;      <a class="code" href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a>( wid, EQUIPMENT_SHIPS );</div>
+<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;   }</div>
+<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160; </div>
+<div class="line"><a name="l01258"></a><span class="lineno"> 1258</span>&#160;   <span class="comment">/* Regenerate lists. */</span></div>
+<div class="line"><a name="l01259"></a><span class="lineno"> 1259</span>&#160;   <a class="code" href="equipment_8c.html#a82c0ee2d34485c1f8740e1f835d78277">equipment_genLists</a>( wid );</div>
+<div class="line"><a name="l01260"></a><span class="lineno"> 1260</span>&#160; </div>
+<div class="line"><a name="l01261"></a><span class="lineno"> 1261</span>&#160;   <span class="comment">/* Restore positions. */</span></div>
+<div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;   <span class="keywordflow">if</span> (outfits) {</div>
+<div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160;      toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, noutfit );</div>
+<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offoutfit );</div>
+<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160;      <a class="code" href="equipment_8c.html#a859bf459494e24022722c5762c785977">equipment_updateOutfits</a>( wid, NULL );</div>
+<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;   }</div>
+<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;   <span class="keywordflow">if</span> (ships) {</div>
+<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;      toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, nship );</div>
+<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;      toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );</div>
+<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160;      <span class="comment">/* Try to maintain same ship selected. */</span></div>
+<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;      s = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );</div>
+<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160;      <span class="keywordflow">if</span> ((s != NULL) &amp;&amp; (strcmp(s,selship)!=0)) {</div>
+<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;         <span class="keywordtype">int</span> ret = toolkit_setImageArray( wid, EQUIPMENT_SHIPS, selship );</div>
+<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;         <span class="keywordflow">if</span> (ret != 0) <span class="comment">/* Failed to maintain. */</span></div>
+<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;            toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );</div>
+<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160; </div>
+<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;         <span class="comment">/* Update ships. */</span></div>
+<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;         <a class="code" href="equipment_8c.html#aa3a721eaa72b223a8cb95d7601bfa8f3">equipment_updateShips</a>( wid, NULL );</div>
+<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;      }</div>
+<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;      free( selship );</div>
 <div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;   }</div>
 <div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160; </div>
 <div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;   <span class="comment">/* Restore focus. */</span></div>
