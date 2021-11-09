@@ -317,34 +317,34 @@ $(function() {
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> flags, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <span class="keywordtype">int</span> <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a>, <span class="keywordtype">int</span> freesur )</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;{</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;   glTexture *texture;</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   <span class="keywordtype">size_t</span> i, filesize;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   <span class="keywordtype">size_t</span> cachesize, pngsize;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   uint8_t *trans;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;   <span class="keywordtype">char</span> *cachefile, *data;</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;   <span class="keywordtype">char</span> digest[33];</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;   md5_state_t md5;</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;   md5_byte_t *md5val;</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;   <span class="keywordflow">if</span> ((name != NULL) &amp;&amp; !(flags &amp; OPENGL_TEX_SKIPCACHE)) {</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( name, <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a> );</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;      <span class="keywordflow">if</span> (texture != NULL) {</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;         <span class="keywordflow">if</span> (freesur)</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;            SDL_FreeSurface( surface );</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;         <span class="keywordflow">return</span> texture;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      }</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;   }</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   <span class="keywordtype">size_t</span> filesize, cachesize;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;   uint8_t *trans;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;   <span class="keywordtype">char</span> *cachefile;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;   <span class="keywordtype">char</span> digest[33];</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160; </div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;   <span class="keywordflow">if</span> ((name != NULL) &amp;&amp; !(flags &amp; OPENGL_TEX_SKIPCACHE)) {</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      texture = <a class="code" href="opengl__tex_8c.html#a2e428a0a9c070e7c2dbd3f6cdc7b2af6">gl_texExists</a>( name, <a class="code" href="structglTexList__.html#a15928ae2f5a8a95cd594a34f9b318eb0">sx</a>, <a class="code" href="structglTexList__.html#a9a316c771fa0d656b4337606c6012beb">sy</a> );</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      <span class="keywordflow">if</span> (texture != NULL) {</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;         <span class="keywordflow">if</span> (freesur)</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;            SDL_FreeSurface( surface );</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;         <span class="keywordflow">return</span> texture;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      }</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   }</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;   <span class="keywordflow">if</span> (flags &amp; OPENGL_TEX_MAPTRANS)</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;      flags ^= OPENGL_TEX_MAPTRANS;</div>
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;   <span class="keywordflow">if</span> (flags &amp; OPENGL_TEX_MAPTRANS)</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;      flags ^= OPENGL_TEX_MAPTRANS;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;   <span class="comment">/* Appropriate size for the transparency map, see SDL_MapTrans */</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;   cachesize = gl_transSize(w, h);</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160; </div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;   <span class="comment">/* Appropriate size for the transparency map, see SDL_MapTrans */</span></div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;   cachesize = gl_transSize(w, h);</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;   cachefile = NULL;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;   trans     = NULL;</div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;   cachefile = NULL;</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;   trans     = NULL;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;   <span class="keywordflow">if</span> (rw != NULL) {</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;      md5val = malloc(16);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;   <span class="keywordflow">if</span> (rw != NULL) {</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      <span class="keywordtype">size_t</span> pngsize;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;      md5_state_t md5;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;      <span class="keywordtype">char</span> *data;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;      md5_byte_t *md5val = malloc(16);</div>
 <div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;      md5_init(&amp;md5);</div>
 <div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160; </div>
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;      pngsize = SDL_RWseek( rw, 0, SEEK_END );</div>
@@ -360,7 +360,7 @@ $(function() {
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      }</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;      md5_finish( &amp;md5, md5val );</div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      <span class="keywordflow">for</span> (i=0; i&lt;16; i++)</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;16; i++)</div>
 <div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;         snprintf( &amp;digest[i * 2], 3, <span class="stringliteral">&quot;%02x&quot;</span>, md5val[i] );</div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;      free(md5val);</div>
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160; </div>
