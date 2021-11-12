@@ -553,434 +553,452 @@ $(function() {
 <div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160; </div>
 <div class="line"><a name="l00632"></a><span class="lineno"><a class="line" href="ship_8c.html#a76192ab2565e2e95dcfd9c6e42df69f1">  632</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="ship_8c.html#a76192ab2565e2e95dcfd9c6e42df69f1">ship_parse</a>( Ship *temp, xmlNodePtr parent )</div>
 <div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;{</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   xmlNodePtr cur, node;</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   <span class="keywordtype">int</span> sx, sy;</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>;</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   <span class="keywordtype">char</span> str[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;   <span class="keywordtype">int</span> noengine;</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;   ShipStatList *ll;</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   ShipTrailEmitter trail;</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160; </div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;   <span class="comment">/* Clear memory. */</span></div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;   memset( temp, 0, <span class="keyword">sizeof</span>(Ship) );</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160; </div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;   <span class="comment">/* Defaults. */</span></div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   <a class="code" href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a>( &amp;temp-&gt;stats_array );</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160; </div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   <span class="comment">/* Get name. */</span></div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;   xmlr_attr_strd( parent, <span class="stringliteral">&quot;name&quot;</span>, temp-&gt;name );</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;   <span class="keywordflow">if</span> (temp-&gt;name == NULL)</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;      WARN( _(<span class="stringliteral">&quot;Ship in %s has invalid or no name&quot;</span>), SHIP_DATA_PATH );</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160; </div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;   <span class="comment">/* Data that must be loaded first. */</span></div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;   <span class="keywordflow">do</span> { <span class="comment">/* load all the data */</span></div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;      xml_onlyNodes(node);</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;class&quot;</span>)) {</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;display&quot;</span>, temp-&gt;class_display );</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;         temp-&gt;class = <a class="code" href="ship_8c.html#a03e92ec358b8d1014a9d918b9b2b3b26">ship_classFromString</a>( xml_get(node) );</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;      }</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160; </div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;   <span class="comment">/* Default offsets for the engine. */</span></div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   temp-&gt;trail_emitters = NULL;</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160; </div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   <span class="comment">/* Load the rest of the data. */</span></div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;   <span class="keywordflow">do</span> { <span class="comment">/* load all the data */</span></div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160; </div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;      <span class="comment">/* Only handle nodes. */</span></div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;      xml_onlyNodes(node);</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160; </div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;GFX&quot;</span>)) {</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;         <span class="comment">/* Get base graphic name. */</span></div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;         <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: GFX element is NULL&quot;</span>), temp-&gt;name);</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;         }</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160; </div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;         <span class="comment">/* Get size. */</span></div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;         xmlr_attr_float_def(node, <span class="stringliteral">&quot;size&quot;</span>, temp-&gt;gfx_3d_scale, 1);</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sx&quot;</span>, sx, 8 );</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sy&quot;</span>, sy, 8 );</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;   xmlNodePtr node;</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   <span class="keywordtype">int</span> sx, sy;</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   <span class="keywordtype">char</span> str[<a class="code" href="naev_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   <span class="keywordtype">int</span> noengine;</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   ShipStatList *ll;</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;   ShipTrailEmitter trail;</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160; </div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   <span class="comment">/* Clear memory. */</span></div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;   memset( temp, 0, <span class="keyword">sizeof</span>(Ship) );</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160; </div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;   <span class="comment">/* Defaults. */</span></div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;   <a class="code" href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a>( &amp;temp-&gt;stats_array );</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160; </div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   <span class="comment">/* Get name. */</span></div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;   xmlr_attr_strd( parent, <span class="stringliteral">&quot;name&quot;</span>, temp-&gt;name );</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   <span class="keywordflow">if</span> (temp-&gt;name == NULL)</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;      WARN( _(<span class="stringliteral">&quot;Ship in %s has invalid or no name&quot;</span>), SHIP_DATA_PATH );</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160; </div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;   <span class="comment">/* Data that must be loaded first. */</span></div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;   <span class="keywordflow">do</span> { <span class="comment">/* load all the data */</span></div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;      xml_onlyNodes(node);</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;class&quot;</span>)) {</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;         xmlr_attr_strd( node, <span class="stringliteral">&quot;display&quot;</span>, temp-&gt;class_display );</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;         temp-&gt;class = <a class="code" href="ship_8c.html#a03e92ec358b8d1014a9d918b9b2b3b26">ship_classFromString</a>( xml_get(node) );</div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;      }</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160; </div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;   <span class="comment">/* Default offsets for the engine. */</span></div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;   temp-&gt;trail_emitters = NULL;</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160; </div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;   <span class="comment">/* Load the rest of the data. */</span></div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;   node = parent-&gt;xmlChildrenNode;</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;   <span class="keywordflow">do</span> { <span class="comment">/* load all the data */</span></div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160; </div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;      <span class="comment">/* Only handle nodes. */</span></div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;      xml_onlyNodes(node);</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160; </div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;GFX&quot;</span>)) {</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;         <span class="comment">/* Get base graphic name. */</span></div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;         <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: GFX element is NULL&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;         }</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160; </div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;         <span class="comment">/* Get size. */</span></div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;         xmlr_attr_float_def(node, <span class="stringliteral">&quot;size&quot;</span>, temp-&gt;gfx_3d_scale, 1);</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sx&quot;</span>, sx, 8 );</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sy&quot;</span>, sy, 8 );</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160; </div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;         xmlr_attr_int(node, <span class="stringliteral">&quot;noengine&quot;</span>, noengine );</div>
 <div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160; </div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;         xmlr_attr_int(node, <span class="stringliteral">&quot;noengine&quot;</span>, noengine );</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160; </div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;         <span class="comment">/* Load the graphics. */</span></div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;         <a class="code" href="ship_8c.html#a76fc4349a776500b0b38cfaec30fd72d">ship_loadGFX</a>( temp, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, sx, sy, !noengine );</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160; </div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;         <span class="comment">/* Load the polygon. */</span></div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;         <a class="code" href="ship_8c.html#aab482a7bafbf1f3b92d3bf46ef55db52">ship_loadPLG</a>( temp, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, sx*sy );</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160; </div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;         <span class="comment">/* Validity check: there must be 1 polygon per sprite. */</span></div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(temp-&gt;polygon) != sx*sy) {</div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: the number of collision polygons is wrong.\n \</span></div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;<span class="stringliteral">                    npolygon = %i and sx*sy = %i&quot;</span>),</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;                    temp-&gt;name, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(temp-&gt;polygon), sx*sy);</div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;         }</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160; </div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;      }</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;gfx_space&quot;</span>)) {</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160; </div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;         <span class="comment">/* Get path */</span></div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;         <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: gfx_space element is NULL&quot;</span>), temp-&gt;name);</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;         }</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;         snprintf( str, <span class="keyword">sizeof</span>(str), GFX_PATH<span class="stringliteral">&quot;%s&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160; </div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;         <span class="comment">/* Get sprite size. */</span></div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sx&quot;</span>, sx, 8 );</div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sy&quot;</span>, sy, 8 );</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;         <span class="comment">/* Load the graphics. */</span></div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;         <a class="code" href="ship_8c.html#a76fc4349a776500b0b38cfaec30fd72d">ship_loadGFX</a>( temp, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, sx, sy, !noengine );</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160; </div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;         <span class="comment">/* Load the polygon. */</span></div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;         <a class="code" href="ship_8c.html#aab482a7bafbf1f3b92d3bf46ef55db52">ship_loadPLG</a>( temp, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, sx*sy );</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160; </div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;         <span class="comment">/* Validity check: there must be 1 polygon per sprite. */</span></div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(temp-&gt;polygon) != sx*sy) {</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: the number of collision polygons is wrong.\n \</span></div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;<span class="stringliteral">                    npolygon = %i and sx*sy = %i&quot;</span>),</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;                    temp-&gt;name, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(temp-&gt;polygon), sx*sy);</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;         }</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160; </div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;      }</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160; </div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;gfx_space&quot;</span>)) {</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;         <span class="comment">/* Get path */</span></div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;         <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: gfx_space element is NULL&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;         }</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;         snprintf( str, <span class="keyword">sizeof</span>(str), GFX_PATH<span class="stringliteral">&quot;%s&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;         <span class="comment">/* Get sprite size. */</span></div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sx&quot;</span>, sx, 8 );</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sy&quot;</span>, sy, 8 );</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160; </div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;         <span class="comment">/* Load the graphics. */</span></div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;         <a class="code" href="ship_8c.html#a62d788436e6095cf43e4d81292366262">ship_loadSpaceImage</a>( temp, str, sx, sy );</div>
 <div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160; </div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;         <span class="comment">/* Load the graphics. */</span></div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;         <a class="code" href="ship_8c.html#a62d788436e6095cf43e4d81292366262">ship_loadSpaceImage</a>( temp, str, sx, sy );</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;      }</div>
 <div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160; </div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;      }</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160; </div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;gfx_engine&quot;</span>)) {</div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160; </div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;         <span class="comment">/* Get path */</span></div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;         <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: gfx_engine element is NULL&quot;</span>), temp-&gt;name);</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;         }</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;         snprintf( str, <span class="keyword">sizeof</span>(str), GFX_PATH<span class="stringliteral">&quot;%s&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;gfx_engine&quot;</span>)) {</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;         <span class="comment">/* Get path */</span></div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;         <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: gfx_engine element is NULL&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;         }</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;         snprintf( str, <span class="keyword">sizeof</span>(str), GFX_PATH<span class="stringliteral">&quot;%s&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160; </div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;         <span class="comment">/* Get sprite size. */</span></div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sx&quot;</span>, sx, 8 );</div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sy&quot;</span>, sy, 8 );</div>
 <div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160; </div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;         <span class="comment">/* Get sprite size. */</span></div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sx&quot;</span>, sx, 8 );</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;sy&quot;</span>, sy, 8 );</div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160; </div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;         <span class="comment">/* Load the graphics. */</span></div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;         <a class="code" href="ship_8c.html#a46aff362d584e5d587846eb9b1264e4e">ship_loadEngineImage</a>( temp, str, sx, sy );</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160; </div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;      }</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160; </div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;gfx_comm&quot;</span>)) {</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;         <span class="comment">/* Get path */</span></div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;         <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: gfx_comm element is NULL&quot;</span>), temp-&gt;name);</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;         }</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;         snprintf( str, <span class="keyword">sizeof</span>(str), GFX_PATH<span class="stringliteral">&quot;%s&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;         temp-&gt;gfx_comm = strdup(str);</div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;      }</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;gfx_overlays&quot;</span>)) {</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;         cur = node-&gt;children;</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;         temp-&gt;gfx_overlays = <a class="code" href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a>( glTexture*, 2 );</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;            xml_onlyNodes(cur);</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;gfx_overlay&quot;</span>))</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;               <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;temp-&gt;gfx_overlays,</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;                     <a class="code" href="nxml_8c.html#afda706d36380ca8e737f6fd404bda489">xml_parseTexture</a>( cur, OVERLAY_GFX_PATH<span class="stringliteral">&quot;%s&quot;</span>, 1, 1, OPENGL_TEX_MIPMAPS ) );</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;      }</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;GUI&quot;</span>,temp-&gt;gui);</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;sound&quot;</span>)) {</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;         temp-&gt;sound = <a class="code" href="sound_8c.html#aa93287b69db58dff3e0b534676123f9d">sound_get</a>( xml_get(node) );</div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;      }</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;base_type&quot;</span>,temp-&gt;base_type);</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;class&quot;</span>)) {</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;         <span class="comment">/* Already preemptively loaded, avoids warning. */</span></div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;      }</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;      xmlr_float(node,<span class="stringliteral">&quot;time_mod&quot;</span>,temp-&gt;dt_default);</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;      xmlr_long(node,<span class="stringliteral">&quot;price&quot;</span>,temp-&gt;price);</div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;license&quot;</span>,temp-&gt;license);</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;fabricator&quot;</span>,temp-&gt;fabricator);</div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;description&quot;</span>,temp-&gt;description);</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;      xmlr_int(node,<span class="stringliteral">&quot;points&quot;</span>,temp-&gt;points);</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      xmlr_int(node,<span class="stringliteral">&quot;rarity&quot;</span>,temp-&gt;rarity);</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160; </div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;trail_generator&quot;</span>)) {</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;         xmlr_attr_float( node, <span class="stringliteral">&quot;x&quot;</span>, trail.x_engine );</div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;         xmlr_attr_float( node, <span class="stringliteral">&quot;y&quot;</span>, trail.y_engine );</div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;         xmlr_attr_float( node, <span class="stringliteral">&quot;h&quot;</span>, trail.h_engine );</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;always_under&quot;</span>, trail.always_under, 0 );</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;trail_emitters == NULL) {</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;            temp-&gt;trail_emitters = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( ShipTrailEmitter );</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;         }</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;         <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> == NULL)</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;            <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = <span class="stringliteral">&quot;default&quot;</span>;</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;         trail.trail_spec = <a class="code" href="spfx_8c.html#aaa7403ac9f8807a174f95e68dfc88b39">trailSpec_get</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;         <span class="keywordflow">if</span> (trail.trail_spec != NULL)</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;            <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;temp-&gt;trail_emitters, trail );</div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;      }</div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160; </div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;movement&quot;</span>)) {</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;         cur = node-&gt;children;</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;            xml_onlyNodes(cur);</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;thrust&quot;</span>,temp-&gt;thrust);</div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;turn&quot;</span>,temp-&gt;turn);</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;speed&quot;</span>,temp-&gt;speed);</div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;            <span class="comment">/* All the xmlr_ stuff have continue cases. */</span></div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown movement node &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;      }</div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;health&quot;</span>)) {</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;         cur = node-&gt;children;</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;            xml_onlyNodes(cur);</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;absorb&quot;</span>,temp-&gt;dmg_absorb);</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;armour&quot;</span>,temp-&gt;armour);</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;armour_regen&quot;</span>,temp-&gt;armour_regen);</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;shield&quot;</span>,temp-&gt;shield);</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;shield_regen&quot;</span>,temp-&gt;shield_regen);</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;energy&quot;</span>,temp-&gt;energy);</div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;energy_regen&quot;</span>,temp-&gt;energy_regen);</div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;            <span class="comment">/* All the xmlr_ stuff have continue cases. */</span></div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown health node &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;      }</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;characteristics&quot;</span>)) {</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;         cur = node-&gt;children;</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;            xml_onlyNodes(cur);</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;            xmlr_int(cur,<span class="stringliteral">&quot;crew&quot;</span>,temp-&gt;crew);</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;mass&quot;</span>,temp-&gt;mass);</div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;cpu&quot;</span>,temp-&gt;cpu);</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;            xmlr_int(cur,<span class="stringliteral">&quot;fuel&quot;</span>,temp-&gt;fuel);</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;            xmlr_int(cur,<span class="stringliteral">&quot;fuel_consumption&quot;</span>,temp-&gt;fuel_consumption);</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;cargo&quot;</span>,temp-&gt;cap_cargo);</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;            <span class="comment">/* All the xmlr_ stuff have continue cases. */</span></div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown characteristic node &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;      }</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;slots&quot;</span>)) {</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;         <span class="comment">/* Allocate the space. */</span></div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;         temp-&gt;outfit_structure  = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( ShipOutfitSlot );</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;         temp-&gt;outfit_utility    = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( ShipOutfitSlot );</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;         temp-&gt;outfit_weapon     = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( ShipOutfitSlot );</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160; </div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;         <span class="comment">/* Initialize the mounts. */</span></div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;         cur = node-&gt;children;</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;            xml_onlyNodes(cur);</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;structure&quot;</span>))</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;               <a class="code" href="ship_8c.html#a076656313fd16d994fc4b2cdea9eaf90">ship_parseSlot</a>( temp, &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;temp-&gt;outfit_structure), OUTFIT_SLOT_STRUCTURE, cur );</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;utility&quot;</span>))</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;               <a class="code" href="ship_8c.html#a076656313fd16d994fc4b2cdea9eaf90">ship_parseSlot</a>( temp, &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;temp-&gt;outfit_utility), OUTFIT_SLOT_UTILITY, cur );</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;weapon&quot;</span>))</div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;               <a class="code" href="ship_8c.html#a076656313fd16d994fc4b2cdea9eaf90">ship_parseSlot</a>( temp, &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;temp-&gt;outfit_weapon), OUTFIT_SLOT_WEAPON, cur );</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;            <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;               WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown slot node &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;         <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>( &amp;temp-&gt;outfit_structure );</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;         <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>( &amp;temp-&gt;outfit_utility );</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;         <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>( &amp;temp-&gt;outfit_weapon );</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;      }</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160; </div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;      <span class="comment">/* Parse ship stats. */</span></div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;stats&quot;</span>)) {</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;         cur = node-&gt;children;</div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;         <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;            xml_onlyNodes(cur);</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;            ll = <a class="code" href="shipstats_8c.html#a13a02ebb994fb24c4cf5f41189df763f">ss_listFromXML</a>( cur );</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;            <span class="keywordflow">if</span> (ll != NULL) {</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;               ll-&gt;next    = temp-&gt;stats;</div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;               temp-&gt;stats = ll;</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;               <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;            }</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown stat &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160; </div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;         <span class="comment">/* Load array. */</span></div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;         <a class="code" href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a>( &amp;temp-&gt;stats_array );</div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;         <a class="code" href="shipstats_8c.html#a1d422ebc08d9740e56c54e2c3e9b4af1">ss_statsModFromList</a>( &amp;temp-&gt;stats_array, temp-&gt;stats );</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160; </div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;         <span class="comment">/* Create description. */</span></div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;stats != NULL) {</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;            temp-&gt;desc_stats = malloc( <a class="code" href="ship_8c.html#a7f72a2aa20f3e76f105f4df1914ff639">STATS_DESC_MAX</a> );</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;            i = <a class="code" href="shipstats_8c.html#a0812bd403599d2b6f8b58271b3ba5275">ss_statsListDesc</a>( temp-&gt;stats, temp-&gt;desc_stats, <a class="code" href="ship_8c.html#a7f72a2aa20f3e76f105f4df1914ff639">STATS_DESC_MAX</a>, 0 );</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;            <span class="keywordflow">if</span> (i &lt;= 0) {</div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;               free( temp-&gt;desc_stats );</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;               temp-&gt;desc_stats = NULL;</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;            }</div>
-<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;         }</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160; </div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;      }</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160; </div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;      <span class="comment">/* Used by on-valid and NSH utils, no in-game meaning. */</span></div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;mission&quot;</span>))</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160; </div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;      DEBUG(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown node &#39;%s&#39;.&quot;</span>), temp-&gt;name, node-&gt;name);</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160; </div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;   <span class="comment">/* Post processing. */</span></div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;   temp-&gt;dmg_absorb   /= 100.;</div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;   temp-&gt;turn         *= M_PI / 180.; <span class="comment">/* Convert to rad. */</span></div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160; </div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;   <span class="comment">/* ship validator */</span></div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;<span class="preprocessor">#define MELEMENT(o,s)      if (o) WARN( _(&quot;Ship &#39;%s&#39; missing &#39;%s&#39; element&quot;), temp-&gt;name, s)</span></div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;   MELEMENT(temp-&gt;name==NULL,<span class="stringliteral">&quot;name&quot;</span>);</div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;   MELEMENT(temp-&gt;base_type==NULL,<span class="stringliteral">&quot;base_type&quot;</span>);</div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;   MELEMENT((temp-&gt;gfx_space==NULL) || (temp-&gt;gfx_comm==NULL),<span class="stringliteral">&quot;GFX&quot;</span>);</div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;   MELEMENT(temp-&gt;gui==NULL,<span class="stringliteral">&quot;GUI&quot;</span>);</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;   MELEMENT(temp-&gt;class==SHIP_CLASS_NULL,<span class="stringliteral">&quot;class&quot;</span>);</div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;   MELEMENT(temp-&gt;points==0,<span class="stringliteral">&quot;points&quot;</span>);</div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;   MELEMENT(temp-&gt;price==0,<span class="stringliteral">&quot;price&quot;</span>);</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;   MELEMENT(temp-&gt;dt_default==0.,<span class="stringliteral">&quot;time_mod&quot;</span>);</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;   MELEMENT(temp-&gt;fabricator==NULL,<span class="stringliteral">&quot;fabricator&quot;</span>);</div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;   MELEMENT(temp-&gt;description==NULL,<span class="stringliteral">&quot;description&quot;</span>);</div>
-<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;   MELEMENT(temp-&gt;armour==0.,<span class="stringliteral">&quot;armour&quot;</span>);</div>
-<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;   <span class="comment">/*MELEMENT(temp-&gt;thrust==0.,&quot;thrust&quot;);</span></div>
-<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;<span class="comment">   MELEMENT(temp-&gt;turn==0.,&quot;turn&quot;);</span></div>
-<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;<span class="comment">   MELEMENT(temp-&gt;speed==0.,&quot;speed&quot;);</span></div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;<span class="comment">   MELEMENT(temp-&gt;shield==0.,&quot;shield&quot;);</span></div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;<span class="comment">   MELEMENT(temp-&gt;shield_regen==0.,&quot;shield_regen&quot;);</span></div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;<span class="comment">   MELEMENT(temp-&gt;energy==0.,&quot;energy&quot;);</span></div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;<span class="comment">   MELEMENT(temp-&gt;energy_regen==0.,&quot;energy_regen&quot;);</span></div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;<span class="comment">   MELEMENT(temp-&gt;fuel==0.,&quot;fuel&quot;);*/</span></div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;   MELEMENT(temp-&gt;crew==0,<span class="stringliteral">&quot;crew&quot;</span>);</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;   MELEMENT(temp-&gt;mass==0.,<span class="stringliteral">&quot;mass&quot;</span>);</div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   MELEMENT(temp-&gt;fuel_consumption==0,<span class="stringliteral">&quot;fuel_consumption&quot;</span>);</div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;   <span class="comment">/*MELEMENT(temp-&gt;cap_cargo==0,&quot;cargo&quot;);</span></div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;<span class="comment">   MELEMENT(temp-&gt;cpu==0.,&quot;cpu&quot;);*/</span></div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;<span class="preprocessor">#undef MELEMENT</span></div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160; </div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;}</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160; </div>
-<div class="line"><a name="l00950"></a><span class="lineno"><a class="line" href="ship_8c.html#a3f388994f3a35daa5ca5c7cdd2ffe7ce">  950</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="ship_8c.html#a3f388994f3a35daa5ca5c7cdd2ffe7ce">ships_load</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;{</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;   <span class="keywordtype">char</span> **ship_files;</div>
-<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;   <span class="keywordtype">size_t</span> nfiles;</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;         <span class="comment">/* Load the graphics. */</span></div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;         <a class="code" href="ship_8c.html#a46aff362d584e5d587846eb9b1264e4e">ship_loadEngineImage</a>( temp, str, sx, sy );</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160; </div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;      }</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160; </div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;gfx_comm&quot;</span>)) {</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;         <span class="comment">/* Get path */</span></div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;         <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>==NULL) {</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39;: gfx_comm element is NULL&quot;</span>), temp-&gt;name);</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;         }</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;         snprintf( str, <span class="keyword">sizeof</span>(str), GFX_PATH<span class="stringliteral">&quot;%s&quot;</span>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;         temp-&gt;gfx_comm = strdup(str);</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;      }</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;gfx_overlays&quot;</span>)) {</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;         xmlNodePtr cur = node-&gt;children;</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;         temp-&gt;gfx_overlays = <a class="code" href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a>( glTexture*, 2 );</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;            xml_onlyNodes(cur);</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;gfx_overlay&quot;</span>))</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;               <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;temp-&gt;gfx_overlays,</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;                     <a class="code" href="nxml_8c.html#afda706d36380ca8e737f6fd404bda489">xml_parseTexture</a>( cur, OVERLAY_GFX_PATH<span class="stringliteral">&quot;%s&quot;</span>, 1, 1, OPENGL_TEX_MIPMAPS ) );</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;      }</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160; </div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;GUI&quot;</span>,temp-&gt;gui);</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;sound&quot;</span>)) {</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;         temp-&gt;sound = <a class="code" href="sound_8c.html#aa93287b69db58dff3e0b534676123f9d">sound_get</a>( xml_get(node) );</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;      }</div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;base_type&quot;</span>,temp-&gt;base_type);</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;class&quot;</span>)) {</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;         <span class="comment">/* Already preemptively loaded, avoids warning. */</span></div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;      }</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;      xmlr_float(node,<span class="stringliteral">&quot;time_mod&quot;</span>,temp-&gt;dt_default);</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;      xmlr_long(node,<span class="stringliteral">&quot;price&quot;</span>,temp-&gt;price);</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;license&quot;</span>,temp-&gt;license);</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;fabricator&quot;</span>,temp-&gt;fabricator);</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;      xmlr_strd(node,<span class="stringliteral">&quot;description&quot;</span>,temp-&gt;description);</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;      xmlr_int(node,<span class="stringliteral">&quot;points&quot;</span>,temp-&gt;points);</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;      xmlr_int(node,<span class="stringliteral">&quot;rarity&quot;</span>,temp-&gt;rarity);</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160; </div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;trail_generator&quot;</span>)) {</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;         <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>;</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;         xmlr_attr_float( node, <span class="stringliteral">&quot;x&quot;</span>, trail.x_engine );</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;         xmlr_attr_float( node, <span class="stringliteral">&quot;y&quot;</span>, trail.y_engine );</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;         xmlr_attr_float( node, <span class="stringliteral">&quot;h&quot;</span>, trail.h_engine );</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;         xmlr_attr_int_def( node, <span class="stringliteral">&quot;always_under&quot;</span>, trail.always_under, 0 );</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;trail_emitters == NULL) {</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;            temp-&gt;trail_emitters = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( ShipTrailEmitter );</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;         }</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;         <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = xml_get(node);</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> == NULL)</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;            <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = <span class="stringliteral">&quot;default&quot;</span>;</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;         trail.trail_spec = <a class="code" href="spfx_8c.html#aaa7403ac9f8807a174f95e68dfc88b39">trailSpec_get</a>( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> );</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;         <span class="keywordflow">if</span> (trail.trail_spec != NULL)</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;            <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;temp-&gt;trail_emitters, trail );</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;      }</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160; </div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;movement&quot;</span>)) {</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;         xmlNodePtr cur = node-&gt;children;</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;            xml_onlyNodes(cur);</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;thrust&quot;</span>,temp-&gt;thrust);</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;turn&quot;</span>,temp-&gt;turn);</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;speed&quot;</span>,temp-&gt;speed);</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;            <span class="comment">/* All the xmlr_ stuff have continue cases. */</span></div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown movement node &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;      }</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;health&quot;</span>)) {</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;         xmlNodePtr cur = node-&gt;children;</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;            xml_onlyNodes(cur);</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;absorb&quot;</span>,temp-&gt;dmg_absorb);</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;armour&quot;</span>,temp-&gt;armour);</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;armour_regen&quot;</span>,temp-&gt;armour_regen);</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;shield&quot;</span>,temp-&gt;shield);</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;shield_regen&quot;</span>,temp-&gt;shield_regen);</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;energy&quot;</span>,temp-&gt;energy);</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;energy_regen&quot;</span>,temp-&gt;energy_regen);</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;            <span class="comment">/* All the xmlr_ stuff have continue cases. */</span></div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown health node &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;      }</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;characteristics&quot;</span>)) {</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;         xmlNodePtr cur = node-&gt;children;</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;            xml_onlyNodes(cur);</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;            xmlr_int(cur,<span class="stringliteral">&quot;crew&quot;</span>,temp-&gt;crew);</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;mass&quot;</span>,temp-&gt;mass);</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;cpu&quot;</span>,temp-&gt;cpu);</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;            xmlr_int(cur,<span class="stringliteral">&quot;fuel&quot;</span>,temp-&gt;fuel);</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;            xmlr_int(cur,<span class="stringliteral">&quot;fuel_consumption&quot;</span>,temp-&gt;fuel_consumption);</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;            xmlr_float(cur,<span class="stringliteral">&quot;cargo&quot;</span>,temp-&gt;cap_cargo);</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;            <span class="comment">/* All the xmlr_ stuff have continue cases. */</span></div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown characteristic node &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;      }</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;slots&quot;</span>)) {</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;         <span class="comment">/* Allocate the space. */</span></div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;         temp-&gt;outfit_structure  = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( ShipOutfitSlot );</div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;         temp-&gt;outfit_utility    = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( ShipOutfitSlot );</div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;         temp-&gt;outfit_weapon     = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( ShipOutfitSlot );</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160; </div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;         <span class="comment">/* Initialize the mounts. */</span></div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;         xmlNodePtr cur = node-&gt;children;</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;            xml_onlyNodes(cur);</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;structure&quot;</span>))</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;               <a class="code" href="ship_8c.html#a076656313fd16d994fc4b2cdea9eaf90">ship_parseSlot</a>( temp, &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;temp-&gt;outfit_structure), OUTFIT_SLOT_STRUCTURE, cur );</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;utility&quot;</span>))</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;               <a class="code" href="ship_8c.html#a076656313fd16d994fc4b2cdea9eaf90">ship_parseSlot</a>( temp, &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;temp-&gt;outfit_utility), OUTFIT_SLOT_UTILITY, cur );</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (xml_isNode(cur,<span class="stringliteral">&quot;weapon&quot;</span>))</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;               <a class="code" href="ship_8c.html#a076656313fd16d994fc4b2cdea9eaf90">ship_parseSlot</a>( temp, &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;temp-&gt;outfit_weapon), OUTFIT_SLOT_WEAPON, cur );</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;               WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown slot node &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;         <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>( &amp;temp-&gt;outfit_structure );</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;         <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>( &amp;temp-&gt;outfit_utility );</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;         <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>( &amp;temp-&gt;outfit_weapon );</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;      }</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160; </div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;      <span class="comment">/* Parse ship stats. */</span></div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;stats&quot;</span>)) {</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;         xmlNodePtr cur = node-&gt;children;</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;            xml_onlyNodes(cur);</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;            ll = <a class="code" href="shipstats_8c.html#a13a02ebb994fb24c4cf5f41189df763f">ss_listFromXML</a>( cur );</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;            <span class="keywordflow">if</span> (ll != NULL) {</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;               ll-&gt;next    = temp-&gt;stats;</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;               temp-&gt;stats = ll;</div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;               <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;            }</div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;            WARN(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown stat &#39;%s&#39;.&quot;</span>), temp-&gt;name, cur-&gt;name);</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160; </div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;         <span class="comment">/* Load array. */</span></div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;         <a class="code" href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a>( &amp;temp-&gt;stats_array );</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;         <a class="code" href="shipstats_8c.html#a1d422ebc08d9740e56c54e2c3e9b4af1">ss_statsModFromList</a>( &amp;temp-&gt;stats_array, temp-&gt;stats );</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160; </div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;         <span class="comment">/* Create description. */</span></div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;         <span class="keywordflow">if</span> (temp-&gt;stats != NULL) {</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;            <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;            temp-&gt;desc_stats = malloc( <a class="code" href="ship_8c.html#a7f72a2aa20f3e76f105f4df1914ff639">STATS_DESC_MAX</a> );</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;            i = <a class="code" href="shipstats_8c.html#a0812bd403599d2b6f8b58271b3ba5275">ss_statsListDesc</a>( temp-&gt;stats, temp-&gt;desc_stats, <a class="code" href="ship_8c.html#a7f72a2aa20f3e76f105f4df1914ff639">STATS_DESC_MAX</a>, 0 );</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;            <span class="keywordflow">if</span> (i &lt;= 0) {</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;               free( temp-&gt;desc_stats );</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;               temp-&gt;desc_stats = NULL;</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;            }</div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;         }</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160; </div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;      }</div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160; </div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;      <span class="comment">/* Parse tags. */</span></div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <span class="stringliteral">&quot;tags&quot;</span>)) {</div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;         xmlNodePtr cur = node-&gt;children;</div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;         temp-&gt;tags = <a class="code" href="array_8h.html#ad1bf30a2043b321afd76277cec9f46c8">array_create</a>( <span class="keywordtype">char</span>* );</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;         <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;            xml_onlyNodes(cur);</div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;            <span class="keywordflow">if</span> (xml_isNode(cur, <span class="stringliteral">&quot;tag&quot;</span>)) {</div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;               <span class="keywordtype">char</span> *tmp = xml_get(cur);</div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;               <span class="keywordflow">if</span> (tmp != NULL)</div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;                  <a class="code" href="array_8h.html#ac5806e193ac90a33f8a2a93de4f80dee">array_push_back</a>( &amp;temp-&gt;tags, strdup(tmp) );</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;            }</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;         } <span class="keywordflow">while</span> (xml_nextNode(cur));</div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;      }</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160; </div>
+<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;      <span class="comment">/* Used by on-valid and NSH utils, no in-game meaning. */</span></div>
+<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node,<span class="stringliteral">&quot;mission&quot;</span>))</div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160; </div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;      DEBUG(_(<span class="stringliteral">&quot;Ship &#39;%s&#39; has unknown node &#39;%s&#39;.&quot;</span>), temp-&gt;name, node-&gt;name);</div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160; </div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;   <span class="comment">/* Post processing. */</span></div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;   temp-&gt;dmg_absorb   /= 100.;</div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;   temp-&gt;turn         *= M_PI / 180.; <span class="comment">/* Convert to rad. */</span></div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160; </div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;   <span class="comment">/* ship validator */</span></div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;<span class="preprocessor">#define MELEMENT(o,s)      if (o) WARN( _(&quot;Ship &#39;%s&#39; missing &#39;%s&#39; element&quot;), temp-&gt;name, s)</span></div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;   MELEMENT(temp-&gt;name==NULL,<span class="stringliteral">&quot;name&quot;</span>);</div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;   MELEMENT(temp-&gt;base_type==NULL,<span class="stringliteral">&quot;base_type&quot;</span>);</div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;   MELEMENT((temp-&gt;gfx_space==NULL) || (temp-&gt;gfx_comm==NULL),<span class="stringliteral">&quot;GFX&quot;</span>);</div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;   MELEMENT(temp-&gt;gui==NULL,<span class="stringliteral">&quot;GUI&quot;</span>);</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;   MELEMENT(temp-&gt;class==SHIP_CLASS_NULL,<span class="stringliteral">&quot;class&quot;</span>);</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;   MELEMENT(temp-&gt;points==0,<span class="stringliteral">&quot;points&quot;</span>);</div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;   MELEMENT(temp-&gt;price==0,<span class="stringliteral">&quot;price&quot;</span>);</div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;   MELEMENT(temp-&gt;dt_default==0.,<span class="stringliteral">&quot;time_mod&quot;</span>);</div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;   MELEMENT(temp-&gt;fabricator==NULL,<span class="stringliteral">&quot;fabricator&quot;</span>);</div>
+<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;   MELEMENT(temp-&gt;description==NULL,<span class="stringliteral">&quot;description&quot;</span>);</div>
+<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;   MELEMENT(temp-&gt;armour==0.,<span class="stringliteral">&quot;armour&quot;</span>);</div>
+<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;   <span class="comment">/*MELEMENT(temp-&gt;thrust==0.,&quot;thrust&quot;);</span></div>
+<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;<span class="comment">   MELEMENT(temp-&gt;turn==0.,&quot;turn&quot;);</span></div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;<span class="comment">   MELEMENT(temp-&gt;speed==0.,&quot;speed&quot;);</span></div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;<span class="comment">   MELEMENT(temp-&gt;shield==0.,&quot;shield&quot;);</span></div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;<span class="comment">   MELEMENT(temp-&gt;shield_regen==0.,&quot;shield_regen&quot;);</span></div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;<span class="comment">   MELEMENT(temp-&gt;energy==0.,&quot;energy&quot;);</span></div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;<span class="comment">   MELEMENT(temp-&gt;energy_regen==0.,&quot;energy_regen&quot;);</span></div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;<span class="comment">   MELEMENT(temp-&gt;fuel==0.,&quot;fuel&quot;);*/</span></div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;   MELEMENT(temp-&gt;crew==0,<span class="stringliteral">&quot;crew&quot;</span>);</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;   MELEMENT(temp-&gt;mass==0.,<span class="stringliteral">&quot;mass&quot;</span>);</div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;   MELEMENT(temp-&gt;fuel_consumption==0,<span class="stringliteral">&quot;fuel_consumption&quot;</span>);</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;   <span class="comment">/*MELEMENT(temp-&gt;cap_cargo==0,&quot;cargo&quot;);</span></div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;<span class="comment">   MELEMENT(temp-&gt;cpu==0.,&quot;cpu&quot;);*/</span></div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;<span class="preprocessor">#undef MELEMENT</span></div>
 <div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160; </div>
-<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;   <span class="comment">/* Validity. */</span></div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;   <a class="code" href="shipstats_8c.html#aed566646fa506a0dcd6d541bf266b4db">ss_check</a>();</div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;}</div>
 <div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160; </div>
-<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;   ship_files = PHYSFS_enumerateFiles( SHIP_DATA_PATH );</div>
-<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;   <span class="keywordflow">for</span> (nfiles=0; ship_files[nfiles]!=NULL; nfiles++) {}</div>
-<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160; </div>
-<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;   <span class="comment">/* Initialize stack if needed. */</span></div>
-<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a> == NULL)</div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;      <a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a> = <a class="code" href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a>(Ship, nfiles);</div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160; </div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; ship_files[i]!=NULL; i++) {</div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;      <span class="keywordtype">char</span> *file;</div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;      xmlNodePtr node;</div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;      xmlDocPtr doc;</div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160; </div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="ndata_8c.html#a8522b5bb874742d2ec2a721ab437ebef">ndata_matchExt</a>( ship_files[i], <span class="stringliteral">&quot;xml&quot;</span> ))</div>
-<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160; </div>
-<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;      <span class="comment">/* Get the file name .*/</span></div>
-<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;      <a class="code" href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a>( &amp;file, <span class="stringliteral">&quot;%s%s&quot;</span>, SHIP_DATA_PATH, ship_files[i] );</div>
-<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160; </div>
-<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;      <span class="comment">/* Load the XML. */</span></div>
-<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;      doc  = <a class="code" href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a>( file );</div>
-<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160; </div>
-<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;      <span class="keywordflow">if</span> (doc == NULL) {</div>
-<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;         free(file);</div>
-<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;      }</div>
-<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160; </div>
-<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;      node = doc-&gt;xmlChildrenNode; <span class="comment">/* First ship node */</span></div>
-<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160;      <span class="keywordflow">if</span> (node == NULL) {</div>
-<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;         xmlFreeDoc(doc);</div>
-<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;         WARN(_(<span class="stringliteral">&quot;Malformed %s file: does not contain elements&quot;</span>), file);</div>
-<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;         free(file);</div>
-<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;      }</div>
+<div class="line"><a name="l00963"></a><span class="lineno"><a class="line" href="ship_8c.html#a3f388994f3a35daa5ca5c7cdd2ffe7ce">  963</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="ship_8c.html#a3f388994f3a35daa5ca5c7cdd2ffe7ce">ships_load</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;{</div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;   <span class="keywordtype">char</span> **ship_files;</div>
+<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;   <span class="keywordtype">size_t</span> nfiles;</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160; </div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;   <span class="comment">/* Validity. */</span></div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;   <a class="code" href="shipstats_8c.html#aed566646fa506a0dcd6d541bf266b4db">ss_check</a>();</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160; </div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;   ship_files = PHYSFS_enumerateFiles( SHIP_DATA_PATH );</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;   <span class="keywordflow">for</span> (nfiles=0; ship_files[nfiles]!=NULL; nfiles++) {}</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160; </div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;   <span class="comment">/* Initialize stack if needed. */</span></div>
+<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a> == NULL)</div>
+<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;      <a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a> = <a class="code" href="array_8h.html#a6f15b617933d8ed080bd53b043342923">array_create_size</a>(Ship, nfiles);</div>
+<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160; </div>
+<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; ship_files[i]!=NULL; i++) {</div>
+<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;      <span class="keywordtype">char</span> *file;</div>
+<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;      xmlNodePtr node;</div>
+<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;      xmlDocPtr doc;</div>
+<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160; </div>
+<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="ndata_8c.html#a8522b5bb874742d2ec2a721ab437ebef">ndata_matchExt</a>( ship_files[i], <span class="stringliteral">&quot;xml&quot;</span> ))</div>
+<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160; </div>
+<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;      <span class="comment">/* Get the file name .*/</span></div>
+<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;      <a class="code" href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a>( &amp;file, <span class="stringliteral">&quot;%s%s&quot;</span>, SHIP_DATA_PATH, ship_files[i] );</div>
+<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160; </div>
+<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;      <span class="comment">/* Load the XML. */</span></div>
+<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;      doc  = <a class="code" href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a>( file );</div>
 <div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160; </div>
-<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;      free(file);</div>
-<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160; </div>
-<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <a class="code" href="ship_8c.html#aa598e3d0988ac7630c876fadc704746e">XML_SHIP</a>))</div>
-<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;         <span class="comment">/* Load the ship. */</span></div>
-<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;         <a class="code" href="ship_8c.html#a76192ab2565e2e95dcfd9c6e42df69f1">ship_parse</a>( &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>), node );</div>
-<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160; </div>
-<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;      <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;      xmlFreeDoc(doc);</div>
-<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;   }</div>
-<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;   qsort( <a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>), <span class="keyword">sizeof</span>(Ship), <a class="code" href="ship_8c.html#a48262ef901e18d44140e7c709badc856">ship_cmp</a> );</div>
-<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160; </div>
-<div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160;   <span class="comment">/* Shrink stack. */</span></div>
-<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;   <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>(&amp;<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>);</div>
-<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;   DEBUG( n_( <span class="stringliteral">&quot;Loaded %d Ship&quot;</span>, <span class="stringliteral">&quot;Loaded %d Ships&quot;</span>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>) ), <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>) );</div>
+<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;      <span class="keywordflow">if</span> (doc == NULL) {</div>
+<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;         free(file);</div>
+<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;      }</div>
+<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160; </div>
+<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;      node = doc-&gt;xmlChildrenNode; <span class="comment">/* First ship node */</span></div>
+<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;      <span class="keywordflow">if</span> (node == NULL) {</div>
+<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;         xmlFreeDoc(doc);</div>
+<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;         WARN(_(<span class="stringliteral">&quot;Malformed %s file: does not contain elements&quot;</span>), file);</div>
+<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;         free(file);</div>
+<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160;      }</div>
+<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160; </div>
+<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;      free(file);</div>
 <div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160; </div>
-<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160;   <span class="comment">/* Clean up. */</span></div>
-<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160;   PHYSFS_freeList( ship_files );</div>
-<div class="line"><a name="l01009"></a><span class="lineno"> 1009</span>&#160; </div>
-<div class="line"><a name="l01010"></a><span class="lineno"> 1010</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160;}</div>
-<div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160; </div>
-<div class="line"><a name="l01016"></a><span class="lineno"><a class="line" href="ship_8c.html#a6a7453b86728f8fa202dbe8da9c942d1"> 1016</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="ship_8c.html#a6a7453b86728f8fa202dbe8da9c942d1">ships_free</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;{</div>
-<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>); i++) {</div>
-<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;      Ship *s = &amp;<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>[i];</div>
-<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160; </div>
-<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;      <span class="comment">/* Free stored strings. */</span></div>
-<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;      free(s-&gt;name);</div>
-<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;      free(s-&gt;class_display);</div>
-<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;      free(s-&gt;description);</div>
-<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;      free(s-&gt;gui);</div>
-<div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;      free(s-&gt;base_type);</div>
-<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;      free(s-&gt;fabricator);</div>
-<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;      free(s-&gt;license);</div>
-<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;      free(s-&gt;desc_stats);</div>
-<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160; </div>
-<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;      <span class="comment">/* Free outfits. */</span></div>
-<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;outfit_structure); j++)</div>
-<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;         <a class="code" href="outfit_8c.html#af05d86f6400adcf85f24fcae707b31e6">outfit_freeSlot</a>( &amp;s-&gt;outfit_structure[j].slot );</div>
-<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;outfit_utility); j++)</div>
-<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;         <a class="code" href="outfit_8c.html#af05d86f6400adcf85f24fcae707b31e6">outfit_freeSlot</a>( &amp;s-&gt;outfit_utility[j].slot );</div>
-<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;outfit_weapon); j++)</div>
-<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;         <a class="code" href="outfit_8c.html#af05d86f6400adcf85f24fcae707b31e6">outfit_freeSlot</a>( &amp;s-&gt;outfit_weapon[j].slot );</div>
-<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;outfit_structure);</div>
-<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;outfit_utility);</div>
-<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;outfit_weapon);</div>
-<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160; </div>
-<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;      <a class="code" href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">ss_free</a>( s-&gt;stats );</div>
+<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160;      <span class="keywordflow">if</span> (xml_isNode(node, <a class="code" href="ship_8c.html#aa598e3d0988ac7630c876fadc704746e">XML_SHIP</a>))</div>
+<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160;         <span class="comment">/* Load the ship. */</span></div>
+<div class="line"><a name="l01009"></a><span class="lineno"> 1009</span>&#160;         <a class="code" href="ship_8c.html#a76192ab2565e2e95dcfd9c6e42df69f1">ship_parse</a>( &amp;<a class="code" href="array_8h.html#a8037aba47ab61629eee083791786b582">array_grow</a>(&amp;<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>), node );</div>
+<div class="line"><a name="l01010"></a><span class="lineno"> 1010</span>&#160; </div>
+<div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160;      <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;      xmlFreeDoc(doc);</div>
+<div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;   }</div>
+<div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160;   qsort( <a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>), <span class="keyword">sizeof</span>(Ship), <a class="code" href="ship_8c.html#a48262ef901e18d44140e7c709badc856">ship_cmp</a> );</div>
+<div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160; </div>
+<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;   <span class="comment">/* Shrink stack. */</span></div>
+<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;   <a class="code" href="array_8h.html#a95eced54a13af47f83c269654f438b82">array_shrink</a>(&amp;<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>);</div>
+<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;   DEBUG( n_( <span class="stringliteral">&quot;Loaded %d Ship&quot;</span>, <span class="stringliteral">&quot;Loaded %d Ships&quot;</span>, <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>) ), <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>) );</div>
+<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160; </div>
+<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;   <span class="comment">/* Clean up. */</span></div>
+<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;   PHYSFS_freeList( ship_files );</div>
+<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160; </div>
+<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;}</div>
+<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160; </div>
+<div class="line"><a name="l01029"></a><span class="lineno"><a class="line" href="ship_8c.html#a6a7453b86728f8fa202dbe8da9c942d1"> 1029</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="ship_8c.html#a6a7453b86728f8fa202dbe8da9c942d1">ships_free</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;{</div>
+<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>); i++) {</div>
+<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;      Ship *s = &amp;<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>[i];</div>
+<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160; </div>
+<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;      <span class="comment">/* Free stored strings. */</span></div>
+<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;      free(s-&gt;name);</div>
+<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;      free(s-&gt;class_display);</div>
+<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;      free(s-&gt;description);</div>
+<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;      free(s-&gt;gui);</div>
+<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;      free(s-&gt;base_type);</div>
+<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;      free(s-&gt;fabricator);</div>
+<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;      free(s-&gt;license);</div>
+<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;      free(s-&gt;desc_stats);</div>
 <div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160; </div>
-<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;      <span class="comment">/* Free graphics. */</span></div>
-<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;      <a class="code" href="object_8c.html#a3151487c64b37422e84d500e2adc8509">object_free</a>(s-&gt;gfx_3d);</div>
-<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_space);</div>
-<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_engine);</div>
-<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_target);</div>
-<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_store);</div>
-<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;      free(s-&gt;gfx_comm);</div>
-<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;gfx_overlays); j++)</div>
-<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;         <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_overlays[j]);</div>
-<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;gfx_overlays);</div>
+<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;      <span class="comment">/* Free outfits. */</span></div>
+<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;outfit_structure); j++)</div>
+<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;         <a class="code" href="outfit_8c.html#af05d86f6400adcf85f24fcae707b31e6">outfit_freeSlot</a>( &amp;s-&gt;outfit_structure[j].slot );</div>
+<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;outfit_utility); j++)</div>
+<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;         <a class="code" href="outfit_8c.html#af05d86f6400adcf85f24fcae707b31e6">outfit_freeSlot</a>( &amp;s-&gt;outfit_utility[j].slot );</div>
+<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;outfit_weapon); j++)</div>
+<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;         <a class="code" href="outfit_8c.html#af05d86f6400adcf85f24fcae707b31e6">outfit_freeSlot</a>( &amp;s-&gt;outfit_weapon[j].slot );</div>
+<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;outfit_structure);</div>
+<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;outfit_utility);</div>
+<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;outfit_weapon);</div>
 <div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160; </div>
-<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;      <span class="comment">/* Free collision polygons. */</span></div>
-<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;polygon); j++) {</div>
-<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;         free(s-&gt;polygon[j].x);</div>
-<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;         free(s-&gt;polygon[j].y);</div>
-<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;      }</div>
-<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160; </div>
-<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;trail_emitters);</div>
-<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;polygon);</div>
-<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;   }</div>
-<div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160; </div>
-<div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>);</div>
-<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;   <a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a> = NULL;</div>
-<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;}</div>
+<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;      <a class="code" href="shipstats_8c.html#a087d33fe46ccc83b95aff161016ee995">ss_free</a>( s-&gt;stats );</div>
+<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160; </div>
+<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;      <span class="comment">/* Free graphics. */</span></div>
+<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;      <a class="code" href="object_8c.html#a3151487c64b37422e84d500e2adc8509">object_free</a>(s-&gt;gfx_3d);</div>
+<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_space);</div>
+<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_engine);</div>
+<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_target);</div>
+<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_store);</div>
+<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;      free(s-&gt;gfx_comm);</div>
+<div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;gfx_overlays); j++)</div>
+<div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;         <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>(s-&gt;gfx_overlays[j]);</div>
+<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;gfx_overlays);</div>
+<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160; </div>
+<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;      <span class="comment">/* Free collision polygons. */</span></div>
+<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;polygon); j++) {</div>
+<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;         free(s-&gt;polygon[j].x);</div>
+<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;         free(s-&gt;polygon[j].y);</div>
+<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;      }</div>
+<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160; </div>
+<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;trail_emitters);</div>
+<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;polygon);</div>
+<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160; </div>
+<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;      <span class="comment">/* Free tags. */</span></div>
+<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(s-&gt;tags); j++)</div>
+<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;         free(s-&gt;tags[j]);</div>
+<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;      <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(s-&gt;tags);</div>
+<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;   }</div>
+<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160; </div>
+<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;   <a class="code" href="array_8h.html#a04e810cfeccd1cd523f9b28e68aca564">array_free</a>(<a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a>);</div>
+<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;   <a class="code" href="ship_8c.html#a12b64763b1bdffdc56e0b19f1abfe2a4">ship_stack</a> = NULL;</div>
+<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aship_8c_html_a3f388994f3a35daa5ca5c7cdd2ffe7ce"><div class="ttname"><a href="ship_8c.html#a3f388994f3a35daa5ca5c7cdd2ffe7ce">ships_load</a></div><div class="ttdeci">int ships_load(void)</div><div class="ttdoc">Loads all the ships in the data files.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00950">ship.c:950</a></div></div>
+<div class="ttc" id="aship_8c_html_a3f388994f3a35daa5ca5c7cdd2ffe7ce"><div class="ttname"><a href="ship_8c.html#a3f388994f3a35daa5ca5c7cdd2ffe7ce">ships_load</a></div><div class="ttdeci">int ships_load(void)</div><div class="ttdoc">Loads all the ships in the data files.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00963">ship.c:963</a></div></div>
 <div class="ttc" id="ashipstats_8c_html_abfa2c2992f08c6a5e4459241abc3f0db"><div class="ttname"><a href="shipstats_8c.html#abfa2c2992f08c6a5e4459241abc3f0db">ss_statsInit</a></div><div class="ttdeci">int ss_statsInit(ShipStats *stats)</div><div class="ttdoc">Initializes a stat structure.</div><div class="ttdef"><b>Definition:</b> <a href="shipstats_8c_source.html#l00291">shipstats.c:291</a></div></div>
 <div class="ttc" id="aship_8c_html_ad6f2dfcc72e370957d1895fd6517aad8"><div class="ttname"><a href="ship_8c.html#ad6f2dfcc72e370957d1895fd6517aad8">ship_genTargetGFX</a></div><div class="ttdeci">static int ship_genTargetGFX(Ship *temp, SDL_Surface *surface, int sx, int sy)</div><div class="ttdoc">Generates a target graphic for a ship.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00332">ship.c:332</a></div></div>
 <div class="ttc" id="aship_8c_html_a48262ef901e18d44140e7c709badc856"><div class="ttname"><a href="ship_8c.html#a48262ef901e18d44140e7c709badc856">ship_cmp</a></div><div class="ttdeci">static int ship_cmp(const void *p1, const void *p2)</div><div class="ttdoc">Compares two ship pointers for qsort.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00058">ship.c:58</a></div></div>
@@ -1000,7 +1018,7 @@ $(function() {
 <div class="ttc" id="aoutfit_8c_html_af05d86f6400adcf85f24fcae707b31e6"><div class="ttname"><a href="outfit_8c.html#af05d86f6400adcf85f24fcae707b31e6">outfit_freeSlot</a></div><div class="ttdeci">void outfit_freeSlot(OutfitSlot *s)</div><div class="ttdoc">Frees an outfit slot.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l01028">outfit.c:1028</a></div></div>
 <div class="ttc" id="aship_8c_html_a76fc4349a776500b0b38cfaec30fd72d"><div class="ttname"><a href="ship_8c.html#a76fc4349a776500b0b38cfaec30fd72d">ship_loadGFX</a></div><div class="ttdeci">static int ship_loadGFX(Ship *temp, const char *buf, int sx, int sy, int engine)</div><div class="ttdoc">Loads the graphics for a ship.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l00452">ship.c:452</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ae7c1e2ed8f7e1980ddab05925e2983fe"><div class="ttname"><a href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a></div><div class="ttdeci">void gl_freeTexture(glTexture *texture)</div><div class="ttdoc">Frees a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00746">opengl_tex.c:746</a></div></div>
-<div class="ttc" id="aship_8c_html_a6a7453b86728f8fa202dbe8da9c942d1"><div class="ttname"><a href="ship_8c.html#a6a7453b86728f8fa202dbe8da9c942d1">ships_free</a></div><div class="ttdeci">void ships_free(void)</div><div class="ttdoc">Frees all the ships.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l01016">ship.c:1016</a></div></div>
+<div class="ttc" id="aship_8c_html_a6a7453b86728f8fa202dbe8da9c942d1"><div class="ttname"><a href="ship_8c.html#a6a7453b86728f8fa202dbe8da9c942d1">ships_free</a></div><div class="ttdeci">void ships_free(void)</div><div class="ttdoc">Frees all the ships.</div><div class="ttdef"><b>Definition:</b> <a href="ship_8c_source.html#l01029">ship.c:1029</a></div></div>
 <div class="ttc" id="aslots_8c_html_abddd205f78c406e2e148e3055a8847fa"><div class="ttname"><a href="slots_8c.html#abddd205f78c406e2e148e3055a8847fa">sp_required</a></div><div class="ttdeci">int sp_required(unsigned int spid)</div><div class="ttdoc">Gets whether or not a slot property is required.</div><div class="ttdef"><b>Definition:</b> <a href="slots_8c_source.html#l00178">slots.c:178</a></div></div>
 <div class="ttc" id="anstring_8c_html_a1af9acc6b6efdca3576cb8223d95f401"><div class="ttname"><a href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a></div><div class="ttdeci">int asprintf(char **strp, const char *fmt,...)</div><div class="ttdoc">Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00153">nstring.c:153</a></div></div>
 <div class="ttc" id="anxml_8c_html_a435de90e2ad949b234e0544aeff32cdd"><div class="ttname"><a href="nxml_8c.html#a435de90e2ad949b234e0544aeff32cdd">xml_parsePhysFS</a></div><div class="ttdeci">xmlDocPtr xml_parsePhysFS(const char *filename)</div><div class="ttdoc">Analogous to xmlParseMemory/xmlParseFile.</div><div class="ttdef"><b>Definition:</b> <a href="nxml_8c_source.html#l00072">nxml.c:72</a></div></div>
