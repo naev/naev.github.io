@@ -51,69 +51,68 @@ $(function() {
 <a href="nlua__diff_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * See Licensing and Copyright notice in naev.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;nstring.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;lauxlib.h&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;lua.h&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="naev_8h.html">naev.h</a>&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;nlua_diff.h&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;log.h&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;nluadef.h&quot;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;unidiff.h&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">/* diffs */</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">diff_applyL</a>( lua_State *L );</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">diff_removeL</a>( lua_State *L );</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">diff_isappliedL</a>( lua_State *L );</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#ab271507d8e3bd00297520a6cab63ce29">   34</a></span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg <a class="code" href="nlua__diff_8c.html#ab271507d8e3bd00297520a6cab63ce29">diff_methods</a>[] = {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;   { <span class="stringliteral">&quot;apply&quot;</span>, <a class="code" href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">diff_applyL</a> },</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;   { <span class="stringliteral">&quot;remove&quot;</span>, <a class="code" href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">diff_removeL</a> },</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;   { <span class="stringliteral">&quot;isApplied&quot;</span>, <a class="code" href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">diff_isappliedL</a> },</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;   {0,0}</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}; </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#abbf7eb3f80b8c15a3ada428ae1acd3d3">   47</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#abbf7eb3f80b8c15a3ada428ae1acd3d3">nlua_loadDiff</a>( nlua_env env )</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;   nlua_register(env, <span class="stringliteral">&quot;diff&quot;</span>, <a class="code" href="nlua__diff_8c.html#ab271507d8e3bd00297520a6cab63ce29">diff_methods</a>, 0);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">   73</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">diff_applyL</a>( lua_State *L )</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   <a class="code" href="unidiff_8c.html#a60dca40d1e6c9340aff7454d60457125">diff_apply</a>( name );</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">   86</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">diff_removeL</a>( lua_State *L )</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;{</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;   <a class="code" href="unidiff_8c.html#a7e8aed9365e624d5d41f49d432a3750c">diff_remove</a>( name );</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">  100</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">diff_isappliedL</a>( lua_State *L )</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name = luaL_checkstring(L,1);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   lua_pushboolean(L,<a class="code" href="unidiff_8c.html#ae93598bc95e589f19bc28f10c1da066b">diff_isApplied</a>(name));</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;nstring.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;lauxlib.h&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;lua.h&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="naev_8h.html">naev.h</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;nlua_diff.h&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;log.h&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;nluadef.h&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;unidiff.h&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">/* diffs */</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">diff_applyL</a>( lua_State *L );</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">diff_removeL</a>( lua_State *L );</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">diff_isappliedL</a>( lua_State *L );</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#ab271507d8e3bd00297520a6cab63ce29">   30</a></span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg <a class="code" href="nlua__diff_8c.html#ab271507d8e3bd00297520a6cab63ce29">diff_methods</a>[] = {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;   { <span class="stringliteral">&quot;apply&quot;</span>, <a class="code" href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">diff_applyL</a> },</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;   { <span class="stringliteral">&quot;remove&quot;</span>, <a class="code" href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">diff_removeL</a> },</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;   { <span class="stringliteral">&quot;isApplied&quot;</span>, <a class="code" href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">diff_isappliedL</a> },</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;   {0,0}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}; </div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#abbf7eb3f80b8c15a3ada428ae1acd3d3">   42</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#abbf7eb3f80b8c15a3ada428ae1acd3d3">nlua_loadDiff</a>( nlua_env env )</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;   nlua_register(env, <span class="stringliteral">&quot;diff&quot;</span>, <a class="code" href="nlua__diff_8c.html#ab271507d8e3bd00297520a6cab63ce29">diff_methods</a>, 0);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">   67</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">diff_applyL</a>( lua_State *L )</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;{</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;   <a class="code" href="unidiff_8c.html#a60dca40d1e6c9340aff7454d60457125">diff_apply</a>( name );</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">   81</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">diff_removeL</a>( lua_State *L )</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;{</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   <a class="code" href="unidiff_8c.html#a7e8aed9365e624d5d41f49d432a3750c">diff_remove</a>( name );</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">   96</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">diff_isappliedL</a>( lua_State *L )</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;{</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *name = luaL_checkstring(L,1);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   lua_pushboolean(L,<a class="code" href="unidiff_8c.html#ae93598bc95e589f19bc28f10c1da066b">diff_isApplied</a>(name));</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;   <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="anlua__diff_8c_html_abbf7eb3f80b8c15a3ada428ae1acd3d3"><div class="ttname"><a href="nlua__diff_8c.html#abbf7eb3f80b8c15a3ada428ae1acd3d3">nlua_loadDiff</a></div><div class="ttdeci">int nlua_loadDiff(nlua_env env)</div><div class="ttdoc">Loads the diff Lua library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00047">nlua_diff.c:47</a></div></div>
-<div class="ttc" id="aunidiff_8c_html_ae93598bc95e589f19bc28f10c1da066b"><div class="ttname"><a href="unidiff_8c.html#ae93598bc95e589f19bc28f10c1da066b">diff_isApplied</a></div><div class="ttdeci">int diff_isApplied(const char *name)</div><div class="ttdoc">Checks if a diff is currently applied.</div><div class="ttdef"><b>Definition:</b> <a href="unidiff_8c_source.html#l00205">unidiff.c:205</a></div></div>
-<div class="ttc" id="anlua__diff_8c_html_a400de9d46f1374b95e7245d9a2473761"><div class="ttname"><a href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">diff_removeL</a></div><div class="ttdeci">static int diff_removeL(lua_State *L)</div><div class="ttdoc">Removes a diff by name.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00086">nlua_diff.c:86</a></div></div>
+<div class="ttc" id="anlua__diff_8c_html_abbf7eb3f80b8c15a3ada428ae1acd3d3"><div class="ttname"><a href="nlua__diff_8c.html#abbf7eb3f80b8c15a3ada428ae1acd3d3">nlua_loadDiff</a></div><div class="ttdeci">int nlua_loadDiff(nlua_env env)</div><div class="ttdoc">Loads the diff Lua library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00042">nlua_diff.c:42</a></div></div>
+<div class="ttc" id="aunidiff_8c_html_ae93598bc95e589f19bc28f10c1da066b"><div class="ttname"><a href="unidiff_8c.html#ae93598bc95e589f19bc28f10c1da066b">diff_isApplied</a></div><div class="ttdeci">int diff_isApplied(const char *name)</div><div class="ttdoc">Checks if a diff is currently applied.</div><div class="ttdef"><b>Definition:</b> <a href="unidiff_8c_source.html#l00211">unidiff.c:211</a></div></div>
+<div class="ttc" id="anlua__diff_8c_html_a400de9d46f1374b95e7245d9a2473761"><div class="ttname"><a href="nlua__diff_8c.html#a400de9d46f1374b95e7245d9a2473761">diff_removeL</a></div><div class="ttdeci">static int diff_removeL(lua_State *L)</div><div class="ttdoc">Removes a diff by name.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00081">nlua_diff.c:81</a></div></div>
 <div class="ttc" id="anaev_8h_html"><div class="ttname"><a href="naev_8h.html">naev.h</a></div><div class="ttdoc">Header file with generic functions and naev-specifics.</div></div>
-<div class="ttc" id="aunidiff_8c_html_a60dca40d1e6c9340aff7454d60457125"><div class="ttname"><a href="unidiff_8c.html#a60dca40d1e6c9340aff7454d60457125">diff_apply</a></div><div class="ttdeci">int diff_apply(const char *name)</div><div class="ttdoc">Applies a diff to the universe.</div><div class="ttdef"><b>Definition:</b> <a href="unidiff_8c_source.html#l00232">unidiff.c:232</a></div></div>
-<div class="ttc" id="anlua__diff_8c_html_a45a526a8b9cfde6757d559fcab2f2249"><div class="ttname"><a href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">diff_isappliedL</a></div><div class="ttdeci">static int diff_isappliedL(lua_State *L)</div><div class="ttdoc">Checks to see if a diff is currently applied.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00100">nlua_diff.c:100</a></div></div>
-<div class="ttc" id="anlua__diff_8c_html_a58f9bc9c92efb9c1b1bf009a02839c38"><div class="ttname"><a href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">diff_applyL</a></div><div class="ttdeci">static int diff_applyL(lua_State *L)</div><div class="ttdoc">Lua bindings to apply/remove Universe Diffs.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00073">nlua_diff.c:73</a></div></div>
-<div class="ttc" id="anlua__diff_8c_html_ab271507d8e3bd00297520a6cab63ce29"><div class="ttname"><a href="nlua__diff_8c.html#ab271507d8e3bd00297520a6cab63ce29">diff_methods</a></div><div class="ttdeci">static const luaL_Reg diff_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00034">nlua_diff.c:34</a></div></div>
-<div class="ttc" id="aunidiff_8c_html_a7e8aed9365e624d5d41f49d432a3750c"><div class="ttname"><a href="unidiff_8c.html#a7e8aed9365e624d5d41f49d432a3750c">diff_remove</a></div><div class="ttdeci">void diff_remove(const char *name)</div><div class="ttdoc">Removes a diff from the universe.</div><div class="ttdef"><b>Definition:</b> <a href="unidiff_8c_source.html#l01027">unidiff.c:1027</a></div></div>
+<div class="ttc" id="aunidiff_8c_html_a60dca40d1e6c9340aff7454d60457125"><div class="ttname"><a href="unidiff_8c.html#a60dca40d1e6c9340aff7454d60457125">diff_apply</a></div><div class="ttdeci">int diff_apply(const char *name)</div><div class="ttdoc">Applies a diff to the universe.</div><div class="ttdef"><b>Definition:</b> <a href="unidiff_8c_source.html#l00238">unidiff.c:238</a></div></div>
+<div class="ttc" id="anlua__diff_8c_html_a45a526a8b9cfde6757d559fcab2f2249"><div class="ttname"><a href="nlua__diff_8c.html#a45a526a8b9cfde6757d559fcab2f2249">diff_isappliedL</a></div><div class="ttdeci">static int diff_isappliedL(lua_State *L)</div><div class="ttdoc">Checks to see if a diff is currently applied.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00096">nlua_diff.c:96</a></div></div>
+<div class="ttc" id="anlua__diff_8c_html_a58f9bc9c92efb9c1b1bf009a02839c38"><div class="ttname"><a href="nlua__diff_8c.html#a58f9bc9c92efb9c1b1bf009a02839c38">diff_applyL</a></div><div class="ttdeci">static int diff_applyL(lua_State *L)</div><div class="ttdoc">Lua bindings to apply/remove Universe Diffs.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00067">nlua_diff.c:67</a></div></div>
+<div class="ttc" id="anlua__diff_8c_html_ab271507d8e3bd00297520a6cab63ce29"><div class="ttname"><a href="nlua__diff_8c.html#ab271507d8e3bd00297520a6cab63ce29">diff_methods</a></div><div class="ttdeci">static const luaL_Reg diff_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__diff_8c_source.html#l00030">nlua_diff.c:30</a></div></div>
+<div class="ttc" id="aunidiff_8c_html_a7e8aed9365e624d5d41f49d432a3750c"><div class="ttname"><a href="unidiff_8c.html#a7e8aed9365e624d5d41f49d432a3750c">diff_remove</a></div><div class="ttdeci">void diff_remove(const char *name)</div><div class="ttdoc">Removes a diff from the universe.</div><div class="ttdef"><b>Definition:</b> <a href="unidiff_8c_source.html#l01131">unidiff.c:1131</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
