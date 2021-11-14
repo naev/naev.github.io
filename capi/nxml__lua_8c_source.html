@@ -465,51 +465,49 @@ $(function() {
 <div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;            <a class="code" href="nlua__vec2_8c.html#a7b6737c7b888b17008e5325e217c52c9">lua_pushvector</a>( L, vec );</div>
 <div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;         }</div>
 <div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;         <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;            <span class="comment">/* There are a few types knowingly left out above.</span></div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="comment">             * Meaningless (?): PILOT_METATABLE.</span></div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="comment">             * Seems doable, use case unclear: ARTICLE_METATABLE.</span></div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="comment">             * Seems doable, but probably GUI-only: COL_METATABLE, TEX_METATABLE.</span></div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="comment">             * */</span></div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;            WARN(_(<span class="stringliteral">&quot;Unknown Lua data type!&quot;</span>));</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;            lua_pop(L,1);</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;            <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;         }</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160; </div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;         <span class="comment">/* Set field. */</span></div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;         lua_settable(L, -3);</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160; </div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;         <span class="comment">/* cleanup */</span></div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;         free(type);</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;         free(name);</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;      }</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160; </div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;}</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160; </div>
-<div class="line"><a name="l00519"></a><span class="lineno"><a class="line" href="nxml__lua_8c.html#a96c92783d750b14567d92aa7172acc9e">  519</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nxml__lua_8c.html#a96c92783d750b14567d92aa7172acc9e">nxml_unpersistLua</a>( nlua_env env, xmlNodePtr parent )</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;{</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;   <span class="keywordtype">int</span> ret;</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160; </div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   nlua_getenv(env, <span class="stringliteral">&quot;mem&quot;</span>);</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;   ret = <a class="code" href="nxml__lua_8c.html#ab8f367d472447c720cf49ab3ae893c99">nxml_unpersistDataNode</a>(naevL,parent);</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;   lua_pop(naevL,1);</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160; </div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;   <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;}</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160; </div>
-<div class="line"><a name="l00538"></a><span class="lineno"><a class="line" href="nxml__lua_8c.html#aff0116d161ce8c0b51ca1b7203ba214d">  538</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nxml__lua_8c.html#aff0116d161ce8c0b51ca1b7203ba214d">nxml_canWriteString</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keywordtype">size_t</span> len )</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;{</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;      <span class="keywordflow">if</span> ( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] == <span class="charliteral">&#39;\0&#39;</span></div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;           || ( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] &lt; 0x20 &amp;&amp; <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] != <span class="charliteral">&#39;\t&#39;</span> &amp;&amp; <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] != <span class="charliteral">&#39;\n&#39;</span> &amp;&amp; <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] != <span class="charliteral">&#39;\r&#39;</span> ) )</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;         <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;   }</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;   <span class="keywordflow">return</span> u8_isvalid( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, len );</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;}</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;            <span class="comment">/* There are a few types knowingly left out above. Quoting the lua_{to,push} methods, as of 2021-11-13, they are:</span></div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="comment">             * article, audio, canvas, colour, data, file, font, linopt, pilot, pilotoutfit, shader, tex, transform.</span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="comment">             * */</span></div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;            WARN(_(<span class="stringliteral">&quot;Unknown Lua data type!&quot;</span>));</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;            lua_pop(L,1);</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;            <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;         }</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160; </div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;         <span class="comment">/* Set field. */</span></div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;         lua_settable(L, -3);</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160; </div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;         <span class="comment">/* cleanup */</span></div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;         free(type);</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;         free(name);</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;      }</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;   } <span class="keywordflow">while</span> (xml_nextNode(node));</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160; </div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;}</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160; </div>
+<div class="line"><a name="l00517"></a><span class="lineno"><a class="line" href="nxml__lua_8c.html#a96c92783d750b14567d92aa7172acc9e">  517</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="nxml__lua_8c.html#a96c92783d750b14567d92aa7172acc9e">nxml_unpersistLua</a>( nlua_env env, xmlNodePtr parent )</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;{</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;   <span class="keywordtype">int</span> ret;</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160; </div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;   nlua_getenv(env, <span class="stringliteral">&quot;mem&quot;</span>);</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;   ret = <a class="code" href="nxml__lua_8c.html#ab8f367d472447c720cf49ab3ae893c99">nxml_unpersistDataNode</a>(naevL,parent);</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   lua_pop(naevL,1);</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160; </div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;   <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;}</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160; </div>
+<div class="line"><a name="l00536"></a><span class="lineno"><a class="line" href="nxml__lua_8c.html#aff0116d161ce8c0b51ca1b7203ba214d">  536</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nxml__lua_8c.html#aff0116d161ce8c0b51ca1b7203ba214d">nxml_canWriteString</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, <span class="keywordtype">size_t</span> len )</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;{</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;      <span class="keywordflow">if</span> ( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] == <span class="charliteral">&#39;\0&#39;</span></div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;           || ( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] &lt; 0x20 &amp;&amp; <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] != <span class="charliteral">&#39;\t&#39;</span> &amp;&amp; <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] != <span class="charliteral">&#39;\n&#39;</span> &amp;&amp; <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>[ i ] != <span class="charliteral">&#39;\r&#39;</span> ) )</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;         <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;   }</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;   <span class="keywordflow">return</span> u8_isvalid( <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, len );</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructCommodity_html"><div class="ttname"><a href="structCommodity.html">Commodity</a></div><div class="ttdoc">Represents a commodity.</div></div>
-<div class="ttc" id="anxml__lua_8c_html_aff0116d161ce8c0b51ca1b7203ba214d"><div class="ttname"><a href="nxml__lua_8c.html#aff0116d161ce8c0b51ca1b7203ba214d">nxml_canWriteString</a></div><div class="ttdeci">static int nxml_canWriteString(const char *buf, size_t len)</div><div class="ttdoc">Checks whether saving the given string (from lua_tolstring) can be saved into an XML document without...</div><div class="ttdef"><b>Definition:</b> <a href="nxml__lua_8c_source.html#l00538">nxml_lua.c:538</a></div></div>
+<div class="ttc" id="anxml__lua_8c_html_aff0116d161ce8c0b51ca1b7203ba214d"><div class="ttname"><a href="nxml__lua_8c.html#aff0116d161ce8c0b51ca1b7203ba214d">nxml_canWriteString</a></div><div class="ttdeci">static int nxml_canWriteString(const char *buf, size_t len)</div><div class="ttdoc">Checks whether saving the given string (from lua_tolstring) can be saved into an XML document without...</div><div class="ttdef"><b>Definition:</b> <a href="nxml__lua_8c_source.html#l00536">nxml_lua.c:536</a></div></div>
 <div class="ttc" id="anlua__planet_8c_html_af6703c02b77a3e3c44e71f06fb915271"><div class="ttname"><a href="nlua__planet_8c.html#af6703c02b77a3e3c44e71f06fb915271">lua_toplanet</a></div><div class="ttdeci">LuaPlanet lua_toplanet(lua_State *L, int ind)</div><div class="ttdoc">This module allows you to handle the planets from Lua.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__planet_8c_source.html#l00138">nlua_planet.c:138</a></div></div>
 <div class="ttc" id="anlua__vec2_8c_html_a84a1567cd2d6e722397d0c163900db78"><div class="ttname"><a href="nlua__vec2_8c.html#a84a1567cd2d6e722397d0c163900db78">lua_tovector</a></div><div class="ttdeci">Vector2d * lua_tovector(lua_State *L, int ind)</div><div class="ttdoc">Represents a 2D vector in Lua.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__vec2_8c_source.html#l00109">nlua_vec2.c:109</a></div></div>
 <div class="ttc" id="anlua__system_8c_html_afa47fb1b9c3d4eaa1b8f5f18268855b4"><div class="ttname"><a href="nlua__system_8c.html#afa47fb1b9c3d4eaa1b8f5f18268855b4">lua_pushsystem</a></div><div class="ttdeci">LuaSystem * lua_pushsystem(lua_State *L, LuaSystem sys)</div><div class="ttdoc">Pushes a system on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00186">nlua_system.c:186</a></div></div>
@@ -517,7 +515,7 @@ $(function() {
 <div class="ttc" id="astructPlanet_html"><div class="ttname"><a href="structPlanet.html">Planet</a></div><div class="ttdoc">Represents a planet.</div></div>
 <div class="ttc" id="anlua__system_8c_html_aff6c85f01c3a5bab7773e3af9de95bfa"><div class="ttname"><a href="nlua__system_8c.html#aff6c85f01c3a5bab7773e3af9de95bfa">lua_issystem</a></div><div class="ttdeci">int lua_issystem(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a system.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__system_8c_source.html#l00202">nlua_system.c:202</a></div></div>
 <div class="ttc" id="anlua__ship_8c_html_a63db2da3089d6a1aea2ee97e502648e5"><div class="ttname"><a href="nlua__ship_8c.html#a63db2da3089d6a1aea2ee97e502648e5">lua_isship</a></div><div class="ttdeci">int lua_isship(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a ship.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__ship_8c_source.html#l00180">nlua_ship.c:180</a></div></div>
-<div class="ttc" id="anxml__lua_8c_html_a96c92783d750b14567d92aa7172acc9e"><div class="ttname"><a href="nxml__lua_8c.html#a96c92783d750b14567d92aa7172acc9e">nxml_unpersistLua</a></div><div class="ttdeci">int nxml_unpersistLua(nlua_env env, xmlNodePtr parent)</div><div class="ttdoc">Unpersists Lua data into a table named &quot;mem&quot;.</div><div class="ttdef"><b>Definition:</b> <a href="nxml__lua_8c_source.html#l00519">nxml_lua.c:519</a></div></div>
+<div class="ttc" id="anxml__lua_8c_html_a96c92783d750b14567d92aa7172acc9e"><div class="ttname"><a href="nxml__lua_8c.html#a96c92783d750b14567d92aa7172acc9e">nxml_unpersistLua</a></div><div class="ttdeci">int nxml_unpersistLua(nlua_env env, xmlNodePtr parent)</div><div class="ttdoc">Unpersists Lua data into a table named &quot;mem&quot;.</div><div class="ttdef"><b>Definition:</b> <a href="nxml__lua_8c_source.html#l00517">nxml_lua.c:517</a></div></div>
 <div class="ttc" id="anlua__commodity_8c_html_a9b2c34612497d0251909c13ec3db952d"><div class="ttname"><a href="nlua__commodity_8c.html#a9b2c34612497d0251909c13ec3db952d">lua_pushcommodity</a></div><div class="ttdeci">Commodity ** lua_pushcommodity(lua_State *L, Commodity *commodity)</div><div class="ttdoc">Pushes a commodity on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__commodity_8c_source.html#l00140">nlua_commodity.c:140</a></div></div>
 <div class="ttc" id="anlua__faction_8c_html_abb855cec1f27c510cb0001b5845d0acf"><div class="ttname"><a href="nlua__faction_8c.html#abb855cec1f27c510cb0001b5845d0acf">lua_tofaction</a></div><div class="ttdeci">LuaFaction lua_tofaction(lua_State *L, int ind)</div><div class="ttdoc">Gets faction at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__faction_8c_source.html#l00124">nlua_faction.c:124</a></div></div>
 <div class="ttc" id="anlua__time_8c_html_a646c743fc4fb0107ee90b2d426888963"><div class="ttname"><a href="nlua__time_8c.html#a646c743fc4fb0107ee90b2d426888963">lua_pushtime</a></div><div class="ttdeci">ntime_t * lua_pushtime(lua_State *L, ntime_t time)</div><div class="ttdoc">Pushes a time on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__time_8c_source.html#l00126">nlua_time.c:126</a></div></div>
