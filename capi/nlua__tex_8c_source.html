@@ -389,84 +389,80 @@ $(function() {
 <div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;}</div>
 <div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160; </div>
 <div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160; </div>
-<div class="line"><a name="l00478"></a><span class="lineno"><a class="line" href="nlua__tex_8c.html#a5dc7a5272e727d1fa6445937688a2ba1">  478</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__tex_8c.html#a5dc7a5272e727d1fa6445937688a2ba1">texL_spriteFromDir</a>( lua_State *L )</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;{</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>;</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;   glTexture *tex;</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;   <span class="keywordtype">int</span> sx, sy;</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160; </div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;   NLUA_CHECKRW(L);</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160; </div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;   <span class="comment">/* Params. */</span></div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;   tex = <a class="code" href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a>( L, 1 );</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160; </div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;   <span class="comment">/* Use radians if requested, otherwise convert to degrees. */</span></div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;   <span class="keywordflow">if</span> (lua_gettop(L) &gt; 2 &amp;&amp; (lua_toboolean(L, 3)))</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;      a = luaL_checknumber( L, 2 );</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;      a = luaL_checknumber( L, 2 ) / 180. * M_PI;</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160; </div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;   <span class="comment">/* Calculate with parameter validity.. */</span></div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;   <span class="keywordflow">if</span> ((a &gt;= 2.*M_PI) || (a &lt; 0.)) {</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;      a = fmod( a, 2.*M_PI );</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;      <span class="keywordflow">if</span> (a &lt; 0.)</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;         a += 2.*M_PI;</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;   }</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;   <a class="code" href="opengl__tex_8c.html#ac82dd1e609bebffb3a93d93f42b28e49">gl_getSpriteFromDir</a>( &amp;sx, &amp;sy, tex, a );</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160; </div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;   <span class="comment">/* Return. */</span></div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;   lua_pushinteger( L, sx+1 );</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;   lua_pushinteger( L, sy+1 );</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;   <span class="keywordflow">return</span> 2;</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;}</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160; </div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160; </div>
-<div class="line"><a name="l00518"></a><span class="lineno"><a class="line" href="nlua__tex_8c.html#af17add0ce0e58b3b1870fcecd117869d">  518</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__tex_8c.html#af17add0ce0e58b3b1870fcecd117869d">texL_setFilter</a>( lua_State *L )</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;{</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;   glTexture *tex = <a class="code" href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a>(L,1);</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *smin = luaL_checkstring(L,2);</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *smag = luaL_optstring(L,3,smin);</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   GLint min, mag;</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160; </div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;   min = <a class="code" href="opengl_8c.html#a6c8a644de73b7b09bd89b453ebab8a70">gl_stringToFilter</a>( smin );</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;   mag = <a class="code" href="opengl_8c.html#a6c8a644de73b7b09bd89b453ebab8a70">gl_stringToFilter</a>( smag );</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160; </div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;   <span class="keywordflow">if</span> (min==0 || mag==0)</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
+<div class="line"><a name="l00477"></a><span class="lineno"><a class="line" href="nlua__tex_8c.html#a5dc7a5272e727d1fa6445937688a2ba1">  477</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__tex_8c.html#a5dc7a5272e727d1fa6445937688a2ba1">texL_spriteFromDir</a>( lua_State *L )</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;{</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>;</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;   glTexture *tex;</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;   <span class="keywordtype">int</span> sx, sy;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160; </div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;   NLUA_CHECKRW(L);</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160; </div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;   <span class="comment">/* Params. */</span></div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;   tex = <a class="code" href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a>( L, 1 );</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160; </div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;   a = luaL_checknumber( L, 2 );</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160; </div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;   <span class="comment">/* Calculate with parameter validity.. */</span></div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;   <span class="keywordflow">if</span> ((a &gt;= 2.*M_PI) || (a &lt; 0.)) {</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;      a = fmod( a, 2.*M_PI );</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;      <span class="keywordflow">if</span> (a &lt; 0.)</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;         a += 2.*M_PI;</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;   }</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;   <a class="code" href="opengl__tex_8c.html#ac82dd1e609bebffb3a93d93f42b28e49">gl_getSpriteFromDir</a>( &amp;sx, &amp;sy, tex, a );</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160; </div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;   <span class="comment">/* Return. */</span></div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;   lua_pushinteger( L, sx+1 );</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;   lua_pushinteger( L, sy+1 );</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;   <span class="keywordflow">return</span> 2;</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;}</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160; </div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160; </div>
+<div class="line"><a name="l00513"></a><span class="lineno"><a class="line" href="nlua__tex_8c.html#af17add0ce0e58b3b1870fcecd117869d">  513</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__tex_8c.html#af17add0ce0e58b3b1870fcecd117869d">texL_setFilter</a>( lua_State *L )</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;{</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;   glTexture *tex = <a class="code" href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a>(L,1);</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *smin = luaL_checkstring(L,2);</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *smag = luaL_optstring(L,3,smin);</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;   GLint min, mag;</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160; </div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;   min = <a class="code" href="opengl_8c.html#a6c8a644de73b7b09bd89b453ebab8a70">gl_stringToFilter</a>( smin );</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;   mag = <a class="code" href="opengl_8c.html#a6c8a644de73b7b09bd89b453ebab8a70">gl_stringToFilter</a>( smag );</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160; </div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;   <span class="keywordflow">if</span> (min==0 || mag==0)</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160; </div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;   glBindTexture( GL_TEXTURE_2D, tex-&gt;texture );</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag );</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min );</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;   gl_checkErr();</div>
 <div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160; </div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;   glBindTexture( GL_TEXTURE_2D, tex-&gt;texture );</div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag );</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min );</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;   gl_checkErr();</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160; </div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;}</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160; </div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160; </div>
-<div class="line"><a name="l00549"></a><span class="lineno"><a class="line" href="nlua__tex_8c.html#a10884acb65593ab5c049dd14f0022b3f">  549</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__tex_8c.html#a10884acb65593ab5c049dd14f0022b3f">texL_setWrap</a>( lua_State *L )</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;{</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;   glTexture *tex = <a class="code" href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a>(L,1);</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *shoriz = luaL_checkstring(L,2);</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *svert = luaL_optstring(L,3,shoriz);</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *sdepth = luaL_optstring(L,4,shoriz);</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;   GLint horiz, vert, depth;</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160; </div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;   horiz = <a class="code" href="opengl_8c.html#af6fd17ff2b431cfe9f00158eedc920c8">gl_stringToClamp</a>( shoriz );</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;   vert = <a class="code" href="opengl_8c.html#af6fd17ff2b431cfe9f00158eedc920c8">gl_stringToClamp</a>( svert );</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;   depth = <a class="code" href="opengl_8c.html#af6fd17ff2b431cfe9f00158eedc920c8">gl_stringToClamp</a>( sdepth );</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160; </div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;   <span class="keywordflow">if</span> (horiz==0 || vert==0 || depth==0)</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160; </div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;   glBindTexture( GL_TEXTURE_2D, tex-&gt;texture );</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, horiz );</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, vert );</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, depth );</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;   gl_checkErr();</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160; </div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;}</div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160; </div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;}</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160; </div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160; </div>
+<div class="line"><a name="l00544"></a><span class="lineno"><a class="line" href="nlua__tex_8c.html#a10884acb65593ab5c049dd14f0022b3f">  544</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="nlua__tex_8c.html#a10884acb65593ab5c049dd14f0022b3f">texL_setWrap</a>( lua_State *L )</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;{</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;   glTexture *tex = <a class="code" href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a>(L,1);</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *shoriz = luaL_checkstring(L,2);</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *svert = luaL_optstring(L,3,shoriz);</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *sdepth = luaL_optstring(L,4,shoriz);</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;   GLint horiz, vert, depth;</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160; </div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;   horiz = <a class="code" href="opengl_8c.html#af6fd17ff2b431cfe9f00158eedc920c8">gl_stringToClamp</a>( shoriz );</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;   vert = <a class="code" href="opengl_8c.html#af6fd17ff2b431cfe9f00158eedc920c8">gl_stringToClamp</a>( svert );</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   depth = <a class="code" href="opengl_8c.html#af6fd17ff2b431cfe9f00158eedc920c8">gl_stringToClamp</a>( sdepth );</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160; </div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;   <span class="keywordflow">if</span> (horiz==0 || vert==0 || depth==0)</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;      NLUA_INVALID_PARAMETER(L);</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160; </div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;   glBindTexture( GL_TEXTURE_2D, tex-&gt;texture );</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, horiz );</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, vert );</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, depth );</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;   gl_checkErr();</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160; </div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;}</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aopengl_8c_html_af6fd17ff2b431cfe9f00158eedc920c8"><div class="ttname"><a href="opengl_8c.html#af6fd17ff2b431cfe9f00158eedc920c8">gl_stringToClamp</a></div><div class="ttdeci">GLint gl_stringToClamp(const char *s)</div><div class="ttdoc">Gets the associated min/mag filter from a string.</div><div class="ttdef"><b>Definition:</b> <a href="opengl_8c_source.html#l00594">opengl.c:594</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_adbe7a90b3bed1c31dcc43a1ac0dff3cd"><div class="ttname"><a href="nlua__tex_8c.html#adbe7a90b3bed1c31dcc43a1ac0dff3cd">lua_totex</a></div><div class="ttdeci">glTexture * lua_totex(lua_State *L, int ind)</div><div class="ttdoc">Lua bindings to interact with OpenGL textures.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00098">nlua_tex.c:98</a></div></div>
@@ -476,7 +472,7 @@ $(function() {
 <div class="ttc" id="anlua__tex_8c_html_a563e60d65943256583b7ddd44a4cfe27"><div class="ttname"><a href="nlua__tex_8c.html#a563e60d65943256583b7ddd44a4cfe27">lua_istex</a></div><div class="ttdeci">int lua_istex(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a texture.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00139">nlua_tex.c:139</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ac82dd1e609bebffb3a93d93f42b28e49"><div class="ttname"><a href="opengl__tex_8c.html#ac82dd1e609bebffb3a93d93f42b28e49">gl_getSpriteFromDir</a></div><div class="ttdeci">void gl_getSpriteFromDir(int *x, int *y, const glTexture *t, const double dir)</div><div class="ttdoc">Sets x and y to be the appropriate sprite for glTexture using dir.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00850">opengl_tex.c:850</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_aedf3a997b191b95464cf5026f18e6511"><div class="ttname"><a href="nlua__tex_8c.html#aedf3a997b191b95464cf5026f18e6511">texL_methods</a></div><div class="ttdeci">static const luaL_Reg texL_methods[]</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00047">nlua_tex.c:47</a></div></div>
-<div class="ttc" id="anlua__tex_8c_html_a5dc7a5272e727d1fa6445937688a2ba1"><div class="ttname"><a href="nlua__tex_8c.html#a5dc7a5272e727d1fa6445937688a2ba1">texL_spriteFromDir</a></div><div class="ttdeci">static int texL_spriteFromDir(lua_State *L)</div><div class="ttdoc">Gets the sprite that corresponds to a direction.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00478">nlua_tex.c:478</a></div></div>
+<div class="ttc" id="anlua__tex_8c_html_a5dc7a5272e727d1fa6445937688a2ba1"><div class="ttname"><a href="nlua__tex_8c.html#a5dc7a5272e727d1fa6445937688a2ba1">texL_spriteFromDir</a></div><div class="ttdeci">static int texL_spriteFromDir(lua_State *L)</div><div class="ttdoc">Gets the sprite that corresponds to a direction.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00477">nlua_tex.c:477</a></div></div>
 <div class="ttc" id="arng_8c_html_a3ae63274d1e5a52f21db2df3bc5eee03"><div class="ttname"><a href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a></div><div class="ttdeci">static const double a[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00247">rng.c:247</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ae7c1e2ed8f7e1980ddab05925e2983fe"><div class="ttname"><a href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a></div><div class="ttdeci">void gl_freeTexture(glTexture *texture)</div><div class="ttdoc">Frees a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00746">opengl_tex.c:746</a></div></div>
 <div class="ttc" id="anstring_8c_html_a1af9acc6b6efdca3576cb8223d95f401"><div class="ttname"><a href="nstring_8c.html#a1af9acc6b6efdca3576cb8223d95f401">asprintf</a></div><div class="ttdeci">int asprintf(char **strp, const char *fmt,...)</div><div class="ttdoc">Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument....</div><div class="ttdef"><b>Definition:</b> <a href="nstring_8c_source.html#l00153">nstring.c:153</a></div></div>
@@ -490,12 +486,12 @@ $(function() {
 <div class="ttc" id="anlua__file_8c_html_a6df49d40dfdda50824fe6f77e6abf186"><div class="ttname"><a href="nlua__file_8c.html#a6df49d40dfdda50824fe6f77e6abf186">lua_isfile</a></div><div class="ttdeci">int lua_isfile(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a file.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__file_8c_source.html#l00125">nlua_file.c:125</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_a4a2511286a7f85cc4d71a34b84a63ebd"><div class="ttname"><a href="nlua__tex_8c.html#a4a2511286a7f85cc4d71a34b84a63ebd">luaL_checktex</a></div><div class="ttdeci">glTexture * luaL_checktex(lua_State *L, int ind)</div><div class="ttdoc">Gets texture at index or raises error if there is no texture at index.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00109">nlua_tex.c:109</a></div></div>
 <div class="ttc" id="anlua__data_8c_html_a8a18953a65d7dbe652ac0c3af9cf3625"><div class="ttname"><a href="nlua__data_8c.html#a8a18953a65d7dbe652ac0c3af9cf3625">lua_isdata</a></div><div class="ttdeci">int lua_isdata(lua_State *L, int ind)</div><div class="ttdoc">Checks to see if ind is a data.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__data_8c_source.html#l00113">nlua_data.c:113</a></div></div>
-<div class="ttc" id="anlua__tex_8c_html_a10884acb65593ab5c049dd14f0022b3f"><div class="ttname"><a href="nlua__tex_8c.html#a10884acb65593ab5c049dd14f0022b3f">texL_setWrap</a></div><div class="ttdeci">static int texL_setWrap(lua_State *L)</div><div class="ttdoc">Sets the texture wrapping.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00549">nlua_tex.c:549</a></div></div>
+<div class="ttc" id="anlua__tex_8c_html_a10884acb65593ab5c049dd14f0022b3f"><div class="ttname"><a href="nlua__tex_8c.html#a10884acb65593ab5c049dd14f0022b3f">texL_setWrap</a></div><div class="ttdeci">static int texL_setWrap(lua_State *L)</div><div class="ttdoc">Sets the texture wrapping.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00544">nlua_tex.c:544</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_ad09c6ce0779488ffde1645e0ed6a2506"><div class="ttname"><a href="nlua__tex_8c.html#ad09c6ce0779488ffde1645e0ed6a2506">texL_close</a></div><div class="ttdeci">static int texL_close(lua_State *L)</div><div class="ttdoc">Frees the texture.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00162">nlua_tex.c:162</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_a0b83a0ad0a4174362ebcee39a1ce7d2d"><div class="ttname"><a href="nlua__tex_8c.html#a0b83a0ad0a4174362ebcee39a1ce7d2d">texL_dim</a></div><div class="ttdeci">static int texL_dim(lua_State *L)</div><div class="ttdoc">Gets the dimensions of the texture.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00424">nlua_tex.c:424</a></div></div>
 <div class="ttc" id="anlua__data_8c_html_a9dd98fb86f091161643cb3b89f6ee67b"><div class="ttname"><a href="nlua__data_8c.html#a9dd98fb86f091161643cb3b89f6ee67b">lua_pushdata</a></div><div class="ttdeci">LuaData_t * lua_pushdata(lua_State *L, LuaData_t data)</div><div class="ttdoc">Pushes a data on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__data_8c_source.html#l00097">nlua_data.c:97</a></div></div>
 <div class="ttc" id="anlua__tex_8c_html_aad52ac8ce85118f76b34ecd3107af4d8"><div class="ttname"><a href="nlua__tex_8c.html#aad52ac8ce85118f76b34ecd3107af4d8">texL_sprites</a></div><div class="ttdeci">static int texL_sprites(lua_State *L)</div><div class="ttdoc">Gets the number of sprites in the texture.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00451">nlua_tex.c:451</a></div></div>
-<div class="ttc" id="anlua__tex_8c_html_af17add0ce0e58b3b1870fcecd117869d"><div class="ttname"><a href="nlua__tex_8c.html#af17add0ce0e58b3b1870fcecd117869d">texL_setFilter</a></div><div class="ttdeci">static int texL_setFilter(lua_State *L)</div><div class="ttdoc">Sets the texture minification and magnification filters.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00518">nlua_tex.c:518</a></div></div>
+<div class="ttc" id="anlua__tex_8c_html_af17add0ce0e58b3b1870fcecd117869d"><div class="ttname"><a href="nlua__tex_8c.html#af17add0ce0e58b3b1870fcecd117869d">texL_setFilter</a></div><div class="ttdeci">static int texL_setFilter(lua_State *L)</div><div class="ttdoc">Sets the texture minification and magnification filters.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tex_8c_source.html#l00513">nlua_tex.c:513</a></div></div>
 <div class="ttc" id="arng_8c_html_a6dbc3ea54b9ab71917fe57fa11372346"><div class="ttname"><a href="rng_8c.html#a6dbc3ea54b9ab71917fe57fa11372346">b</a></div><div class="ttdeci">static const double b[]</div><div class="ttdef"><b>Definition:</b> <a href="rng_8c_source.html#l00256">rng.c:256</a></div></div>
 <div class="ttc" id="aopengl_8c_html_a6c8a644de73b7b09bd89b453ebab8a70"><div class="ttname"><a href="opengl_8c.html#a6c8a644de73b7b09bd89b453ebab8a70">gl_stringToFilter</a></div><div class="ttdeci">GLint gl_stringToFilter(const char *s)</div><div class="ttdoc">Gets the associated min/mag filter from a string.</div><div class="ttdef"><b>Definition:</b> <a href="opengl_8c_source.html#l00579">opengl.c:579</a></div></div>
 <!-- start footer part -->
