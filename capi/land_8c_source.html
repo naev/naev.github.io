@@ -952,477 +952,479 @@ $(function() {
 <div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;      <a class="code" href="event_8c.html#acee910c5f6745dd62a319f045f06aa07">events_trigger</a>( EVENT_TRIGGER_LAND );</div>
 <div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160; </div>
 <div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;      <span class="comment">/* Make sure services didn&#39;t change or we have to do the tab window. */</span></div>
-<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;services != pntservices)</div>
+<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;services != pntservices) {</div>
 <div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;         <a class="code" href="land_8c.html#ae5e42072ae51b9ea7b3c0752256e92a5">land_setupTabs</a>();</div>
-<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160; </div>
-<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;      <span class="comment">/* 3) Generate computer and bar missions. */</span></div>
-<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;      <span class="comment">/* Generate bar missions first for claims. */</span></div>
-<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;      <span class="keywordflow">if</span> (planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_BAR) &amp;&amp; !planet_isFlag(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_NOMISNSPAWN))</div>
-<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;         <a class="code" href="npc_8c.html#a2b7722e96fce75ed7c58f51313793d01">npc_generateMissions</a>(); <span class="comment">/* Generate bar npc. */</span></div>
-<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;      <span class="keywordflow">if</span> (planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_MISSIONS))</div>
-<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;         <a class="code" href="land_8c.html#a817712c9042d4682d48d0d151656e027">mission_computer</a> = <a class="code" href="mission_8c.html#afdc03d53b5f12418528f86360b12ad9e">missions_genList</a>( &amp;<a class="code" href="land_8c.html#a3e8d96829b0a68069bd988356eaa254a">mission_ncomputer</a>,</div>
-<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;               <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;presence.faction, <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;name, <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;name,</div>
-<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;               MIS_AVAIL_COMPUTER );</div>
-<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;   }</div>
-<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160; </div>
-<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;   <span class="comment">/* 4) Create other tabs. */</span></div>
-<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;<span class="preprocessor">#define should_open(s, w) \</span></div>
-<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;<span class="preprocessor">   (planet_hasService(land_planet, s) &amp;&amp; (!land_tabGenerated(w)))</span></div>
-<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160; </div>
-<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;   <span class="comment">/* Things get a bit hairy here. Hooks may have triggered a GUI reload via</span></div>
-<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;<span class="comment">    * e.g. player.swapShip, so the land tabs may have been generated already</span></div>
-<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160;<span class="comment">    * and we need to check that before regenerating them.</span></div>
-<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160; </div>
-<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;   <span class="comment">/* Basic - bar + missions */</span></div>
-<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_BAR, LAND_WINDOW_BAR ))</div>
-<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;      <a class="code" href="land_8c.html#ad70f847ff04d640ef71918812a579fec">bar_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_BAR) );</div>
-<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_MISSIONS, LAND_WINDOW_MISSION ))</div>
-<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;      <a class="code" href="land_8c.html#a6c976fa364eb941b794773b58ced67ed">misn_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_MISSION) );</div>
-<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;   <span class="comment">/* Outfits. */</span></div>
-<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_OUTFITS, LAND_WINDOW_OUTFITS ))</div>
-<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;      <a class="code" href="land__outfits_8c.html#a6ec655d62d6b14f580d4144738cee636">outfits_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_OUTFITS), NULL );</div>
-<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;   <span class="comment">/* Shipyard. */</span></div>
-<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ))</div>
-<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;      <a class="code" href="land__shipyard_8c.html#a3b50754e192562293777efac8edb53f0">shipyard_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_SHIPYARD) );</div>
-<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;   <span class="comment">/* Equipment. */</span></div>
-<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;   <span class="keywordflow">if</span> ((planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_OUTFITS) ||</div>
-<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;         planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_SHIPYARD)) &amp;&amp;</div>
-<div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;         !land_tabGenerated( LAND_WINDOW_EQUIPMENT ))</div>
-<div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;      <a class="code" href="equipment_8c.html#ae3f4006f3cbe59b848ebf65ee9e33203">equipment_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_EQUIPMENT) );</div>
-<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;   <span class="comment">/* Commodity. */</span></div>
-<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_COMMODITY, LAND_WINDOW_COMMODITY ))</div>
-<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;      <a class="code" href="land__trade_8c.html#a370af34d07bbabefbb9e2ff198039232">commodity_exchange_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_COMMODITY) );</div>
-<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;<span class="preprocessor">#undef should_open</span></div>
-<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160; </div>
-<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;   <span class="keywordflow">if</span> (!regen) {</div>
-<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;      <span class="comment">/* Reset markers if needed. */</span></div>
-<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;      <a class="code" href="mission_8c.html#a4a8af8fb9ff0ef11d268432dfdd3091f">mission_sysMark</a>();</div>
-<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160; </div>
-<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;      <span class="comment">/* Check land missions. */</span></div>
-<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="land_8c.html#af5fedeab2579c7f88df92ba16ff6d17a">has_visited</a>(<a class="code" href="land_8c.html#a689d985e9ee3f932a8c89e0b8d6a9895">VISITED_LAND</a>)) {</div>
-<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;         <a class="code" href="mission_8c.html#a3bac4543ee633374be825ef5ccf108e3">missions_run</a>(MIS_AVAIL_LAND, <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;presence.faction,</div>
-<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;               <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;name, <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;name);</div>
-<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;         <a class="code" href="land_8c.html#a0df066f110be70d63b8c9a6cfcf1380d">visited</a>(<a class="code" href="land_8c.html#a689d985e9ee3f932a8c89e0b8d6a9895">VISITED_LAND</a>);</div>
-<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;      }</div>
-<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;   }</div>
-<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160; </div>
-<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;   <span class="comment">/* Go to last open tab. */</span></div>
-<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;   window_tabWinOnChange( <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>, <span class="stringliteral">&quot;tabLand&quot;</span>, <a class="code" href="land_8c.html#a00d864dfa0476d07b86ebb4cdcc77e72">land_changeTab</a> );</div>
-<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;   <span class="keywordflow">if</span> (changetab &amp;&amp; <a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[ <a class="code" href="land_8c.html#a0b800208425ac7b0ab8dcba95be21a47">last_window</a> ] != -1)</div>
-<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;      window_tabWinSetActive( <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>, <span class="stringliteral">&quot;tabLand&quot;</span>, <a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[ <a class="code" href="land_8c.html#a0b800208425ac7b0ab8dcba95be21a47">last_window</a> ] );</div>
-<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160; </div>
-<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;   <span class="comment">/* Refresh the map button in case the player couldn&#39;t afford it prior to</span></div>
-<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;<span class="comment">    * mission payment.</span></div>
-<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;   <a class="code" href="land_8c.html#ac76b91ee8f654c52e2f505030b839646">land_updateMainTab</a>();</div>
-<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160; </div>
-<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;   <span class="comment">/* Refuel if necessary. */</span></div>
-<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;   <a class="code" href="land_8c.html#aeefd3773b3efb48d43d0916398741051">land_refuel</a>();</div>
-<div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160; </div>
-<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;   <span class="comment">/* Finished loading. */</span></div>
-<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;   <a class="code" href="land_8c.html#a699c3894d189b60cc517f034f14769c9">land_loaded</a> = 1;</div>
-<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160; </div>
-<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;   <span class="comment">/* Necessary if player.land() was run in an abort() function. */</span></div>
-<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;   <a class="code" href="toolkit_8c.html#ab9cb9e690788fe1cfa7089d0cb528798">window_lower</a>( <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a> );</div>
-<div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160;}</div>
-<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160; </div>
-<div class="line"><a name="l01109"></a><span class="lineno"><a class="line" href="land_8c.html#a50037c54f1199579fdc354aa61f52728"> 1109</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="land_8c.html#a50037c54f1199579fdc354aa61f52728">land_setWindow</a>( <span class="keywordtype">int</span> window )</div>
-<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;{</div>
-<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[ window ] &lt; 0)</div>
-<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;   window_tabWinSetActive( <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>, <span class="stringliteral">&quot;tabLand&quot;</span>, <a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[window] );</div>
-<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;}</div>
-<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160; </div>
-<div class="line"><a name="l01122"></a><span class="lineno"><a class="line" href="land_8c.html#ac31058d9dda769012c91c866c34e595a"> 1122</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a>( <a class="code" href="structPlanet.html">Planet</a>* p, <span class="keywordtype">int</span> load )</div>
-<div class="line"><a name="l01123"></a><span class="lineno"> 1123</span>&#160;{</div>
-<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;   <span class="comment">/* Do not land twice. */</span></div>
-<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>)</div>
-<div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01127"></a><span class="lineno"> 1127</span>&#160; </div>
-<div class="line"><a name="l01128"></a><span class="lineno"> 1128</span>&#160;   <span class="comment">/* Incrcement times player landed. */</span></div>
-<div class="line"><a name="l01129"></a><span class="lineno"> 1129</span>&#160;   <span class="keywordflow">if</span> (!load)</div>
-<div class="line"><a name="l01130"></a><span class="lineno"> 1130</span>&#160;      <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.landed_times++;</div>
-<div class="line"><a name="l01131"></a><span class="lineno"> 1131</span>&#160; </div>
-<div class="line"><a name="l01132"></a><span class="lineno"> 1132</span>&#160;   <span class="comment">/* Clear some unnecessary flags. */</span></div>
-<div class="line"><a name="l01133"></a><span class="lineno"> 1133</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_COOLDOWN_BRAKE);</div>
-<div class="line"><a name="l01134"></a><span class="lineno"> 1134</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_COOLDOWN );</div>
-<div class="line"><a name="l01135"></a><span class="lineno"> 1135</span>&#160; </div>
-<div class="line"><a name="l01136"></a><span class="lineno"> 1136</span>&#160;   <span class="comment">/* Resets the player&#39;s heat. */</span></div>
-<div class="line"><a name="l01137"></a><span class="lineno"> 1137</span>&#160;   <a class="code" href="pilot__heat_8c.html#a97c6b628d59347dae74710af47e464f2">pilot_heatReset</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
-<div class="line"><a name="l01138"></a><span class="lineno"> 1138</span>&#160; </div>
-<div class="line"><a name="l01139"></a><span class="lineno"> 1139</span>&#160;   <span class="comment">/* Heal the player so GUI shows player at full everything. */</span></div>
-<div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a3efb77f9b10293bb645d7641609485ef">pilot_healLanded</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
-<div class="line"><a name="l01141"></a><span class="lineno"> 1141</span>&#160; </div>
-<div class="line"><a name="l01142"></a><span class="lineno"> 1142</span>&#160;   <span class="comment">/* Stop player sounds. */</span></div>
-<div class="line"><a name="l01143"></a><span class="lineno"> 1143</span>&#160;   <a class="code" href="player_8c.html#a988a143f483f4ee9fc1e7501e9277a2c">player_soundStop</a>();</div>
-<div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160; </div>
-<div class="line"><a name="l01145"></a><span class="lineno"> 1145</span>&#160;   <span class="comment">/* Load stuff */</span></div>
-<div class="line"><a name="l01146"></a><span class="lineno"> 1146</span>&#160;   <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a> = p;</div>
-<div class="line"><a name="l01147"></a><span class="lineno"> 1147</span>&#160;   <a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a> = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( p-&gt;gfx_exterior, 0 );</div>
-<div class="line"><a name="l01148"></a><span class="lineno"> 1148</span>&#160; </div>
-<div class="line"><a name="l01149"></a><span class="lineno"> 1149</span>&#160;   <span class="comment">/* Run outfits as necessary. */</span></div>
-<div class="line"><a name="l01150"></a><span class="lineno"> 1150</span>&#160;   <a class="code" href="pilot__outfit_8c.html#aca89b0e8f90c142fb10bb8fdd7e0496c">pilot_outfitLOnland</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
-<div class="line"><a name="l01151"></a><span class="lineno"> 1151</span>&#160; </div>
-<div class="line"><a name="l01152"></a><span class="lineno"> 1152</span>&#160;   <span class="comment">/* Generate the news. */</span></div>
-<div class="line"><a name="l01153"></a><span class="lineno"> 1153</span>&#160;   <span class="keywordflow">if</span> (planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_BAR))</div>
-<div class="line"><a name="l01154"></a><span class="lineno"> 1154</span>&#160;      <a class="code" href="land_8c.html#aa8ace0481a05d2e126bdefeacffc4251">news_load</a>();</div>
-<div class="line"><a name="l01155"></a><span class="lineno"> 1155</span>&#160; </div>
-<div class="line"><a name="l01156"></a><span class="lineno"> 1156</span>&#160;   <span class="comment">/* Average economy prices that player has seen */</span></div>
-<div class="line"><a name="l01157"></a><span class="lineno"> 1157</span>&#160;   economy_averageSeenPrices( p );</div>
-<div class="line"><a name="l01158"></a><span class="lineno"> 1158</span>&#160; </div>
-<div class="line"><a name="l01159"></a><span class="lineno"> 1159</span>&#160;   <span class="comment">/* Clear the NPC. */</span></div>
-<div class="line"><a name="l01160"></a><span class="lineno"> 1160</span>&#160;   <a class="code" href="npc_8c.html#a56bde0a1e6b7a363e8095e8f45a4f519">npc_clear</a>();</div>
-<div class="line"><a name="l01161"></a><span class="lineno"> 1161</span>&#160; </div>
-<div class="line"><a name="l01162"></a><span class="lineno"> 1162</span>&#160;   <span class="comment">/* Create all the windows. */</span></div>
-<div class="line"><a name="l01163"></a><span class="lineno"> 1163</span>&#160;   <a class="code" href="land_8c.html#a35634614957e81cc5a3df1f1d3592141">land_genWindows</a>( load, 0 );</div>
-<div class="line"><a name="l01164"></a><span class="lineno"> 1164</span>&#160; </div>
-<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;   <span class="comment">/* Hack so that load can run player.takeoff(). */</span></div>
-<div class="line"><a name="l01166"></a><span class="lineno"> 1166</span>&#160;   <span class="keywordflow">if</span> (load)</div>
-<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;      <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;load&quot;</span> );</div>
-<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160; </div>
-<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;   <span class="comment">/* Just in case? */</span></div>
-<div class="line"><a name="l01170"></a><span class="lineno"> 1170</span>&#160;   <a class="code" href="land_8c.html#a005d4e974a6f9a7e7fe8b20a9cc2e5ec">bar_regen</a>();</div>
-<div class="line"><a name="l01171"></a><span class="lineno"> 1171</span>&#160; </div>
-<div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;   <span class="comment">/* Mission forced take off. */</span></div>
-<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a964f629a8f91354066d6c8bedfeb7677">land_takeoff</a>)</div>
-<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160;      <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(0);</div>
-<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160;}</div>
-<div class="line"><a name="l01176"></a><span class="lineno"> 1176</span>&#160; </div>
-<div class="line"><a name="l01182"></a><span class="lineno"><a class="line" href="land_8c.html#afbcc8d719ed52beeebbcbf20ce96cb53"> 1182</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="land_8c.html#afbcc8d719ed52beeebbcbf20ce96cb53">land_createMainTab</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid )</div>
-<div class="line"><a name="l01183"></a><span class="lineno"> 1183</span>&#160;{</div>
-<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160;   <span class="keyword">const</span> glTexture *logo;</div>
-<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;   <span class="keywordtype">int</span> offset;</div>
-<div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160;   <span class="keywordtype">int</span> w, h, logow, logoh, th;</div>
-<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *bufSInfo;</div>
-<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160; </div>
-<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;   <span class="comment">/* Get window dimensions. */</span></div>
-<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;   <a class="code" href="toolkit_8c.html#a2da856138b3dca397a69c3b4d440d769">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
-<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160; </div>
-<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;   <span class="comment">/*</span></div>
-<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;<span class="comment">    * Faction logo.</span></div>
-<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160;   offset = 20;</div>
-<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;presence.faction != -1) {</div>
-<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;      logo = <a class="code" href="faction_8c.html#a8779a04440f1314611dbef914bdd0c69">faction_logo</a>(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;presence.faction);</div>
-<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;      <span class="keywordflow">if</span> (logo != NULL) {</div>
-<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;         logow = logo-&gt;w * (double)FACTION_LOGO_SM / <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( logo-&gt;w, logo-&gt;h );</div>
-<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;         logoh = logo-&gt;h * (double)FACTION_LOGO_SM / <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( logo-&gt;w, logo-&gt;h );</div>
-<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160;         window_addImage( wid, 440 + (w-460-logow)/2, -20,</div>
-<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160;               logow, logoh, <span class="stringliteral">&quot;imgFaction&quot;</span>, logo, 0 );</div>
-<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160;         offset += FACTION_LOGO_SM;</div>
-<div class="line"><a name="l01204"></a><span class="lineno"> 1204</span>&#160;      }</div>
-<div class="line"><a name="l01205"></a><span class="lineno"> 1205</span>&#160;   }</div>
-<div class="line"><a name="l01206"></a><span class="lineno"> 1206</span>&#160; </div>
-<div class="line"><a name="l01207"></a><span class="lineno"> 1207</span>&#160;   <span class="comment">/*</span></div>
-<div class="line"><a name="l01208"></a><span class="lineno"> 1208</span>&#160;<span class="comment">    * Pretty display.</span></div>
-<div class="line"><a name="l01209"></a><span class="lineno"> 1209</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l01210"></a><span class="lineno"> 1210</span>&#160;   window_addImage( wid, 20, -40, 400, 400, <span class="stringliteral">&quot;imgPlanet&quot;</span>, <a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a>, 1 );</div>
-<div class="line"><a name="l01211"></a><span class="lineno"> 1211</span>&#160;   window_addText( wid, 440, -20-offset,</div>
-<div class="line"><a name="l01212"></a><span class="lineno"> 1212</span>&#160;         w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,</div>
-<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160;         <span class="stringliteral">&quot;txtPlanetDesc&quot;</span>, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL, _(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;description) );</div>
-<div class="line"><a name="l01214"></a><span class="lineno"> 1214</span>&#160; </div>
-<div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160;   <span class="comment">/* Player stats. */</span></div>
-<div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160;   bufSInfo = _(</div>
-<div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160;         <span class="stringliteral">&quot;#nStationed at:\n&quot;</span></div>
-<div class="line"><a name="l01218"></a><span class="lineno"> 1218</span>&#160;         <span class="stringliteral">&quot;Class:\n&quot;</span></div>
-<div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;         <span class="stringliteral">&quot;Faction:\n&quot;</span></div>
-<div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;         <span class="stringliteral">&quot;Population:\n&quot;</span></div>
-<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;         <span class="stringliteral">&quot;\n&quot;</span></div>
-<div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;         <span class="stringliteral">&quot;Free Space:\n&quot;</span></div>
-<div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160;         <span class="stringliteral">&quot;Money:&quot;</span> );</div>
-<div class="line"><a name="l01224"></a><span class="lineno"> 1224</span>&#160;   th = <a class="code" href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a>( &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, 200, bufSInfo );</div>
-<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;   window_addText( wid, 20, 20, 200, th,</div>
-<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;         0, <span class="stringliteral">&quot;txtSInfo&quot;</span>, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL, bufSInfo );</div>
-<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;   window_addText( wid, 20+120, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,</div>
-<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;         th, 0, <span class="stringliteral">&quot;txtDInfo&quot;</span>, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL, NULL );</div>
-<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160; </div>
-<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;   <span class="comment">/*</span></div>
-<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;<span class="comment">    * buttons</span></div>
-<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;   <span class="comment">/* first column */</span></div>
-<div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;   window_addButtonKey( wid, -20, 20,</div>
-<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;         LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, <span class="stringliteral">&quot;btnTakeoff&quot;</span>,</div>
-<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;         _(<span class="stringliteral">&quot;Take Off&quot;</span>), <a class="code" href="land_8c.html#aec395be2472a112d87d347ba0aa7a4bc">land_buttonTakeoff</a>, SDLK_t );</div>
-<div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160; </div>
-<div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;   <span class="comment">/* Add &quot;no refueling&quot; notice if needed. */</span></div>
-<div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160;   <span class="keywordflow">if</span> (!planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_REFUEL)) {</div>
-<div class="line"><a name="l01240"></a><span class="lineno"> 1240</span>&#160;      window_addText( <a class="code" href="land_8c.html#a3cbb6511845b065f666ecc5afe8a9a5c">land_windows</a>[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,</div>
-<div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;               200, <a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h, 1, <span class="stringliteral">&quot;txtRefuel&quot;</span>,</div>
-<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;               &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL, _(<span class="stringliteral">&quot;No refueling services.&quot;</span>) );</div>
-<div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;   }</div>
-<div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;}</div>
-<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160; </div>
-<div class="line"><a name="l01254"></a><span class="lineno"><a class="line" href="land_8c.html#a00d864dfa0476d07b86ebb4cdcc77e72"> 1254</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="land_8c.html#a00d864dfa0476d07b86ebb4cdcc77e72">land_changeTab</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *wgt, <span class="keywordtype">int</span> old, <span class="keywordtype">int</span> tab )</div>
-<div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;{</div>
-<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;   (void) wid;</div>
-<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160;   (void) wgt;</div>
-<div class="line"><a name="l01258"></a><span class="lineno"> 1258</span>&#160;   (void) old;</div>
-<div class="line"><a name="l01259"></a><span class="lineno"> 1259</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> w;</div>
-<div class="line"><a name="l01260"></a><span class="lineno"> 1260</span>&#160;   <span class="comment">/* Safe defaults. */</span></div>
-<div class="line"><a name="l01261"></a><span class="lineno"> 1261</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *torun_hook = NULL;</div>
-<div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> to_visit = 0;</div>
-<div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160; </div>
-<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;   <span class="comment">/* Find what switched. */</span></div>
-<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;LAND_NUMWINDOWS; i++) {</div>
-<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[i] != tab)</div>
-<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;      <a class="code" href="land_8c.html#a0b800208425ac7b0ab8dcba95be21a47">last_window</a> = i;</div>
-<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;      w = <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>( i );</div>
-<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160; </div>
-<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;      <span class="comment">/* Must regenerate outfits. */</span></div>
-<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160;      <span class="keywordflow">switch</span> (i) {</div>
-<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_MAIN:</div>
-<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;            <a class="code" href="land_8c.html#ac76b91ee8f654c52e2f505030b839646">land_updateMainTab</a>();</div>
-<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_OUTFITS:</div>
-<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;            <a class="code" href="land__outfits_8c.html#a8dfbc071e692281867a648fa497a1952">outfits_update</a>( w, NULL );</div>
-<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;            to_visit   = <a class="code" href="land_8c.html#aefe35d20ecd7f88b914e880820653afa">VISITED_OUTFITS</a>;</div>
-<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;            torun_hook = <span class="stringliteral">&quot;outfits&quot;</span>;</div>
-<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_SHIPYARD:</div>
-<div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160;            <a class="code" href="land__shipyard_8c.html#ad0c6c3b5f5657c3b7456f3c5bd91199b">shipyard_update</a>( w, NULL );</div>
-<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;            to_visit   = <a class="code" href="land_8c.html#aeb87da0f4c72b484b5238c7f7d53838c">VISITED_SHIPYARD</a>;</div>
-<div class="line"><a name="l01284"></a><span class="lineno"> 1284</span>&#160;            torun_hook = <span class="stringliteral">&quot;shipyard&quot;</span>;</div>
-<div class="line"><a name="l01285"></a><span class="lineno"> 1285</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01286"></a><span class="lineno"> 1286</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_BAR:</div>
-<div class="line"><a name="l01287"></a><span class="lineno"> 1287</span>&#160;            <a class="code" href="land_8c.html#a3d64270d064d54f3b2ce1a1037ee8abe">bar_update</a>( w, NULL );</div>
-<div class="line"><a name="l01288"></a><span class="lineno"> 1288</span>&#160;            to_visit   = <a class="code" href="land_8c.html#a8283a369826cd5a89514f638a5149e8e">VISITED_BAR</a>;</div>
-<div class="line"><a name="l01289"></a><span class="lineno"> 1289</span>&#160;            torun_hook = <span class="stringliteral">&quot;bar&quot;</span>;</div>
-<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_MISSION:</div>
-<div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;            <a class="code" href="land_8c.html#af3d6035746df50efdcb5ee8cff63e7c4">misn_update</a>( w, NULL );</div>
-<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;            to_visit   = <a class="code" href="land_8c.html#a4c1821845c57496b66a2db919624a08f">VISITED_MISSION</a>;</div>
-<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;            torun_hook = <span class="stringliteral">&quot;mission&quot;</span>;</div>
-<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_COMMODITY:</div>
-<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;            <a class="code" href="land__trade_8c.html#acb3e81ee498b5c56c9b0e844cb2e2178">commodity_update</a>( w, NULL );</div>
-<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;            to_visit   = <a class="code" href="land_8c.html#a670aac77862e69b16cf3fdf6aa13a2a2">VISITED_COMMODITY</a>;</div>
-<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;            torun_hook = <span class="stringliteral">&quot;commodity&quot;</span>;</div>
-<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_EQUIPMENT:</div>
-<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;            <a class="code" href="equipment_8c.html#aa3a721eaa72b223a8cb95d7601bfa8f3">equipment_updateShips</a>( w, NULL );</div>
-<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;            <a class="code" href="equipment_8c.html#a859bf459494e24022722c5762c785977">equipment_updateOutfits</a>( w, NULL );</div>
-<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;            to_visit   = <a class="code" href="land_8c.html#a30171392252e0a2c9003f22f682ef4df">VISITED_EQUIPMENT</a>;</div>
-<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;            torun_hook = <span class="stringliteral">&quot;equipment&quot;</span>;</div>
-<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160; </div>
-<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160;         <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;      }</div>
-<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160; </div>
-<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160;      <span class="comment">/* Clear markers if closing Mission Computer. */</span></div>
-<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160;      <span class="keywordflow">if</span> (i != LAND_WINDOW_MISSION)</div>
-<div class="line"><a name="l01314"></a><span class="lineno"> 1314</span>&#160;         <a class="code" href="space_8c.html#ad13eb4bb17eb89f051df29c6df5962ab">space_clearComputerMarkers</a>();</div>
-<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160; </div>
-<div class="line"><a name="l01316"></a><span class="lineno"> 1316</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01317"></a><span class="lineno"> 1317</span>&#160;   }</div>
-<div class="line"><a name="l01318"></a><span class="lineno"> 1318</span>&#160; </div>
-<div class="line"><a name="l01319"></a><span class="lineno"> 1319</span>&#160;   <span class="comment">/* Check land missions - always run hooks. */</span></div>
-<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160;   <span class="comment">/*if ((to_visit != 0) &amp;&amp; !has_visited(to_visit)) {*/</span></div>
-<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;   {</div>
-<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;      <span class="comment">/* Run hooks, run after music in case hook wants to change music. */</span></div>
-<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;      <span class="keywordflow">if</span> (torun_hook != NULL)</div>
-<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( torun_hook ) &gt; 0)</div>
-<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;            <a class="code" href="land_8c.html#a9e57fb5f033d37143e4d016a4314ec01">bar_genList</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_BAR) );</div>
-<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160; </div>
-<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160;      <a class="code" href="land_8c.html#a0df066f110be70d63b8c9a6cfcf1380d">visited</a>(to_visit);</div>
+<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;         <a class="code" href="land_8c.html#afbcc8d719ed52beeebbcbf20ce96cb53">land_createMainTab</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_MAIN) );</div>
+<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;         <a class="code" href="land_8c.html#ac76b91ee8f654c52e2f505030b839646">land_updateMainTab</a>();</div>
+<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;      }</div>
+<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160; </div>
+<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;      <span class="comment">/* 3) Generate computer and bar missions. */</span></div>
+<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;      <span class="comment">/* Generate bar missions first for claims. */</span></div>
+<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;      <span class="keywordflow">if</span> (planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_BAR) &amp;&amp; !planet_isFlag(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_NOMISNSPAWN))</div>
+<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;         <a class="code" href="npc_8c.html#a2b7722e96fce75ed7c58f51313793d01">npc_generateMissions</a>(); <span class="comment">/* Generate bar npc. */</span></div>
+<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;      <span class="keywordflow">if</span> (planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_MISSIONS))</div>
+<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;         <a class="code" href="land_8c.html#a817712c9042d4682d48d0d151656e027">mission_computer</a> = <a class="code" href="mission_8c.html#afdc03d53b5f12418528f86360b12ad9e">missions_genList</a>( &amp;<a class="code" href="land_8c.html#a3e8d96829b0a68069bd988356eaa254a">mission_ncomputer</a>,</div>
+<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;               <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;presence.faction, <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;name, <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;name,</div>
+<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;               MIS_AVAIL_COMPUTER );</div>
+<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;   }</div>
+<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160; </div>
+<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;   <span class="comment">/* 4) Create other tabs. */</span></div>
+<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;<span class="preprocessor">#define should_open(s, w) \</span></div>
+<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;<span class="preprocessor">   (planet_hasService(land_planet, s) &amp;&amp; (!land_tabGenerated(w)))</span></div>
+<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160; </div>
+<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;   <span class="comment">/* Things get a bit hairy here. Hooks may have triggered a GUI reload via</span></div>
+<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;<span class="comment">    * e.g. player.swapShip, so the land tabs may have been generated already</span></div>
+<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;<span class="comment">    * and we need to check that before regenerating them.</span></div>
+<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160; </div>
+<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;   <span class="comment">/* Basic - bar + missions */</span></div>
+<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_BAR, LAND_WINDOW_BAR ))</div>
+<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;      <a class="code" href="land_8c.html#ad70f847ff04d640ef71918812a579fec">bar_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_BAR) );</div>
+<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_MISSIONS, LAND_WINDOW_MISSION ))</div>
+<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;      <a class="code" href="land_8c.html#a6c976fa364eb941b794773b58ced67ed">misn_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_MISSION) );</div>
+<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;   <span class="comment">/* Outfits. */</span></div>
+<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_OUTFITS, LAND_WINDOW_OUTFITS ))</div>
+<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;      <a class="code" href="land__outfits_8c.html#a6ec655d62d6b14f580d4144738cee636">outfits_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_OUTFITS), NULL );</div>
+<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;   <span class="comment">/* Shipyard. */</span></div>
+<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ))</div>
+<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;      <a class="code" href="land__shipyard_8c.html#a3b50754e192562293777efac8edb53f0">shipyard_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_SHIPYARD) );</div>
+<div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;   <span class="comment">/* Equipment. */</span></div>
+<div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;   <span class="keywordflow">if</span> ((planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_OUTFITS) ||</div>
+<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;         planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_SHIPYARD)) &amp;&amp;</div>
+<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;         !land_tabGenerated( LAND_WINDOW_EQUIPMENT ))</div>
+<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;      <a class="code" href="equipment_8c.html#ae3f4006f3cbe59b848ebf65ee9e33203">equipment_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_EQUIPMENT) );</div>
+<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;   <span class="comment">/* Commodity. */</span></div>
+<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;   <span class="keywordflow">if</span> (should_open( PLANET_SERVICE_COMMODITY, LAND_WINDOW_COMMODITY ))</div>
+<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;      <a class="code" href="land__trade_8c.html#a370af34d07bbabefbb9e2ff198039232">commodity_exchange_open</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_COMMODITY) );</div>
+<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;<span class="preprocessor">#undef should_open</span></div>
+<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160; </div>
+<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;   <span class="keywordflow">if</span> (!regen) {</div>
+<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;      <span class="comment">/* Reset markers if needed. */</span></div>
+<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;      <a class="code" href="mission_8c.html#a4a8af8fb9ff0ef11d268432dfdd3091f">mission_sysMark</a>();</div>
+<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160; </div>
+<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;      <span class="comment">/* Check land missions. */</span></div>
+<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="land_8c.html#af5fedeab2579c7f88df92ba16ff6d17a">has_visited</a>(<a class="code" href="land_8c.html#a689d985e9ee3f932a8c89e0b8d6a9895">VISITED_LAND</a>)) {</div>
+<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;         <a class="code" href="mission_8c.html#a3bac4543ee633374be825ef5ccf108e3">missions_run</a>(MIS_AVAIL_LAND, <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;presence.faction,</div>
+<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;               <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;name, <a class="code" href="space_8c.html#a80fc91b008974b39b78ee551d5abc684">cur_system</a>-&gt;name);</div>
+<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;         <a class="code" href="land_8c.html#a0df066f110be70d63b8c9a6cfcf1380d">visited</a>(<a class="code" href="land_8c.html#a689d985e9ee3f932a8c89e0b8d6a9895">VISITED_LAND</a>);</div>
+<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;      }</div>
+<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;   }</div>
+<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160; </div>
+<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;   <span class="comment">/* Go to last open tab. */</span></div>
+<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;   window_tabWinOnChange( <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>, <span class="stringliteral">&quot;tabLand&quot;</span>, <a class="code" href="land_8c.html#a00d864dfa0476d07b86ebb4cdcc77e72">land_changeTab</a> );</div>
+<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;   <span class="keywordflow">if</span> (changetab &amp;&amp; <a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[ <a class="code" href="land_8c.html#a0b800208425ac7b0ab8dcba95be21a47">last_window</a> ] != -1)</div>
+<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;      window_tabWinSetActive( <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>, <span class="stringliteral">&quot;tabLand&quot;</span>, <a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[ <a class="code" href="land_8c.html#a0b800208425ac7b0ab8dcba95be21a47">last_window</a> ] );</div>
+<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160; </div>
+<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;   <span class="comment">/* Refresh the map button in case the player couldn&#39;t afford it prior to</span></div>
+<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;<span class="comment">    * mission payment. */</span></div>
+<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;   <a class="code" href="land_8c.html#ac76b91ee8f654c52e2f505030b839646">land_updateMainTab</a>();</div>
+<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160; </div>
+<div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160;   <span class="comment">/* Refuel if necessary. */</span></div>
+<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;   <a class="code" href="land_8c.html#aeefd3773b3efb48d43d0916398741051">land_refuel</a>();</div>
+<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160; </div>
+<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;   <span class="comment">/* Finished loading. */</span></div>
+<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;   <a class="code" href="land_8c.html#a699c3894d189b60cc517f034f14769c9">land_loaded</a> = 1;</div>
+<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160; </div>
+<div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160;   <span class="comment">/* Necessary if player.land() was run in an abort() function. */</span></div>
+<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;   <a class="code" href="toolkit_8c.html#ab9cb9e690788fe1cfa7089d0cb528798">window_lower</a>( <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a> );</div>
+<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;}</div>
+<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160; </div>
+<div class="line"><a name="l01111"></a><span class="lineno"><a class="line" href="land_8c.html#a50037c54f1199579fdc354aa61f52728"> 1111</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="land_8c.html#a50037c54f1199579fdc354aa61f52728">land_setWindow</a>( <span class="keywordtype">int</span> window )</div>
+<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;{</div>
+<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[ window ] &lt; 0)</div>
+<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;      <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;   window_tabWinSetActive( <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>, <span class="stringliteral">&quot;tabLand&quot;</span>, <a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[window] );</div>
+<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160;}</div>
+<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160; </div>
+<div class="line"><a name="l01124"></a><span class="lineno"><a class="line" href="land_8c.html#ac31058d9dda769012c91c866c34e595a"> 1124</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a>( <a class="code" href="structPlanet.html">Planet</a>* p, <span class="keywordtype">int</span> load )</div>
+<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;{</div>
+<div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160;   <span class="comment">/* Do not land twice. */</span></div>
+<div class="line"><a name="l01127"></a><span class="lineno"> 1127</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>)</div>
+<div class="line"><a name="l01128"></a><span class="lineno"> 1128</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01129"></a><span class="lineno"> 1129</span>&#160; </div>
+<div class="line"><a name="l01130"></a><span class="lineno"> 1130</span>&#160;   <span class="comment">/* Incrcement times player landed. */</span></div>
+<div class="line"><a name="l01131"></a><span class="lineno"> 1131</span>&#160;   <span class="keywordflow">if</span> (!load)</div>
+<div class="line"><a name="l01132"></a><span class="lineno"> 1132</span>&#160;      <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.landed_times++;</div>
+<div class="line"><a name="l01133"></a><span class="lineno"> 1133</span>&#160; </div>
+<div class="line"><a name="l01134"></a><span class="lineno"> 1134</span>&#160;   <span class="comment">/* Clear some unnecessary flags. */</span></div>
+<div class="line"><a name="l01135"></a><span class="lineno"> 1135</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_COOLDOWN_BRAKE);</div>
+<div class="line"><a name="l01136"></a><span class="lineno"> 1136</span>&#160;   pilot_rmFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_COOLDOWN );</div>
+<div class="line"><a name="l01137"></a><span class="lineno"> 1137</span>&#160; </div>
+<div class="line"><a name="l01138"></a><span class="lineno"> 1138</span>&#160;   <span class="comment">/* Resets the player&#39;s heat. */</span></div>
+<div class="line"><a name="l01139"></a><span class="lineno"> 1139</span>&#160;   <a class="code" href="pilot__heat_8c.html#a97c6b628d59347dae74710af47e464f2">pilot_heatReset</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
+<div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160; </div>
+<div class="line"><a name="l01141"></a><span class="lineno"> 1141</span>&#160;   <span class="comment">/* Heal the player so GUI shows player at full everything. */</span></div>
+<div class="line"><a name="l01142"></a><span class="lineno"> 1142</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a3efb77f9b10293bb645d7641609485ef">pilot_healLanded</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
+<div class="line"><a name="l01143"></a><span class="lineno"> 1143</span>&#160; </div>
+<div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160;   <span class="comment">/* Stop player sounds. */</span></div>
+<div class="line"><a name="l01145"></a><span class="lineno"> 1145</span>&#160;   <a class="code" href="player_8c.html#a988a143f483f4ee9fc1e7501e9277a2c">player_soundStop</a>();</div>
+<div class="line"><a name="l01146"></a><span class="lineno"> 1146</span>&#160; </div>
+<div class="line"><a name="l01147"></a><span class="lineno"> 1147</span>&#160;   <span class="comment">/* Load stuff */</span></div>
+<div class="line"><a name="l01148"></a><span class="lineno"> 1148</span>&#160;   <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a> = p;</div>
+<div class="line"><a name="l01149"></a><span class="lineno"> 1149</span>&#160;   <a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a> = <a class="code" href="opengl__tex_8c.html#ac11623fb12c9ea15b80ec32d90c6898d">gl_newImage</a>( p-&gt;gfx_exterior, 0 );</div>
+<div class="line"><a name="l01150"></a><span class="lineno"> 1150</span>&#160; </div>
+<div class="line"><a name="l01151"></a><span class="lineno"> 1151</span>&#160;   <span class="comment">/* Run outfits as necessary. */</span></div>
+<div class="line"><a name="l01152"></a><span class="lineno"> 1152</span>&#160;   <a class="code" href="pilot__outfit_8c.html#aca89b0e8f90c142fb10bb8fdd7e0496c">pilot_outfitLOnland</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
+<div class="line"><a name="l01153"></a><span class="lineno"> 1153</span>&#160; </div>
+<div class="line"><a name="l01154"></a><span class="lineno"> 1154</span>&#160;   <span class="comment">/* Generate the news. */</span></div>
+<div class="line"><a name="l01155"></a><span class="lineno"> 1155</span>&#160;   <span class="keywordflow">if</span> (planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_BAR))</div>
+<div class="line"><a name="l01156"></a><span class="lineno"> 1156</span>&#160;      <a class="code" href="land_8c.html#aa8ace0481a05d2e126bdefeacffc4251">news_load</a>();</div>
+<div class="line"><a name="l01157"></a><span class="lineno"> 1157</span>&#160; </div>
+<div class="line"><a name="l01158"></a><span class="lineno"> 1158</span>&#160;   <span class="comment">/* Average economy prices that player has seen */</span></div>
+<div class="line"><a name="l01159"></a><span class="lineno"> 1159</span>&#160;   economy_averageSeenPrices( p );</div>
+<div class="line"><a name="l01160"></a><span class="lineno"> 1160</span>&#160; </div>
+<div class="line"><a name="l01161"></a><span class="lineno"> 1161</span>&#160;   <span class="comment">/* Clear the NPC. */</span></div>
+<div class="line"><a name="l01162"></a><span class="lineno"> 1162</span>&#160;   <a class="code" href="npc_8c.html#a56bde0a1e6b7a363e8095e8f45a4f519">npc_clear</a>();</div>
+<div class="line"><a name="l01163"></a><span class="lineno"> 1163</span>&#160; </div>
+<div class="line"><a name="l01164"></a><span class="lineno"> 1164</span>&#160;   <span class="comment">/* Create all the windows. */</span></div>
+<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;   <a class="code" href="land_8c.html#a35634614957e81cc5a3df1f1d3592141">land_genWindows</a>( load, 0 );</div>
+<div class="line"><a name="l01166"></a><span class="lineno"> 1166</span>&#160; </div>
+<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;   <span class="comment">/* Hack so that load can run player.takeoff(). */</span></div>
+<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160;   <span class="keywordflow">if</span> (load)</div>
+<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;      <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( <span class="stringliteral">&quot;load&quot;</span> );</div>
+<div class="line"><a name="l01170"></a><span class="lineno"> 1170</span>&#160; </div>
+<div class="line"><a name="l01171"></a><span class="lineno"> 1171</span>&#160;   <span class="comment">/* Just in case? */</span></div>
+<div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;   <a class="code" href="land_8c.html#a005d4e974a6f9a7e7fe8b20a9cc2e5ec">bar_regen</a>();</div>
+<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160; </div>
+<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160;   <span class="comment">/* Mission forced take off. */</span></div>
+<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a964f629a8f91354066d6c8bedfeb7677">land_takeoff</a>)</div>
+<div class="line"><a name="l01176"></a><span class="lineno"> 1176</span>&#160;      <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(0);</div>
+<div class="line"><a name="l01177"></a><span class="lineno"> 1177</span>&#160;}</div>
+<div class="line"><a name="l01178"></a><span class="lineno"> 1178</span>&#160; </div>
+<div class="line"><a name="l01184"></a><span class="lineno"><a class="line" href="land_8c.html#afbcc8d719ed52beeebbcbf20ce96cb53"> 1184</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="land_8c.html#afbcc8d719ed52beeebbcbf20ce96cb53">land_createMainTab</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid )</div>
+<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;{</div>
+<div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160;   <span class="keyword">const</span> glTexture *logo;</div>
+<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;   <span class="keywordtype">int</span> offset;</div>
+<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;   <span class="keywordtype">int</span> w, h, logow, logoh, th;</div>
+<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *bufSInfo;</div>
+<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160; </div>
+<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;   <span class="comment">/* Get window dimensions. */</span></div>
+<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;   <a class="code" href="toolkit_8c.html#a2da856138b3dca397a69c3b4d440d769">window_dimWindow</a>( wid, &amp;w, &amp;h );</div>
+<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160; </div>
+<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160;   <span class="comment">/*</span></div>
+<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160;<span class="comment">    * Faction logo.</span></div>
+<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;   offset = 20;</div>
+<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;presence.faction != -1) {</div>
+<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;      logo = <a class="code" href="faction_8c.html#a8779a04440f1314611dbef914bdd0c69">faction_logo</a>(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;presence.faction);</div>
+<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;      <span class="keywordflow">if</span> (logo != NULL) {</div>
+<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160;         logow = logo-&gt;w * (double)FACTION_LOGO_SM / <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( logo-&gt;w, logo-&gt;h );</div>
+<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160;         logoh = logo-&gt;h * (double)FACTION_LOGO_SM / <a class="code" href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>( logo-&gt;w, logo-&gt;h );</div>
+<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160;         window_addImage( wid, 440 + (w-460-logow)/2, -20,</div>
+<div class="line"><a name="l01204"></a><span class="lineno"> 1204</span>&#160;               logow, logoh, <span class="stringliteral">&quot;imgFaction&quot;</span>, logo, 0 );</div>
+<div class="line"><a name="l01205"></a><span class="lineno"> 1205</span>&#160;         offset += FACTION_LOGO_SM;</div>
+<div class="line"><a name="l01206"></a><span class="lineno"> 1206</span>&#160;      }</div>
+<div class="line"><a name="l01207"></a><span class="lineno"> 1207</span>&#160;   }</div>
+<div class="line"><a name="l01208"></a><span class="lineno"> 1208</span>&#160; </div>
+<div class="line"><a name="l01209"></a><span class="lineno"> 1209</span>&#160;   <span class="comment">/*</span></div>
+<div class="line"><a name="l01210"></a><span class="lineno"> 1210</span>&#160;<span class="comment">    * Pretty display.</span></div>
+<div class="line"><a name="l01211"></a><span class="lineno"> 1211</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l01212"></a><span class="lineno"> 1212</span>&#160;   window_addImage( wid, 20, -40, 400, 400, <span class="stringliteral">&quot;imgPlanet&quot;</span>, <a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a>, 1 );</div>
+<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160;   window_addText( wid, 440, -20-offset,</div>
+<div class="line"><a name="l01214"></a><span class="lineno"> 1214</span>&#160;         w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,</div>
+<div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160;         <span class="stringliteral">&quot;txtPlanetDesc&quot;</span>, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL, _(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;description) );</div>
+<div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160; </div>
+<div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160;   <span class="comment">/* Player stats. */</span></div>
+<div class="line"><a name="l01218"></a><span class="lineno"> 1218</span>&#160;   bufSInfo = _(</div>
+<div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;         <span class="stringliteral">&quot;#nStationed at:\n&quot;</span></div>
+<div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;         <span class="stringliteral">&quot;Class:\n&quot;</span></div>
+<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;         <span class="stringliteral">&quot;Faction:\n&quot;</span></div>
+<div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;         <span class="stringliteral">&quot;Population:\n&quot;</span></div>
+<div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160;         <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line"><a name="l01224"></a><span class="lineno"> 1224</span>&#160;         <span class="stringliteral">&quot;Free Space:\n&quot;</span></div>
+<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;         <span class="stringliteral">&quot;Money:&quot;</span> );</div>
+<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;   th = <a class="code" href="font_8c.html#a0f1a2e63659f8c8e5d3abb1f6766cc97">gl_printHeightRaw</a>( &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, 200, bufSInfo );</div>
+<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;   window_addText( wid, 20, 20, 200, th,</div>
+<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;         0, <span class="stringliteral">&quot;txtSInfo&quot;</span>, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL, bufSInfo );</div>
+<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;   window_addText( wid, 20+120, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,</div>
+<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;         th, 0, <span class="stringliteral">&quot;txtDInfo&quot;</span>, &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL, NULL );</div>
+<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160; </div>
+<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;   <span class="comment">/*</span></div>
+<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;<span class="comment">    * buttons</span></div>
+<div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;   <span class="comment">/* first column */</span></div>
+<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;   window_addButtonKey( wid, -20, 20,</div>
+<div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160;         LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, <span class="stringliteral">&quot;btnTakeoff&quot;</span>,</div>
+<div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;         _(<span class="stringliteral">&quot;Take Off&quot;</span>), <a class="code" href="land_8c.html#aec395be2472a112d87d347ba0aa7a4bc">land_buttonTakeoff</a>, SDLK_t );</div>
+<div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160; </div>
+<div class="line"><a name="l01240"></a><span class="lineno"> 1240</span>&#160;   <span class="comment">/* Add &quot;no refueling&quot; notice if needed. */</span></div>
+<div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;   <span class="keywordflow">if</span> (!planet_hasService(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>, PLANET_SERVICE_REFUEL)) {</div>
+<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;      window_addText( <a class="code" href="land_8c.html#a3cbb6511845b065f666ecc5afe8a9a5c">land_windows</a>[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,</div>
+<div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;               200, <a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>.h, 1, <span class="stringliteral">&quot;txtRefuel&quot;</span>,</div>
+<div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;               &amp;<a class="code" href="font_8c.html#a70108689d1f2c28b6e91f763e3918e9b">gl_defFont</a>, NULL, _(<span class="stringliteral">&quot;No refueling services.&quot;</span>) );</div>
+<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160;   }</div>
+<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160;}</div>
+<div class="line"><a name="l01247"></a><span class="lineno"> 1247</span>&#160; </div>
+<div class="line"><a name="l01256"></a><span class="lineno"><a class="line" href="land_8c.html#a00d864dfa0476d07b86ebb4cdcc77e72"> 1256</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="land_8c.html#a00d864dfa0476d07b86ebb4cdcc77e72">land_changeTab</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> wid, <span class="keyword">const</span> <span class="keywordtype">char</span> *wgt, <span class="keywordtype">int</span> old, <span class="keywordtype">int</span> tab )</div>
+<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160;{</div>
+<div class="line"><a name="l01258"></a><span class="lineno"> 1258</span>&#160;   (void) wid;</div>
+<div class="line"><a name="l01259"></a><span class="lineno"> 1259</span>&#160;   (void) wgt;</div>
+<div class="line"><a name="l01260"></a><span class="lineno"> 1260</span>&#160;   (void) old;</div>
+<div class="line"><a name="l01261"></a><span class="lineno"> 1261</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> w;</div>
+<div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;   <span class="comment">/* Safe defaults. */</span></div>
+<div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">char</span> *torun_hook = NULL;</div>
+<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> to_visit = 0;</div>
+<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160; </div>
+<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;   <span class="comment">/* Find what switched. */</span></div>
+<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;LAND_NUMWINDOWS; i++) {</div>
+<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a0b4828c42cca1a8c44098b19fbea214e">land_windowsMap</a>[i] != tab)</div>
+<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160;      <a class="code" href="land_8c.html#a0b800208425ac7b0ab8dcba95be21a47">last_window</a> = i;</div>
+<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;      w = <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>( i );</div>
+<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160; </div>
+<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;      <span class="comment">/* Must regenerate outfits. */</span></div>
+<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;      <span class="keywordflow">switch</span> (i) {</div>
+<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_MAIN:</div>
+<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;            <a class="code" href="land_8c.html#ac76b91ee8f654c52e2f505030b839646">land_updateMainTab</a>();</div>
+<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_OUTFITS:</div>
+<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;            <a class="code" href="land__outfits_8c.html#a8dfbc071e692281867a648fa497a1952">outfits_update</a>( w, NULL );</div>
+<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;            to_visit   = <a class="code" href="land_8c.html#aefe35d20ecd7f88b914e880820653afa">VISITED_OUTFITS</a>;</div>
+<div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;            torun_hook = <span class="stringliteral">&quot;outfits&quot;</span>;</div>
+<div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_SHIPYARD:</div>
+<div class="line"><a name="l01284"></a><span class="lineno"> 1284</span>&#160;            <a class="code" href="land__shipyard_8c.html#ad0c6c3b5f5657c3b7456f3c5bd91199b">shipyard_update</a>( w, NULL );</div>
+<div class="line"><a name="l01285"></a><span class="lineno"> 1285</span>&#160;            to_visit   = <a class="code" href="land_8c.html#aeb87da0f4c72b484b5238c7f7d53838c">VISITED_SHIPYARD</a>;</div>
+<div class="line"><a name="l01286"></a><span class="lineno"> 1286</span>&#160;            torun_hook = <span class="stringliteral">&quot;shipyard&quot;</span>;</div>
+<div class="line"><a name="l01287"></a><span class="lineno"> 1287</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01288"></a><span class="lineno"> 1288</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_BAR:</div>
+<div class="line"><a name="l01289"></a><span class="lineno"> 1289</span>&#160;            <a class="code" href="land_8c.html#a3d64270d064d54f3b2ce1a1037ee8abe">bar_update</a>( w, NULL );</div>
+<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;            to_visit   = <a class="code" href="land_8c.html#a8283a369826cd5a89514f638a5149e8e">VISITED_BAR</a>;</div>
+<div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;            torun_hook = <span class="stringliteral">&quot;bar&quot;</span>;</div>
+<div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_MISSION:</div>
+<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;            <a class="code" href="land_8c.html#af3d6035746df50efdcb5ee8cff63e7c4">misn_update</a>( w, NULL );</div>
+<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;            to_visit   = <a class="code" href="land_8c.html#a4c1821845c57496b66a2db919624a08f">VISITED_MISSION</a>;</div>
+<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;            torun_hook = <span class="stringliteral">&quot;mission&quot;</span>;</div>
+<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_COMMODITY:</div>
+<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;            <a class="code" href="land__trade_8c.html#acb3e81ee498b5c56c9b0e844cb2e2178">commodity_update</a>( w, NULL );</div>
+<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;            to_visit   = <a class="code" href="land_8c.html#a670aac77862e69b16cf3fdf6aa13a2a2">VISITED_COMMODITY</a>;</div>
+<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;            torun_hook = <span class="stringliteral">&quot;commodity&quot;</span>;</div>
+<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;         <span class="keywordflow">case</span> LAND_WINDOW_EQUIPMENT:</div>
+<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;            <a class="code" href="equipment_8c.html#aa3a721eaa72b223a8cb95d7601bfa8f3">equipment_updateShips</a>( w, NULL );</div>
+<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;            <a class="code" href="equipment_8c.html#a859bf459494e24022722c5762c785977">equipment_updateOutfits</a>( w, NULL );</div>
+<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;            to_visit   = <a class="code" href="land_8c.html#a30171392252e0a2c9003f22f682ef4df">VISITED_EQUIPMENT</a>;</div>
+<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;            torun_hook = <span class="stringliteral">&quot;equipment&quot;</span>;</div>
+<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160; </div>
+<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;         <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160;      }</div>
+<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160; </div>
+<div class="line"><a name="l01314"></a><span class="lineno"> 1314</span>&#160;      <span class="comment">/* Clear markers if closing Mission Computer. */</span></div>
+<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160;      <span class="keywordflow">if</span> (i != LAND_WINDOW_MISSION)</div>
+<div class="line"><a name="l01316"></a><span class="lineno"> 1316</span>&#160;         <a class="code" href="space_8c.html#ad13eb4bb17eb89f051df29c6df5962ab">space_clearComputerMarkers</a>();</div>
+<div class="line"><a name="l01317"></a><span class="lineno"> 1317</span>&#160; </div>
+<div class="line"><a name="l01318"></a><span class="lineno"> 1318</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01319"></a><span class="lineno"> 1319</span>&#160;   }</div>
+<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160; </div>
+<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;   <span class="comment">/* Check land missions - always run hooks. */</span></div>
+<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;   <span class="comment">/*if ((to_visit != 0) &amp;&amp; !has_visited(to_visit)) {*/</span></div>
+<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;   {</div>
+<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;      <span class="comment">/* Run hooks, run after music in case hook wants to change music. */</span></div>
+<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;      <span class="keywordflow">if</span> (torun_hook != NULL)</div>
+<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>( torun_hook ) &gt; 0)</div>
+<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160;            <a class="code" href="land_8c.html#a9e57fb5f033d37143e4d016a4314ec01">bar_genList</a>( <a class="code" href="land_8c.html#a54fabfb94ee06a4a710d52da3dd74fb1">land_getWid</a>(LAND_WINDOW_BAR) );</div>
 <div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160; </div>
-<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a964f629a8f91354066d6c8bedfeb7677">land_takeoff</a>)</div>
-<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;         <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(1);</div>
-<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;   }</div>
-<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;}</div>
-<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160; </div>
-<div class="line"><a name="l01339"></a><span class="lineno"><a class="line" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656"> 1339</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>( <span class="keywordtype">int</span> delay )</div>
-<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;{</div>
-<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;   <span class="keywordtype">int</span> h, stu;</div>
-<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;   <span class="keywordtype">char</span> *nt;</div>
-<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>, r;</div>
-<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160; </div>
-<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>)</div>
-<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160; </div>
-<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;   <span class="comment">/* Player&#39;s ship is not able to fly. */</span></div>
-<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ab3994400a772145f361cf8a74ffa7aec">player_canTakeoff</a>()) {</div>
-<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;      <span class="keywordtype">char</span> message[STRMAX_SHORT];</div>
-<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;      <a class="code" href="pilot__outfit_8c.html#aad031d8fa82908c43aee6776fa433ce6">pilot_reportSpaceworthy</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, message, <span class="keyword">sizeof</span>(message) );</div>
-<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;      <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Ship not fit for flight&quot;</span>), message );</div>
-<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160; </div>
-<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;      <span class="comment">/* Check whether the player needs rescuing. */</span></div>
-<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;      <a class="code" href="land_8c.html#a58707e7ae34f33f7f9d721a303c17432">land_stranded</a>();</div>
-<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160; </div>
-<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;   }</div>
-<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160; </div>
-<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;   <span class="comment">/* Clear queued takeoff. */</span></div>
-<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;   <a class="code" href="land_8c.html#a964f629a8f91354066d6c8bedfeb7677">land_takeoff</a> = 0;</div>
-<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160; </div>
-<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;   <span class="comment">/* Refuel if needed. */</span></div>
-<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;   <a class="code" href="land_8c.html#aeefd3773b3efb48d43d0916398741051">land_refuel</a>();</div>
-<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160; </div>
-<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;   <span class="comment">/* In case we had paused messy sounds. */</span></div>
-<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160;   <a class="code" href="sound_8c.html#a918b0b9e44a53989257324da30ba2939">sound_stopAll</a>();</div>
-<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160; </div>
-<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;   <span class="comment">/* ze music */</span></div>
-<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;   <a class="code" href="music_8c.html#a5a1125faf5771e25b85823fcc492c054">music_choose</a>(<span class="stringliteral">&quot;takeoff&quot;</span>);</div>
-<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160; </div>
-<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;   <span class="comment">/* to randomize the takeoff a bit */</span></div>
-<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;   a = RNGF() * 2. * M_PI;</div>
-<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;   r = RNGF() * <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;radius;</div>
-<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160; </div>
-<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;   <span class="comment">/* no longer authorized to land */</span></div>
-<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;   player_rmFlag(PLAYER_LANDACK);</div>
-<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;   pilot_rmFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p,PILOT_LANDING); <span class="comment">/* No longer landing. */</span></div>
-<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160; </div>
-<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;   <span class="comment">/* set player to another position with random facing direction and no vel */</span></div>
-<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;   <a class="code" href="player_8c.html#a448beeae7efa85a54ce1899143662334">player_warp</a>( <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;pos.x + r * cos(a), <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;pos.y + r * sin(a) );</div>
-<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;   vect_pset( &amp;<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;vel, 0., 0. );</div>
-<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;dir = RNGF() * 2. * M_PI;</div>
-<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;   <a class="code" href="camera_8c.html#a66ab20236dca75d4537284f0688b6d8f">cam_setTargetPilot</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;id, 0 );</div>
-<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160; </div>
-<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;   <span class="comment">/* heal the player */</span></div>
-<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a3efb77f9b10293bb645d7641609485ef">pilot_healLanded</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
-<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160; </div>
-<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;   <span class="comment">/* Refill ammo */</span></div>
-<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a6ec70643d24d369c3c7b20df4d4ce949">pilot_fillAmmo</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
-<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160; </div>
-<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;   <span class="comment">/* Clear planet target. Allows for easier autonav out of the system. */</span></div>
-<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;   <a class="code" href="player_8c.html#a52d3581b9f23e8903a8abade0babef7a">player_targetPlanetSet</a>( -1 );</div>
-<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160; </div>
-<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;   <span class="comment">/* Clear pilots other than player. */</span></div>
-<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;   <a class="code" href="pilot_8c.html#a4d3e5a9b87c03163903f97a3db7016bc">pilots_clean</a>(0);</div>
-<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160; </div>
-<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;   <span class="comment">/* initialize the new space */</span></div>
-<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;   h = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace;</div>
-<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;   <a class="code" href="space_8c.html#a02f0fd39282e7f1f1e3bcd6a1b088a74">space_init</a>( NULL, 1 );</div>
-<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace = h;</div>
-<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160; </div>
-<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;   <span class="comment">/* cleanup */</span></div>
-<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="save_8c.html#a5e203b38eedcf236ba9c773e43ac86ac">save_all</a>() &lt; 0) <span class="comment">/* must be before cleaning up planet */</span></div>
-<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;      <a class="code" href="dialogue_8c.html#a3f539d942fa23eb9561ebc45e964ee07">dialogue_alert</a>( _(<span class="stringliteral">&quot;Failed to save game! You should exit and check the log to see what happened and then file a bug report!&quot;</span>) );</div>
-<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160; </div>
-<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;   <span class="comment">/* time goes by, triggers hook before takeoff */</span></div>
-<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;   <span class="keywordflow">if</span> (delay) {</div>
-<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;      <span class="comment">/* TODO should this depend on something else? */</span></div>
-<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;      stu = (int)(NT_PERIOD_SECONDS * <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;stats.land_delay);</div>
-<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;      <a class="code" href="ntime_8c.html#a6c36a00020524fdd13d3c46cb110a942">ntime_inc</a>( <a class="code" href="ntime_8c.html#a0c1f06bbf4516b2b6f908e8a4f9aa86b">ntime_create</a>( 0, 0, stu ) );</div>
-<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;   }</div>
-<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;   nt = <a class="code" href="ntime_8c.html#a47af974bcccb2f11248afcc2c3800672">ntime_pretty</a>( 0, 2 );</div>
-<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;   <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>( _(<span class="stringliteral">&quot;#oTaking off from %s on %s.&quot;</span>), _(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;name), nt);</div>
-<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;   free(nt);</div>
-<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160; </div>
-<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;   <span class="comment">/* Hooks and stuff. */</span></div>
-<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160;   <a class="code" href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4">land_cleanup</a>(); <span class="comment">/* Cleanup stuff */</span></div>
-<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>(<span class="stringliteral">&quot;takeoff&quot;</span>); <span class="comment">/* Must be run after cleanup since we don&#39;t want the</span></div>
-<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;<span class="comment">                            missions to think we are landed. */</span></div>
-<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="menu_8h.html#a7347066e26f4a79010f58d4dc2b519f0">menu_isOpen</a>(<a class="code" href="menu_8h.html#a059c571fb21d7be01f2e7c743a26b4f8">MENU_MAIN</a>))</div>
-<div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;   <a class="code" href="player_8c.html#a960b461ff3cb03cdd446e02b3718536b">player_addEscorts</a>();</div>
-<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>(<span class="stringliteral">&quot;enter&quot;</span>);</div>
-<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="menu_8h.html#a7347066e26f4a79010f58d4dc2b519f0">menu_isOpen</a>(<a class="code" href="menu_8h.html#a059c571fb21d7be01f2e7c743a26b4f8">MENU_MAIN</a>))</div>
-<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;   <a class="code" href="event_8c.html#acee910c5f6745dd62a319f045f06aa07">events_trigger</a>( EVENT_TRIGGER_ENTER );</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;   <a class="code" href="mission_8c.html#a3bac4543ee633374be825ef5ccf108e3">missions_run</a>( MIS_AVAIL_SPACE, -1, NULL, NULL );</div>
-<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="menu_8h.html#a7347066e26f4a79010f58d4dc2b519f0">menu_isOpen</a>(<a class="code" href="menu_8h.html#a059c571fb21d7be01f2e7c743a26b4f8">MENU_MAIN</a>))</div>
-<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;landing_delay = PILOT_TAKEOFF_DELAY * <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>();</div>
-<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;ptimer = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;landing_delay;</div>
-<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;   pilot_setFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_TAKEOFF );</div>
-<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;   <a class="code" href="pilot_8c.html#a20ffd969aa698f1f5441b796046bf652">pilot_setThrust</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, 0. );</div>
-<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;   <a class="code" href="pilot_8c.html#a6eb285468d55c251a53190e2046705c6">pilot_setTurn</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, 0. );</div>
-<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160; </div>
-<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;   <span class="comment">/* Update lua stuff. */</span></div>
-<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;   <a class="code" href="pilot__outfit_8c.html#affb54125bb6eab6f125d8ed17af9029e">pilot_outfitLInitAll</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
-<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a5d30fb1b21abcb04b4019aaaf05bb13b">pilot_outfitLOntakeoff</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
-<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160; </div>
-<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;   <span class="comment">/* Reset speed */</span></div>
-<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160;   <a class="code" href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a>();</div>
-<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;}</div>
-<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160; </div>
-<div class="line"><a name="l01448"></a><span class="lineno"><a class="line" href="land_8c.html#a58707e7ae34f33f7f9d721a303c17432"> 1448</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="land_8c.html#a58707e7ae34f33f7f9d721a303c17432">land_stranded</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160;{</div>
-<div class="line"><a name="l01450"></a><span class="lineno"> 1450</span>&#160;   <span class="comment">/* Nothing to do if there&#39;s no rescue script. */</span></div>
-<div class="line"><a name="l01451"></a><span class="lineno"> 1451</span>&#160;   <span class="keywordflow">if</span> (!PHYSFS_exists(RESCUE_PATH))</div>
-<div class="line"><a name="l01452"></a><span class="lineno"> 1452</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01453"></a><span class="lineno"> 1453</span>&#160; </div>
-<div class="line"><a name="l01454"></a><span class="lineno"> 1454</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> == LUA_NOREF) {</div>
-<div class="line"><a name="l01455"></a><span class="lineno"> 1455</span>&#160;      <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>;</div>
-<div class="line"><a name="l01456"></a><span class="lineno"> 1456</span>&#160;      <span class="keywordtype">size_t</span> bufsize;</div>
-<div class="line"><a name="l01457"></a><span class="lineno"> 1457</span>&#160; </div>
-<div class="line"><a name="l01458"></a><span class="lineno"> 1458</span>&#160;      <a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> = nlua_newEnv(1);</div>
-<div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160;      <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( <a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> );</div>
-<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;      <a class="code" href="nlua__tk_8c.html#a589a461c0b7e7019cb11fe5d022a042c">nlua_loadTk</a>( <a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> );</div>
-<div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160; </div>
-<div class="line"><a name="l01462"></a><span class="lineno"> 1462</span>&#160;      <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( RESCUE_PATH, &amp;bufsize );</div>
-<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> == NULL) {</div>
-<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;         WARN( _(<span class="stringliteral">&quot;File &#39;%s&#39; not found!&quot;</span>), RESCUE_PATH );</div>
-<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;         <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;      }</div>
-<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;      <span class="keywordflow">if</span> (nlua_dobufenv(<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, bufsize, RESCUE_PATH) != 0) {</div>
-<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;         WARN( _(<span class="stringliteral">&quot;Error loading file: %s\n&quot;</span></div>
-<div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160;             <span class="stringliteral">&quot;%s\n&quot;</span></div>
-<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;             <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
-<div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160;               RESCUE_PATH, lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160;         free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
-<div class="line"><a name="l01473"></a><span class="lineno"> 1473</span>&#160;         <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l01474"></a><span class="lineno"> 1474</span>&#160;      }</div>
-<div class="line"><a name="l01475"></a><span class="lineno"> 1475</span>&#160;      free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
-<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160;   }</div>
-<div class="line"><a name="l01477"></a><span class="lineno"> 1477</span>&#160; </div>
-<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;   <span class="comment">/* Run Lua. */</span></div>
-<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160;   nlua_getenv(<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a>,<span class="stringliteral">&quot;rescue&quot;</span>);</div>
-<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;   <span class="keywordflow">if</span> (nlua_pcall(<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a>, 0, 0)) { <span class="comment">/* error has occurred */</span></div>
-<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;      WARN( _(<span class="stringliteral">&quot;Rescue: &#39;rescue&#39; : &#39;%s&#39;&quot;</span>), lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;      lua_pop(naevL,1);</div>
-<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;   }</div>
-<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;}</div>
-<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160; </div>
-<div class="line"><a name="l01489"></a><span class="lineno"><a class="line" href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4"> 1489</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4">land_cleanup</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;{</div>
-<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;   <span class="comment">/* Clean up default stuff. */</span></div>
-<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;   <a class="code" href="land_8c.html#a58ade7957c6ba96aa878eec199561310">land_regen</a>     = 0;</div>
-<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;   <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>    = NULL;</div>
-<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;   <a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>         = 0;</div>
-<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;   <a class="code" href="land_8c.html#ad17b27edcf355a31e9be156220024fb7">land_visited</a>   = 0;</div>
-<div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;   land_generated = 0;</div>
-<div class="line"><a name="l01497"></a><span class="lineno"> 1497</span>&#160; </div>
-<div class="line"><a name="l01498"></a><span class="lineno"> 1498</span>&#160;   <span class="comment">/* Destroy window. */</span></div>
-<div class="line"><a name="l01499"></a><span class="lineno"> 1499</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a> &gt; 0)</div>
-<div class="line"><a name="l01500"></a><span class="lineno"> 1500</span>&#160;      <a class="code" href="toolkit_8c.html#aef6482354bb181c106970486ad16b406">window_destroy</a>(<a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>);</div>
-<div class="line"><a name="l01501"></a><span class="lineno"> 1501</span>&#160;   <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>       = 0;</div>
-<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160; </div>
-<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160;   <span class="comment">/* Clean up possible stray graphic. */</span></div>
-<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a> != NULL)</div>
-<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a> );</div>
-<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;   <a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a>   = NULL;</div>
-<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160; </div>
-<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;   <span class="comment">/* Clean up mission computer. */</span></div>
-<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="land_8c.html#a3e8d96829b0a68069bd988356eaa254a">mission_ncomputer</a>; i++)</div>
-<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;      <a class="code" href="mission_8c.html#a2e21b5d28d28af487d690175756f3f11">mission_cleanup</a>( &amp;<a class="code" href="land_8c.html#a817712c9042d4682d48d0d151656e027">mission_computer</a>[i] );</div>
-<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;   free(<a class="code" href="land_8c.html#a817712c9042d4682d48d0d151656e027">mission_computer</a>);</div>
-<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160;   <a class="code" href="land_8c.html#a817712c9042d4682d48d0d151656e027">mission_computer</a>  = NULL;</div>
-<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160;   <a class="code" href="land_8c.html#a3e8d96829b0a68069bd988356eaa254a">mission_ncomputer</a> = 0;</div>
-<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160; </div>
-<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;   <span class="comment">/* Clean up bar missions. */</span></div>
-<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160;   <a class="code" href="npc_8c.html#a56bde0a1e6b7a363e8095e8f45a4f519">npc_clear</a>();</div>
-<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160; </div>
-<div class="line"><a name="l01518"></a><span class="lineno"> 1518</span>&#160;   <span class="comment">/* Clean up shipyard. */</span></div>
-<div class="line"><a name="l01519"></a><span class="lineno"> 1519</span>&#160;   <a class="code" href="land__shipyard_8c.html#a9e1997c4ec22402e2472d90336ec1419">shipyard_cleanup</a>();</div>
-<div class="line"><a name="l01520"></a><span class="lineno"> 1520</span>&#160; </div>
-<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160;   <span class="comment">/* Clean up rescue Lua. */</span></div>
-<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> != LUA_NOREF) {</div>
-<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160;      nlua_freeEnv(<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a>);</div>
-<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;      <a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> = LUA_NOREF;</div>
-<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160;   }</div>
-<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;}</div>
-<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160; </div>
-<div class="line"><a name="l01531"></a><span class="lineno"><a class="line" href="land_8c.html#aadfc48add90fc97a6a8bacea2743c283"> 1531</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land_8c.html#aadfc48add90fc97a6a8bacea2743c283">land_exit</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l01532"></a><span class="lineno"> 1532</span>&#160;{</div>
-<div class="line"><a name="l01533"></a><span class="lineno"> 1533</span>&#160;   <a class="code" href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4">land_cleanup</a>();</div>
-<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160;   <a class="code" href="equipment_8c.html#a6fc7d94624bfe0199b85168c0065a5d5">equipment_cleanup</a>();</div>
-<div class="line"><a name="l01535"></a><span class="lineno"> 1535</span>&#160;   <a class="code" href="land__outfits_8c.html#a4dd37169971f0c7d78d6fc776ae76bb7">outfits_cleanup</a>();</div>
-<div class="line"><a name="l01536"></a><span class="lineno"> 1536</span>&#160;}</div>
+<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160;      <a class="code" href="land_8c.html#a0df066f110be70d63b8c9a6cfcf1380d">visited</a>(to_visit);</div>
+<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160; </div>
+<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a964f629a8f91354066d6c8bedfeb7677">land_takeoff</a>)</div>
+<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;         <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>(1);</div>
+<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;   }</div>
+<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;}</div>
+<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160; </div>
+<div class="line"><a name="l01341"></a><span class="lineno"><a class="line" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656"> 1341</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a>( <span class="keywordtype">int</span> delay )</div>
+<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;{</div>
+<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;   <span class="keywordtype">int</span> h, stu;</div>
+<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;   <span class="keywordtype">char</span> *nt;</div>
+<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;   <span class="keywordtype">double</span> <a class="code" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a>, r;</div>
+<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160; </div>
+<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>)</div>
+<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160; </div>
+<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;   <span class="comment">/* Player&#39;s ship is not able to fly. */</span></div>
+<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="player_8c.html#ab3994400a772145f361cf8a74ffa7aec">player_canTakeoff</a>()) {</div>
+<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;      <span class="keywordtype">char</span> message[STRMAX_SHORT];</div>
+<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;      <a class="code" href="pilot__outfit_8c.html#aad031d8fa82908c43aee6776fa433ce6">pilot_reportSpaceworthy</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, message, <span class="keyword">sizeof</span>(message) );</div>
+<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;      <a class="code" href="dialogue_8c.html#adf6b3adbdff74aef8d75d595483000d0">dialogue_msgRaw</a>( _(<span class="stringliteral">&quot;Ship not fit for flight&quot;</span>), message );</div>
+<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160; </div>
+<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;      <span class="comment">/* Check whether the player needs rescuing. */</span></div>
+<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;      <a class="code" href="land_8c.html#a58707e7ae34f33f7f9d721a303c17432">land_stranded</a>();</div>
+<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160; </div>
+<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;   }</div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160; </div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;   <span class="comment">/* Clear queued takeoff. */</span></div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;   <a class="code" href="land_8c.html#a964f629a8f91354066d6c8bedfeb7677">land_takeoff</a> = 0;</div>
+<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160; </div>
+<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;   <span class="comment">/* Refuel if needed. */</span></div>
+<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;   <a class="code" href="land_8c.html#aeefd3773b3efb48d43d0916398741051">land_refuel</a>();</div>
+<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160; </div>
+<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;   <span class="comment">/* In case we had paused messy sounds. */</span></div>
+<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;   <a class="code" href="sound_8c.html#a918b0b9e44a53989257324da30ba2939">sound_stopAll</a>();</div>
+<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160; </div>
+<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;   <span class="comment">/* ze music */</span></div>
+<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;   <a class="code" href="music_8c.html#a5a1125faf5771e25b85823fcc492c054">music_choose</a>(<span class="stringliteral">&quot;takeoff&quot;</span>);</div>
+<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160; </div>
+<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;   <span class="comment">/* to randomize the takeoff a bit */</span></div>
+<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;   a = RNGF() * 2. * M_PI;</div>
+<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;   r = RNGF() * <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;radius;</div>
+<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160; </div>
+<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;   <span class="comment">/* no longer authorized to land */</span></div>
+<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;   player_rmFlag(PLAYER_LANDACK);</div>
+<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;   pilot_rmFlag(<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p,PILOT_LANDING); <span class="comment">/* No longer landing. */</span></div>
+<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160; </div>
+<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;   <span class="comment">/* set player to another position with random facing direction and no vel */</span></div>
+<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;   <a class="code" href="player_8c.html#a448beeae7efa85a54ce1899143662334">player_warp</a>( <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;pos.x + r * cos(a), <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;pos.y + r * sin(a) );</div>
+<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;   vect_pset( &amp;<a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;vel, 0., 0. );</div>
+<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;solid-&gt;dir = RNGF() * 2. * M_PI;</div>
+<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;   <a class="code" href="camera_8c.html#a66ab20236dca75d4537284f0688b6d8f">cam_setTargetPilot</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;id, 0 );</div>
+<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160; </div>
+<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;   <span class="comment">/* heal the player */</span></div>
+<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a3efb77f9b10293bb645d7641609485ef">pilot_healLanded</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160; </div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;   <span class="comment">/* Refill ammo */</span></div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a6ec70643d24d369c3c7b20df4d4ce949">pilot_fillAmmo</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160; </div>
+<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;   <span class="comment">/* Clear planet target. Allows for easier autonav out of the system. */</span></div>
+<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;   <a class="code" href="player_8c.html#a52d3581b9f23e8903a8abade0babef7a">player_targetPlanetSet</a>( -1 );</div>
+<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160; </div>
+<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;   <span class="comment">/* Clear pilots other than player. */</span></div>
+<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;   <a class="code" href="pilot_8c.html#a4d3e5a9b87c03163903f97a3db7016bc">pilots_clean</a>(0);</div>
+<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160; </div>
+<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;   <span class="comment">/* initialize the new space */</span></div>
+<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;   h = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace;</div>
+<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;   <a class="code" href="space_8c.html#a02f0fd39282e7f1f1e3bcd6a1b088a74">space_init</a>( NULL, 1 );</div>
+<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;nav_hyperspace = h;</div>
+<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160; </div>
+<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;   <span class="comment">/* cleanup */</span></div>
+<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="save_8c.html#a5e203b38eedcf236ba9c773e43ac86ac">save_all</a>() &lt; 0) <span class="comment">/* must be before cleaning up planet */</span></div>
+<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;      <a class="code" href="dialogue_8c.html#a3f539d942fa23eb9561ebc45e964ee07">dialogue_alert</a>( _(<span class="stringliteral">&quot;Failed to save game! You should exit and check the log to see what happened and then file a bug report!&quot;</span>) );</div>
+<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160; </div>
+<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;   <span class="comment">/* time goes by, triggers hook before takeoff */</span></div>
+<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;   <span class="keywordflow">if</span> (delay) {</div>
+<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;      <span class="comment">/* TODO should this depend on something else? */</span></div>
+<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;      stu = (int)(NT_PERIOD_SECONDS * <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;stats.land_delay);</div>
+<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;      <a class="code" href="ntime_8c.html#a6c36a00020524fdd13d3c46cb110a942">ntime_inc</a>( <a class="code" href="ntime_8c.html#a0c1f06bbf4516b2b6f908e8a4f9aa86b">ntime_create</a>( 0, 0, stu ) );</div>
+<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;   }</div>
+<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;   nt = <a class="code" href="ntime_8c.html#a47af974bcccb2f11248afcc2c3800672">ntime_pretty</a>( 0, 2 );</div>
+<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160;   <a class="code" href="gui_8c.html#ae62f951a861023b09fbb17b2cfddb0d2">player_message</a>( _(<span class="stringliteral">&quot;#oTaking off from %s on %s.&quot;</span>), _(<a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>-&gt;name), nt);</div>
+<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;   free(nt);</div>
+<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160; </div>
+<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;   <span class="comment">/* Hooks and stuff. */</span></div>
+<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;   <a class="code" href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4">land_cleanup</a>(); <span class="comment">/* Cleanup stuff */</span></div>
+<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>(<span class="stringliteral">&quot;takeoff&quot;</span>); <span class="comment">/* Must be run after cleanup since we don&#39;t want the</span></div>
+<div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160;<span class="comment">                            missions to think we are landed. */</span></div>
+<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="menu_8h.html#a7347066e26f4a79010f58d4dc2b519f0">menu_isOpen</a>(<a class="code" href="menu_8h.html#a059c571fb21d7be01f2e7c743a26b4f8">MENU_MAIN</a>))</div>
+<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;   <a class="code" href="player_8c.html#a960b461ff3cb03cdd446e02b3718536b">player_addEscorts</a>();</div>
+<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;   <a class="code" href="hook_8c.html#ad94fa31ab5926d7577ada6c36d895546">hooks_run</a>(<span class="stringliteral">&quot;enter&quot;</span>);</div>
+<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="menu_8h.html#a7347066e26f4a79010f58d4dc2b519f0">menu_isOpen</a>(<a class="code" href="menu_8h.html#a059c571fb21d7be01f2e7c743a26b4f8">MENU_MAIN</a>))</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;   <a class="code" href="event_8c.html#acee910c5f6745dd62a319f045f06aa07">events_trigger</a>( EVENT_TRIGGER_ENTER );</div>
+<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;   <a class="code" href="mission_8c.html#a3bac4543ee633374be825ef5ccf108e3">missions_run</a>( MIS_AVAIL_SPACE, -1, NULL, NULL );</div>
+<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="menu_8h.html#a7347066e26f4a79010f58d4dc2b519f0">menu_isOpen</a>(<a class="code" href="menu_8h.html#a059c571fb21d7be01f2e7c743a26b4f8">MENU_MAIN</a>))</div>
+<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;landing_delay = PILOT_TAKEOFF_DELAY * <a class="code" href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a>();</div>
+<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;   <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;ptimer = <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p-&gt;landing_delay;</div>
+<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;   pilot_setFlag( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, PILOT_TAKEOFF );</div>
+<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;   <a class="code" href="pilot_8c.html#a20ffd969aa698f1f5441b796046bf652">pilot_setThrust</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, 0. );</div>
+<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;   <a class="code" href="pilot_8c.html#a6eb285468d55c251a53190e2046705c6">pilot_setTurn</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p, 0. );</div>
+<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160; </div>
+<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;   <span class="comment">/* Update lua stuff. */</span></div>
+<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160;   <a class="code" href="pilot__outfit_8c.html#affb54125bb6eab6f125d8ed17af9029e">pilot_outfitLInitAll</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
+<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;   <a class="code" href="pilot__outfit_8c.html#a5d30fb1b21abcb04b4019aaaf05bb13b">pilot_outfitLOntakeoff</a>( <a class="code" href="player_8c.html#ac8701471143b28a786b0028420edfeb6">player</a>.p );</div>
+<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160; </div>
+<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;   <span class="comment">/* Reset speed */</span></div>
+<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;   <a class="code" href="player__autonav_8c.html#a49c761c41fb035d49699b214fd55edc1">player_autonavResetSpeed</a>();</div>
+<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;}</div>
+<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160; </div>
+<div class="line"><a name="l01450"></a><span class="lineno"><a class="line" href="land_8c.html#a58707e7ae34f33f7f9d721a303c17432"> 1450</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="land_8c.html#a58707e7ae34f33f7f9d721a303c17432">land_stranded</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01451"></a><span class="lineno"> 1451</span>&#160;{</div>
+<div class="line"><a name="l01452"></a><span class="lineno"> 1452</span>&#160;   <span class="comment">/* Nothing to do if there&#39;s no rescue script. */</span></div>
+<div class="line"><a name="l01453"></a><span class="lineno"> 1453</span>&#160;   <span class="keywordflow">if</span> (!PHYSFS_exists(RESCUE_PATH))</div>
+<div class="line"><a name="l01454"></a><span class="lineno"> 1454</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01455"></a><span class="lineno"> 1455</span>&#160; </div>
+<div class="line"><a name="l01456"></a><span class="lineno"> 1456</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> == LUA_NOREF) {</div>
+<div class="line"><a name="l01457"></a><span class="lineno"> 1457</span>&#160;      <span class="keywordtype">char</span> *<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>;</div>
+<div class="line"><a name="l01458"></a><span class="lineno"> 1458</span>&#160;      <span class="keywordtype">size_t</span> bufsize;</div>
+<div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160; </div>
+<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;      <a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> = nlua_newEnv(1);</div>
+<div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160;      <a class="code" href="nlua_8c.html#a45e6b8d12cc6f943d058023f8ec74a2d">nlua_loadStandard</a>( <a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> );</div>
+<div class="line"><a name="l01462"></a><span class="lineno"> 1462</span>&#160;      <a class="code" href="nlua__tk_8c.html#a589a461c0b7e7019cb11fe5d022a042c">nlua_loadTk</a>( <a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> );</div>
+<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160; </div>
+<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;      <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> = <a class="code" href="ndata_8c.html#a16f6ef61238e43179df6914a165c70ad">ndata_read</a>( RESCUE_PATH, &amp;bufsize );</div>
+<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a> == NULL) {</div>
+<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;         WARN( _(<span class="stringliteral">&quot;File &#39;%s&#39; not found!&quot;</span>), RESCUE_PATH );</div>
+<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;         <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;      }</div>
+<div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160;      <span class="keywordflow">if</span> (nlua_dobufenv(<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a>, <a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>, bufsize, RESCUE_PATH) != 0) {</div>
+<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;         WARN( _(<span class="stringliteral">&quot;Error loading file: %s\n&quot;</span></div>
+<div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160;             <span class="stringliteral">&quot;%s\n&quot;</span></div>
+<div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160;             <span class="stringliteral">&quot;Most likely Lua file has improper syntax, please check&quot;</span>),</div>
+<div class="line"><a name="l01473"></a><span class="lineno"> 1473</span>&#160;               RESCUE_PATH, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l01474"></a><span class="lineno"> 1474</span>&#160;         free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
+<div class="line"><a name="l01475"></a><span class="lineno"> 1475</span>&#160;         <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160;      }</div>
+<div class="line"><a name="l01477"></a><span class="lineno"> 1477</span>&#160;      free(<a class="code" href="news_8c.html#add3504cb24d0f18e58cfe91db1b667dd">buf</a>);</div>
+<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;   }</div>
+<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160; </div>
+<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;   <span class="comment">/* Run Lua. */</span></div>
+<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;   nlua_getenv(<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a>,<span class="stringliteral">&quot;rescue&quot;</span>);</div>
+<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;   <span class="keywordflow">if</span> (nlua_pcall(<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a>, 0, 0)) { <span class="comment">/* error has occurred */</span></div>
+<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;      WARN( _(<span class="stringliteral">&quot;Rescue: &#39;rescue&#39; : &#39;%s&#39;&quot;</span>), lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;      lua_pop(naevL,1);</div>
+<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;   }</div>
+<div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;}</div>
+<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160; </div>
+<div class="line"><a name="l01491"></a><span class="lineno"><a class="line" href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4"> 1491</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4">land_cleanup</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;{</div>
+<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;   <span class="comment">/* Clean up default stuff. */</span></div>
+<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;   <a class="code" href="land_8c.html#a58ade7957c6ba96aa878eec199561310">land_regen</a>     = 0;</div>
+<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;   <a class="code" href="land_8c.html#a92e7bb796bc10b51b1a64271a8086c42">land_planet</a>    = NULL;</div>
+<div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;   <a class="code" href="land_8c.html#a83ae8aa54491a1fd25f773b83a87fec0">landed</a>         = 0;</div>
+<div class="line"><a name="l01497"></a><span class="lineno"> 1497</span>&#160;   <a class="code" href="land_8c.html#ad17b27edcf355a31e9be156220024fb7">land_visited</a>   = 0;</div>
+<div class="line"><a name="l01498"></a><span class="lineno"> 1498</span>&#160;   land_generated = 0;</div>
+<div class="line"><a name="l01499"></a><span class="lineno"> 1499</span>&#160; </div>
+<div class="line"><a name="l01500"></a><span class="lineno"> 1500</span>&#160;   <span class="comment">/* Destroy window. */</span></div>
+<div class="line"><a name="l01501"></a><span class="lineno"> 1501</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a> &gt; 0)</div>
+<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160;      <a class="code" href="toolkit_8c.html#aef6482354bb181c106970486ad16b406">window_destroy</a>(<a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>);</div>
+<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160;   <a class="code" href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a>       = 0;</div>
+<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160; </div>
+<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;   <span class="comment">/* Clean up possible stray graphic. */</span></div>
+<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a> != NULL)</div>
+<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160;      <a class="code" href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a>( <a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a> );</div>
+<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;   <a class="code" href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a>   = NULL;</div>
+<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160; </div>
+<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;   <span class="comment">/* Clean up mission computer. */</span></div>
+<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="land_8c.html#a3e8d96829b0a68069bd988356eaa254a">mission_ncomputer</a>; i++)</div>
+<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160;      <a class="code" href="mission_8c.html#a2e21b5d28d28af487d690175756f3f11">mission_cleanup</a>( &amp;<a class="code" href="land_8c.html#a817712c9042d4682d48d0d151656e027">mission_computer</a>[i] );</div>
+<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160;   free(<a class="code" href="land_8c.html#a817712c9042d4682d48d0d151656e027">mission_computer</a>);</div>
+<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160;   <a class="code" href="land_8c.html#a817712c9042d4682d48d0d151656e027">mission_computer</a>  = NULL;</div>
+<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;   <a class="code" href="land_8c.html#a3e8d96829b0a68069bd988356eaa254a">mission_ncomputer</a> = 0;</div>
+<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160; </div>
+<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160;   <span class="comment">/* Clean up bar missions. */</span></div>
+<div class="line"><a name="l01518"></a><span class="lineno"> 1518</span>&#160;   <a class="code" href="npc_8c.html#a56bde0a1e6b7a363e8095e8f45a4f519">npc_clear</a>();</div>
+<div class="line"><a name="l01519"></a><span class="lineno"> 1519</span>&#160; </div>
+<div class="line"><a name="l01520"></a><span class="lineno"> 1520</span>&#160;   <span class="comment">/* Clean up shipyard. */</span></div>
+<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160;   <a class="code" href="land__shipyard_8c.html#a9e1997c4ec22402e2472d90336ec1419">shipyard_cleanup</a>();</div>
+<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160; </div>
+<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160;   <span class="comment">/* Clean up rescue Lua. */</span></div>
+<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;   <span class="keywordflow">if</span> (<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> != LUA_NOREF) {</div>
+<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160;      nlua_freeEnv(<a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a>);</div>
+<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;      <a class="code" href="land_8c.html#aff377938e8cba86ba9f4a1e0774144c3">rescue_env</a> = LUA_NOREF;</div>
+<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;   }</div>
+<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160;}</div>
+<div class="line"><a name="l01529"></a><span class="lineno"> 1529</span>&#160; </div>
+<div class="line"><a name="l01533"></a><span class="lineno"><a class="line" href="land_8c.html#aadfc48add90fc97a6a8bacea2743c283"> 1533</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="land_8c.html#aadfc48add90fc97a6a8bacea2743c283">land_exit</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160;{</div>
+<div class="line"><a name="l01535"></a><span class="lineno"> 1535</span>&#160;   <a class="code" href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4">land_cleanup</a>();</div>
+<div class="line"><a name="l01536"></a><span class="lineno"> 1536</span>&#160;   <a class="code" href="equipment_8c.html#a6fc7d94624bfe0199b85168c0065a5d5">equipment_cleanup</a>();</div>
+<div class="line"><a name="l01537"></a><span class="lineno"> 1537</span>&#160;   <a class="code" href="land__outfits_8c.html#a4dd37169971f0c7d78d6fc776ae76bb7">outfits_cleanup</a>();</div>
+<div class="line"><a name="l01538"></a><span class="lineno"> 1538</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="acamera_8c_html_a66ab20236dca75d4537284f0688b6d8f"><div class="ttname"><a href="camera_8c.html#a66ab20236dca75d4537284f0688b6d8f">cam_setTargetPilot</a></div><div class="ttdeci">void cam_setTargetPilot(unsigned int follow, int soft_over)</div><div class="ttdoc">Sets the target to follow.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8c_source.html#l00120">camera.c:120</a></div></div>
 <div class="ttc" id="aland_8c_html_ad70f847ff04d640ef71918812a579fec"><div class="ttname"><a href="land_8c.html#ad70f847ff04d640ef71918812a579fec">bar_open</a></div><div class="ttdeci">static void bar_open(unsigned int wid)</div><div class="ttdoc">Opens the spaceport bar window.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00258">land.c:258</a></div></div>
@@ -1444,7 +1446,7 @@ $(function() {
 <div class="ttc" id="amenu_8h_html"><div class="ttname"><a href="menu_8h.html">menu.h</a></div><div class="ttdoc">Handles the important game menus.</div></div>
 <div class="ttc" id="aland_8c_html_a351ef5ee6b3c337e79699cea1e1b89ff"><div class="ttname"><a href="land_8c.html#a351ef5ee6b3c337e79699cea1e1b89ff">land_wid</a></div><div class="ttdeci">unsigned int land_wid</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00074">land.c:74</a></div></div>
 <div class="ttc" id="antime_8c_html_a6c36a00020524fdd13d3c46cb110a942"><div class="ttname"><a href="ntime_8c.html#a6c36a00020524fdd13d3c46cb110a942">ntime_inc</a></div><div class="ttdeci">void ntime_inc(ntime_t t)</div><div class="ttdoc">Sets the time relatively.</div><div class="ttdef"><b>Definition:</b> <a href="ntime_8c_source.html#l00237">ntime.c:237</a></div></div>
-<div class="ttc" id="aland_8c_html_a720c6b1e16a3ad937b8184f8daa003a4"><div class="ttname"><a href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4">land_cleanup</a></div><div class="ttdeci">void land_cleanup(void)</div><div class="ttdoc">Cleans up some land-related variables.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01489">land.c:1489</a></div></div>
+<div class="ttc" id="aland_8c_html_a720c6b1e16a3ad937b8184f8daa003a4"><div class="ttname"><a href="land_8c.html#a720c6b1e16a3ad937b8184f8daa003a4">land_cleanup</a></div><div class="ttdeci">void land_cleanup(void)</div><div class="ttdoc">Cleans up some land-related variables.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01491">land.c:1491</a></div></div>
 <div class="ttc" id="aland__outfits_8c_html_a4e3bbc63f416f5d12b34ae9020a455e4"><div class="ttname"><a href="land__outfits_8c.html#a4e3bbc63f416f5d12b34ae9020a455e4">outfit_canBuy</a></div><div class="ttdeci">int outfit_canBuy(const char *name, Planet *planet)</div><div class="ttdoc">Checks to see if the player can buy the outfit.</div><div class="ttdef"><b>Definition:</b> <a href="land__outfits_8c_source.html#l00633">land_outfits.c:633</a></div></div>
 <div class="ttc" id="afaction_8c_html_a8779a04440f1314611dbef914bdd0c69"><div class="ttname"><a href="faction_8c.html#a8779a04440f1314611dbef914bdd0c69">faction_logo</a></div><div class="ttdeci">const glTexture * faction_logo(int f)</div><div class="ttdoc">Gets the faction's logo (ideally 256x256).</div><div class="ttdef"><b>Definition:</b> <a href="faction_8c_source.html#l00424">faction.c:424</a></div></div>
 <div class="ttc" id="aland_8c_html_a14a8d0a510fdac047d07e63759cba6cd"><div class="ttname"><a href="land_8c.html#a14a8d0a510fdac047d07e63759cba6cd">land_cleanupWindow</a></div><div class="ttdeci">static void land_cleanupWindow(unsigned int wid, const char *name)</div><div class="ttdoc">Cleans up the land window.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00872">land.c:872</a></div></div>
@@ -1476,19 +1478,19 @@ $(function() {
 <div class="ttc" id="anpc_8c_html_af5c443ae4dacbf0907e814ddae380540"><div class="ttname"><a href="npc_8c.html#af5c443ae4dacbf0907e814ddae380540">npc_sort</a></div><div class="ttdeci">void npc_sort(void)</div><div class="ttdoc">Sorts the NPCs.</div><div class="ttdef"><b>Definition:</b> <a href="npc_8c_source.html#l00359">npc.c:359</a></div></div>
 <div class="ttc" id="aland_8c_html_a35634614957e81cc5a3df1f1d3592141"><div class="ttname"><a href="land_8c.html#a35634614957e81cc5a3df1f1d3592141">land_genWindows</a></div><div class="ttdeci">void land_genWindows(int load, int changetab)</div><div class="ttdoc">Recreates the land windows.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00965">land.c:965</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_a31d2bbaf062ed6cfe031521ea545dce9"><div class="ttname"><a href="opengl__tex_8c.html#a31d2bbaf062ed6cfe031521ea545dce9">gl_addTexArray</a></div><div class="ttdeci">glTexture ** gl_addTexArray(glTexture **tex, int *n, glTexture *t)</div><div class="ttdoc">Adds an element to a texture array.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00926">opengl_tex.c:926</a></div></div>
-<div class="ttc" id="aland_8c_html_a50037c54f1199579fdc354aa61f52728"><div class="ttname"><a href="land_8c.html#a50037c54f1199579fdc354aa61f52728">land_setWindow</a></div><div class="ttdeci">int land_setWindow(int window)</div><div class="ttdoc">Sets the land window tab.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01109">land.c:1109</a></div></div>
+<div class="ttc" id="aland_8c_html_a50037c54f1199579fdc354aa61f52728"><div class="ttname"><a href="land_8c.html#a50037c54f1199579fdc354aa61f52728">land_setWindow</a></div><div class="ttdeci">int land_setWindow(int window)</div><div class="ttdoc">Sets the land window tab.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01111">land.c:1111</a></div></div>
 <div class="ttc" id="anlua__tk_8c_html_a589a461c0b7e7019cb11fe5d022a042c"><div class="ttname"><a href="nlua__tk_8c.html#a589a461c0b7e7019cb11fe5d022a042c">nlua_loadTk</a></div><div class="ttdeci">int nlua_loadTk(nlua_env env)</div><div class="ttdoc">Loads the Toolkit Lua library.</div><div class="ttdef"><b>Definition:</b> <a href="nlua__tk_8c_source.html#l00084">nlua_tk.c:84</a></div></div>
 <div class="ttc" id="amission_8c_html_a2e21b5d28d28af487d690175756f3f11"><div class="ttname"><a href="mission_8c.html#a2e21b5d28d28af487d690175756f3f11">mission_cleanup</a></div><div class="ttdeci">void mission_cleanup(Mission *misn)</div><div class="ttdoc">Cleans up a mission.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00634">mission.c:634</a></div></div>
 <div class="ttc" id="anpc_8c_html_ab6a1e0739264866453674aee63bd9943"><div class="ttname"><a href="npc_8c.html#ab6a1e0739264866453674aee63bd9943">npc_getTexture</a></div><div class="ttdeci">glTexture * npc_getTexture(int i)</div><div class="ttdoc">Get the texture of an NPC.</div><div class="ttdef"><b>Definition:</b> <a href="npc_8c_source.html#l00534">npc.c:534</a></div></div>
 <div class="ttc" id="aland__trade_8c_html_a370af34d07bbabefbb9e2ff198039232"><div class="ttname"><a href="land__trade_8c.html#a370af34d07bbabefbb9e2ff198039232">commodity_exchange_open</a></div><div class="ttdeci">void commodity_exchange_open(unsigned int wid)</div><div class="ttdoc">Opens the local market window.</div><div class="ttdef"><b>Definition:</b> <a href="land__trade_8c_source.html#l00043">land_trade.c:43</a></div></div>
 <div class="ttc" id="anews_8c_html_a3dd57b81bb46307ae6a356c32a756290"><div class="ttname"><a href="news_8c.html#a3dd57b81bb46307ae6a356c32a756290">generate_news</a></div><div class="ttdeci">int * generate_news(int faction)</div><div class="ttdoc">Generates news from newslist from specific faction AND Generic news.</div><div class="ttdef"><b>Definition:</b> <a href="news_8c_source.html#l00256">news.c:256</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a11f784a03ba54341249928713904410d"><div class="ttname"><a href="player_8c.html#a11f784a03ba54341249928713904410d">player_getShip</a></div><div class="ttdeci">Pilot * player_getShip(const char *shipname)</div><div class="ttdoc">Gets a specific ship.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l02527">player.c:2527</a></div></div>
-<div class="ttc" id="aland_8c_html_a00d864dfa0476d07b86ebb4cdcc77e72"><div class="ttname"><a href="land_8c.html#a00d864dfa0476d07b86ebb4cdcc77e72">land_changeTab</a></div><div class="ttdeci">static void land_changeTab(unsigned int wid, const char *wgt, int old, int tab)</div><div class="ttdoc">Saves the last place the player was.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01254">land.c:1254</a></div></div>
-<div class="ttc" id="aland_8c_html_a58707e7ae34f33f7f9d721a303c17432"><div class="ttname"><a href="land_8c.html#a58707e7ae34f33f7f9d721a303c17432">land_stranded</a></div><div class="ttdeci">static void land_stranded(void)</div><div class="ttdoc">Runs the rescue script if players are stuck.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01448">land.c:1448</a></div></div>
+<div class="ttc" id="aland_8c_html_a00d864dfa0476d07b86ebb4cdcc77e72"><div class="ttname"><a href="land_8c.html#a00d864dfa0476d07b86ebb4cdcc77e72">land_changeTab</a></div><div class="ttdeci">static void land_changeTab(unsigned int wid, const char *wgt, int old, int tab)</div><div class="ttdoc">Saves the last place the player was.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01256">land.c:1256</a></div></div>
+<div class="ttc" id="aland_8c_html_a58707e7ae34f33f7f9d721a303c17432"><div class="ttname"><a href="land_8c.html#a58707e7ae34f33f7f9d721a303c17432">land_stranded</a></div><div class="ttdeci">static void land_stranded(void)</div><div class="ttdoc">Runs the rescue script if players are stuck.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01450">land.c:1450</a></div></div>
 <div class="ttc" id="anpc_8c_html_a48a20e637aac751719e991741869f42f"><div class="ttname"><a href="npc_8c.html#a48a20e637aac751719e991741869f42f">npc_approach</a></div><div class="ttdeci">int npc_approach(int i)</div><div class="ttdoc">Approaches the NPC.</div><div class="ttdef"><b>Definition:</b> <a href="npc_8c_source.html#l00615">npc.c:615</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a6ec70643d24d369c3c7b20df4d4ce949"><div class="ttname"><a href="pilot__outfit_8c.html#a6ec70643d24d369c3c7b20df4d4ce949">pilot_fillAmmo</a></div><div class="ttdeci">void pilot_fillAmmo(Pilot *pilot)</div><div class="ttdoc">Fills pilot's ammo completely.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00823">pilot_outfit.c:823</a></div></div>
 <div class="ttc" id="aopengl__tex_8c_html_ae7c1e2ed8f7e1980ddab05925e2983fe"><div class="ttname"><a href="opengl__tex_8c.html#ae7c1e2ed8f7e1980ddab05925e2983fe">gl_freeTexture</a></div><div class="ttdeci">void gl_freeTexture(glTexture *texture)</div><div class="ttdoc">Frees a texture.</div><div class="ttdef"><b>Definition:</b> <a href="opengl__tex_8c_source.html#l00746">opengl_tex.c:746</a></div></div>
-<div class="ttc" id="aland_8c_html_afbcc8d719ed52beeebbcbf20ce96cb53"><div class="ttname"><a href="land_8c.html#afbcc8d719ed52beeebbcbf20ce96cb53">land_createMainTab</a></div><div class="ttdeci">static void land_createMainTab(unsigned int wid)</div><div class="ttdoc">Creates the main tab.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01182">land.c:1182</a></div></div>
+<div class="ttc" id="aland_8c_html_afbcc8d719ed52beeebbcbf20ce96cb53"><div class="ttname"><a href="land_8c.html#afbcc8d719ed52beeebbcbf20ce96cb53">land_createMainTab</a></div><div class="ttdeci">static void land_createMainTab(unsigned int wid)</div><div class="ttdoc">Creates the main tab.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01184">land.c:1184</a></div></div>
 <div class="ttc" id="aland_8c_html_a6c976fa364eb941b794773b58ced67ed"><div class="ttname"><a href="land_8c.html#a6c976fa364eb941b794773b58ced67ed">misn_open</a></div><div class="ttdeci">static void misn_open(unsigned int wid)</div><div class="ttdoc">Opens the mission computer window.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00542">land.c:542</a></div></div>
 <div class="ttc" id="anpc_8c_html_aa9c153a0eff3ea93d058a8c3ec12803c"><div class="ttname"><a href="npc_8c.html#aa9c153a0eff3ea93d058a8c3ec12803c">npc_isImportant</a></div><div class="ttdeci">int npc_isImportant(int i)</div><div class="ttdoc">Checks to see if the NPC is important or not.</div><div class="ttdef"><b>Definition:</b> <a href="npc_8c_source.html#l00558">npc.c:558</a></div></div>
 <div class="ttc" id="astructMission_html"><div class="ttname"><a href="structMission.html">Mission</a></div><div class="ttdoc">Represents an active mission.</div></div>
@@ -1516,7 +1518,7 @@ $(function() {
 <div class="ttc" id="atoolkit_8c_html_a991ca896d9fdd7ca3a94cf617b7eaa56"><div class="ttname"><a href="toolkit_8c.html#a991ca896d9fdd7ca3a94cf617b7eaa56">window_destroyWidget</a></div><div class="ttdeci">void window_destroyWidget(unsigned int wid, const char *wgtname)</div><div class="ttdoc">Destroys a widget in a window.</div><div class="ttdef"><b>Definition:</b> <a href="toolkit_8c_source.html#l01008">toolkit.c:1008</a></div></div>
 <div class="ttc" id="aland_8c_html_ad17b27edcf355a31e9be156220024fb7"><div class="ttname"><a href="land_8c.html#ad17b27edcf355a31e9be156220024fb7">land_visited</a></div><div class="ttdeci">static unsigned int land_visited</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00063">land.c:63</a></div></div>
 <div class="ttc" id="aland_8c_html_aec395be2472a112d87d347ba0aa7a4bc"><div class="ttname"><a href="land_8c.html#aec395be2472a112d87d347ba0aa7a4bc">land_buttonTakeoff</a></div><div class="ttdeci">void land_buttonTakeoff(unsigned int wid, const char *unused)</div><div class="ttdoc">Wrapper for takeoff mission button.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00858">land.c:858</a></div></div>
-<div class="ttc" id="aland_8c_html_aadfc48add90fc97a6a8bacea2743c283"><div class="ttname"><a href="land_8c.html#aadfc48add90fc97a6a8bacea2743c283">land_exit</a></div><div class="ttdeci">void land_exit(void)</div><div class="ttdoc">Exits all the landing stuff.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01531">land.c:1531</a></div></div>
+<div class="ttc" id="aland_8c_html_aadfc48add90fc97a6a8bacea2743c283"><div class="ttname"><a href="land_8c.html#aadfc48add90fc97a6a8bacea2743c283">land_exit</a></div><div class="ttdeci">void land_exit(void)</div><div class="ttdoc">Exits all the landing stuff.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01533">land.c:1533</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a988a143f483f4ee9fc1e7501e9277a2c"><div class="ttname"><a href="player_8c.html#a988a143f483f4ee9fc1e7501e9277a2c">player_soundStop</a></div><div class="ttdeci">void player_soundStop(void)</div><div class="ttdoc">Stops playing player sounds.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l00807">player.c:807</a></div></div>
 <div class="ttc" id="aland_8c_html_afda459acf4582551dbf07ae73339e82a"><div class="ttname"><a href="land_8c.html#afda459acf4582551dbf07ae73339e82a">misn_genList</a></div><div class="ttdeci">static void misn_genList(unsigned int wid, int first)</div><div class="ttdoc">Generates the mission list.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00658">land.c:658</a></div></div>
 <div class="ttc" id="anaev_8h_html_aacc3ee1a7f283f8ef65cea31f4436a95"><div class="ttname"><a href="naev_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a></div><div class="ttdeci">#define MAX(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00039">naev.h:39</a></div></div>
@@ -1544,7 +1546,7 @@ $(function() {
 <div class="ttc" id="aland_8c_html_af111a0dcb9c69926d7943ab4440fb2b1"><div class="ttname"><a href="land_8c.html#af111a0dcb9c69926d7943ab4440fb2b1">gfx_exterior</a></div><div class="ttdeci">static glTexture * gfx_exterior</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00079">land.c:79</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a3cdaa797597e07c441d330c7798c1038"><div class="ttname"><a href="pilot__outfit_8c.html#a3cdaa797597e07c441d330c7798c1038">pilot_hasDeployed</a></div><div class="ttdeci">int pilot_hasDeployed(Pilot *p)</div><div class="ttdoc">Checks to see if the pilot has deployed ships.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00256">pilot_outfit.c:256</a></div></div>
 <div class="ttc" id="aland_8c_html_a0b800208425ac7b0ab8dcba95be21a47"><div class="ttname"><a href="land_8c.html#a0b800208425ac7b0ab8dcba95be21a47">last_window</a></div><div class="ttdeci">static int last_window</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00095">land.c:95</a></div></div>
-<div class="ttc" id="aland_8c_html_a8506febc63cb945a2d0368acd57b8656"><div class="ttname"><a href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a></div><div class="ttdeci">void takeoff(int delay)</div><div class="ttdoc">Makes the player take off if landed.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01339">land.c:1339</a></div></div>
+<div class="ttc" id="aland_8c_html_a8506febc63cb945a2d0368acd57b8656"><div class="ttname"><a href="land_8c.html#a8506febc63cb945a2d0368acd57b8656">takeoff</a></div><div class="ttdeci">void takeoff(int delay)</div><div class="ttdoc">Makes the player take off if landed.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01341">land.c:1341</a></div></div>
 <div class="ttc" id="asave_8c_html_a5e203b38eedcf236ba9c773e43ac86ac"><div class="ttname"><a href="save_8c.html#a5e203b38eedcf236ba9c773e43ac86ac">save_all</a></div><div class="ttdeci">int save_all(void)</div><div class="ttdoc">Saves the current game.</div><div class="ttdef"><b>Definition:</b> <a href="save_8c_source.html#l00092">save.c:92</a></div></div>
 <div class="ttc" id="aland_8c_html_a670aac77862e69b16cf3fdf6aa13a2a2"><div class="ttname"><a href="land_8c.html#a670aac77862e69b16cf3fdf6aa13a2a2">VISITED_COMMODITY</a></div><div class="ttdeci">#define VISITED_COMMODITY</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00055">land.c:55</a></div></div>
 <div class="ttc" id="aplayer_8c_html_a88a8cb25811799ad5ce9cdddfaf144cd"><div class="ttname"><a href="player_8c.html#a88a8cb25811799ad5ce9cdddfaf144cd">player_dt_default</a></div><div class="ttdeci">double player_dt_default(void)</div><div class="ttdoc">Returns the player's total default time delta based on dt_mod and ship's dt_default.</div><div class="ttdef"><b>Definition:</b> <a href="player_8c_source.html#l01759">player.c:1759</a></div></div>
@@ -1557,7 +1559,7 @@ $(function() {
 <div class="ttc" id="aland__outfits_8c_html_a4dd37169971f0c7d78d6fc776ae76bb7"><div class="ttname"><a href="land__outfits_8c.html#a4dd37169971f0c7d78d6fc776ae76bb7">outfits_cleanup</a></div><div class="ttdeci">void outfits_cleanup(void)</div><div class="ttdoc">Cleans up outfit globals.</div><div class="ttdef"><b>Definition:</b> <a href="land__outfits_8c_source.html#l00863">land_outfits.c:863</a></div></div>
 <div class="ttc" id="aland_8c_html_ae5e42072ae51b9ea7b3c0752256e92a5"><div class="ttname"><a href="land_8c.html#ae5e42072ae51b9ea7b3c0752256e92a5">land_setupTabs</a></div><div class="ttdeci">static void land_setupTabs(void)</div><div class="ttdoc">Sets up the tabs for the window.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00906">land.c:906</a></div></div>
 <div class="ttc" id="aland_8c_html_af3d6035746df50efdcb5ee8cff63e7c4"><div class="ttname"><a href="land_8c.html#af3d6035746df50efdcb5ee8cff63e7c4">misn_update</a></div><div class="ttdeci">static void misn_update(unsigned int wid, const char *str)</div><div class="ttdoc">Updates the mission list.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00703">land.c:703</a></div></div>
-<div class="ttc" id="aland_8c_html_ac31058d9dda769012c91c866c34e595a"><div class="ttname"><a href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a></div><div class="ttdeci">void land(Planet *p, int load)</div><div class="ttdoc">Opens up all the land dialogue stuff.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01122">land.c:1122</a></div></div>
+<div class="ttc" id="aland_8c_html_ac31058d9dda769012c91c866c34e595a"><div class="ttname"><a href="land_8c.html#ac31058d9dda769012c91c866c34e595a">land</a></div><div class="ttdeci">void land(Planet *p, int load)</div><div class="ttdoc">Opens up all the land dialogue stuff.</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l01124">land.c:1124</a></div></div>
 <div class="ttc" id="aland_8c_html_a0df066f110be70d63b8c9a6cfcf1380d"><div class="ttname"><a href="land_8c.html#a0df066f110be70d63b8c9a6cfcf1380d">visited</a></div><div class="ttdeci">#define visited(f)</div><div class="ttdef"><b>Definition:</b> <a href="land_8c_source.html#l00061">land.c:61</a></div></div>
 <div class="ttc" id="aoutfit_8c_html_a0a785d79d010792279fc92b2842c8675"><div class="ttname"><a href="outfit_8c.html#a0a785d79d010792279fc92b2842c8675">outfit_get</a></div><div class="ttdeci">const Outfit * outfit_get(const char *name)</div><div class="ttdoc">Gets an outfit by name.</div><div class="ttdef"><b>Definition:</b> <a href="outfit_8c_source.html#l00117">outfit.c:117</a></div></div>
 <div class="ttc" id="amission_8c_html_afdc03d53b5f12418528f86360b12ad9e"><div class="ttname"><a href="mission_8c.html#afdc03d53b5f12418528f86360b12ad9e">missions_genList</a></div><div class="ttdeci">Mission * missions_genList(int *n, int faction, const char *planet, const char *sysname, int loc)</div><div class="ttdoc">Generates a mission list. This runs create() so won't work with all missions.</div><div class="ttdef"><b>Definition:</b> <a href="mission_8c_source.html#l00796">mission.c:796</a></div></div>
