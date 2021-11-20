@@ -1367,39 +1367,99 @@ $(function() {
 <div class="line"><a name="l01580"></a><span class="lineno"> 1580</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( pilot );</div>
 <div class="line"><a name="l01581"></a><span class="lineno"> 1581</span>&#160;}</div>
 <div class="line"><a name="l01582"></a><span class="lineno"> 1582</span>&#160; </div>
-<div class="line"><a name="l01588"></a><span class="lineno"><a class="line" href="pilot__outfit_8c.html#a9cb477b86d1f8b3a3b878ffa91a1bfee"> 1588</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__outfit_8c.html#a9cb477b86d1f8b3a3b878ffa91a1bfee">pilot_outfitLCleanup</a>( Pilot *pilot )</div>
+<div class="line"><a name="l01588"></a><span class="lineno"><a class="line" href="pilot__outfit_8c.html#aca89b0e8f90c142fb10bb8fdd7e0496c"> 1588</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__outfit_8c.html#aca89b0e8f90c142fb10bb8fdd7e0496c">pilot_outfitLOnland</a>( Pilot *pilot )</div>
 <div class="line"><a name="l01589"></a><span class="lineno"> 1589</span>&#160;{</div>
 <div class="line"><a name="l01590"></a><span class="lineno"> 1590</span>&#160;   pilotoutfit_modified = 0;</div>
 <div class="line"><a name="l01591"></a><span class="lineno"> 1591</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pilot-&gt;outfits); i++) {</div>
 <div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160;      PilotOutfitSlot *po = pilot-&gt;outfits[i];</div>
 <div class="line"><a name="l01593"></a><span class="lineno"> 1593</span>&#160;      <span class="keywordflow">if</span> (po-&gt;outfit==NULL || !<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(po-&gt;outfit))</div>
 <div class="line"><a name="l01594"></a><span class="lineno"> 1594</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01595"></a><span class="lineno"> 1595</span>&#160;      <span class="keywordflow">if</span> (po-&gt;outfit-&gt;u.mod.lua_cleanup == LUA_NOREF)</div>
+<div class="line"><a name="l01595"></a><span class="lineno"> 1595</span>&#160;      <span class="keywordflow">if</span> (po-&gt;outfit-&gt;u.mod.lua_land == LUA_NOREF)</div>
 <div class="line"><a name="l01596"></a><span class="lineno"> 1596</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01597"></a><span class="lineno"> 1597</span>&#160;      <span class="comment">/* Pilot could be created and then erased without getting properly</span></div>
-<div class="line"><a name="l01598"></a><span class="lineno"> 1598</span>&#160;<span class="comment">       * initialized. */</span></div>
-<div class="line"><a name="l01599"></a><span class="lineno"> 1599</span>&#160;      <span class="keywordflow">if</span> (po-&gt;lua_mem == LUA_NOREF)</div>
-<div class="line"><a name="l01600"></a><span class="lineno"> 1600</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l01601"></a><span class="lineno"> 1601</span>&#160; </div>
-<div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;      nlua_env env = po-&gt;outfit-&gt;u.mod.lua_env;</div>
+<div class="line"><a name="l01597"></a><span class="lineno"> 1597</span>&#160; </div>
+<div class="line"><a name="l01598"></a><span class="lineno"> 1598</span>&#160;      nlua_env env = po-&gt;outfit-&gt;u.mod.lua_env;</div>
+<div class="line"><a name="l01599"></a><span class="lineno"> 1599</span>&#160; </div>
+<div class="line"><a name="l01600"></a><span class="lineno"> 1600</span>&#160;      <span class="comment">/* Set the memory. */</span></div>
+<div class="line"><a name="l01601"></a><span class="lineno"> 1601</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;lua_mem); <span class="comment">/* mem */</span></div>
+<div class="line"><a name="l01602"></a><span class="lineno"> 1602</span>&#160;      nlua_setenv(env, <span class="stringliteral">&quot;mem&quot;</span>); <span class="comment">/* */</span></div>
 <div class="line"><a name="l01603"></a><span class="lineno"> 1603</span>&#160; </div>
-<div class="line"><a name="l01604"></a><span class="lineno"> 1604</span>&#160;      <span class="comment">/* Set the memory. */</span></div>
-<div class="line"><a name="l01605"></a><span class="lineno"> 1605</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;lua_mem); <span class="comment">/* mem */</span></div>
-<div class="line"><a name="l01606"></a><span class="lineno"> 1606</span>&#160;      nlua_setenv(env, <span class="stringliteral">&quot;mem&quot;</span>); <span class="comment">/* */</span></div>
-<div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160; </div>
-<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160;      <span class="comment">/* Set up the function: cleanup( p, po ) */</span></div>
-<div class="line"><a name="l01609"></a><span class="lineno"> 1609</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;outfit-&gt;u.mod.lua_cleanup); <span class="comment">/* f */</span></div>
-<div class="line"><a name="l01610"></a><span class="lineno"> 1610</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, pilot-&gt;id); <span class="comment">/* f, p */</span></div>
-<div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160;      <a class="code" href="nlua__pilotoutfit_8c.html#a9a4411b619fd54467cc9e3c193bb1c3d">lua_pushpilotoutfit</a>(naevL, po);  <span class="comment">/* f, p, po */</span></div>
-<div class="line"><a name="l01612"></a><span class="lineno"> 1612</span>&#160;      <span class="keywordflow">if</span> (nlua_pcall( env, 2, 0 )) {   <span class="comment">/* */</span></div>
-<div class="line"><a name="l01613"></a><span class="lineno"> 1613</span>&#160;         WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39;&#39;s outfit &#39;%s&#39; -&gt; &#39;cleanup&#39;:\n%s&quot;</span>), pilot-&gt;name, po-&gt;outfit-&gt;name, lua_tostring(naevL,-1));</div>
-<div class="line"><a name="l01614"></a><span class="lineno"> 1614</span>&#160;         lua_pop(naevL, 1);</div>
-<div class="line"><a name="l01615"></a><span class="lineno"> 1615</span>&#160;      }</div>
-<div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;   }</div>
-<div class="line"><a name="l01617"></a><span class="lineno"> 1617</span>&#160;   <span class="comment">/* Pilot gets cleaned up so no need to recalculate stats. */</span></div>
-<div class="line"><a name="l01618"></a><span class="lineno"> 1618</span>&#160;}</div>
+<div class="line"><a name="l01604"></a><span class="lineno"> 1604</span>&#160;      <span class="comment">/* Set up the function: land( p, po ) */</span></div>
+<div class="line"><a name="l01605"></a><span class="lineno"> 1605</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;outfit-&gt;u.mod.lua_land); <span class="comment">/* f */</span></div>
+<div class="line"><a name="l01606"></a><span class="lineno"> 1606</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, pilot-&gt;id); <span class="comment">/* f, p */</span></div>
+<div class="line"><a name="l01607"></a><span class="lineno"> 1607</span>&#160;      <a class="code" href="nlua__pilotoutfit_8c.html#a9a4411b619fd54467cc9e3c193bb1c3d">lua_pushpilotoutfit</a>(naevL, po);  <span class="comment">/* f, p, po */</span></div>
+<div class="line"><a name="l01608"></a><span class="lineno"> 1608</span>&#160;      <span class="keywordflow">if</span> (nlua_pcall( env, 2, 0 )) {   <span class="comment">/* */</span></div>
+<div class="line"><a name="l01609"></a><span class="lineno"> 1609</span>&#160;         WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39;&#39;s outfit &#39;%s&#39; -&gt; &#39;land&#39;:\n%s&quot;</span>), pilot-&gt;name, po-&gt;outfit-&gt;name, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l01610"></a><span class="lineno"> 1610</span>&#160;         lua_pop(naevL, 1);</div>
+<div class="line"><a name="l01611"></a><span class="lineno"> 1611</span>&#160;      }</div>
+<div class="line"><a name="l01612"></a><span class="lineno"> 1612</span>&#160;   }</div>
+<div class="line"><a name="l01613"></a><span class="lineno"> 1613</span>&#160;   <span class="comment">/* Recalculate if anything changed. */</span></div>
+<div class="line"><a name="l01614"></a><span class="lineno"> 1614</span>&#160;   <span class="keywordflow">if</span> (pilotoutfit_modified)</div>
+<div class="line"><a name="l01615"></a><span class="lineno"> 1615</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( pilot );</div>
+<div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;}</div>
+<div class="line"><a name="l01617"></a><span class="lineno"> 1617</span>&#160; </div>
+<div class="line"><a name="l01623"></a><span class="lineno"><a class="line" href="pilot__outfit_8c.html#a5d30fb1b21abcb04b4019aaaf05bb13b"> 1623</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__outfit_8c.html#a5d30fb1b21abcb04b4019aaaf05bb13b">pilot_outfitLOntakeoff</a>( Pilot *pilot )</div>
+<div class="line"><a name="l01624"></a><span class="lineno"> 1624</span>&#160;{</div>
+<div class="line"><a name="l01625"></a><span class="lineno"> 1625</span>&#160;   pilotoutfit_modified = 0;</div>
+<div class="line"><a name="l01626"></a><span class="lineno"> 1626</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pilot-&gt;outfits); i++) {</div>
+<div class="line"><a name="l01627"></a><span class="lineno"> 1627</span>&#160;      PilotOutfitSlot *po = pilot-&gt;outfits[i];</div>
+<div class="line"><a name="l01628"></a><span class="lineno"> 1628</span>&#160;      <span class="keywordflow">if</span> (po-&gt;outfit==NULL || !<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(po-&gt;outfit))</div>
+<div class="line"><a name="l01629"></a><span class="lineno"> 1629</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01630"></a><span class="lineno"> 1630</span>&#160;      <span class="keywordflow">if</span> (po-&gt;outfit-&gt;u.mod.lua_takeoff == LUA_NOREF)</div>
+<div class="line"><a name="l01631"></a><span class="lineno"> 1631</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01632"></a><span class="lineno"> 1632</span>&#160; </div>
+<div class="line"><a name="l01633"></a><span class="lineno"> 1633</span>&#160;      nlua_env env = po-&gt;outfit-&gt;u.mod.lua_env;</div>
+<div class="line"><a name="l01634"></a><span class="lineno"> 1634</span>&#160; </div>
+<div class="line"><a name="l01635"></a><span class="lineno"> 1635</span>&#160;      <span class="comment">/* Set the memory. */</span></div>
+<div class="line"><a name="l01636"></a><span class="lineno"> 1636</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;lua_mem); <span class="comment">/* mem */</span></div>
+<div class="line"><a name="l01637"></a><span class="lineno"> 1637</span>&#160;      nlua_setenv(env, <span class="stringliteral">&quot;mem&quot;</span>); <span class="comment">/* */</span></div>
+<div class="line"><a name="l01638"></a><span class="lineno"> 1638</span>&#160; </div>
+<div class="line"><a name="l01639"></a><span class="lineno"> 1639</span>&#160;      <span class="comment">/* Set up the function: takeoff( p, po ) */</span></div>
+<div class="line"><a name="l01640"></a><span class="lineno"> 1640</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;outfit-&gt;u.mod.lua_takeoff); <span class="comment">/* f */</span></div>
+<div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, pilot-&gt;id); <span class="comment">/* f, p */</span></div>
+<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160;      <a class="code" href="nlua__pilotoutfit_8c.html#a9a4411b619fd54467cc9e3c193bb1c3d">lua_pushpilotoutfit</a>(naevL, po);  <span class="comment">/* f, p, po */</span></div>
+<div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160;      <span class="keywordflow">if</span> (nlua_pcall( env, 2, 0 )) {   <span class="comment">/* */</span></div>
+<div class="line"><a name="l01644"></a><span class="lineno"> 1644</span>&#160;         WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39;&#39;s outfit &#39;%s&#39; -&gt; &#39;takeoff&#39;:\n%s&quot;</span>), pilot-&gt;name, po-&gt;outfit-&gt;name, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l01645"></a><span class="lineno"> 1645</span>&#160;         lua_pop(naevL, 1);</div>
+<div class="line"><a name="l01646"></a><span class="lineno"> 1646</span>&#160;      }</div>
+<div class="line"><a name="l01647"></a><span class="lineno"> 1647</span>&#160;   }</div>
+<div class="line"><a name="l01648"></a><span class="lineno"> 1648</span>&#160;   <span class="comment">/* Recalculate if anything changed. */</span></div>
+<div class="line"><a name="l01649"></a><span class="lineno"> 1649</span>&#160;   <span class="keywordflow">if</span> (pilotoutfit_modified)</div>
+<div class="line"><a name="l01650"></a><span class="lineno"> 1650</span>&#160;      <a class="code" href="pilot__outfit_8c.html#a69e155b5a354ff956e013b1cc8f9cad8">pilot_calcStats</a>( pilot );</div>
+<div class="line"><a name="l01651"></a><span class="lineno"> 1651</span>&#160;}</div>
+<div class="line"><a name="l01652"></a><span class="lineno"> 1652</span>&#160; </div>
+<div class="line"><a name="l01658"></a><span class="lineno"><a class="line" href="pilot__outfit_8c.html#a9cb477b86d1f8b3a3b878ffa91a1bfee"> 1658</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="pilot__outfit_8c.html#a9cb477b86d1f8b3a3b878ffa91a1bfee">pilot_outfitLCleanup</a>( Pilot *pilot )</div>
+<div class="line"><a name="l01659"></a><span class="lineno"> 1659</span>&#160;{</div>
+<div class="line"><a name="l01660"></a><span class="lineno"> 1660</span>&#160;   pilotoutfit_modified = 0;</div>
+<div class="line"><a name="l01661"></a><span class="lineno"> 1661</span>&#160;   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="array_8h.html#a7c62b40a0c0e00e204db23aee2186d70">array_size</a>(pilot-&gt;outfits); i++) {</div>
+<div class="line"><a name="l01662"></a><span class="lineno"> 1662</span>&#160;      PilotOutfitSlot *po = pilot-&gt;outfits[i];</div>
+<div class="line"><a name="l01663"></a><span class="lineno"> 1663</span>&#160;      <span class="keywordflow">if</span> (po-&gt;outfit==NULL || !<a class="code" href="outfit_8c.html#aa9e0ac971226259f27e350f01e78c4dc">outfit_isMod</a>(po-&gt;outfit))</div>
+<div class="line"><a name="l01664"></a><span class="lineno"> 1664</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01665"></a><span class="lineno"> 1665</span>&#160;      <span class="keywordflow">if</span> (po-&gt;outfit-&gt;u.mod.lua_cleanup == LUA_NOREF)</div>
+<div class="line"><a name="l01666"></a><span class="lineno"> 1666</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01667"></a><span class="lineno"> 1667</span>&#160;      <span class="comment">/* Pilot could be created and then erased without getting properly</span></div>
+<div class="line"><a name="l01668"></a><span class="lineno"> 1668</span>&#160;<span class="comment">       * initialized. */</span></div>
+<div class="line"><a name="l01669"></a><span class="lineno"> 1669</span>&#160;      <span class="keywordflow">if</span> (po-&gt;lua_mem == LUA_NOREF)</div>
+<div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160; </div>
+<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;      nlua_env env = po-&gt;outfit-&gt;u.mod.lua_env;</div>
+<div class="line"><a name="l01673"></a><span class="lineno"> 1673</span>&#160; </div>
+<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160;      <span class="comment">/* Set the memory. */</span></div>
+<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;lua_mem); <span class="comment">/* mem */</span></div>
+<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;      nlua_setenv(env, <span class="stringliteral">&quot;mem&quot;</span>); <span class="comment">/* */</span></div>
+<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160; </div>
+<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160;      <span class="comment">/* Set up the function: cleanup( p, po ) */</span></div>
+<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160;      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po-&gt;outfit-&gt;u.mod.lua_cleanup); <span class="comment">/* f */</span></div>
+<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;      <a class="code" href="nlua__pilot_8c.html#af0ba03c950b5f67410e2c2f00018c4fb">lua_pushpilot</a>(naevL, pilot-&gt;id); <span class="comment">/* f, p */</span></div>
+<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;      <a class="code" href="nlua__pilotoutfit_8c.html#a9a4411b619fd54467cc9e3c193bb1c3d">lua_pushpilotoutfit</a>(naevL, po);  <span class="comment">/* f, p, po */</span></div>
+<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;      <span class="keywordflow">if</span> (nlua_pcall( env, 2, 0 )) {   <span class="comment">/* */</span></div>
+<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160;         WARN( _(<span class="stringliteral">&quot;Pilot &#39;%s&#39;&#39;s outfit &#39;%s&#39; -&gt; &#39;cleanup&#39;:\n%s&quot;</span>), pilot-&gt;name, po-&gt;outfit-&gt;name, lua_tostring(naevL,-1));</div>
+<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;         lua_pop(naevL, 1);</div>
+<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;      }</div>
+<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;   }</div>
+<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;   <span class="comment">/* Pilot gets cleaned up so no need to recalculate stats. */</span></div>
+<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="apilot__outfit_8c_html_a9cb477b86d1f8b3a3b878ffa91a1bfee"><div class="ttname"><a href="pilot__outfit_8c.html#a9cb477b86d1f8b3a3b878ffa91a1bfee">pilot_outfitLCleanup</a></div><div class="ttdeci">void pilot_outfitLCleanup(Pilot *pilot)</div><div class="ttdoc">Handle cleanup hooks for outfits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l01588">pilot_outfit.c:1588</a></div></div>
+<div class="ttc" id="apilot__outfit_8c_html_a9cb477b86d1f8b3a3b878ffa91a1bfee"><div class="ttname"><a href="pilot__outfit_8c.html#a9cb477b86d1f8b3a3b878ffa91a1bfee">pilot_outfitLCleanup</a></div><div class="ttdeci">void pilot_outfitLCleanup(Pilot *pilot)</div><div class="ttdoc">Handle cleanup hooks for outfits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l01658">pilot_outfit.c:1658</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a4edc863f1e143af83abaebf92687f730"><div class="ttname"><a href="pilot__outfit_8c.html#a4edc863f1e143af83abaebf92687f730">pilot_addOutfit</a></div><div class="ttdeci">int pilot_addOutfit(Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s)</div><div class="ttdoc">Adds an outfit to the pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00372">pilot_outfit.c:372</a></div></div>
 <div class="ttc" id="agui_8c_html_ad3ce892d7df7f277dd2a7c50870f3e1b"><div class="ttname"><a href="gui_8c.html#ad3ce892d7df7f277dd2a7c50870f3e1b">gui_setGeneric</a></div><div class="ttdeci">void gui_setGeneric(const Pilot *pilot)</div><div class="ttdoc">Calls trigger functions depending on who the pilot is.</div><div class="ttdef"><b>Definition:</b> <a href="gui_8c_source.html#l01787">gui.c:1787</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_aad031d8fa82908c43aee6776fa433ce6"><div class="ttname"><a href="pilot__outfit_8c.html#aad031d8fa82908c43aee6776fa433ce6">pilot_reportSpaceworthy</a></div><div class="ttdeci">int pilot_reportSpaceworthy(const Pilot *p, char *buf, int bufSize)</div><div class="ttdoc">Pilot safety report - makes sure stats are safe.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00553">pilot_outfit.c:553</a></div></div>
@@ -1441,6 +1501,7 @@ $(function() {
 <div class="ttc" id="apilot__outfit_8c_html_a429a282a692c5fcf1969363e8d03e972"><div class="ttname"><a href="pilot__outfit_8c.html#a429a282a692c5fcf1969363e8d03e972">pilot_outfitLOnshoot</a></div><div class="ttdeci">void pilot_outfitLOnshoot(Pilot *pilot)</div><div class="ttdoc">Runs the pilot's Lua outfits onhit script.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l01442">pilot_outfit.c:1442</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_aa9cefc41eaf728d5641f0cb36c40018e"><div class="ttname"><a href="pilot__outfit_8c.html#aa9cefc41eaf728d5641f0cb36c40018e">pilot_addAmmo</a></div><div class="ttdeci">int pilot_addAmmo(Pilot *pilot, PilotOutfitSlot *s, const Outfit *ammo, int quantity)</div><div class="ttdoc">Adds some ammo to the pilot stock.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00664">pilot_outfit.c:664</a></div></div>
 <div class="ttc" id="apilot__heat_8c_html_acb31efe3cf3974a32a446a99bae8c3b4"><div class="ttname"><a href="pilot__heat_8c.html#acb31efe3cf3974a32a446a99bae8c3b4">pilot_heatCalc</a></div><div class="ttdeci">void pilot_heatCalc(Pilot *p)</div><div class="ttdoc">Calculates the heat parameters for a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__heat_8c_source.html#l00038">pilot_heat.c:38</a></div></div>
+<div class="ttc" id="apilot__outfit_8c_html_a5d30fb1b21abcb04b4019aaaf05bb13b"><div class="ttname"><a href="pilot__outfit_8c.html#a5d30fb1b21abcb04b4019aaaf05bb13b">pilot_outfitLOntakeoff</a></div><div class="ttdeci">void pilot_outfitLOntakeoff(Pilot *pilot)</div><div class="ttdoc">Runs Lua outfits when pilot takes off from a planet.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l01623">pilot_outfit.c:1623</a></div></div>
 <div class="ttc" id="astructPilot___html_ae89857331c6ec3517ea0102306a1fb27"><div class="ttname"><a href="structPilot__.html#ae89857331c6ec3517ea0102306a1fb27">Pilot_::dockslot</a></div><div class="ttdeci">int dockslot</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8h_source.html#l00328">pilot.h:328</a></div></div>
 <div class="ttc" id="astructPilot___html_adfb1ffae5f5653864bcec8a54bc075ab"><div class="ttname"><a href="structPilot__.html#adfb1ffae5f5653864bcec8a54bc075ab">Pilot_::target</a></div><div class="ttdeci">unsigned int target</div><div class="ttdef"><b>Definition:</b> <a href="pilot_8h_source.html#l00331">pilot.h:331</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a2622ffa02bcfe1d84c922f038f2a1a42"><div class="ttname"><a href="pilot__outfit_8c.html#a2622ffa02bcfe1d84c922f038f2a1a42">pilot_outfitLCooldown</a></div><div class="ttdeci">void pilot_outfitLCooldown(Pilot *pilot, int done, int success, double timer)</div><div class="ttdoc">Handle cooldown hooks for outfits.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l01402">pilot_outfit.c:1402</a></div></div>
@@ -1488,6 +1549,7 @@ $(function() {
 <div class="ttc" id="apilot__outfit_8c_html_abce4262017a880914bfcf6557478faba"><div class="ttname"><a href="pilot__outfit_8c.html#abce4262017a880914bfcf6557478faba">pilot_outfitLAdd</a></div><div class="ttdeci">int pilot_outfitLAdd(Pilot *pilot, PilotOutfitSlot *po)</div><div class="ttdoc">Outfit is added to a ship.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l01167">pilot_outfit.c:1167</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a4015ebec602dae303670aad044feb1e3"><div class="ttname"><a href="pilot__outfit_8c.html#a4015ebec602dae303670aad044feb1e3">pilot_slotsCheckRequired</a></div><div class="ttdeci">int pilot_slotsCheckRequired(const Pilot *p)</div><div class="ttdoc">Pilot required (core) slot filled check - makes sure they are filled.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00484">pilot_outfit.c:484</a></div></div>
 <div class="ttc" id="anaev_8h_html_a74e75242132eaabbc1c512488a135926"><div class="ttname"><a href="naev_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a></div><div class="ttdeci">#define MIN(x, y)</div><div class="ttdef"><b>Definition:</b> <a href="naev_8h_source.html#l00040">naev.h:40</a></div></div>
+<div class="ttc" id="apilot__outfit_8c_html_aca89b0e8f90c142fb10bb8fdd7e0496c"><div class="ttname"><a href="pilot__outfit_8c.html#aca89b0e8f90c142fb10bb8fdd7e0496c">pilot_outfitLOnland</a></div><div class="ttdeci">void pilot_outfitLOnland(Pilot *pilot)</div><div class="ttdoc">Runs Lua outfits when pilot lands on a planet.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l01588">pilot_outfit.c:1588</a></div></div>
 <div class="ttc" id="aescort_8c_html_a4602b87abe2c36b479b5c7d63c6761e0"><div class="ttname"><a href="escort_8c.html#a4602b87abe2c36b479b5c7d63c6761e0">escort_freeList</a></div><div class="ttdeci">void escort_freeList(Pilot *p)</div><div class="ttdoc">Remove all escorts from a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="escort_8c_source.html#l00060">escort.c:60</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_a9bfa9c39ba4055c93f92f332d7070f6b"><div class="ttname"><a href="pilot__outfit_8c.html#a9bfa9c39ba4055c93f92f332d7070f6b">pilot_outfitLOnstealth</a></div><div class="ttdeci">int pilot_outfitLOnstealth(Pilot *pilot)</div><div class="ttdoc">Runs the pilot's Lua outfits onhit script.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l01478">pilot_outfit.c:1478</a></div></div>
 <div class="ttc" id="apilot__outfit_8c_html_ab380cb3792d2cb6da39ffdf7fbb45cb0"><div class="ttname"><a href="pilot__outfit_8c.html#ab380cb3792d2cb6da39ffdf7fbb45cb0">pilot_getMount</a></div><div class="ttdeci">int pilot_getMount(const Pilot *p, const PilotOutfitSlot *w, Vector2d *v)</div><div class="ttdoc">Gets the mount position of a pilot.</div><div class="ttdef"><b>Definition:</b> <a href="pilot__outfit_8c_source.html#l00145">pilot_outfit.c:145</a></div></div>
