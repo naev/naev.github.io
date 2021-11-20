@@ -288,6 +288,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safe
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a9470ea6bf4b3c6bec36363d552de22a8">safelanes_recalculate</a> (void)</td></tr>
 <tr class="memdesc:a9470ea6bf4b3c6bec36363d552de22a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the safe lane locations in response to the universe changing (e.g., diff applied). <br /></td></tr>
 <tr class="separator:a9470ea6bf4b3c6bec36363d552de22a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30aede8638ac824e1ef6e73669dba7ad"><td class="memItemLeft" align="right" valign="top"><a id="a30aede8638ac824e1ef6e73669dba7ad"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a30aede8638ac824e1ef6e73669dba7ad">safelanes_calculated</a> (void)</td></tr>
+<tr class="memdesc:a30aede8638ac824e1ef6e73669dba7ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not the safe lanes have been calculated at least once. <br /></td></tr>
+<tr class="separator:a30aede8638ac824e1ef6e73669dba7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -347,6 +351,8 @@ static const <a class="el" href="safelanes_8c.html#a87107ac1f804d94f8e38afe692fc
 <tr class="separator:a602069ab94cd369cdc15219ce9766ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad60f83d281ebe3da9ba0669d23944c48"><td class="memItemLeft" align="right" valign="top">static double *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#ad60f83d281ebe3da9ba0669d23944c48">cmp_key_ref</a></td></tr>
 <tr class="separator:ad60f83d281ebe3da9ba0669d23944c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00ddecb40249acebd85ead7cdbbc069b"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="safelanes_8c.html#a00ddecb40249acebd85ead7cdbbc069b">safelanes_calculated_once</a> = 0</td></tr>
+<tr class="separator:a00ddecb40249acebd85ead7cdbbc069b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles factions' safe lanes through systems. This implements the algorithm described in utils/lanes-generator (whitepaper and much clearer Python version). </p>
@@ -442,7 +448,7 @@ static const <a class="el" href="safelanes_8c.html#a87107ac1f804d94f8e38afe692fc
 <p>&lt; Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated.</p>
 <p>&lt; System si's U and Lambda rows start at sys_base; its lal rows start at lal_base.</p>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00668">668</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00684">684</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -489,7 +495,7 @@ static const <a class="el" href="safelanes_8c.html#a87107ac1f804d94f8e38afe692fc
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Array (<a class="el" href="array_8h.html" title="Provides macros to work with dynamic arrays.">array.h</a>) of matching SafeLane structures. Caller frees. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00183">183</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00184">184</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -520,7 +526,7 @@ static const <a class="el" href="safelanes_8c.html#a87107ac1f804d94f8e38afe692fc
 <p>Returns the initial conductivity value (1/length) for edge ei. The live value is stored in the stiffness matrix;. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="safelanes_8c.html#a1b2ff9d83db3703564b4f73ca049a3fa" title="Sets up the stiffness matrix.">safelanes_initStiff</a> above. When <a class="el" href="rng_8c.html#a3ae63274d1e5a52f21db2df3bc5eee03">a</a> lane is activated, its conductivity is updated to (1+<a class="el" href="safelanes_8c.html#a29874299171f0e96c480b139d19adef4">ALPHA</a>)/length. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00554">554</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00570">570</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -551,7 +557,7 @@ static const <a class="el" href="safelanes_8c.html#a87107ac1f804d94f8e38afe692fc
 <p>Updates the stiffness matrix to account for the given edge being activated. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="safelanes_8c.html#a1b2ff9d83db3703564b4f73ca049a3fa" title="Sets up the stiffness matrix.">safelanes_initStiff</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00564">564</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00580">580</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
@@ -903,6 +909,31 @@ static const <a class="el" href="safelanes_8c.html#a87107ac1f804d94f8e38afe692fc
 <p>(Q*)Q where Q is the ExV difference matrix. </p>
 
 <p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00108">108</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
+
+</div>
+</div>
+<a id="a00ddecb40249acebd85ead7cdbbc069b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00ddecb40249acebd85ead7cdbbc069b">&#9670;&nbsp;</a></span>safelanes_calculated_once</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int safelanes_calculated_once = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether or not the safe lanes have been computed once. </p>
+
+<p class="definition">Definition at line <a class="el" href="safelanes_8c_source.html#l00113">113</a> of file <a class="el" href="safelanes_8c_source.html">safelanes.c</a>.</p>
 
 </div>
 </div>
