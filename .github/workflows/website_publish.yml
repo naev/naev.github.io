@@ -20,70 +20,70 @@ jobs:
       - name: Checkout Naev Repository
         uses: actions/checkout@v2
         with:
-          path: prod
+          path: ${{ github.workspace }}/prod
 
       - name: Clone Website
         if: github.event.action == 'website'
         uses: actions/checkout@v2
         with:
           repository: 'naev/naev-website'
-          path: staging
+          path: ${{ github.workspace }}/staging
 
       - name: Clone API Docs
         if: github.event.action == 'api'
         uses: actions/checkout@v2
         with:
           repository: 'naev/naev'
-          path: staging
+          path: ${{ github.workspace }}/staging
 
       - name: Compile Website
         if: github.event.action == 'website'
         run: |
           make
-        working-directory: staging
+        working-directory: ${{ github.workspace }}/staging
 
       - name: Meson Build
         if: github.event.action == 'api'
         run: |
           meson setup build . -Dexecutable=disabled
           meson compile -C build
-        working-directory: staging
+        working-directory: ${{ github.workspace }}/staging
 
       - name: Apply Website Changes
         if: github.event.action == 'website'
         run: |
           rsync -avzh output/ ${{ github.workspace }}/prod
-        working-directory: staging
+        working-directory: ${{ github.workspace }}/staging
 
       - name: Apply API Docs Changes
         if: github.event.action == 'api'
         run: |
           rsync -avzh build/docs/lua/ ${{ github.workspace }}/prod/api
-        working-directory: staging
+        working-directory: ${{ github.workspace }}/staging
 
       - name: Add new file changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions"
           git add *
-        working-directory: prod
+        working-directory: ${{ github.workspace }}/prod
 
       - name: Commit Website Changes
         if: github.event.action == 'website'
         run: |
           git commit -m "Website Updates" -a
-        working-directory: prod
+        working-directory: ${{ github.workspace }}/prod
 
       - name: Commit API Documentation Changes
         if: github.event.action == 'api'
         run: |
           git commit -m "API Documentation Updates" -a
-        working-directory: prod
+        working-directory: ${{ github.workspace }}/prod
 
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-          directory: prod
+          directory: ${{ github.workspace }}/prod
           
