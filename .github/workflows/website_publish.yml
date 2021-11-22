@@ -22,6 +22,11 @@ jobs:
         with:
           path: ${{ github.workspace }}/prod
 
+      - name: Test Directory Location
+        run: |
+          pwd
+        working-directory: ${{ github.workspace }}/prod
+
       - name: Clone Website
         if: github.event.action == 'website'
         uses: actions/checkout@v2
@@ -52,8 +57,6 @@ jobs:
       - name: Apply Website Changes
         if: github.event.action == 'website'
         run: |
-          cd ${{ github.workspace }}
-          ls -l
           rsync -avzh output/ ${{ github.workspace }}/prod
         working-directory: ${{ github.workspace }}/staging
 
