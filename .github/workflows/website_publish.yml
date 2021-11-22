@@ -5,6 +5,8 @@ on: [repository_dispatch]
 jobs:
   publish:
     runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/naev-docs:latest"
     steps:
       - name: Event Information
         run: |
@@ -34,34 +36,6 @@ jobs:
           repository: 'naev/naev'
           path: staging
 
-      - name: Update APT Cache
-        run: |
-          sudo apt-get update
-
-      - name: Install Required APT Packages
-        if: github.event.action == 'website'
-        run: |
-          sudo apt-get install \
-            make \
-            ruby-bundler \
-            ruby-dev \
-            tidy
-
-      - name: Install Additional Build Dependencies
-        if: github.event.action == 'api'
-        run: |
-          sudo apt-get install \
-            lua-ldoc \
-            graphviz \
-            doxygen \
-            ninja-build
-
-      - name: Install Required Ruby Gems
-        if: github.event.action == 'website'
-        run: |
-          bundle install -j$(nproc)
-        working-directory: staging
-
       - name: Compile Website
         if: github.event.action == 'website'
         run: |
@@ -71,8 +45,8 @@ jobs:
       - name: Meson Build
         if: github.event.action == 'api'
         run: |
-          ./meson.sh setup build . -Dexecutable=disabled
-          ./meson.sh compile -C build
+          meson setup build . -Dexecutable=disabled
+          meson compile -C build
         working-directory: staging
 
       - name: Apply Website Changes
@@ -85,7 +59,6 @@ jobs:
         if: github.event.action == 'api'
         run: |
           rsync -avzh build/docs/lua/ ${{ github.workspace }}/prod/api
-          rsync -avzh build/docs/c/ ${{ github.workspace }}/prod/capi
         working-directory: staging
 
       - name: Add new file changes
