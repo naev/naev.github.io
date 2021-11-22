@@ -52,6 +52,7 @@ jobs:
       - name: Apply Website Changes
         if: github.event.action == 'website'
         run: |
+          find ${{ github.workspace }} -maxdepth 2 -type d -ls
           rsync -avzh output/ ${{ github.workspace }}/prod
         working-directory: ${{ github.workspace }}/staging
 
