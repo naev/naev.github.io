@@ -20,77 +20,76 @@ jobs:
       - name: Checkout Naev Repository
         uses: actions/checkout@v2
         with:
-          path: ${{ github.workspace }}/prod
+          path: /tmp/naevBuild/prod
 
       - name: Test Directory Location
         run: |
           pwd
-          echo ${{ github.workspace }}/prod
           exit 1
-        working-directory: ${{ github.workspace }}/prod
+        working-directory: /tmp/naevBuild/prod
 
       - name: Clone Website
         if: github.event.action == 'website'
         uses: actions/checkout@v2
         with:
           repository: 'naev/naev-website'
-          path: ${{ github.workspace }}/staging
+          path: /tmp/naevBuild/staging
 
       - name: Clone API Docs
         if: github.event.action == 'api'
         uses: actions/checkout@v2
         with:
           repository: 'naev/naev'
-          path: ${{ github.workspace }}/staging
+          path: /tmp/naevBuild/staging
 
       - name: Compile Website
         if: github.event.action == 'website'
         run: |
           make
-        working-directory: ${{ github.workspace }}/staging
+        working-directory: /tmp/naevBuild/staging
 
       - name: Meson Build
         if: github.event.action == 'api'
         run: |
           meson setup build . -Dexecutable=disabled
           meson compile -C build
-        working-directory: ${{ github.workspace }}/staging
+        working-directory: /tmp/naevBuild/staging
 
       - name: Apply Website Changes
         if: github.event.action == 'website'
         run: |
-          rsync -avzh output/ ${{ github.workspace }}/prod
-        working-directory: ${{ github.workspace }}/staging
+          rsync -avzh output/ /tmp/naevBuild/prod
+        working-directory: /tmp/naevBuild/staging
 
       - name: Apply API Docs Changes
         if: github.event.action == 'api'
         run: |
-          rsync -avzh build/docs/lua/ ${{ github.workspace }}/prod/api
-        working-directory: ${{ github.workspace }}/staging
+          rsync -avzh build/docs/lua/ /tmp/naevBuild/prod/api
+        working-directory: /tmp/naevBuild/staging
 
       - name: Add new file changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions"
           git add *
-        working-directory: ${{ github.workspace }}/prod
+        working-directory: /tmp/naevBuild/prod
 
       - name: Commit Website Changes
         if: github.event.action == 'website'
         run: |
           git commit -m "Website Updates" -a
-        working-directory: ${{ github.workspace }}/prod
+        working-directory: /tmp/naevBuild/prod
 
       - name: Commit API Documentation Changes
         if: github.event.action == 'api'
         run: |
           git commit -m "API Documentation Updates" -a
-        working-directory: ${{ github.workspace }}/prod
+        working-directory: /tmp/naevBuild/prod
 
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-          directory: ${{ github.workspace }}/prod
+          directory: /tmp/naevBuild/prod
           
