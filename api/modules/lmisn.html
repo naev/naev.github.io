@@ -145,18 +145,18 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#sfxVictory">sfxVictory ()</a></td>
-	<td class="summary">Plays a happy sound.</td>
+	<td class="summary">Plays a happy victory sound.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#sfxMoney">sfxMoney ()</a></td>
-	<td class="summary">Plays another happy sound.</td>
+	<td class="summary">Plays a money indicating money made.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#getLandablePlanets">getLandablePlanets ([sys[, fct[, fctmatch=false]]])</a></td>
-	<td class="summary">Returns a complete or filtered table of landable planets.</td>
+	<td class="summary">Returns a complete or filtered table of landable planets (that is, landable, inhabitable, and not restricted)</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getNextSystem">getNextSystem (nowsys, finalsys, hidden)</a></td>
+	<td class="name" nowrap><a href="#getNextSystem">getNextSystem (nowsys, finalsys[, hidden=false])</a></td>
 	<td class="summary">Choose the next system to jump to on the route from system nowsys to system finalsys.</td>
 	</tr>
 	<tr>
@@ -165,7 +165,7 @@
          system sys.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getPlanetAtDistance">getPlanetAtDistance (sys, min, max, fct, samefct, filter, data, hidden)</a></td>
+	<td class="name" nowrap><a href="#getPlanetAtDistance">getPlanetAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</a></td>
 	<td class="summary">Works the same as lmisn.getSysAtDistance, but for planets.</td>
 	</tr>
 	<tr>
@@ -190,7 +190,7 @@
     <strong>sfxVictory ()</strong>
     </dt>
     <dd>
-    Plays a happy sound.
+    Plays a happy victory sound.  Should be used for unique mission completion.
 
 
 
@@ -204,7 +204,7 @@
     <strong>sfxMoney ()</strong>
     </dt>
     <dd>
-    Plays another happy sound.
+    Plays a money indicating money made.  Should be used when the player receives payment for generic repeatable missions.
 
 
 
@@ -218,7 +218,7 @@
     <strong>getLandablePlanets ([sys[, fct[, fctmatch=false]]])</strong>
     </dt>
     <dd>
-    Returns a complete or filtered table of landable planets.
+    Returns a complete or filtered table of landable planets (that is, landable, inhabitable, and not restricted)
 
 
     <h3>Parameters:</h3>
@@ -230,12 +230,12 @@
         </li>
         <li><span class="parameter">fct</span>
             <span class="types"><span class="type">Faction</span></span>
-         If nil, return all landable planets in the system, otherwise...
+         If nil, return all landable planets in the system meeting the landable criteria, otherwise...
          (<em>optional</em>)
         </li>
         <li><span class="parameter">fctmatch</span>
             <span class="types"><span class="type">boolean</span></span>
-         If true, restrict results to the given faction; if false, restrict to its enemies.
+         If true, restrict results to the given faction; if false, restricts it to factions not hostile with fct.
          (<em>default</em> false)
         </li>
     </ul>
@@ -253,7 +253,7 @@
 </dd>
     <dt>
     <a name = "getNextSystem"></a>
-    <strong>getNextSystem (nowsys, finalsys, hidden)</strong>
+    <strong>getNextSystem (nowsys, finalsys[, hidden=false])</strong>
     </dt>
     <dd>
     Choose the next system to jump to on the route from system nowsys to system finalsys.
@@ -272,6 +272,7 @@
         <li><span class="parameter">hidden</span>
             <span class="types"><span class="type">boolean</span></span>
          Whether the path may include hidden systems.
+         (<em>default</em> false)
         </li>
     </ul>
 
@@ -350,44 +351,77 @@ destsys = planets[index][<span class="number">2</span>]</pre>
 </dd>
     <dt>
     <a name = "getPlanetAtDistance"></a>
-    <strong>getPlanetAtDistance (sys, min, max, fct, samefct, filter, data, hidden)</strong>
+    <strong>getPlanetAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</strong>
     </dt>
     <dd>
     Works the same as lmisn.getSysAtDistance, but for planets.
 <p>   Filter is applied on a planet level.
 
 
+
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">sys</span>
-
+            <span class="types"><span class="type">System</span></span>
+         System to base distance calculations off of.
+         (<em>default</em> system.cur())
         </li>
         <li><span class="parameter">min</span>
-
+            <span class="types"><span class="type">number</span></span>
+         Minimum jump distance to get planet at.
         </li>
         <li><span class="parameter">max</span>
-
+            <span class="types"><span class="type">number</span></span>
+         Maximum jump distance to get planet at.
         </li>
         <li><span class="parameter">fct</span>
-
+            <span class="types"><span class="type">Faction</span></span>
+         What faction to do landing checks with.
+         (<em>default</em> nil)
         </li>
         <li><span class="parameter">samefct</span>
-
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to only allow planets to belong exactly to fct.
+         (<em>default</em> false)
         </li>
         <li><span class="parameter">filter</span>
-
+            <span class="types"><span class="type">function</span></span>
+         Filtering function that returns a boolean and takes a planet being tested as a parameter.
+         (<em>default</em> nil)
         </li>
         <li><span class="parameter">data</span>
-
+         Custom data that will be passed to filter.
+         (<em>default</em> nil)
         </li>
         <li><span class="parameter">hidden</span>
-
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to consider hidden jumps when computing system distance.
+         (<em>default</em> false)
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        A table containing all the planets matching the criteria. Can be empty if no matches found.
+    </ol>
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+</span><span class="keyword">local</span> candidates = lmisn.getPlanetAtDistance( system.cur(), <span class="number">3</span>, <span class="number">5</span>, <span class="string">"Independent"</span>, <span class="keyword">false</span> )
+<span class="comment">-- Make sure there are candidates
+</span><span class="keyword">if</span> #candidates==<span class="number">0</span> <span class="keyword">then</span>
+   <span class="global">error</span>(<span class="string">"There are no planets meeting the criteria!"</span>)
+<span class="keyword">end</span>
+<span class="comment">-- Sort candidates by some criteria
+</span><span class="global">table</span>.sort( candidates, my_planet_sort_function )
+<span class="comment">-- Get best by sorting criteria
+</span><span class="keyword">local</span> destpnt = candidates[<span class="number">1</span>]</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -435,7 +469,7 @@ destsys = planets[index][<span class="number">2</span>]</pre>
         </li>
         <li><span class="parameter">hidden</span>
             <span class="types"><span class="type">boolean</span></span>
-
+         Whether or not to consider hidden jumps when computing system distance.
          (<em>default</em> false)
         </li>
     </ul>
@@ -451,7 +485,7 @@ destsys = planets[index][<span class="number">2</span>]</pre>
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">lmisn.getRandomPlanetAtDistance( system.cur(), <span class="number">3</span>, <span class="number">5</span>, <span class="string">"Independent"</span>, <span class="keyword">false</span> ) <span class="comment">-- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.</span></pre>
+        <pre class="example">destpnt = lmisn.getRandomPlanetAtDistance( system.cur(), <span class="number">3</span>, <span class="number">5</span>, <span class="string">"Independent"</span>, <span class="keyword">false</span> ) <span class="comment">-- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.</span></pre>
     </ul>
 
 </dd>
@@ -466,7 +500,8 @@ destsys = planets[index][<span class="number">2</span>]</pre>
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">names</span>
-         Table of names of missions to check
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of names (strings) of missions to check
         </li>
     </ul>
 
@@ -491,7 +526,7 @@ destsys = planets[index][<span class="number">2</span>]</pre>
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-30 10:20:23 </i>
+<i style="float:right;">Last updated 2021-11-30 10:25:18 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
