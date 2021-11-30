@@ -15,6 +15,8 @@
   <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
   <link rel="stylesheet" href="../ldoc.css"><!-- CSS -->
   <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <!-- EnlighterJS Resources !-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.css" />
   <title>Naev Lua API</title><!-- Website information -->
 </head>
 <body class="bg-light">
@@ -429,22 +431,23 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">local</span> planets = {}
-lmisn.getSysAtDistance( system.cur(), <span class="number">1</span>, <span class="number">6</span>,
-    <span class="keyword">function</span>(s)
-        <span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="global">ipairs</span>(s:planets()) <span class="keyword">do</span>
-            <span class="keyword">if</span> v:faction() == faction.get(<span class="string">"Sirius"</span>) <span class="keyword">and</span> v:class() == <span class="string">"M"</span> <span class="keyword">then</span>
-                <span class="keyword">return</span> <span class="keyword">true</span>
-            <span class="keyword">end</span>
-        <span class="keyword">end</span>
-        <span class="keyword">return</span> <span class="keyword">false</span>
-    <span class="keyword">end</span> )
+        <pre data-enlighter-language="lua" class="example">local planets = {}
+lmisn.getSysAtDistance( system.cur(), 1, 6,
+    function(s)
+        for i, v in ipairs(s:planets()) do
+            if v:faction() == faction.get(&quot;Sirius&quot;) and v:class() == &quot;M&quot; then
+                return true
+            end
+        end
+        return false
+    end )
 
-<span class="keyword">if</span> #planets == <span class="number">0</span> <span class="keyword">then</span> abort() <span class="keyword">end</span> <span class="comment">-- In case no suitable planets are in range.
-</span>
-<span class="keyword">local</span> index = rnd.rnd(<span class="number">1</span>, #planets)
-destplanet = planets[index][<span class="number">1</span>]
-destsys = planets[index][<span class="number">2</span>]</pre>
+if #planets == 0 then abort() end -- In case no suitable planets are in range.
+
+local index = rnd.rnd(1, #planets)
+destplanet = planets[index][1]
+destsys = planets[index][2]
+</pre>
     </ul>
 
 </dd>
@@ -510,16 +513,17 @@ destsys = planets[index][<span class="number">2</span>]</pre>
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="comment">-- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
-</span><span class="keyword">local</span> candidates = lmisn.getPlanetAtDistance( system.cur(), <span class="number">3</span>, <span class="number">5</span>, <span class="string">"Independent"</span>, <span class="keyword">false</span> )
-<span class="comment">-- Make sure there are candidates
-</span><span class="keyword">if</span> #candidates==<span class="number">0</span> <span class="keyword">then</span>
-   <span class="global">error</span>(<span class="string">"There are no planets meeting the criteria!"</span>)
-<span class="keyword">end</span>
-<span class="comment">-- Sort candidates by some criteria
-</span><span class="global">table</span>.sort( candidates, my_planet_sort_function )
-<span class="comment">-- Get best by sorting criteria
-</span><span class="keyword">local</span> destpnt = candidates[<span class="number">1</span>]</pre>
+        <pre data-enlighter-language="lua" class="example">-- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+local candidates = lmisn.getPlanetAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false )
+-- Make sure there are candidates
+if #candidates==0 then
+   error(&quot;There are no planets meeting the criteria!&quot;)
+end
+-- Sort candidates by some criteria
+table.sort( candidates, my_planet_sort_function )
+-- Get best by sorting criteria
+local destpnt = candidates[1]
+</pre>
     </ul>
 
 </dd>
@@ -584,7 +588,8 @@ destsys = planets[index][<span class="number">2</span>]</pre>
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">destpnt = lmisn.getRandomPlanetAtDistance( system.cur(), <span class="number">3</span>, <span class="number">5</span>, <span class="string">"Independent"</span>, <span class="keyword">false</span> ) <span class="comment">-- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.</span></pre>
+        <pre data-enlighter-language="lua" class="example">destpnt = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false ) -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+</pre>
     </ul>
 
 </dd>
@@ -614,7 +619,8 @@ destsys = planets[index][<span class="number">2</span>]</pre>
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> anyMissionActive( { <span class="string">"Cargo"</span>, <span class="string">"Cargo Rush"</span> } ) <span class="keyword">then</span> <span class="comment">-- at least one Cargo or Cargo Rush is active</span></pre>
+        <pre data-enlighter-language="lua" class="example">if anyMissionActive( { &quot;Cargo&quot;, &quot;Cargo Rush&quot; } ) then -- at least one Cargo or Cargo Rush is active
+</pre>
     </ul>
 
 </dd>
@@ -625,7 +631,7 @@ destsys = planets[index][<span class="number">2</span>]</pre>
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-30 13:54:03 </i>
+<i style="float:right;">Last updated 2021-11-30 14:43:29 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
@@ -637,5 +643,19 @@ destsys = planets[index][<span class="number">2</span>]</pre>
         </footer>
     </div>
 </div>
+  <!-- EnlighterJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.js"></script>
+
+  <!-- Init Code -->
+  <script type="text/javascript">
+      // - highlight all pre + code tags (CSS3 selectors)
+      // - use theme "bootstrap4"
+      // - replace tabs with 2 spaces
+      EnlighterJS.init('pre', 'code', {
+              language : 'lua',
+              theme: 'bootstrap4',
+              indent : 2
+      });
+  </script>
 </body>
 </html>
