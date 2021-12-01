@@ -159,32 +159,32 @@
 	<td class="summary">Opens a new data.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get ()</a></td>
+	<td class="name" nowrap><a href="#get">get (data, pos)</a></td>
 	<td class="summary">Gets the value of an element.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get ()</a></td>
+	<td class="name" nowrap><a href="#set">set (data, pos, value)</a></td>
 	<td class="summary">Sets the value of an element.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getSize">getSize ()</a></td>
-	<td class="summary"></td>
+	<td class="name" nowrap><a href="#getSize">getSize (data)</a></td>
+	<td class="summary">Gets the number of elements.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getString">getString ()</a></td>
-	<td class="summary"></td>
+	<td class="name" nowrap><a href="#getString">getString (data)</a></td>
+	<td class="summary">Returns the data contents as a string.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#paste">paste ()</a></td>
-	<td class="summary"></td>
+	<td class="name" nowrap><a href="#paste">paste (dest, source, dx, sx, sw)</a></td>
+	<td class="summary">Writes the contents of "source" into "dest".</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#addWeighted">addWeighted ()</a></td>
-	<td class="summary"></td>
+	<td class="name" nowrap><a href="#addWeighted">addWeighted (A, B, alpha, beta, bias)</a></td>
+	<td class="summary">Returns alpha*A + beta*B + bias</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#convolve2d">convolve2d ()</a></td>
-	<td class="summary"></td>
+	<td class="name" nowrap><a href="#convolve2d">convolve2d (I, iw, ih, K, kw, kh)</a></td>
+	<td class="summary">Does a convolution.</td>
 	</tr>
 </table>
 
@@ -280,26 +280,58 @@
 </dd>
     <dt>
     <a name = "get"></a>
-    <strong>get ()</strong>
+    <strong>get (data, pos)</strong>
     </dt>
     <dd>
     Gets the value of an element.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">data</span>
+            <span class="types"><span class="type">Data</span></span>
+         Data to index.
+        </li>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">number</span></span>
+         Element position.
+        </li>
+    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The entry.
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "get"></a>
-    <strong>get ()</strong>
+    <a name = "set"></a>
+    <strong>set (data, pos, value)</strong>
     </dt>
     <dd>
     Sets the value of an element.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">data</span>
+            <span class="types"><span class="type">Data</span></span>
+         Data to index.
+        </li>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">number</span></span>
+         Element position.
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">number</span></span>
+         Value to set it to.
+        </li>
+    </ul>
 
 
 
@@ -308,13 +340,26 @@
 </dd>
     <dt>
     <a name = "getSize"></a>
-    <strong>getSize ()</strong>
+    <strong>getSize (data)</strong>
     </dt>
     <dd>
+    Gets the number of elements.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">data</span>
+            <span class="types"><span class="type">Data</span></span>
+         ...
+        </li>
+    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
 
+           <span class="types"><span class="type">number</span></span>
+        Data size.
+    </ol>
 
 
 
@@ -322,13 +367,26 @@
 </dd>
     <dt>
     <a name = "getString"></a>
-    <strong>getString ()</strong>
+    <strong>getString (data)</strong>
     </dt>
     <dd>
+    Returns the data contents as a string.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">data</span>
+            <span class="types"><span class="type">Data</span></span>
+         ...
+        </li>
+    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
 
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The bytes inside.
+    </ol>
 
 
 
@@ -336,12 +394,35 @@
 </dd>
     <dt>
     <a name = "paste"></a>
-    <strong>paste ()</strong>
+    <strong>paste (dest, source, dx, sx, sw)</strong>
     </dt>
     <dd>
+    Writes the contents of "source" into "dest".
 
 
-
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dest</span>
+            <span class="types"><span class="type">Data</span></span>
+         Destination.
+        </li>
+        <li><span class="parameter">source</span>
+            <span class="types"><span class="type">Data</span></span>
+         Source.
+        </li>
+        <li><span class="parameter">dx</span>
+            <span class="types"><span class="type">number</span></span>
+         Offset from start of destination.
+        </li>
+        <li><span class="parameter">sx</span>
+            <span class="types"><span class="type">number</span></span>
+         Offset from start of source.
+        </li>
+        <li><span class="parameter">sw</span>
+            <span class="types"><span class="type">number</span></span>
+         Number of data elements to copy.
+        </li>
+    </ul>
 
 
 
@@ -350,13 +431,42 @@
 </dd>
     <dt>
     <a name = "addWeighted"></a>
-    <strong>addWeighted ()</strong>
+    <strong>addWeighted (A, B, alpha, beta, bias)</strong>
     </dt>
     <dd>
+    Returns alpha*A + beta*B + bias
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">A</span>
+            <span class="types"><span class="type">Data</span></span>
+         as above.
+        </li>
+        <li><span class="parameter">B</span>
+            <span class="types"><span class="type">Data</span></span>
+         as above.
+        </li>
+        <li><span class="parameter">alpha</span>
+            <span class="types"><span class="type">number</span></span>
+         as above.
+        </li>
+        <li><span class="parameter">beta</span>
+            <span class="types"><span class="type">number</span></span>
+         as above.
+        </li>
+        <li><span class="parameter">bias</span>
+            <span class="types"><span class="type">number</span></span>
+         as above.
+        </li>
+    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
 
+           <span class="types"><span class="type">Data</span></span>
+        alpha*A + beta*B + bias.
+    </ol>
 
 
 
@@ -364,13 +474,46 @@
 </dd>
     <dt>
     <a name = "convolve2d"></a>
-    <strong>convolve2d ()</strong>
+    <strong>convolve2d (I, iw, ih, K, kw, kh)</strong>
     </dt>
     <dd>
+    Does a convolution.  You'd rather be writing shaders, right?
 
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">I</span>
+            <span class="types"><span class="type">Data</span></span>
+         left-hand side of the convolution operator.
+        </li>
+        <li><span class="parameter">iw</span>
+            <span class="types"><span class="type">number</span></span>
+         width of I.
+        </li>
+        <li><span class="parameter">ih</span>
+            <span class="types"><span class="type">number</span></span>
+         height of I.
+        </li>
+        <li><span class="parameter">K</span>
+            <span class="types"><span class="type">Data</span></span>
+         right-hand side of the convolution operator.
+        </li>
+        <li><span class="parameter">kw</span>
+            <span class="types"><span class="type">number</span></span>
+         width of K.
+        </li>
+        <li><span class="parameter">kh</span>
+            <span class="types"><span class="type">number</span></span>
+         height of K.
+        </li>
+    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        (I*K, width, height)
+    </ol>
 
 
 
@@ -383,7 +526,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-30 15:11:01 </i>
+<i style="float:right;">Last updated 2021-12-01 05:30:45 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
