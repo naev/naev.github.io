@@ -250,7 +250,7 @@
 	<td class="summary">Gets the active outfits and their states of the pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#outfits">outfits (p[, What=nil])</a></td>
+	<td class="name" nowrap><a href="#outfits">outfits (p[, What=nil[, skip_locked=false]])</a></td>
 	<td class="summary">Gets the outfits of a pilot.</td>
 	</tr>
 	<tr>
@@ -382,6 +382,10 @@
 	<td class="summary">Starts or stops a pilot's cooldown mode.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#cooldownCycle">cooldownCycle (p)</a></td>
+	<td class="summary">Makes the pilot do an instant full cooldown cycle.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#setNoJump">setNoJump (p[, state=true])</a></td>
 	<td class="summary">Enables or disables a pilot's hyperspace engine.</td>
 	</tr>
@@ -398,8 +402,28 @@
 	<td class="summary">Adds an outfit to a pilot.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#outfitSlot">outfitSlot (p, slotname)</a></td>
+	<td class="summary">Checks to see outfit a pilot has in a slot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#outfitAddSlot">outfitAddSlot (p, outfit, slotname[, bypass_cpu=false[, bypass_slot=false]])</a></td>
+	<td class="summary">Adds an outfit to a pilot by slot name.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#outfitRm">outfitRm (p, outfit, q)</a></td>
 	<td class="summary">Removes an outfit from a pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#outfitRmSlot">outfitRmSlot (p, slotname)</a></td>
+	<td class="summary">Removes an outfit from a pilot's named slot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#outfitAddIntrinsic">outfitAddIntrinsic (p, o)</a></td>
+	<td class="summary">Adds an intrinsic outfit to the pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#outfitRmIntrinsic">outfitRmIntrinsic (p, o)</a></td>
+	<td class="summary">Removes an intrinsic outfit from the pilot.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#setFuel">setFuel (p, f)</a></td>
@@ -418,6 +442,18 @@
 	<td class="summary">Allows getting an intrinsic stats of a pilot, or gets all of them if name is not specified.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#effectClear">effectClear (p)</a></td>
+	<td class="summary">Clears the effect on a pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#effectAdd">effectAdd (p, name[, Duration=-1[, Scaling=1]])</a></td>
+	<td class="summary">Adds an effect to a pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#effectGet">effectGet (p)</a></td>
+	<td class="summary">Gets the effects on a pilot.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#changeAI">changeAI (p, newai)</a></td>
 	<td class="summary">Changes the pilot's AI.</td>
 	</tr>
@@ -426,7 +462,7 @@
 	<td class="summary">Sets the temperature of a pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#setHealth">setHealth (p, armour, shield[, stress=0])</a></td>
+	<td class="name" nowrap><a href="#setHealth">setHealth (p[, armour=current armour[, shield=current shield[, stress=0]]])</a></td>
 	<td class="summary">Sets the health of a pilot.</td>
 	</tr>
 	<tr>
@@ -628,6 +664,18 @@
 	<tr>
 	<td class="name" nowrap><a href="#hookClear">hookClear (p)</a></td>
 	<td class="summary">Clears the pilot's hooks.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#collisionTest">collisionTest (p, t)</a></td>
+	<td class="summary">Tests to see if two ships collide.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#damage">damage (p, dmg[, disable=0.[, penetration=0.[, type="normal"[, shooter=nil]]]])</a></td>
+	<td class="summary">Damages a pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#knockback">knockback (p, m, v[, p=p:pos()[, e=1.]])</a></td>
+	<td class="summary">Knocks back a pilot.</td>
 	</tr>
 </table>
 
@@ -864,7 +912,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </pre></li>
         <li><pre data-enlighter-language="lua" class="example">pilot.toggleSpawn( false ) -- Disables global spawning
 </pre></li>
-        <li><pre data-enlighter-language="lua" class="example">pliot.toggleSpawn( &quot;Pirates&quot; ) -- Defaults to disabling pirate spawning
+        <li><pre data-enlighter-language="lua" class="example">pilot.toggleSpawn( &quot;Pirates&quot; ) -- Defaults to disabling pirate spawning
 </pre></li>
         <li><pre data-enlighter-language="lua" class="example">pilot.toggleSpawn( &quot;Pirates&quot;, true ) -- Turns on pirate spawning
 </pre></li>
@@ -1586,7 +1634,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </dd>
     <dt>
     <a name = "outfits"></a>
-    <strong>outfits (p[, What=nil])</strong>
+    <strong>outfits (p[, What=nil[, skip_locked=false]])</strong>
     </dt>
     <dd>
     Gets the outfits of a pilot.
@@ -1600,8 +1648,13 @@ How param works (by type of value passed): &lt;br/&gt;
         </li>
         <li><span class="parameter">What</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         slot type to get outfits of. Can be either nil, "weapon", "utility", or "structure".
+         slot type to get outfits of. Can be either nil, "weapon", "utility", "structure", or "intrinsic".
          (<em>default</em> nil)
+        </li>
+        <li><span class="parameter">skip_locked</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not locked outfits should be ignored.
+         (<em>default</em> false)
         </li>
     </ul>
 
@@ -2663,6 +2716,27 @@ How param works (by type of value passed): &lt;br/&gt;
 
 </dd>
     <dt>
+    <a name = "cooldownCycle"></a>
+    <strong>cooldownCycle (p)</strong>
+    </dt>
+    <dd>
+    Makes the pilot do an instant full cooldown cycle.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to perform cycle.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "setNoJump"></a>
     <strong>setNoJump (p[, state=true])</strong>
     </dt>
@@ -2809,12 +2883,88 @@ How param works (by type of value passed): &lt;br/&gt;
 
 </dd>
     <dt>
+    <a name = "outfitSlot"></a>
+    <strong>outfitSlot (p, slotname)</strong>
+    </dt>
+    <dd>
+    Checks to see outfit a pilot has in a slot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to check outfit slot of.
+        </li>
+        <li><span class="parameter">slotname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the slot to check.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Outfit</span> or <span class="type">nil</span></span>
+        Outfit if applicable or nil otherwise.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "outfitAddSlot"></a>
+    <strong>outfitAddSlot (p, outfit, slotname[, bypass_cpu=false[, bypass_slot=false]])</strong>
+    </dt>
+    <dd>
+    Adds an outfit to a pilot by slot name.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to add outfit to.
+        </li>
+        <li><span class="parameter">outfit</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">outfit</span></span>
+         Outfit or name of the outfit to add.
+        </li>
+        <li><span class="parameter">slotname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the slot to add to.
+        </li>
+        <li><span class="parameter">bypass_cpu</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether to skip CPU checks when adding an outfit.
+         (<em>default</em> false)
+        </li>
+        <li><span class="parameter">bypass_slot</span>
+            <span class="types"><span class="type">boolean</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Whether or not to skip slot size checks before adding an outfit. Not that this implies skipping the CPU checks. In the case bypass_slot is a string, the outfit gets added to the named slot if possible (no slot check).
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether or not the outfit was added.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "outfitRm"></a>
     <strong>outfitRm (p, outfit, q)</strong>
     </dt>
     <dd>
     Removes an outfit from a pilot.
-<p> "all" will remove all outfits except cores.
+<p> "all" will remove all outfits except cores and locked outfits.
  "cores" will remove all cores, but nothing else.
 
 
@@ -2846,7 +2996,7 @@ How param works (by type of value passed): &lt;br/&gt;
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre data-enlighter-language="lua" class="example">p:outfitRm( &quot;all&quot; ) -- Leaves the pilot naked (except for cores).
+        <li><pre data-enlighter-language="lua" class="example">p:outfitRm( &quot;all&quot; ) -- Leaves the pilot naked (except for cores and locked outfits).
 </pre></li>
         <li><pre data-enlighter-language="lua" class="example">p:outfitRm( &quot;cores&quot; ) -- Strips the pilot of its cores, leaving it dead in space.
 </pre></li>
@@ -2855,6 +3005,87 @@ How param works (by type of value passed): &lt;br/&gt;
         <li><pre data-enlighter-language="lua" class="example">p:outfitRm( &quot;Neutron Disruptor&quot;, 2 ) -- Removes two neutron disruptor.
 </pre></li>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "outfitRmSlot"></a>
+    <strong>outfitRmSlot (p, slotname)</strong>
+    </dt>
+    <dd>
+    Removes an outfit from a pilot's named slot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to remove outfit from.
+        </li>
+        <li><span class="parameter">slotname</span>
+            <span class="types"><span class="type">strin</span></span>
+         Name of the slot to remove the outfit from.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true on success.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "outfitAddIntrinsic"></a>
+    <strong>outfitAddIntrinsic (p, o)</strong>
+    </dt>
+    <dd>
+    Adds an intrinsic outfit to the pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to add intrinsic outfit to.
+        </li>
+        <li><span class="parameter">o</span>
+            <span class="types"><span class="type">Outfit</span></span>
+         Outfit to add as intrinsic outfit (must be modifier outfit).
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "outfitRmIntrinsic"></a>
+    <strong>outfitRmIntrinsic (p, o)</strong>
+    </dt>
+    <dd>
+    Removes an intrinsic outfit from the pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to remove intrinsic outfit from.
+        </li>
+        <li><span class="parameter">o</span>
+            <span class="types"><span class="type">Outfit</span></span>
+         Outfit to remove from intrinsic outfits.
+        </li>
+    </ul>
+
+
+
+
 
 </dd>
     <dt>
@@ -2976,6 +3207,95 @@ How param works (by type of value passed): &lt;br/&gt;
 
 </dd>
     <dt>
+    <a name = "effectClear"></a>
+    <strong>effectClear (p)</strong>
+    </dt>
+    <dd>
+    Clears the effect on a pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to clear effects of.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "effectAdd"></a>
+    <strong>effectAdd (p, name[, Duration=-1[, Scaling=1]])</strong>
+    </dt>
+    <dd>
+    Adds an effect to a pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to add effect to.
+        </li>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the effect to add.
+        </li>
+        <li><span class="parameter">Duration</span>
+            <span class="types"><span class="type">duration</span></span>
+         of the effect or set to negative to be default.
+         (<em>default</em> -1)
+        </li>
+        <li><span class="parameter">Scaling</span>
+            <span class="types"><span class="type">scale</span></span>
+         factor.
+         (<em>default</em> 1)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether or not the effect was successfully added.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "effectGet"></a>
+    <strong>effectGet (p)</strong>
+    </dt>
+    <dd>
+    Gets the effects on a pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to get effects of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        Table of effects which are treated as tables with "name" and "timer" elements.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "changeAI"></a>
     <strong>changeAI (p, newai)</strong>
     </dt>
@@ -3048,7 +3368,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </dd>
     <dt>
     <a name = "setHealth"></a>
-    <strong>setHealth (p, armour, shield[, stress=0])</strong>
+    <strong>setHealth (p[, armour=current armour[, shield=current shield[, stress=0]]])</strong>
     </dt>
     <dd>
     Sets the health of a pilot.
@@ -3065,10 +3385,12 @@ How param works (by type of value passed): &lt;br/&gt;
         <li><span class="parameter">armour</span>
             <span class="types"><span class="type">number</span></span>
          Value to set armour to, should be double from 0-100 (in percent).
+         (<em>default</em> current armour)
         </li>
         <li><span class="parameter">shield</span>
             <span class="types"><span class="type">number</span></span>
          Value to set shield to, should be double from 0-100 (in percent).
+         (<em>default</em> current shield)
         </li>
         <li><span class="parameter">stress</span>
             <span class="types"><span class="type">number</span></span>
@@ -4769,6 +5091,129 @@ How param works (by type of value passed): &lt;br/&gt;
     </ul>
 
 </dd>
+    <dt>
+    <a name = "collisionTest"></a>
+    <strong>collisionTest (p, t)</strong>
+    </dt>
+    <dd>
+    Tests to see if two ships collide.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         First pilot to check.
+        </li>
+        <li><span class="parameter">t</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Second pilot to check.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Vec2</span> or <span class="type">nil</span></span>
+        nil if no collision, or Vec2 with collision point if collided.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "damage"></a>
+    <strong>damage (p, dmg[, disable=0.[, penetration=0.[, type="normal"[, shooter=nil]]]])</strong>
+    </dt>
+    <dd>
+    Damages a pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot being damaged.
+        </li>
+        <li><span class="parameter">dmg</span>
+            <span class="types"><span class="type">number</span></span>
+         Damage being done.
+        </li>
+        <li><span class="parameter">disable</span>
+            <span class="types"><span class="type">number</span></span>
+         Disable being done.
+         (<em>default</em> 0.)
+        </li>
+        <li><span class="parameter">penetration</span>
+            <span class="types"><span class="type">number</span></span>
+         Penetration (in %).
+         (<em>default</em> 0.)
+        </li>
+        <li><span class="parameter">type</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Damage type being done.
+         (<em>default</em> "normal")
+        </li>
+        <li><span class="parameter">shooter</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot doing the damage.
+         (<em>default</em> nil)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Amount of damage done.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "knockback"></a>
+    <strong>knockback (p, m, v[, p=p:pos()[, e=1.]])</strong>
+    </dt>
+    <dd>
+    Knocks back a pilot.  It can either accept two pilots, or a pilot and an element represented by mass, velocity, and position.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         Position of the object knocking back the pilot.
+         (<em>default</em> p:pos())
+        </li>
+        <li><span class="parameter">m</span>
+            <span class="types"><span class="type">number</span></span>
+         Mass of object knocking back pilot.
+        </li>
+        <li><span class="parameter">v</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         Velocity of object knocking back pilot.
+        </li>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         Position of the object knocking back the pilot.
+         (<em>default</em> p:pos())
+        </li>
+        <li><span class="parameter">e</span>
+            <span class="types"><span class="type">number</span></span>
+         Coefficient of restitution. Use 1. for elastic collisions, and 0. for inelastic collisions.
+         (<em>default</em> 1.)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
 </dl>
 
 
@@ -4776,7 +5221,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-12-23 15:48:47 </i>
+<i style="float:right;">Last updated 2021-12-23 16:21:08 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
