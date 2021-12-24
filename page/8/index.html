@@ -99,6 +99,256 @@
     <ul class="list-unstyled">
       <li class="mt-3 mb-4">
         <div class="blog-post">
+          <h4><a href="../../blarg/2012-04-02_so_afterburners/">So, afterburners</a></h4>
+          <p class="text-muted">BY BTAXIS, ON APRIL 2ND, 2012</p>
+          <p>As some of you may have noticed, the last few releases have introduced changes to the
+          afterburner outfit. Where you could run it continuously so long as your ship had energy
+          before, now it can only be on for a certain about of time, after which it needs to
+          recharge. Also, in 0.5.2, activating the afterburner will abort the autonav.</p>
+          <p>The reasoning behind this is that the afterburner is a combat-oriented outfit, whereas
+          most people were using it to speed up their ship during travel, particularly during rush
+          missions. Effectively, an afterburner would speed up a ship – a lot – for no appreciable
+          cost. This we wanted to discourage. Speed at long ranges should come from speccing for
+          speed by going light on weapons and using passive outfits, not from abusing the
+          afterburner.</p>
+          <p>However, some people raised some legitimate complaints about the changes we made. For
+          instance, making the afterburner recharge over the same time period irrespective of how
+          long it was on is unpleasant and counter to what you might expect. Aborting the autonav
+          was just an added irritation, not an incentive not to use the afterburner. After all,
+          afterburning in 1x time would still get you to your destination in less in-game time than
+          not using it in time compression would. Finally, limiting the afterburner’s time wasn’t
+          really making the afterburner ineffective at speeding up the ship over long distances, it
+          was only making it a bit LESS effective.</p>
+          <p>Reason for us to tackle the problem from a different angle. The afterburner should not
+          be made annoying to use. Instead, it should simply be made unfit for the purposes it
+          wasn’t intended for. To do this, we picked up an idea we discussed early in the
+          afterburner overhaul: making afterburners generate heat.</p>
+          <h4 id="heat-based-afterburners">Heat based afterburners</h4>
+          <p>In their latest incarnation, afterburners generate heat when active, in the same way
+          weapons generate heat when being fired. And, like weapons, afterburners get less
+          effective when they heat up. When the afterburner starts to overheat, the speed and
+          thrust bonuses it provides decrease, until afterburning is no faster than regular
+          thrusting.</p>
+          <figure class="figure embed-responsive" style="text-align:center;">
+            <div class="embed-responsive figure-img">
+              &lt;img class='img-fluid' alt='An afterburner that's heating up'
+              src="/imgs/blarg/2012/04/screenshot000.png" /&gt;
+            </div>
+            <figcaption class="figure-caption">
+              An afterburner that's heating up
+            </figcaption>
+          </figure>
+          <p>Because heat drains into the ship much slower than it builds up when afterburning, the
+          afterburner can’t be on all the time even if energy permits. In fact, for the player it’s
+          best to use the afterburner only occasionally and in short bursts. This naturally makes
+          it more suitable for use in combat than for speed boosts across large distances.</p>
+          <p>The heat based afterburners behave just like the original ones otherwise. They don’t
+          have an enforced recharge cycle and can be used at any time, with the sole exception that
+          it will shut off automatically when completely overheated, and can only be turned on if
+          it’s cooler than 70% of its maximum heat.</p>
+          <h4 id="getting-rid-of-heat">Getting rid of heat</h4>
+          <p>Afterburners using heat is nice, but it adds another source of heat to a ship that is
+          already having to deal with heat from other sources. When a ship’s hull heats up, the
+          outfits installed in it won’t cool as fast, or not at all. Especially in combat, this can
+          be a big problem – both for the player and the AI. In fact, a fight can degenerate in
+          what I call “heat deadlock”, where all parties have heated up so much that their weapons
+          aren’t shooting much anymore, so shield regeneration outpaces damage done across the
+          board.</p>
+          <figure class="figure embed-responsive" style="text-align:center;">
+            <div class="embed-responsive figure-img"><img class="img-fluid" alt=
+            "A Lancelot in Active Cooldown mode. When the bar has completely emptied, the cycle is complete."
+            src="../../imgs/blarg/2012/04/screenshot001.png"></div>
+            <figcaption class="figure-caption">
+              A Lancelot in Active Cooldown mode. When the bar has completely emptied, the cycle is
+              complete.
+            </figcaption>
+          </figure>
+          <p>To combat this, we have introduced a new mechanic to the game, called Active Cooldown.
+          When in Active Cooldown, a ship very rapidly loses its heat until both hull and outfits
+          hit the baseline temperature. The process depends largely on the ship, with small ships
+          taking less than 10 seconds to cool and big ships taking around 30. When you consider
+          that under normal circumstances, it can literally take hours and hours (real time!) to
+          lose heat, Active Cooldown is a very, very fast way to lose heat.</p>
+          <p>So, you wonder aloud to nonexistent auditory organs, what’s the catch? There are two
+          catches, as it turns out. The first catch is that to enter Active Cooldown, a ship must
+          be stationary, and while it is cooling, it can’t take any other action. So in a combat
+          situation, Active Cooldown makes you very vulnerable. The second catch is that heat is
+          lost at an exponential rate – the longer you wait, the faster heat is lost. This means
+          that it is highly desirable to wait until the end of the Active Cooldown cycle, as
+          opposed to waiting only a portion of the time and then getting back into action. Active
+          Cooldown can’t effectively be “pulsed” to quickly lose some heat in the middle of a
+          fight.</p>
+          <p>Hopefully, these two changes to gameplay will go a long way in making afterburners the
+          tools they’re meant to be without being disruptive to gameplay, as well as making heat
+          much less of a problem to prolonged trips through the galaxy.</p>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
+          <h4><a href="../../blarg/2012-03-29_lua_api_docs_added_to_naev_org/">Lua API Docs Added
+          to Naev.org</a></h4>
+          <p class="text-muted">BY DEIZ, ON MARCH 29TH, 2012</p>
+          <p>Naev’s Lua API documentation has finally been integrated as a part of <a href=
+          "https://naev.org">naev.org</a>, under its very own subdomain: <a href=
+          "https://naev.org/api/">api.naev.org</a>.</p>
+          <p>Some may note that the documentation has been around for some time, and that’s true.
+          In fact, the effort dates to 2008, and has been kept in sync with the code ever since.
+          It’s historically been hosted on a small VPS by bobbens, with a handful of links to it
+          peppered throughout the <a href="https://github.com/naev/naev/wiki">Wiki</a>, as well as
+          a mention in the IRC channel’s topic (RIP Freenode) (though I suspect 95% of IRC users
+          never read channel topics).</p>
+          <p>With any luck, making the API documentation more easily accessible will spur on some
+          mission developers. I’d be remiss if I didn’t reiterate a bit of the API documentation’s
+          preamble: Naev includes an in-game Lua console, accessible via <strong>F2</strong>, by
+          default. It provides access to the majority of the Lua API (excepting a few things that
+          are tied to missions and events, such as the hook module) and is a useful tool for
+          ~~cheating~~ testing code snippets for use in missions.</p>
+          <p>So, venture forth to Alteris and try something like:</p>
+          <p><code>for k,v in ipairs(pilot.get( faction.get("Pirate") )) do v:setHealth(0, 0)
+          end</code></p>
+          <p>… because as everybody knows, you’re not having fun until you’re surrounded by
+          spontaneously-exploding pirates.</p>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
+          <h4><a href="../../blarg/2012-03-25_0.5.2/">Naev 0.5.2 Release</a></h4>
+          <p class="text-muted">BY DEIZ, ON MARCH 25TH, 2012</p>
+          <p>The Naev development team is proud to announce the release of Naev 0.5.2. This is
+          mainly a bugfix release, though it also introduces a small amount of content in the form
+          of missions and outfits.</p>
+          <p>The new asset discovery mechanics have bothered quite a few people, so we’ve
+          introduced a jump scanner outfit that greatly increases jump detection range, as well as
+          local maps which behave similarly to the traditional star maps found in 0.5.0 and earlier
+          releases.</p>
+          <p>Now, as per usual it’s time for some statistics, from 0.5.1 to 0.5.2:</p>
+          <p>83 files changed, 2408 insertions(+), 574 deletions(-)</p>
+          <p>More than half of the added lines come from the dat/ directory tree, thanks in large
+          part to a new event and a repeatable mission for the Sirius faction.</p>
+          <p><strong>Download:</strong> <a href=
+          "https://sourceforge.net/projects/naev/files/naev-0.5.1/">https://sourceforge.net/projects/naev/files/naev-0.5.1/</a></p>
+          <p><strong>Blog:</strong> <a href="https://naev.org/">https://naev.org/</a></p>
+          <p><strong>Forums:</strong> http://forum.naev.org/ (Forums are lost.)</p>
+          <h4 id="changes-since-051">Changes since 0.5.1:</h4>
+          <ul>
+            <li>New events and missions</li>
+            <li>New outfits</li>
+            <li>House Soromid now has a logo</li>
+            <li>More ways of mapping the universe</li>
+            <li>Disabling damage leaks through shields</li>
+            <li>conf.lua-tweakable font sizes for accessibility</li>
+            <li>Bug fixes</li>
+          </ul>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
+          <h4><a href="../../blarg/2012-03-01_0.5.1/">Naev 0.5.1 Release</a></h4>
+          <p class="text-muted">BY BOBBENS, ON MARCH 1ST, 2012</p>
+          <p>The Naev development team is proud to announce the release of Naev 0.5.1. It’s been
+          nearly nine months since the release of 0.5.0, but we hope the release is worth the wait.
+          With contributions by some twenty people, it’s one of our larger releases.</p>
+          <p>0.5.1 was originally intended to be a small feature release, released soon after
+          0.5.0. Needless to say, that didn’t happen. However, in the time since, 0.5.1 has
+          ballooned into a sizeable release unto itself. We’ve implemented a number of proposals
+          that bring us a few steps closer to our goal for the far-off version 1.0, developed a
+          fair bit of new content, and polished up innumerable things.</p>
+          <p>As per usual, we encourage players to start new pilots in 0.5.1 for an optimal
+          experience. Of course, older saves can still be loaded, but there are some caveats.
+          Specifically, due to asset and jump discovery, a 0.5.0 (or earlier) save will have its
+          map appear as a series of unlinked systems, as the jumps must be discovered. A number of
+          older missions have also been heavily tweaked, so in-progress missions in older saves may
+          need to be manually aborted.</p>
+          <p>And now, for some slightly-misleading statistics, from 0.5.0 up to a few days ago:</p>
+          <p>804 files changed, 48017 insertions(+), 35760 deletions(-)</p>
+          <p>As well as some less-misleading ones, from the src/ directory:</p>
+          <p>346 files changed, 14799 insertions(+), 8806 deletions(-)</p>
+          <p>Since 0.5.0, Naev’s core code has grown by almost 6,000 lines, and we’ve gained more
+          than 12,000 lines, in total.</p>
+          <p>Download: <a href=
+          "https://sourceforge.net/projects/naev/files/naev-0.5.1/">https://sourceforge.net/projects/naev/files/naev-0.5.1/</a></p>
+          <p>Blog: <a href="https://naev.org/">https://naev.org/</a></p>
+          <p>Forums: http://forum.naev.org/ (Forums are lost.)</p>
+          <h4 id="list-of-changes-since-050">List of changes since 0.5.0:</h4>
+          <p><strong>For Players:</strong></p>
+          <ul>
+            <li>Many new missions, and improvements for older ones.</li>
+            <li>Soromid faction added.
+              <ul>
+                <li>Full array of ships for the faction.</li>
+                <li>Populated northern area of the galaxy.</li>
+              </ul>
+            </li>
+            <li>New disable mechanic
+              <ul>
+                <li>Disabling damage is separate from regular damage.</li>
+                <li>Player ships can now be disabled, boarded and looted!</li>
+                <li>Disabled ships will recover automatically over time.</li>
+              </ul>
+            </li>
+            <li>Jump points, planets and stations must now be discovered through exploration.</li>
+            <li>Maps now reveal fixed routes, mostly between major factions’ space.</li>
+            <li>Fancier map search shows details about found items.</li>
+            <li>New planet and station graphics.</li>
+            <li>Large AI ships now have greater weapons diversity.</li>
+            <li>General usability improvements for low resolutions.</li>
+            <li>Missiles lock on gradually, depending on electronic warfare values.</li>
+            <li>The tutorial has been substantially expanded and reworked.</li>
+            <li>Active outfits allow for powerful, temporary abilities to be toggled.</li>
+            <li>New key bindings make the it possible to use the keyboard most of the time.
+              <ul>
+                <li>Autonav is now more flexible and can travel to planets in addition to
+                systems.</li>
+                <li>Navigate the spaceport with keytips.</li>
+              </ul>
+            </li>
+            <li>Improved faction reputation logic.
+              <ul>
+                <li>Factions now have ceilings for reputation gained through killing.</li>
+                <li>Missions are necessary to elevate your standing beyond this.</li>
+                <li>Completing major missions can increase the reputation ceilings.</li>
+              </ul>
+            </li>
+            <li>Landing permissions enhanced beyond the simple boolean (hostile or friendly) model.
+              <ul>
+                <li>Landing at military and other special assets typically requires high reputation
+                with a faction.</li>
+                <li>When you don’t meet the required standing but aren’t hostile, assets are marked
+                ‘restricted’.</li>
+              </ul>
+            </li>
+            <li>Overhaul of spaceport bar NPCs. NPCs will now often say meaningful things and can
+            even help the player out by hinting at missions or updating his galaxy map.</li>
+            <li>Complete ship health rebalancing.</li>
+            <li>Store user data in XDG-compliant locations (*nix-only)</li>
+            <li>Misc. bug fixes</li>
+          </ul>
+          <p><strong>For Developers:</strong></p>
+          <ul>
+            <li>Faction standing and land permission code moved to Lua.
+              <ul>
+                <li>Reputation is now handled with per-faction scripts.</li>
+                <li>Special assets can have unique landing code (e.g. requiring a particular
+                mission to be done)</li>
+              </ul>
+            </li>
+            <li>Large amount of Lua API additions and changes.</li>
+            <li>Greatly enhanced the in-game universe editor.</li>
+            <li>XML data (ships, planets, etc.) has been split into individual files to allow
+            greater modularity.</li>
+            <li>Various faction specific scripts have been reorganized to be in a more logical
+            location, and these script have been tied closer to the master faction definition.</li>
+            <li>Generally less crash-prone when loading corrupt data.</li>
+            <li>Misc. bug fixes</li>
+          </ul>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
           <h4><a href="../../blarg/2012-02-20_xdg_part_deux/">XDG Part Deux</a></h4>
           <p class="text-muted">BY DEIZ, ON FEBRUARY 20TH, 2012</p>
           <p>As with the previous post, this pertains solely to <strong>*nix</strong> (primarily
@@ -117,140 +367,6 @@
           make the coming release less painful for bobbens, because I think if we’d gone the
           full-manual route and asked package maintainers to correctly run the script for each
           user, they’d be demanding his head on a pike.</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href="../../blarg/2012-02-19_unix_gets_xdg_compliancy/">UNIX gets XDG
-          Compliancy</a></h4>
-          <p class="text-muted">BY BOBBENS, ON FEBRUARY 19TH, 2012</p>
-          <p>This change only affects <strong>UNIX</strong> platforms (that includes linux and mac
-          os x). Now in git master we have recently merged changes that should bring Naev up to the
-          <a href=
-          "https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG Base
-          Directory specification</a>. What does this mean? First off it means that no longer will
-          Naev’s per user stuff sit in “~/.naev” but instead it will be split up so that:</p>
-          <ul>
-            <li>config is in $XDG_CONFIG_HOME or “~/.config/naev”</li>
-            <li>saves and screenshots are in $XDG_DATA_HOME or “~/.local/share/naev”</li>
-            <li>nebula and misc cache stuff are in $XDG_CACHE_HOME or “~/.cache/naev”</li>
-          </ul>
-          <p>The bad news, this means that you will have to run our script to move stuff over or it
-          won’t recognize your old config or saves. We should be detecting that and displaying a
-          warning. To update to the new paths all you have to do is run:</p>
-          <p><code>$ ./naev-confupdate.sh</code></p>
-          <p>However, we do believe this will be better in the long run. Package maintainers should
-          look into incorporating that script for users in post-install hooks or the likes to avoid
-          trouble. Sorry for any inconveniences this may cause.</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href="../../blarg/2012-02-11_activated_outfits/">Activated outfits</a></h4>
-          <p class="text-muted">BY BTAXIS, ON FEBRUARY 11TH, 2012</p>
-          <p>Okay, so, on those activated outfits, they’re now up and running in the Git version.
-          For those of you who are curious about how it works, I’ll explain it briefly.</p>
-          <figure class="figure embed-responsive" style="text-align:center;">
-            <div class="embed-responsive figure-img"><img class="img-fluid" alt=
-            "Running a jammer while the afterburner cools down." src=
-            "../../imgs/blarg/2012/02/active-300x225.png"></div>
-            <figcaption class="figure-caption">
-              Running a jammer while the afterburner cools down.
-            </figcaption>
-          </figure>
-          <p>An activated outfit is a piece of equipment that does something when manually
-          activated in space. While it’s off it does nothing, but it also doesn’t use any energy.
-          On the other hand, once an activated outfit is turned on the benefit it gives is usually
-          quite noticeable, and can make a big difference if used right.</p>
-          <p>This means that the abilities activated outfits give you are highly situational and
-          give you more things to worry about than just fly, point and shoot. In some ways, we are
-          moving a little closer to the common skill bar you find in many action RPGs. Like those
-          skills, our activated outfits can have a cooldown period too, which means you need to
-          wait a certain time before you can use that same outfit again.</p>
-          <p>At the moment, we only have two activated outfits, those being the Missile Jammer
-          (which slows down missiles close to you) and the Afterburner. But we have plans for quite
-          a few other outfits. For example, how about an outfit that instantaneously transports
-          your ship to another part of the system, or an outfit that lets you quickly recharge your
-          shield at the cost of a big chunk of energy? The possibilities are many.</p>
-          <p>Activated outfits will be in the next release.</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href="../../blarg/2012-02-03_naev_is_on_desura/">Naev is on Desura!</a></h4>
-          <p class="text-muted">BY DEIZ, ON FEBRUARY 3RD, 2012</p>
-          <p>~~I suppose I should qualify that with an almost.~~ Thanks to the efforts of #naev IRC
-          regular oldtopman, we’re all set up ~~and awaiting final approval~~. ~~Once we go live,~~
-          Naev ~~will be~~ <em>is</em> available via Desura on all of our usual supported platforms
-          (32 and 64-bit Linux, Windows and Mac OS X). The Desura client is presently exclusive to
-          Windows and Linux, but Naev will still be downloadable on OS X through Desura’s site.</p>
-          <p>For those unaware of Desura, it’s a digital distribution platform. I’ll let Desura’s
-          own <a href=
-          "https://web.archive.org/web/20120314232311/http://www.desura.com/about">about page</a>
-          do the rest of the talking.</p>
-          <p>Without further ado, here’s a link to Naev’s Desura page:</p>
-          <p><a href=
-          "https://web.archive.org/web/20120314232311/http://www.desura.com/games/naev"><img src=
-          "../../imgs/blarg/2012/02/desura.png" alt="Desura Digital Distribution"></a></p>
-          <p><strong>Update:</strong> As of now, Naev is live on Desura!</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href="../../blarg/2012-01-23_more_happenings/">More happenings</a></h4>
-          <p class="text-muted">BY BTAXIS, ON JANUARY 23RD, 2012</p>
-          <p>Hello everyone, and a belated happy 2012. It’s been rather quiet here on the blog, but
-          I assure you that’s only because nobody has been posting on it. Elsewhere we’re all still
-          tinkering away on the project, and we’re hoping to build toward a new release in the near
-          future. Before we can do that though, we need to put the finishing touches on the active
-          outfit system. You see, we plan to add outfits you can install on your ship and activate
-          once in space for all sorts of effects… Oh, but I can see you’re not very interested in
-          that. So, let’s move on to something else that’s been happening:</p>
-          <h4 id="asset-and-jump-discovery">Asset and jump discovery</h4>
-          <p>Discovering assets (that’s planets and stations) and jump points used to be easy. Jump
-          into a system, glance at the system map, voila, they’re all there. But that is changing.
-          Just as ships become undetectable if they’re far away from you, so can assets and jump
-          points be invisible to you, using much the same mechanics. For an easy example, look at
-          the following screencaps:</p>
-          <p><strong>NOTE</strong> These screenshots have been lost to time :(</p>
-          <p>As you can see, it’s now possible for assets to not be shown on the map until the
-          player discovers them. Now, I should point out that most planets tend to be fairly hard
-          to miss in a star system, so when you jump into a new system you will usually discover
-          all of them immediately, just like it’s always been. The example above isn’t
-          representative in that respect – I simply modified the hide values for the purpose of
-          showing how it works. However, if the system has high sensor interference (inside the
-          nebula, for example), it may be more difficult to find the planets within.</p>
-          <p>Space stations tend to be a fair bit smaller than celestial bodies however (yes yes,
-          except THAT one). You may have to scout around a system a bit before they appear on the
-          map, and if the station actually makes an effort of being inconspicuous (think hidden
-          military or pirate bases), you won’t easily find them.</p>
-          <p>Jump points, too, are more difficult to detect than your average planet. You usually
-          won’t spot any jump points other than the one you entered from when jumping in, which
-          means you can’t plot a course to the next unknown system before first finding the way
-          there. So how will you know where the jump points are then? Well, you could fly around
-          and look for them yourself, but there are a number of things you can do to find them more
-          reliably:</p>
-          <ul>
-            <li>Follow other pilots. Especially traders often travel to other systems, and they
-            know all the major routes. If you see a trader fly away from a planet, try following
-            it. Chances are it will lead you to a jump point.</li>
-            <li>Talk to NPCs in the spaceport bars. Not only do NPCs offer you missions sometimes,
-            they will also give you helpful information. Some may even offer to update your map
-            with locations of assets or jump points if you don’t know them already.</li>
-            <li>Buy maps. As of the next version of Naev, the Star Map outfit has been replaced by
-            a collection of pre-defined maps. Each map reveals one or more star systems, and may or
-            may not reveal jumps and assets belonging to them. Buying a map for the Empire Core,
-            for example, will immediately update your map with systems in Empire space, as well as
-            the jumps leading from one to the other.</li>
-          </ul>
-          <p>There are also rumors of new, exotic types of jump points, such as hidden jump points
-          that can’t be detected without special equipment, known only to a selected few. There
-          also seems to be a kind of jump point that can’t be detected at all, and that only be
-          used from the other side…</p>
         </div>
         <hr>
       </li>

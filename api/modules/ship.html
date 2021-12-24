@@ -15,6 +15,8 @@
   <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
   <link rel="stylesheet" href="../ldoc.css"><!-- CSS -->
   <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <!-- EnlighterJS Resources !-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.css" />
   <title>Naev Lua API</title><!-- Website information -->
 </head>
 <body class="bg-light">
@@ -81,8 +83,10 @@
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
+  <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/merge_tables.html">merge_tables</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
@@ -190,7 +194,7 @@
 	<td class="summary">Gets the amount of the ship's slots.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getSlots">getSlots (s)</a></td>
+	<td class="name" nowrap><a href="#getSlots">getSlots (s[, ignore_locked=false])</a></td>
 	<td class="summary">Get a table of slots of a ship, where a slot is a table with a string size, type, and property</td>
 	</tr>
 	<tr>
@@ -281,7 +285,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> s1 == s2 <span class="keyword">then</span> <span class="comment">-- Checks to see if ship s1 and s2 are the same</span></pre>
+        <pre data-enlighter-language="lua" class="example">if s1 == s2 then -- Checks to see if ship s1 and s2 are the same
+</pre>
     </ul>
 
 </dd>
@@ -312,7 +317,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">s = ship.get( <span class="string">"Hyena"</span> ) <span class="comment">-- Gets the hyena</span></pre>
+        <pre data-enlighter-language="lua" class="example">s = ship.get( &quot;Hyena&quot; ) -- Gets the hyena
+</pre>
     </ul>
 
 </dd>
@@ -367,7 +373,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">shipname = s:name() <span class="comment">-- Equivalent to `_(s:nameRaw())`</span></pre>
+        <pre data-enlighter-language="lua" class="example">shipname = s:name() -- Equivalent to `_(s:nameRaw())`
+</pre>
     </ul>
 
 </dd>
@@ -402,7 +409,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">shipname = s:nameRaw()</pre>
+        <pre data-enlighter-language="lua" class="example">shipname = s:nameRaw()
+</pre>
     </ul>
 
 </dd>
@@ -435,7 +443,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="global">type</span> = s:baseType()</pre>
+        <pre data-enlighter-language="lua" class="example">type = s:baseType()
+</pre>
     </ul>
 
 </dd>
@@ -466,7 +475,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">shipclass = s:class()</pre>
+        <pre data-enlighter-language="lua" class="example">shipclass = s:class()
+</pre>
     </ul>
 
 </dd>
@@ -497,7 +507,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">shipclass = s:classDisplay()</pre>
+        <pre data-enlighter-language="lua" class="example">shipclass = s:classDisplay()
+</pre>
     </ul>
 
 </dd>
@@ -529,7 +540,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">points = s:points()</pre>
+        <pre data-enlighter-language="lua" class="example">points = s:points()
+</pre>
     </ul>
 
 </dd>
@@ -566,13 +578,14 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">slots_weapon, slots_utility, slots_structure = p:slots()</pre>
+        <pre data-enlighter-language="lua" class="example">slots_weapon, slots_utility, slots_structure = p:slots()
+</pre>
     </ul>
 
 </dd>
     <dt>
     <a name = "getSlots"></a>
-    <strong>getSlots (s)</strong>
+    <strong>getSlots (s[, ignore_locked=false])</strong>
     </dt>
     <dd>
     Get a table of slots of a ship, where a slot is a table with a string size, type, and property
@@ -582,21 +595,28 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">s</span>
+            <span class="types"><span class="type">Ship</span></span>
          Ship to get slots of
+        </li>
+        <li><span class="parameter">ignore_locked</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to ignore locked slots.
+         (<em>default</em> false)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        A table of tables with slot properties string "size", string "type", string "property", boolean "required", boolean "exclusive", and (if applicable) outfit "outfit"
+        A table of tables with slot properties string "size", string "type", string "property", boolean "required", boolean "exclusive", boolean "locked", and (if applicable) outfit "outfit"
     </ol>
 
 
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="global">ipairs</span>( ship.getSlots( ship.get(<span class="string">"Llama"</span>) ) ) <span class="keyword">do</span> <span class="global">print</span>(v[<span class="string">"type"</span>]) <span class="keyword">end</span></pre>
+        <pre data-enlighter-language="lua" class="example">for i, v in ipairs( ship.getSlots( ship.get(&quot;Llama&quot;) ) ) do print(v[&quot;type&quot;]) end
+</pre>
     </ul>
 
 </dd>
@@ -662,7 +682,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">cpu_left = s:cpu()</pre>
+        <pre data-enlighter-language="lua" class="example">cpu_left = s:cpu()
+</pre>
     </ul>
 
 </dd>
@@ -696,7 +717,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">price, base = s:price()</pre>
+        <pre data-enlighter-language="lua" class="example">price, base = s:price()
+</pre>
     </ul>
 
 </dd>
@@ -784,7 +806,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">gfx = s:gfxComm()</pre>
+        <pre data-enlighter-language="lua" class="example">gfx = s:gfxComm()
+</pre>
     </ul>
 
 </dd>
@@ -817,7 +840,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">gfx = s:gfxTarget()</pre>
+        <pre data-enlighter-language="lua" class="example">gfx = s:gfxTarget()
+</pre>
     </ul>
 
 </dd>
@@ -850,7 +874,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">gfx = s:gfx()</pre>
+        <pre data-enlighter-language="lua" class="example">gfx = s:gfx()
+</pre>
     </ul>
 
 </dd>
@@ -881,7 +906,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">description = s:description()</pre>
+        <pre data-enlighter-language="lua" class="example">description = s:description()
+</pre>
     </ul>
 
 </dd>
@@ -976,7 +1002,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> s:tags()[<span class="string">"fancy"</span>] <span class="keyword">then</span> <span class="comment">-- Has "fancy" tag</span></pre>
+        <pre data-enlighter-language="lua" class="example">if s:tags()[&quot;fancy&quot;] then -- Has &quot;fancy&quot; tag
+</pre>
     </ul>
 
 </dd>
@@ -987,16 +1014,34 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-22 08:53:55 </i>
+<i style="float:right;">Last updated 2021-12-24 01:47:50 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
     <div class="container">
         <footer class="row text-muted">
-            <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
-            <p class="col-xs-12 col-sm-6 text-right">Original content licensed under CC-By-SA 4.0</p>
+          <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
+          <p class="col-xs-12 col-sm-6 text-right">Original content licensed under <a href=
+          "https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
         </footer>
     </div>
 </div>
+  <!-- EnlighterJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.js">
+          integrity="sha384-qMvs9nZ6afccojk2J2vg2CwyiHc5m/k1nb9VWa+otyt3VK4agPEc9/pfWC/iOxkG"
+          crossorigin="anonymous">
+  </script>
+
+  <!-- Init Code -->
+  <script type="text/javascript">
+      // - highlight all pre + code tags (CSS3 selectors)
+      // - use theme "bootstrap4"
+      // - replace tabs with 2 spaces
+      EnlighterJS.init('pre', 'code', {
+              language : 'lua',
+              theme: 'bootstrap4',
+              indent : 2
+      });
+  </script>
 </body>
 </html>

@@ -15,6 +15,8 @@
   <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
   <link rel="stylesheet" href="../ldoc.css"><!-- CSS -->
   <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <!-- EnlighterJS Resources !-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.css" />
   <title>Naev Lua API</title><!-- Website information -->
 </head>
 <body class="bg-light">
@@ -81,8 +83,10 @@
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
+  <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/merge_tables.html">merge_tables</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
@@ -265,12 +269,28 @@
 	<td class="summary">Forces the player to close comm if they are chatting.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#shipvarPeek">shipvarPeek (varname[, shipname])</a></td>
+	<td class="summary">Peeks at a ship variable.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shipvarPush">shipvarPush (varname, val[, shipname])</a></td>
+	<td class="summary">Pushes a ship variable.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shipvarPop">shipvarPop (varname[, shipname])</a></td>
+	<td class="summary">Pops a ship variable.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#ships">ships ()</a></td>
 	<td class="summary">Gets the names of the player's ships.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#shipOutfits">shipOutfits (name)</a></td>
 	<td class="summary">Gets the outfits for one of the player's ships.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shipMetadata">shipMetadata (name)</a></td>
+	<td class="summary">Gets meta-data about one of the player's ships.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#outfits">outfits ()</a></td>
@@ -289,7 +309,7 @@
 	<td class="summary">Removes an outfit from the player's outfit list.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#addShip">addShip (ship[, name[, noname=false]])</a></td>
+	<td class="name" nowrap><a href="#addShip">addShip (ship[, name=ship.get(ship):name()[, acquired[, noname=false]]])</a></td>
 	<td class="summary">Gives the player a new ship.</td>
 	</tr>
 	<tr>
@@ -309,6 +329,10 @@
 	<td class="summary">Checks to see if player has done a mission.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#misnDoneList">misnDoneList ()</a></td>
+	<td class="summary">Gets a list of all the missions the player has done.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#evtActive">evtActive (name)</a></td>
 	<td class="summary">Checks to see if the player has an event active.</td>
 	</tr>
@@ -319,6 +343,26 @@
 	<tr>
 	<td class="name" nowrap><a href="#teleport">teleport (dest[, no_simulate=false])</a></td>
 	<td class="summary">Teleports the player to a new planet or system (only if not landed).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#dt_mod">dt_mod ()</a></td>
+	<td class="summary">Gets the dt_mod of the player, which multiplies all time stuff.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#chapter">chapter ()</a></td>
+	<td class="summary">Gets the player's current chapter.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#chapterSet">chapterSet (chapter)</a></td>
+	<td class="summary">Sets the player's current chapter.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#infoButtonRegister">infoButtonRegister (caption, func)</a></td>
+	<td class="summary">Registers a button in the info window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#infoButtonUnregister">infoButtonUnregister (ID)</a></td>
+	<td class="summary">Unregisters a button in the info window.</td>
 	</tr>
 </table>
 
@@ -397,7 +441,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.pay( <span class="number">500</span> ) <span class="comment">-- Gives player 500 credits</span></pre>
+        <pre data-enlighter-language="lua" class="example">player.pay( 500 ) -- Gives player 500 credits
+</pre>
     </ul>
 
 </dd>
@@ -432,8 +477,10 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">monies = player.credits()</pre></li>
-        <li><pre class="example">monies, readable = player.credits( <span class="number">2</span> )</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">monies = player.credits()
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">monies, readable = player.credits( 2 )
+</pre></li>
     </ul>
 
 </dd>
@@ -518,7 +565,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.omsgAdd( <span class="string">"some_message"</span>, <span class="number">5</span> )</pre>
+        <pre data-enlighter-language="lua" class="example">player.omsgAdd( &quot;some_message&quot;, 5 )
+</pre>
     </ul>
 
 </dd>
@@ -557,7 +605,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.omsgChange( omsg_id, <span class="string">"new message"</span>, <span class="number">3</span> )</pre>
+        <pre data-enlighter-language="lua" class="example">player.omsgChange( omsg_id, &quot;new message&quot;, 3 )
+</pre>
     </ul>
 
 </dd>
@@ -582,7 +631,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.omsgRm( msg_id )</pre>
+        <pre data-enlighter-language="lua" class="example">player.omsgRm( msg_id )
+</pre>
     </ul>
 
 </dd>
@@ -608,7 +658,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.allowSave( b )</pre>
+        <pre data-enlighter-language="lua" class="example">player.allowSave( b )
+</pre>
     </ul>
 
 </dd>
@@ -632,7 +683,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">v = player.pos()</pre>
+        <pre data-enlighter-language="lua" class="example">v = player.pos()
+</pre>
     </ul>
 
 </dd>
@@ -676,7 +728,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">jumps = player.jumps()</pre>
+        <pre data-enlighter-language="lua" class="example">jumps = player.jumps()
+</pre>
     </ul>
 
 </dd>
@@ -703,7 +756,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">fuel, consumption = player.fuel()</pre>
+        <pre data-enlighter-language="lua" class="example">fuel, consumption = player.fuel()
+</pre>
     </ul>
 
 </dd>
@@ -729,8 +783,10 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">player.refuel() <span class="comment">-- Refuel fully</span></pre></li>
-        <li><pre class="example">player.refuel( <span class="number">200</span> ) <span class="comment">-- Refuels partially</span></pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.refuel() -- Refuel fully
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.refuel( 200 ) -- Refuels partially
+</pre></li>
     </ul>
 
 </dd>
@@ -754,7 +810,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">autonav = player.autonav()</pre>
+        <pre data-enlighter-language="lua" class="example">autonav = player.autonav()
+</pre>
     </ul>
 
 </dd>
@@ -781,7 +838,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">sys, jumps = player.autonavDest()</pre>
+        <pre data-enlighter-language="lua" class="example">sys, jumps = player.autonavDest()
+</pre>
     </ul>
 
 </dd>
@@ -806,9 +864,10 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">sys, jumps = player.autonavAbort()
+        <pre data-enlighter-language="lua" class="example">sys, jumps = player.autonavAbort()
 
-&lt;em&gt;Note&lt;/em&gt; Does <span class="keyword">not</span> <span class="keyword">do</span> anything <span class="keyword">if</span> the player is <span class="keyword">not</span> <span class="keyword">in</span> autonav.</pre>
+&lt;em&gt;Note&lt;/em&gt; Does not do anything if the player is not in autonav.
+</pre>
     </ul>
 
 </dd>
@@ -868,7 +927,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.cinematics( <span class="keyword">true</span>, { gui = <span class="keyword">true</span> } ) <span class="comment">-- Enables cinematics without hiding gui.</span></pre>
+        <pre data-enlighter-language="lua" class="example">player.cinematics( true, { gui = true } ) -- Enables cinematics without hiding gui.
+</pre>
     </ul>
 
 </dd>
@@ -923,7 +983,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.unboard()</pre>
+        <pre data-enlighter-language="lua" class="example">player.unboard()
+</pre>
     </ul>
 
 </dd>
@@ -1017,9 +1078,12 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">player.allowLand() <span class="comment">-- Allows the player to land</span></pre></li>
-        <li><pre class="example">player.allowLand( <span class="keyword">false</span> ) <span class="comment">-- Doesn't allow the player to land.</span></pre></li>
-        <li><pre class="example">player.allowLand( <span class="keyword">false</span>, <span class="string">"No landing."</span> ) <span class="comment">-- Doesn't allow the player to land with the message "No landing."</span></pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.allowLand() -- Allows the player to land
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.allowLand( false ) -- Doesn&apos;t allow the player to land.
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.allowLand( false, &quot;No landing.&quot; ) -- Doesn&apos;t allow the player to land with the message &quot;No landing.&quot;
+</pre></li>
     </ul>
 
 </dd>
@@ -1059,7 +1123,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.landWindow( <span class="string">"outfits"</span> )</pre>
+        <pre data-enlighter-language="lua" class="example">player.landWindow( &quot;outfits&quot; )
+</pre>
     </ul>
 
 </dd>
@@ -1071,6 +1136,92 @@
     Forces the player to close comm if they are chatting.
 
 
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "shipvarPeek"></a>
+    <strong>shipvarPeek (varname[, shipname])</strong>
+    </dt>
+    <dd>
+    Peeks at a ship variable.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">varname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the variable to check value of.
+        </li>
+        <li><span class="parameter">shipname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the ship to check variable of. Defaults to player's current ship.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">local exp = player.shipvarPeek( &quot;exp&quot; ) -- Checks the value of the &quot;exp&quot; ship var on the player&apos;s current ship
+</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "shipvarPush"></a>
+    <strong>shipvarPush (varname, val[, shipname])</strong>
+    </dt>
+    <dd>
+    Pushes a ship variable.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">varname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the variable to set value of.
+        </li>
+        <li><span class="parameter">val</span>
+         Value to push.
+        </li>
+        <li><span class="parameter">shipname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the ship to push variable to. Defaults to player's current ship.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "shipvarPop"></a>
+    <strong>shipvarPop (varname[, shipname])</strong>
+    </dt>
+    <dd>
+    Pops a ship variable.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">varname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the variable to pop.
+        </li>
+        <li><span class="parameter">shipname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the ship to pop variable from. Defaults to player's current ship.
+         (<em>optional</em>)
+        </li>
+    </ul>
 
 
 
@@ -1097,7 +1248,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">names = player.ships() <span class="comment">-- The player's ship names.</span></pre>
+        <pre data-enlighter-language="lua" class="example">names = player.ships() -- The player&apos;s ship names.
+</pre>
     </ul>
 
 </dd>
@@ -1128,8 +1280,36 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">outfits = player.shipOutfits(<span class="string">"Llama"</span>) <span class="comment">-- Gets the Llama's outfits</span></pre>
+        <pre data-enlighter-language="lua" class="example">outfits = player.shipOutfits(&quot;Llama&quot;) -- Gets the Llama&apos;s outfits
+</pre>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "shipMetadata"></a>
+    <strong>shipMetadata (name)</strong>
+    </dt>
+    <dd>
+    Gets meta-data about one of the player's ships.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the ship to get the meta-data of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Table</span></span>
+        of meta-data.
+    </ol>
+
+
+
 
 </dd>
     <dt>
@@ -1154,7 +1334,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.outfits() <span class="comment">-- A table of all the player's outfits.</span></pre>
+        <pre data-enlighter-language="lua" class="example">player.outfits() -- A table of all the player&apos;s outfits.
+</pre>
     </ul>
 
 </dd>
@@ -1190,7 +1371,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">q = player.numOutfit( <span class="string">"Laser Cannon MK0"</span>, <span class="keyword">true</span> ) <span class="comment">-- Number of 'Laser Cannon MK0' the player owns (unequipped)</span></pre>
+        <pre data-enlighter-language="lua" class="example">q = player.numOutfit( &quot;Laser Cannon MK0&quot;, true ) -- Number of &apos;Laser Cannon MK0&apos; the player owns (unequipped)
+</pre>
     </ul>
 
 </dd>
@@ -1220,8 +1402,10 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">player.outfitAdd( <span class="string">"Laser Cannon"</span> ) <span class="comment">-- Gives the player a laser cannon</span></pre></li>
-        <li><pre class="example">player.outfitAdd( <span class="string">"Plasma Blaster"</span>, <span class="number">2</span> ) <span class="comment">-- Gives the player two plasma blasters</span></pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.outfitAdd( &quot;Laser Cannon&quot; ) -- Gives the player a laser cannon
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.outfitAdd( &quot;Plasma Blaster&quot;, 2 ) -- Gives the player two plasma blasters
+</pre></li>
     </ul>
 
 </dd>
@@ -1253,13 +1437,14 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.outfitRm( <span class="string">"Plasma Blaster"</span>, <span class="number">2</span> ) <span class="comment">-- Removes two plasma blasters from the player</span></pre>
+        <pre data-enlighter-language="lua" class="example">player.outfitRm( &quot;Plasma Blaster&quot;, 2 ) -- Removes two plasma blasters from the player
+</pre>
     </ul>
 
 </dd>
     <dt>
     <a name = "addShip"></a>
-    <strong>addShip (ship[, name[, noname=false]])</strong>
+    <strong>addShip (ship[, name=ship.get(ship):name()[, acquired[, noname=false]]])</strong>
     </dt>
     <dd>
     Gives the player a new ship.
@@ -1276,6 +1461,11 @@
         <li><span class="parameter">name</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Name to give the ship if player refuses to name it (defaults to shipname if omitted).
+         (<em>default</em> ship.get(ship):name())
+        </li>
+        <li><span class="parameter">acquired</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
          (<em>optional</em>)
         </li>
         <li><span class="parameter">noname</span>
@@ -1296,7 +1486,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">player.addShip( <span class="string">"Pirate Kestrel"</span>, <span class="string">"Seiryuu"</span> ) <span class="comment">-- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.</span></pre>
+        <pre data-enlighter-language="lua" class="example">player.addShip( &quot;Pirate Kestrel&quot;, _(&quot;Seiryuu&quot;), _(&quot;&quot;) ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
+</pre>
     </ul>
 
 </dd>
@@ -1381,7 +1572,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> player.misnActive( <span class="string">"The Space Family"</span> ) <span class="keyword">then</span> <span class="comment">-- Player is doing space family mission</span></pre>
+        <pre data-enlighter-language="lua" class="example">if player.misnActive( &quot;The Space Family&quot; ) then -- Player is doing space family mission
+</pre>
     </ul>
 
 </dd>
@@ -1414,8 +1606,29 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> player.misnDone( <span class="string">"The Space Family"</span> ) <span class="keyword">then</span> <span class="comment">-- Player finished mission</span></pre>
+        <pre data-enlighter-language="lua" class="example">if player.misnDone( &quot;The Space Family&quot; ) then -- Player finished mission
+</pre>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "misnDoneList"></a>
+    <strong>misnDoneList ()</strong>
+    </dt>
+    <dd>
+    Gets a list of all the missions the player has done.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        List of all the missions the player has done.
+    </ol>
+
+
+
 
 </dd>
     <dt>
@@ -1445,7 +1658,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> player.evtActive( <span class="string">"Shipwreck"</span> ) <span class="keyword">then</span> <span class="comment">-- The shipwreck event is active</span></pre>
+        <pre data-enlighter-language="lua" class="example">if player.evtActive( &quot;Shipwreck&quot; ) then -- The shipwreck event is active
+</pre>
     </ul>
 
 </dd>
@@ -1478,7 +1692,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> player.evtDone( <span class="string">"Shipwreck"</span> ) <span class="keyword">then</span> <span class="comment">-- Player finished event</span></pre>
+        <pre data-enlighter-language="lua" class="example">if player.evtDone( &quot;Shipwreck&quot; ) then -- Player finished event
+</pre>
     </ul>
 
 </dd>
@@ -1511,10 +1726,128 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">player.teleport( system.get(<span class="string">"Arcanis"</span>) ) <span class="comment">-- Teleports the player to Arcanis.</span></pre></li>
-        <li><pre class="example">player.teleport( <span class="string">"Arcanis"</span> ) <span class="comment">-- Teleports the player to Arcanis.</span></pre></li>
-        <li><pre class="example">player.teleport( <span class="string">"Dvaer Prime"</span> ) <span class="comment">-- Teleports the player to Dvaer, and relocates him to Dvaer Prime.</span></pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.teleport( system.get(&quot;Arcanis&quot;) ) -- Teleports the player to Arcanis.
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.teleport( &quot;Arcanis&quot; ) -- Teleports the player to Arcanis.
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.teleport( &quot;Dvaer Prime&quot; ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">player.teleport( &quot;Sol&quot;, true ) -- Teleports the player to SOL, but doesn&apos;t run any initial simulation
+</pre></li>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "dt_mod"></a>
+    <strong>dt_mod ()</strong>
+    </dt>
+    <dd>
+    Gets the dt_mod of the player, which multiplies all time stuff.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The dt_mod of the player.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "chapter"></a>
+    <strong>chapter ()</strong>
+    </dt>
+    <dd>
+    Gets the player's current chapter.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The player's current chapter.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "chapterSet"></a>
+    <strong>chapterSet (chapter)</strong>
+    </dt>
+    <dd>
+    Sets the player's current chapter.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">chapter</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The name of the chapter to set the player to.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "infoButtonRegister"></a>
+    <strong>infoButtonRegister (caption, func)</strong>
+    </dt>
+    <dd>
+    Registers a button in the info window.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">caption</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Caption of the button.
+        </li>
+        <li><span class="parameter">func</span>
+            <span class="types"><span class="type">function</span></span>
+         Function to run when clicked.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        ID of the info window button for use with player.infoButtonUnregister.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "infoButtonUnregister"></a>
+    <strong>infoButtonUnregister (ID)</strong>
+    </dt>
+    <dd>
+    Unregisters a button in the info window.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ID</span>
+            <span class="types"><span class="type">number</span></span>
+         of the button to unregister.
+        </li>
+    </ul>
+
+
+
+
 
 </dd>
 </dl>
@@ -1524,16 +1857,34 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-22 08:53:55 </i>
+<i style="float:right;">Last updated 2021-12-24 01:47:50 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
     <div class="container">
         <footer class="row text-muted">
-            <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
-            <p class="col-xs-12 col-sm-6 text-right">Original content licensed under CC-By-SA 4.0</p>
+          <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
+          <p class="col-xs-12 col-sm-6 text-right">Original content licensed under <a href=
+          "https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
         </footer>
     </div>
 </div>
+  <!-- EnlighterJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.js">
+          integrity="sha384-qMvs9nZ6afccojk2J2vg2CwyiHc5m/k1nb9VWa+otyt3VK4agPEc9/pfWC/iOxkG"
+          crossorigin="anonymous">
+  </script>
+
+  <!-- Init Code -->
+  <script type="text/javascript">
+      // - highlight all pre + code tags (CSS3 selectors)
+      // - use theme "bootstrap4"
+      // - replace tabs with 2 spaces
+      EnlighterJS.init('pre', 'code', {
+              language : 'lua',
+              theme: 'bootstrap4',
+              indent : 2
+      });
+  </script>
 </body>
 </html>

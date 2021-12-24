@@ -84,6 +84,9 @@
           <a class="page-link" href="../14/">14</a>
         </li>
         <li class="page-item">
+          <a class="page-link" href="../15/">15</a>
+        </li>
+        <li class="page-item">
           <a class="page-link" href="../14/" aria-label="Next"><span aria-hidden="true">»</span>
           <span class="sr-only">Next</span></a>
         </li>
@@ -91,6 +94,141 @@
     </nav>
     <hr>
     <ul class="list-unstyled">
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
+          <h4><a href="../../blarg/2010-11-23_correct_physics/">Correct Physics</a></h4>
+          <p class="text-muted">BY BOBBENS, ON NOVEMBER 23RD, 2010</p>
+          <p><strong>WARNING: TECHNICAL POST</strong></p>
+          <p>After much insistence on Deiz that something was wrong since we needed a hack to get
+          ships to properly display 100% speed, we’ve finally found the culprit. Some old code of
+          mine that what it did was:</p>
+          <p><code>c void limit_speed( Vector2d* vel, const double speed, const double dt ) {
+          double vmod; vmod = VMOD(*vel); if (vmod &gt; speed) /* shouldn't go faster */ vect_pset(
+          vel, (vmod-speed)*(1. - dt*3.) + speed, VANGLE(*vel) ); }</code></p>
+          <p>What does this mean? It may seem like a good idea to limit the speed by modulating the
+          velocity directly. There is also a dt in there to try to make it not frame dependent.
+          However let’s analyze the consequences.</p>
+          <p>The important question is: what is the maximum velocity? The way stuff is done we’re
+          cascading the limit_speed with the physics model. We can simplify it to an euler
+          integration (it’s actually runge-kutta but I’ll talk about that a bit latter):</p>
+          <p><code>v_1 = v_0 + a dt</code></p>
+          <p>Everyone should be familiar with that. I won’t go into details from where that comes
+          from. Basically it means that the current velocity is the last velocity plus the
+          acceleration times the time that passed from the last instant. This is then chained to
+          the limit_speed which does:</p>
+          <p><code>v = (v_1 - v_{max})(1 - 3dt)</code></p>
+          <p>So we can write the composite form as:</p>
+          <p><code>v = (v_0 + a dt - v_{max})(1 - 3dt) = v_0 + a dt - v_{max} - 3 dt v_0 - 3 a dt^2
+          + 3 dt v_{max}</code></p>
+          <p>Now we can see the problem. What should be linearly dependent on the dt to cancel out
+          the dependency on the frame rate is now quadratically dependent (notice <code>3 a
+          dt^2</code>). This means that the velocity now does indeed depend on the frame rate.
+          That’s bad. The physics model shouldn’t depend on the frame rate. How can we fix
+          that?</p>
+          <p>The most logical and simple solution would be instead of hardcoding a limit_speed
+          function outside of the physics engine to integrate it. What does the physics engine work
+          with? Forces. What should we do? Create a virtual force dependent on velocity.</p>
+          <p>A bit on our physics engine. The physics in NAEV is modelled as <a href=
+          "https://en.wikipedia.org/wiki/Differential_equation">differential equations</a> and is
+          solved generally with <a href=
+          "https://en.wikipedia.org/wiki/Runge-kutta">Runge-Kutta</a>. It all sounds really
+          complicated but it isn’t too much. If you want to go into detail take a look at <a href=
+          "https://github.com/naev/naev/blob/main/src/physics.c">src/physics.c</a>.</p>
+          <p>First the philosophical meaning of this force. What does it represent? Why do ships
+          have speed limits? This limit represents the ship’s stabilization systems. To allow the
+          ships to have artificial gravity (the ones that do) and fly around so well with turning,
+          they need complex stabilization systems. So what we’re modelling is some sort of drag
+          force.</p>
+          <p>Now onto the force itself. After much discussion ranting and throwing of equations we
+          finally managed to model it. The current model is:</p>
+          <p><code>f_{stabilization} = k (v - v_{max})</code></p>
+          <p>It’s much more simple, behaves really well and allows really simple max speed
+          calculations. Your max speed is when the forces acting on your ship are 0. When does this
+          happen? Easy, <code>v_{realmax} = speed + \frac{thrust}{k}</code>. We’ve found that a
+          good value is <code>k = 3</code> .</p>
+          <p>Other notes, while doing this revamp I improved the current engine. Thrust is relative
+          to the ship, that means that rotations are smoothed out really nicely by the Runge-Kutta
+          algorithm. Same happens with the new stabilization force. This means the physics are
+          smoother than ever. The system was also improved to handle fast ships and jump ins
+          without instability. What we saw originally was that when your ship was moving really
+          fast, the stabilization force caused instability in the physics engine. This meant your
+          ship would end up at infinity about a second after jumping in. However the new improved
+          engine can handle any speed by chopping up the simulation more finely when the ship is
+          going fast.</p>
+          <p>Other notes we also have a hybrid physics engine now, in the sense it can do both
+          <a href="https://en.wikipedia.org/wiki/Runge-kutta">Runge-Kutta</a> and <a href=
+          "https://en.wikipedia.org/wiki/Euler_method">Euler</a> for different objects at the same
+          time. I’m quite proud of it. The player may be asking what to make of all this? Well you
+          probably won’t feel a thing, but let me assure you it’s much more awesome.</p>
+          <p><strong>EDIT:</strong> It’s been pointed out that if you go back to the equation
+          originally you could have looked at how the units did mismatch. We all learn from our
+          mistakes, how stupid they may be :) .</p>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
+          <h4><a href="../../blarg/2010-11-16_fancy_new_menu/">Fancy new menu</a></h4>
+          <p class="text-muted">BY BOBBENS, ON NOVEMBER 16TH, 2010</p>
+          <p>After lots of nagging and harassing of developers we finally have it! The great epic
+          new fancy main menu background, and what could be fancier than naev itself? Yes the
+          background is a system (specifically it’s the start system for now). It’ll be a bit
+          fancier in the future but you can now enjoy the awesomeness. No more boring backgrounds!
+          Check it out!</p>
+          <p><strong>NOTE</strong> The screenshot has been lost to time :(</p>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
+          <h4><a href="../../blarg/2010-11-12_naev_0.4.2_is_now_available_in_opensuse/">NAEV 0.4.2
+          is now available in openSUSE</a></h4>
+          <p class="text-muted">BY DEIZ, ON NOVEMBER 12TH, 2010</p>
+          <p>While development continues towards 0.5.0, increased availability of the current
+          stable release is always a good thing. NAEV can now be found in the openSUSE Games
+          repository.</p>
+          <p>See <a href=
+          "https://software.opensuse.org/search?q=naev&amp;baseproject=openSUSE%3A11.3&amp;lang=en&amp;exclude_filter=home%3A&amp;exclude_debug=true">
+          here</a> for downloadable packages for openSUSE 11.3. There are also packages built for a
+          number of other RPM-based distributions, including Mandriva and Fedora listed by the
+          <a href="https://build.opensuse.org/package/show/games/naev">build service</a>,
+          downloadable from <a href=
+          "https://software.opensuse.org/search?q=naev&amp;baseproject=ALL&amp;lang=en&amp;exclude_filter=home%3A&amp;exclude_debug=true">
+          here</a>. It appears that you’ll need the naev and naev-data packages; after installing
+          both, NAEV should be ready to play.</p>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
+          <h4><a href="../../blarg/2010-11-10_big_big_systems/">Big Big Systems</a></h4>
+          <p class="text-muted">BY BOBBENS, ON NOVEMBER 10TH, 2010</p>
+          <p>So what happens when you take big systems and inject them with pure essence of big?
+          You get Big Big Systems. How big are we talking? If an old system maybe had an effective
+          radius of 3.75 kpx or so, now we have radius of 25 kpx. That’s a pretty big increase. How
+          long does it take to fly across it? It’s likely faster than before thanks to dynamic time
+          compression.</p>
+          <p>A brief overview of how this is handled; There are currently two ways to trigger
+          dynamic time compression:</p>
+          <ol>
+            <li>Activate autonav</li>
+            <li>Right click on the overlay map</li>
+          </ol>
+          <p>What it does, essentially, is increase the time compression until your ship reaches an
+          “effective” speed of 2500 m/s. That means all ships behave nearly identically, be it
+          capital ship or light fighter. This means that capital ships are much more playable
+          now.</p>
+          <p>Can’t leave you without a pretty screenshot, so this is what a big big system looks
+          like. As you can see there’s a YOU and GOTO on the map and dynamic time compression is at
+          27.1x. My Empire Hawking is flying from YOU to the GOTO. On the map overlay you can also
+          see friendlies flying nearby.</p>
+          <p>So what’s next? Balance. Balance? Balance! It’s going to still take a while, but it’ll
+          be damn well worth it. For those following Git, big big systems are still in the balance
+          branch and haven’t been merged into bigsys yet.</p>
+          <p><strong>NOTE</strong> The screenshot has been lost to time :(</p>
+        </div>
+        <hr>
+      </li>
       <li class="mt-3 mb-4">
         <div class="blog-post">
           <h4><a href="../../blarg/2010-10-24_mouse_targetting/">Mouse Targeting</a></h4>
@@ -111,129 +249,6 @@
           "https://web.archive.org/web/20110321021726/http://forum.naev.org/viewtopic.php?f=6&amp;t=105">
           damage rejection</a>. It seems like we may be ahead of schedule for 0.5.0, but I make no
           promises.</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href="../../blarg/2010-08-23_next_steps_to_0.5.0/">Next steps to 0.5.0</a></h4>
-          <p class="text-muted">BY BOBBENS, ON AUGUST 23RD, 2010</p>
-          <p>I’ve been asked multiple times what the ETA for 0.5.0 is. For now, the answer is “when
-          it’s done”, but going over the TODO, it seems like it’ll be around New Years. Many of our
-          original goals are done, but the list seems to grow faster than features are finished;
-          here’s what’s left:</p>
-          <ol>
-            <li><strong>Weapon Revamp</strong> – Removes secondary weapons in favour of dynamic
-            player-defined weapon groups (WIP).</li>
-            <li><strong>Tech Editor</strong> – Incorporate a technology editor to allow balancing
-            technology and the likes much faster.</li>
-            <li><strong>Finish GUI</strong> – With the weapon revamp we should be finally able to
-            get a new awesome epic GUI done. This builds upon the Lua infrastructure we now have
-            for GUI development.</li>
-            <li><strong>Finish Electronic Warfare</strong> – One of the major 0.5.0 objectives.
-            It’s more or less implemented, but needs to actually have the outfits and ships use it.
-            The major issue is balancing, which is complex to say the least. This is when we merge
-            ewarfare into bigsys.</li>
-            <li><strong>Advanced Time Compression</strong> – Sick of flying around slow in your big
-            capital ship? Dynamic time compression will make travel fast and fluid when out of
-            combat. When you enter combat you’ll revert to your ship’s normal handling
-            characteristics. This is mainly to allow large slow ships to be less tedious to fly,
-            especially in big systems.</li>
-            <li><strong>Overlay Map</strong> – We want a Diablo 2-style map overlay in the big
-            systems, the current infrastructure isn’t cutting it. With big systems there’s so many
-            things in each system it’s hard to keep track of things in the minimap. An overlay will
-            allow you to see whole systems, more or less, without sacrificing the minimap’s
-            usefulness in combat. You’ll be able to toggle it on command.</li>
-            <li><strong>Finish Big Systems</strong> – With the overlay and electronic warfare done
-            we want to finally complete big systems. This means systems will be even larger and
-            you’ll have intra-system travel and combat. Time compression will make it all painless
-            and the overlay will make it so you don’t get lost. This is when everything gets merged
-            into master.</li>
-            <li><strong>Beam Rewrite</strong> – Beam weapons are due for a makeover. They’re
-            currently an awful hack. They shall be moved into their own infrastructure and be
-            upgraded to comply with OpenGL ES specification. The AI will also start using them
-            efficiently.</li>
-            <li><strong>Mouse Usage</strong> – Target cycling is cute, but when each system has 30+
-            ships in visible range, selecting a specific ship is tedious. This will allow mouse
-            targeting and limited mouse flying (have the ship face the mouse, etc.) among other
-            things.</li>
-            <li><strong>Heavy Testing</strong> – This is a <em>huge</em> release, so a beta will
-            likely be released. NAEV is typically quite stable and bug-free, but we’d like to avoid
-            pure-maintenance releases in 0.5.*. We’ve had our share of embarrassing bugs during
-            past releases and we don’t want that to happen again.</li>
-          </ol>
-          <p>As you can see there’s a lot of stuff left. That’s a lot of work not to mention all
-          the new content we’re getting done in parallel. You might think that 0.5.0 is the end of
-          the line but we have many many more ideas which will most likely be for 0.6.0. So as you
-          can see we aren’t being lazy nor inefficient, we’re just overly-ambitious. The end goal
-          is to have 0.5.0 be a mature and stable platform for which all you modders and content
-          developers will be able to mess with. Anyway, bear with us, this release is going to be
-          epic. Most of you who only played up to 0.4.2 will have to relearn the entire game as
-          it’s much more advanced. However don’t fear the change, it’s for the better and has been
-          all heavily discussed and analyzed before being implemented. If you still worry, feel
-          free to grab a copy of the ‘ewarfare’ branch on git and drop us some a line on IRC, the
-          forum or the mailing list.</p>
-          <p>Some stats to give you an indication of the magnitude of the change:</p>
-          <p><code>bobbens@ghanima (~/usr/prj/naev)] $ git diff NAEV-0.4.2 | wc -l 78621</code></p>
-          <p>Yes, that’s nearly 80k line changes in the diff from the latest version and that’s
-          with the gigantic TODO we have left. Scary, huh?</p>
-          <p>Bobbens out.</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href=
-          "../../blarg/2010-08-16_background_effects_improving_screenshots_since_2010/">Background
-          effects: Improving screenshots since 2010.</a></h4>
-          <p class="text-muted">BY DEIZ, ON AUGUST 16TH, 2010</p>
-          <p>Space is an immense, largely vacuous void. The ratio of nothingness to interesting
-          phenomena is pitifully high. Among even those rare phenomena, the amount perceptible by
-          the human eye pales in comparison to wider-wavelength recording combined with false
-          colours.</p>
-          <p>Fortunately, however, NAEV is a game, not a simulator. It’s a bit boring to fly over
-          endless blackness with nothing but stars to keep you company. Ships and large planets,
-          while pretty, come and go with alarming rapidity.</p>
-          <p>To that end, we’ve endeavoured to make NAEV more visually enticing by implementing
-          support for background graphics. In all, there are more than 30 backgrounds, with more to
-          come, hopefully. I suppose it’s time to let the pictures do the talking (Note: They’re
-          much larger in-game):</p>
-          <p><strong>NOTE</strong> The screenshots have been lost to time :(</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href="../../blarg/2010-08-12_save_the_events/">Save the Events!</a></h4>
-          <p class="text-muted">BY BOBBENS, ON AUGUST 12TH, 2010</p>
-          <p>After a post in the forum reminded me that it’s stupid that events can’t save
-          themselves. I have decided to correct that. So finally after ages of having events sort
-          of naturally die we have persistent events. Events work different from missions and in
-          this aspect too. For an event to be saved you must explicitly tell it to be saved with
-          <a href="https://naev.org/api/modules/evt.html#save">evt.save()</a>. This will make it
-          save itself. Also added sanity checks, but there is always the danger (unlike with
-          missions) that an event goes crazy and can’t complete. The player since he has no control
-          over this won’t be able to eliminate it and over time we may have an issue with event
-          bloat in save games. Hopefully this won’t happen since I’ve added checks for the common
-          cause of events becoming inert, which is not having any hooks.</p>
-          <p>Either way I hope having events can lead to a more dynamic universe in the sense that
-          some small scripted actions can appear randomly. Something like scientists screaming in
-          falling elevators but in outer space. So keep your eyes open for scripted coolness in
-          development version (or 0.5.0 when it’s released).</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href=
-          "../../blarg/2010-07-29_arch_linux_naev_now_included_in_community_repository/">Arch
-          Linux: NAEV now included in Community repository.</a></h4>
-          <p class="text-muted">BY DEIZ, ON JULY 29TH, 2010</p>
-          <p>The packages (<a href="https://archlinux.org/packages/?q=naev">naev and naev-data</a>)
-          are still quite new, so some mirrors may not have synced yet.</p>
-          <p>Special thanks to cleanrock, who created and maintained the Arch User Repository
-          PKGBUILD, and to those who voted for NAEV’s inclusion in the official repositories,
-          without which we’d likely not be packaged.</p>
         </div>
         <hr>
       </li>
@@ -258,6 +273,9 @@
         </li>
         <li class="page-item">
           <a class="page-link" href="../14/">14</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="../15/">15</a>
         </li>
         <li class="page-item">
           <a class="page-link" href="../14/" aria-label="Next"><span aria-hidden="true">»</span>

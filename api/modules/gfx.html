@@ -15,6 +15,8 @@
   <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
   <link rel="stylesheet" href="../ldoc.css"><!-- CSS -->
   <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <!-- EnlighterJS Resources !-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.css" />
   <title>Naev Lua API</title><!-- Website information -->
 </head>
 <body class="bg-light">
@@ -81,8 +83,10 @@
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
+  <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/merge_tables.html">merge_tables</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
@@ -153,6 +157,10 @@
 	<td class="summary">Gets the dimensions of the Naev window.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#screencoords">screencoords (Vector[, Whether=false])</a></td>
+	<td class="summary">Gets the screen coordinates from game coordinates.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#renderTex">renderTex (tex, pos_x, pos_y[, sprite_x=0[, sprite_y=0[, colour]]])</a></td>
 	<td class="summary">Renders a texture.</td>
 	</tr>
@@ -161,7 +169,7 @@
 	<td class="summary">DEPRECATED: Renders a texture, scaled.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#renderTexRaw">renderTexRaw (tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h[, colour[, angle]])</a></td>
+	<td class="name" nowrap><a href="#renderTexRaw">renderTexRaw (tex, pos_x, pos_y, pos_w, pos_h[, sprite_x=1[, sprite_y=1[, tex_x=0.[, tex_y=0.[, tex_w=1.[, tex_h=1.[, colour[, angle]]]]]]]])</a></td>
 	<td class="summary">Renders a texture using the core render function.</td>
 	</tr>
 	<tr>
@@ -271,8 +279,41 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">screen_w, screen_h = gfx.dim()</pre>
+        <pre data-enlighter-language="lua" class="example">screen_w, screen_h = gfx.dim()
+</pre>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "screencoords"></a>
+    <strong>screencoords (Vector[, Whether=false])</strong>
+    </dt>
+    <dd>
+    Gets the screen coordinates from game coordinates.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">Vector</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         of coordinates to transnform.
+        </li>
+        <li><span class="parameter">Whether</span>
+            <span class="types"><span class="type">boolean</span></span>
+         or not to invert y axis.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Vec2</span></span>
+        Transformed vector.
+    </ol>
+
+
+
 
 </dd>
     <dt>
@@ -321,10 +362,14 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">gfx.renderTex( tex, <span class="number">0.</span>, <span class="number">0.</span> ) <span class="comment">-- Render tex at origin</span></pre></li>
-        <li><pre class="example">gfx.renderTex( tex, <span class="number">0.</span>, <span class="number">0.</span>, col ) <span class="comment">-- Render tex at origin with colour col</span></pre></li>
-        <li><pre class="example">gfx.renderTex( tex, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">4</span>, <span class="number">3</span> ) <span class="comment">-- Render sprite at position 4,3 (top-left is 1,1)</span></pre></li>
-        <li><pre class="example">gfx.renderTex( tex, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">4</span>, <span class="number">3</span>, col ) <span class="comment">-- Render sprite at position 4,3 (top-left is 1,1) with colour col</span></pre></li>
+        <li><pre data-enlighter-language="lua" class="example">gfx.renderTex( tex, 0., 0. ) -- Render tex at origin
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">gfx.renderTex( tex, 0., 0., col ) -- Render tex at origin with colour col
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">gfx.renderTex( tex, 0., 0., 4, 3 ) -- Render sprite at position 4,3 (top-left is 1,1)
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">gfx.renderTex( tex, 0., 0., 4, 3, col ) -- Render sprite at position 4,3 (top-left is 1,1) with colour col
+</pre></li>
     </ul>
 
 </dd>
@@ -383,7 +428,7 @@
 </dd>
     <dt>
     <a name = "renderTexRaw"></a>
-    <strong>renderTexRaw (tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h[, colour[, angle]])</strong>
+    <strong>renderTexRaw (tex, pos_x, pos_y, pos_w, pos_h[, sprite_x=1[, sprite_y=1[, tex_x=0.[, tex_y=0.[, tex_w=1.[, tex_h=1.[, colour[, angle]]]]]]]])</strong>
     </dt>
     <dd>
     Renders a texture using the core render function.
@@ -418,26 +463,32 @@
         <li><span class="parameter">sprite_x</span>
             <span class="types"><span class="type">number</span></span>
          X sprite to render.
+         (<em>default</em> 1)
         </li>
         <li><span class="parameter">sprite_y</span>
             <span class="types"><span class="type">number</span></span>
          Y sprite to render.
+         (<em>default</em> 1)
         </li>
         <li><span class="parameter">tex_x</span>
             <span class="types"><span class="type">number</span></span>
          X sprite texture offset as [0.:1.].
+         (<em>default</em> 0.)
         </li>
         <li><span class="parameter">tex_y</span>
             <span class="types"><span class="type">number</span></span>
          Y sprite texture offset as [0.:1.].
+         (<em>default</em> 0.)
         </li>
         <li><span class="parameter">tex_w</span>
             <span class="types"><span class="type">number</span></span>
          Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
+         (<em>default</em> 1.)
         </li>
         <li><span class="parameter">tex_h</span>
             <span class="types"><span class="type">number</span></span>
          Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
+         (<em>default</em> 1.)
         </li>
         <li><span class="parameter">colour</span>
             <span class="types"><span class="type">Colour</span></span>
@@ -456,7 +507,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">gfx.renderTexRaw( tex, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">100.</span>, <span class="number">100.</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.5</span>, <span class="number">0.5</span> ) <span class="comment">-- Renders the bottom quarter of the sprite 1,1 of the image.</span></pre>
+        <pre data-enlighter-language="lua" class="example">gfx.renderTexRaw( tex, 0., 0., 100., 100., 1, 1, 0., 0., 0.5, 0.5 ) -- Renders the bottom quarter of the sprite 1,1 of the image.
+</pre>
     </ul>
 
 </dd>
@@ -536,8 +588,10 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">gfx.renderRect( <span class="number">10.</span>, <span class="number">30</span>,. <span class="number">40.</span>, <span class="number">40.</span>, col ) <span class="comment">-- Renders a 40 side square at position 10,30 of colour col</span></pre></li>
-        <li><pre class="example">gfx.renderRect( <span class="number">10.</span>, <span class="number">30</span>,. <span class="number">40.</span>, <span class="number">40.</span>, col, True ) <span class="comment">-- Renders a 40 side empty square at position 10,30 of colour col</span></pre></li>
+        <li><pre data-enlighter-language="lua" class="example">gfx.renderRect( 10., 30,. 40., 40., col ) -- Renders a 40 side square at position 10,30 of colour col
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">gfx.renderRect( 10., 30,. 40., 40., col, True ) -- Renders a 40 side empty square at position 10,30 of colour col
+</pre></li>
     </ul>
 
 </dd>
@@ -698,8 +752,10 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">len = gfx.printDim( <span class="keyword">nil</span>, _(<span class="string">"Hello World!"</span>) ) <span class="comment">-- Length of string with normal font</span></pre></li>
-        <li><pre class="example">height = gfx.printDim( <span class="keyword">true</span>, _(<span class="string">[["Longer text"]]</span>), <span class="number">20</span> ) <span class="comment">-- Dimensions of text block</span></pre></li>
+        <li><pre data-enlighter-language="lua" class="example">len = gfx.printDim( nil, _(&quot;Hello World!&quot;) ) -- Length of string with normal font
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">height = gfx.printDim( true, _([[&quot;Longer text&quot;]]), 20 ) -- Dimensions of text block
+</pre></li>
     </ul>
 
 </dd>
@@ -846,7 +902,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">gfx.printf( font, _(<span class="string">"Hello World!"</span>), <span class="number">50</span>, <span class="number">50</span>, colour.new(<span class="string">"Red"</span>) ) <span class="comment">-- Displays text in red at 50,50.</span></pre>
+        <pre data-enlighter-language="lua" class="example">gfx.printf( font, _(&quot;Hello World!&quot;), 50, 50, colour.new(&quot;Red&quot;) ) -- Displays text in red at 50,50.
+</pre>
     </ul>
 
 </dd>
@@ -936,9 +993,12 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example">gfx.<span class="global">print</span>( <span class="keyword">nil</span>, _(<span class="string">"Hello World!"</span>), <span class="number">50</span>, <span class="number">50</span>, colour.new(<span class="string">"Red"</span>) ) <span class="comment">-- Displays text in red at 50,50.</span></pre></li>
-        <li><pre class="example">gfx.<span class="global">print</span>( <span class="keyword">true</span>, _(<span class="string">"Hello World!"</span>), <span class="number">50</span>, <span class="number">50</span>, col, <span class="number">100</span> ) <span class="comment">-- Displays text to a maximum of 100 pixels wide.</span></pre></li>
-        <li><pre class="example">gfx.<span class="global">print</span>( <span class="keyword">true</span>, str, <span class="number">50</span>, <span class="number">50</span>, col, <span class="number">100</span>, <span class="keyword">true</span> ) <span class="comment">-- Displays centered text to a maximum of 100 pixels.</span></pre></li>
+        <li><pre data-enlighter-language="lua" class="example">gfx.print( nil, _(&quot;Hello World!&quot;), 50, 50, colour.new(&quot;Red&quot;) ) -- Displays text in red at 50,50.
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">gfx.print( true, _(&quot;Hello World!&quot;), 50, 50, col, 100 ) -- Displays text to a maximum of 100 pixels wide.
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">gfx.print( true, str, 50, 50, col, 100, true ) -- Displays centered text to a maximum of 100 pixels.
+</pre></li>
     </ul>
 
 </dd>
@@ -991,7 +1051,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">gfx.printText( <span class="keyword">true</span>, <span class="number">100</span>, <span class="number">50</span>, <span class="number">50</span>, <span class="number">100</span>, <span class="number">100</span>, col ) <span class="comment">-- Displays a 100x100 block of text</span></pre>
+        <pre data-enlighter-language="lua" class="example">gfx.printText( true, 100, 50, 50, 100, 100, col ) -- Displays a 100x100 block of text
+</pre>
     </ul>
 
 </dd>
@@ -1022,7 +1083,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">gfx.setBlendMode( <span class="string">"alpha"</span>, <span class="string">"premultiplied"</span> )</pre>
+        <pre data-enlighter-language="lua" class="example">gfx.setBlendMode( &quot;alpha&quot;, &quot;premultiplied&quot; )
+</pre>
     </ul>
 
 </dd>
@@ -1096,16 +1158,34 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-22 08:53:55 </i>
+<i style="float:right;">Last updated 2021-12-24 01:47:50 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
     <div class="container">
         <footer class="row text-muted">
-            <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
-            <p class="col-xs-12 col-sm-6 text-right">Original content licensed under CC-By-SA 4.0</p>
+          <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
+          <p class="col-xs-12 col-sm-6 text-right">Original content licensed under <a href=
+          "https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
         </footer>
     </div>
 </div>
+  <!-- EnlighterJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.js">
+          integrity="sha384-qMvs9nZ6afccojk2J2vg2CwyiHc5m/k1nb9VWa+otyt3VK4agPEc9/pfWC/iOxkG"
+          crossorigin="anonymous">
+  </script>
+
+  <!-- Init Code -->
+  <script type="text/javascript">
+      // - highlight all pre + code tags (CSS3 selectors)
+      // - use theme "bootstrap4"
+      // - replace tabs with 2 spaces
+      EnlighterJS.init('pre', 'code', {
+              language : 'lua',
+              theme: 'bootstrap4',
+              indent : 2
+      });
+  </script>
 </body>
 </html>

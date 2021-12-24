@@ -15,6 +15,8 @@
   <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
   <link rel="stylesheet" href="../ldoc.css"><!-- CSS -->
   <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <!-- EnlighterJS Resources !-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.css" />
   <title>Naev Lua API</title><!-- Website information -->
 </head>
 <body class="bg-light">
@@ -81,8 +83,10 @@
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
+  <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/merge_tables.html">merge_tables</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
@@ -192,6 +196,10 @@
 	<td class="summary">Gets the description of a commodity if it exists.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#new">new (cargo, decription[, params=nil])</a></td>
+	<td class="summary">Creates a new temporary commodity.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#illegalto">illegalto (c, f)</a></td>
 	<td class="summary">Makes a temporary commodity illegal to a faction.</td>
 	</tr>
@@ -239,7 +247,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> o1 == o2 <span class="keyword">then</span> <span class="comment">-- Checks to see if commodity o1 and o2 are the same</span></pre>
+        <pre data-enlighter-language="lua" class="example">if o1 == o2 then -- Checks to see if commodity o1 and o2 are the same
+</pre>
     </ul>
 
 </dd>
@@ -270,7 +279,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">s = commodity.get( <span class="string">"Food"</span> ) <span class="comment">-- Gets the food commodity</span></pre>
+        <pre data-enlighter-language="lua" class="example">s = commodity.get( &quot;Food&quot; ) -- Gets the food commodity
+</pre>
     </ul>
 
 </dd>
@@ -325,7 +335,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">commodityname = c:name() <span class="comment">-- Equivalent to `_(c:nameRaw())`</span></pre>
+        <pre data-enlighter-language="lua" class="example">commodityname = c:name() -- Equivalent to `_(c:nameRaw())`
+</pre>
     </ul>
 
 </dd>
@@ -361,7 +372,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">commodityrawname = c:nameRaw()</pre>
+        <pre data-enlighter-language="lua" class="example">commodityrawname = c:nameRaw()
+</pre>
     </ul>
 
 </dd>
@@ -392,7 +404,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="global">print</span>( c:price() ) <span class="comment">-- Prints the base price of the commodity</span></pre>
+        <pre data-enlighter-language="lua" class="example">print( c:price() ) -- Prints the base price of the commodity
+</pre>
     </ul>
 
 </dd>
@@ -427,7 +440,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> c:priceAt( planet.get(<span class="string">"Polaris Prime"</span>) ) &gt; <span class="number">100</span> <span class="keyword">then</span> <span class="comment">-- Checks price of a commodity at polaris prime</span></pre>
+        <pre data-enlighter-language="lua" class="example">if c:priceAt( planet.get(&quot;Polaris Prime&quot;) ) &gt; 100 then -- Checks price of a commodity at polaris prime
+</pre>
     </ul>
 
 </dd>
@@ -466,7 +480,8 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">if</span> c:priceAtTime( planet.get(<span class="string">"Polaris Prime"</span>), time ) &gt; <span class="number">100</span> <span class="keyword">then</span> <span class="comment">-- Checks price of a commodity at polaris prime</span></pre>
+        <pre data-enlighter-language="lua" class="example">if c:priceAtTime( planet.get(&quot;Polaris Prime&quot;), time ) &gt; 100 then -- Checks price of a commodity at polaris prime
+</pre>
     </ul>
 
 </dd>
@@ -518,6 +533,46 @@
 
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
         Description of the commodity if exists, otherwise nil.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new"></a>
+    <strong>new (cargo, decription[, params=nil])</strong>
+    </dt>
+    <dd>
+    Creates a new temporary commodity.  If a temporary commodity with the same name exists, that gets returned instead.
+        "Temporary" is a relative term. The returned commodity object may be saved to a mission's/event's "mem" table,
+        or used as a mission cargo (see misn.cargoAdd), and in those cases it will persist in saved games.
+        Caution: Usage as a regular commodity in the player's cargo holds is not yet supported.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">cargo</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the cargo to add. This must not match a cargo name defined in commodity.xml.
+        </li>
+        <li><span class="parameter">decription</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Description of the cargo to add.
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of named parameters. Currently supported is "gfx_space".
+         (<em>default</em> nil)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Commodity</span></span>
+        The newly created commodity or an existing temporary commodity with the same name.
     </ol>
 
 
@@ -583,16 +638,34 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-22 08:53:55 </i>
+<i style="float:right;">Last updated 2021-12-24 01:47:50 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
     <div class="container">
         <footer class="row text-muted">
-            <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
-            <p class="col-xs-12 col-sm-6 text-right">Original content licensed under CC-By-SA 4.0</p>
+          <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
+          <p class="col-xs-12 col-sm-6 text-right">Original content licensed under <a href=
+          "https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
         </footer>
     </div>
 </div>
+  <!-- EnlighterJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.js">
+          integrity="sha384-qMvs9nZ6afccojk2J2vg2CwyiHc5m/k1nb9VWa+otyt3VK4agPEc9/pfWC/iOxkG"
+          crossorigin="anonymous">
+  </script>
+
+  <!-- Init Code -->
+  <script type="text/javascript">
+      // - highlight all pre + code tags (CSS3 selectors)
+      // - use theme "bootstrap4"
+      // - replace tabs with 2 spaces
+      EnlighterJS.init('pre', 'code', {
+              language : 'lua',
+              theme: 'bootstrap4',
+              indent : 2
+      });
+  </script>
 </body>
 </html>
