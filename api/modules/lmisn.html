@@ -112,13 +112,13 @@
   <li><a href="../modules/outfit.html">outfit</a></li>
   <li><a href="../modules/pilot.html">pilot</a></li>
   <li><a href="../modules/pilotoutfit.html">pilotoutfit</a></li>
-  <li><a href="../modules/planet.html">planet</a></li>
   <li><a href="../modules/player.html">player</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
   <li><a href="../modules/safelanes.html">safelanes</a></li>
   <li><a href="../modules/shader.html">shader</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
   <li><a href="../modules/shiplog.html">shiplog</a></li>
+  <li><a href="../modules/spob.html">spob</a></li>
   <li><a href="../modules/system.html">system</a></li>
   <li><a href="../modules/tex.html">tex</a></li>
   <li><a href="../modules/time.html">time</a></li>
@@ -155,8 +155,8 @@
 	<td class="summary">Plays a money indicating money made.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getLandablePlanets">getLandablePlanets ([sys[, fct[, fctmatch=false]]])</a></td>
-	<td class="summary">Returns a complete or filtered table of landable planets (that is, landable, inhabitable, and not restricted)</td>
+	<td class="name" nowrap><a href="#getLandableSpobs">getLandableSpobs ([sys[, fct[, fctmatch=false]]])</a></td>
+	<td class="summary">Returns a complete or filtered table of landable spobs (that is, landable, inhabitable, and not restricted)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#getNextSystem">getNextSystem (nowsys, finalsys[, hidden=false])</a></td>
@@ -180,12 +180,12 @@
          system sys.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getPlanetAtDistance">getPlanetAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</a></td>
-	<td class="summary">Works the same as lmisn.getSysAtDistance, but for planets.</td>
+	<td class="name" nowrap><a href="#getSpobAtDistance">getSpobAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</a></td>
+	<td class="summary">Works the same as lmisn.getSysAtDistance, but for spobs.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getRandomPlanetAtDistance">getRandomPlanetAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</a></td>
-	<td class="summary">Gets a random planet at a distance.</td>
+	<td class="name" nowrap><a href="#getRandomSpobAtDistance">getRandomSpobAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</a></td>
+	<td class="summary">Gets a random spob at a distance.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#anyMissionActive">anyMissionActive (names)</a></td>
@@ -233,11 +233,11 @@
 
 </dd>
     <dt>
-    <a name = "getLandablePlanets"></a>
-    <strong>getLandablePlanets ([sys[, fct[, fctmatch=false]]])</strong>
+    <a name = "getLandableSpobs"></a>
+    <strong>getLandableSpobs ([sys[, fct[, fctmatch=false]]])</strong>
     </dt>
     <dd>
-    Returns a complete or filtered table of landable planets (that is, landable, inhabitable, and not restricted)
+    Returns a complete or filtered table of landable spobs (that is, landable, inhabitable, and not restricted)
 
 
     <h3>Parameters:</h3>
@@ -249,7 +249,7 @@
         </li>
         <li><span class="parameter">fct</span>
             <span class="types"><span class="type">Faction</span></span>
-         If nil, return all landable planets in the system meeting the landable criteria, otherwise...
+         If nil, return all landable spobs in the system meeting the landable criteria, otherwise...
          (<em>optional</em>)
         </li>
         <li><span class="parameter">fctmatch</span>
@@ -263,7 +263,7 @@
     <ol>
 
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-        All matching planets in a list.
+        All matching spobs in a list.
     </ol>
 
 
@@ -364,7 +364,7 @@
     <strong>lmisn.sysFilters.factionLandable (fct[, samefact=false])</strong>
     </dt>
     <dd>
-    Provides the landable system filter.  Makes sure each system has at least on landable, inhabited, non-restricted planet and is landable by a certain faction.
+    Provides the landable system filter.  Makes sure each system has at least on landable, inhabited, non-restricted spob and is landable by a certain faction.
 
 
 
@@ -399,7 +399,7 @@
     <dd>
     Fetches an array of systems from min to max jumps away from the given
          system sys.
-<p>   The following example gets a random Sirius M class planet between 1 to 6 jumps away.
+<p>   The following example gets a random Sirius M class spob between 1 to 6 jumps away.
 
 
 
@@ -435,10 +435,10 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre data-enlighter-language="lua" class="example">local planets = {}
+        <pre data-enlighter-language="lua" class="example">local spobs = {}
 lmisn.getSysAtDistance( system.cur(), 1, 6,
     function(s)
-        for i, v in ipairs(s:planets()) do
+        for i, v in ipairs(s:spobs()) do
             if v:faction() == faction.get(&quot;Sirius&quot;) and v:class() == &quot;M&quot; then
                 return true
             end
@@ -446,22 +446,22 @@ lmisn.getSysAtDistance( system.cur(), 1, 6,
         return false
     end )
 
-if #planets == 0 then abort() end -- In case no suitable planets are in range.
+if #spobs == 0 then abort() end -- In case no suitable spobs are in range.
 
-local index = rnd.rnd(1, #planets)
-destplanet = planets[index][1]
-destsys = planets[index][2]
+local index = rnd.rnd(1, #spobs)
+destspob = spobs[index][1]
+destsys = spobs[index][2]
 </pre>
     </ul>
 
 </dd>
     <dt>
-    <a name = "getPlanetAtDistance"></a>
-    <strong>getPlanetAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</strong>
+    <a name = "getSpobAtDistance"></a>
+    <strong>getSpobAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</strong>
     </dt>
     <dd>
-    Works the same as lmisn.getSysAtDistance, but for planets.
-<p>   Filter is applied on a planet level.
+    Works the same as lmisn.getSysAtDistance, but for spobs.
+<p>   Filter is applied on a spob level.
 
 
 
@@ -474,11 +474,11 @@ destsys = planets[index][2]
         </li>
         <li><span class="parameter">min</span>
             <span class="types"><span class="type">number</span></span>
-         Minimum jump distance to get planet at.
+         Minimum jump distance to get spob at.
         </li>
         <li><span class="parameter">max</span>
             <span class="types"><span class="type">number</span></span>
-         Maximum jump distance to get planet at.
+         Maximum jump distance to get spob at.
         </li>
         <li><span class="parameter">fct</span>
             <span class="types"><span class="type">Faction</span></span>
@@ -487,12 +487,12 @@ destsys = planets[index][2]
         </li>
         <li><span class="parameter">samefct</span>
             <span class="types"><span class="type">boolean</span></span>
-         Whether or not to only allow planets to belong exactly to fct.
+         Whether or not to only allow spobs to belong exactly to fct.
          (<em>default</em> false)
         </li>
         <li><span class="parameter">filter</span>
             <span class="types"><span class="type">function</span></span>
-         Filtering function that returns a boolean and takes a planet being tested as a parameter.
+         Filtering function that returns a boolean and takes a spob being tested as a parameter.
          (<em>default</em> nil)
         </li>
         <li><span class="parameter">data</span>
@@ -510,21 +510,21 @@ destsys = planets[index][2]
     <ol>
 
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-        A table containing all the planets matching the criteria. Can be empty if no matches found.
+        A table containing all the spobs matching the criteria. Can be empty if no matches found.
     </ol>
 
 
 
     <h3>Usage:</h3>
     <ul>
-        <pre data-enlighter-language="lua" class="example">-- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
-local candidates = lmisn.getPlanetAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false )
+        <pre data-enlighter-language="lua" class="example">-- Get random spob within 3 to 5 jumps of current system that is landable by independent pilots.
+local candidates = lmisn.getSpobAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false )
 -- Make sure there are candidates
 if #candidates==0 then
-   error(&quot;There are no planets meeting the criteria!&quot;)
+   error(&quot;There are no spobs meeting the criteria!&quot;)
 end
 -- Sort candidates by some criteria
-table.sort( candidates, my_planet_sort_function )
+table.sort( candidates, my_spob_sort_function )
 -- Get best by sorting criteria
 local destpnt = candidates[1]
 </pre>
@@ -532,11 +532,11 @@ local destpnt = candidates[1]
 
 </dd>
     <dt>
-    <a name = "getRandomPlanetAtDistance"></a>
-    <strong>getRandomPlanetAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</strong>
+    <a name = "getRandomSpobAtDistance"></a>
+    <strong>getRandomSpobAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</strong>
     </dt>
     <dd>
-    Gets a random planet at a distance.  Only checks for inhabited, landable, and non-restricted planets.
+    Gets a random spob at a distance.  Only checks for inhabited, landable, and non-restricted spobs.
 
 
 
@@ -549,11 +549,11 @@ local destpnt = candidates[1]
         </li>
         <li><span class="parameter">min</span>
             <span class="types"><span class="type">number</span></span>
-         Minimum jump distance to get planet at.
+         Minimum jump distance to get spob at.
         </li>
         <li><span class="parameter">max</span>
             <span class="types"><span class="type">number</span></span>
-         Maximum jump distance to get planet at.
+         Maximum jump distance to get spob at.
         </li>
         <li><span class="parameter">fct</span>
             <span class="types"><span class="type">Faction</span></span>
@@ -562,12 +562,12 @@ local destpnt = candidates[1]
         </li>
         <li><span class="parameter">samefct</span>
             <span class="types"><span class="type">boolean</span></span>
-         Whether or not to only allow planets to belong exactly to fct.
+         Whether or not to only allow spobs to belong exactly to fct.
          (<em>default</em> false)
         </li>
         <li><span class="parameter">filter</span>
             <span class="types"><span class="type">function</span></span>
-         Filtering function that returns a boolean and takes a planet being tested as a parameter.
+         Filtering function that returns a boolean and takes a spob being tested as a parameter.
          (<em>default</em> nil)
         </li>
         <li><span class="parameter">data</span>
@@ -584,15 +584,15 @@ local destpnt = candidates[1]
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Planet</span></span>
-        A single planet matching all the criteria.
+           <span class="types"><span class="type">Spob</span></span>
+        A single spob matching all the criteria.
     </ol>
 
 
 
     <h3>Usage:</h3>
     <ul>
-        <pre data-enlighter-language="lua" class="example">destpnt = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false ) -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+        <pre data-enlighter-language="lua" class="example">destpnt = lmisn.getRandomSpobAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false ) -- Get random spob within 3 to 5 jumps of current system that is landable by independent pilots.
 </pre>
     </ul>
 
@@ -656,7 +656,7 @@ local destpnt = candidates[1]
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-12-26 19:10:22 </i>
+<i style="float:right;">Last updated 2021-12-27 15:58:02 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">

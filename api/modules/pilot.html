@@ -112,13 +112,13 @@
   <li><a href="../modules/outfit.html">outfit</a></li>
   <li><strong>pilot</strong></li>
   <li><a href="../modules/pilotoutfit.html">pilotoutfit</a></li>
-  <li><a href="../modules/planet.html">planet</a></li>
   <li><a href="../modules/player.html">player</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
   <li><a href="../modules/safelanes.html">safelanes</a></li>
   <li><a href="../modules/shader.html">shader</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
   <li><a href="../modules/shiplog.html">shiplog</a></li>
+  <li><a href="../modules/spob.html">spob</a></li>
   <li><a href="../modules/system.html">system</a></li>
   <li><a href="../modules/tex.html">tex</a></li>
   <li><a href="../modules/time.html">time</a></li>
@@ -642,7 +642,7 @@
 	<td class="summary">Tries to make the pilot stealth.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#land">land (p[, planet[, shoot]])</a></td>
+	<td class="name" nowrap><a href="#land">land (p[, spob[, shoot]])</a></td>
 	<td class="summary">Tells the pilot to land</td>
 	</tr>
 	<tr>
@@ -723,7 +723,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Planet</span>, <span class="type">Vec2</span> or <span class="type">Jump</span></span>
+           <span class="types"><span class="type">Spob</span>, <span class="type">Vec2</span> or <span class="type">Jump</span></span>
         A randomly chosen suitable spawn point.
     </ol>
 
@@ -755,9 +755,9 @@
          Faction to give the pilot.
         </li>
         <li><span class="parameter">param</span>
-            <span class="types"><span class="type">System</span> or <span class="type">Planet</span></span>
+            <span class="types"><span class="type">System</span> or <span class="type">Spob</span></span>
          Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
-              a planet it'll try to take off from it.
+              a spob it'll try to take off from it.
         </li>
         <li><span class="parameter">pilotname</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
@@ -794,11 +794,11 @@
 </pre></li>
         <li><pre data-enlighter-language="lua" class="example">p = pilot.add( &quot;Empire Pacifier&quot;, &quot;Empire&quot;, system.get(&quot;Goddard&quot;) ) -- Have the pilot jump in from the system.
 </pre></li>
-        <li><pre data-enlighter-language="lua" class="example">p = pilot.add( &quot;Goddard&quot;, &quot;Goddard&quot;, planet.get(&quot;Zhiru&quot;) , _(&quot;Goddard Goddard&quot;) ) -- Have the pilot take off from a planet.
+        <li><pre data-enlighter-language="lua" class="example">p = pilot.add( &quot;Goddard&quot;, &quot;Goddard&quot;, spob.get(&quot;Zhiru&quot;) , _(&quot;Goddard Goddard&quot;) ) -- Have the pilot take off from a spob.
 
 How param works (by type of value passed): &lt;br/&gt;
- - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets &lt;br/&gt;
- - planet: pilot takes off from the planet &lt;br/&gt;
+ - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile spobs &lt;br/&gt;
+ - spob: pilot takes off from the spob &lt;br/&gt;
  - system: jumps pilot in from the system &lt;br/&gt;
  - vec2: pilot is created at the position (no jump/takeoff) &lt;br/&gt;
  - true: Acts like nil, but does not avoid jump points with no presence &lt;br/&gt;
@@ -1415,8 +1415,8 @@ How param works (by type of value passed): &lt;br/&gt;
     <h3>Returns:</h3>
     <ol>
         <li>
-           <span class="types"><span class="type">Planet</span> or <span class="type">nil</span></span>
-        The pilot's planet target.</li>
+           <span class="types"><span class="type">Spob</span> or <span class="type">nil</span></span>
+        The pilot's spob target.</li>
         <li>
            <span class="types"><span class="type">System</span> or <span class="type">nil</span></span>
         The pilot's hyperspace target.</li>
@@ -1426,7 +1426,7 @@ How param works (by type of value passed): &lt;br/&gt;
 
     <h3>Usage:</h3>
     <ul>
-        <pre data-enlighter-language="lua" class="example">planet, hyperspace = p:nav()
+        <pre data-enlighter-language="lua" class="example">spob, hyperspace = p:nav()
 </pre>
     </ul>
 
@@ -4761,7 +4761,7 @@ How param works (by type of value passed): &lt;br/&gt;
  Third argument is destination: if false or nil, destination is automatically chosen.
  If true, the pilot does not jump nor land and stays in system.
  If Jump is given, the pilot tries to use this jump to go hyperspace.
- If Planet is given, the pilot tries to land on it.
+ If Spob is given, the pilot tries to land on it.
 
 
 
@@ -4776,7 +4776,7 @@ How param works (by type of value passed): &lt;br/&gt;
          Target pilot to runaway from.
         </li>
         <li><span class="parameter">destination.</span>
-            <span class="types"><span class="type">boolean</span>, <span class="type">Jump</span> or <span class="type">Planet</span></span>
+            <span class="types"><span class="type">boolean</span>, <span class="type">Jump</span> or <span class="type">Spob</span></span>
 
          (<em>default</em> false)
         </li>
@@ -4914,7 +4914,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </dd>
     <dt>
     <a name = "land"></a>
-    <strong>land (p[, planet[, shoot]])</strong>
+    <strong>land (p[, spob[, shoot]])</strong>
     </dt>
     <dd>
     Tells the pilot to land  Pilot must be under manual control for this to work.
@@ -4927,9 +4927,9 @@ How param works (by type of value passed): &lt;br/&gt;
             <span class="types"><span class="type">Pilot</span></span>
          Pilot to tell to land.
         </li>
-        <li><span class="parameter">planet</span>
-            <span class="types"><span class="type">Planet</span></span>
-         Planet to land on, uses random if nil.
+        <li><span class="parameter">spob</span>
+            <span class="types"><span class="type">Spob</span></span>
+         Spob to land on, uses random if nil.
          (<em>optional</em>)
         </li>
         <li><span class="parameter">shoot</span>
@@ -5277,7 +5277,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-12-26 19:10:22 </i>
+<i style="float:right;">Last updated 2021-12-27 15:58:02 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
