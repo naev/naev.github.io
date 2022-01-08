@@ -83,8 +83,8 @@
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
-  <li><a href="../modules/lazyload.html">lazyload</a></li>
-  <li><strong>linenoise</strong></li>
+  <li><strong>lazyload</strong></li>
+  <li><a href="../modules/linenoise.html">linenoise</a></li>
   <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
@@ -140,37 +140,16 @@
 
 <div id="content">
 
-<h1>Module <code>linenoise</code></h1>
-<p>Command-line library.</p>
-<p> See https://github.com/hoelzro/lua-linenoise.
-</p>
+<h1>Module <code>lazyload</code></h1>
+<p>Laziest lib there is.</p>
+<p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#ln.linenoise">ln.linenoise (prompt)</a></td>
-	<td class="summary">Return a line of user input (generally after yielding to Naev's event loop), or nil if no more is available.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ln.historyadd">ln.historyadd (line)</a></td>
-	<td class="summary">Adds a line to the history list.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ln.historysave">ln.historysave (filename)</a></td>
-	<td class="summary">Saves the history to the given file path.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ln.historyload">ln.historyload (filename)</a></td>
-	<td class="summary">Loads the history from the given file path.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ln.setcompletion">ln.setcompletion (callback)</a></td>
-	<td class="summary">Sets the completion callback (which should call ln.addcompletion() once per suggested completion of "line").</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ln.addcompletion">ln.addcompletion (completions, option)</a></td>
-	<td class="summary">Adds string to the list of completions.</td>
+	<td class="name" nowrap><a href="#lazyload">lazyload (libname[, rw=false])</a></td>
+	<td class="summary">Main function that wraps a library to lazy load it.</td>
 	</tr>
 </table>
 
@@ -182,144 +161,40 @@
 
     <dl class="function">
     <dt>
-    <a name = "ln.linenoise"></a>
-    <strong>ln.linenoise (prompt)</strong>
+    <a name = "lazyload"></a>
+    <strong>lazyload (libname[, rw=false])</strong>
     </dt>
     <dd>
-    Return a line of user input (generally after yielding to Naev's event loop), or nil if no more is available.
-<p>TODO This is a stub implementation that doesn't work.
-
+    Main function that wraps a library to lazy load it.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">prompt</span>
+        <li><span class="parameter">libname</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         A prompt like "> " or ">> " to put in front of the line.
+         Name of library to lazy load (gets passed to require)
+        </li>
+        <li><span class="parameter">rw</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not the library should be writable.
+         (<em>default</em> false)
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        A library that can be used in place of the real library with lazy loading.
+    </ol>
 
 
 
-
-</dd>
-    <dt>
-    <a name = "ln.historyadd"></a>
-    <strong>ln.historyadd (line)</strong>
-    </dt>
-    <dd>
-    Adds a line to the history list.
-<p>TODO This is a stub implementation that doesn't work.
-
-
-
-    <h3>Parameters:</h3>
+    <h3>Usage:</h3>
     <ul>
-        <li><span class="parameter">line</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Input line to add.
-        </li>
+        <pre data-enlighter-language="lua" class="example">return require(&quot;lazyload&quot;)( &quot;mylib&quot;, false )
+</pre>
     </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ln.historysave"></a>
-    <strong>ln.historysave (filename)</strong>
-    </dt>
-    <dd>
-    Saves the history to the given file path.
-<p>TODO This is a stub implementation that doesn't work.
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">filename</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         PhysicsFS path to the history file.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ln.historyload"></a>
-    <strong>ln.historyload (filename)</strong>
-    </dt>
-    <dd>
-    Loads the history from the given file path.
-<p>TODO This is a stub implementation that doesn't work.
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">filename</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         PhysicsFS path to the history file.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ln.setcompletion"></a>
-    <strong>ln.setcompletion (callback)</strong>
-    </dt>
-    <dd>
-    Sets the completion callback (which should call ln.addcompletion() once per suggested completion of "line").
-<p>TODO This is a stub implementation that doesn't work.
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
-         function(completions, line) which may call ln.addcompletion() with the opaque completions object.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ln.addcompletion"></a>
-    <strong>ln.addcompletion (completions, option)</strong>
-    </dt>
-    <dd>
-    Adds string to the list of completions.  (To be called by the completion callback.)
-<p>TODO This is a stub implementation that doesn't work.
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">completions</span>
-         The object passed to the completion callback.
-        </li>
-        <li><span class="parameter">option</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         A possible completion.
-        </li>
-    </ul>
-
-
-
-
 
 </dd>
 </dl>
