@@ -1,89 +1,19 @@
-name: Build and Publish Website
- 
-on: [repository_dispatch]
- 
+name: "Publish Website"
+on:
+  workflow_dispatch:
+    inputs:
+      publish_type:
+        description: "'website' for website build, and 'api' for API build"
+        required: true
+        type: string
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/naev-docs:latest"
-    steps:
-      - name: Event Information
-        run: |
-          echo "Event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'"
-          
-      - name: Skip Duplicate Actions
-        uses: fkirc/skip-duplicate-actions@v2.1.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checkout Naev Repository
-        uses: actions/checkout@v2
-        with:
-          path: /__w/naev.github.io/naev.github.io/prod
-
-      - name: Clone Website
-        if: github.event.action == 'website'
-        uses: actions/checkout@v2
-        with:
-          repository: 'naev/naev-website'
-          path: ${{ github.workspace }}/staging
-
-      - name: Clone API Docs
-        if: github.event.action == 'api'
-        uses: actions/checkout@v2
-        with:
-          repository: 'naev/naev'
-          path: ${{ github.workspace }}/staging
-
-      - name: Compile Website
-        if: github.event.action == 'website'
-        run: |
-          make
-        working-directory: ${{ github.workspace }}/staging
-
-      - name: Meson Build
-        if: github.event.action == 'api'
-        run: |
-          meson setup build . -Dexecutable=disabled
-          meson compile -C build
-        working-directory: ${{ github.workspace }}/staging
-
-      - name: Apply Website Changes
-        if: github.event.action == 'website'
-        run: |
-          rsync -avzh output/ /__w/naev.github.io/naev.github.io/prod
-        working-directory: ${{ github.workspace }}/staging
-
-      - name: Apply API Docs Changes
-        if: github.event.action == 'api'
-        run: |
-          rsync -avzh build/docs/lua/ /__w/naev.github.io/naev.github.io/prod/api
-        working-directory: ${{ github.workspace }}/staging
-
-      - name: Add new file changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Actions"
-          git add *
-        working-directory: /__w/naev.github.io/naev.github.io/prod
-
-      - name: Commit Website Changes
-        if: github.event.action == 'website'
-        run: |
-          git commit -m "Website Updates" -a
-        working-directory: /__w/naev.github.io/naev.github.io/prod
-
-      - name: Commit API Documentation Changes
-        if: github.event.action == 'api'
-        run: |
-          git commit -m "API Documentation Updates" -a
-        working-directory: /__w/naev.github.io/naev.github.io/prod
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-          directory: /__w/naev.github.io/naev.github.io/prod
-          
+  website:
+    uses: naev/naev.github.io/.github/workflows/website_publish.yml@main
+    if: github.event.inputs.publish_type == 'website'
+    with:
+      publish_type: ${{ github.event.inputs.publish_type }}
+  api:
+    uses: naev/naev.github.io/.github/workflows/website_publish.yml@main
+    if: github.event.inputs.publish_type == 'api'
+    with:
+      publish_type: ${{ github.event.inputs.publish_type }}
