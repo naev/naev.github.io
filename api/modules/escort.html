@@ -81,7 +81,7 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
-  <li><a href="../modules/escort.html">escort</a></li>
+  <li><strong>escort</strong></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
   <li><a href="../modules/lazyload.html">lazyload</a></li>
@@ -93,7 +93,7 @@
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
-  <li><strong>canvas</strong></li>
+  <li><a href="../modules/canvas.html">canvas</a></li>
   <li><a href="../modules/colour.html">colour</a></li>
   <li><a href="../modules/commodity.html">commodity</a></li>
   <li><a href="../modules/data.html">data</a></li>
@@ -141,38 +141,37 @@
 
 <div id="content">
 
-<h1>Module <code>canvas</code></h1>
-<p>Lua bindings to interact with canvass.</p>
+<h1>Module <code>escort</code></h1>
+<p>Library for dealing with escorts in missions.</p>
 <p>
-<p> <em>Note</em> The API here is designed to be compatible with that of LÖVE.
-</p>
+ luacheck: globals _escort_spawn _escort_jumpin _escort_jumpout _escort_land _escort_takeoff _escort_failure _escort_e_death _escort_e_land _escort_e_jump _escort_e_attacked(Hook functions passed by name)</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#__gc">__gc (canvas)</a></td>
-	<td class="summary">Frees a canvas.</td>
+	<td class="name" nowrap><a href="#init">init (ships[, params])</a></td>
+	<td class="summary">Initializes the library by setting all the necessary hooks.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#__eq">__eq (f1, f2)</a></td>
-	<td class="summary">Compares two canvass to see if they are the same.</td>
+	<td class="name" nowrap><a href="#exit">exit ()</a></td>
+	<td class="summary">Cleans up the escort framework when done, eliminating all hooks.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new">new (width, height)</a></td>
-	<td class="summary">Opens a new canvas.</td>
+	<td class="name" nowrap><a href="#num_alive">num_alive ()</a></td>
+	<td class="summary">Gets the number of escorts that are still alive.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set">set (arg)</a></td>
-	<td class="summary">Sets the active canvas.</td>
+	<td class="name" nowrap><a href="#pilots">pilots ()</a></td>
+	<td class="summary">Gets the list of pilots.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getTex">getTex (canvas)</a></td>
-	<td class="summary">Gets the texture associated with the canvas.</td>
+	<td class="name" nowrap><a href="#setDest">setDest (dest, success[, failure])</a></td>
+	<td class="summary">Sets the destination of the</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#clear">clear (canvas, col)</a></td>
-	<td class="summary">Clears a canvas.</td>
+	<td class="name" nowrap><a href="#spawn">spawn (pos)</a></td>
+	<td class="summary">Spawns the escorts at location.</td>
 	</tr>
 </table>
 
@@ -184,18 +183,23 @@
 
     <dl class="function">
     <dt>
-    <a name = "__gc"></a>
-    <strong>__gc (canvas)</strong>
+    <a name = "init"></a>
+    <strong>init (ships[, params])</strong>
     </dt>
     <dd>
-    Frees a canvas.
+    Initializes the library by setting all the necessary hooks.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">canvas</span>
-            <span class="types"><span class="type">Canvas</span></span>
-         Canvas to free.
+        <li><span class="parameter">ships</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         List of ships to add.
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         List of optional parameters.
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -205,30 +209,33 @@
 
 </dd>
     <dt>
-    <a name = "__eq"></a>
-    <strong>__eq (f1, f2)</strong>
+    <a name = "exit"></a>
+    <strong>exit ()</strong>
     </dt>
     <dd>
-    Compares two canvass to see if they are the same.
+    Cleans up the escort framework when done, eliminating all hooks.
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">f1</span>
-            <span class="types"><span class="type">Canvas</span></span>
-         Canvas 1 to compare.
-        </li>
-        <li><span class="parameter">f2</span>
-            <span class="types"><span class="type">Canvas</span></span>
-         Canvas 2 to compare.
-        </li>
-    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "num_alive"></a>
+    <strong>num_alive ()</strong>
+    </dt>
+    <dd>
+    Gets the number of escorts that are still alive.
+
+
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">boolean</span></span>
-        true if both canvass are the same.
+           <span class="types"><span class="type">number</span></span>
+        Number of escorts still alive.
     </ol>
 
 
@@ -236,30 +243,19 @@
 
 </dd>
     <dt>
-    <a name = "new"></a>
-    <strong>new (width, height)</strong>
+    <a name = "pilots"></a>
+    <strong>pilots ()</strong>
     </dt>
     <dd>
-    Opens a new canvas.
+    Gets the list of pilots.
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">width</span>
-            <span class="types"><span class="type">number</span></span>
-         Width of the new canvas.
-        </li>
-        <li><span class="parameter">height</span>
-            <span class="types"><span class="type">number</span></span>
-         Height of the new canvas.
-        </li>
-    </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Canvas</span></span>
-        New canvas object.
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        Table containing the existing pilots. The first will be the leader.
     </ol>
 
 
@@ -267,19 +263,27 @@
 
 </dd>
     <dt>
-    <a name = "set"></a>
-    <strong>set (arg)</strong>
+    <a name = "setDest"></a>
+    <strong>setDest (dest, success[, failure])</strong>
     </dt>
     <dd>
-    Sets the active canvas.
- <em>TODO</em> Add actual graphics state maintenance! For now, just disable the scissor region.
+    Sets the destination of the
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">arg</span>
-            <span class="types"><span class="type">Canvas</span> or <span class="type">nil</span></span>
-         Either a canvas object or nil to disable.
+        <li><span class="parameter">dest</span>
+            <span class="types"><span class="type">system</span> or <span class="type">spob</span></span>
+         Destination of the escorts.
+        </li>
+        <li><span class="parameter">success</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the global function to call on success.
+        </li>
+        <li><span class="parameter">failure</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the global function to call on failure. Default will give a vntk message and fail the mission.
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -289,52 +293,27 @@
 
 </dd>
     <dt>
-    <a name = "getTex"></a>
-    <strong>getTex (canvas)</strong>
+    <a name = "spawn"></a>
+    <strong>spawn (pos)</strong>
     </dt>
     <dd>
-    Gets the texture associated with the canvas.
+    Spawns the escorts at location.  This can be useful at the beginning if you want them to jump in or take of while in space. It is handled automatically when the player takes off or jumps into a system.
+
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">canvas</span>
-            <span class="types"><span class="type">Canvas</span></span>
-         Canvas to get the texture from.
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">Vector</span>, <span class="type">Spob</span> or <span class="type">System</span></span>
+         Position to spawn the fleet at. The argument is directly passed to pilot.add.
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Tex</span></span>
-        Texture associated with the canvas.
+        table Table of newly created pilots.
     </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "clear"></a>
-    <strong>clear (canvas, col)</strong>
-    </dt>
-    <dd>
-    Clears a canvas.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">canvas</span>
-            <span class="types"><span class="type">Canvas</span></span>
-         Canvas to clear.
-        </li>
-        <li><span class="parameter">col</span>
-            <span class="types"><span class="type">Colour</span></span>
-         Colour to clear to.
-        </li>
-    </ul>
-
 
 
 
