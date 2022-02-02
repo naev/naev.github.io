@@ -81,7 +81,7 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
-  <li><a href="../modules/escort.html">escort</a></li>
+  <li><strong>escort</strong></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
   <li><a href="../modules/lazyload.html">lazyload</a></li>
@@ -132,7 +132,7 @@
   <li><a href="../modules/pp_shaders.html">pp_shaders</a></li>
   <li><a href="../modules/prng.html">prng</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
-  <li><strong>swapship</strong></li>
+  <li><a href="../modules/swapship.html">swapship</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
 
@@ -140,20 +140,37 @@
 
 <div id="content">
 
-<h1>Module <code>swapship</code></h1>
-<p>Utility to swap the player's ship.</p>
-<p></p>
+<h1>Module <code>escort</code></h1>
+<p>Library for dealing with escorts in missions.</p>
+<p>
+ luacheck: globals _escort_spawn _escort_jumpin _escort_jumpout _escort_land _escort_takeoff _escort_failure _escort_e_death _escort_e_land _escort_e_jump _escort_e_attacked(Hook functions passed by name)</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#test">test (template)</a></td>
-	<td class="summary">Tests to see if it is possible to swap ships for the player.</td>
+	<td class="name" nowrap><a href="#init">init (ships[, params])</a></td>
+	<td class="summary">Initializes the library by setting all the necessary hooks.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#swap">swap (template, acquired)</a></td>
-	<td class="summary">Swaps the player's ship.</td>
+	<td class="name" nowrap><a href="#exit">exit ()</a></td>
+	<td class="summary">Cleans up the escort framework when done, eliminating all hooks.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#num_alive">num_alive ()</a></td>
+	<td class="summary">Gets the number of escorts that are still alive.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pilots">pilots ()</a></td>
+	<td class="summary">Gets the list of pilots.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setDest">setDest (dest, success[, failure])</a></td>
+	<td class="summary">Sets the destination of the</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#spawn">spawn (pos)</a></td>
+	<td class="summary">Spawns the escorts at location.</td>
 	</tr>
 </table>
 
@@ -165,18 +182,23 @@
 
     <dl class="function">
     <dt>
-    <a name = "test"></a>
-    <strong>test (template)</strong>
+    <a name = "init"></a>
+    <strong>init (ships[, params])</strong>
     </dt>
     <dd>
-    Tests to see if it is possible to swap ships for the player.
+    Initializes the library by setting all the necessary hooks.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">template</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Template pilot to try to swap ships with the player.
+        <li><span class="parameter">ships</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         List of ships to add.
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         List of optional parameters.
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -186,32 +208,110 @@
 
 </dd>
     <dt>
-    <a name = "swap"></a>
-    <strong>swap (template, acquired)</strong>
+    <a name = "exit"></a>
+    <strong>exit ()</strong>
     </dt>
     <dd>
-    Swaps the player's ship.  Performs checks to make sure things don't break. Use in place of player.swapShip() unless you really know what you're doing.
-<p>   Can fail if the player can't copy all the mission cargo over.
+    Cleans up the escort framework when done, eliminating all hooks.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "num_alive"></a>
+    <strong>num_alive ()</strong>
+    </dt>
+    <dd>
+    Gets the number of escorts that are still alive.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Number of escorts still alive.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pilots"></a>
+    <strong>pilots ()</strong>
+    </dt>
+    <dd>
+    Gets the list of pilots.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        Table containing the existing pilots. The first will be the leader.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setDest"></a>
+    <strong>setDest (dest, success[, failure])</strong>
+    </dt>
+    <dd>
+    Sets the destination of the
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dest</span>
+            <span class="types"><span class="type">system</span> or <span class="type">spob</span></span>
+         Destination of the escorts.
+        </li>
+        <li><span class="parameter">success</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the global function to call on success.
+        </li>
+        <li><span class="parameter">failure</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the global function to call on failure. Default will give a vntk message and fail the mission.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "spawn"></a>
+    <strong>spawn (pos)</strong>
+    </dt>
+    <dd>
+    Spawns the escorts at location.  This can be useful at the beginning if you want them to jump in or take of while in space. It is handled automatically when the player takes off or jumps into a system.
 
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">template</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Template pilot to swap with the player. Note that the template pilot gets removed on success.
-        </li>
-        <li><span class="parameter">acquired</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Description of how the new ship was acquired.
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">Vector</span>, <span class="type">Spob</span> or <span class="type">System</span></span>
+         Position to spawn the fleet at. The argument is directly passed to pilot.add.
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">boolean</span></span>
-        true on success, false otherwise
+        table Table of newly created pilots.
     </ol>
 
 
