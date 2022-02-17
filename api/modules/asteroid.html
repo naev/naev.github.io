@@ -83,13 +83,13 @@
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
-  <li><strong>format</strong></li>
+  <li><a href="../modules/format.html">format</a></li>
   <li><a href="../modules/lazyload.html">lazyload</a></li>
   <li><a href="../modules/linenoise.html">linenoise</a></li>
   <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
-  <li><a href="../modules/asteroid.html">asteroid</a></li>
+  <li><strong>asteroid</strong></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
@@ -141,53 +141,65 @@
 
 <div id="content">
 
-<h1>Module <code>format</code></h1>
-<p>Provides string formatting and interpolation facilities.</p>
+<h1>Module <code>asteroid</code></h1>
+<p>Lua bindings to interact with asteroid.</p>
 <p>
-   The benefits of using it are easy internationalization and consistency with the rest of Naev.
-   The number formatters handle plural forms in the user's language, digit separators, and abbreviations.
-   String interpolation (format.f) allows for named parameters ("Fly to {planet} in the {system} system"),
-   whereas string.format is positional ("Fly to %s in the %s system") and locks translators into the English word order.
-</p>
+<p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#number">number (number)</a></td>
-	<td class="summary">Converts a nonnegative integer into a human readable string, delimiting every third digit with a comma.</td>
+	<td class="name" nowrap><a href="#__eq">__eq (a1, a2)</a></td>
+	<td class="summary">Compares two asteroids to see if they are the same.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#credits">credits (credits)</a></td>
-	<td class="summary">Converts a number of credits to a string.</td>
+	<td class="name" nowrap><a href="#get">get (If)</a></td>
+	<td class="summary">Gets an asteroid in the system.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#reward">reward (reward)</a></td>
-	<td class="summary">Converts an item object or number of credits to reward string ("You have received _").</td>
+	<td class="name" nowrap><a href="#exists">exists (a)</a></td>
+	<td class="summary">Checks to see if an asteroid exists.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#tonnes">tonnes (tonnes)</a></td>
-	<td class="summary">Converts a number of tonnes to a string, using ngettext.</td>
+	<td class="name" nowrap><a href="#field">field (a)</a></td>
+	<td class="summary">Gets the field the asteroid belongs to (useful for getting more asteroids from the same field).</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#tonnes_short">tonnes_short (tonnes)</a></td>
-	<td class="summary">Like fmt.tonnes, but for abbreviations.</td>
+	<td class="name" nowrap><a href="#pos">pos (a)</a></td>
+	<td class="summary">Gets the position of an asteroid.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#jumps">jumps (jumps)</a></td>
-	<td class="summary">Converts a number of jumps to a string, utilizing ngettext.</td>
+	<td class="name" nowrap><a href="#vel">vel (a)</a></td>
+	<td class="summary">Gets the velocity of an asteroid.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#list">list (words)</a></td>
-	<td class="summary">A version of string.gsub returning just the string.</td>
+	<td class="name" nowrap><a href="#scanned">scanned (a)</a></td>
+	<td class="summary">Gets whether or not an asteroid got scanned.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#humanize">humanize (Number)</a></td>
-	<td class="summary">Converts a number to a human readable string.</td>
+	<td class="name" nowrap><a href="#timer">timer (a)</a></td>
+	<td class="summary">Gets the time left on the asteroid.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#f">f (str, tab)</a></td>
-	<td class="summary">String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> but closer to Python's str.format().</td>
+	<td class="name" nowrap><a href="#setTimer">setTimer (a, Time)</a></td>
+	<td class="summary">Sets the time left on the asteroid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#armour">armour (a)</a></td>
+	<td class="summary">Gets the armour (health) left on the asteroid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#alertRange">alertRange (a)</a></td>
+	<td class="summary">Gets the alert range of an asteroid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setTimer">setTimer (a, Amount)</a></td>
+	<td class="summary">Sets the armour of the asteroid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#materials">materials (a)</a></td>
+	<td class="summary">Gets the materials the asteroid can potentially drop.</td>
 	</tr>
 </table>
 
@@ -199,144 +211,30 @@
 
     <dl class="function">
     <dt>
-    <a name = "number"></a>
-    <strong>number (number)</strong>
+    <a name = "__eq"></a>
+    <strong>__eq (a1, a2)</strong>
     </dt>
     <dd>
-    Converts a nonnegative integer into a human readable string, delimiting every third digit with a comma.
-If you pass a more exotic "number" value, you'll get a string back, but you won't attain happiness.
-
+    Compares two asteroids to see if they are the same.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">number</span>
-         The number to format. Will be rounded to the nearest integer.
+        <li><span class="parameter">a1</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid 1 to compare.
         </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "credits"></a>
-    <strong>credits (credits)</strong>
-    </dt>
-    <dd>
-    Converts a number of credits to a string.
-<p>   Should be used everywhere a number of credits is displayed.
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">credits</span>
-         Number of credits.
+        <li><span class="parameter">a2</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid 2 to compare.
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        A string taking the form of "X ¤".
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">vn.na(fmt.f(_(&quot;You have been paid {credits}.&quot;), {credits=fmt.credits(credits)}))
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "reward"></a>
-    <strong>reward (reward)</strong>
-    </dt>
-    <dd>
-    Converts an item object or number of credits to reward string ("You have received _").
-                    Avoid passing strings (English or translated) for clarity's sake.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">reward</span>
-         Thing or number of credits the player is receiving.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        A string taking the form of "You have received X." -- translated and colorized.
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">vn.na(fmt.reward(money_reward))
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "tonnes"></a>
-    <strong>tonnes (tonnes)</strong>
-    </dt>
-    <dd>
-    Converts a number of tonnes to a string, using ngettext.
-<p>   This adds "tonnes" to the output of fmt.number in a translatable way.
-   Caution: Usage within sentences can backfire, if the correct grammar to use
-   depends on the number of tonnes. Using ngettext (n_) on full sentences is
-   safer where practical.
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">tonnes</span>
-         Number of tonnes.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        A string taking the form of "X tonne" or "X tonnes".
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">vn.na(fmt.f(_(&quot;You are carrying {tonnes}&quot;), {tonnes=fmt.tonnes(tonnes)}))
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "tonnes_short"></a>
-    <strong>tonnes_short (tonnes)</strong>
-    </dt>
-    <dd>
-    Like fmt.tonnes, but for abbreviations.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">tonnes</span>
-         Number of tonnes.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        A short string like "22 t" describing the given mass.
+           <span class="types"><span class="type">boolean</span></span>
+        true if both asteroids are the same.
     </ol>
 
 
@@ -344,68 +242,26 @@ If you pass a more exotic "number" value, you'll get a string back, but you won'
 
 </dd>
     <dt>
-    <a name = "jumps"></a>
-    <strong>jumps (jumps)</strong>
+    <a name = "get"></a>
+    <strong>get (If)</strong>
     </dt>
     <dd>
-    Converts a number of jumps to a string, utilizing ngettext.
-<p>   This adds "jumps" to the output of fmt.number in a translatable way.
-   Caution: Usage within sentences can backfire, if the correct grammar to use
-   depends on the number of jumps. Using ngettext (n_) on full sentences is
-   safer where practical.
-
+    Gets an asteroid in the system.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">jumps</span>
-         Number of jumps.
+        <li><span class="parameter">If</span>
+            <span class="types"><span class="type">nil</span>, <span class="type">number</span>, <span class="type">Vector</span> or <span class="type">Pilot</span></span>
+         not supplied, gets a random asteroid, if not it tries to get the asteroid closest to the Vector or Pilot. In the case of a number, it tries to get a random asteroid from the asteroid field with the number as an id.
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        A string taking the form of "X jump" or "X jumps".
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">vn.na(fmt.f(_(&quot;The system is {jumps} away.&quot;), {jumps=fmt.jumps(jumps)}))
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "list"></a>
-    <strong>list (words)</strong>
-    </dt>
-    <dd>
-    A version of string.gsub returning just the string.  --]]local function _replace(template, index, text)
-   local str = string.gsub(template, index, tostring(text))
-   return str
-end
-<p>--[[--
-Creates a translatable list of words.
-<p>   Taken from <a href="https://stackoverflow.com/questions/43081112/localization-of-lists/58033018#58033018">this post</a>.
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">words</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         List of words to translate such as {"one","two","three"}.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-        String of the list of words such as "one, two, and three"
+           <span class="types"><span class="type">Asteroid</span></span>
+        The closest asteroid or nil if not found.
     </ol>
 
 
@@ -413,28 +269,26 @@ Creates a translatable list of words.
 
 </dd>
     <dt>
-    <a name = "humanize"></a>
-    <strong>humanize (Number)</strong>
+    <a name = "exists"></a>
+    <strong>exists (a)</strong>
     </dt>
     <dd>
-    Converts a number to a human readable string.
-<p>Has to be implemented on a per-language basis.
-
+    Checks to see if an asteroid exists.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">Number</span>
-            <span class="types"><span class="type">num</span></span>
-         to convert to a human readable string.
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to check to see if exists.
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-        Human readable string.
+           <span class="types"><span class="type">boolean</span></span>
+        true if te asteroid exists, false otherwise.
     </ol>
 
 
@@ -442,41 +296,272 @@ Creates a translatable list of words.
 
 </dd>
     <dt>
-    <a name = "f"></a>
-    <strong>f (str, tab)</strong>
+    <a name = "field"></a>
+    <strong>field (a)</strong>
     </dt>
     <dd>
-    String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> but closer to Python's str.format().
-<p>   Prefer this over string.format because it allows translations to change the word order.
-   It also lets you use objects in the formatting (if they support tostring()), whereas string.format can only do this under LuaJIT.
-
+    Gets the field the asteroid belongs to (useful for getting more asteroids from the same field).
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">str</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Format string which may include placeholders of the form "{var}" "{var:6.3f}"
-                      (where the expression after the colon is any directive string.format understands).
-        </li>
-        <li><span class="parameter">tab</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         Argument table.
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to get what field it belongs to.
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        ID of the field the asteroid belongs to.
+    </ol>
 
 
 
-    <h3>Usage:</h3>
+
+</dd>
+    <dt>
+    <a name = "pos"></a>
+    <strong>pos (a)</strong>
+    </dt>
+    <dd>
+    Gets the position of an asteroid.
+
+
+    <h3>Parameters:</h3>
     <ul>
-        <li><pre data-enlighter-language="lua" class="example">fmt.f(_(&quot;Deliver the loot to {pnt} in the {sys} system&quot;),{pnt=returnpnt, sys=returnsys})
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">fmt.f(_(&quot;As easy as {1}, {2}, {3}&quot;), {&quot;one&quot;, &quot;two&quot;, &quot;three&quot;})
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">fmt.f(_(&quot;A few digits of pi: {1:.2f}&quot;), {math.pi})
-</pre></li>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to get position of.
+        </li>
     </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Vector</span></span>
+        Position of the asteroid.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "vel"></a>
+    <strong>vel (a)</strong>
+    </dt>
+    <dd>
+    Gets the velocity of an asteroid.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to get velocity of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Vector</span></span>
+        Position of the asteroid.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "scanned"></a>
+    <strong>scanned (a)</strong>
+    </dt>
+    <dd>
+    Gets whether or not an asteroid got scanned.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to get scanned state of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether or not the asteroid was scanned.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "timer"></a>
+    <strong>timer (a)</strong>
+    </dt>
+    <dd>
+    Gets the time left on the asteroid.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to get time left on.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Seconds left before the asteroid is unavailable.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Total number of seconds the asteroid had to live.</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setTimer"></a>
+    <strong>setTimer (a, Time)</strong>
+    </dt>
+    <dd>
+    Sets the time left on the asteroid.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to set time left of.
+        </li>
+        <li><span class="parameter">Time</span>
+            <span class="types"><span class="type">number</span></span>
+         left to set to in seconds.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "armour"></a>
+    <strong>armour (a)</strong>
+    </dt>
+    <dd>
+    Gets the armour (health) left on the asteroid.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to get armour of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Armour left before the asteroid is destroyed.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "alertRange"></a>
+    <strong>alertRange (a)</strong>
+    </dt>
+    <dd>
+    Gets the alert range of an asteroid.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to get alert range of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Alert range of the asteroid.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setTimer"></a>
+    <strong>setTimer (a, Amount)</strong>
+    </dt>
+    <dd>
+    Sets the armour of the asteroid.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to set armour of.
+        </li>
+        <li><span class="parameter">Amount</span>
+            <span class="types"><span class="type">number</span></span>
+         to set the armour to (negative values will explode it).
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "materials"></a>
+    <strong>materials (a)</strong>
+    </dt>
+    <dd>
+    Gets the materials the asteroid can potentially drop.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">Asteroid</span></span>
+         Asteroid to get materials of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        Table containing the materials.
+    </ol>
+
+
+
 
 </dd>
 </dl>
