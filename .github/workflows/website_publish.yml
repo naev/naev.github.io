@@ -1,12 +1,19 @@
 name: "Publish Website"
-concurrency: website
+concurrency: 
+  group: website
+  cancel-in-progress: true
+
 on:
   workflow_dispatch:
     inputs:
       publish_type:
-        description: "'website' for website build, and 'api' for API build"
+        description: "Select what to build. Defaults to 'website'"
         required: true
-        type: string
+        default: 'website' 
+        type: choice
+        options:
+        - 'website'
+        - 'api'
 jobs:
   website:
     uses: naev/naev-infrastructure/.github/workflows/website_build.yml@main
