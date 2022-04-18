@@ -164,6 +164,10 @@
 	<td class="summary">Adds a ship with an AI and faction to the system (instead of a predefined fleet).</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#clone">clone (p)</a></td>
+	<td class="summary">Clones a pilot.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#rm">rm (p)</a></td>
 	<td class="summary">Removes a pilot without explosions or anything.</td>
 	</tr>
@@ -711,6 +715,18 @@
 	<td class="name" nowrap><a href="#showEmitters">showEmitters ([state=true])</a></td>
 	<td class="summary">Toggles the emitter marker.</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shipvarPeek">shipvarPeek (varname[, shipname])</a></td>
+	<td class="summary">Peeks at a ship variable.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shipvarPush">shipvarPush (varname, val[, shipname])</a></td>
+	<td class="summary">Pushes a ship variable.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shipvarPop">shipvarPop (varname[, shipname])</a></td>
+	<td class="summary">Pops a ship variable.</td>
+	</tr>
 </table>
 
 <br/>
@@ -833,6 +849,34 @@ How param works (by type of value passed): &lt;br/&gt;
 
 </dd>
     <dt>
+    <a name = "clone"></a>
+    <strong>clone (p)</strong>
+    </dt>
+    <dd>
+    Clones a pilot.  It will share nearly all properties including outfits.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to clone.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Pilot</span></span>
+        A new clone of the pilot.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "rm"></a>
     <strong>rm (p)</strong>
     </dt>
@@ -889,9 +933,9 @@ How param works (by type of value passed): &lt;br/&gt;
     <strong>clear ()</strong>
     </dt>
     <dd>
-    Clears the current system of pilots.   Used for epic battles and such.
+    Clears the current system of pilots.  Used for epic battles and such.
 <p> Be careful with this command especially in big systems. It will most likely
-  cause issues if multiple missions are in the same system.
+ cause issues if multiple missions are in the same system.
 <p> <em>Note</em> Clears all global pilot hooks too.
 
 
@@ -5487,6 +5531,92 @@ How param works (by type of value passed): &lt;br/&gt;
     </ul>
 
 </dd>
+    <dt>
+    <a name = "shipvarPeek"></a>
+    <strong>shipvarPeek (varname[, shipname])</strong>
+    </dt>
+    <dd>
+    Peeks at a ship variable.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">varname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the variable to check value of.
+        </li>
+        <li><span class="parameter">shipname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the ship to check variable of. Defaults to pilot's current ship.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">local exp = p:shipvarPeek( &quot;exp&quot; ) -- Checks the value of the &quot;exp&quot; ship var on the player&apos;s current ship
+</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "shipvarPush"></a>
+    <strong>shipvarPush (varname, val[, shipname])</strong>
+    </dt>
+    <dd>
+    Pushes a ship variable.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">varname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the variable to set value of.
+        </li>
+        <li><span class="parameter">val</span>
+         Value to push.
+        </li>
+        <li><span class="parameter">shipname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the ship to push variable to. Defaults to pilot's current ship.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "shipvarPop"></a>
+    <strong>shipvarPop (varname[, shipname])</strong>
+    </dt>
+    <dd>
+    Pops a ship variable.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">varname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the variable to pop.
+        </li>
+        <li><span class="parameter">shipname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the ship to pop variable from. Defaults to pilot's current ship.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
 </dl>
 
 
@@ -5494,7 +5624,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-04-17 18:29:09 </i>
+<i style="float:right;">Last updated 2022-04-18 05:47:32 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
