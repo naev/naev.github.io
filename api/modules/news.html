@@ -152,40 +152,40 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#add">add (faction, title, body[, date_to_rm[, date]])</a></td>
-	<td class="summary">Adds an article.</td>
+	<td class="name" nowrap><a href="#add">add (faction, title, body[, date_to_rm[, date[, Priority=5]]])</a></td>
+	<td class="summary">Adds a news article.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#rm">rm (article)</a></td>
-	<td class="summary">Frees an article or a table of articles.</td>
+	<td class="name" nowrap><a href="#rm">rm (n)</a></td>
+	<td class="summary">Frees a news article or a table of articles.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get">get ([characteristic])</a></td>
-	<td class="summary">Gets all matching articles in a table.</td>
+	<td class="summary">Gets all matching news articles in a table.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#__eq">__eq (a1, a2)</a></td>
-	<td class="summary">Check articles for equality.</td>
+	<td class="summary">Check news articles for equality.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#title">title (a)</a></td>
-	<td class="summary">Gets the article title.</td>
+	<td class="summary">Gets the news article title.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#desc">desc (a)</a></td>
-	<td class="summary">Gets the article description.</td>
+	<td class="summary">Gets the news article description.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#faction">faction (a)</a></td>
-	<td class="summary">Gets the article faction.</td>
+	<td class="summary">Gets the news article faction.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#date">date (a)</a></td>
-	<td class="summary">Gets the article date.</td>
+	<td class="summary">Gets the news article date.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#bind">bind (a, tag)</a></td>
-	<td class="summary">Tags an article or a table of articles with a string.</td>
+	<td class="summary">Tags a news article or a table of articles with a string.</td>
 	</tr>
 </table>
 
@@ -198,10 +198,10 @@
     <dl class="function">
     <dt>
     <a name = "add"></a>
-    <strong>add (faction, title, body[, date_to_rm[, date]])</strong>
+    <strong>add (faction, title, body[, date_to_rm[, date[, Priority=5]]])</strong>
     </dt>
     <dd>
-    Adds an article.
+    Adds a news article.
 
 
     <h3>Parameters:</h3>
@@ -228,6 +228,11 @@
          What time to put, defaults to current date, use 0 to not use a date
          (<em>optional</em>)
         </li>
+        <li><span class="parameter">Priority</span>
+            <span class="types"><span class="type">number</span></span>
+         to use. Lower is more important and will appear first.
+         (<em>default</em> 5)
+        </li>
     </ul>
 
     <h3>Returns:</h3>
@@ -245,22 +250,24 @@
 </pre></li>
         <li><pre data-enlighter-language="lua" class="example">s = news.add( &quot;Empire&quot;, &quot;Hello world!&quot;, &quot;The Empire wishes to say hello!&quot;, 0 ) -- Adds an Empire specific article, with date 0.
 </pre></li>
+        <li><pre data-enlighter-language="lua" class="example">s = news.add( { { faction = &quot;Empire&quot;, title = &quot;Hello World!&quot;, body = &quot;The Empire wishes to say hello!&quot; } } ) -- Can also be passed as tables
+</pre></li>
     </ul>
 
 </dd>
     <dt>
     <a name = "rm"></a>
-    <strong>rm (article)</strong>
+    <strong>rm (n)</strong>
     </dt>
     <dd>
-    Frees an article or a table of articles.
+    Frees a news article or a table of articles.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">article</span>
-            <span class="types"><span class="type">Article</span></span>
-         article to free
+        <li><span class="parameter">n</span>
+            <span class="types"><span class="type">News</span></span>
+         News article to free.
         </li>
     </ul>
 
@@ -274,10 +281,10 @@
     <strong>get ([characteristic])</strong>
     </dt>
     <dd>
-    Gets all matching articles in a table.
+    Gets all matching news articles in a table.
 <p> characteristic can be any of the following:<br />
  <ul>
-    <li>Title of the articles</li>
+    <li>Title of the news articles</li>
     <li>Body (text) of the articles</li>
     <li>Faction name of the articles ("Generic" for generic)</li>
     <li>Tag of the articles (applied with news.bind())</li>
@@ -314,7 +321,7 @@
     <strong>__eq (a1, a2)</strong>
     </dt>
     <dd>
-    Check articles for equality.
+    Check news articles for equality.
 <p> Allows you to use the '==' operator in Lua with articles.
 
 
@@ -347,7 +354,7 @@
     <strong>title (a)</strong>
     </dt>
     <dd>
-    Gets the article title.
+    Gets the news article title.
 
 
     <h3>Parameters:</h3>
@@ -374,7 +381,7 @@
     <strong>desc (a)</strong>
     </dt>
     <dd>
-    Gets the article description.
+    Gets the news article description.
 
 
     <h3>Parameters:</h3>
@@ -401,7 +408,7 @@
     <strong>faction (a)</strong>
     </dt>
     <dd>
-    Gets the article faction.
+    Gets the news article faction.
 
 
     <h3>Parameters:</h3>
@@ -428,7 +435,7 @@
     <strong>date (a)</strong>
     </dt>
     <dd>
-    Gets the article date.
+    Gets the news article date.
 
 
     <h3>Parameters:</h3>
@@ -455,7 +462,7 @@
     <strong>bind (a, tag)</strong>
     </dt>
     <dd>
-    Tags an article or a table of articles with a string.
+    Tags a news article or a table of articles with a string.
 
 
     <h3>Parameters:</h3>
@@ -482,7 +489,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-05-22 21:30:27 </i>
+<i style="float:right;">Last updated 2022-05-23 04:06:21 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
