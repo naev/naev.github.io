@@ -98,7 +98,7 @@
   <li><a href="../modules/commodity.html">commodity</a></li>
   <li><a href="../modules/data.html">data</a></li>
   <li><a href="../modules/diff.html">diff</a></li>
-  <li><strong>evt</strong></li>
+  <li><a href="../modules/evt.html">evt</a></li>
   <li><a href="../modules/faction.html">faction</a></li>
   <li><a href="../modules/file.html">file</a></li>
   <li><a href="../modules/font.html">font</a></li>
@@ -130,7 +130,7 @@
   <li><a href="../modules/var.html">var</a></li>
   <li><a href="../modules/vec2.html">vec2</a></li>
   <li><a href="../modules/equipopt.optimize.html">equipopt.optimize</a></li>
-  <li><a href="../modules/pilotai.html">pilotai</a></li>
+  <li><strong>pilotai</strong></li>
   <li><a href="../modules/portrait.html">portrait</a></li>
   <li><a href="../modules/pp_shaders.html">pp_shaders</a></li>
   <li><a href="../modules/prng.html">prng</a></li>
@@ -143,231 +143,16 @@
 
 <div id="content">
 
-<h1>Module <code>evt</code></h1>
-<p>Event system Lua bindings.</p>
-<p>
-<p> An example would be:
- <pre>
- evt.finish() -- finishes the event
- </pre>
-</p>
+<h1>Module <code>pilotai</code></h1>
+<p>Pilot AI helper utilities.</p>
+<p> Meant for controlling the AI without using explicit pilot#control.</p>
 
 
-<h2><a href="#Functions">Functions</a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#npcAdd">npcAdd (func, name, portrait, desc[, priority=5[, background=nil]])</a></td>
-	<td class="summary">Adds an NPC.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#npcRm">npcRm (id)</a></td>
-	<td class="summary">Removes an NPC.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#finish">finish ([properly=false])</a></td>
-	<td class="summary">Finishes the event.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#save">save ([enable=true])</a></td>
-	<td class="summary">Saves an event.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#claim">claim (params[, onlytest=false[, inclusive=false]])</a></td>
-	<td class="summary">Tries to claim systems or strings.</td>
-	</tr>
-</table>
 
 <br/>
 <br/>
 
 
-    <h2><a name="Functions"></a>Functions</h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "npcAdd"></a>
-    <strong>npcAdd (func, name, portrait, desc[, priority=5[, background=nil]])</strong>
-    </dt>
-    <dd>
-    Adds an NPC.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">func</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the function to run when approaching, gets passed the npc_id when called.
-        </li>
-        <li><span class="parameter">name</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the NPC
-        </li>
-        <li><span class="parameter">portrait</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Portrait file name to use for the NPC (from GFX_PATH/portraits/).
-        </li>
-        <li><span class="parameter">desc</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Description associated to the NPC.
-        </li>
-        <li><span class="parameter">priority</span>
-            <span class="types"><span class="type">number</span></span>
-         Optional priority argument (highest is 0, lowest is 10).
-         (<em>default</em> 5)
-        </li>
-        <li><span class="parameter">background</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Background file name to use (from GFX_PATH/portraits/).
-         (<em>default</em> nil)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        The ID of the NPC to pass to npcRm.
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">npc_id = evt.npcAdd( &quot;my_func&quot;, &quot;Mr. Test&quot;, &quot;none.webp&quot;, &quot;A test.&quot; ) -- Creates an NPC.
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "npcRm"></a>
-    <strong>npcRm (id)</strong>
-    </dt>
-    <dd>
-    Removes an NPC.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">id</span>
-            <span class="types"><span class="type">number</span></span>
-         ID of the NPC to remove.
-        </li>
-    </ul>
-
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">evt.npcRm( npc_id )
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "finish"></a>
-    <strong>finish ([properly=false])</strong>
-    </dt>
-    <dd>
-    Finishes the event.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">properly</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true and the event is unique it marks the event
-                     as completed. If false it deletes the event but
-                     doesn't mark it as completed.
-         (<em>default</em> false)
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "save"></a>
-    <strong>save ([enable=true])</strong>
-    </dt>
-    <dd>
-    Saves an event.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">enable</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true sets the event to save, otherwise tells the event to not save.
-         (<em>default</em> true)
-        </li>
-    </ul>
-
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">evt.save() -- Saves an event, which is by default disabled.
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "claim"></a>
-    <strong>claim (params[, onlytest=false[, inclusive=false]])</strong>
-    </dt>
-    <dd>
-    Tries to claim systems or strings.
-<p> Claiming systems and strings is a way to avoid mission collisions preemptively.
-<p> Note it does not actually perform the claim if it fails to claim. It also
-  does not work more than once.
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">params</span>
-            <span class="types"><span class="type">System</span>, <span class="type">String</span> or <span class="type">{System,String...}</span></span>
-         Table of systems/strings to claim or a single system/string.
-        </li>
-        <li><span class="parameter">onlytest</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether or not to only test the claim, but not apply it.
-         (<em>default</em> false)
-        </li>
-        <li><span class="parameter">inclusive</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether or not to allow the claim to include other inclusive claims. Multiple missions/events can inclusively claim the same system, but only one system can exclusively claim it.
-         (<em>default</em> false)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        true if was able to claim, false otherwise.
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <li><pre data-enlighter-language="lua" class="example">if not evt.claim( { system.get(&quot;Gamma Polaris&quot;) } ) then evt.finish( false ) end
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">if not evt.claim( system.get(&quot;Gamma Polaris&quot;) ) then evt.finish( false ) end
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">if not evt.claim( &apos;some_string&apos; ) then evt.finish( false ) end
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">if not evt.claim( { system.get(&quot;Gamma Polaris&quot;), &apos;some_string&apos; } ) then evt.finish( false ) end
-</pre></li>
-    </ul>
-
-</dd>
-</dl>
 
 
 </div> <!-- id="content" -->
