@@ -13,15 +13,15 @@ on:
         type: choice
         options:
         - 'website'
-        - 'api'
+        - 'docs'
 jobs:
   website:
     uses: naev/naev-infrastructure/.github/workflows/website_build.yml@main
     if: github.event.inputs.publish_type == 'website'
     with:
       publish_type: ${{ github.event.inputs.publish_type }}
-  api:
+  docs:
     uses: naev/naev-infrastructure/.github/workflows/website_build.yml@main
-    if: github.event.inputs.publish_type == 'api'
+    if: github.event.inputs.publish_type == 'docs'
     with:
       publish_type: ${{ github.event.inputs.publish_type }}
