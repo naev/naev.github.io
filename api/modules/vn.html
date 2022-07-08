@@ -15,6 +15,8 @@
   <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
   <link rel="stylesheet" href="../ldoc.css"><!-- CSS -->
   <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <!-- EnlighterJS Resources !-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.css" />
   <title>Naev Lua API</title><!-- Website information -->
 </head>
 <body class="bg-light">
@@ -44,16 +46,19 @@
             <a class="nav-link" href="https://naev.org/downloads/">Downloads</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="https://naev.org/contact/">Contact</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="https://github.com/naev/naev">Github</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="https://github.com/naev/naev/wiki">Wiki</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://discord.com/invite/nd2M5BR">Discord</a>
+            <a class="nav-link" href="https://naev.org/api/">Lua API</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://naev.org/api/">Lua API</a>
+            <a class="nav-link" href="https://naev.org/devmanual/">Dev Manual</a>
           </li>
         </ul>
       </div>
@@ -79,10 +84,16 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
+  <li><strong>vn</strong></li>
+  <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
+  <li><a href="../modules/lazyload.html">lazyload</a></li>
+  <li><a href="../modules/linenoise.html">linenoise</a></li>
+  <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
@@ -90,7 +101,6 @@
   <li><a href="../modules/colour.html">colour</a></li>
   <li><a href="../modules/commodity.html">commodity</a></li>
   <li><a href="../modules/data.html">data</a></li>
-  <li><a href="../modules/debug.html">debug</a></li>
   <li><a href="../modules/diff.html">diff</a></li>
   <li><a href="../modules/evt.html">evt</a></li>
   <li><a href="../modules/faction.html">faction</a></li>
@@ -108,13 +118,14 @@
   <li><a href="../modules/outfit.html">outfit</a></li>
   <li><a href="../modules/pilot.html">pilot</a></li>
   <li><a href="../modules/pilotoutfit.html">pilotoutfit</a></li>
-  <li><a href="../modules/planet.html">planet</a></li>
   <li><a href="../modules/player.html">player</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
   <li><a href="../modules/safelanes.html">safelanes</a></li>
   <li><a href="../modules/shader.html">shader</a></li>
   <li><a href="../modules/ship.html">ship</a></li>
   <li><a href="../modules/shiplog.html">shiplog</a></li>
+  <li><a href="../modules/spfx.html">spfx</a></li>
+  <li><a href="../modules/spob.html">spob</a></li>
   <li><a href="../modules/system.html">system</a></li>
   <li><a href="../modules/tex.html">tex</a></li>
   <li><a href="../modules/time.html">time</a></li>
@@ -123,12 +134,14 @@
   <li><a href="../modules/var.html">var</a></li>
   <li><a href="../modules/vec2.html">vec2</a></li>
   <li><a href="../modules/equipopt.optimize.html">equipopt.optimize</a></li>
+  <li><a href="../modules/pilotai.html">pilotai</a></li>
   <li><a href="../modules/portrait.html">portrait</a></li>
   <li><a href="../modules/pp_shaders.html">pp_shaders</a></li>
   <li><a href="../modules/prng.html">prng</a></li>
+  <li><a href="../modules/prob.html">prob</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
-  <li><strong>vn</strong></li>
+  <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
 
 </div>
@@ -137,7 +150,7 @@
 
 <h1>Module <code>vn</code></h1>
 <p>Visual Novel API for Naev</p>
-<p>Based on Love2D API</p>
+<p>   Based on Love2D API</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -159,8 +172,16 @@
 	<td class="summary">Key press handler.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#mousemoved">mousemoved (mx, my)</a></td>
+	<td class="summary">Mouse move handler.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#mousepressed">mousepressed (mx, my, button)</a></td>
 	<td class="summary">Mouse press handler.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#mousereleased">mousereleased (mx, my, button)</a></td>
+	<td class="summary">Mouse released handler.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#na">na (what, nowait)</a></td>
@@ -194,7 +215,7 @@
 	<td class="summary">Makes a character disappear in the VN.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#Character:scene">Character:scene (background)</a></td>
+	<td class="name" nowrap><a href="#Character:scene">Character:scene ()</a></td>
 	<td class="summary">Starts a new scene.</td>
 	</tr>
 	<tr>
@@ -258,7 +279,7 @@
 	<td class="summary">Plays a bingo sound.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#Character:sfxEerie">Character:sfxEerie ()</a></td>
+	<td class="name" nowrap><a href="#Character:sfxEerie">Character:sfxEerie (params)</a></td>
 	<td class="summary">Plays an eerie sound.</td>
 	</tr>
 	<tr>
@@ -389,11 +410,63 @@
 
 </dd>
     <dt>
+    <a name = "mousemoved"></a>
+    <strong>mousemoved (mx, my)</strong>
+    </dt>
+    <dd>
+    Mouse move handler.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">mx</span>
+
+        </li>
+        <li><span class="parameter">my</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "mousepressed"></a>
     <strong>mousepressed (mx, my, button)</strong>
     </dt>
     <dd>
     Mouse press handler.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">mx</span>
+            <span class="types"><span class="type">number</span></span>
+         X position of the click.
+        </li>
+        <li><span class="parameter">my</span>
+            <span class="types"><span class="type">number</span></span>
+         Y position of the click.
+        </li>
+        <li><span class="parameter">button</span>
+            <span class="types"><span class="type">number</span></span>
+         Button that was pressed.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "mousereleased"></a>
+    <strong>mousereleased (mx, my, button)</strong>
+    </dt>
+    <dd>
+    Mouse released handler.
 
 
     <h3>Parameters:</h3>
@@ -638,24 +711,19 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">vn.disappear( c, <span class="string">"fade"</span>, <span class="number">3</span> )</pre>
+        <pre data-enlighter-language="lua" class="example">vn.disappear( c, &quot;fade&quot;, 3 )
+</pre>
     </ul>
 
 </dd>
     <dt>
     <a name = "Character:scene"></a>
-    <strong>Character:scene (background)</strong>
+    <strong>Character:scene ()</strong>
     </dt>
     <dd>
     Starts a new scene.
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">background</span>
-         Background image to set or none if nil.
-        </li>
-    </ul>
 
 
 
@@ -668,7 +736,7 @@
     </dt>
     <dd>
     Has a character say something.
-<p><em>Note</em> "me" and "narrator" are specila meta-characters.
+<p><em>Note</em> "You" and "Narrator" are special meta-characters.
 
 
 
@@ -1010,7 +1078,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">params</span>
-        TODO return vn.sfx( vn._sfx.money, params )
+
         </li>
     </ul>
 
@@ -1061,12 +1129,18 @@
 </dd>
     <dt>
     <a name = "Character:sfxEerie"></a>
-    <strong>Character:sfxEerie ()</strong>
+    <strong>Character:sfxEerie (params)</strong>
     </dt>
     <dd>
     Plays an eerie sound.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">params</span>
+
+        </li>
+    </ul>
 
 
 
@@ -1251,16 +1325,34 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-10-15 16:36:08 </i>
+<i style="float:right;">Last updated 2022-07-08 07:34:28 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
     <div class="container">
         <footer class="row text-muted">
-            <p class="col-xs-12 col-sm-6 text-left">© 2021 Naev Development Blarg</p>
-            <p class="col-xs-12 col-sm-6 text-right">Original content licensed under CC-By-SA 4.0</p>
+          <p class="col-xs-12 col-sm-6 text-left">© 2022 Naev Development Blarg</p>
+          <p class="col-xs-12 col-sm-6 text-right">Original content licensed under <a href=
+          "https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
         </footer>
     </div>
 </div>
+  <!-- EnlighterJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.js">
+          integrity="sha384-qMvs9nZ6afccojk2J2vg2CwyiHc5m/k1nb9VWa+otyt3VK4agPEc9/pfWC/iOxkG"
+          crossorigin="anonymous">
+  </script>
+
+  <!-- Init Code -->
+  <script type="text/javascript">
+      // - highlight all pre + code tags (CSS3 selectors)
+      // - use theme "enlighter"
+      // - replace tabs with 2 spaces
+      EnlighterJS.init('pre', 'code', {
+              language : 'lua',
+              theme: 'enlighter',
+              indent : 2
+      });
+  </script>
 </body>
 </html>
