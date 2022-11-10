@@ -84,7 +84,7 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
-  <li><a href="../modules/cinema.html">cinema</a></li>
+  <li><strong>cinema</strong></li>
   <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
@@ -132,7 +132,7 @@
   <li><a href="../modules/time.html">time</a></li>
   <li><a href="../modules/tk.html">tk</a></li>
   <li><a href="../modules/transform.html">transform</a></li>
-  <li><strong>var</strong></li>
+  <li><a href="../modules/var.html">var</a></li>
   <li><a href="../modules/vec2.html">vec2</a></li>
   <li><a href="../modules/equipopt.optimize.html">equipopt.optimize</a></li>
   <li><a href="../modules/pilotai.html">pilotai</a></li>
@@ -149,37 +149,20 @@
 
 <div id="content">
 
-<h1>Module <code>var</code></h1>
-<p>Mission variable Lua bindings.</p>
-<p>
-<p> Mission variables are similar to Lua variables, but are conserved for each
-  player across all the missions.  They are good for storing campaign or
-  other global values.
-<p> Typical usage would be:
- <pre>
- v = var.peek( "es_misn" ) -- Get the value
- if v == nil then -- Doesn't exist, so create
-    var.push( "es_misn", 1 )
- else
-    var.push( "es_misn", v+1 ) -- Increment value
- end
- </pre>
-</p>
+<h1>Module <code>cinema</code></h1>
+<p>Functions for handling cinematic scenes.</p>
+<p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#peek">peek (name)</a></td>
-	<td class="summary">Gets the mission variable value of a certain name.</td>
+	<td class="name" nowrap><a href="#on">on (params)</a></td>
+	<td class="summary">Enables cinematic mode.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#pop">pop (name)</a></td>
-	<td class="summary">Pops a mission variable off the stack, destroying it.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#push">push (name, value)</a></td>
-	<td class="summary">Creates a new mission variable.</td>
+	<td class="name" nowrap><a href="#off">off ()</a></td>
+	<td class="summary">Disables cinematic mode.</td>
 	</tr>
 </table>
 
@@ -191,47 +174,17 @@
 
     <dl class="function">
     <dt>
-    <a name = "peek"></a>
-    <strong>peek (name)</strong>
+    <a name = "on"></a>
+    <strong>on (params)</strong>
     </dt>
     <dd>
-    Gets the mission variable value of a certain name.
-             it is.
+    Enables cinematic mode.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">name</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the mission variable to get.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        The value of the mission variable which will depend on what type
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "pop"></a>
-    <strong>pop (name)</strong>
-    </dt>
-    <dd>
-    Pops a mission variable off the stack, destroying it.
-<p> This does not give you any value and destroys it permanently (or until recreated).
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">name</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the mission variable to pop.
+        <li><span class="parameter">params</span>
+         Parameters.
         </li>
     </ul>
 
@@ -241,26 +194,13 @@
 
 </dd>
     <dt>
-    <a name = "push"></a>
-    <strong>push (name, value)</strong>
+    <a name = "off"></a>
+    <strong>off ()</strong>
     </dt>
     <dd>
-    Creates a new mission variable.
-<p> This will overwrite existing vars, so it's a good way to update the values
-  of different mission variables.
-<p>                  nil, bool, string or number.
+    Disables cinematic mode.
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">name</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name to use for the new mission variable.
-        </li>
-        <li><span class="parameter">value</span>
-         Value of the new mission variable.  Accepted types are:
-        </li>
-    </ul>
 
 
 
