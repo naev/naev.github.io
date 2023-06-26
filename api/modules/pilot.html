@@ -532,6 +532,10 @@
 	<td class="summary">Sets the health of a pilot.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#setHealth">setHealth (p[, armour=current armour[, shield=current shield[, stress=current stress]]])</a></td>
+	<td class="summary">Sets the health of a pilot in absolute value.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#addHealth">addHealth (p[, armour=0.[, shield=0.]])</a></td>
 	<td class="summary">Adds health to a pilot.</td>
 	</tr>
@@ -558,6 +562,14 @@
 	<tr>
 	<td class="name" nowrap><a href="#health">health (p[, absolute=false])</a></td>
 	<td class="summary">Gets the pilot's health.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#armour">armour (p[, absolute=false])</a></td>
+	<td class="summary">Gets the pilot's armour.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shield">shield (p[, absolute=false])</a></td>
+	<td class="summary">Gets the pilot's shield.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#energy">energy (p[, absolute=false])</a></td>
@@ -3922,7 +3934,7 @@ How param works (by type of value passed): &lt;br/&gt;
     </dt>
     <dd>
     Sets the health of a pilot.
-<p> This recovers the pilot's disabled state, although he may become disabled afterwards.
+<p> This recovers the pilot's disabled state, although they may become disabled afterwards.
 
 
 
@@ -3961,6 +3973,44 @@ How param works (by type of value passed): &lt;br/&gt;
         <li><pre data-enlighter-language="lua" class="example">p:setHealth( 100, 100, 0 ) -- Sets pilot to full health and no stress
 </pre></li>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "setHealth"></a>
+    <strong>setHealth (p[, armour=current armour[, shield=current shield[, stress=current stress]]])</strong>
+    </dt>
+    <dd>
+    Sets the health of a pilot in absolute value.
+<p> This recovers the pilot's disabled state, although they may become disabled afterwards.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to set health of.
+        </li>
+        <li><span class="parameter">armour</span>
+            <span class="types"><span class="type">number</span></span>
+         Value to set armour to, in absolute value.
+         (<em>default</em> current armour)
+        </li>
+        <li><span class="parameter">shield</span>
+            <span class="types"><span class="type">number</span></span>
+         Value to set shield to, in absolute value
+         (<em>default</em> current shield)
+        </li>
+        <li><span class="parameter">stress</span>
+            <span class="types"><span class="type">number</span></span>
+         Value to set stress (disable damage) to, in absolute value.
+         (<em>default</em> current stress)
+        </li>
+    </ul>
+
+
+
+
 
 </dd>
     <dt>
@@ -4198,6 +4248,80 @@ How param works (by type of value passed): &lt;br/&gt;
     <h3>Usage:</h3>
     <ul>
         <pre data-enlighter-language="lua" class="example">armour, shield, stress, dis = p:health()
+</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "armour"></a>
+    <strong>armour (p[, absolute=false])</strong>
+    </dt>
+    <dd>
+    Gets the pilot's armour.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to get armour of.
+        </li>
+        <li><span class="parameter">absolute</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not it shouldn't be relative and be absolute instead.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The armour in % [0:100] if relative or absolute value otherwise.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">armour = p:armour()
+</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "shield"></a>
+    <strong>shield (p[, absolute=false])</strong>
+    </dt>
+    <dd>
+    Gets the pilot's shield.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to get shield of.
+        </li>
+        <li><span class="parameter">absolute</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not it shouldn't be relative and be absolute instead.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The shield in % [0:100] if relative or absolute value otherwise.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">shield = p:shield()
 </pre>
     </ul>
 
@@ -6252,7 +6376,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2023-06-25 15:59:35 </i>
+<i style="float:right;">Last updated 2023-06-26 04:42:12 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
