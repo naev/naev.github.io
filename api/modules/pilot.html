@@ -200,7 +200,7 @@
 	<td class="summary">Gets the pilots available in the system by a certain criteria.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getAllies">getAllies (pilot[, dist=infinity[, pos=pilot.pos[, Whether=false[, disabled=false[, fighters=false]]]]])</a></td>
+	<td class="name" nowrap><a href="#getAllies">getAllies (pilot[, dist=infinity[, pos=pilot.pos[, ignore_range=false[, disabled=false[, fighters=false]]]]])</a></td>
 	<td class="summary">Gets friendly pilots to a pilot (or faction) within a certain distance.</td>
 	</tr>
 	<tr>
@@ -272,7 +272,7 @@
 	<td class="summary">Gets the nav target of the pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#activeWeapset">activeWeapset (p, current)</a></td>
+	<td class="name" nowrap><a href="#weapsetActive">weapsetActive (p, current)</a></td>
 	<td class="summary">Gets the ID (number from 1 to 10) of the current active weapset.</td>
 	</tr>
 	<tr>
@@ -280,8 +280,28 @@
 	<td class="summary">Gets the weapset weapon of the pilot.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#weapsetType">weapsetType (p, id, type)</a></td>
+	<td class="summary">Sets the type of a weapon set for a pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#weapsetAdd">weapsetAdd (p, id, slot)</a></td>
+	<td class="summary">Adds an outfit to a pilot's weapon set.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#weapsetRm">weapsetRm (p, id, slot)</a></td>
+	<td class="summary">Removes an outfit from a pilot's weapon set.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#weapsetCleanup">weapsetCleanup (p, id)</a></td>
+	<td class="summary">Cleans up a weapon set.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#weapsetHeat">weapsetHeat (p[, id])</a></td>
 	<td class="summary">Gets heat information for a weapon set.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#weapsetSetInrange">weapsetSetInrange (p[, id=nil], docheck)</a></td>
+	<td class="summary">Sets whether a pilot's weapon set does inrange checks.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#actives">actives (p[, sort=false])</a></td>
@@ -456,11 +476,11 @@
 	<td class="summary">Adds an outfit to a pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#outfitSlot">outfitSlot (p, slotname)</a></td>
+	<td class="name" nowrap><a href="#outfitSlot">outfitSlot (p, slot)</a></td>
 	<td class="summary">Checks to see outfit a pilot has in a slot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#outfitAddSlot">outfitAddSlot (p, outfit, slotname[, bypass_cpu=false[, bypass_slot=false]])</a></td>
+	<td class="name" nowrap><a href="#outfitAddSlot">outfitAddSlot (p, outfit, slot[, bypass_cpu=false[, bypass_slot=false]])</a></td>
 	<td class="summary">Adds an outfit to a pilot by slot name.</td>
 	</tr>
 	<tr>
@@ -468,7 +488,7 @@
 	<td class="summary">Removes an outfit from a pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#outfitRmSlot">outfitRmSlot (p, slotname)</a></td>
+	<td class="name" nowrap><a href="#outfitRmSlot">outfitRmSlot (p, slot)</a></td>
 	<td class="summary">Removes an outfit from a pilot's named slot.</td>
 	</tr>
 	<tr>
@@ -500,7 +520,19 @@
 	<td class="summary">Allows getting an intrinsic stats of a pilot, or gets all of them if name is not specified.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#effectClear">effectClear (p)</a></td>
+	<td class="name" nowrap><a href="#shippropReset">shippropReset ()</a></td>
+	<td class="summary">Resets the ship property stats of a pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shippropSet">shippropSet (p, name, value)</a></td>
+	<td class="summary">Allows setting ship property stats of a pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shippropGet">shippropGet (p[, name=nil][, internal=false], Value)</a></td>
+	<td class="summary">Allows getting an ship property stats of a pilot, or gets all of them if name is not specified.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#effectClear">effectClear (p, keepdebuffs, keepbuffs, keepothers)</a></td>
 	<td class="summary">Clears the effect on a pilot.</td>
 	</tr>
 	<tr>
@@ -974,6 +1006,8 @@ How param works (by type of value passed): &lt;br/&gt;
     </dt>
     <dd>
     Removes a pilot without explosions or anything.
+<p> Does nothing if the pilot does not exist.
+
 
 
     <h3>Parameters:</h3>
@@ -1153,7 +1187,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </dd>
     <dt>
     <a name = "getAllies"></a>
-    <strong>getAllies (pilot[, dist=infinity[, pos=pilot.pos[, Whether=false[, disabled=false[, fighters=false]]]]])</strong>
+    <strong>getAllies (pilot[, dist=infinity[, pos=pilot.pos[, ignore_range=false[, disabled=false[, fighters=false]]]]])</strong>
     </dt>
     <dd>
     Gets friendly pilots to a pilot (or faction) within a certain distance.
@@ -1175,9 +1209,9 @@ How param works (by type of value passed): &lt;br/&gt;
          Position to check from.
          (<em>default</em> pilot.pos)
         </li>
-        <li><span class="parameter">Whether</span>
+        <li><span class="parameter">ignore_range</span>
             <span class="types"><span class="type">boolean</span></span>
-         or not to only check for pilots in range (only in the case of pilot, not faction)
+         Whether or not to only check for pilots in range (only in the case of pilot, not faction)
          (<em>default</em> false)
         </li>
         <li><span class="parameter">disabled</span>
@@ -1770,8 +1804,8 @@ How param works (by type of value passed): &lt;br/&gt;
 
 </dd>
     <dt>
-    <a name = "activeWeapset"></a>
-    <strong>activeWeapset (p, current)</strong>
+    <a name = "weapsetActive"></a>
+    <strong>weapsetActive (p, current)</strong>
     </dt>
     <dd>
     Gets the ID (number from 1 to 10) of the current active weapset.
@@ -1794,7 +1828,7 @@ How param works (by type of value passed): &lt;br/&gt;
 
     <h3>Usage:</h3>
     <ul>
-        <pre data-enlighter-language="lua" class="example">set_id = p:activeWeapset() -- A number from 1 to 10
+        <pre data-enlighter-language="lua" class="example">set_id = p:weapsetActive() -- A number from 1 to 10
 </pre>
     </ul>
 
@@ -1871,6 +1905,121 @@ How param works (by type of value passed): &lt;br/&gt;
 
 </dd>
     <dt>
+    <a name = "weapsetType"></a>
+    <strong>weapsetType (p, id, type)</strong>
+    </dt>
+    <dd>
+    Sets the type of a weapon set for a pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to set weapon set type of.
+        </li>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">integer</span></span>
+         ID of the weapon set as shown in game (from 0 to 9).
+        </li>
+        <li><span class="parameter">type</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Type of the weapon set. Can be either "change", "weapon", or "active".
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "weapsetAdd"></a>
+    <strong>weapsetAdd (p, id, slot)</strong>
+    </dt>
+    <dd>
+    Adds an outfit to a pilot's weapon set.
+<p> Note that this can change the structure of the weapon set. For example, adding a utility/structural outfit to a weapon weapon set will remove all weapons and change it to be of type "active".
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to remove weapon from weapon set.
+        </li>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">integer</span></span>
+         ID of the weapon set as shown in game (from 0 to 9).
+        </li>
+        <li><span class="parameter">slot</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">integer</span></span>
+         Slot to add to weapon set. Can be passed by either id or name.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "weapsetRm"></a>
+    <strong>weapsetRm (p, id, slot)</strong>
+    </dt>
+    <dd>
+    Removes an outfit from a pilot's weapon set.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to remove weapon from weapon set.
+        </li>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">integer</span></span>
+         ID of the weapon set as shown in game (from 0 to 9).
+        </li>
+        <li><span class="parameter">slot</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">integer</span></span>
+         Slot to remove from weapon set. Can be passed by either id or name.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "weapsetCleanup"></a>
+    <strong>weapsetCleanup (p, id)</strong>
+    </dt>
+    <dd>
+    Cleans up a weapon set.  This removes all properties of the weapon set and resets it.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to remove weapon from weapon set.
+        </li>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">integer</span></span>
+         ID of the weapon set as shown in game (from 0 to 9).
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "weapsetHeat"></a>
     <strong>weapsetHeat (p[, id])</strong>
     </dt>
@@ -1919,6 +2068,36 @@ How param works (by type of value passed): &lt;br/&gt;
         <li><pre data-enlighter-language="lua" class="example">hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
 </pre></li>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "weapsetSetInrange"></a>
+    <strong>weapsetSetInrange (p[, id=nil], docheck)</strong>
+    </dt>
+    <dd>
+    Sets whether a pilot's weapon set does inrange checks.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to get weapset weapon of.
+        </li>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">number</span></span>
+         ID of the weapon set to set inrange check status, or nil for all.
+         (<em>default</em> nil)
+        </li>
+        <li><span class="parameter">docheck</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to do inrange checks.
+        </li>
+    </ul>
+
+
+
+
 
 </dd>
     <dt>
@@ -1994,7 +2173,7 @@ How param works (by type of value passed): &lt;br/&gt;
         </li>
         <li><span class="parameter">What</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         slot type to get outfits of. Can be either nil, "weapon", "utility", "structure", or "intrinsic".
+         slot type to get outfits of. Can be either nil, "weapon", "utility", "structure", "intrinsic", or "all". nil implies returning all non-intrinsic outfits.
          (<em>default</em> nil)
         </li>
         <li><span class="parameter">skip_locked</span>
@@ -2021,6 +2200,8 @@ How param works (by type of value passed): &lt;br/&gt;
     </dt>
     <dd>
     Gets a mapping of outfit slot IDs and outfits of a pilot.
+<p> <em>Note</em> The index value can be used as a slot identifier.
+
 
 
     <h3>Parameters:</h3>
@@ -3343,9 +3524,12 @@ How param works (by type of value passed): &lt;br/&gt;
 
     <h3>Returns:</h3>
     <ol>
-
+        <li>
            <span class="types"><span class="type">number</span></span>
-        The number of outfits added.
+        The number of outfits added.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        The id of the slot of the first outfit added if applicable.</li>
     </ol>
 
 
@@ -3359,7 +3543,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </dd>
     <dt>
     <a name = "outfitSlot"></a>
-    <strong>outfitSlot (p, slotname)</strong>
+    <strong>outfitSlot (p, slot)</strong>
     </dt>
     <dd>
     Checks to see outfit a pilot has in a slot.
@@ -3371,9 +3555,9 @@ How param works (by type of value passed): &lt;br/&gt;
             <span class="types"><span class="type">Pilot</span></span>
          Pilot to check outfit slot of.
         </li>
-        <li><span class="parameter">slotname</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the slot to check.
+        <li><span class="parameter">slot</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">integer</span></span>
+         Slot to check. Can be passed as a slot name (string) or slot id (integer).
         </li>
     </ul>
 
@@ -3390,7 +3574,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </dd>
     <dt>
     <a name = "outfitAddSlot"></a>
-    <strong>outfitAddSlot (p, outfit, slotname[, bypass_cpu=false[, bypass_slot=false]])</strong>
+    <strong>outfitAddSlot (p, outfit, slot[, bypass_cpu=false[, bypass_slot=false]])</strong>
     </dt>
     <dd>
     Adds an outfit to a pilot by slot name.
@@ -3406,9 +3590,9 @@ How param works (by type of value passed): &lt;br/&gt;
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">outfit</span></span>
          Outfit or name of the outfit to add.
         </li>
-        <li><span class="parameter">slotname</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the slot to add to.
+        <li><span class="parameter">slot</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">integer</span></span>
+         Slot to add to. Can be passed as a slot name (string) or slot id (integer).
         </li>
         <li><span class="parameter">bypass_cpu</span>
             <span class="types"><span class="type">boolean</span></span>
@@ -3484,7 +3668,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </dd>
     <dt>
     <a name = "outfitRmSlot"></a>
-    <strong>outfitRmSlot (p, slotname)</strong>
+    <strong>outfitRmSlot (p, slot)</strong>
     </dt>
     <dd>
     Removes an outfit from a pilot's named slot.
@@ -3498,9 +3682,9 @@ How param works (by type of value passed): &lt;br/&gt;
             <span class="types"><span class="type">Pilot</span></span>
          Pilot to remove outfit from.
         </li>
-        <li><span class="parameter">slotname</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Name of the slot to remove the outfit from.
+        <li><span class="parameter">slot</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">integer</span></span>
+         Slot to remove from. Can be passed as a slot name (string) or slot id (integer).
         </li>
     </ul>
 
@@ -3713,8 +3897,90 @@ How param works (by type of value passed): &lt;br/&gt;
 
 </dd>
     <dt>
+    <a name = "shippropReset"></a>
+    <strong>shippropReset ()</strong>
+    </dt>
+    <dd>
+    Resets the ship property stats of a pilot.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "shippropSet"></a>
+    <strong>shippropSet (p, name, value)</strong>
+    </dt>
+    <dd>
+    Allows setting ship property stats of a pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to set stat of.
+        </li>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the stat to set. It is the same as in the xml.
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">number</span></span>
+         Value to set the stat to.
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">p:shippropSet( &quot;turn&quot;, -50 ) -- Lowers p&apos;s turn by 50%
+</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "shippropGet"></a>
+    <strong>shippropGet (p[, name=nil][, internal=false], Value)</strong>
+    </dt>
+    <dd>
+    Allows getting an ship property stats of a pilot, or gets all of them if name is not specified.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to get stat of.
+        </li>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the stat to get. It is the same as in the xml.
+         (<em>default</em> nil)
+        </li>
+        <li><span class="parameter">internal</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to use the internal representation.
+         (<em>default</em> false)
+        </li>
+        <li><span class="parameter">Value</span>
+         of the stat or a table containing all the stats if name is not specified.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "effectClear"></a>
-    <strong>effectClear (p)</strong>
+    <strong>effectClear (p, keepdebuffs, keepbuffs, keepothers)</strong>
     </dt>
     <dd>
     Clears the effect on a pilot.
@@ -3725,6 +3991,18 @@ How param works (by type of value passed): &lt;br/&gt;
         <li><span class="parameter">p</span>
             <span class="types"><span class="type">Pilot</span></span>
          Pilot to clear effects of.
+        </li>
+        <li><span class="parameter">keepdebuffs</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to keep debuffs.
+        </li>
+        <li><span class="parameter">keepbuffs</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to keep buffs.
+        </li>
+        <li><span class="parameter">keepothers</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to keep others.
         </li>
     </ul>
 
@@ -6381,7 +6659,7 @@ How param works (by type of value passed): &lt;br/&gt;
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2023-07-06 08:27:38 </i>
+<i style="float:right;">Last updated 2023-07-06 08:49:01 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
