@@ -235,6 +235,10 @@
 	<td class="summary">Checks to see if the player has autonav enabled.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#autonavSetPos">autonavSetPos (pos)</a></td>
+	<td class="summary">Indicates the player where their autonav target position is.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#autonavDest">autonavDest ()</a></td>
 	<td class="summary">Gets the player's long term autonav destination.</td>
 	</tr>
@@ -247,7 +251,11 @@
 	<td class="summary">Resets the game speed without disabling autonav.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#setSpeed">setSpeed (speed)</a></td>
+	<td class="name" nowrap><a href="#autonavEnd">autonavEnd ()</a></td>
+	<td class="summary">Ends the autonav system.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setSpeed">setSpeed (speed[, sound=speed[, noset=false]])</a></td>
 	<td class="summary">Sets the game speed directly.</td>
 	</tr>
 	<tr>
@@ -263,6 +271,10 @@
 	<td class="summary">Takes a screenshot (same as the keyboard action).</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#tryBoard">tryBoard (noisy)</a></td>
+	<td class="summary">Tries to make the player board their target.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#unboard">unboard ()</a></td>
 	<td class="summary">Unboards the player from its boarded target.</td>
 	</tr>
@@ -273,6 +285,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#takeoff">takeoff ()</a></td>
 	<td class="summary">Forces the player to take off if they are landed.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#tryBoard">tryBoard (noisy)</a></td>
+	<td class="summary">Tries to make the player land.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#land">land (spb)</a></td>
@@ -974,6 +990,27 @@
 
 </dd>
     <dt>
+    <a name = "autonavSetPos"></a>
+    <strong>autonavSetPos (pos)</strong>
+    </dt>
+    <dd>
+    Indicates the player where their autonav target position is.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">Vec2</span> or <span class="type">nil</span></span>
+         Position to mark as autonav destination or nil to clear.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "autonavDest"></a>
     <strong>autonavDest ()</strong>
     </dt>
@@ -1055,8 +1092,23 @@
 
 </dd>
     <dt>
+    <a name = "autonavEnd"></a>
+    <strong>autonavEnd ()</strong>
+    </dt>
+    <dd>
+    Ends the autonav system.  You probably want to use player.autonavAbort instead of this.
+
+
+
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "setSpeed"></a>
-    <strong>setSpeed (speed)</strong>
+    <strong>setSpeed (speed[, sound=speed[, noset=false]])</strong>
     </dt>
     <dd>
     Sets the game speed directly.
@@ -1067,6 +1119,16 @@
         <li><span class="parameter">speed</span>
             <span class="types"><span class="type">number</span></span>
          Speed to set the game to. If omitted it will reset the game speed.
+        </li>
+        <li><span class="parameter">sound</span>
+            <span class="types"><span class="type">number</span></span>
+         Sound speed to set to.
+         (<em>default</em> speed)
+        </li>
+        <li><span class="parameter">noset</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Avoid setting player.speed. Useful for autonav.
+         (<em>default</em> false)
         </li>
     </ul>
 
@@ -1148,6 +1210,33 @@
 
 </dd>
     <dt>
+    <a name = "tryBoard"></a>
+    <strong>tryBoard (noisy)</strong>
+    </dt>
+    <dd>
+    Tries to make the player board their target.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">noisy</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to do player messages.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        Status of the boarding attempt. Can be "impossible", "retry", "ok", or "error".
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "unboard"></a>
     <strong>unboard ()</strong>
     </dt>
@@ -1200,6 +1289,33 @@
 
 
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "tryBoard"></a>
+    <strong>tryBoard (noisy)</strong>
+    </dt>
+    <dd>
+    Tries to make the player land.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">noisy</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to do player messages.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        Status of the boarding attempt. Can be "impossible", "retry", "ok", or "error".
+    </ol>
 
 
 
@@ -2551,7 +2667,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2023-07-14 12:49:26 </i>
+<i style="float:right;">Last updated 2023-07-14 13:48:02 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div class="container-fluid nebula-bg mt-5">
