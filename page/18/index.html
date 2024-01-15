@@ -99,6 +99,78 @@
     <ul class="list-unstyled">
       <li class="mt-3 mb-4">
         <div class="blog-post">
+          <h4><a href="../../blarg/2010-11-23_correct_physics/">Correct Physics</a></h4>
+          <p class="text-muted">BY BOBBENS, ON NOVEMBER 23RD, 2010</p>
+          <p><strong>WARNING: TECHNICAL POST</strong></p>
+          <p>After much insistence on Deiz that something was wrong since we needed a hack to get
+          ships to properly display 100% speed, we’ve finally found the culprit. Some old code of
+          mine that what it did was:</p>
+          <p><code>c void limit_speed( Vector2d* vel, const double speed, const double dt ) {
+          double vmod; vmod = VMOD(*vel); if (vmod &gt; speed) /* shouldn't go faster */ vect_pset(
+          vel, (vmod-speed)*(1. - dt*3.) + speed, VANGLE(*vel) ); }</code></p>
+          <p>What does this mean? It may seem like a good idea to limit the speed by modulating the
+          velocity directly. There is also a dt in there to try to make it not frame dependent.
+          However let’s analyze the consequences.</p>
+          <p>The important question is: what is the maximum velocity? The way stuff is done we’re
+          cascading the limit_speed with the physics model. We can simplify it to an euler
+          integration (it’s actually runge-kutta but I’ll talk about that a bit latter):</p>
+          <p><code>v_1 = v_0 + a dt</code></p>
+          <p>Everyone should be familiar with that. I won’t go into details from where that comes
+          from. Basically it means that the current velocity is the last velocity plus the
+          acceleration times the time that passed from the last instant. This is then chained to
+          the limit_speed which does:</p>
+          <p><code>v = (v_1 - v_{max})(1 - 3dt)</code></p>
+          <p>So we can write the composite form as:</p>
+          <p><code>v = (v_0 + a dt - v_{max})(1 - 3dt) = v_0 + a dt - v_{max} - 3 dt v_0 - 3 a dt^2
+          + 3 dt v_{max}</code></p>
+          <p>Now we can see the problem. What should be linearly dependent on the dt to cancel out
+          the dependency on the frame rate is now quadratically dependent (notice <code>3 a
+          dt^2</code>). This means that the velocity now does indeed depend on the frame rate.
+          That’s bad. The physics model shouldn’t depend on the frame rate. How can we fix
+          that?</p>
+          <p>The most logical and simple solution would be instead of hardcoding a limit_speed
+          function outside of the physics engine to integrate it. What does the physics engine work
+          with? Forces. What should we do? Create a virtual force dependent on velocity.</p>
+          <p>A bit on our physics engine. The physics in NAEV is modelled as <a href=
+          "https://en.wikipedia.org/wiki/Differential_equation">differential equations</a> and is
+          solved generally with <a href=
+          "https://en.wikipedia.org/wiki/Runge-kutta">Runge-Kutta</a>. It all sounds really
+          complicated but it isn’t too much. If you want to go into detail take a look at <a href=
+          "https://github.com/naev/naev/blob/main/src/physics.c">src/physics.c</a>.</p>
+          <p>First the philosophical meaning of this force. What does it represent? Why do ships
+          have speed limits? This limit represents the ship’s stabilization systems. To allow the
+          ships to have artificial gravity (the ones that do) and fly around so well with turning,
+          they need complex stabilization systems. So what we’re modelling is some sort of drag
+          force.</p>
+          <p>Now onto the force itself. After much discussion ranting and throwing of equations we
+          finally managed to model it. The current model is:</p>
+          <p><code>f_{stabilization} = k (v - v_{max})</code></p>
+          <p>It’s much more simple, behaves really well and allows really simple max speed
+          calculations. Your max speed is when the forces acting on your ship are 0. When does this
+          happen? Easy, <code>v_{realmax} = speed + \frac{thrust}{k}</code>. We’ve found that a
+          good value is <code>k = 3</code> .</p>
+          <p>Other notes, while doing this revamp I improved the current engine. Thrust is relative
+          to the ship, that means that rotations are smoothed out really nicely by the Runge-Kutta
+          algorithm. Same happens with the new stabilization force. This means the physics are
+          smoother than ever. The system was also improved to handle fast ships and jump ins
+          without instability. What we saw originally was that when your ship was moving really
+          fast, the stabilization force caused instability in the physics engine. This meant your
+          ship would end up at infinity about a second after jumping in. However the new improved
+          engine can handle any speed by chopping up the simulation more finely when the ship is
+          going fast.</p>
+          <p>Other notes we also have a hybrid physics engine now, in the sense it can do both
+          <a href="https://en.wikipedia.org/wiki/Runge-kutta">Runge-Kutta</a> and <a href=
+          "https://en.wikipedia.org/wiki/Euler_method">Euler</a> for different objects at the same
+          time. I’m quite proud of it. The player may be asking what to make of all this? Well you
+          probably won’t feel a thing, but let me assure you it’s much more awesome.</p>
+          <p><strong>EDIT:</strong> It’s been pointed out that if you go back to the equation
+          originally you could have looked at how the units did mismatch. We all learn from our
+          mistakes, how stupid they may be :) .</p>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
           <h4><a href="../../blarg/2010-11-16_fancy_new_menu/">Fancy new menu</a></h4>
           <p class="text-muted">BY BOBBENS, ON NOVEMBER 16TH, 2010</p>
           <p>After lots of nagging and harassing of developers we finally have it! The great epic
@@ -180,73 +252,6 @@
           "https://web.archive.org/web/20110321021726/http://forum.naev.org/viewtopic.php?f=6&amp;t=105">
           damage rejection</a>. It seems like we may be ahead of schedule for 0.5.0, but I make no
           promises.</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href="../../blarg/2010-08-23_next_steps_to_0.5.0/">Next steps to 0.5.0</a></h4>
-          <p class="text-muted">BY BOBBENS, ON AUGUST 23RD, 2010</p>
-          <p>I’ve been asked multiple times what the ETA for 0.5.0 is. For now, the answer is “when
-          it’s done”, but going over the TODO, it seems like it’ll be around New Years. Many of our
-          original goals are done, but the list seems to grow faster than features are finished;
-          here’s what’s left:</p>
-          <ol>
-            <li><strong>Weapon Revamp</strong> – Removes secondary weapons in favour of dynamic
-            player-defined weapon groups (WIP).</li>
-            <li><strong>Tech Editor</strong> – Incorporate a technology editor to allow balancing
-            technology and the likes much faster.</li>
-            <li><strong>Finish GUI</strong> – With the weapon revamp we should be finally able to
-            get a new awesome epic GUI done. This builds upon the Lua infrastructure we now have
-            for GUI development.</li>
-            <li><strong>Finish Electronic Warfare</strong> – One of the major 0.5.0 objectives.
-            It’s more or less implemented, but needs to actually have the outfits and ships use it.
-            The major issue is balancing, which is complex to say the least. This is when we merge
-            ewarfare into bigsys.</li>
-            <li><strong>Advanced Time Compression</strong> – Sick of flying around slow in your big
-            capital ship? Dynamic time compression will make travel fast and fluid when out of
-            combat. When you enter combat you’ll revert to your ship’s normal handling
-            characteristics. This is mainly to allow large slow ships to be less tedious to fly,
-            especially in big systems.</li>
-            <li><strong>Overlay Map</strong> – We want a Diablo 2-style map overlay in the big
-            systems, the current infrastructure isn’t cutting it. With big systems there’s so many
-            things in each system it’s hard to keep track of things in the minimap. An overlay will
-            allow you to see whole systems, more or less, without sacrificing the minimap’s
-            usefulness in combat. You’ll be able to toggle it on command.</li>
-            <li><strong>Finish Big Systems</strong> – With the overlay and electronic warfare done
-            we want to finally complete big systems. This means systems will be even larger and
-            you’ll have intra-system travel and combat. Time compression will make it all painless
-            and the overlay will make it so you don’t get lost. This is when everything gets merged
-            into master.</li>
-            <li><strong>Beam Rewrite</strong> – Beam weapons are due for a makeover. They’re
-            currently an awful hack. They shall be moved into their own infrastructure and be
-            upgraded to comply with OpenGL ES specification. The AI will also start using them
-            efficiently.</li>
-            <li><strong>Mouse Usage</strong> – Target cycling is cute, but when each system has 30+
-            ships in visible range, selecting a specific ship is tedious. This will allow mouse
-            targeting and limited mouse flying (have the ship face the mouse, etc.) among other
-            things.</li>
-            <li><strong>Heavy Testing</strong> – This is a <em>huge</em> release, so a beta will
-            likely be released. NAEV is typically quite stable and bug-free, but we’d like to avoid
-            pure-maintenance releases in 0.5.*. We’ve had our share of embarrassing bugs during
-            past releases and we don’t want that to happen again.</li>
-          </ol>
-          <p>As you can see there’s a lot of stuff left. That’s a lot of work not to mention all
-          the new content we’re getting done in parallel. You might think that 0.5.0 is the end of
-          the line but we have many many more ideas which will most likely be for 0.6.0. So as you
-          can see we aren’t being lazy nor inefficient, we’re just overly-ambitious. The end goal
-          is to have 0.5.0 be a mature and stable platform for which all you modders and content
-          developers will be able to mess with. Anyway, bear with us, this release is going to be
-          epic. Most of you who only played up to 0.4.2 will have to relearn the entire game as
-          it’s much more advanced. However don’t fear the change, it’s for the better and has been
-          all heavily discussed and analyzed before being implemented. If you still worry, feel
-          free to grab a copy of the ‘ewarfare’ branch on git and drop us some a line on IRC, the
-          forum or the mailing list.</p>
-          <p>Some stats to give you an indication of the magnitude of the change:</p>
-          <p><code>bobbens@ghanima (~/usr/prj/naev)] $ git diff NAEV-0.4.2 | wc -l 78621</code></p>
-          <p>Yes, that’s nearly 80k line changes in the diff from the latest version and that’s
-          with the gigantic TODO we have left. Scary, huh?</p>
-          <p>Bobbens out.</p>
         </div>
         <hr>
       </li>
