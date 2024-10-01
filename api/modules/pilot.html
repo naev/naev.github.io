@@ -203,7 +203,7 @@
 	<td class="summary">Disables or enables pilot spawning in the current system.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get (factions, disabled)</a></td>
+	<td class="name" nowrap><a href="#get">get (factions[, disabled=false])</a></td>
 	<td class="summary">Gets the pilots available in the system by a certain criteria.</td>
 	</tr>
 	<tr>
@@ -500,11 +500,15 @@
 	<td class="summary">Allows the pilot to be boarded when not disabled.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#disabled">disabled (p)</a></td>
+	<td class="summary">Gets the disabled state of a pilot.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#setNoDeath">setNoDeath (p[, state=true])</a></td>
 	<td class="summary">Makes it so the pilot never dies, stays at 1.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#disable">disable (p[, nopermanent=false])</a></td>
+	<td class="name" nowrap><a href="#setDisable">setDisable (p[, nopermanent=false])</a></td>
 	<td class="summary">Disables a pilot.</td>
 	</tr>
 	<tr>
@@ -672,6 +676,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#shield">shield (p[, absolute=false])</a></td>
 	<td class="summary">Gets the pilot's shield.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#stress">stress (p[, absolute=false])</a></td>
+	<td class="summary">Gets the pilot's stress.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#energy">energy (p[, absolute=false])</a></td>
@@ -887,7 +895,7 @@
 	<td class="summary">Set a pilots leader.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#followers">followers (p)</a></td>
+	<td class="name" nowrap><a href="#followers">followers (p, hidefighters)</a></td>
 	<td class="summary">Get all of a pilots followers.</td>
 	</tr>
 	<tr>
@@ -1286,7 +1294,7 @@ their faction or taking off from non-hostile spobs &lt;br/&gt;
 </dd>
     <dt>
     <a name = "get"></a>
-    <strong>get (factions, disabled)</strong>
+    <strong>get (factions[, disabled=false])</strong>
     </dt>
     <dd>
     Gets the pilots available in the system by a certain criteria.
@@ -1302,8 +1310,9 @@ their faction or taking off from non-hostile spobs &lt;br/&gt;
         </li>
         <li><span class="parameter">disabled</span>
             <span class="types"><span class="type">boolean</span></span>
-         Whether or not to get disabled ships (default
- is off if parameter is omitted).
+         Whether or not to get disabled
+ ships.
+         (<em>default</em> false)
         </li>
     </ul>
 
@@ -3830,6 +3839,33 @@ you!&quot;) ) -- Messages player ignoring interference
 
 </dd>
     <dt>
+    <a name = "disabled"></a>
+    <strong>disabled (p)</strong>
+    </dt>
+    <dd>
+    Gets the disabled state of a pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to get disabled state of.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether or not the pilot is disabled.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "setNoDeath"></a>
     <strong>setNoDeath (p[, state=true])</strong>
     </dt>
@@ -3862,8 +3898,8 @@ you!&quot;) ) -- Messages player ignoring interference
 
 </dd>
     <dt>
-    <a name = "disable"></a>
-    <strong>disable (p[, nopermanent=false])</strong>
+    <a name = "setDisable"></a>
+    <strong>setDisable (p[, nopermanent=false])</strong>
     </dt>
     <dd>
     Disables a pilot.
@@ -5312,6 +5348,45 @@ well as all outfits.
     <h3>Usage:</h3>
     <ul>
         <pre data-enlighter-language="lua" class="example">shield = p:shield()
+</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "stress"></a>
+    <strong>stress (p[, absolute=false])</strong>
+    </dt>
+    <dd>
+    Gets the pilot's stress.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to get stress of.
+        </li>
+        <li><span class="parameter">absolute</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not it shouldn't be
+ relative and be absolute instead.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The shield in % [0:100] if relative or absolute value
+ otherwise.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">stress = p:stress()
 </pre>
     </ul>
 
@@ -7080,7 +7155,7 @@ faced
 </dd>
     <dt>
     <a name = "followers"></a>
-    <strong>followers (p)</strong>
+    <strong>followers (p, hidefighters)</strong>
     </dt>
     <dd>
     Get all of a pilots followers.
@@ -7091,6 +7166,11 @@ faced
         <li><span class="parameter">p</span>
             <span class="types"><span class="type">Pilot</span></span>
          Pilot to get the followers of.
+        </li>
+        <li><span class="parameter">hidefighters</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to ignore deployed
+ fighters.
         </li>
     </ul>
 
@@ -7499,7 +7579,7 @@ ship var on the player&apos;s current ship
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-09-23 17:30:05 </i>
+<i style="float:right;">Last updated 2024-10-01 01:00:47 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">
