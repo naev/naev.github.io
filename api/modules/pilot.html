@@ -288,15 +288,7 @@
 	<td class="summary">Sets the hyperspace navigation target for the pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#weapsetActive">weapsetActive (p)</a></td>
-	<td class="summary">Gets the ID (number from 1 to 10) of the current active weapset.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#weapsetSetActive">weapsetSetActive (p, Weapon)</a></td>
-	<td class="summary">Sets the ID (number from 1 to 10) of the current active weapset.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#weapset">weapset (p[, id=pilot.weapsetActive()])</a></td>
+	<td class="name" nowrap><a href="#weapset">weapset (p[, id=all])</a></td>
 	<td class="summary">Gets the weapset weapon of the pilot.</td>
 	</tr>
 	<tr>
@@ -332,7 +324,7 @@
 	<td class="summary">Sets whether a pilot's weapon set does inrange checks.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#weapsetAmmo">weapsetAmmo (p[, id[, level=-1]])</a></td>
+	<td class="name" nowrap><a href="#weapsetAmmo">weapsetAmmo (p[, id], level)</a></td>
 	<td class="summary">Gets the ammo left of a weapon set.</td>
 	</tr>
 	<tr>
@@ -2028,70 +2020,8 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
 
 </dd>
     <dt>
-    <a name = "weapsetActive"></a>
-    <strong>weapsetActive (p)</strong>
-    </dt>
-    <dd>
-    Gets the ID (number from 1 to 10) of the current active weapset.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">p</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Pilot to get active weapset ID of.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        current active weapset ID.
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">set_id = p:weapsetActive() -- A number from 1 to 10
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "weapsetSetActive"></a>
-    <strong>weapsetSetActive (p, Weapon)</strong>
-    </dt>
-    <dd>
-    Sets the ID (number from 1 to 10) of the current active weapset.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">p</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Pilot to get active weapset ID of.
-        </li>
-        <li><span class="parameter">Weapon</span>
-            <span class="types"><span class="type">number</span></span>
-         set to make active.
-        </li>
-    </ul>
-
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">set_id = p:weapsetActive() -- A number from 1 to 10
-</pre>
-    </ul>
-
-</dd>
-    <dt>
     <a name = "weapset"></a>
-    <strong>weapset (p[, id=pilot.weapsetActive()])</strong>
+    <strong>weapset (p[, id=all])</strong>
     </dt>
     <dd>
     Gets the weapset weapon of the pilot.
@@ -2104,8 +2034,8 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
   <li> left_p: Relative ammo left [0:1] or nil if not applicable </li>
   <li> lockon: Lock-on [0:1] for seeker weapons or nil if not applicable.
  </li> <li> in_arc: Whether or not the target is in targeting arc or nil if
- not applicable. </li> <li> level: Level of the weapon (1 is primary, 2 is
- secondary). </li> <li> active: Whether or not the weapon is currently active.
+ not applicable. </li>
+ <li> active: Whether or not the weapon is currently active.
  </li> <li> heat: Heat level of the weapon where 1 is normal and 0 is
  overheated. </li> <li> type: Type of the weapon. </li> <li> dtype: Damage
  type of the weapon. </li> <li> track: Tracking level of the weapon. </li>
@@ -2116,8 +2046,7 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
  print( "Weapnset Name: " .. ws_name )
  for i, w in ipairs(ws) do
     print( "Name: " .. w.name )
-    print( "Cooldown: " .. tostring(cooldown) )
-    print( "Level: " .. tostring(level) )
+    print( "Cooldown: " .. tostring(w.cooldown) )
  end
  </pre>
 
@@ -2133,7 +2062,7 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
             <span class="types"><span class="type">number</span></span>
          ID of the set to get
  information of. Defaults to currently active set.
-         (<em>default</em> pilot.weapsetActive())
+         (<em>default</em> all)
         </li>
     </ul>
 
@@ -2151,10 +2080,8 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre data-enlighter-language="lua" class="example">set_name, slots = p:weapset( true ) -- Gets info for all active
+        <li><pre data-enlighter-language="lua" class="example">set_name, slots = p:weapset() -- Gets info for all active
  weapons
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">set_name, slots = p:weapset() -- Get info about the current set
 </pre></li>
         <li><pre data-enlighter-language="lua" class="example">set_name, slots = p:weapset( 5 ) -- Get info about the set number 5
 </pre></li>
@@ -2213,7 +2140,7 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
         </li>
         <li><span class="parameter">type</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-         Type of the weapon set. Can be either "switch",
+         Type of the weapon set. Can be either
  "toggle", or "hold".
         </li>
     </ul>
@@ -2366,7 +2293,7 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
         <li><span class="parameter">id</span>
             <span class="types"><span class="type">number</span></span>
          ID of the set to get information of. Defaults to
- currently active set.
+ all weapon sets.
          (<em>optional</em>)
         </li>
     </ul>
@@ -2385,10 +2312,8 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre data-enlighter-language="lua" class="example">hmean, hpeak = p:weapsetHeat( true ) -- Gets info for all active
+        <li><pre data-enlighter-language="lua" class="example">hmean, hpeak = p:weapsetHeat() -- Gets info for all active
  weapons
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">hmean, hpeak = p:weapsetHeat() -- Get info about the current set
 </pre></li>
         <li><pre data-enlighter-language="lua" class="example">hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
 </pre></li>
@@ -2428,7 +2353,7 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
 </dd>
     <dt>
     <a name = "weapsetAmmo"></a>
-    <strong>weapsetAmmo (p[, id[, level=-1]])</strong>
+    <strong>weapsetAmmo (p[, id], level)</strong>
     </dt>
     <dd>
     Gets the ammo left of a weapon set.
@@ -2443,13 +2368,12 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
         <li><span class="parameter">id</span>
             <span class="types"><span class="type">number</span></span>
          Optional parameter indicating id of weapon set
- to get ammo of, defaults to selected one.
+ to get ammo of.
          (<em>optional</em>)
         </li>
         <li><span class="parameter">level</span>
             <span class="types"><span class="type">number</span></span>
          Level of weapon set to get range of.
-         (<em>default</em> -1)
         </li>
     </ul>
 
@@ -2504,7 +2428,7 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
         </li>
         <li><span class="parameter">sort</span>
             <span class="types"><span class="type">boolean</span></span>
-         Whether or not to sort the otufits.
+         Whether or not to sort the outfits.
          (<em>default</em> false)
         </li>
     </ul>
@@ -7579,7 +7503,7 @@ ship var on the player&apos;s current ship
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-10-12 08:46:58 </i>
+<i style="float:right;">Last updated 2024-10-12 16:44:23 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">
