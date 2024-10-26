@@ -199,12 +199,37 @@
 	<td class="summary">Gets the faction's translated long name.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#areEnemies">areEnemies (f, e)</a></td>
+	<td class="name" nowrap><a href="#areEnemies">areEnemies (f, e[, sys])</a></td>
 	<td class="summary">Checks to see if f is an enemy of e.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#areAllies">areAllies (f, a)</a></td>
+	<td class="name" nowrap><a href="#areAllies">areAllies (f, a[, sys])</a></td>
 	<td class="summary">Checks to see if f is an ally of a.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hit">hit (f, mod, Whether[, reason="script"[, single=false]])</a></td>
+	<td class="summary">Modifies the player's standing with the faction.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#reputationGlobal">reputationGlobal (f)</a></td>
+	<td class="summary">Gets the player's global reputation with the faction.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#reputationText">reputationText (f[, val=f:reputationGlobal()])</a></td>
+	<td class="summary">Gets the human readable standing text correpsonding (translated).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#reputationDefault">reputationDefault (f)</a></td>
+	<td class="summary">Gets the player's default reputation with the faction.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setReputationGlobal">setReputationGlobal (f)</a></td>
+	<td class="summary">Overrides the player's faction global standing with a faction.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#applyLocalThreshold">applyLocalThreshold (f, sys)</a></td>
+	<td class="summary">Enforces the local threshold of a faction starting at a particular
+ system.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#modPlayer">modPlayer (f, mod[, reason="script"])</a></td>
@@ -265,6 +290,14 @@
 	<tr>
 	<td class="name" nowrap><a href="#static">static (f)</a></td>
 	<td class="summary">Checks to see if a faction has a static standing with the player.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#reputationOverride">reputationOverride (f)</a></td>
+	<td class="summary">Gets the overriden reputation value of a faction.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setReputationOverride">setReputationOverride (f, Sets)</a></td>
+	<td class="summary">Gets the overriden reputation value of a faction.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#tags">tags ([tag=nil])</a></td>
@@ -550,7 +583,7 @@
 </dd>
     <dt>
     <a name = "areEnemies"></a>
-    <strong>areEnemies (f, e)</strong>
+    <strong>areEnemies (f, e[, sys])</strong>
     </dt>
     <dd>
     Checks to see if f is an enemy of e.
@@ -565,6 +598,12 @@
         <li><span class="parameter">e</span>
             <span class="types"><span class="type">Faction</span></span>
          Faction to check if is an enemy.
+        </li>
+        <li><span class="parameter">sys</span>
+            <span class="types"><span class="type">System</span></span>
+         System to check to see if they are enemies in.
+ Mainly for when comparing to the player's faction.
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -586,7 +625,7 @@
 </dd>
     <dt>
     <a name = "areAllies"></a>
-    <strong>areAllies (f, a)</strong>
+    <strong>areAllies (f, a[, sys])</strong>
     </dt>
     <dd>
     Checks to see if f is an ally of a.
@@ -601,6 +640,12 @@
         <li><span class="parameter">a</span>
             <span class="types"><span class="type">faction</span></span>
          Faction to check if is an enemy.
+        </li>
+        <li><span class="parameter">sys</span>
+            <span class="types"><span class="type">System</span></span>
+         System to check to see if they are allies in.
+ Mainly for when comparing to the player's faction.
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -618,6 +663,218 @@
         <pre data-enlighter-language="lua" class="example">if f:areAllies( faction.get( &quot;Pirate&quot; ) ) then
 </pre>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "hit"></a>
+    <strong>hit (f, mod, Whether[, reason="script"[, single=false]])</strong>
+    </dt>
+    <dd>
+    Modifies the player's standing with the faction.
+<p> Also can modify the standing with allies and enemies of the faction.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Faction</span></span>
+         Faction to modify player's standing with.
+        </li>
+        <li><span class="parameter">mod</span>
+            <span class="types"><span class="type">number</span></span>
+         The modifier to modify faction by.
+        </li>
+        <li><span class="parameter">Whether</span>
+            <span class="types"><span class="type">System</span> or <span class="type">nil</span></span>
+         to make the faction hit local at a system,
+ or global.
+        </li>
+        <li><span class="parameter">reason</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         Reason behind it. This is passed as
+ a string to the faction "hit" function. The engine can generate "kill" and
+ "distress" sources. For missions the default is "script".
+         (<em>default</em> "script")
+        </li>
+        <li><span class="parameter">single</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not the hit should affect
+ allies/enemies of the faction getting a hit.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">How</span></span>
+        much the reputation was actually changed after Lua script
+ was run.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre data-enlighter-language="lua" class="example">f:hit( -5, system.cur() ) -- Lowers faction by 5 at the current system
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">f:hit( 10 ) -- Globally increases faction by 10
+</pre></li>
+        <li><pre data-enlighter-language="lua" class="example">f:hit( 10, nil, nil, true ) -- Globally increases faction by 10, but
+doesn&apos;t affect allies nor enemies of the faction.
+</pre></li>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "reputationGlobal"></a>
+    <strong>reputationGlobal (f)</strong>
+    </dt>
+    <dd>
+    Gets the player's global reputation with the faction.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Faction</span></span>
+         Faction to get player's standing with.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The value of the standing.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">if f:reputationGlobal() &gt;= 0 then -- Player is not hostile
+</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "reputationText"></a>
+    <strong>reputationText (f[, val=f:reputationGlobal()])</strong>
+    </dt>
+    <dd>
+    Gets the human readable standing text correpsonding (translated).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">faction</span></span>
+         Faction to get standing text from.
+        </li>
+        <li><span class="parameter">val</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Value to get the
+ standing text of, or nil to use the global faction standing.
+         (<em>default</em> f:reputationGlobal())
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+        Translated text corresponding to the faction value.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "reputationDefault"></a>
+    <strong>reputationDefault (f)</strong>
+    </dt>
+    <dd>
+    Gets the player's default reputation with the faction.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Faction</span></span>
+         Faction to get player's default standing with.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The value of the standing.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setReputationGlobal"></a>
+    <strong>setReputationGlobal (f)</strong>
+    </dt>
+    <dd>
+    Overrides the player's faction global standing with a faction.  Use
+ sparingly as it overrites local standings.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Faction</span></span>
+         Faction to set the player's golbal reptation with.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The value of the reputation to set to.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "applyLocalThreshold"></a>
+    <strong>applyLocalThreshold (f, sys)</strong>
+    </dt>
+    <dd>
+    Enforces the local threshold of a faction starting at a particular
+ system.  Meant to be used when computing faction hits from the faction
+ standing Lua scripts. Not meant for use elsewhere.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Faction</span></span>
+         Faction to apply local thresholding to.
+        </li>
+        <li><span class="parameter">sys</span>
+            <span class="types"><span class="type">System</span></span>
+         System to compute the thresholding from. This will
+ be the reference and will not have its value modified.
+        </li>
+    </ul>
+
+
+
+
 
 </dd>
     <dt>
@@ -825,8 +1082,7 @@
     <ol>
 
            <span class="types"><span class="type">number</span></span>
-        The value of the standing and the human readable
- string.
+        The value of the standing.
     </ol>
 
 
@@ -1108,6 +1364,61 @@
 
 </dd>
     <dt>
+    <a name = "reputationOverride"></a>
+    <strong>reputationOverride (f)</strong>
+    </dt>
+    <dd>
+    Gets the overriden reputation value of a faction.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Faction</span></span>
+         Faction to get whether or not the reputation is
+ overriden and the value.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+        The override reputation value or nil if not
+ overriden.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setReputationOverride"></a>
+    <strong>setReputationOverride (f, Sets)</strong>
+    </dt>
+    <dd>
+    Gets the overriden reputation value of a faction.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">Faction</span></span>
+         Faction to enable/disable reputation override of.
+        </li>
+        <li><span class="parameter">Sets</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         the faction reputation override to the value if
+ a number, or disables it if nil.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "tags"></a>
     <strong>tags ([tag=nil])</strong>
     </dt>
@@ -1261,7 +1572,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-10-23 16:22:34 </i>
+<i style="float:right;">Last updated 2024-10-26 02:56:25 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">
