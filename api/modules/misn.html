@@ -86,7 +86,6 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/cinema.html">cinema</a></li>
-  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
@@ -95,6 +94,7 @@
   <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
@@ -144,6 +144,7 @@
   <li><a href="../modules/prob.html">prob</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
+  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
 
@@ -153,13 +154,11 @@
 
 <h1>Module <code>misn</code></h1>
 <p>Mission Lua bindings.</p>
-<p>
 <p> An example would be:
  <pre>
  misn.setNPC( "Keer", "empire/unique/keer.webp", _("You see here Commodore
  Keer.") )
- </pre>
-</p>
+ </pre></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -300,10 +299,10 @@
     <strong>setDesc (desc)</strong>
     </dt>
     <dd>
-    Sets the current mission description.
+    Sets the current mission description. </p>
+
 <p> Also sets the mission OSD unless you explicitly force an OSD, however you
   can't specify bullet points or other fancy things like with the real OSD.
-
 
 
     <h3>Parameters:</h3>
@@ -350,7 +349,6 @@
  the mission computer. Unused otherwise.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">Distance</span>
@@ -374,7 +372,6 @@
  otherwise.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">Whether</span>
@@ -396,7 +393,6 @@
     <dd>
     Sets the faction giver of the mission.  Used mainly as metadata for
  sorting and organizing missions in the mission computer.
-
 
 
     <h3>Parameters:</h3>
@@ -518,13 +514,14 @@ Valid marker types are:&lt;br/&gt;
     <strong>setNPC (name, portrait, desc)</strong>
     </dt>
     <dd>
-    Sets the current mission NPC.
+    Sets the current mission NPC. </p>
+
 <p> This is used in bar missions where you talk to a person. The portraits are
-  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.webp
-  you would use "none.webp".)
+  the ones found in GFX<em>PATH/portraits. (For GFX</em>PATH/portraits/none.webp
+  you would use "none.webp".)</p>
+
 <p> Note that this NPC will disappear when either misn.accept() or misn.finish()
   is called.
-
 
 
     <h3>Parameters:</h3>
@@ -585,10 +582,10 @@ drain itself.&quot;) )
     <strong>accept ()</strong>
     </dt>
     <dd>
-    Attempts to accept the mission.
+    Attempts to accept the mission. </p>
+
 <p> Note: there is no limit on the maximum number of missions a player can have
  simultaneously.
-
 
 
 
@@ -642,14 +639,16 @@ drain itself.&quot;) )
  of it unless they abandons the mission in which case it'll get eliminated.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">cargo</span>
             <span class="types"><span class="type">Commodity</span> or <a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-         Type of cargo to add, either as
-       a Commodity object or as the raw (untranslated) name of a
-       commodity.
+
+<p> Type of cargo to add, either as</p>
+<pre><code>   a Commodity object or as the raw (untranslated) name of a
+   commodity.
+</code></pre>
+
         </li>
         <li><span class="parameter">quantity</span>
             <span class="types"><span class="type">number</span></span>
@@ -727,10 +726,10 @@ drain itself.&quot;) )
     <strong>osdCreate (title, list)</strong>
     </dt>
     <dd>
-    Creates a mission OSD.
-<p> <em>Note</em> You can index elements by using '\\t' as first character of an element.
- <em>Note</em> Destroys an osd if it already exists.
+    Creates a mission OSD. </p>
 
+<p> <em>Note</em> You can index elements by using '\t' as first character of an element.
+ <em>Note</em> Destroys an osd if it already exists.
 
 
     <h3>Parameters:</h3>
@@ -774,9 +773,9 @@ drain itself.&quot;) )
     <strong>osdActive (n)</strong>
     </dt>
     <dd>
-    Sets active in mission OSD.
-<p> <em>Note</em> Uses Lua indexes, so 1 is first member, 2 is second and so on.
+    Sets active in mission OSD. </p>
 
+<p> <em>Note</em> Uses Lua indexes, so 1 is first member, 2 is second and so on.
 
 
     <h3>Parameters:</h3>
@@ -928,12 +927,13 @@ drain itself.&quot;) )
     <strong>claim (params[, inclusive=false])</strong>
     </dt>
     <dd>
-    Tries to claim systems or strings.
+    Tries to claim systems or strings. </p>
+
 <p> Claiming systems and strings is a way to avoid mission collisions
- preemptively.
+ preemptively.</p>
+
 <p> Note it does not actually perform the claim if it fails to claim. It also
   does not work more than once.
-
 
 
     <h3>Parameters:</h3>
@@ -982,9 +982,9 @@ then misn.finish( false ) end
     <strong>computerRefresh ()</strong>
     </dt>
     <dd>
-    Refreshes the mission computer offerings.
-<p> Do not use from a mission 'create' function.
+    Refreshes the mission computer offerings. </p>
 
+<p> Do not use from a mission 'create' function.
 
 
 
@@ -1000,7 +1000,7 @@ then misn.finish( false ) end
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-12-08 13:14:37 </i>
+<i style="float:right;">Last updated 2024-12-08 14:29:33 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">

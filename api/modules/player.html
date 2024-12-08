@@ -86,7 +86,6 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/cinema.html">cinema</a></li>
-  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
@@ -95,6 +94,7 @@
   <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
@@ -144,6 +144,7 @@
   <li><a href="../modules/prob.html">prob</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
+  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
 
@@ -153,7 +154,6 @@
 
 <h1>Module <code>player</code></h1>
 <p>Lua bindings to interact with the player.</p>
-<p>
 <p> These bindings let you modify stuff about the player and find out special
   information. General usage would be calls like:
  <pre>
@@ -563,10 +563,10 @@
     <strong>ship ()</strong>
     </dt>
     <dd>
-    Gets the player's ship's name (given by the player).
+    Gets the player's ship's name (given by the player). </p>
+
 <p> <em>Note</em> Not to be confused with getting the player's ship that can be done with
  player.pilot():ship().
-
 
 
 
@@ -1189,9 +1189,9 @@
     <strong>autonavReset ([timer=0.])</strong>
     </dt>
     <dd>
-    Resets the game speed without disabling autonav.
-<p> <em>Note</em> Does not do anything if the player is not in autonav.
+    Resets the game speed without disabling autonav. </p>
 
+<p> <em>Note</em> Does not do anything if the player is not in autonav.
 
 
     <h3>Parameters:</h3>
@@ -1216,7 +1216,6 @@
     <dd>
     Ends the autonav system.  You probably want to use player.autonavAbort
  instead of this.
-
 
 
 
@@ -1303,7 +1302,8 @@
     <strong>cinematics (enable, options)</strong>
     </dt>
     <dd>
-    Puts the game in cinematics mode or back to regular mode.
+    Puts the game in cinematics mode or back to regular mode. </p>
+
 <p> Possible options are:<br/>
  <ul>
   <li>abort : (string) autonav abort message</li>
@@ -1311,7 +1311,6 @@
  speed, default false</li> <li>gui : (boolean) enables the player's gui,
  default disabled</li>
  </ul>
-
 
 
     <h3>Parameters:</h3>
@@ -1408,9 +1407,9 @@ without hiding gui.
     <strong>unboard ()</strong>
     </dt>
     <dd>
-    Unboards the player from its boarded target.
-<p> Use from inside a board hook.
+    Unboards the player from its boarded target. </p>
 
+<p> Use from inside a board hook.
 
 
 
@@ -1449,10 +1448,10 @@ without hiding gui.
     <strong>takeoff ()</strong>
     </dt>
     <dd>
-    Forces the player to take off if they are landed.
+    Forces the player to take off if they are landed. </p>
+
 <p> Assume the pilot is still landed until the current running function returns
   If you want to create pilots on take off please hook the takeoff/land hooks.
-
 
 
 
@@ -1494,10 +1493,10 @@ without hiding gui.
     <strong>land (spb)</strong>
     </dt>
     <dd>
-    Automagically lands the player on a spob.
+    Automagically lands the player on a spob. </p>
+
 <p> Note that this will teleport the player to the system in question as
  necessary.
-
 
 
     <h3>Parameters:</h3>
@@ -1518,10 +1517,10 @@ without hiding gui.
     <strong>landAllow ([b=true[, msg]])</strong>
     </dt>
     <dd>
-    Allows or disallows the player to land.
+    Allows or disallows the player to land. </p>
+
 <p> This will allow or disallow landing on a system level and is reset when the
   player enters another system.
-
 
 
     <h3>Parameters:</h3>
@@ -1559,7 +1558,8 @@ to land with the message &quot;No landing.&quot;
     <strong>landWindow (winname)</strong>
     </dt>
     <dd>
-    Sets the active land window.
+    Sets the active land window. </p>
+
 <p> Valid windows are:<br/>
   - main<br/>
   - bar<br/>
@@ -1568,7 +1568,6 @@ to land with the message &quot;No landing.&quot;
   - shipyard<br/>
   - equipment<br/>
   - commodity<br/>
-
 
 
     <h3>Parameters:</h3>
@@ -1600,9 +1599,9 @@ to land with the message &quot;No landing.&quot;
     <strong>commOpen (Target)</strong>
     </dt>
     <dd>
-    Opens communication with a pilot or spob.
-<p> Will do no checks with spobs.
+    Opens communication with a pilot or spob. </p>
 
+<p> Will do no checks with spobs.
 
 
     <h3>Parameters:</h3>
@@ -1846,9 +1845,9 @@ to land with the message &quot;No landing.&quot;
     <strong>outfits ([unequipped_only=false])</strong>
     </dt>
     <dd>
-    Gets all the outfits the player owns.
-<p> If you want the quantity, call player.outfitNum() on the individual outfit.
+    Gets all the outfits the player owns. </p>
 
+<p> If you want the quantity, call player.outfitNum() on the individual outfit.
 
 
     <h3>Parameters:</h3>
@@ -1956,9 +1955,9 @@ blasters
     <strong>outfitRm (name[, q])</strong>
     </dt>
     <dd>
-    Removes an outfit from the player's outfit list.
-<p> "all" will remove all outfits.
+    Removes an outfit from the player's outfit list. </p>
 
+<p> "all" will remove all outfits.
 
 
     <h3>Parameters:</h3>
@@ -1990,10 +1989,10 @@ from the player
     <strong>shipAdd (ship[, name=ship.get(ship):name()[, acquired[, noname=false]]])</strong>
     </dt>
     <dd>
-    Gives the player a new ship.
+    Gives the player a new ship. </p>
+
 <p> <em>Note</em> Should be given when landed, ideally on a spob with a shipyard.
  Furthermore, this invalidates all player.pilot() references.
-
 
 
     <h3>Parameters:</h3>
@@ -2044,12 +2043,12 @@ player a Pirate Kestrel named Seiryuu if player cancels the naming.
     <strong>shipSwap (ship[, ignore_cargo=false[, remove=false]])</strong>
     </dt>
     <dd>
-    Swaps the player's current ship with a ship they own by name.
+    Swaps the player's current ship with a ship they own by name. </p>
+
 <p> <em>Note</em> You shouldn't use this directly unless you know what you are doing. If
  the player's cargo doesn't fit in the new ship, it won't be moved over and
  can lead to a whole slew of issues.
  <em>Note</em> This invalidates all player.pilot() references!
-
 
 
     <h3>Parameters:</h3>
@@ -2144,9 +2143,9 @@ space family mission
     <strong>misnDone (name)</strong>
     </dt>
     <dd>
-    Checks to see if player has done a mission.
-<p> This only works with missions that have the unique flag.
+    Checks to see if player has done a mission. </p>
 
+<p> This only works with missions that have the unique flag.
 
 
     <h3>Parameters:</h3>
@@ -2232,9 +2231,9 @@ active
     <strong>evtDone (name)</strong>
     </dt>
     <dd>
-    Checks to see if player has done an event.
-<p> This only works with events that have the unique flag.
+    Checks to see if player has done an event. </p>
 
+<p> This only works with events that have the unique flag.
 
 
     <h3>Parameters:</h3>
@@ -2391,7 +2390,6 @@ active
     Gets the free space for mission cargos on the player's ship.  This can
  be less than the amount of free space in the player's fleet since the other
  fleet ships can not carry mission cargo.
-
 
 
 
@@ -2580,9 +2578,9 @@ active
     <strong>inventory ()</strong>
     </dt>
     <dd>
-    Gets the contents of the player's inventory.
-<p> Note that this does not get licenses.
+    Gets the contents of the player's inventory. </p>
 
+<p> Note that this does not get licenses.
 
 
 
@@ -2692,11 +2690,11 @@ active
     <strong>teleport (dest[, no_simulate=false[, silent=false]])</strong>
     </dt>
     <dd>
-    Teleports the player to a new spob or system (only if not landed).
+    Teleports the player to a new spob or system (only if not landed). </p>
+
 <p> If the destination is a system, the coordinates of the player will not
  change. If the destination is a spob, the player will be placed over that
  spob.
-
 
 
     <h3>Parameters:</h3>
@@ -2920,7 +2918,6 @@ doesn&apos;t run any initial simulation
  and jumps.  Meant to be used with cutscenes that use player.teleport().
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">or</span>
@@ -3020,7 +3017,7 @@ doesn&apos;t run any initial simulation
          a table containing the different start information as
  keys and the corresponding information as values. Fields include things such
  as "name" for the campaign name, "ship" for the starting ship, "shipname" for
- the starting shp name, etc. Please refer to `dat/start.xml` for more details
+ the starting shp name, etc. Please refer to <code>dat/start.xml</code> for more details
  of available fields.
     </ol>
 
@@ -3035,7 +3032,7 @@ doesn&apos;t run any initial simulation
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-12-08 13:14:37 </i>
+<i style="float:right;">Last updated 2024-12-08 14:29:33 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">

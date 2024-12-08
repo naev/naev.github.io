@@ -86,7 +86,6 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/cinema.html">cinema</a></li>
-  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><strong>format</strong></li>
@@ -95,6 +94,7 @@
   <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
@@ -144,6 +144,7 @@
   <li><a href="../modules/prob.html">prob</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
+  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
 
@@ -153,12 +154,10 @@
 
 <h1>Module <code>format</code></h1>
 <p>Provides string formatting and interpolation facilities.</p>
-<p>
-   The benefits of using it are easy internationalization and consistency with the rest of Naev.
+<p>   The benefits of using it are easy internationalization and consistency with the rest of Naev.
    The number formatters handle plural forms in the user's language, digit separators, and abbreviations.
    String interpolation (format.f) allows for named parameters ("Fly to {planet} in the {system} system"),
-   whereas string.format is positional ("Fly to %s in the %s system") and locks translators into the English word order.
-</p>
+   whereas string.format is positional ("Fly to %s in the %s system") and locks translators into the English word order.</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -217,7 +216,6 @@
 If you pass a more exotic "number" value, you'll get a string back, but you won't attain happiness.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">number</span>
@@ -235,9 +233,9 @@ If you pass a more exotic "number" value, you'll get a string back, but you won'
     <strong>credits (credits)</strong>
     </dt>
     <dd>
-    Converts a number of credits to a string.
-<p>   Should be used everywhere a number of credits is displayed.
+    Converts a number of credits to a string. </p>
 
+<p>   Should be used everywhere a number of credits is displayed.
 
 
     <h3>Parameters:</h3>
@@ -273,8 +271,11 @@ If you pass a more exotic "number" value, you'll get a string back, but you won'
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">reward_list</span>
-         Thing or number of credits the player is receiving.
-                    Avoid passing strings (English or translated) for clarity's sake. Can be a table containing multiple instances.
+
+<p> Thing or number of credits the player is receiving.</p>
+<pre><code>                Avoid passing strings (English or translated) for clarity's sake. Can be a table containing multiple instances.
+</code></pre>
+
         </li>
     </ul>
 
@@ -298,12 +299,12 @@ If you pass a more exotic "number" value, you'll get a string back, but you won'
     <strong>tonnes (tonnes)</strong>
     </dt>
     <dd>
-    Converts a number of tonnes to a string, using ngettext.
+    Converts a number of tonnes to a string, using ngettext. </p>
+
 <p>   This adds "tonnes" to the output of fmt.number in a translatable way.
    Caution: Usage within sentences can backfire, if the correct grammar to use
    depends on the number of tonnes. Using ngettext (n_) on full sentences is
    safer where practical.
-
 
 
     <h3>Parameters:</h3>
@@ -358,12 +359,12 @@ If you pass a more exotic "number" value, you'll get a string back, but you won'
     <strong>jumps (jumps)</strong>
     </dt>
     <dd>
-    Converts a number of jumps to a string, utilizing ngettext.
+    Converts a number of jumps to a string, utilizing ngettext. </p>
+
 <p>   This adds "jumps" to the output of fmt.number in a translatable way.
    Caution: Usage within sentences can backfire, if the correct grammar to use
    depends on the number of jumps. Using ngettext (n_) on full sentences is
    safer where practical.
-
 
 
     <h3>Parameters:</h3>
@@ -396,11 +397,12 @@ If you pass a more exotic "number" value, you'll get a string back, but you won'
     A version of string.gsub returning just the string.  --]]local function _replace(template, index, text)
    local str = string.gsub(template, index, tostring(text))
    return str
-end
-<p>--[[--
-Creates a translatable list of words.
-<p>   Taken from <a href="https://stackoverflow.com/questions/43081112/localization-of-lists/58033018#58033018">this post</a>.
+end</p>
 
+<p>--[[--
+Creates a translatable list of words.</p>
+
+<p>   Taken from <a href="https://stackoverflow.com/questions/43081112/localization-of-lists/58033018#58033018">this post</a>.
 
 
     <h3>Parameters:</h3>
@@ -427,9 +429,9 @@ Creates a translatable list of words.
     <strong>humanize (num)</strong>
     </dt>
     <dd>
-    Converts a number to a human readable string.
-<p>Has to be implemented on a per-language basis.
+    Converts a number to a human readable string. </p>
 
+<p>Has to be implemented on a per-language basis.
 
 
     <h3>Parameters:</h3>
@@ -456,18 +458,21 @@ Creates a translatable list of words.
     <strong>f (str, tab)</strong>
     </dt>
     <dd>
-    String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> but closer to Python's str.format().
+    String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> but closer to Python's str.format(). </p>
+
 <p>   Prefer this over string.format because it allows translations to change the word order.
    It also lets you use objects in the formatting (if they support tostring()), whereas string.format can only do this under LuaJIT.
-
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">str</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-         Format string which may include placeholders of the form "{var}" "{var:6.3f}"
-                      (where the expression after the colon is any directive string.format understands).
+
+<p> Format string which may include placeholders of the form "{var}" "{var:6.3f}"</p>
+<pre><code>                  (where the expression after the colon is any directive string.format understands).
+</code></pre>
+
         </li>
         <li><span class="parameter">tab</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
@@ -496,7 +501,7 @@ Creates a translatable list of words.
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-12-08 13:14:37 </i>
+<i style="float:right;">Last updated 2024-12-08 14:29:33 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">

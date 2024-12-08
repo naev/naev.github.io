@@ -86,7 +86,6 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/cinema.html">cinema</a></li>
-  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
@@ -95,6 +94,7 @@
   <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
@@ -144,6 +144,7 @@
   <li><a href="../modules/prob.html">prob</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
+  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
 
@@ -153,15 +154,17 @@
 
 <h1>Module <code>faction</code></h1>
 <p>Lua bindings to deal with factions.</p>
-<p>
 <p> Use like:
  <pre>
  f = faction.get( "Empire" )
- if f:playerStanding() < 0 then
-    -- player is hostile to "Empire"
- end
- </pre>
-</p>
+ if f:playerStanding() &lt; 0 then</p>
+
+<pre>
+<span class="comment">-- player is hostile to "Empire"</span>
+</pre>
+
+<p> end
+ </pre></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -442,9 +445,9 @@
     <strong>__eq (f, comp)</strong>
     </dt>
     <dd>
-    __eq (equality) metamethod for factions.
-<p> You can use the '==' operator within Lua to compare factions with this.
+    __eq (equality) metamethod for factions. </p>
 
+<p> You can use the '==' operator within Lua to compare factions with this.
 
 
     <h3>Parameters:</h3>
@@ -480,12 +483,12 @@
     <strong>name (f)</strong>
     </dt>
     <dd>
-    Gets the faction's translated short name.
+    Gets the faction's translated short name. </p>
+
 <p> This translated name should be used for display purposes (e.g.
  messages) where the shorter version of the faction's display name
  should be used. It cannot be used as an identifier for the faction;
  for that, use faction.nameRaw() instead.
-
 
 
     <h3>Parameters:</h3>
@@ -517,12 +520,12 @@
     <strong>nameRaw (f)</strong>
     </dt>
     <dd>
-    Gets the faction's raw / "real" (untranslated, internal) name.
+    Gets the faction's raw / "real" (untranslated, internal) name. </p>
+
 <p> This untranslated name should be used for identification purposes
  (e.g. can be passed to faction.get()). It should not be used for
  display purposes; for that, use faction.name() or faction.longname()
  instead.
-
 
 
     <h3>Parameters:</h3>
@@ -554,12 +557,12 @@
     <strong>longname (f)</strong>
     </dt>
     <dd>
-    Gets the faction's translated long name.
+    Gets the faction's translated long name. </p>
+
 <p> This translated name should be used for display purposes (e.g.
  messages) where the longer version of the faction's display name
  should be used. It cannot be used as an identifier for the faction;
  for that, use faction.nameRaw() instead.
-
 
 
     <h3>Parameters:</h3>
@@ -675,9 +678,9 @@
     <strong>hit (f, mod, Whether[, reason="script"[, single=false]])</strong>
     </dt>
     <dd>
-    Modifies the player's standing with the faction.
-<p> Also can modify the standing with allies and enemies of the faction.
+    Modifies the player's standing with the faction. </p>
 
+<p> Also can modify the standing with allies and enemies of the faction.
 
 
     <h3>Parameters:</h3>
@@ -878,7 +881,6 @@ doesn&apos;t affect allies nor enemies of the faction.
  sparingly as it overrites local standings.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">f</span>
@@ -908,7 +910,6 @@ doesn&apos;t affect allies nor enemies of the faction.
  standing Lua scripts. Not meant for use elsewhere.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">f</span>
@@ -932,9 +933,9 @@ doesn&apos;t affect allies nor enemies of the faction.
     <strong>modPlayer (f, mod[, reason="script"])</strong>
     </dt>
     <dd>
-    Modifies the player's standing with the faction.
-<p> Also modifies standing with allies and enemies of the faction.
+    Modifies the player's standing with the faction. </p>
 
+<p> Also modifies standing with allies and enemies of the faction.
 
 
     <h3>Parameters:</h3>
@@ -971,9 +972,9 @@ doesn&apos;t affect allies nor enemies of the faction.
     <strong>modPlayerSingle (f, mod[, reason="script"])</strong>
     </dt>
     <dd>
-    Modifies the player's standing with the faction.
-<p> Does not affect other faction standings.
+    Modifies the player's standing with the faction. </p>
 
+<p> Does not affect other faction standings.
 
 
     <h3>Parameters:</h3>
@@ -1010,10 +1011,10 @@ doesn&apos;t affect allies nor enemies of the faction.
     <strong>modPlayerRaw (f, mod)</strong>
     </dt>
     <dd>
-    Modifies the player's standing with the faction.
+    Modifies the player's standing with the faction. </p>
+
 <p> Does not affect other faction standings and is not processed by the faction
   Lua script, so it indicates exactly the amount to be changed.
-
 
 
     <h3>Parameters:</h3>
@@ -1513,9 +1514,9 @@ doesn&apos;t affect allies nor enemies of the faction.
     </dt>
     <dd>
     Adds a faction dynamically.  Note that if the faction already exists as
- a dynamic faction, the existing one is returned.
-<p> <em>Note</em> Defaults to known.
+ a dynamic faction, the existing one is returned.</p>
 
+<p> <em>Note</em> Defaults to known.
 
 
     <h3>Parameters:</h3>
@@ -1537,8 +1538,8 @@ doesn&apos;t affect allies nor enemies of the faction.
         <li><span class="parameter">params</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
          Table of parameters. Options include "ai"
- (string) to set the AI to use, "clear_allies" (boolean) to clear all allies,
- "clear_enemies" (boolean) to clear all enemies, "player" (number) to set the
+ (string) to set the AI to use, "clear<em>allies" (boolean) to clear all allies,
+ "clear</em>enemies" (boolean) to clear all enemies, "player" (number) to set the
  default player standing, "colour" (string|colour) which represents the
  factional colours.
          (<em>optional</em>)
@@ -1556,7 +1557,6 @@ doesn&apos;t affect allies nor enemies of the faction.
     </dt>
     <dd>
     Adds or removes allies to a faction.  Only works with dynamic factions.
-
 
 
     <h3>Parameters:</h3>
@@ -1591,7 +1591,6 @@ doesn&apos;t affect allies nor enemies of the faction.
  factions.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">fac</span>
@@ -1622,7 +1621,7 @@ doesn&apos;t affect allies nor enemies of the faction.
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-12-08 13:14:37 </i>
+<i style="float:right;">Last updated 2024-12-08 14:29:33 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">

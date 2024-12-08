@@ -86,7 +86,6 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/cinema.html">cinema</a></li>
-  <li><a href="../modules/vn.html">vn</a></li>
   <li><strong>escort</strong></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
@@ -95,6 +94,7 @@
   <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
@@ -144,6 +144,7 @@
   <li><a href="../modules/prob.html">prob</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
+  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
 
@@ -154,40 +155,44 @@
 <h1>Module <code>escort</code></h1>
 <p>Library for dealing with escorts in missions.</p>
 <p>
-<p>Can be used either to provide the player with a few perishable escorts, or provide a set of escorts the player has to follow and guard to the destination.
-<p>Below is a simple example of a convoy that the player has to protect while it goes on to some spob.
-```
--- This is an example of using the API to provide a fleet the player has to
--- guard starting from the start_convoy function that sets it up
--- The mission will automatically fail if all the escorts die
-function start_convoy ()
-   -- Initialize the library with the pilots the player has to escort
-   escort.init( {"Koala", "Llama"}, {faction=faction.get("Independent")} )
-   -- Set the destination target, the escorts will try to go there automagically
-   escort.setDest( spob.get("Darkshed"), "convoy success" )
-end
--- This function will be run  when the player lands on the destination
-function convoy_success ()
-   local alive = escort.num_alive()
-   -- Do something based on the number of escorts that are alive
-   do_something( alive )
-   -- Cleans up the library
-   escort.exit()
-end
-```
-<p>Below is a more complex example where the player becomes the leader and the escorts follow and protect the player.
-```
--- Initialize the library and give the player two escorts that will guard them / help them out
-function start_convoy ()
-   escort.init( {"Lancelot", "Lancelot"}, {faction=faction.get("Mercenary"), nofailifdead=true, func_pilot_death="escort_died"} )
-end
--- The escort died
-function escort_died( _p )
-   if escort.num_alive() <= 0 then
-      -- All the escorts are dead
-   end
-end
-```
+
+
+<p>Can be used either to provide the player with a few perishable escorts, or provide a set of escorts the player has to follow and guard to the destination.</p>
+
+<p>Below is a simple example of a convoy that the player has to protect while it goes on to some spob.</p>
+<pre><code> -- This is an example of using the API to provide a fleet the player has to
+ -- guard starting from the start_convoy function that sets it up
+ -- The mission will automatically fail if all the escorts die
+ function start_convoy ()
+    -- Initialize the library with the pilots the player has to escort
+    escort.init( {"Koala", "Llama"}, {faction=faction.get("Independent")} )
+    -- Set the destination target, the escorts will try to go there automagically
+    escort.setDest( spob.get("Darkshed"), "convoy success" )
+ end
+ -- This function will be run  when the player lands on the destination
+ function convoy_success ()
+    local alive = escort.num_alive()
+    -- Do something based on the number of escorts that are alive
+    do_something( alive )
+    -- Cleans up the library
+    escort.exit()
+ end
+</code></pre>
+
+
+<p>Below is a more complex example where the player becomes the leader and the escorts follow and protect the player.</p>
+<pre><code> -- Initialize the library and give the player two escorts that will guard them / help them out
+ function start_convoy ()
+    escort.init( {"Lancelot", "Lancelot"}, {faction=faction.get("Mercenary"), nofailifdead=true, func_pilot_death="escort_died"} )
+ end
+ -- The escort died
+ function escort_died( _p )
+    if escort.num_alive() &lt;= 0 then
+       -- All the escorts are dead
+    end
+ end
+</code></pre>
+
 </p>
 
 
@@ -315,9 +320,9 @@ end
     <strong>setDest (dest, success[, failure])</strong>
     </dt>
     <dd>
-    Sets the destination of the escort convoy.
-<p>Disables the escorts from following the player.
+    Sets the destination of the escort convoy. </p>
 
+<p>Disables the escorts from following the player.
 
 
     <h3>Parameters:</h3>
@@ -364,7 +369,6 @@ end
     Spawns the escorts at location.  This can be useful at the beginning if you want them to jump in or take of while in space. It is handled automatically when the player takes off or jumps into a system.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">pos</span>
@@ -390,7 +394,7 @@ end
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-12-08 13:14:37 </i>
+<i style="float:right;">Last updated 2024-12-08 14:29:33 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">

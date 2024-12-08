@@ -86,7 +86,6 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/cinema.html">cinema</a></li>
-  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
@@ -95,6 +94,7 @@
   <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
@@ -144,6 +144,7 @@
   <li><a href="../modules/prob.html">prob</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
+  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
 
@@ -153,19 +154,24 @@
 
 <h1>Module <code>hook</code></h1>
 <p>Lua bindings to manipulate hooks.</p>
-<p>
 <p> Hooks allow you to trigger functions to certain actions like when the player
-  jumps or a pilot dies.
+  jumps or a pilot dies.</p>
+
 <p> They can have arguments passed to them which will then get passed to the
-  called hook function.
+  called hook function.</p>
+
 <p> Example usage would be:
  <pre>
- function penter( arg )
-    -- Function to run when player enters a system
- end
+ function penter( arg )</p>
+
+<pre>
+<span class="comment">-- Function to run when player enters a system</span>
+</pre>
+
+<p> end</p>
+
 <p> hookid = hook.enter( "penter", 5 )
- </pre>
-</p>
+ </pre></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -253,7 +259,7 @@
 	<td class="summary">Hooks the function to the player selling any sort of outfit.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#outfit_sell">outfit_sell (funcname, arg)</a></td>
+	<td class="name" nowrap><a href="#equip">equip (funcname, arg)</a></td>
 	<td class="summary">Hooks the function to the player equipping or deequipping any outfit.</td>
 	</tr>
 	<tr>
@@ -375,7 +381,8 @@
     <strong>land (funcname[, where], arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player landing.
+    Hooks the function to the player landing. </p>
+
 <p> Can also be used to hook the various subparts of the landing menu. Possible
  targets for where are:<br />
    - "land" - when landed (default with no parameter )<br />
@@ -385,7 +392,6 @@
    - "mission" - when visited mission computer<br />
    - "commodity" - when visited commodity exchange<br />
    - "equipment" - when visiting equipment place<br />
-
 
 
     <h3>Parameters:</h3>
@@ -428,7 +434,8 @@ equipment screen
     <strong>info (funcname[, where], arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the info menu.
+    Hooks the function to the info menu. </p>
+
 <p> Can also be used to hook the various subparts of the info menu. Possible
  targets for where are:<br />
    - "main"<br />
@@ -438,7 +445,6 @@ equipment screen
    - "mission"<br />
    - "standing"<br />
    - "shiplog"<br />
-
 
 
     <h3>Parameters:</h3>
@@ -637,9 +643,9 @@ equipment screen
     <strong>hail_spob (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player hailing any spob.
-<p> The hook receives a single parameter which is the spob being hailed.
+    Hooks the function to the player hailing any spob. </p>
 
+<p> The hook receives a single parameter which is the spob being hailed.
 
 
     <h3>Parameters:</h3>
@@ -669,9 +675,9 @@ equipment screen
     <strong>hail (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player hailing any ship (not a spob).
-<p> The hook receives a single parameter which is the ship being hailed.
+    Hooks the function to the player hailing any ship (not a spob). </p>
 
+<p> The hook receives a single parameter which is the ship being hailed.
 
 
     <h3>Parameters:</h3>
@@ -701,9 +707,9 @@ equipment screen
     <strong>board (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player boarding any ship.
-<p> The hook receives a single parameter which is the ship being boarded.
+    Hooks the function to the player boarding any ship. </p>
 
+<p> The hook receives a single parameter which is the ship being boarded.
 
 
     <h3>Parameters:</h3>
@@ -733,9 +739,9 @@ equipment screen
     <strong>timer (s, funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks a timer.
-<p> The hook receives only the optional argument.
+    Hooks a timer. </p>
 
+<p> The hook receives only the optional argument.
 
 
     <h3>Parameters:</h3>
@@ -778,16 +784,15 @@ equipment screen
 
 
 
-
 </dd>
     <dt>
     <a name = "date"></a>
     <strong>date (resolution, funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks a date change with custom resolution.
-<p> The hook receives only the optional argument.
+    Hooks a date change with custom resolution. </p>
 
+<p> The hook receives only the optional argument.
 
 
     <h3>Parameters:</h3>
@@ -828,9 +833,9 @@ a 1000 second resolution
     <strong>comm_buy (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player buying any sort of commodity.
-<p> The hook receives the commodity bought and the quantity being bought.
+    Hooks the function to the player buying any sort of commodity. </p>
 
+<p> The hook receives the commodity bought and the quantity being bought.
 
 
     <h3>Parameters:</h3>
@@ -860,9 +865,9 @@ a 1000 second resolution
     <strong>comm_sell (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player selling any sort of commodity.
-<p> The hook receives the commodity sold and the quantity being sold.
+    Hooks the function to the player selling any sort of commodity. </p>
 
+<p> The hook receives the commodity sold and the quantity being sold.
 
 
     <h3>Parameters:</h3>
@@ -892,9 +897,9 @@ a 1000 second resolution
     <strong>comm_jettison (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player jettisoning any sort of commodity.
-<p> The hook receives the commodity and the quantity jettisoned.
+    Hooks the function to the player jettisoning any sort of commodity. </p>
 
+<p> The hook receives the commodity and the quantity jettisoned.
 
 
     <h3>Parameters:</h3>
@@ -925,9 +930,9 @@ a 1000 second resolution
     </dt>
     <dd>
     Hooks the function to the player gatehring any sort of commodity in
- space.
-<p> The hook receives the commodity and the quantity being gathered.
+ space. </p>
 
+<p> The hook receives the commodity and the quantity being gathered.
 
 
     <h3>Parameters:</h3>
@@ -957,9 +962,9 @@ a 1000 second resolution
     <strong>outfit_buy (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player buying any sort of outfit.
-<p> The hook receives the name of the outfit and the quantity being bought.
+    Hooks the function to the player buying any sort of outfit. </p>
 
+<p> The hook receives the name of the outfit and the quantity being bought.
 
 
     <h3>Parameters:</h3>
@@ -989,9 +994,9 @@ a 1000 second resolution
     <strong>outfit_sell (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player selling any sort of outfit.
-<p> The hook receives the name of the outfit and the quantity being sold.
+    Hooks the function to the player selling any sort of outfit. </p>
 
+<p> The hook receives the name of the outfit and the quantity being sold.
 
 
     <h3>Parameters:</h3>
@@ -1017,8 +1022,8 @@ a 1000 second resolution
 
 </dd>
     <dt>
-    <a name = "outfit_sell"></a>
-    <strong>outfit_sell (funcname, arg)</strong>
+    <a name = "equip"></a>
+    <strong>equip (funcname, arg)</strong>
     </dt>
     <dd>
     Hooks the function to the player equipping or deequipping any outfit.
@@ -1051,9 +1056,9 @@ a 1000 second resolution
     <strong>ship_buy (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player buying any sort of ship.
-<p> The hook receives the name of the ship type bought.
+    Hooks the function to the player buying any sort of ship. </p>
 
+<p> The hook receives the name of the ship type bought.
 
 
     <h3>Parameters:</h3>
@@ -1083,10 +1088,10 @@ a 1000 second resolution
     <strong>ship_sell (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player selling any sort of ship.
+    Hooks the function to the player selling any sort of ship. </p>
+
 <p> The hook receives the name of the ship type sold and the player-given name of
  the ship.
-
 
 
     <h3>Parameters:</h3>
@@ -1116,10 +1121,10 @@ a 1000 second resolution
     <strong>ship_swap (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player swapping their ship.
+    Hooks the function to the player swapping their ship. </p>
+
 <p> The hook receives the name of the ship swapped to and the name of the ship
  swapped from (if applicable).
-
 
 
     <h3>Parameters:</h3>
@@ -1149,11 +1154,11 @@ a 1000 second resolution
     <strong>input (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player pressing any input.
+    Hooks the function to the player pressing any input. </p>
+
 <p> It returns the name of the key being pressed like "accel" and whether or not
  it's a press.<br/> <br/> Functions should be in format:<br/> function f(
  inputname, inputpress, args )
-
 
 
     <h3>Parameters:</h3>
@@ -1183,11 +1188,11 @@ a 1000 second resolution
     <strong>mouse (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to the player clicking the mouse.
+    Hooks the function to the player clicking the mouse. </p>
+
 <p> The parameter passed to the function is the button pressed
  (1==left,2==middle,3==right), and whether it is a down (true) or up (false)
  event.
-
 
 
     <h3>Parameters:</h3>
@@ -1217,11 +1222,11 @@ a 1000 second resolution
     <strong>standing (funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to any faction standing change.
+    Hooks the function to any faction standing change. </p>
+
 <p> The parameters passed to the function are faction whose standing is being
  changed and the amount changed:<br/>
  function f( faction, change, system, secondary, primary_fct, args )
-
 
 
     <h3>Parameters:</h3>
@@ -1252,13 +1257,13 @@ a 1000 second resolution
     </dt>
     <dd>
     Hooks the function to when the player discovers an spob, jump point or
- the likes.
+ the likes. </p>
+
 <p> The parameters passed to the function are the type which can be one of:<br/>
  - "spob" <br/>
  - "jump" <br/>
  and the actual spob or jump point discovered with the following format: <br/>
  function f( type, discovery )
-
 
 
     <h3>Parameters:</h3>
@@ -1288,9 +1293,9 @@ a 1000 second resolution
     <strong>asteroid_scan (funcname, Argument)</strong>
     </dt>
     <dd>
-    Hooks the function to when the player scans an asteroid.
-<p> The parameter passed to the function is the asteroid scanned.
+    Hooks the function to when the player scans an asteroid. </p>
 
+<p> The parameter passed to the function is the asteroid scanned.
 
 
     <h3>Parameters:</h3>
@@ -1323,10 +1328,10 @@ a 1000 second resolution
     </dt>
     <dd>
     Hooks the function to when the player receives  or loses money through
- player.pay() (the Lua function only).
+ player.pay() (the Lua function only). </p>
+
 <p> The amount paid (or taken from the player) and reason (which is nil by
  default) is passed as a parameter:<br/> function f( amount, reason, args )
-
 
 
     <h3>Parameters:</h3>
@@ -1357,10 +1362,10 @@ a 1000 second resolution
     </dt>
     <dd>
     Hook run once at the end of the next frame regardless of anything that
- can happen.
+ can happen. </p>
+
 <p> This hook is a good way to do possibly breaking stuff like for example
  player.teleport().
-
 
 
     <h3>Parameters:</h3>
@@ -1391,13 +1396,14 @@ a 1000 second resolution
     </dt>
     <dd>
     Hook run at the end of each frame when the update routine is run (game
- is not paused, etc.).
+ is not paused, etc.). </p>
+
 <p> It is closely related to hook.safe(), but you have to manually remove it or
- it continues forever.
+ it continues forever.</p>
+
 <p> The current delta-tick (time passed in game) and real delta-tick (independent
  of game status) are passed as parameters:<br/> function f( dt, real_dt, args
  )
-
 
 
     <h3>Parameters:</h3>
@@ -1431,7 +1437,6 @@ a 1000 second resolution
  background stuff).  Meant to be only for rendering things.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">funcname</span>
@@ -1461,7 +1466,6 @@ a 1000 second resolution
     <dd>
     Hook that runs during rendering the foreground (just below the gui
  stuff).  Meant to be only for rendering things.
-
 
 
     <h3>Parameters:</h3>
@@ -1495,7 +1499,6 @@ a 1000 second resolution
  alternative to doing post-processing shader effects.
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">funcname</span>
@@ -1525,7 +1528,6 @@ a 1000 second resolution
     <dd>
     Hook that runs when a mission is complete.  The entire mission
  information table is passed similar to player.evtDoneList().
-
 
 
     <h3>Parameters:</h3>
@@ -1559,7 +1561,6 @@ a 1000 second resolution
  table is passed similar to player.evtDoneList().
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">funcname</span>
@@ -1588,8 +1589,7 @@ a 1000 second resolution
     </dt>
     <dd>
     Hook run once at the end of the next frame regardless when manually
- triggered.  Can be triggered manually with `naev.trigger`.
-
+ triggered.  Can be triggered manually with <a href="../modules/naev.html#trigger">naev.trigger</a>.
 
 
     <h3>Parameters:</h3>
@@ -1621,9 +1621,11 @@ a 1000 second resolution
     <strong>pilot (pilot, type, funcname, arg)</strong>
     </dt>
     <dd>
-    Hooks the function to a specific pilot.
+    Hooks the function to a specific pilot. </p>
+
 <p> These hooks only live in the current system and get reset every time the
- player enters a new system.
+ player enters a new system.</p>
+
 <p> You can hook to different actions.  Currently hook system only supports:<br
  /> <ul> <li> "creation" : triggered when a pilot is created.</li> <li>
  "death" : triggered when pilot dies (before marked as dead). </li> <li>
@@ -1656,24 +1658,27 @@ a 1000 second resolution
  The combat hooks also pass the pilot acting on it, so for example the pilot
   that disabled, attacked or killed the selected pilot. They have the
   following format:
- <p>
-    function combat_hook( pilot, attacker, arg )<br />
-    end
- </p>
+ <p></p>
+<pre><code>function combat_hook( pilot, attacker, arg )&lt;br /&gt;
+end
+</code></pre>
+<p> </p>
  Please note that in the case of disable or death hook the attacker may be nil
   indicating that it was killed by other means like for example the shockwave
   of a dying ship or nebula volatility.<br />
  <br />
  The land and jump hooks also pass the spob or jump point the pilot is
  landing at or jumped from, respectively:
- <p>
-    function land_hook( pilot, spob, arg )<br />
-    end
- </p>
- <p style="margin-bottom: 0">
-    function jump_hook( pilot, jump_point, arg )<br />
-    end
- </p>
+ <p></p>
+<pre><code>function land_hook( pilot, spob, arg )&lt;br /&gt;
+end
+</code></pre>
+<p> </p>
+ <p style="margin-bottom: 0"></p>
+<pre><code>function jump_hook( pilot, jump_point, arg )&lt;br /&gt;
+end
+</code></pre>
+<p> </p>
  The stealth hook passes whether or not the ship is stealthing or destealthing
  as a boolean: <p> function stealth_hook( pilot, status, arg )<br /> end
  </p>
@@ -1716,7 +1721,7 @@ a 1000 second resolution
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-12-08 13:14:37 </i>
+<i style="float:right;">Last updated 2024-12-08 14:29:33 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">

@@ -86,7 +86,6 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
   <li><a href="../modules/cinema.html">cinema</a></li>
-  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/format.html">format</a></li>
@@ -95,6 +94,7 @@
   <li><a href="../modules/lmisn.html">lmisn</a></li>
   <li><a href="../modules/lmusic.html">lmusic</a></li>
   <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
@@ -144,6 +144,7 @@
   <li><a href="../modules/prob.html">prob</a></li>
   <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/swapship.html">swapship</a></li>
+  <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
 
@@ -153,14 +154,13 @@
 
 <h1>Module <code>system</code></h1>
 <p>Lua system module.</p>
-<p>
-<p> This module allows you to use the Star Systems from Lua.
+<p> This module allows you to use the Star Systems from Lua.</p>
+
 <p> Typical example would be something like:
  <pre>
  cur = system.cur() -- Gets current system
  sys = system.get( "Gamma Polaris" )
- </pre>
-</p>
+ </pre></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -329,10 +329,14 @@
     <strong>get (param)</strong>
     </dt>
     <dd>
-    Gets a system.
-<p> Behaves differently depending on what you pass as param: <br/>
-    - string : Gets the system by raw (untranslated) name. <br/>
-    - spob : Gets the system by spob. <br/>
+
+<p>Gets a system. </p>
+
+<p> Behaves differently depending on what you pass as param: <br/></p>
+<pre><code>- string : Gets the system by raw (untranslated) name. &lt;br/&gt;
+- spob : Gets the system by spob. &lt;br/&gt;
+</code></pre>
+
 
 
 
@@ -387,9 +391,9 @@
     <strong>__eq (s, comp)</strong>
     </dt>
     <dd>
-    Check systems for equality.
-<p> Allows you to use the '==' operator in Lua with systems.
+    Check systems for equality. </p>
 
+<p> Allows you to use the '==' operator in Lua with systems.
 
 
     <h3>Parameters:</h3>
@@ -425,11 +429,11 @@
     <strong>name (s)</strong>
     </dt>
     <dd>
-    Returns the system's translated name.
+    Returns the system's translated name. </p>
+
 <p> This translated name should be used for display purposes (e.g.
  messages). It cannot be used as an identifier for the system; for
  that, use system.nameRaw() instead.
-
 
 
     <h3>Parameters:</h3>
@@ -488,11 +492,11 @@
     <strong>nameRaw (s)</strong>
     </dt>
     <dd>
-    Returns the system's raw (untranslated) name.
+    Returns the system's raw (untranslated) name. </p>
+
 <p> This untranslated name should be used for identification purposes
  (e.g. can be passed to system.get()). It should not be used directly
  for display purposes without manually translating it with _().
-
 
 
     <h3>Parameters:</h3>
@@ -640,11 +644,15 @@
     <strong>jumpDist (s, system[, hidden=false[, known=false]])</strong>
     </dt>
     <dd>
-    Gets jump distance from current system, or to another.
-<p> Does different things depending on the parameter type:
-    - nil : Gets distance to current system.
-    - string : Gets distance to system matching name.
-    - system : Gets distance to system
+
+<p>Gets jump distance from current system, or to another. </p>
+
+<p> Does different things depending on the parameter type:</p>
+<pre><code>- nil : Gets distance to current system.
+- string : Gets distance to system matching name.
+- system : Gets distance to system
+</code></pre>
+
 
 
 
@@ -698,14 +706,15 @@
     <strong>jumpPath (s, goal[, hidden=false])</strong>
     </dt>
     <dd>
-    Gets jump path from current system, or to another.
-<p> Does different things depending on the parameter type:
- <ul>
-    <li>nil : Gets path to current system.</li>
-    <li>string : Gets path to system with the given raw (untranslated)
- name.</li> <li>system : Gets path to system</li>
- </ul>
+    Gets jump path from current system, or to another. </p>
 
+<p> Does different things depending on the parameter type:
+ <ul></p>
+<pre><code>&lt;li&gt;nil : Gets path to current system.&lt;/li&gt;
+&lt;li&gt;string : Gets path to system with the given raw (untranslated)
+</code></pre>
+<p> name.</li> <li>system : Gets path to system</li>
+ </ul>
 
 
     <h3>Parameters:</h3>
@@ -926,7 +935,6 @@ creates 5 tons of gold at the origin
  without being translated by _().
 
 
-
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">s</span>
@@ -996,13 +1004,13 @@ to see if the Dvaered have ships in the system
     <strong>presence (s)</strong>
     </dt>
     <dd>
-    Gets the presence in the system.
+    Gets the presence in the system. </p>
+
 <p> Possible parameters are besides a faction:<br/>
   - "all": Gets the sum of all the presences.<br />
   - "friendly": Gets the sum of all the friendly presences.<br />
   - "hostile": Gets the sum of all the hostile presences.<br />
   - "neutral": Gets the sum of all the neutral presences.<br />
-
 
 
     <h3>Parameters:</h3>
@@ -1039,9 +1047,9 @@ to see if the system is dominantly friendly
     <strong>radius (s)</strong>
     </dt>
     <dd>
-    Gets the radius of the system.
-<p> This is the radius of the circle which all the default jumps will be on.
+    Gets the radius of the system. </p>
 
+<p> This is the radius of the circle which all the default jumps will be on.
 
 
     <h3>Parameters:</h3>
@@ -1204,10 +1212,10 @@ to see if the system is dominantly friendly
     <strong>markerClear ()</strong>
     </dt>
     <dd>
-    Clears the system markers.
+    Clears the system markers. </p>
+
 <p> This can be dangerous and clash with other missions, do not try this at home
  kids.
-
 
 
 
@@ -1401,7 +1409,7 @@ marker at (50,30)
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-12-08 13:14:37 </i>
+<i style="float:right;">Last updated 2024-12-08 14:29:33 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">
