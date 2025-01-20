@@ -320,10 +320,6 @@
 	<td class="summary">Cleans up a weapon set.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#weapsetHeat">weapsetHeat (p[, id])</a></td>
-	<td class="summary">Gets heat information for a weapon set.</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#weapsetSetInrange">weapsetSetInrange (p[, id=nil], docheck)</a></td>
 	<td class="summary">Sets whether a pilot's weapon set does inrange checks.</td>
 	</tr>
@@ -386,10 +382,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#dir">dir (p)</a></td>
 	<td class="summary">Gets the pilot's direction.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#temp">temp (p)</a></td>
-	<td class="summary">Gets the temperature of a pilot.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#mass">mass (p)</a></td>
@@ -628,10 +620,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#changeAI">changeAI (p, newai)</a></td>
 	<td class="summary">Changes the pilot's AI.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#setTemp">setTemp (p, temp[, noslots=false])</a></td>
-	<td class="summary">Sets the temperature of a pilot.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#setHealth">setHealth (p[, armour=current armour[, shield=current shield[, stress=0]]])</a></td>
@@ -2080,8 +2068,7 @@ hostiles of &quot;Pirate&quot; faction 5000 units from origin
  </li> <li> in_arc: Whether or not the target is in targeting arc or nil if
  not applicable. </li>
  <li> active: Whether or not the weapon is currently active.
- </li> <li> heat: Heat level of the weapon where 1 is normal and 0 is
- overheated. </li> <li> type: Type of the weapon. </li> <li> dtype: Damage
+ </li></li> <li> type: Type of the weapon. </li> <li> dtype: Damage
  type of the weapon. </li> <li> track: Tracking level of the weapon. </li>
  </ul></p>
 
@@ -2314,58 +2301,6 @@ print( "Cooldown: " .. tostring(w.cooldown) )
 
 </dd>
     <dt>
-    <a name = "weapsetHeat"></a>
-    <strong>weapsetHeat (p[, id])</strong>
-    </dt>
-    <dd>
-    Gets heat information for a weapon set. </p>
-
-<p> Heat is a 0-2 value that corresponds to three separate ranges:</p>
-
-<p> <ul>
-  <li>0: Weapon set isn't overheating and has no penalties.</li>
-  <li>0-1: Weapon set has reduced accuracy.</li>
-  <li>1-2: Weapon set has full accuracy penalty plus reduced fire rate.</li>
- </ul>
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">p</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Pilot to get weapset weapon of.
-        </li>
-        <li><span class="parameter">id</span>
-            <span class="types"><span class="type">number</span></span>
-         ID of the set to get information of. Defaults to
- all weapon sets.
-         (<em>optional</em>)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-        <li>
-           <span class="types"><span class="type">number</span></span>
-        Mean heat.</li>
-        <li>
-           <span class="types"><span class="type">number</span></span>
-        Peak heat.</li>
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <li><pre data-enlighter-language="lua" class="example">hmean, hpeak = p:weapsetHeat() -- Gets info for all active
- weapons
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
-</pre></li>
-    </ul>
-
-</dd>
-    <dt>
     <a name = "weapsetSetInrange"></a>
     <strong>weapsetSetInrange (p[, id=nil], docheck)</strong>
     </dt>
@@ -2465,9 +2400,8 @@ print( "Cooldown: " .. tostring(w.cooldown) )
  <ul>
   <li> outfit: The outfit. </li>
   <li> type: Type of the outfit. </li>
-  <li> active: Whether or not the outfit is active at the current time.
-  <li> heat: The heat of the outfit's slot. A value between 0 and 1, where 0
- is fully overheated, and 1 is normal. </li> <li> weapset: The first weapon
+  <li> active: Whether or not the outfit is active at the current time.</li>
+  <li> weapset: The first weapon
  set that the outfit appears in, if any. </li> <li> state: State of the
  outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li> <li>
  duration: Set only if state is "on". Indicates duration value (0 = just
@@ -2900,38 +2834,6 @@ print( "State: " .. o.state )
     <h3>Usage:</h3>
     <ul>
         <pre data-enlighter-language="lua" class="example">d = p:dir()
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "temp"></a>
-    <strong>temp (p)</strong>
-    </dt>
-    <dd>
-    Gets the temperature of a pilot.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">p</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Pilot to get temperature of.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        The pilot's current temperature (in kelvin).
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">t = p:temp()
 </pre>
     </ul>
 
@@ -4878,53 +4780,6 @@ you!&quot;) ) -- Messages player ignoring interference
     <ul>
         <pre data-enlighter-language="lua" class="example">p:changeAI( &quot;empire&quot; ) -- set the pilot to use the Empire AI
 </pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "setTemp"></a>
-    <strong>setTemp (p, temp[, noslots=false])</strong>
-    </dt>
-    <dd>
-    Sets the temperature of a pilot. </p>
-
-<p> All temperatures are in Kelvins. Note that temperatures cannot go below the
- base temperature of the Naev galaxy, which is 250K.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">p</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Pilot to set health of.
-        </li>
-        <li><span class="parameter">temp</span>
-            <span class="types"><span class="type">number</span></span>
-         Value to set temperature to. Values below base
- temperature will be clamped.
-        </li>
-        <li><span class="parameter">noslots</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether slots should also be set to
- this temperature.
-         (<em>default</em> false)
-        </li>
-    </ul>
-
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <li><pre data-enlighter-language="lua" class="example">p:setTemp( 300, true ) -- Sets ship temperature to 300K, as well as
- all outfits.
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">p:setTemp( 500, false ) -- Sets ship temperature to 500K, but leaves
- outfits alone.
-</pre></li>
-        <li><pre data-enlighter-language="lua" class="example">p:setTemp( 0 ) -- Sets ship temperature to the base temperature, as
-well as all outfits.
-</pre></li>
     </ul>
 
 </dd>
@@ -7637,7 +7492,7 @@ ship var on the player&apos;s current ship
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2025-01-20 13:15:29 </i>
+<i style="float:right;">Last updated 2025-01-20 15:53:33 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">
