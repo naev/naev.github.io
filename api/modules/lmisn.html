@@ -85,34 +85,35 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/ai.html">ai</a></li>
-  <li><a href="../modules/cinema.html">cinema</a></li>
-  <li><a href="../modules/escort.html">escort</a></li>
-  <li><a href="../modules/fleet.html">fleet</a></li>
-  <li><a href="../modules/format.html">format</a></li>
-  <li><a href="../modules/lazyload.html">lazyload</a></li>
-  <li><a href="../modules/linenoise.html">linenoise</a></li>
-  <li><strong>lmisn</strong></li>
-  <li><a href="../modules/lmusic.html">lmusic</a></li>
-  <li><a href="../modules/love_shaders.html">love_shaders</a></li>
-  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
   <li><a href="../modules/canvas.html">canvas</a></li>
+  <li><a href="../modules/cinema.html">cinema</a></li>
   <li><a href="../modules/colour.html">colour</a></li>
   <li><a href="../modules/commodity.html">commodity</a></li>
   <li><a href="../modules/data.html">data</a></li>
   <li><a href="../modules/diff.html">diff</a></li>
+  <li><a href="../modules/equipopt.optimize.html">equipopt.optimize</a></li>
+  <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/evt.html">evt</a></li>
   <li><a href="../modules/faction.html">faction</a></li>
   <li><a href="../modules/file.html">file</a></li>
+  <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/font.html">font</a></li>
+  <li><a href="../modules/format.html">format</a></li>
   <li><a href="../modules/gfx.html">gfx</a></li>
   <li><a href="../modules/gui.html">gui</a></li>
   <li><a href="../modules/hook.html">hook</a></li>
   <li><a href="../modules/jump.html">jump</a></li>
+  <li><a href="../modules/lazyload.html">lazyload</a></li>
+  <li><a href="../modules/linenoise.html">linenoise</a></li>
   <li><a href="../modules/linopt.html">linopt</a></li>
+  <li><strong>lmisn</strong></li>
+  <li><a href="../modules/lmusic.html">lmusic</a></li>
+  <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/misn.html">misn</a></li>
   <li><a href="../modules/munition.html">munition</a></li>
   <li><a href="../modules/music.html">music</a></li>
@@ -120,8 +121,14 @@
   <li><a href="../modules/news.html">news</a></li>
   <li><a href="../modules/outfit.html">outfit</a></li>
   <li><a href="../modules/pilot.html">pilot</a></li>
+  <li><a href="../modules/pilotai.html">pilotai</a></li>
   <li><a href="../modules/pilotoutfit.html">pilotoutfit</a></li>
   <li><a href="../modules/player.html">player</a></li>
+  <li><a href="../modules/portrait.html">portrait</a></li>
+  <li><a href="../modules/pp_shaders.html">pp_shaders</a></li>
+  <li><a href="../modules/prng.html">prng</a></li>
+  <li><a href="../modules/prob.html">prob</a></li>
+  <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
   <li><a href="../modules/safelanes.html">safelanes</a></li>
   <li><a href="../modules/shader.html">shader</a></li>
@@ -129,6 +136,7 @@
   <li><a href="../modules/shiplog.html">shiplog</a></li>
   <li><a href="../modules/spfx.html">spfx</a></li>
   <li><a href="../modules/spob.html">spob</a></li>
+  <li><a href="../modules/swapship.html">swapship</a></li>
   <li><a href="../modules/system.html">system</a></li>
   <li><a href="../modules/tex.html">tex</a></li>
   <li><a href="../modules/time.html">time</a></li>
@@ -136,14 +144,6 @@
   <li><a href="../modules/transform.html">transform</a></li>
   <li><a href="../modules/var.html">var</a></li>
   <li><a href="../modules/vec2.html">vec2</a></li>
-  <li><a href="../modules/equipopt.optimize.html">equipopt.optimize</a></li>
-  <li><a href="../modules/pilotai.html">pilotai</a></li>
-  <li><a href="../modules/portrait.html">portrait</a></li>
-  <li><a href="../modules/pp_shaders.html">pp_shaders</a></li>
-  <li><a href="../modules/prng.html">prng</a></li>
-  <li><a href="../modules/prob.html">prob</a></li>
-  <li><a href="../modules/proximity.html">proximity</a></li>
-  <li><a href="../modules/swapship.html">swapship</a></li>
   <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
@@ -162,20 +162,16 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#sfxVictory">sfxVictory ()</a></td>
-	<td class="summary">Plays a happy victory sound.</td>
+	<td class="name" nowrap><a href="#anyMissionActive">anyMissionActive (names)</a></td>
+	<td class="summary">Wrapper for player.misnActive that works on a table of missions.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#sfxMoney">sfxMoney ()</a></td>
-	<td class="summary">Plays a money indicating money made.</td>
+	<td class="name" nowrap><a href="#calculateDistance">calculateDistance (origin_sys, origin_pos, dest_sys, dest_pos, params)</a></td>
+	<td class="summary">Calculates the distance (in pixels) from a position in a system to a position in another system.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#sfxBingo">sfxBingo ()</a></td>
-	<td class="summary">Plays a jingle indicating success.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#sfxEerie">sfxEerie ()</a></td>
-	<td class="summary">Plays a weird eerie sfx.</td>
+	<td class="name" nowrap><a href="#fail">fail (reason)</a></td>
+	<td class="summary">Wrapper for player.msg + misn.finish for when the player fails a mission.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#getLandableSpobs">getLandableSpobs ([sys[, fct[, fctmatch=false]]])</a></td>
@@ -186,8 +182,24 @@
 	<td class="summary">Choose the next system to jump to on the route from system nowsys to system finalsys.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#getRandomSpobAtDistance">getRandomSpobAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</a></td>
+	<td class="summary">Gets a random spob at a distance.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#getRoute">getRoute (nowsys, finalsys, hidden)</a></td>
 	<td class="summary">Gets the route between nowsys and finalsys.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getSpobAtDistance">getSpobAtDistance ([sys=system.cur()], min, max[, fct=faction.get("Player")[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</a></td>
+	<td class="summary">Works the same as lmisn.getSysAtDistance, but for spobs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getSysAtDistance">getSysAtDistance (sys, min, max, filter, data, hidden)</a></td>
+	<td class="summary">
+<p>Fetches an array of systems from min to max jumps away from the given</p>
+<pre><code>     system sys.
+</code></pre>
+</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#lmisn.sysFilters.default">lmisn.sysFilters.default ()</a></td>
@@ -202,32 +214,20 @@
 	<td class="summary">Provides the landable system filter.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getSysAtDistance">getSysAtDistance (sys, min, max, filter, data, hidden)</a></td>
-	<td class="summary">
-<p>Fetches an array of systems from min to max jumps away from the given</p>
-<pre><code>     system sys.
-</code></pre>
-</td>
+	<td class="name" nowrap><a href="#sfxBingo">sfxBingo ()</a></td>
+	<td class="summary">Plays a jingle indicating success.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getSpobAtDistance">getSpobAtDistance ([sys=system.cur()], min, max[, fct=faction.get("Player")[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</a></td>
-	<td class="summary">Works the same as lmisn.getSysAtDistance, but for spobs.</td>
+	<td class="name" nowrap><a href="#sfxEerie">sfxEerie ()</a></td>
+	<td class="summary">Plays a weird eerie sfx.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getRandomSpobAtDistance">getRandomSpobAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</a></td>
-	<td class="summary">Gets a random spob at a distance.</td>
+	<td class="name" nowrap><a href="#sfxMoney">sfxMoney ()</a></td>
+	<td class="summary">Plays a money indicating money made.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#calculateDistance">calculateDistance (origin_sys, origin_pos, dest_sys, dest_pos, params)</a></td>
-	<td class="summary">Calculates the distance (in pixels) from a position in a system to a position in another system.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#anyMissionActive">anyMissionActive (names)</a></td>
-	<td class="summary">Wrapper for player.misnActive that works on a table of missions.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#fail">fail (reason)</a></td>
-	<td class="summary">Wrapper for player.msg + misn.finish for when the player fails a mission.</td>
+	<td class="name" nowrap><a href="#sfxVictory">sfxVictory ()</a></td>
+	<td class="summary">Plays a happy victory sound.</td>
 	</tr>
 </table>
 
@@ -239,55 +239,95 @@
 
     <dl class="function">
     <dt>
-    <a name = "sfxVictory"></a>
-    <strong>sfxVictory ()</strong>
+    <a name = "anyMissionActive"></a>
+    <strong>anyMissionActive (names)</strong>
     </dt>
     <dd>
-    Plays a happy victory sound.  Should be used for unique mission completion.
+    Wrapper for player.misnActive that works on a table of missions.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">names</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
+         Table of names (strings) of missions to check
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        true if any of the listed missions are active
+    </ol>
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">if anyMissionActive( { &quot;Cargo&quot;, &quot;Cargo Rush&quot; } ) then -- at least one Cargo or Cargo Rush is active
+</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "calculateDistance"></a>
+    <strong>calculateDistance (origin_sys, origin_pos, dest_sys, dest_pos, params)</strong>
+    </dt>
+    <dd>
+    Calculates the distance (in pixels) from a position in a system to a position in another system.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">origin_sys</span>
+            <span class="types"><span class="type">System</span></span>
+         System to calculate distance from.
+        </li>
+        <li><span class="parameter">origin_pos</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         Position to calculate distance from.
+        </li>
+        <li><span class="parameter">dest_sys</span>
+            <span class="types"><span class="type">System</span></span>
+         Target system to calculate distance to.
+        </li>
+        <li><span class="parameter">dest_pos</span>
+            <span class="types"><span class="type">Vec2</span></span>
+         Target position to calculate distance to.
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
+         Table of parameters. Currently supported are "use_hidden".
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        The distance travelled</li>
+        <li>
+        The jumpPath leading to the target system</li>
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "sfxMoney"></a>
-    <strong>sfxMoney ()</strong>
+    <a name = "fail"></a>
+    <strong>fail (reason)</strong>
     </dt>
     <dd>
-    Plays a money indicating money made.  Should be used when the player receives payment for generic repeatable missions.
+    Wrapper for player.msg + misn.finish for when the player fails a mission.
 
 
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "sfxBingo"></a>
-    <strong>sfxBingo ()</strong>
-    </dt>
-    <dd>
-    Plays a jingle indicating success.  Meant more for small good things advancing missions rather than completion.
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "sfxEerie"></a>
-    <strong>sfxEerie ()</strong>
-    </dt>
-    <dd>
-    Plays a weird eerie sfx.
-
-
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">reason</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         Reason the mission failed.
+        </li>
+    </ul>
 
 
 
@@ -369,6 +409,71 @@
 
 </dd>
     <dt>
+    <a name = "getRandomSpobAtDistance"></a>
+    <strong>getRandomSpobAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</strong>
+    </dt>
+    <dd>
+    Gets a random spob at a distance.  Only checks for inhabited, landable, and non-restricted spobs.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sys</span>
+            <span class="types"><span class="type">System</span></span>
+         System to base distance calculations off of.
+         (<em>default</em> system.cur())
+        </li>
+        <li><span class="parameter">min</span>
+            <span class="types"><span class="type">number</span></span>
+         Minimum jump distance to get spob at.
+        </li>
+        <li><span class="parameter">max</span>
+            <span class="types"><span class="type">number</span></span>
+         Maximum jump distance to get spob at.
+        </li>
+        <li><span class="parameter">fct</span>
+            <span class="types"><span class="type">Faction</span></span>
+         What faction to do landing checks with.
+         (<em>default</em> nil)
+        </li>
+        <li><span class="parameter">samefct</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to only allow spobs to belong exactly to fct.
+         (<em>default</em> false)
+        </li>
+        <li><span class="parameter">filter</span>
+            <span class="types"><span class="type">function</span></span>
+         Filtering function that returns a boolean and takes a spob being tested as a parameter.
+         (<em>default</em> nil)
+        </li>
+        <li><span class="parameter">data</span>
+         Custom data that will be passed to filter.
+         (<em>default</em> nil)
+        </li>
+        <li><span class="parameter">hidden</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to consider hidden jumps when computing system distance.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Spob</span></span>
+        A single spob matching all the criteria.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">destpnt = lmisn.getRandomSpobAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false ) -- Get random spob within 3 to 5 jumps of current system that is landable by independent pilots.
+</pre>
+    </ul>
+
+</dd>
+    <dt>
     <a name = "getRoute"></a>
     <strong>getRoute (nowsys, finalsys, hidden)</strong>
     </dt>
@@ -404,6 +509,146 @@
 
 
 
+
+</dd>
+    <dt>
+    <a name = "getSpobAtDistance"></a>
+    <strong>getSpobAtDistance ([sys=system.cur()], min, max[, fct=faction.get("Player")[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</strong>
+    </dt>
+    <dd>
+    Works the same as lmisn.getSysAtDistance, but for spobs. </p>
+
+<p>   Filter is applied on a spob level.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sys</span>
+            <span class="types"><span class="type">System</span></span>
+         System to base distance calculations off of.
+         (<em>default</em> system.cur())
+        </li>
+        <li><span class="parameter">min</span>
+            <span class="types"><span class="type">number</span></span>
+         Minimum jump distance to get spob at.
+        </li>
+        <li><span class="parameter">max</span>
+            <span class="types"><span class="type">number</span></span>
+         Maximum jump distance to get spob at.
+        </li>
+        <li><span class="parameter">fct</span>
+            <span class="types"><span class="type">Faction</span></span>
+         What faction to do landing checks with.
+         (<em>default</em> faction.get("Player"))
+        </li>
+        <li><span class="parameter">samefct</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to only allow spobs to belong exactly to fct.
+         (<em>default</em> false)
+        </li>
+        <li><span class="parameter">filter</span>
+            <span class="types"><span class="type">function</span></span>
+         Filtering function that returns a boolean and takes a spob being tested as a parameter.
+         (<em>default</em> nil)
+        </li>
+        <li><span class="parameter">data</span>
+         Custom data that will be passed to filter.
+         (<em>default</em> nil)
+        </li>
+        <li><span class="parameter">hidden</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to consider hidden jumps when computing system distance.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
+        A table containing all the spobs matching the criteria. Can be empty if no matches found.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">-- Get random spob within 3 to 5 jumps of current system that is landable by independent pilots.
+local candidates = lmisn.getSpobAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false )
+-- Make sure there are candidates
+if #candidates==0 then
+   error(&quot;There are no spobs meeting the criteria!&quot;)
+end
+-- Sort candidates by some criteria
+table.sort( candidates, my_spob_sort_function )
+-- Get best by sorting criteria
+local destpnt = candidates[1]
+</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "getSysAtDistance"></a>
+    <strong>getSysAtDistance (sys, min, max, filter, data, hidden)</strong>
+    </dt>
+    <dd>
+    Fetches an array of systems from min to max jumps away from the given</p>
+<pre><code>     system sys.
+</code></pre>
+
+<p>   The following example gets a random Sirius M class spob between 1 to 6 jumps away.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sys</span>
+         System to calculate distance from or nil to use current system
+        </li>
+        <li><span class="parameter">min</span>
+         Min distance to check for.
+        </li>
+        <li><span class="parameter">max</span>
+         Maximum distance to check for.
+        </li>
+        <li><span class="parameter">filter</span>
+         Optional filter function to use for more details.
+        </li>
+        <li><span class="parameter">data</span>
+         Data to pass to filter
+        </li>
+        <li><span class="parameter">hidden</span>
+         Whether or not to consider hidden jumps (off by default)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The table of systems n jumps away from sys
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre data-enlighter-language="lua" class="example">local spobs = {}
+lmisn.getSysAtDistance( system.cur(), 1, 6,
+    function(s)
+        for i, v in ipairs(s:spobs()) do
+            if v:faction() == faction.get(&quot;Sirius&quot;) and v:class() == &quot;M&quot; then
+                return true
+            end
+        end
+        return false
+    end )
+
+if #spobs == 0 then misn.finish(false) end -- In case no suitable spobs are in range.
+
+local index = rnd.rnd(1, #spobs)
+destspob = spobs[index][1]
+destsys = spobs[index][2]
+</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -495,300 +740,55 @@
 
 </dd>
     <dt>
-    <a name = "getSysAtDistance"></a>
-    <strong>getSysAtDistance (sys, min, max, filter, data, hidden)</strong>
+    <a name = "sfxBingo"></a>
+    <strong>sfxBingo ()</strong>
     </dt>
     <dd>
-    Fetches an array of systems from min to max jumps away from the given</p>
-<pre><code>     system sys.
-</code></pre>
-
-<p>   The following example gets a random Sirius M class spob between 1 to 6 jumps away.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">sys</span>
-         System to calculate distance from or nil to use current system
-        </li>
-        <li><span class="parameter">min</span>
-         Min distance to check for.
-        </li>
-        <li><span class="parameter">max</span>
-         Maximum distance to check for.
-        </li>
-        <li><span class="parameter">filter</span>
-         Optional filter function to use for more details.
-        </li>
-        <li><span class="parameter">data</span>
-         Data to pass to filter
-        </li>
-        <li><span class="parameter">hidden</span>
-         Whether or not to consider hidden jumps (off by default)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        The table of systems n jumps away from sys
-    </ol>
+    Plays a jingle indicating success.  Meant more for small good things advancing missions rather than completion.
 
 
 
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">local spobs = {}
-lmisn.getSysAtDistance( system.cur(), 1, 6,
-    function(s)
-        for i, v in ipairs(s:spobs()) do
-            if v:faction() == faction.get(&quot;Sirius&quot;) and v:class() == &quot;M&quot; then
-                return true
-            end
-        end
-        return false
-    end )
-
-if #spobs == 0 then misn.finish(false) end -- In case no suitable spobs are in range.
-
-local index = rnd.rnd(1, #spobs)
-destspob = spobs[index][1]
-destsys = spobs[index][2]
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "getSpobAtDistance"></a>
-    <strong>getSpobAtDistance ([sys=system.cur()], min, max[, fct=faction.get("Player")[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</strong>
-    </dt>
-    <dd>
-    Works the same as lmisn.getSysAtDistance, but for spobs. </p>
-
-<p>   Filter is applied on a spob level.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">sys</span>
-            <span class="types"><span class="type">System</span></span>
-         System to base distance calculations off of.
-         (<em>default</em> system.cur())
-        </li>
-        <li><span class="parameter">min</span>
-            <span class="types"><span class="type">number</span></span>
-         Minimum jump distance to get spob at.
-        </li>
-        <li><span class="parameter">max</span>
-            <span class="types"><span class="type">number</span></span>
-         Maximum jump distance to get spob at.
-        </li>
-        <li><span class="parameter">fct</span>
-            <span class="types"><span class="type">Faction</span></span>
-         What faction to do landing checks with.
-         (<em>default</em> faction.get("Player"))
-        </li>
-        <li><span class="parameter">samefct</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether or not to only allow spobs to belong exactly to fct.
-         (<em>default</em> false)
-        </li>
-        <li><span class="parameter">filter</span>
-            <span class="types"><span class="type">function</span></span>
-         Filtering function that returns a boolean and takes a spob being tested as a parameter.
-         (<em>default</em> nil)
-        </li>
-        <li><span class="parameter">data</span>
-         Custom data that will be passed to filter.
-         (<em>default</em> nil)
-        </li>
-        <li><span class="parameter">hidden</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether or not to consider hidden jumps when computing system distance.
-         (<em>default</em> false)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
-        A table containing all the spobs matching the criteria. Can be empty if no matches found.
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">-- Get random spob within 3 to 5 jumps of current system that is landable by independent pilots.
-local candidates = lmisn.getSpobAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false )
--- Make sure there are candidates
-if #candidates==0 then
-   error(&quot;There are no spobs meeting the criteria!&quot;)
-end
--- Sort candidates by some criteria
-table.sort( candidates, my_spob_sort_function )
--- Get best by sorting criteria
-local destpnt = candidates[1]
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "getRandomSpobAtDistance"></a>
-    <strong>getRandomSpobAtDistance ([sys=system.cur()], min, max[, fct=nil[, samefct=false[, filter=nil[, data=nil[, hidden=false]]]]])</strong>
-    </dt>
-    <dd>
-    Gets a random spob at a distance.  Only checks for inhabited, landable, and non-restricted spobs.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">sys</span>
-            <span class="types"><span class="type">System</span></span>
-         System to base distance calculations off of.
-         (<em>default</em> system.cur())
-        </li>
-        <li><span class="parameter">min</span>
-            <span class="types"><span class="type">number</span></span>
-         Minimum jump distance to get spob at.
-        </li>
-        <li><span class="parameter">max</span>
-            <span class="types"><span class="type">number</span></span>
-         Maximum jump distance to get spob at.
-        </li>
-        <li><span class="parameter">fct</span>
-            <span class="types"><span class="type">Faction</span></span>
-         What faction to do landing checks with.
-         (<em>default</em> nil)
-        </li>
-        <li><span class="parameter">samefct</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether or not to only allow spobs to belong exactly to fct.
-         (<em>default</em> false)
-        </li>
-        <li><span class="parameter">filter</span>
-            <span class="types"><span class="type">function</span></span>
-         Filtering function that returns a boolean and takes a spob being tested as a parameter.
-         (<em>default</em> nil)
-        </li>
-        <li><span class="parameter">data</span>
-         Custom data that will be passed to filter.
-         (<em>default</em> nil)
-        </li>
-        <li><span class="parameter">hidden</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether or not to consider hidden jumps when computing system distance.
-         (<em>default</em> false)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Spob</span></span>
-        A single spob matching all the criteria.
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">destpnt = lmisn.getRandomSpobAtDistance( system.cur(), 3, 5, &quot;Independent&quot;, false ) -- Get random spob within 3 to 5 jumps of current system that is landable by independent pilots.
-</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "calculateDistance"></a>
-    <strong>calculateDistance (origin_sys, origin_pos, dest_sys, dest_pos, params)</strong>
-    </dt>
-    <dd>
-    Calculates the distance (in pixels) from a position in a system to a position in another system.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">origin_sys</span>
-            <span class="types"><span class="type">System</span></span>
-         System to calculate distance from.
-        </li>
-        <li><span class="parameter">origin_pos</span>
-            <span class="types"><span class="type">Vec2</span></span>
-         Position to calculate distance from.
-        </li>
-        <li><span class="parameter">dest_sys</span>
-            <span class="types"><span class="type">System</span></span>
-         Target system to calculate distance to.
-        </li>
-        <li><span class="parameter">dest_pos</span>
-            <span class="types"><span class="type">Vec2</span></span>
-         Target position to calculate distance to.
-        </li>
-        <li><span class="parameter">params</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
-         Table of parameters. Currently supported are "use_hidden".
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-        <li>
-        The distance travelled</li>
-        <li>
-        The jumpPath leading to the target system</li>
-    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "anyMissionActive"></a>
-    <strong>anyMissionActive (names)</strong>
+    <a name = "sfxEerie"></a>
+    <strong>sfxEerie ()</strong>
     </dt>
     <dd>
-    Wrapper for player.misnActive that works on a table of missions.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">names</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.6">table</a></span>
-         Table of names (strings) of missions to check
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        true if any of the listed missions are active
-    </ol>
+    Plays a weird eerie sfx.
 
 
 
-    <h3>Usage:</h3>
-    <ul>
-        <pre data-enlighter-language="lua" class="example">if anyMissionActive( { &quot;Cargo&quot;, &quot;Cargo Rush&quot; } ) then -- at least one Cargo or Cargo Rush is active
-</pre>
-    </ul>
+
+
+
 
 </dd>
     <dt>
-    <a name = "fail"></a>
-    <strong>fail (reason)</strong>
+    <a name = "sfxMoney"></a>
+    <strong>sfxMoney ()</strong>
     </dt>
     <dd>
-    Wrapper for player.msg + misn.finish for when the player fails a mission.
+    Plays a money indicating money made.  Should be used when the player receives payment for generic repeatable missions.
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">reason</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-         Reason the mission failed.
-        </li>
-    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sfxVictory"></a>
+    <strong>sfxVictory ()</strong>
+    </dt>
+    <dd>
+    Plays a happy victory sound.  Should be used for unique mission completion.
+
+
 
 
 
@@ -802,7 +802,7 @@ local destpnt = candidates[1]
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2025-04-30 09:16:45 </i>
+<i style="float:right;">Last updated 2025-04-30 13:47:03 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">

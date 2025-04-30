@@ -85,34 +85,35 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><strong>ai</strong></li>
-  <li><a href="../modules/cinema.html">cinema</a></li>
-  <li><a href="../modules/escort.html">escort</a></li>
-  <li><a href="../modules/fleet.html">fleet</a></li>
-  <li><a href="../modules/format.html">format</a></li>
-  <li><a href="../modules/lazyload.html">lazyload</a></li>
-  <li><a href="../modules/linenoise.html">linenoise</a></li>
-  <li><a href="../modules/lmisn.html">lmisn</a></li>
-  <li><a href="../modules/lmusic.html">lmusic</a></li>
-  <li><a href="../modules/love_shaders.html">love_shaders</a></li>
-  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/asteroid.html">asteroid</a></li>
   <li><a href="../modules/audio.html">audio</a></li>
   <li><a href="../modules/bkg.html">bkg</a></li>
   <li><a href="../modules/camera.html">camera</a></li>
   <li><a href="../modules/canvas.html">canvas</a></li>
+  <li><a href="../modules/cinema.html">cinema</a></li>
   <li><a href="../modules/colour.html">colour</a></li>
   <li><a href="../modules/commodity.html">commodity</a></li>
   <li><a href="../modules/data.html">data</a></li>
   <li><a href="../modules/diff.html">diff</a></li>
+  <li><a href="../modules/equipopt.optimize.html">equipopt.optimize</a></li>
+  <li><a href="../modules/escort.html">escort</a></li>
   <li><a href="../modules/evt.html">evt</a></li>
   <li><a href="../modules/faction.html">faction</a></li>
   <li><a href="../modules/file.html">file</a></li>
+  <li><a href="../modules/fleet.html">fleet</a></li>
   <li><a href="../modules/font.html">font</a></li>
+  <li><a href="../modules/format.html">format</a></li>
   <li><a href="../modules/gfx.html">gfx</a></li>
   <li><a href="../modules/gui.html">gui</a></li>
   <li><a href="../modules/hook.html">hook</a></li>
   <li><a href="../modules/jump.html">jump</a></li>
+  <li><a href="../modules/lazyload.html">lazyload</a></li>
+  <li><a href="../modules/linenoise.html">linenoise</a></li>
   <li><a href="../modules/linopt.html">linopt</a></li>
+  <li><a href="../modules/lmisn.html">lmisn</a></li>
+  <li><a href="../modules/lmusic.html">lmusic</a></li>
+  <li><a href="../modules/love_shaders.html">love_shaders</a></li>
+  <li><a href="../modules/luatk.html">luatk</a></li>
   <li><a href="../modules/misn.html">misn</a></li>
   <li><a href="../modules/munition.html">munition</a></li>
   <li><a href="../modules/music.html">music</a></li>
@@ -120,8 +121,14 @@
   <li><a href="../modules/news.html">news</a></li>
   <li><a href="../modules/outfit.html">outfit</a></li>
   <li><a href="../modules/pilot.html">pilot</a></li>
+  <li><a href="../modules/pilotai.html">pilotai</a></li>
   <li><a href="../modules/pilotoutfit.html">pilotoutfit</a></li>
   <li><a href="../modules/player.html">player</a></li>
+  <li><a href="../modules/portrait.html">portrait</a></li>
+  <li><a href="../modules/pp_shaders.html">pp_shaders</a></li>
+  <li><a href="../modules/prng.html">prng</a></li>
+  <li><a href="../modules/prob.html">prob</a></li>
+  <li><a href="../modules/proximity.html">proximity</a></li>
   <li><a href="../modules/rnd.html">rnd</a></li>
   <li><a href="../modules/safelanes.html">safelanes</a></li>
   <li><a href="../modules/shader.html">shader</a></li>
@@ -129,6 +136,7 @@
   <li><a href="../modules/shiplog.html">shiplog</a></li>
   <li><a href="../modules/spfx.html">spfx</a></li>
   <li><a href="../modules/spob.html">spob</a></li>
+  <li><a href="../modules/swapship.html">swapship</a></li>
   <li><a href="../modules/system.html">system</a></li>
   <li><a href="../modules/tex.html">tex</a></li>
   <li><a href="../modules/time.html">time</a></li>
@@ -136,14 +144,6 @@
   <li><a href="../modules/transform.html">transform</a></li>
   <li><a href="../modules/var.html">var</a></li>
   <li><a href="../modules/vec2.html">vec2</a></li>
-  <li><a href="../modules/equipopt.optimize.html">equipopt.optimize</a></li>
-  <li><a href="../modules/pilotai.html">pilotai</a></li>
-  <li><a href="../modules/portrait.html">portrait</a></li>
-  <li><a href="../modules/pp_shaders.html">pp_shaders</a></li>
-  <li><a href="../modules/prng.html">prng</a></li>
-  <li><a href="../modules/prob.html">prob</a></li>
-  <li><a href="../modules/proximity.html">proximity</a></li>
-  <li><a href="../modules/swapship.html">swapship</a></li>
   <li><a href="../modules/vn.html">vn</a></li>
   <li><a href="../modules/vntk.html">vntk</a></li>
 </ul>
@@ -225,48 +225,42 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#pushtask">pushtask (func[, data])</a></td>
-	<td class="summary">Pushes a task onto the pilot's task list.</td>
+	<td class="name" nowrap><a href="#accel">accel ([acceleration=1.])</a></td>
+	<td class="summary">Starts accelerating the pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#poptask">poptask ()</a></td>
-	<td class="summary">Pops the current running task.</td>
+	<td class="name" nowrap><a href="#aim">aim (target)</a></td>
+	<td class="summary">Aims at a pilot, trying to hit it rather than move to it.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#taskname">taskname ()</a></td>
-	<td class="summary">Gets the current task's name.</td>
+	<td class="name" nowrap><a href="#board">board ()</a></td>
+	<td class="summary">Attempts to board the pilot's target.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#taskdata">taskdata ()</a></td>
-	<td class="summary">Gets the pilot's task data.</td>
+	<td class="name" nowrap><a href="#brake">brake ([prefer_reverse=false])</a></td>
+	<td class="summary">Brakes the pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#pushsubtask">pushsubtask (func[, data])</a></td>
-	<td class="summary">Pushes a subtask onto the pilot's task's subtask list.</td>
+	<td class="name" nowrap><a href="#canHyperspace">canHyperspace ()</a></td>
+	<td class="summary">Gets whether or not the pilot can hyperspace.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#popsubtask">popsubtask ()</a></td>
-	<td class="summary">Pops the current running task.</td>
+	<td class="name" nowrap><a href="#canboard">canboard (target)</a></td>
+	<td class="summary">Checks to see if pilot can board the target.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#subtaskname">subtaskname ()</a></td>
-	<td class="summary">Gets the current subtask's name.</td>
+	<td class="name" nowrap><a href="#careful_face">careful_face (target)</a></td>
+	<td class="summary">Gives the direction to follow in order to reach the target while
+  minimizating risk.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#subtaskdata">subtaskdata ()</a></td>
-	<td class="summary">Gets the pilot's subtask target.</td>
+	<td class="name" nowrap><a href="#combat">combat ([val=true])</a></td>
+	<td class="summary">Sets the combat flag.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#pilot">pilot ()</a></td>
-	<td class="summary">Gets the AI's pilot.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#rndpilot">rndpilot ()</a></td>
-	<td class="summary">Gets a random pilot in the system.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#nearestpilot">nearestpilot ()</a></td>
-	<td class="summary">gets the nearest pilot to the current pilot</td>
+	<td class="name" nowrap><a href="#dir">dir (target)</a></td>
+	<td class="summary">calculates the direction that the target is relative to the current
+ pilot facing.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#dist">dist (pointer)</a></td>
@@ -277,83 +271,12 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 	<td class="summary">Gets the squared distance from the pointer.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#flyby_dist">flyby_dist (pointer)</a></td>
-	<td class="summary">Gets the distance from the pointer perpendicular to the current
- pilot's flight vector.</td>
+	<td class="name" nowrap><a href="#distress">distress (msg)</a></td>
+	<td class="summary">Sends a distress signal.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#minbrakedist">minbrakedist (vel)</a></td>
-	<td class="summary">Gets the minimum braking distance.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#isbribed">isbribed (target)</a></td>
-	<td class="summary">Checks to see if target has bribed pilot.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#instantJump">instantJump ()</a></td>
-	<td class="summary">Checks to see if pilot can instant jump.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ismaxvel">ismaxvel ()</a></td>
-	<td class="summary">Checks to see if pilot is at maximum velocity.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#isstopped">isstopped ()</a></td>
-	<td class="summary">Checks to see if pilot is stopped.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#isenemy">isenemy (target)</a></td>
-	<td class="summary">Checks to see if target is an enemy.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#isally">isally (target)</a></td>
-	<td class="summary">Checks to see if target is an ally.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#haslockon">haslockon ()</a></td>
-	<td class="summary">Checks to see if pilot has a missile lockon.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#hasprojectile">hasprojectile ()</a></td>
-	<td class="summary">Checks to see if pilot has a projectile after him.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#scandone">scandone ()</a></td>
-	<td class="summary">Checks to see if pilot has finished scanning their target.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#accel">accel ([acceleration=1.])</a></td>
-	<td class="summary">Starts accelerating the pilot.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#turn">turn (vel)</a></td>
-	<td class="summary">Starts turning the pilot.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#face">face (target[, invert=false[, compensate=false]])</a></td>
-	<td class="summary">Faces the target.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#careful_face">careful_face (target)</a></td>
-	<td class="summary">Gives the direction to follow in order to reach the target while
-  minimizating risk.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#aim">aim (target)</a></td>
-	<td class="summary">Aims at a pilot, trying to hit it rather than move to it.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#iface">iface (target)</a></td>
-	<td class="summary">Maintains an intercept pursuit course.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#dir">dir (target)</a></td>
-	<td class="summary">calculates the direction that the target is relative to the current
- pilot facing.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#idir">idir (target)</a></td>
-	<td class="summary">Calculates angle between pilot facing and intercept-course to target.</td>
+	<td class="name" nowrap><a href="#dock">dock (target)</a></td>
+	<td class="summary">Docks the ship.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#drift_facing">drift_facing ()</a></td>
@@ -361,56 +284,17 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
  and the pilot's current facing.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#brake">brake ([prefer_reverse=false])</a></td>
-	<td class="summary">Brakes the pilot.</td>
+	<td class="name" nowrap><a href="#face">face (target[, invert=false[, compensate=false]])</a></td>
+	<td class="summary">Faces the target.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#nearestspob">nearestspob ()</a></td>
-	<td class="summary">Get the nearest friendly spob to the pilot.</td>
+	<td class="name" nowrap><a href="#face_accurate">face_accurate (pos, vel[, radius=0.[, angle=0.[, Kp=10.[, Kd=20.]]]])</a></td>
+	<td class="summary">Computes the point to face in order to follow a moving object.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#spobfrompos">spobfrompos (pos)</a></td>
-	<td class="summary">Get the nearest friendly spob to a given position.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#rndspob">rndspob ()</a></td>
-	<td class="summary">Get a random spob.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#landspob">landspob ([only_friend=false])</a></td>
-	<td class="summary">Get a random friendly spob.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#land">land ([pnt])</a></td>
-	<td class="summary">Lands on a spob.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#hyperspace">hyperspace ([sys])</a></td>
-	<td class="summary">Tries to enter hyperspace.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#sethyptarget">sethyptarget (target)</a></td>
-	<td class="summary">Sets hyperspace target.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#nearhyptarget">nearhyptarget ()</a></td>
-	<td class="summary">Gets the nearest hyperspace target.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#rndhyptarget">rndhyptarget ()</a></td>
-	<td class="summary">Gets a random hyperspace target.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#canHyperspace">canHyperspace ()</a></td>
-	<td class="summary">Gets whether or not the pilot can hyperspace.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#hyperspaceAbort">hyperspaceAbort ()</a></td>
-	<td class="summary">Has the AI abandon hyperspace if applicable.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#relvel">relvel ()</a></td>
-	<td class="summary">Gets the relative velocity of a pilot.</td>
+	<td class="name" nowrap><a href="#flyby_dist">flyby_dist (pointer)</a></td>
+	<td class="summary">Gets the distance from the pointer perpendicular to the current
+ pilot's flight vector.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#follow_accurate">follow_accurate (target[, radius=0.[, angle=0.[, Kp=10.[, Kd=20.[, method]]]]])</a></td>
@@ -421,91 +305,160 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 </td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#face_accurate">face_accurate (pos, vel[, radius=0.[, angle=0.[, Kp=10.[, Kd=20.]]]])</a></td>
-	<td class="summary">Computes the point to face in order to follow a moving object.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#stop">stop ()</a></td>
-	<td class="summary">Completely stops the pilot if it is below minimum vel error (no
- insta-stops).</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#dock">dock (target)</a></td>
-	<td class="summary">Docks the ship.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#combat">combat ([val=true])</a></td>
-	<td class="summary">Sets the combat flag.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#settarget">settarget (target)</a></td>
-	<td class="summary">Sets the pilot's target.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#setasterotarget">setasterotarget (int, int)</a></td>
-	<td class="summary">Sets the pilot's asteroid target.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#getgatherable">getgatherable (float)</a></td>
-	<td class="summary">Gets the closest gatherable within a radius.</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#gatherablepos">gatherablepos (int)</a></td>
 	<td class="summary">Gets the pos and vel of a given gatherable.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#weapset">weapset (id[, type=true])</a></td>
-	<td class="summary">Sets the active weapon set, fires another weapon set or activate an
- outfit.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#hascannons">hascannons ()</a></td>
-	<td class="summary">Does the pilot have cannons?</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#hasturrets">hasturrets ()</a></td>
-	<td class="summary">Does the pilot have turrets?</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#hasfighterbays">hasfighterbays ()</a></td>
-	<td class="summary">Does the pilot have fighter bays?</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#hasafterburners">hasafterburners ()</a></td>
-	<td class="summary">Does the pilot have afterburners?</td>
+	<td class="name" nowrap><a href="#getBoss">getBoss ()</a></td>
+	<td class="summary">Picks a pilot that will command the current pilot.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#getenemy">getenemy ([radius=nil])</a></td>
 	<td class="summary">Gets the nearest enemy.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#hostile">hostile (target)</a></td>
-	<td class="summary">Sets the enemy hostile (basically notifies of an impending attack).</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#getweaprangemin">getweaprangemin ([id])</a></td>
-	<td class="summary">Gets the minimum range of a weapon set.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#getweaprange">getweaprange ([id])</a></td>
-	<td class="summary">Gets the range of a weapon set.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#getweapspeed">getweapspeed ([id])</a></td>
-	<td class="summary">Gets the speed of a weapon.</td>
+	<td class="name" nowrap><a href="#getgatherable">getgatherable (float)</a></td>
+	<td class="summary">Gets the closest gatherable within a radius.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#getweapammo">getweapammo ([id])</a></td>
 	<td class="summary">Gets the ammo of a weapon.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#canboard">canboard (target)</a></td>
-	<td class="summary">Checks to see if pilot can board the target.</td>
+	<td class="name" nowrap><a href="#getweaprange">getweaprange ([id])</a></td>
+	<td class="summary">Gets the range of a weapon set.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#relsize">relsize (target)</a></td>
-	<td class="summary">Gets the relative size (ship mass) between the current pilot and the
- specified target.</td>
+	<td class="name" nowrap><a href="#getweaprangemin">getweaprangemin ([id])</a></td>
+	<td class="summary">Gets the minimum range of a weapon set.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getweapspeed">getweapspeed ([id])</a></td>
+	<td class="summary">Gets the speed of a weapon.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hasafterburners">hasafterburners ()</a></td>
+	<td class="summary">Does the pilot have afterburners?</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hascannons">hascannons ()</a></td>
+	<td class="summary">Does the pilot have cannons?</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hasfighterbays">hasfighterbays ()</a></td>
+	<td class="summary">Does the pilot have fighter bays?</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#haslockon">haslockon ()</a></td>
+	<td class="summary">Checks to see if pilot has a missile lockon.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hasprojectile">hasprojectile ()</a></td>
+	<td class="summary">Checks to see if pilot has a projectile after him.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hasturrets">hasturrets ()</a></td>
+	<td class="summary">Does the pilot have turrets?</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hostile">hostile (target)</a></td>
+	<td class="summary">Sets the enemy hostile (basically notifies of an impending attack).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hyperspace">hyperspace ([sys])</a></td>
+	<td class="summary">Tries to enter hyperspace.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hyperspaceAbort">hyperspaceAbort ()</a></td>
+	<td class="summary">Has the AI abandon hyperspace if applicable.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#idir">idir (target)</a></td>
+	<td class="summary">Calculates angle between pilot facing and intercept-course to target.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#iface">iface (target)</a></td>
+	<td class="summary">Maintains an intercept pursuit course.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#instantJump">instantJump ()</a></td>
+	<td class="summary">Checks to see if pilot can instant jump.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#isally">isally (target)</a></td>
+	<td class="summary">Checks to see if target is an ally.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#isbribed">isbribed (target)</a></td>
+	<td class="summary">Checks to see if target has bribed pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#isenemy">isenemy (target)</a></td>
+	<td class="summary">Checks to see if target is an enemy.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ismaxvel">ismaxvel ()</a></td>
+	<td class="summary">Checks to see if pilot is at maximum velocity.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#isstopped">isstopped ()</a></td>
+	<td class="summary">Checks to see if pilot is stopped.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#land">land ([pnt])</a></td>
+	<td class="summary">Lands on a spob.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#landspob">landspob ([only_friend=false])</a></td>
+	<td class="summary">Get a random friendly spob.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#messages">messages ()</a></td>
+	<td class="summary">Returns and clears the pilots message queue.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#minbrakedist">minbrakedist (vel)</a></td>
+	<td class="summary">Gets the minimum braking distance.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#nearestpilot">nearestpilot ()</a></td>
+	<td class="summary">gets the nearest pilot to the current pilot</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#nearestspob">nearestspob ()</a></td>
+	<td class="summary">Get the nearest friendly spob to the pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#nearhyptarget">nearhyptarget ()</a></td>
+	<td class="summary">Gets the nearest hyperspace target.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#outfitOffAll">outfitOffAll ()</a></td>
+	<td class="summary">Tries to turn off all outfits.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pilot">pilot ()</a></td>
+	<td class="summary">Gets the AI's pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#popsubtask">popsubtask ()</a></td>
+	<td class="summary">Pops the current running task.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#poptask">poptask ()</a></td>
+	<td class="summary">Pops the current running task.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pushsubtask">pushsubtask (func[, data])</a></td>
+	<td class="summary">Pushes a subtask onto the pilot's task's subtask list.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pushtask">pushtask (func[, data])</a></td>
+	<td class="summary">Pushes a task onto the pilot's task list.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#refuel">refuel ()</a></td>
+	<td class="summary">Attempts to refuel the pilot's target.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#reldps">reldps (target)</a></td>
@@ -518,24 +471,29 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
  current pilot and the specified target</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#board">board ()</a></td>
-	<td class="summary">Attempts to board the pilot's target.</td>
+	<td class="name" nowrap><a href="#relsize">relsize (target)</a></td>
+	<td class="summary">Gets the relative size (ship mass) between the current pilot and the
+ specified target.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#refuel">refuel ()</a></td>
-	<td class="summary">Attempts to refuel the pilot's target.</td>
+	<td class="name" nowrap><a href="#relvel">relvel ()</a></td>
+	<td class="summary">Gets the relative velocity of a pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#settimer">settimer (timer[, time=0])</a></td>
-	<td class="summary">Sets a timer.</td>
+	<td class="name" nowrap><a href="#rndhyptarget">rndhyptarget ()</a></td>
+	<td class="summary">Gets a random hyperspace target.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#timeup">timeup (timer)</a></td>
-	<td class="summary">Checks a timer.</td>
+	<td class="name" nowrap><a href="#rndpilot">rndpilot ()</a></td>
+	<td class="summary">Gets a random pilot in the system.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_shoot_indicator">set_shoot_indicator (value)</a></td>
-	<td class="summary">Set the seeker shoot indicator.</td>
+	<td class="name" nowrap><a href="#rndspob">rndspob ()</a></td>
+	<td class="summary">Get a random spob.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#scandone">scandone ()</a></td>
+	<td class="summary">Checks to see if pilot has finished scanning their target.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_shoot_indicator">set_shoot_indicator ()</a></td>
@@ -543,28 +501,70 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
  seeker is shot).</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#distress">distress (msg)</a></td>
-	<td class="summary">Sends a distress signal.</td>
+	<td class="name" nowrap><a href="#set_shoot_indicator">set_shoot_indicator (value)</a></td>
+	<td class="summary">Set the seeker shoot indicator.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#getBoss">getBoss ()</a></td>
-	<td class="summary">Picks a pilot that will command the current pilot.</td>
+	<td class="name" nowrap><a href="#setasterotarget">setasterotarget (int, int)</a></td>
+	<td class="summary">Sets the pilot's asteroid target.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#setcredits">setcredits (num)</a></td>
 	<td class="summary">Sets the pilots credits.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#messages">messages ()</a></td>
-	<td class="summary">Returns and clears the pilots message queue.</td>
+	<td class="name" nowrap><a href="#sethyptarget">sethyptarget (target)</a></td>
+	<td class="summary">Sets hyperspace target.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#settarget">settarget (target)</a></td>
+	<td class="summary">Sets the pilot's target.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#settimer">settimer (timer[, time=0])</a></td>
+	<td class="summary">Sets a timer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#spobfrompos">spobfrompos (pos)</a></td>
+	<td class="summary">Get the nearest friendly spob to a given position.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#stealth">stealth ([enable=true])</a></td>
 	<td class="summary">Tries to stealth or destealth the pilot.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#outfitOffAll">outfitOffAll ()</a></td>
-	<td class="summary">Tries to turn off all outfits.</td>
+	<td class="name" nowrap><a href="#stop">stop ()</a></td>
+	<td class="summary">Completely stops the pilot if it is below minimum vel error (no
+ insta-stops).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#subtaskdata">subtaskdata ()</a></td>
+	<td class="summary">Gets the pilot's subtask target.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#subtaskname">subtaskname ()</a></td>
+	<td class="summary">Gets the current subtask's name.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#taskdata">taskdata ()</a></td>
+	<td class="summary">Gets the pilot's task data.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#taskname">taskname ()</a></td>
+	<td class="summary">Gets the current task's name.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#timeup">timeup (timer)</a></td>
+	<td class="summary">Checks a timer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#turn">turn (vel)</a></td>
+	<td class="summary">Starts turning the pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#weapset">weapset (id[, type=true])</a></td>
+	<td class="summary">Sets the active weapon set, fires another weapon set or activate an
+ outfit.</td>
 	</tr>
 </table>
 
@@ -576,22 +576,20 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
     <dl class="function">
     <dt>
-    <a name = "pushtask"></a>
-    <strong>pushtask (func[, data])</strong>
+    <a name = "accel"></a>
+    <strong>accel ([acceleration=1.])</strong>
     </dt>
     <dd>
-    Pushes a task onto the pilot's task list.
+    Starts accelerating the pilot.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">func</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-         Name of function to call for task.
-        </li>
-        <li><span class="parameter">data</span>
-         Data to pass to the function.  Supports any lua type.
-         (<em>optional</em>)
+        <li><span class="parameter">acceleration</span>
+            <span class="types"><span class="type">number</span></span>
+         Fraction of pilot's maximum
+ acceleration from 0 to 1.
+         (<em>default</em> 1.)
         </li>
     </ul>
 
@@ -601,116 +599,30 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "poptask"></a>
-    <strong>poptask ()</strong>
+    <a name = "aim"></a>
+    <strong>aim (target)</strong>
     </dt>
     <dd>
-    Pops the current running task.
+    Aims at a pilot, trying to hit it rather than move to it. </p>
 
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "taskname"></a>
-    <strong>taskname ()</strong>
-    </dt>
-    <dd>
-    Gets the current task's name.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-        The current task name or nil if there are no tasks.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "taskdata"></a>
-    <strong>taskdata ()</strong>
-    </dt>
-    <dd>
-    Gets the pilot's task data.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-        The pilot's task data or nil if there is no task data.
-    </ol>
-
-
-    <h3>See also:</h3>
-    <ul>
-         <a href="../modules/ai.html#pushtask">pushtask</a>
-    </ul>
-
-
-</dd>
-    <dt>
-    <a name = "pushsubtask"></a>
-    <strong>pushsubtask (func[, data])</strong>
-    </dt>
-    <dd>
-    Pushes a subtask onto the pilot's task's subtask list.
+<p> This method uses a polar UV decomposition to get a more accurate
+ time-of-flight
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">func</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-         Name of function to call for task.
-        </li>
-        <li><span class="parameter">data</span>
-         Data to pass to the function.  Supports any lua type.
-         (<em>optional</em>)
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Pilot</span> or <span class="type">Asteroid</span></span>
+         The pilot to aim at
         </li>
     </ul>
 
-
-
-
-
-</dd>
-    <dt>
-    <a name = "popsubtask"></a>
-    <strong>popsubtask ()</strong>
-    </dt>
-    <dd>
-    Pops the current running task.
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "subtaskname"></a>
-    <strong>subtaskname ()</strong>
-    </dt>
-    <dd>
-    Gets the current subtask's name.
-
-
-
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
-        The current subtask name or nil if there are no
- subtasks.
+           <span class="types"><span class="type">number</span></span>
+        The offset from the target aiming position (in
+ radians).
     </ol>
 
 
@@ -718,86 +630,182 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "subtaskdata"></a>
-    <strong>subtaskdata ()</strong>
+    <a name = "board"></a>
+    <strong>board ()</strong>
     </dt>
     <dd>
-    Gets the pilot's subtask target.
+    Attempts to board the pilot's target.
 
 
 
     <h3>Returns:</h3>
     <ol>
 
-        The pilot's target ship identifier or nil if no target.
+           <span class="types"><span class="type">boolean</span></span>
+        true if was able to board the target.
     </ol>
 
 
-    <h3>See also:</h3>
+
+
+</dd>
+    <dt>
+    <a name = "brake"></a>
+    <strong>brake ([prefer_reverse=false])</strong>
+    </dt>
+    <dd>
+    Brakes the pilot.
+
+
+    <h3>Parameters:</h3>
     <ul>
-         <a href="../modules/ai.html#pushsubtask">pushsubtask</a>
+        <li><span class="parameter">prefer_reverse</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not to prefer
+ reverse thrusters.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether braking is finished.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "canHyperspace"></a>
+    <strong>canHyperspace ()</strong>
+    </dt>
+    <dd>
+    Gets whether or not the pilot can hyperspace.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether or not the pilot can hyperspace.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "canboard"></a>
+    <strong>canboard (target)</strong>
+    </dt>
+    <dd>
+    Checks to see if pilot can board the target.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Target to see if pilot can board.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true if pilot can board, false if it can't.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "careful_face"></a>
+    <strong>careful_face (target)</strong>
+    </dt>
+    <dd>
+    Gives the direction to follow in order to reach the target while
+  minimizating risk. </p>
+
+<p> This method is based on a simplified version of trajectory generation in
+ mobile robotics using the potential method.</p>
+
+<p> The principle is to consider the mobile object (ship) as a mechanical object.
+ Obstacles (enemies) and the target exert
+ attractive or repulsive force on this object.</p>
+
+<p> Only visible ships are taken into account.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Pilot</span>, <span class="type">Vec2</span> or <span class="type">number</span></span>
+         Target to go to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Angle offset in radians.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "combat"></a>
+    <strong>combat ([val=true])</strong>
+    </dt>
+    <dd>
+    Sets the combat flag.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Value to set flag to.
+         (<em>default</em> true)
+        </li>
     </ul>
 
 
-</dd>
-    <dt>
-    <a name = "pilot"></a>
-    <strong>pilot ()</strong>
-    </dt>
-    <dd>
-    Gets the AI's pilot.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Pilot</span></span>
-        The AI's pilot.
-    </ol>
-
 
 
 
 </dd>
     <dt>
-    <a name = "rndpilot"></a>
-    <strong>rndpilot ()</strong>
+    <a name = "dir"></a>
+    <strong>dir (target)</strong>
     </dt>
     <dd>
-    Gets a random pilot in the system.
+    calculates the direction that the target is relative to the current
+ pilot facing.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Pilot</span> or <span class="type">Vec2</span></span>
+         Position or pilot to compare facing to
+        </li>
+    </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Pilot</span> or <span class="type">nil</span></span>
-
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "nearestpilot"></a>
-    <strong>nearestpilot ()</strong>
-    </dt>
-    <dd>
-    gets the nearest pilot to the current pilot
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Pilot</span> or <span class="type">nil</span></span>
-
-
-
+           <span class="types"><span class="type">number</span></span>
+        The facing offset to the target (in radians).
     </ol>
 
 
@@ -863,294 +871,39 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "flyby_dist"></a>
-    <strong>flyby_dist (pointer)</strong>
+    <a name = "distress"></a>
+    <strong>distress (msg)</strong>
     </dt>
     <dd>
-    Gets the distance from the pointer perpendicular to the current
- pilot's flight vector.
+    Sends a distress signal.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">pointer</span>
-            <span class="types"><span class="type">Vec2</span> or <span class="type">Pilot</span></span>
-
-
-
+        <li><span class="parameter">msg</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a> or <span class="type">nil</span></span>
+         Message to send or nil.
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        offset_distance
-    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "minbrakedist"></a>
-    <strong>minbrakedist (vel)</strong>
+    <a name = "dock"></a>
+    <strong>dock (target)</strong>
     </dt>
     <dd>
-    Gets the minimum braking distance. </p>
-
-<p> braking vel ==> 0 = v - a*dt
- add turn around time (to initial vel) ==> 180.*360./cur_pilot->turn
- add it to general euler equation  x = v * t + 0.5 * a * t^2
- and voila!</p>
-
-<p> I hate this function and it'll probably need to get changed in the future
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">vel</span>
-            <span class="types"><span class="type">number</span></span>
-         Velocity of target.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-        <li>
-           <span class="types"><span class="type">number</span></span>
-        Minimum braking distance.</li>
-        <li>
-           <span class="types"><span class="type">number</span></span>
-        Time it will take to brake.</li>
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "isbribed"></a>
-    <strong>isbribed (target)</strong>
-    </dt>
-    <dd>
-    Checks to see if target has bribed pilot.
+    Docks the ship.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">target</span>
             <span class="types"><span class="type">Pilot</span></span>
-
-
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether the target has bribed pilot.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "instantJump"></a>
-    <strong>instantJump ()</strong>
-    </dt>
-    <dd>
-    Checks to see if pilot can instant jump.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether the pilot can instant jump.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ismaxvel"></a>
-    <strong>ismaxvel ()</strong>
-    </dt>
-    <dd>
-    Checks to see if pilot is at maximum velocity.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether the pilot is at maximum velocity.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "isstopped"></a>
-    <strong>isstopped ()</strong>
-    </dt>
-    <dd>
-    Checks to see if pilot is stopped.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether the pilot is stopped.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "isenemy"></a>
-    <strong>isenemy (target)</strong>
-    </dt>
-    <dd>
-    Checks to see if target is an enemy.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span></span>
-
-
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether the target is an enemy.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "isally"></a>
-    <strong>isally (target)</strong>
-    </dt>
-    <dd>
-    Checks to see if target is an ally.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span></span>
-
-
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether the target is an ally.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "haslockon"></a>
-    <strong>haslockon ()</strong>
-    </dt>
-    <dd>
-    Checks to see if pilot has a missile lockon.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether the pilot has a missile lockon.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "hasprojectile"></a>
-    <strong>hasprojectile ()</strong>
-    </dt>
-    <dd>
-    Checks to see if pilot has a projectile after him.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether the pilot has a projectile after him.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "scandone"></a>
-    <strong>scandone ()</strong>
-    </dt>
-    <dd>
-    Checks to see if pilot has finished scanning their target.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether the pilot has scanned their target.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "accel"></a>
-    <strong>accel ([acceleration=1.])</strong>
-    </dt>
-    <dd>
-    Starts accelerating the pilot.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">acceleration</span>
-            <span class="types"><span class="type">number</span></span>
-         Fraction of pilot's maximum
- acceleration from 0 to 1.
-         (<em>default</em> 1.)
+         Pilot to dock with.
         </li>
     </ul>
 
@@ -1160,21 +913,21 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "turn"></a>
-    <strong>turn (vel)</strong>
+    <a name = "drift_facing"></a>
+    <strong>drift_facing ()</strong>
     </dt>
     <dd>
-    Starts turning the pilot.
+    Calculate the offset between the pilot's current direction of travel
+ and the pilot's current facing.
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">vel</span>
-            <span class="types"><span class="type">number</span></span>
-         Directional velocity from -1 to 1.
-        </li>
-    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Offset (radians)
+    </ol>
 
 
 
@@ -1228,252 +981,51 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "careful_face"></a>
-    <strong>careful_face (target)</strong>
+    <a name = "face_accurate"></a>
+    <strong>face_accurate (pos, vel[, radius=0.[, angle=0.[, Kp=10.[, Kd=20.]]]])</strong>
     </dt>
     <dd>
-    Gives the direction to follow in order to reach the target while
-  minimizating risk. </p>
-
-<p> This method is based on a simplified version of trajectory generation in
- mobile robotics using the potential method.</p>
-
-<p> The principle is to consider the mobile object (ship) as a mechanical object.
- Obstacles (enemies) and the target exert
- attractive or repulsive force on this object.</p>
-
-<p> Only visible ships are taken into account.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span>, <span class="type">Vec2</span> or <span class="type">number</span></span>
-         Target to go to.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        Angle offset in radians.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "aim"></a>
-    <strong>aim (target)</strong>
-    </dt>
-    <dd>
-    Aims at a pilot, trying to hit it rather than move to it. </p>
-
-<p> This method uses a polar UV decomposition to get a more accurate
- time-of-flight
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span> or <span class="type">Asteroid</span></span>
-         The pilot to aim at
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        The offset from the target aiming position (in
- radians).
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "iface"></a>
-    <strong>iface (target)</strong>
-    </dt>
-    <dd>
-    Maintains an intercept pursuit course.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span> or <span class="type">Vec2</span></span>
-         Position or pilot to intercept.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        The offset from the proper intercept course (in
- radians).
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "dir"></a>
-    <strong>dir (target)</strong>
-    </dt>
-    <dd>
-    calculates the direction that the target is relative to the current
- pilot facing.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span> or <span class="type">Vec2</span></span>
-         Position or pilot to compare facing to
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        The facing offset to the target (in radians).
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "idir"></a>
-    <strong>idir (target)</strong>
-    </dt>
-    <dd>
-    Calculates angle between pilot facing and intercept-course to target.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span> or <span class="type">Vec2</span></span>
-         Position or pilot to compare facing to
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        The facing offset to intercept-course to the target (in
- radians).
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "drift_facing"></a>
-    <strong>drift_facing ()</strong>
-    </dt>
-    <dd>
-    Calculate the offset between the pilot's current direction of travel
- and the pilot's current facing.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span></span>
-        Offset (radians)
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "brake"></a>
-    <strong>brake ([prefer_reverse=false])</strong>
-    </dt>
-    <dd>
-    Brakes the pilot.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">prefer_reverse</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Whether or not to prefer
- reverse thrusters.
-         (<em>default</em> false)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether braking is finished.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "nearestspob"></a>
-    <strong>nearestspob ()</strong>
-    </dt>
-    <dd>
-    Get the nearest friendly spob to the pilot.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Spob</span> or <span class="type">nil</span></span>
-
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "spobfrompos"></a>
-    <strong>spobfrompos (pos)</strong>
-    </dt>
-    <dd>
-    Get the nearest friendly spob to a given position.
+    Computes the point to face in order to follow a moving object.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">pos</span>
             <span class="types"><span class="type">vec2</span></span>
-         Position close to the spob.
+         The objective vector
+        </li>
+        <li><span class="parameter">vel</span>
+            <span class="types"><span class="type">vec2</span></span>
+         The objective velocity
+        </li>
+        <li><span class="parameter">radius</span>
+            <span class="types"><span class="type">number</span></span>
+         The requested distance between p and
+ target
+         (<em>default</em> 0.)
+        </li>
+        <li><span class="parameter">angle</span>
+            <span class="types"><span class="type">number</span></span>
+         The requested angle between p and target
+ (radians)
+         (<em>default</em> 0.)
+        </li>
+        <li><span class="parameter">Kp</span>
+            <span class="types"><span class="type">number</span></span>
+         The first controller parameter
+         (<em>default</em> 10.)
+        </li>
+        <li><span class="parameter">Kd</span>
+            <span class="types"><span class="type">number</span></span>
+         The second controller parameter
+         (<em>default</em> 20.)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Spob</span> or <span class="type">nil</span></span>
-
-
-
+        The point to go to as a vector2.
     </ol>
 
 
@@ -1481,231 +1033,29 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "rndspob"></a>
-    <strong>rndspob ()</strong>
+    <a name = "flyby_dist"></a>
+    <strong>flyby_dist (pointer)</strong>
     </dt>
     <dd>
-    Get a random spob.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Spob</span> or <span class="type">nil</span></span>
-
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "landspob"></a>
-    <strong>landspob ([only_friend=false])</strong>
-    </dt>
-    <dd>
-    Get a random friendly spob.
+    Gets the distance from the pointer perpendicular to the current
+ pilot's flight vector.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">only_friend</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Only check for ally spobs.
-         (<em>default</em> false)
+        <li><span class="parameter">pointer</span>
+            <span class="types"><span class="type">Vec2</span> or <span class="type">Pilot</span></span>
+
+
+
         </li>
     </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Spob</span> or <span class="type">nil</span></span>
-
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "land"></a>
-    <strong>land ([pnt])</strong>
-    </dt>
-    <dd>
-    Lands on a spob.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">pnt</span>
-            <span class="types"><span class="type">Spob</span></span>
-         spob to land on
-         (<em>optional</em>)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether landing was successful.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "hyperspace"></a>
-    <strong>hyperspace ([sys])</strong>
-    </dt>
-    <dd>
-    Tries to enter hyperspace.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">sys</span>
-            <span class="types"><span class="type">System</span></span>
-         System to jump to
-         (<em>optional</em>)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
-        Distance if too far away.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "sethyptarget"></a>
-    <strong>sethyptarget (target)</strong>
-    </dt>
-    <dd>
-    Sets hyperspace target.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Jump</span></span>
-         Hyperspace target
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        Vec2 Where to go to jump
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "nearhyptarget"></a>
-    <strong>nearhyptarget ()</strong>
-    </dt>
-    <dd>
-    Gets the nearest hyperspace target.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">JumpPoint</span> or <span class="type">nil</span></span>
-
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "rndhyptarget"></a>
-    <strong>rndhyptarget ()</strong>
-    </dt>
-    <dd>
-    Gets a random hyperspace target.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">JumpPoint</span> or <span class="type">nil</span></span>
-
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "canHyperspace"></a>
-    <strong>canHyperspace ()</strong>
-    </dt>
-    <dd>
-    Gets whether or not the pilot can hyperspace.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        Whether or not the pilot can hyperspace.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "hyperspaceAbort"></a>
-    <strong>hyperspaceAbort ()</strong>
-    </dt>
-    <dd>
-    Has the AI abandon hyperspace if applicable.
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "relvel"></a>
-    <strong>relvel ()</strong>
-    </dt>
-    <dd>
-    Gets the relative velocity of a pilot.
-
-
 
     <h3>Returns:</h3>
     <ol>
 
            <span class="types"><span class="type">number</span></span>
-        Relative velocity.
+        offset_distance
     </ol>
 
 
@@ -1770,184 +1120,6 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "face_accurate"></a>
-    <strong>face_accurate (pos, vel[, radius=0.[, angle=0.[, Kp=10.[, Kd=20.]]]])</strong>
-    </dt>
-    <dd>
-    Computes the point to face in order to follow a moving object.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">pos</span>
-            <span class="types"><span class="type">vec2</span></span>
-         The objective vector
-        </li>
-        <li><span class="parameter">vel</span>
-            <span class="types"><span class="type">vec2</span></span>
-         The objective velocity
-        </li>
-        <li><span class="parameter">radius</span>
-            <span class="types"><span class="type">number</span></span>
-         The requested distance between p and
- target
-         (<em>default</em> 0.)
-        </li>
-        <li><span class="parameter">angle</span>
-            <span class="types"><span class="type">number</span></span>
-         The requested angle between p and target
- (radians)
-         (<em>default</em> 0.)
-        </li>
-        <li><span class="parameter">Kp</span>
-            <span class="types"><span class="type">number</span></span>
-         The first controller parameter
-         (<em>default</em> 10.)
-        </li>
-        <li><span class="parameter">Kd</span>
-            <span class="types"><span class="type">number</span></span>
-         The second controller parameter
-         (<em>default</em> 20.)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        The point to go to as a vector2.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "stop"></a>
-    <strong>stop ()</strong>
-    </dt>
-    <dd>
-    Completely stops the pilot if it is below minimum vel error (no
- insta-stops).
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "dock"></a>
-    <strong>dock (target)</strong>
-    </dt>
-    <dd>
-    Docks the ship.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Pilot to dock with.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "combat"></a>
-    <strong>combat ([val=true])</strong>
-    </dt>
-    <dd>
-    Sets the combat flag.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">val</span>
-            <span class="types"><span class="type">boolean</span></span>
-         Value to set flag to.
-         (<em>default</em> true)
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "settarget"></a>
-    <strong>settarget (target)</strong>
-    </dt>
-    <dd>
-    Sets the pilot's target.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">target</span>
-         Pilot to target.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "setasterotarget"></a>
-    <strong>setasterotarget (int, int)</strong>
-    </dt>
-    <dd>
-    Sets the pilot's asteroid target.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">int</span>
-         ast Id of the asteroid to target.
-        </li>
-        <li><span class="parameter">int</span>
-         ast Id of the asteroid to target.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "getgatherable"></a>
-    <strong>getgatherable (float)</strong>
-    </dt>
-    <dd>
-    Gets the closest gatherable within a radius.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">float</span>
-         rad Radius to search in.
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        int i Id of the gatherable or nil if none found.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
     <a name = "gatherablepos"></a>
     <strong>gatherablepos (int)</strong>
     </dt>
@@ -1975,106 +1147,21 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "weapset"></a>
-    <strong>weapset (id[, type=true])</strong>
+    <a name = "getBoss"></a>
+    <strong>getBoss ()</strong>
     </dt>
     <dd>
-    Sets the active weapon set, fires another weapon set or activate an
- outfit.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">id</span>
-            <span class="types"><span class="type">number</span></span>
-         ID of the weapon set to switch to or fire.
-        </li>
-        <li><span class="parameter">type</span>
-            <span class="types"><span class="type">boolean</span></span>
-         true to activate, false to deactivate.
-         (<em>default</em> true)
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "hascannons"></a>
-    <strong>hascannons ()</strong>
-    </dt>
-    <dd>
-    Does the pilot have cannons?
+    Picks a pilot that will command the current pilot.
 
 
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">boolean</span></span>
-        True if the pilot has cannons.
-    </ol>
+           <span class="types"><span class="type">Pilot</span> or <span class="type">nil</span></span>
 
 
 
-
-</dd>
-    <dt>
-    <a name = "hasturrets"></a>
-    <strong>hasturrets ()</strong>
-    </dt>
-    <dd>
-    Does the pilot have turrets?
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        True if the pilot has turrets.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "hasfighterbays"></a>
-    <strong>hasfighterbays ()</strong>
-    </dt>
-    <dd>
-    Does the pilot have fighter bays?
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        True if the pilot has fighter bays.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "hasafterburners"></a>
-    <strong>hasafterburners ()</strong>
-    </dt>
-    <dd>
-    Does the pilot have afterburners?
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        True if the pilot has afterburners.
     </ol>
 
 
@@ -2113,32 +1200,65 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "hostile"></a>
-    <strong>hostile (target)</strong>
+    <a name = "getgatherable"></a>
+    <strong>getgatherable (float)</strong>
     </dt>
     <dd>
-    Sets the enemy hostile (basically notifies of an impending attack).
+    Gets the closest gatherable within a radius.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">target</span>
-            <span class="types"><span class="type">Pilot</span></span>
-         Pilot to set hostile.
+        <li><span class="parameter">float</span>
+         rad Radius to search in.
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        int i Id of the gatherable or nil if none found.
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "getweaprangemin"></a>
-    <strong>getweaprangemin ([id])</strong>
+    <a name = "getweapammo"></a>
+    <strong>getweapammo ([id])</strong>
     </dt>
     <dd>
-    Gets the minimum range of a weapon set.
+    Gets the ammo of a weapon.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">number</span></span>
+         Optional parameter indicating id of weapon set
+ to get ammo of, defaults to selected one.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The ammo of the weapon set in the [0,1] range.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getweaprange"></a>
+    <strong>getweaprange ([id])</strong>
+    </dt>
+    <dd>
+    Gets the range of a weapon set.
 
 
     <h3>Parameters:</h3>
@@ -2163,11 +1283,11 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "getweaprange"></a>
-    <strong>getweaprange ([id])</strong>
+    <a name = "getweaprangemin"></a>
+    <strong>getweaprangemin ([id])</strong>
     </dt>
     <dd>
-    Gets the range of a weapon set.
+    Gets the minimum range of a weapon set.
 
 
     <h3>Parameters:</h3>
@@ -2221,19 +1341,159 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "getweapammo"></a>
-    <strong>getweapammo ([id])</strong>
+    <a name = "hasafterburners"></a>
+    <strong>hasafterburners ()</strong>
     </dt>
     <dd>
-    Gets the ammo of a weapon.
+    Does the pilot have afterburners?
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        True if the pilot has afterburners.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hascannons"></a>
+    <strong>hascannons ()</strong>
+    </dt>
+    <dd>
+    Does the pilot have cannons?
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        True if the pilot has cannons.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hasfighterbays"></a>
+    <strong>hasfighterbays ()</strong>
+    </dt>
+    <dd>
+    Does the pilot have fighter bays?
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        True if the pilot has fighter bays.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "haslockon"></a>
+    <strong>haslockon ()</strong>
+    </dt>
+    <dd>
+    Checks to see if pilot has a missile lockon.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the pilot has a missile lockon.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hasprojectile"></a>
+    <strong>hasprojectile ()</strong>
+    </dt>
+    <dd>
+    Checks to see if pilot has a projectile after him.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the pilot has a projectile after him.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hasturrets"></a>
+    <strong>hasturrets ()</strong>
+    </dt>
+    <dd>
+    Does the pilot have turrets?
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        True if the pilot has turrets.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hostile"></a>
+    <strong>hostile (target)</strong>
+    </dt>
+    <dd>
+    Sets the enemy hostile (basically notifies of an impending attack).
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">id</span>
-            <span class="types"><span class="type">number</span></span>
-         Optional parameter indicating id of weapon set
- to get ammo of, defaults to selected one.
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         Pilot to set hostile.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hyperspace"></a>
+    <strong>hyperspace ([sys])</strong>
+    </dt>
+    <dd>
+    Tries to enter hyperspace.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sys</span>
+            <span class="types"><span class="type">System</span></span>
+         System to jump to
          (<em>optional</em>)
         </li>
     </ul>
@@ -2241,8 +1501,8 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">number</span></span>
-        The ammo of the weapon set in the [0,1] range.
+           <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+        Distance if too far away.
     </ol>
 
 
@@ -2250,18 +1510,110 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "canboard"></a>
-    <strong>canboard (target)</strong>
+    <a name = "hyperspaceAbort"></a>
+    <strong>hyperspaceAbort ()</strong>
     </dt>
     <dd>
-    Checks to see if pilot can board the target.
+    Has the AI abandon hyperspace if applicable.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "idir"></a>
+    <strong>idir (target)</strong>
+    </dt>
+    <dd>
+    Calculates angle between pilot facing and intercept-course to target.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Pilot</span> or <span class="type">Vec2</span></span>
+         Position or pilot to compare facing to
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The facing offset to intercept-course to the target (in
+ radians).
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "iface"></a>
+    <strong>iface (target)</strong>
+    </dt>
+    <dd>
+    Maintains an intercept pursuit course.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Pilot</span> or <span class="type">Vec2</span></span>
+         Position or pilot to intercept.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The offset from the proper intercept course (in
+ radians).
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "instantJump"></a>
+    <strong>instantJump ()</strong>
+    </dt>
+    <dd>
+    Checks to see if pilot can instant jump.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the pilot can instant jump.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "isally"></a>
+    <strong>isally (target)</strong>
+    </dt>
+    <dd>
+    Checks to see if target is an ally.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">target</span>
             <span class="types"><span class="type">Pilot</span></span>
-         Target to see if pilot can board.
+
+
+
         </li>
     </ul>
 
@@ -2269,7 +1621,7 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
     <ol>
 
            <span class="types"><span class="type">boolean</span></span>
-        true if pilot can board, false if it can't.
+        Whether the target is an ally.
     </ol>
 
 
@@ -2277,27 +1629,410 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "relsize"></a>
-    <strong>relsize (target)</strong>
+    <a name = "isbribed"></a>
+    <strong>isbribed (target)</strong>
     </dt>
     <dd>
-    Gets the relative size (ship mass) between the current pilot and the
- specified target.
+    Checks to see if target has bribed pilot.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">target</span>
             <span class="types"><span class="type">Pilot</span></span>
-         The pilot whose mass we will compare.
+
+
+
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the target has bribed pilot.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "isenemy"></a>
+    <strong>isenemy (target)</strong>
+    </dt>
+    <dd>
+    Checks to see if target is an enemy.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Pilot</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the target is an enemy.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ismaxvel"></a>
+    <strong>ismaxvel ()</strong>
+    </dt>
+    <dd>
+    Checks to see if pilot is at maximum velocity.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the pilot is at maximum velocity.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "isstopped"></a>
+    <strong>isstopped ()</strong>
+    </dt>
+    <dd>
+    Checks to see if pilot is stopped.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether the pilot is stopped.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "land"></a>
+    <strong>land ([pnt])</strong>
+    </dt>
+    <dd>
+    Lands on a spob.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pnt</span>
+            <span class="types"><span class="type">Spob</span></span>
+         spob to land on
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether landing was successful.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "landspob"></a>
+    <strong>landspob ([only_friend=false])</strong>
+    </dt>
+    <dd>
+    Get a random friendly spob.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">only_friend</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Only check for ally spobs.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Spob</span> or <span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "messages"></a>
+    <strong>messages ()</strong>
+    </dt>
+    <dd>
+    Returns and clears the pilots message queue.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">{{},...}</span></span>
+        Messages.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "minbrakedist"></a>
+    <strong>minbrakedist (vel)</strong>
+    </dt>
+    <dd>
+    Gets the minimum braking distance. </p>
+
+<p> braking vel ==> 0 = v - a*dt
+ add turn around time (to initial vel) ==> 180.*360./cur_pilot->turn
+ add it to general euler equation  x = v * t + 0.5 * a * t^2
+ and voila!</p>
+
+<p> I hate this function and it'll probably need to get changed in the future
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vel</span>
+            <span class="types"><span class="type">number</span></span>
+         Velocity of target.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
            <span class="types"><span class="type">number</span></span>
-        A number from 0 to 1 mapping the relative masses.
+        Minimum braking distance.</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Time it will take to brake.</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "nearestpilot"></a>
+    <strong>nearestpilot ()</strong>
+    </dt>
+    <dd>
+    gets the nearest pilot to the current pilot
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Pilot</span> or <span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "nearestspob"></a>
+    <strong>nearestspob ()</strong>
+    </dt>
+    <dd>
+    Get the nearest friendly spob to the pilot.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Spob</span> or <span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "nearhyptarget"></a>
+    <strong>nearhyptarget ()</strong>
+    </dt>
+    <dd>
+    Gets the nearest hyperspace target.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">JumpPoint</span> or <span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "outfitOffAll"></a>
+    <strong>outfitOffAll ()</strong>
+    </dt>
+    <dd>
+    Tries to turn off all outfits.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pilot"></a>
+    <strong>pilot ()</strong>
+    </dt>
+    <dd>
+    Gets the AI's pilot.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Pilot</span></span>
+        The AI's pilot.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "popsubtask"></a>
+    <strong>popsubtask ()</strong>
+    </dt>
+    <dd>
+    Pops the current running task.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "poptask"></a>
+    <strong>poptask ()</strong>
+    </dt>
+    <dd>
+    Pops the current running task.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pushsubtask"></a>
+    <strong>pushsubtask (func[, data])</strong>
+    </dt>
+    <dd>
+    Pushes a subtask onto the pilot's task's subtask list.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">func</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         Name of function to call for task.
+        </li>
+        <li><span class="parameter">data</span>
+         Data to pass to the function.  Supports any lua type.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pushtask"></a>
+    <strong>pushtask (func[, data])</strong>
+    </dt>
+    <dd>
+    Pushes a task onto the pilot's task list.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">func</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+         Name of function to call for task.
+        </li>
+        <li><span class="parameter">data</span>
+         Data to pass to the function.  Supports any lua type.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "refuel"></a>
+    <strong>refuel ()</strong>
+    </dt>
+    <dd>
+    Attempts to refuel the pilot's target.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true if pilot has begun refueling, false if it hasn't.
     </ol>
 
 
@@ -2361,19 +2096,27 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "board"></a>
-    <strong>board ()</strong>
+    <a name = "relsize"></a>
+    <strong>relsize (target)</strong>
     </dt>
     <dd>
-    Attempts to board the pilot's target.
+    Gets the relative size (ship mass) between the current pilot and the
+ specified target.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Pilot</span></span>
+         The pilot whose mass we will compare.
+        </li>
+    </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">boolean</span></span>
-        true if was able to board the target.
+           <span class="types"><span class="type">number</span></span>
+        A number from 0 to 1 mapping the relative masses.
     </ol>
 
 
@@ -2381,11 +2124,97 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "refuel"></a>
-    <strong>refuel ()</strong>
+    <a name = "relvel"></a>
+    <strong>relvel ()</strong>
     </dt>
     <dd>
-    Attempts to refuel the pilot's target.
+    Gets the relative velocity of a pilot.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Relative velocity.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rndhyptarget"></a>
+    <strong>rndhyptarget ()</strong>
+    </dt>
+    <dd>
+    Gets a random hyperspace target.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">JumpPoint</span> or <span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rndpilot"></a>
+    <strong>rndpilot ()</strong>
+    </dt>
+    <dd>
+    Gets a random pilot in the system.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Pilot</span> or <span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rndspob"></a>
+    <strong>rndspob ()</strong>
+    </dt>
+    <dd>
+    Get a random spob.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Spob</span> or <span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "scandone"></a>
+    <strong>scandone ()</strong>
+    </dt>
+    <dd>
+    Checks to see if pilot has finished scanning their target.
 
 
 
@@ -2393,8 +2222,140 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
     <ol>
 
            <span class="types"><span class="type">boolean</span></span>
-        true if pilot has begun refueling, false if it hasn't.
+        Whether the pilot has scanned their target.
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_shoot_indicator"></a>
+    <strong>set_shoot_indicator ()</strong>
+    </dt>
+    <dd>
+    Access the seeker shoot indicator (that is put to true each time a
+ seeker is shot).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true if the shoot_indicator is true.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_shoot_indicator"></a>
+    <strong>set_shoot_indicator (value)</strong>
+    </dt>
+    <dd>
+    Set the seeker shoot indicator.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">boolean</span></span>
+         to set the shoot indicator to.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setasterotarget"></a>
+    <strong>setasterotarget (int, int)</strong>
+    </dt>
+    <dd>
+    Sets the pilot's asteroid target.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">int</span>
+         ast Id of the asteroid to target.
+        </li>
+        <li><span class="parameter">int</span>
+         ast Id of the asteroid to target.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setcredits"></a>
+    <strong>setcredits (num)</strong>
+    </dt>
+    <dd>
+    Sets the pilots credits.  Only call in create().
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num</span>
+            <span class="types"><span class="type">number</span></span>
+         Number of credits.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sethyptarget"></a>
+    <strong>sethyptarget (target)</strong>
+    </dt>
+    <dd>
+    Sets hyperspace target.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Jump</span></span>
+         Hyperspace target
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Vec2 Where to go to jump
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "settarget"></a>
+    <strong>settarget (target)</strong>
+    </dt>
+    <dd>
+    Sets the pilot's target.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+         Pilot to target.
+        </li>
+    </ul>
+
 
 
 
@@ -2427,152 +2388,28 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "timeup"></a>
-    <strong>timeup (timer)</strong>
+    <a name = "spobfrompos"></a>
+    <strong>spobfrompos (pos)</strong>
     </dt>
     <dd>
-    Checks a timer.
+    Get the nearest friendly spob to a given position.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">timer</span>
-            <span class="types"><span class="type">number</span></span>
-         Timer number.
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">vec2</span></span>
+         Position close to the spob.
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">boolean</span></span>
-        Whether time is up.
-    </ol>
+           <span class="types"><span class="type">Spob</span> or <span class="type">nil</span></span>
 
 
 
-
-</dd>
-    <dt>
-    <a name = "set_shoot_indicator"></a>
-    <strong>set_shoot_indicator (value)</strong>
-    </dt>
-    <dd>
-    Set the seeker shoot indicator.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">value</span>
-            <span class="types"><span class="type">boolean</span></span>
-         to set the shoot indicator to.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_shoot_indicator"></a>
-    <strong>set_shoot_indicator ()</strong>
-    </dt>
-    <dd>
-    Access the seeker shoot indicator (that is put to true each time a
- seeker is shot).
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">boolean</span></span>
-        true if the shoot_indicator is true.
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "distress"></a>
-    <strong>distress (msg)</strong>
-    </dt>
-    <dd>
-    Sends a distress signal.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">msg</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a> or <span class="type">nil</span></span>
-         Message to send or nil.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "getBoss"></a>
-    <strong>getBoss ()</strong>
-    </dt>
-    <dd>
-    Picks a pilot that will command the current pilot.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Pilot</span> or <span class="type">nil</span></span>
-
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "setcredits"></a>
-    <strong>setcredits (num)</strong>
-    </dt>
-    <dd>
-    Sets the pilots credits.  Only call in create().
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">num</span>
-            <span class="types"><span class="type">number</span></span>
-         Number of credits.
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "messages"></a>
-    <strong>messages ()</strong>
-    </dt>
-    <dd>
-    Returns and clears the pilots message queue.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">{{},...}</span></span>
-        Messages.
     </ol>
 
 
@@ -2610,13 +2447,176 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 
 </dd>
     <dt>
-    <a name = "outfitOffAll"></a>
-    <strong>outfitOffAll ()</strong>
+    <a name = "stop"></a>
+    <strong>stop ()</strong>
     </dt>
     <dd>
-    Tries to turn off all outfits.
+    Completely stops the pilot if it is below minimum vel error (no
+ insta-stops).
 
 
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "subtaskdata"></a>
+    <strong>subtaskdata ()</strong>
+    </dt>
+    <dd>
+    Gets the pilot's subtask target.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The pilot's target ship identifier or nil if no target.
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/ai.html#pushsubtask">pushsubtask</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "subtaskname"></a>
+    <strong>subtaskname ()</strong>
+    </dt>
+    <dd>
+    Gets the current subtask's name.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+        The current subtask name or nil if there are no
+ subtasks.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "taskdata"></a>
+    <strong>taskdata ()</strong>
+    </dt>
+    <dd>
+    Gets the pilot's task data.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The pilot's task data or nil if there is no task data.
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/ai.html#pushtask">pushtask</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "taskname"></a>
+    <strong>taskname ()</strong>
+    </dt>
+    <dd>
+    Gets the current task's name.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
+        The current task name or nil if there are no tasks.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "timeup"></a>
+    <strong>timeup (timer)</strong>
+    </dt>
+    <dd>
+    Checks a timer.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">timer</span>
+            <span class="types"><span class="type">number</span></span>
+         Timer number.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Whether time is up.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "turn"></a>
+    <strong>turn (vel)</strong>
+    </dt>
+    <dd>
+    Starts turning the pilot.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vel</span>
+            <span class="types"><span class="type">number</span></span>
+         Directional velocity from -1 to 1.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "weapset"></a>
+    <strong>weapset (id[, type=true])</strong>
+    </dt>
+    <dd>
+    Sets the active weapon set, fires another weapon set or activate an
+ outfit.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id</span>
+            <span class="types"><span class="type">number</span></span>
+         ID of the weapon set to switch to or fire.
+        </li>
+        <li><span class="parameter">type</span>
+            <span class="types"><span class="type">boolean</span></span>
+         true to activate, false to deactivate.
+         (<em>default</em> true)
+        </li>
+    </ul>
 
 
 
@@ -2630,7 +2630,7 @@ subsystems <span class="keyword">and</span> is pretty lacking <span class="keywo
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2025-04-30 09:16:45 </i>
+<i style="float:right;">Last updated 2025-04-30 13:47:03 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">
