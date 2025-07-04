@@ -105,6 +105,113 @@
     <ul class="list-unstyled">
       <li class="mt-3 mb-4">
         <div class="blog-post">
+          <h4><a href="../../blarg/2011-07-24_recent_developments/">Recent developments</a></h4>
+          <p class="text-muted">BY BTAXIS, ON JULY 24TH, 2011</p>
+          <p>It has been some time since you’ve heard from us, so I’m taking it upon myself to give
+          you all an idea of what’s going on with Naev.</p>
+          <p>The first thing I should mention is that is is summer for Naev, and summer usually
+          means a lull in activity. It has to do with lots of other things happening in summer,
+          many of them outdoor ones. I think you get the idea.</p>
+          <p>That said, things have been happening since the 0.5.0 release. The original plan for
+          the next version, 0.5.1, was, and I <a href=
+          "https://colabti.org/irclogger/irclogger_log/naev?date=2011-06-16#l296">quote</a>:</p>
+          <p>14:16 bobbens we can do safe lanes</p>
+          <p>14:16 bobbens for starters</p>
+          <p>14:16 bobbens although I’m not sure on the safe lane stuff how to procede 
+          <!-- codespell:ignore procede --></p>
+          <p>14:16 bobbens we can either go safe lane “simple implementation” first</p>
+          <p>14:16 bobbens for quick release</p>
+          <p>14:16 bobbens or go quadtrees and asteroids first</p>
+          <p>14:16 bobbens for a slower crazy release</p>
+          <p>Once this discussion was over, we promptly started working on completely different
+          things. One of those things is the revised faction standing mechanic, described in a
+          <a href="../../blarg/2011-06-20_expanding_on_faction_standing_and_landing/">previous
+          blarg post</a>. But there is more.</p>
+          <h4 id="disabling">Disabling</h4>
+          <p>For instance, work is ongoing on a revised disabling system. Up until 0.5.0, ships
+          would become disabled once they sustained enough damage (to be precise, once armour fell
+          below 20%), and that was the end of it. However, one of our team members (it was me) felt
+          that this was undesirable, and designed something different. Rather than always being
+          disabled through damage directly, ships now accrue “stress” damage, which builds up as
+          weapons do damage, and falls naturally over time. Once stress damage equals the amount of
+          armour the ship still has left, the ship becomes disabled. Assuming the ship is not
+          destroyed afterward, it will come back online after a certain amount of time.</p>
+          <p>The important part in the above is that stress damage needs to reach the amount of
+          armour health left on the ship. The direct implication of this is that ships with low
+          health are more easily disabled than ships with high health, without tying the concepts
+          of “low” and “high” to the ship’s maximum amount of health. This means that a small ship
+          can be reliably disabled without running the risk of destroying it, for example.</p>
+          <p>The introduction of stress damage in itself also gives us the opportunity to
+          differentiate weapons further. In practice, this means that most weapons will do minimal
+          amounts of disable damage, much less than their actual physical damage, so that it’s
+          almost impossible to disable a ship before killing it. On the other hand, certain other
+          weapons will deal a lot of stress damage and limited amounts of physical damage, so that
+          stress damage easily builds up toward the critical level.</p>
+          <h4 id="missiles">Missiles</h4>
+          <p>One of our current efforts is to make missiles more meaningful while at the same time
+          not placing too much emphasis on them. In 0.5.0, most missiles are mostly useless, for
+          various reasons. For instance, damage was low and the likelihood of missiles hitting fast
+          targets or targets with jammers was rather low. One of our team members (it was me again)
+          came up with an alternative missile system that would allow missiles to be more useful
+          while hopefully not be too dominating.</p>
+          <p>In the new system, a missile weapon must acquire a lock on the target before it can
+          fire. To acquire this lock, the target must be kept within the missile lockon area, which
+          is an arc in front of the ship for normal launchers and everywhere for turreted
+          launchers. The time the launcher takes to lock on depends on the lockon time defined for
+          that launcher, and on the level of stealth of the target. As a general rule, small
+          targets are more stealthy than bigger ones. So while an interceptor missile might lock on
+          to a capital ship very quickly, a heavy torpedo would take a very long time to lock on to
+          a fighter. Stealth is further affected by electronic warfare outfits such as passive
+          scramblers and, to be implemented, jammers that must be activated and provide a
+          short-term boost.</p>
+          <p>Once fired, missiles are quite good at finding their targets. Unlike most of the old
+          missiles, all missiles now predict where their target is going to be, so unless the
+          target can actually outmaneuver the missile, the missile will usually hit. The new
+          missiles also do considerably more damage, so being hit by one can be quite painful. The
+          aim is that most missiles are optimally suited to a certain class of ship, however,
+          dealing too little damage to seriously hurt targets bigger than that and being too slow
+          and sluggish to catch faster ones.</p>
+          <h4 id="ship-health">Ship health</h4>
+          <p>A somewhat minor change, but perhaps worth mentioning here is the overhaul of ship
+          health. Where ship armour and shields more or less linearly increased as the ships got
+          bigger and heavier, one of our team members (it was me, sorry) felt a different
+          philosophy should be followed.</p>
+          <p>Small ships now rely mainly on their maneuverability and their shields, as before.
+          Their hulls are made out of bread, relatively speaking, so only a few hits will be enough
+          to destroy them. Avoiding fire in an engagement is key to survival.</p>
+          <p>Big ships have received substantial cuts to their shielding. While they still have
+          more shielding in absolute terms than smaller ships, the increase becomes less and less
+          as ships get bigger. On the other hand, armour has been drastically increased. The idea
+          here is that big ships, as big and lumbering as they are, will run out of shields in most
+          serious encounters, but survive on armour for a considerable time after that. When combat
+          is over shields will come back up but armour will not. In this manner, capital ships will
+          get worn down between engagements, and will eventually have to return to a friendly
+          planet or station to make repairs. Of course, this assumes combat will be sporadic and
+          intense, as opposed to constant and niggling (as is currently the case!). All in good
+          time.</p>
+          <p>I should also mention that shield regeneration has been boosted across the board,
+          hopefully enough to make the regeneration actually matter in the middle of combat. I’m
+          sure we’ll be tweaking that more in the future.</p>
+          <h4 id="soromid">Soromid</h4>
+          <p>Following contributions of some great ship models by <a href=
+          "https://web.archive.org/web/20160820095618/http://forum.naev.org/memberlist.php?mode=viewprofile&amp;u=174">
+          Viruk</a>, a new faction has been added to the Naev galaxy. The Soromid already existed
+          as a <a href="https://github.com/naev/naev/wiki/The-Soromid">lore writeup</a> previously,
+          but now they also own ships, stations and planets. In the future, they will also receive
+          their own weapon specialization, and of course their own missions.</p>
+          <p>You can see a map of their territory to the right. It is located in the north of the
+          galaxy, where previously there were only empty systems. Not anymore!</p>
+          <h4 id="also">Also</h4>
+          <p>Our team leader bobbens is working on a personal project as well. You can see the
+          result here.</p>
+          <p><strong>NOTE</strong> Unfortunately the above mentioned screenshot is lost, and there
+          is some mention of bobbens’ toe. I wish I could tell you what that was all about -
+          Synchro</p>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
           <h4><a href="../../blarg/2011-06-20_expanding_on_faction_standing_and_landing/">Expanding
           on faction standing and landing</a></h4>
           <p class="text-muted">BY DEIZ, ON JUNE 20TH, 2011</p>
@@ -424,125 +531,6 @@
             </li>
           </ul>
           <p>We hope you enjoy this release!</p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href="../../blarg/2011-04-02_0.5.0-beta1/">Naev 0.5.0-beta1 released!</a></h4>
-          <p class="text-muted">BY BOBBENS, ON APRIL 2ND, 2011</p>
-          <p>The Naev team is proud to announce the long-awaited 0.5.0-beta1 release. This is a
-          beta release and therefore isn’t quite ready for the general public. While it’s highly
-          unlikely that it will set your cat on fire and send threatening messages to your family,
-          there are no guarantees.</p>
-          <figure class="figure embed-responsive" style="text-align:center;">
-            <div class="embed-responsive figure-img"><img class="img-fluid" alt=
-            "The Naev 0.5.0-beta1 release." src="../../imgs/blarg/2011/04/screenshot015.png"></div>
-            <figcaption class="figure-caption">
-              The Naev 0.5.0-beta1 release.
-            </figcaption>
-          </figure>
-          <p>It’s been over a year since 0.4.2, but this is a major step forward in maturity. The
-          original intent for 0.5.0 was to work out many of the important low-level features and
-          gameplay mechanics to avoid jarring shifts in gameplay in future releases. Feature creep
-          being what it is, 0.5.0 has perpetually grown more ambitious over time. We hope to do a
-          better job of “release early, release often” after this beta.</p>
-          <p>Compared to 0.4.2, Naev 0.5.0 is essentially a new game. While older saves can be
-          loaded in 0.5.0-beta1, we highly recommend that players start new games. Many things have
-          changed: The galaxy looks quite different, some older missions are absent or have been
-          wholly rewritten, and there’s a wealth of new ships and equipment. For the best
-          experience, start fresh.</p>
-          <p>On a side note, a number of songs in this release are encoded at a lower quality than
-          in Git, for size reasons. Google Code has a “technical limitation” of 200 MB per file and
-          our current Git ndata size is 214 MB (and growing). We may have to distribute the final
-          0.5.0 release through BitTorrent or another hosting service for this reason.</p>
-          <p>We don’t expect this release to be perfect (it’s a beta after all), and what we need
-          most right now are testers to run through the many 0.4.2-era missions and other content.
-          The more testing the beta gets, the better the final release can be. So please, report
-          any issues to us via the <a href=
-          "https://web.archive.org/web/20170210202130/http://code.google.com/p/naev/issues/list">Google
-          Code bug tracker</a> or on IRC.</p>
-          <p>Changelog (long, but still likely missing some things):</p>
-          <p>For Players</p>
-          <ul>
-            <li>Bigger universe
-              <ul>
-                <li>Expanded Dvaered, Frontier, Empire territories</li>
-                <li>All new Sirius territory</li>
-                <li>Preliminary Soromid area (Not inhabited yet)</li>
-                <li>New Pirate system</li>
-              </ul>
-            </li>
-            <li>Big systems
-              <ul>
-                <li>More planets in systems</li>
-                <li>Bigger planets in systems, more planet graphics</li>
-                <li>Players must fly to jump points before jumping to another system</li>
-              </ul>
-            </li>
-            <li>Electronic warfare
-              <ul>
-                <li>Ships have cloaking and detection abilities</li>
-                <li>Sensor range depends on cloak vs detection</li>
-                <li>Turrets no longer track all ships equally</li>
-              </ul>
-            </li>
-            <li>Fancier targeting method</li>
-            <li>Random bar NPCs</li>
-            <li>On-map security rating abandoned in favour of faction presence indicators</li>
-            <li>More diverse planetary inventories (see the tech system)</li>
-            <li>Outfit slots now have sizes</li>
-            <li>System backgrounds (nebulae, stars and more!).</li>
-            <li>Fancier new GUI.</li>
-            <li>Weapon sets allow to easily configure different weapon configurations for each
-            ship.</li>
-            <li>Heat system replaces accuracy making ships more accurate at first.</li>
-            <li>Overlay map helps navigate and visualize the environment.</li>
-            <li>Mouse targeting.</li>
-            <li>Damage absorption and penetration system.</li>
-            <li>Continuous time model.</li>
-            <li>New tutorial that is independent from the main game.</li>
-            <li>Mouse flying.</li>
-            <li>Images in intro.</li>
-            <li>Lots more content!</li>
-          </ul>
-          <p>For Developers (mission and likewise)</p>
-          <ul>
-            <li>Faction presence
-              <ul>
-                <li>Replaces security and simple fleet spawning</li>
-                <li>Fleet spawning is now controlled through lua on a per-faction basis</li>
-              </ul>
-            </li>
-            <li>Universe and System editor
-              <ul>
-                <li>Allows easy and quick modification of the universe</li>
-                <li>Allows creation and manipulation of planets, systems and jumps</li>
-                <li>Allows selection of planet graphics</li>
-              </ul>
-            </li>
-            <li>New tech system
-              <ul>
-                <li>Techs are groups containing outfits, ships or other techs.</li>
-                <li>Assets (formerly planets) sell whatever is in their assigned techs.</li>
-              </ul>
-            </li>
-            <li>Hook improvements
-              <ul>
-                <li>Pilot hooks pass arguments by default</li>
-                <li>You can now pass custom arguments to hooks</li>
-                <li>Many new hooks.</li>
-              </ul>
-            </li>
-            <li>Removed old timer system to new hook-based timer system</li>
-            <li>Improvements to the in-game console</li>
-            <li>Missions can now use more than a single mission marker</li>
-            <li>SDL_image is no longer a dependency.</li>
-            <li>Events can now be saved.</li>
-            <li>GUI can be written in Lua.</li>
-            <li>Camera can be modified.</li>
-          </ul>
-          <p>That’s all for now, good luck and good flying!</p>
         </div>
         <hr>
       </li>

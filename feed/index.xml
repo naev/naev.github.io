@@ -2,13 +2,73 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://naev.org/">
   <id>https://naev.org/</id>
   <title>Naev Blarg</title>
-  <updated>2025-05-23T00:00:00Z</updated>
+  <updated>2025-07-04T00:00:00Z</updated>
   <link rel="alternate" href="https://naev.org/" type="text/html"/>
   <link rel="self" href="https://naev.org/feed/index.xml" type="application/atom+xml"/>
   <author>
     <name>Naev DevTeam</name>
     <uri>https://naev.org</uri>
   </author>
+  <entry>
+    <id>tag:naev.org,2025-07-04:/blarg/2025-07-04_the_road_to_rust/</id>
+    <title type="html">The Road to Rust</title>
+    <published>2025-07-04T00:00:00Z</published>
+    <updated>2025-07-04T00:00:00Z</updated>
+    <link rel="alternate" href="https://naev.org/blarg/2025-07-04_the_road_to_rust/" type="text/html"/>
+    <content type="html">&lt;p&gt;A long project in the making, the Naev DevTeam is now proud to announce that
+Naev is now partially written in &lt;a href="https://www.rust-lang.org/"&gt;Rust programming
+language&lt;/a&gt;. While still only about 5% of the C code
+has been rewritten, it includes many of the critical components such as the
+most of the rendering pipeline and initialization bits. The porting is being
+done in tandem with general development, so C and Rust will co-exist for a
+while until the port is completed and C can be dropped as necessary. Scripting
+will still be in Lua, which will be much easier to develop using
+&lt;a href="https://docs.rs/mlua/latest/mlua/index.html"&gt;mlua&lt;/a&gt; from Rust.&lt;/p&gt;
+
+&lt;h2 id="what-does-this-mean"&gt;What does this mean?&lt;/h2&gt;
+
+&lt;p&gt;Short-term, it means it is likely there will be more bugs and quirks, however,
+in the longer picture, this means that Naev will be able to make use of the
+inherent memory and threading safety of Rust to be much more bug-free. Rust
+also makes it possible to simplify significant parts of the code and thread
+them more easily, meaning that it is likely that performance will also go up
+over time.&lt;/p&gt;
+
+&lt;p&gt;The porting is also a good way to revise the existing codebase. With the first
+commit being 18 years ago, as you can expect, some parts have not aged too
+well. Rewriting the code in Rust will not only help modernize it, but also
+streamline it so that many more improvements can be easily made. Some
+particular example of something that will become easily possible is
+implementing mechanisms to modify the number of outfit slots on a ship via
+outfits.&lt;/p&gt;
+
+&lt;h2 id="what-has-been-done"&gt;What has been done?&lt;/h2&gt;
+
+&lt;p&gt;While the port is far from over, very important aspects have already been moved
+to Rust side including initialization, rendering, and Lua scripting. Some
+low-hanging fruits have also been grabbed as a proof of concept including
+things like the 2D vector Lua library, damage types, and slot types. The entire
+build system has also been rehauled to have C and Rust work somewhat happily
+together. Besides having to file a lot of bug reports upstream to
+&lt;a href="https://mesonbuild.com/"&gt;meson&lt;/a&gt; and other projects, we now figured it out with
+lots of not so beautiful tricks to compile both a C and Rust library
+separately, and then link them together in Rust. It’s a bit hacky, but it seems
+to work well for the time being.&lt;/p&gt;
+
+&lt;h2 id="what-can-you-do-to-help"&gt;What can you do to help?&lt;/h2&gt;
+
+&lt;p&gt;There is a lot of work left to still be done. Good thing is that anyone can
+help! If you want to help with porting, you can look at the &lt;a href="https://github.com/naev/naev/issues/2890"&gt;issue on rust
+porting&lt;/a&gt; that tries to centralize
+work being done on Rust. If you don’t want to do Rust, you can also help as
+always by testing the nightly and reporting any issues that you may find.&lt;/p&gt;
+
+&lt;p&gt;As always, help is also needed with artwork, sound effects, and music,
+including &lt;a href="https://github.com/naev/naev/wiki/Needed-Artwork%3A-Outfits"&gt;graphics for
+outfits&lt;/a&gt; and &lt;a href="https://github.com/naev/naev/wiki/Needed-Artwork%3A-Characters"&gt;new
+portraits&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <id>tag:naev.org,2025-05-23:/blarg/2025-05-23_0.12.5/</id>
     <title type="html">Naev 0.12.5</title>
@@ -254,59 +314,6 @@ things as necessary.&lt;/p&gt;
   &lt;li&gt;harjas_vengeance: avoid certain system to make the mission easier to do.&lt;/li&gt;
   &lt;li&gt;minerva missions: fixed a ship not spawning correctly&lt;/li&gt;
   &lt;li&gt;Large cargo hulls now match the cargo difference of the small and medium hulls&lt;/li&gt;
-  &lt;li&gt;Minor typo fixes and translation updates&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-  </entry>
-  <entry>
-    <id>tag:naev.org,2024-12-27:/blarg/2024-12-27_0.12.1/</id>
-    <title type="html">Naev 0.12.1</title>
-    <published>2024-12-27T00:00:00Z</published>
-    <updated>2024-12-27T00:00:00Z</updated>
-    <link rel="alternate" href="https://naev.org/blarg/2024-12-27_0.12.1/" type="text/html"/>
-    <content type="html">&lt;p&gt;With big releases, come big bugs. A bug that would potentially mark the entire
-player’s map as known has crept into the release. It has been fixed along with
-other minor fixes, in particular, a bug made the obelisk tests require
-manual setting of weapon sets, and a persistent ship AI repeating to the player
-over and over that they haven’t played in a while.&lt;/p&gt;
-
-&lt;p&gt;You can get the latest version from any of the following sources:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="https://github.com/naev/naev/releases/v0.12.1"&gt;&lt;img src="/imgs/badges/github.svg" alt="Get - Github" /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="https://store.steampowered.com/app/598530/Naev"&gt;&lt;img src="/imgs/badges/steam.svg" alt="Get - Steam" /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="https://naev.itch.io/naev"&gt;&lt;img src="/imgs/badges/itchio.svg" alt="Get - Itch.io" /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="https://flathub.org/apps/details/org.naev.Naev"&gt;&lt;img src="/imgs/badges/flathub.svg" alt="Get - Flathub" /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The new version should be compatible with older save games, and will update
-things as necessary.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class="figure embed-responsive video720p"&gt;
- &lt;div class="embed-responsive embed-responsive-16by9 figure-img"&gt;
-  &lt;video controls="" class="embed-responsive-item"&gt;
-   &lt;source src="/videos/0.12.0_trailer.webm" type="video/webm;codecs=&amp;quot;vp9, opus&amp;quot;" /&gt;
-  &lt;/video&gt;
- &lt;/div&gt;
- &lt;figcaption class="figure-caption"&gt;Naev 0.12.0 official trailer.&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3 id="changes-since-0120"&gt;Changes since 0.12.0&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Fixed psychic orbs having trails&lt;/li&gt;
-  &lt;li&gt;Crop selected spob name if it goes out of bounds in the GUI&lt;/li&gt;
-  &lt;li&gt;Fix obelisk tests not setting properly the primary weapons of the player&lt;/li&gt;
-  &lt;li&gt;Fleet members don’t try to investigate, only leaders do&lt;/li&gt;
-  &lt;li&gt;More lenient update checks when updating saves&lt;/li&gt;
-  &lt;li&gt;Pilots should no longer see through stealth when attacked from stealth&lt;/li&gt;
-  &lt;li&gt;Fixed sometimes full map being partially displayed&lt;/li&gt;
-  &lt;li&gt;Don’t show the “didn’t play in a while” message every time a save is loaded&lt;/li&gt;
-  &lt;li&gt;Difficulty modifiers extend to the player’s escorts as well&lt;/li&gt;
-  &lt;li&gt;Boarding bonus affects outfit / ship capture costs&lt;/li&gt;
-  &lt;li&gt;Lowered the cost of capturing ships&lt;/li&gt;
   &lt;li&gt;Minor typo fixes and translation updates&lt;/li&gt;
 &lt;/ul&gt;
 </content>

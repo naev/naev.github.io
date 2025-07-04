@@ -102,6 +102,142 @@
     <ul class="list-unstyled">
       <li class="mt-3 mb-4">
         <div class="blog-post">
+          <h4><a href="../../blarg/2024-07-21_sporadic_naev_newsletter_vol_4/">Sporadic Naev
+          Newsletter Vol. 4</a></h4>
+          <p class="text-muted">BY BOBBENS, ON JULY 21ST, 2024</p>
+          <p>This year we’re having another edition of our Sporadic Naev Newsletter. We’ll be
+          covering <a href="https://github.com/naev/naev/blob/main/Changelog.md">some of the
+          improvements</a> that will appear in the 0.12.0 release, and more importantly, discuss a
+          feature almost 15 years in the making: Naev going 3D! Now, this doesn’t mean gameplay is
+          going 3D - gameplay is fundamentally unchanged - however, the ship models are now in 3D,
+          allowing us to do new fancy effects and lower memory consumption while at it!</p>
+          <figure class="figure embed-responsive video720p">
+            <div class="embed-responsive embed-responsive-16by9 figure-img">
+              <video controls="" class="embed-responsive-item"><source src=
+              "../../videos/blarg/2024/3dspin.webm" type='video/webm;codecs="vp9, opus"'></video>
+            </div>
+            <figcaption class="figure-caption">
+              Nearly all ships are now in 3D!
+            </figcaption>
+          </figure>
+          <h4 id="less-pirates-in-the-early-game">Less Pirates in the Early Game</h4>
+          <p>One of the major complaints that Naev always gets is how ruthless pirates are,
+          especially in the early game, when the player has no proper defenses. Although the past
+          several releases have tried to mitigate the issue by establishing a safe starting area
+          with no pirates, and adding more introductory missions to help the player get started,
+          for those players that strayed too far from the starting area, it was often fatal. Now,
+          Chapter 0 will feature significantly less pirates, that will ramp up to normal when the
+          player reaches Chapter 1. This should give the player time to get better ships and
+          survive the pirate menace.</p>
+          <figure class="figure embed-responsive" style="text-align:center;">
+            <div class="embed-responsive figure-img"><img class="img-fluid" alt=
+            "Universe diff support in the universe editor." src=
+            "../../imgs/blarg/2024/uniedit_diff.png"></div>
+            <figcaption class="figure-caption">
+              Universe diff support in the universe editor.
+            </figcaption>
+          </figure>
+          <p>In order to implement this feature, the in-game universe editor was significantly
+          reworked (yet again!) to support universe diffs, that is, instead of saving the entire
+          universe, only changes with the default are saved. While this has been used only for
+          reducing pirates, for now, this is going to come very in hand when implementing the next
+          stages of the major campaigns, where the universe will undergo many significant changes.
+          It will definitely be a good investment for things to come.</p>
+          <h4 id="naev-now-in-3d">Naev, now in 3D!</h4>
+          <p>So, while this is something that was proposed around 15 years ago, this is something
+          that has been quite active in the works for almost 5 years now. During that time, it has
+          been rewritten twice: first using object files and more traditional rendering, and now
+          using gltf files with physically-based rendering. As we’re not using any sort of game
+          engine, it was all written from the ground up, and includes some fancy things like
+          variance shadow maps, FidelityFX filtering, high dynamic tone mapping, and super
+          sampling. There’s still many things to do, but this finally lets us start to do fancier
+          things that were infeasible using spritesheets. That said, spritesheets are still
+          supported, however, 3D models are the recommended way of adding new ships.</p>
+          <figure class="figure embed-responsive" style="text-align:center;">
+            <div class="embed-responsive figure-img"><img class="img-fluid" alt=
+            "The system you are in will subtly change the lighting on all ships." src=
+            "../../imgs/blarg/2024/3dlighting.png"></div>
+            <figcaption class="figure-caption">
+              The system you are in will subtly change the lighting on all ships.
+            </figcaption>
+          </figure>
+          <p>It has taken a lot of work, but all the ancient models have been updated to work with
+          the newest blender, and many models have seen upgrades in different aspects like
+          texturing, engine glows, broken geometry, and animations. Some ships have had to be
+          nearly completely remade to work with current standards. There’s still a lot to do, but
+          they look much better, and the same model can be used in the shipyard, communication
+          window, and in-game.</p>
+          <figure class="figure embed-responsive video720p">
+            <div class="embed-responsive embed-responsive-16by9 figure-img">
+              <video controls="" class="embed-responsive-item"><source src=
+              "../../videos/blarg/2024/3dzebra.webm" type='video/webm;codecs="vp9, opus"'></video>
+            </div>
+            <figcaption class="figure-caption">
+              3D models support animations, such as the Zebra having rotating parts.
+            </figcaption>
+          </figure>
+          <p>With 3D, we finally can also have ships tilt slightly when turning. This makes flying
+          feel much more natural, and the tilt shows off more highlights and details of the ships.
+          While we were hoping to add blinking lights and more details, those have not yet been
+          implemented, but there is a real possibility that they will come sooner and later, once
+          some logistics are figured out.</p>
+          <figure class="figure embed-responsive video720p">
+            <div class="embed-responsive embed-responsive-16by9 figure-img">
+              <video controls="" class="embed-responsive-item"><source src=
+              "../../videos/blarg/2024/3dgoddard.webm" type=
+              'video/webm;codecs="vp9, opus"'></video>
+            </div>
+            <figcaption class="figure-caption">
+              Ships tilt slightly when turning. Weapon mounts and trails adjust to the 3D models.
+            </figcaption>
+          </figure>
+          <p>For now, only ships have been reworked into 3D, but we hope to have planets, stations,
+          and asteroids to join them in the near future. Some effects such as the backgrounds,
+          wormholes, and the likes will still be kept in 2D, however, it will all work much better
+          together. Oh, and last but not least, we’ve taken this opportunity to add 4 new ships to
+          flesh out a bit more the Naev universe!</p>
+          <h4 id="linear-energy-regeneration">Linear Energy Regeneration</h4>
+          <p>Although many players had not noticed, energy regeneration in Naev used an RC
+          (Resistance-Capacitor) charge curve, which meant that energy would regenerate faster the
+          less you had, and slowly taper out. This was not properly conveyed to the player and has
+          now made linear. Now 100 GW of energy regeneration will always be 100 GJ of energy
+          generated per second. While it is not possible to keep exactly the same behaviour as
+          before, outfits and ships have been adjusted to try to be as similar as before the
+          change.</p>
+          <h4 id="quality-of-life-for-all">Quality of Life for all!</h4>
+          <p>A lot of Quality of Life has also made it into the nightly. Spaceport bar is marked
+          with red exclamation points when there is an interesting NPC, there is support for
+          sorting and filtering mission computer missions, repeated messages get folded in the GUI,
+          asteroids won’t disappear when the player is nearby or actively targeting them, and much
+          more! This should ensure a smoother experience for the players and get rid of lots of
+          small friction.</p>
+          <figure class="figure embed-responsive" style="text-align:center;">
+            <div class="embed-responsive figure-img"><img class="img-fluid" alt=
+            "You can now sort missions and it is easier to tell when new missions are available at the spaceport bar."
+            src="../../imgs/blarg/2024/qol.png"></div>
+            <figcaption class="figure-caption">
+              You can now sort missions and it is easier to tell when new missions are available at
+              the spaceport bar.
+            </figcaption>
+          </figure>
+          <p>Additionally, the game uses lazy loading and threading to load much faster than
+          before, starting up much faster and using less memory in general.</p>
+          <h4 id="concluding-remarks">Concluding Remarks</h4>
+          <p>All the aforementioned fixes can be already tasted in the nightly branch which can be
+          obtained through the steam beta, <a href=
+          "https://github.com/naev/naev/releases/tag/nightly">github</a>, or <a href=
+          "https://naev.itch.io/naev">itch.io</a>. They will be included in the next 0.12.0 release
+          which is scheduled for December if you’d rather wait for a more stable release instead of
+          risking the bleeding edge. If you’re interested in seeing the full changelog, including
+          things that have not been discussed here, it’s <a href=
+          "https://github.com/naev/naev/blob/main/Changelog.md">available on github</a>. With that,
+          this concludes the Sporadic Naev Newsletter Vol. 4, and see you again in the next
+          one!</p>
+        </div>
+        <hr>
+      </li>
+      <li class="mt-3 mb-4">
+        <div class="blog-post">
           <h4><a href="../../blarg/2024-06-13_0.11.5/">Naev 0.11.5</a></h4>
           <p class="text-muted">BY NAEV DEVTEAM, ON JUNE 13TH, 2024</p>
           <p>This is a minor release, that mainly provides build support for BSD systems. However,
@@ -273,42 +409,6 @@
           "../../imgs/badges/steam.svg" alt="Get - Steam"></a></p>
           <p><a href="https://naev.itch.io/naev"><img src="../../imgs/badges/itchio.svg" alt=
           "Get - Itch.io"></a></p>
-        </div>
-        <hr>
-      </li>
-      <li class="mt-3 mb-4">
-        <div class="blog-post">
-          <h4><a href="../../blarg/2024-01-15_0.11.2/">Naev 0.11.2</a></h4>
-          <p class="text-muted">BY NAEV DEVTEAM, ON JANUARY 15TH, 2024</p>
-          <p>Inside the improvements of 0.11.1, a critical bug that seems to affect release-version
-          windows only sneaked in. This bug causes autonav to basically crash the game when
-          activated in certain conditions. Given that this makes the game pretty much unplayable on
-          affected systems, we created a new version that should solve the issue. Thanks to all
-          those reported and involved in the fixing!</p>
-          <p>You can get the latest version from any of the following sources:</p>
-          <p><a href="https://github.com/naev/naev/releases/v0.11.2"><img src=
-          "../../imgs/badges/github.svg" alt="Get - Github"></a></p>
-          <p><a href="https://store.steampowered.com/app/598530/Naev"><img src=
-          "../../imgs/badges/steam.svg" alt="Get - Steam"></a></p>
-          <p><a href="https://naev.itch.io/naev"><img src="../../imgs/badges/itchio.svg" alt=
-          "Get - Itch.io"></a></p>
-          <p><a href="https://flathub.org/apps/details/org.naev.Naev"><img src=
-          "../../imgs/badges/flathub.svg" alt="Get - Flathub"></a></p>
-          <p><br></p>
-          <figure class="figure embed-responsive video720p">
-            <div class="embed-responsive embed-responsive-16by9 figure-img">
-              <video controls="" class="embed-responsive-item"><source src=
-              "../../videos/0.11.0_trailer.webm" type='video/webm;codecs="vp9, opus"'></video>
-            </div>
-            <figcaption class="figure-caption">
-              Naev 0.11.0 official trailer.
-            </figcaption>
-          </figure>
-          <h3 id="full-changelog">Full Changelog</h3>
-          <ul>
-            <li>Stopped autonav from preventing wobble and overshooting by crashing the entire
-            game</li>
-          </ul>
         </div>
         <hr>
       </li>

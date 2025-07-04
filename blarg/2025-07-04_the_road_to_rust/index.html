@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <!--Old html 4.0.1 way <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+  <!--<meta charset="UTF-8">--><!-- New HTML5 way -->
+  <!-- Mastodon -->
+  <meta name="fediverse:creator" content="@naev@mastodon.gamedev.place">
+  <link rel="me" href="https://mastodon.gamedev.place/@naev"><!-- Mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Favourite icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../../favicon-180.png">
+  <link rel="icon" type="image/png" sizes="196x196" href="../../favicon-196.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="../../favicon-128.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16.png">
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico"><!-- CSS -->
+  <link rel="stylesheet" href="../../style.css"><!-- Website information -->
+  <title>Naev - The Road to Rust</title><!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Naev Blarg RSS Feed" href=
+  "https://naev.org/feed/index.xml">
+</head>
+<body class="bg-light">
+  <div id="naev-header" class="container-fluid nebula-bg">
+    <canvas id="nebula-canvas-0"></canvas>
+    <div class="container" style="position: relative; z-index: 1;">
+      <a href="../../"><img src="../../imgs/naev.png" alt="Naev"></a>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="p-0 navbar-brand" href="#"><img id="logo" class="img-fluid" src="../../favicon.png"
+      alt="Naev"></a> <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+      aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../../">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../page/1/">Blarg</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../media/">Media</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../downloads/">Downloads</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../contact/">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/naev/naev">Github</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/naev/naev/wiki">Wiki</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../api/">Lua API</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../devmanual/">Dev Manual</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main role="main" class="container">
+    <h2>The Road to Rust</h2>
+    <p class="text-muted">BY NAEV DEVTEAM, ON JULY 4TH, 2025</p>
+    <p>A long project in the making, the Naev DevTeam is now proud to announce that Naev is now
+    partially written in <a href="https://www.rust-lang.org/">Rust programming language</a>. While
+    still only about 5% of the C code has been rewritten, it includes many of the critical
+    components such as the most of the rendering pipeline and initialization bits. The porting is
+    being done in tandem with general development, so C and Rust will co-exist for a while until
+    the port is completed and C can be dropped as necessary. Scripting will still be in Lua, which
+    will be much easier to develop using <a href=
+    "https://docs.rs/mlua/latest/mlua/index.html">mlua</a> from Rust.</p>
+    <h2 id="what-does-this-mean">What does this mean?</h2>
+    <p>Short-term, it means it is likely there will be more bugs and quirks, however, in the longer
+    picture, this means that Naev will be able to make use of the inherent memory and threading
+    safety of Rust to be much more bug-free. Rust also makes it possible to simplify significant
+    parts of the code and thread them more easily, meaning that it is likely that performance will
+    also go up over time.</p>
+    <p>The porting is also a good way to revise the existing codebase. With the first commit being
+    18 years ago, as you can expect, some parts have not aged too well. Rewriting the code in Rust
+    will not only help modernize it, but also streamline it so that many more improvements can be
+    easily made. Some particular example of something that will become easily possible is
+    implementing mechanisms to modify the number of outfit slots on a ship via outfits.</p>
+    <h2 id="what-has-been-done">What has been done?</h2>
+    <p>While the port is far from over, very important aspects have already been moved to Rust side
+    including initialization, rendering, and Lua scripting. Some low-hanging fruits have also been
+    grabbed as a proof of concept including things like the 2D vector Lua library, damage types,
+    and slot types. The entire build system has also been rehauled to have C and Rust work somewhat
+    happily together. Besides having to file a lot of bug reports upstream to <a href=
+    "https://mesonbuild.com/">meson</a> and other projects, we now figured it out with lots of not
+    so beautiful tricks to compile both a C and Rust library separately, and then link them
+    together in Rust. It’s a bit hacky, but it seems to work well for the time being.</p>
+    <h2 id="what-can-you-do-to-help">What can you do to help?</h2>
+    <p>There is a lot of work left to still be done. Good thing is that anyone can help! If you
+    want to help with porting, you can look at the <a href=
+    "https://github.com/naev/naev/issues/2890">issue on rust porting</a> that tries to centralize
+    work being done on Rust. If you don’t want to do Rust, you can also help as always by testing
+    the nightly and reporting any issues that you may find.</p>
+    <p>As always, help is also needed with artwork, sound effects, and music, including <a href=
+    "https://github.com/naev/naev/wiki/Needed-Artwork%3A-Outfits">graphics for outfits</a> and
+    <a href="https://github.com/naev/naev/wiki/Needed-Artwork%3A-Characters">new portraits</a>.</p>
+  </main>
+  <div id="naev-footer" class="container-fluid nebula-bg mt-5">
+    <canvas id="nebula-canvas-1"></canvas>
+    <div class="container" style="position: relative; z-index: 1;">
+      <footer class="row text-muted">
+        <p class="col-xs-12 col-sm-6 text-left">© 2025 Naev Development Blarg</p>
+        <p class="col-xs-12 col-sm-6 text-right">Original content licensed under <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
+      </footer>
+    </div>
+  </div><!-- Javascript -->
+  <script src="../../site.js"></script>
+</body>
+</html>
