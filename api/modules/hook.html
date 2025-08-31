@@ -161,7 +161,7 @@
 
 <p> Example usage would be:
  <pre>
- function penter( arg )</p>
+ function penter( argument )</p>
 
 <pre>
 <span class="comment">-- Function to run when player enters a system</span>
@@ -169,7 +169,7 @@
 
 <p> end</p>
 
-<p> hookid = hook.enter( "penter", 5 )
+<p> hook_id = hook.enter( "penter", 5 )
  </pre></p>
 
 
@@ -281,7 +281,7 @@
  player.pay() (the Lua function only).</td>
    </tr>
    <tr>
-   <td class="name" nowrap><a href="#pilot">pilot (pilot, type, funcname, arg)</a></td>
+   <td class="name" nowrap><a href="#pilot">pilot (pilot, type, funcname, argument)</a></td>
    <td class="summary">Hooks the function to a specific pilot.</td>
    </tr>
    <tr>
@@ -596,8 +596,8 @@ a 1000 second resolution
  the likes. </p>
 
 <p> The parameters passed to the function are the type which can be one of:<br/>
- - "spob" <br/>
- - "jump" <br/>
+ - <code>&quot;spob&quot;</code> <br/>
+ - <code>&quot;jump&quot;</code> <br/>
  and the actual spob or jump point discovered with the following format: <br/>
  function f( type, discovery )
 
@@ -822,13 +822,13 @@ a 1000 second resolution
 
 <p> Can also be used to hook the various subparts of the info menu. Possible
  targets for where are:<br />
-   - "main"<br />
-   - "ship"<br />
-   - "weapons"<br />
-   - "cargo"<br />
-   - "mission"<br />
-   - "standing"<br />
-   - "shiplog"<br />
+   - <code>&quot;main&quot;</code><br />
+   - <code>&quot;ship&quot;</code><br />
+   - <code>&quot;weapons&quot;</code><br />
+   - <code>&quot;cargo&quot;</code><br />
+   - <code>&quot;mission&quot;</code><br />
+   - <code>&quot;standing&quot;</code><br />
+   - <code>&quot;shiplog&quot;</code><br />
 
 
     <h3>Parameters:</h3>
@@ -873,9 +873,9 @@ equipment screen
     <dd>
     Hooks the function to the player pressing any input. </p>
 
-<p> It returns the name of the key being pressed like "accel" and whether or not
- it's a press.<br/> <br/> Functions should be in format:<br/> function f(
- inputname, inputpress, args )
+<p> It returns the name of the key being pressed like <code>&quot;accel&quot;</code> and whether or
+ not it's a press. <br/> <br/> Functions should be in format: <br/>
+ <code>function f(inputname, inputpress, args)</code>
 
 
     <h3>Parameters:</h3>
@@ -969,13 +969,13 @@ equipment screen
 
 <p> Can also be used to hook the various subparts of the landing menu. Possible
  targets for where are:<br />
-   - "land" - when landed (default with no parameter )<br />
-   - "outfits" - when visited outfitter<br />
-   - "shipyard" - when visited shipyard<br />
-   - "bar" - when visited bar<br />
-   - "mission" - when visited mission computer<br />
-   - "commodity" - when visited commodity exchange<br />
-   - "equipment" - when visiting equipment place<br />
+   - <code>&quot;land&quot;</code> - when landed (default with no parameter )<br />
+   - <code>&quot;outfits&quot;</code> - when visited outfitter<br />
+   - <code>&quot;shipyard&quot;</code> - when visited shipyard<br />
+   - <code>&quot;bar&quot;</code> - when visited bar<br />
+   - <code>&quot;mission&quot;</code> - when visited mission computer<br />
+   - <code>&quot;commodity&quot;</code> - when visited commodity exchange<br />
+   - <code>&quot;equipment&quot;</code> - when visiting equipment place<br />
 
 
     <h3>Parameters:</h3>
@@ -1186,7 +1186,8 @@ equipment screen
  player.pay() (the Lua function only). </p>
 
 <p> The amount paid (or taken from the player) and reason (which is nil by
- default) is passed as a parameter:<br/> function f( amount, reason, args )
+ default) is passed as a parameter:
+ <br/> <code>function f( amount, reason, args )</code>
 
 
     <h3>Parameters:</h3>
@@ -1213,7 +1214,7 @@ equipment screen
 </dd>
     <dt>
     <a name = "pilot"></a>
-    <strong>pilot (pilot, type, funcname, arg)</strong>
+    <strong>pilot (pilot, type, funcname, argument)</strong>
     </dt>
     <dd>
     Hooks the function to a specific pilot. </p>
@@ -1248,13 +1249,17 @@ equipment screen
  all pilots.<br /> <br /> DO NOT DO UNSAFE THINGS IN PILOT HOOKS. THIS MEANS
  STUFF LIKE player.teleport(). IF YOU HAVE DOUBTS USE A "safe" HOOK.<br /> <br
  /> These hooks all pass the pilot triggering the hook as a parameter, so they
- should have the structure of: <p> function my_hook( pilot, arg )<br /> end
- </p>
+ should have the structure of:
+ <p></p>
+<pre><code>function my_hook( pilot, argument )&lt;br /&gt;
+end
+</code></pre>
+<p> </p>
  The combat hooks also pass the pilot acting on it, so for example the pilot
   that disabled, attacked or killed the selected pilot. They have the
   following format:
  <p></p>
-<pre><code>function combat_hook( pilot, attacker, arg )&lt;br /&gt;
+<pre><code>function combat_hook( pilot, attacker, argument )&lt;br /&gt;
 end
 </code></pre>
 <p> </p>
@@ -1265,17 +1270,17 @@ end
  The land and jump hooks also pass the spob or jump point the pilot is
  landing at or jumped from, respectively:
  <p></p>
-<pre><code>function land_hook( pilot, spob, arg )&lt;br /&gt;
+<pre><code>function land_hook( pilot, spob, argument )&lt;br /&gt;
 end
 </code></pre>
 <p> </p>
  <p style="margin-bottom: 0"></p>
-<pre><code>function jump_hook( pilot, jump_point, arg )&lt;br /&gt;
+<pre><code>function jump_hook( pilot, jump_point, argument )&lt;br /&gt;
 end
 </code></pre>
 <p> </p>
  The stealth hook passes whether or not the ship is stealthing or destealthing
- as a boolean: <p> function stealth_hook( pilot, status, arg )<br /> end
+ as a boolean: <p> function stealth_hook( pilot, status, argument )<br /> end
  </p>
 
 
@@ -1293,7 +1298,7 @@ end
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.4/manual.html#6.4">string</a></span>
          Name of function to run when hook is triggered.
         </li>
-        <li><span class="parameter">arg</span>
+        <li><span class="parameter">argument</span>
          Argument to pass to hook.
         </li>
     </ul>
@@ -1569,7 +1574,7 @@ end
 
 <p> The parameters passed to the function are faction whose standing is being
  changed and the amount changed:<br/>
- function f( faction, change, system, secondary, primary_fct, args )
+ function <code>f( faction, change, system, secondary, primary_fct, args)</code>
 
 
     <h3>Parameters:</h3>
@@ -1687,8 +1692,8 @@ end
  it continues forever.</p>
 
 <p> The current delta-tick (time passed in game) and real delta-tick (independent
- of game status) are passed as parameters:<br/> function f( dt, real_dt, args
- )
+ of game status) are passed as parameters:
+ <br/> <code>function f( dt, real_dt, args )</code>
 
 
     <h3>Parameters:</h3>
@@ -1720,7 +1725,7 @@ end
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2025-08-29 13:05:12 </i>
+<i style="float:right;">Last updated 2025-08-31 00:15:12 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">
